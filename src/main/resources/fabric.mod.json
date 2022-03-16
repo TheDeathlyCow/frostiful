@@ -37,5 +37,6 @@
   },
   "suggests": {
     "another-mod": "*"
-  }
+  },
+  "accessWidener" : "lost-in-the-cold.accesswidener"
 }
