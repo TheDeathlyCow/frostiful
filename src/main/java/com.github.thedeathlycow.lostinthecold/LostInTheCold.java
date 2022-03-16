@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.lostinthecold;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
+import net.minecraft.client.gui.hud.InGameHud;
+import net.minecraft.client.gui.screen.GameMenuScreen;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,5 +13,6 @@ public class LostInTheCold implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
+
     }
 }
