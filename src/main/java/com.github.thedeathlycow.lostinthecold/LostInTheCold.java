@@ -6,10 +6,10 @@ import org.slf4j.LoggerFactory;
 
 public class LostInTheCold implements DedicatedServerModInitializer {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger("modid");
+    public static final String MODID = "lost-in-the-cold";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
     @Override
     public void onInitializeServer() {
-
     }
 }

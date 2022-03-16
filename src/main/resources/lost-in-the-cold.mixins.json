@@ -4,6 +4,7 @@
   "package": "com.github.thedeathlycow.lostinthecold.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "FrozenTicksMixin"
   ],
   "client": [
   ],
