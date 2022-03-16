@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "lost-in-the-cold",
+  "version": "${version}",
+
+  "name": "Lost in the Cold",
+  "description": "Expands upon the freezing system added with Powdered Snow in 1.17.",
+  "authors": [
+    "TheDeathlyCow"
+  ],
+  "contact": {
+    "homepage": "https://github.com/TheDeathlyCow",
+    "sources": "https://github.com/TheDeathlyCow/lost-in-the-cold"
+  },
+
+  "license": "CC0-1.0",
+  "icon": "assets/lost-in-the-cold/icon.png",
+
+  "environment": "*",
+  "entrypoints": {
+    "server": [
+      "com.github.thedeathlycow.lostinthecold.LostInTheCold"
+    ],
+    "client": [
+      "com.github.thedeathlycow.lostinthecold.LostInTheColdClient"
+    ]
+  },
+  "mixins": [
+    "lost-in-the-cold.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=0.13.3",
+    "fabric": "*",
+    "minecraft": "1.18.x",
+    "java": ">=17"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
