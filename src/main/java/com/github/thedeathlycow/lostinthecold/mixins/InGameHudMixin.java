@@ -16,7 +16,9 @@ abstract class InGameHudMixin {
     @Inject(
             method = "renderStatusBars",
             at = @At(
-                    "HEAD"
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/profiler/Profiler;pop()V",
+                    shift = At.Shift.BEFORE
             )
     )
     private void renderFrostBar(MatrixStack matrices, CallbackInfo ci) {
