@@ -22,7 +22,6 @@ public class LostInTheCold implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
-        LOGGER.info("There are " + onInitializeListeners.size() + " listeners");
         onInitializeListeners.forEach(OnInitializeListener::onInitialize);
         ModItems.registerItems();
     }

@@ -19,7 +19,6 @@ public class ModEntityAttributes implements OnInitializeListener {
 
     @Override
     public void onInitialize() {
-        LostInTheCold.LOGGER.info("Registering entity attributes for " + LostInTheCold.MODID);
         register("generic.frost_resistance", FROST_RESISTANCE);
     }
 

@@ -16,7 +16,6 @@ public class LostInTheColdClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        LostInTheCold.LOGGER.info("There are " + onInitializeListeners.size() + " listeners");
         onInitializeListeners.forEach(OnInitializeListener::onInitialize);
         ModItems.registerItems();
     }
