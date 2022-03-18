@@ -12,14 +12,14 @@ public class LostInTheCold implements DedicatedServerModInitializer {
     public static final String MODID = "lost-in-the-cold";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    private static final Set<InitializeServerListener> onInitializeListeners = new HashSet<>();
+    private static final Set<OnInitializeListener> onInitializeListeners = new HashSet<>();
 
-    public static void addOnInitializeListener(InitializeServerListener listener) {
+    public static void addOnInitializeListener(OnInitializeListener listener) {
         onInitializeListeners.add(listener);
     }
 
     @Override
     public void onInitializeServer() {
-        onInitializeListeners.forEach(InitializeServerListener::onInitialize);
+        onInitializeListeners.forEach(OnInitializeListener::onInitialize);
     }
 }

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.init;
 
-public interface InitializeServerListener {
+public interface OnInitializeListener {
 
     void onInitialize();
 
