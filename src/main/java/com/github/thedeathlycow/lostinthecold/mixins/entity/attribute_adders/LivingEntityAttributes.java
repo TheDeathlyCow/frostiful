@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.lostinthecold.mixins.attribute_adders;
+package com.github.thedeathlycow.lostinthecold.mixins.entity.attribute_adders;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.FreezingValues;

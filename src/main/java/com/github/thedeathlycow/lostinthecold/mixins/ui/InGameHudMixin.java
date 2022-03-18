@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.lostinthecold.mixins;
+package com.github.thedeathlycow.lostinthecold.mixins.ui;
 
 import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -22,7 +22,7 @@ abstract class InGameHudMixin {
             )
     )
     private void renderFrostBar(MatrixStack matrices, CallbackInfo ci) {
-        
+
     }
 
     //    @Inject(

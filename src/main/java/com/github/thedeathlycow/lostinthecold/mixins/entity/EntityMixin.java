@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.lostinthecold.mixins;
+package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
