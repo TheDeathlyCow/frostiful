@@ -11,6 +11,7 @@ import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
@@ -40,8 +41,45 @@ public class LivingEntityMixin {
             ticksToAdd = 3;
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_FREEZING)) {
             ticksToAdd = 10;
+        } else {
+            ticksToAdd = -5;
         }
-        instance.setFrozenTicks(ticksFrozen + ticksToAdd);
+
+        if (instance.isWet()) {
+            ticksToAdd *= 1.5f;
+        }
+
+        if (instance.inPowderSnow) {
+            ticksToAdd = 100;
+        }
+
+        if (instance.isOnFire()) {
+            ticksToAdd = -100;
+        }
+
+        ticksFrozen += ticksToAdd;
+
+        if (ticksFrozen < 0) {
+            ticksFrozen = 0;
+        }
+
+        int freezeDamageThreshold = instance.getMinFreezeDamageTicks();
+        if (ticksFrozen > freezeDamageThreshold) {
+            ticksFrozen = freezeDamageThreshold;
+        }
+
+        instance.setFrozenTicks(ticksFrozen);
+    }
+
+    @Redirect(
+            method = "tickMovement",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
+            )
+    )
+    private void blockDefaultPowderSnowFreezing(LivingEntity instance, int i) {
+
     }
 
 }

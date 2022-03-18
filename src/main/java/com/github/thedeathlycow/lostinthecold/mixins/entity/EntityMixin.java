@@ -29,6 +29,6 @@ abstract class EntityMixin {
     }
 
     private static double getTicksFromFrostResistance(final double frostResistance) {
-        return 20.0D * FreezingValues.SECONDS_PER_FROST_RESIST * frostResistance;
+        return 20 * FreezingValues.SECONDS_PER_FROST_RESIST * frostResistance;
     }
 }
