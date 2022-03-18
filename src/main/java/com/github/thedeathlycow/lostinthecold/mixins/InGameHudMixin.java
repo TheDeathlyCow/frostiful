@@ -22,7 +22,7 @@ abstract class InGameHudMixin {
             )
     )
     private void renderFrostBar(MatrixStack matrices, CallbackInfo ci) {
-
+        
     }
 
     //    @Inject(
@@ -42,7 +42,7 @@ abstract class InGameHudMixin {
             return;
         }
 
-        int frozenHealthPoints = (player.getFrozenTicks() / FreezingValues.FROST_RESISTANCE_MULTIPLIER);
+        int frozenHealthPoints = (player.getFrozenTicks() / FreezingValues.SECONDS_PER_FROST_RESIST);
         int frozenHealthHearts = MathHelper.ceil((double) frozenHealthPoints / 2.0D);
         if (m < frozenHealthHearts) {
             boolean isHalfHeart = m + 1 == frozenHealthHearts && (frozenHealthPoints & 1) == 1;
