@@ -19,10 +19,10 @@
   "environment": "*",
   "entrypoints": {
     "server": [
-      "com.github.thedeathlycow.lostinthecold.LostInTheCold"
+      "com.github.thedeathlycow.lostinthecold.init.LostInTheCold"
     ],
     "client": [
-      "com.github.thedeathlycow.lostinthecold.LostInTheColdClient"
+      "com.github.thedeathlycow.lostinthecold.init.LostInTheColdClient"
     ]
   },
   "mixins": [
