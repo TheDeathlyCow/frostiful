@@ -4,10 +4,10 @@
   "package": "com.github.thedeathlycow.lostinthecold.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "EntityMixin",
+    "entity.EntityMixin",
+    "entity.attribute_adders.LivingEntityAttributes",
     "ui.InGameHudInvoker",
-    "InGameHudMixin",
-    "entity.attribute_adders.LivingEntityAttributes"
+    "ui.InGameHudMixin"
   ],
   "client": [
   ],
