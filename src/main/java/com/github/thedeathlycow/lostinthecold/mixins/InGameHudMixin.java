@@ -33,6 +33,7 @@ abstract class InGameHudMixin {
 //            ),
 //            locals = LocalCapture.CAPTURE_FAILEXCEPTION
 //    )
+    @Deprecated
     private void renderFrozenHeart(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci, InGameHud.HeartType heartType, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, boolean bl3) {
 
         if (heartType == InGameHud.HeartType.WITHERED || !FreezingValues.USE_HEART_OVERLAY) {
