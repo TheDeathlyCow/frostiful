@@ -17,7 +17,9 @@ public class ModEntityAttributes implements OnInitializeListener {
      */
     public static final EntityAttribute FROST_RESISTANCE = (new ClampedEntityAttribute("attribute.name.generic.frost_resistance", FreezingValues.BASE_FROST_RESISTANCE, 1.0D, 2048.0D)).setTracked(true);
 
+    @Override
     public void onInitialize() {
+        LostInTheCold.LOGGER.info("Registering entity attributes for " + LostInTheCold.MODID);
         register("generic.frost_resistance", FROST_RESISTANCE);
     }
 

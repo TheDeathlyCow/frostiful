@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.init;
 
+import com.github.thedeathlycow.lostinthecold.items.ModItems;
 import net.fabricmc.api.ClientModInitializer;
 
 import java.util.HashSet;
@@ -15,6 +16,8 @@ public class LostInTheColdClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
+        LostInTheCold.LOGGER.info("There are " + onInitializeListeners.size() + " listeners");
         onInitializeListeners.forEach(OnInitializeListener::onInitialize);
+        ModItems.registerItems();
     }
 }
