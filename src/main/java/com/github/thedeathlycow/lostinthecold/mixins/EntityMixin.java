@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.mixins;
 
+import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -14,12 +15,17 @@ abstract class EntityMixin {
 
     @Inject(at = @At("HEAD"), method = "getMinFreezeDamageTicks()I", cancellable = true)
     private void getMinFreezeDamageTicks(CallbackInfoReturnable<Integer> cir) {
+        Entity instance = (Entity) (Object) this;
         // start with a base time to freeze
-        //int freezeTickDamageThreshhold = FreezingValues.BASE_MIN_FREEZING_TICKS;
-        if (((Entity) (Object) this) instanceof LivingEntity livingEntity) {
-            // add more time to freeze based on current health
-            int freezeTickDamageThreshold = MathHelper.ceil(FreezingValues.TICK_INCREASE_PER_HEALTH_POINT * livingEntity.getHealth());
-            cir.setReturnValue(freezeTickDamageThreshold);
+        int freezeTickDamageThreshold = FreezingValues.BASE_FROST_RESISTANCE;
+        if (instance instanceof LivingEntity livingEntity) {
+            // add more time to freeze based on frost resistance
+            if (livingEntity.getAttributes().hasAttribute(ModEntityAttributes.FROST_RESISTANCE)) {
+                freezeTickDamageThreshold += FreezingValues.FROST_RESISTANCE_MULTIPLIER * livingEntity.getAttributes().getValue(ModEntityAttributes.FROST_RESISTANCE);
+            }
         }
+
+        cir.setReturnValue(freezeTickDamageThreshold);
+
     }
 }

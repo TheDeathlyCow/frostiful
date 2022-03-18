@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.lostinthecold;
 
+import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.gui.screen.GameMenuScreen;
@@ -13,6 +14,6 @@ public class LostInTheCold implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
-
+        ModEntityAttributes.registerAttributes();
     }
 }

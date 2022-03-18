@@ -5,9 +5,9 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "EntityMixin",
-    "HudHeartTypeMixin",
     "InGameHudInvoker",
-    "InGameHudMixin"
+    "InGameHudMixin",
+    "attribute_adders.LivingEntityAttributes"
   ],
   "client": [
   ],

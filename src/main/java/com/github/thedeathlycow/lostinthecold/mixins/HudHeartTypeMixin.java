@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.mixins;
 
+import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -15,7 +16,12 @@ public abstract class HudHeartTypeMixin {
                     target = "Lnet/minecraft/entity/player/PlayerEntity;isFrozen()Z"
             ))
     private static boolean blockDefaultFrozenHeartRendering(PlayerEntity thisPlayer) {
-        return false;
+        if (FreezingValues.USE_HEART_OVERLAY) {
+            return false;
+        } else {
+            return thisPlayer.isFrozen();
+        }
+
     }
 
 }
