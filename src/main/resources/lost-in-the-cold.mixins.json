@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "entity.EntityMixin",
+    "entity.LivingEntityMixin",
     "entity.attribute_adders.LivingEntityAttributes",
     "item.ArmorItemMixin",
     "ui.InGameHudInvoker",

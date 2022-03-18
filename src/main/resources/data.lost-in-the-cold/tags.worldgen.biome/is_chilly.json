@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:meadow",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:taiga",
+    "minecraft:windswept_hills",
+    "minecraft:windswept_forest",
+    "minecraft:windswept_gravelly_hills",
+    "minecraft:stony_shore",
+    "minecraft:stony_peaks"
+  ]
+}

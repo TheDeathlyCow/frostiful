@@ -22,6 +22,7 @@ public class LostInTheCold implements DedicatedServerModInitializer {
 
     @Override
     public void onInitializeServer() {
+        LOGGER.info("Loading Lost in the Cold dedicated server");
         onInitializeListeners.forEach(OnInitializeListener::onInitialize);
         ModItems.registerItems();
     }
