@@ -1,7 +1,9 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
+import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.tag.BiomeTags;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
@@ -27,34 +29,39 @@ public class LivingEntityMixin {
             )
     )
     private void tickTemperature(CallbackInfo ci) {
-        LivingEntity instance = (LivingEntity)(Object)this;
-        int ticksFrozen = instance.getFrozenTicks();
+        LivingEntity livingEntity = (LivingEntity)(Object)this;
 
-        World world = instance.getWorld();
-        BlockPos pos = instance.getBlockPos();
+        if (!livingEntity.canFreeze()) {
+            return;
+        }
+
+        int ticksFrozen = livingEntity.getFrozenTicks();
+
+        World world = livingEntity.getWorld();
+        BlockPos pos = livingEntity.getBlockPos();
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
-        int ticksToAdd = 0;
+        int ticksToAdd;
         if (biomeIn.isIn(BiomeTemperatureTags.IS_CHILLY)) {
-            ticksToAdd = 1;
+            ticksToAdd = FreezingValues.CHILLY_BIOME_FREEZE_RATE;
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_COLD)) {
-            ticksToAdd = 3;
+            ticksToAdd = FreezingValues.COLD_BIOME_FREEZE_RATE;
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_FREEZING)) {
-            ticksToAdd = 10;
+            ticksToAdd = FreezingValues.FREEZING_BIOME_FREEZE_RATE;
         } else {
-            ticksToAdd = -5;
+            ticksToAdd = FreezingValues.WARM_BIOME_FREEZE_RATE;;
         }
 
-        if (instance.isWet()) {
-            ticksToAdd *= 1.5f;
+        if (livingEntity.inPowderSnow) {
+            ticksToAdd = FreezingValues.POWDER_SNOW_FREEZE_RATE;
         }
 
-        if (instance.inPowderSnow) {
-            ticksToAdd = 100;
+        if (livingEntity.isWet()) {
+            ticksToAdd *= FreezingValues.WET_FREEZE_RATE_MULTIPLIER;
         }
 
-        if (instance.isOnFire()) {
-            ticksToAdd = -100;
+        if (livingEntity.isOnFire()) {
+            ticksToAdd = FreezingValues.ON_FIRE_FREEZE_RATE;
         }
 
         ticksFrozen += ticksToAdd;
@@ -63,12 +70,12 @@ public class LivingEntityMixin {
             ticksFrozen = 0;
         }
 
-        int freezeDamageThreshold = instance.getMinFreezeDamageTicks();
+        int freezeDamageThreshold = livingEntity.getMinFreezeDamageTicks();
         if (ticksFrozen > freezeDamageThreshold) {
             ticksFrozen = freezeDamageThreshold;
         }
 
-        instance.setFrozenTicks(ticksFrozen);
+        livingEntity.setFrozenTicks(ticksFrozen);
     }
 
     @Redirect(
