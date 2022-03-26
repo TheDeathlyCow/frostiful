@@ -45,7 +45,7 @@ public enum FurLinedArmorMaterials implements ArmorMaterial {
 
     @Override
     public String getName() {
-        return parentMaterial.getName();
+        return "fur_lined_" + parentMaterial.getName();
     }
 
     @Override
