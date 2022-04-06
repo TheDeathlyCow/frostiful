@@ -3,9 +3,6 @@ package com.github.thedeathlycow.lostinthecold.mixins.entity;
 import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.tag.BiomeTags;
-import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.World;
@@ -29,7 +26,7 @@ public class LivingEntityMixin {
             )
     )
     private void tickTemperature(CallbackInfo ci) {
-        LivingEntity livingEntity = (LivingEntity)(Object)this;
+        LivingEntity livingEntity = (LivingEntity) (Object) this;
 
         if (!livingEntity.canFreeze()) {
             return;
@@ -49,7 +46,8 @@ public class LivingEntityMixin {
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_FREEZING)) {
             ticksToAdd = FreezingValues.FREEZING_BIOME_FREEZE_RATE;
         } else {
-            ticksToAdd = FreezingValues.WARM_BIOME_FREEZE_RATE;;
+            ticksToAdd = FreezingValues.WARM_BIOME_FREEZE_RATE;
+            ;
         }
 
         if (livingEntity.inPowderSnow) {

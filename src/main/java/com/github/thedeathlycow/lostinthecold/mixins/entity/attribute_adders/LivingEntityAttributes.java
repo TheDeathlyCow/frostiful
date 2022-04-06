@@ -17,7 +17,7 @@ public class LivingEntityAttributes {
             at = @At("TAIL"),
             cancellable = true
     )
-    private static void addFrostResistanceAttributeToPlayer(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+    private static void addFrostResistanceAttributeToLivingEntity(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
         attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, FreezingValues.BASE_FROST_RESISTANCE);
         cir.setReturnValue(attributeBuilder);
