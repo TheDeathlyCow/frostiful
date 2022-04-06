@@ -3,6 +3,7 @@ package com.github.thedeathlycow.lostinthecold.mixins.entity;
 import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.World;
@@ -12,9 +13,26 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public class LivingEntityMixin {
+
+    @Inject(
+            method = "canFreeze",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    private void creativePlayersCannotFreeze(CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity livingEntity = (LivingEntity) (Object) this;
+        if (livingEntity instanceof PlayerEntity player) {
+            if (player.isCreative()) {
+                cir.setReturnValue(false);
+            }
+        }
+    }
 
     @Inject(
             method = "tickMovement",
