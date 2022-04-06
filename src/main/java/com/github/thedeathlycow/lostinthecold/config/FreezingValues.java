@@ -3,7 +3,7 @@ package com.github.thedeathlycow.lostinthecold.config;
 public class FreezingValues {
     public static final boolean USE_HEART_OVERLAY = false;
     public static final int SECONDS_PER_FROST_RESIST = 60;
-    public static final int BASE_FROST_RESISTANCE = 4;
+    public static final double BASE_FROST_RESISTANCE = 3;
     public static final int CHILLY_BIOME_FREEZE_RATE = 1;
     public static final int COLD_BIOME_FREEZE_RATE = 3;
     public static final int FREEZING_BIOME_FREEZE_RATE = 10;

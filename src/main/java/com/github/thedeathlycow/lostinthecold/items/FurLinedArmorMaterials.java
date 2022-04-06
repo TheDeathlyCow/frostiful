@@ -8,14 +8,18 @@ import net.minecraft.sound.SoundEvent;
 
 public enum FurLinedArmorMaterials implements ArmorMaterial {
 
-    FUR_LINED_IRON(ArmorMaterials.IRON, 2.0D);
+    FUR_LINED_GOLD(ArmorMaterials.GOLD, new double[]{0.5D, 1.5D, 2.0D, 1.0D}),
+    FUR_LINED_CHAIN(ArmorMaterials.CHAIN, new double[]{0.5D, 1.5D, 2.0D, 1.0D}),
+    FUR_LINED_IRON(ArmorMaterials.IRON, new double[]{0.5D, 1.5D, 2.0D, 1.0D}),
+    FUR_LINED_DIAMOND(ArmorMaterials.DIAMOND, new double[]{0.5D, 1.5D, 2.0D, 1.0D}),
+    FUR_LINED_NETHERITE(ArmorMaterials.NETHERITE, new double[]{1.0D, 2.0D, 2.5D, 1.5D});
 
     private final ArmorMaterial parentMaterial;
-    private final double frostResistance;
+    private final double[] frostResistanceAmounts;
 
-    FurLinedArmorMaterials(ArmorMaterial parentMaterial, double frostResistance) {
+    FurLinedArmorMaterials(ArmorMaterial parentMaterial, double[] frostResistanceAmounts) {
         this.parentMaterial = parentMaterial;
-        this.frostResistance = frostResistance;
+        this.frostResistanceAmounts = frostResistanceAmounts;
     }
 
     @Override
@@ -58,7 +62,7 @@ public enum FurLinedArmorMaterials implements ArmorMaterial {
         return parentMaterial.getKnockbackResistance();
     }
 
-    public double getFrostResistance() {
-        return this.frostResistance;
+    public double getFrostResistance(EquipmentSlot slot) {
+        return this.frostResistanceAmounts[slot.getEntitySlotId()];
     }
 }

@@ -27,6 +27,8 @@ public class ArmorItemMixin {
     @Shadow @Final @Mutable
     private Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
 
+    @Shadow @Final protected EquipmentSlot slot;
+
     @Inject(
             method = "<init>",
             at = @At("RETURN")
@@ -44,7 +46,7 @@ public class ArmorItemMixin {
                     new EntityAttributeModifier(
                             uUID,
                             "Armor frost resistance",
-                            furLinedMaterial.getFrostResistance(),
+                            furLinedMaterial.getFrostResistance(slot),
                             EntityAttributeModifier.Operation.ADDITION
                     )
             );
