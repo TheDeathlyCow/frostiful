@@ -3,5 +3,9 @@
   "item.lost-in-the-cold.fur_lined_iron_helmet": "Fur Lined Iron Helmet",
   "item.lost-in-the-cold.fur_lined_iron_chestplate": "Fur Lined Iron Chestplate",
   "item.lost-in-the-cold.fur_lined_iron_leggings": "Fur Lined Iron Leggings",
-  "item.lost-in-the-cold.fur_lined_iron_boots": "Fur Lined Iron Boots"
+  "item.lost-in-the-cold.fur_lined_iron_boots": "Fur Lined Iron Boots",
+  "commands.lost-in-the-cold.freeze.add.success.single": "Added %d frozen ticks to %s (now %d)",
+  "commands.lost-in-the-cold.freeze.add.success.multiple": "Added %d frozen ticks to %d targets",
+  "commands.lost-in-the-cold.freeze.set.success.single": "Set the frozen ticks of %s to %d",
+  "commands.lost-in-the-cold.freeze.set.success.multiple": "Set the frozen ticks of %d targets to %d"
 }

@@ -4,8 +4,10 @@ import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
 import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfigLoader;
 import com.github.thedeathlycow.lostinthecold.items.ModItems;
+import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
 import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
@@ -33,6 +35,13 @@ public class LostInTheCold implements ModInitializer {
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing Lost in the Cold");
+
+        CommandRegistrationCallback.EVENT.register(
+                ((dispatcher, dedicated) -> {
+                    FreezeCommand.register(dispatcher);
+                })
+        );
+
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(configLoader);
 
         Reflection.initialize(
