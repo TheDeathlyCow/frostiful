@@ -1,0 +1,19 @@
+{
+  "freeze_rate_config": {
+    "chilly_biome_freeze_rate": 1,
+    "cold_biome_freeze_rate": 5,
+    "freezing_biome_freeze_rate": 15,
+    "powder_snow_freeze_rate_multiplier": 3.0,
+    "wet_freeze_rate_multiplier": 1.5
+  },
+  "frost_resistance_config": {
+    "seconds_per_frost_resistance": 60,
+    "base_entity_frost_resistance": 3.0
+  },
+  "thaw_rate_config": {
+    "warm_biome_freeze_rate": -10,
+    "on_fire_freeze_rate": -100,
+    "warmthPerLightLevel": 2,
+    "minWarmthLightLevel": 1
+  }
+}

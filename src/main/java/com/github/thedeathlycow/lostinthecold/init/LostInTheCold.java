@@ -1,29 +1,38 @@
 package com.github.thedeathlycow.lostinthecold.init;
 
+import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
+import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
+import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfigLoader;
 import com.github.thedeathlycow.lostinthecold.items.ModItems;
-import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.api.DedicatedServerModInitializer;
+import com.google.common.reflect.Reflection;
+import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.LinkedList;
-import java.util.List;
-
-public class LostInTheCold implements DedicatedServerModInitializer {
+public class LostInTheCold implements ModInitializer {
 
     public static final String MODID = "lost-in-the-cold";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    private static final List<OnInitializeListener> onInitializeListeners = new LinkedList<>();
+    private static final HypothermiaConfig config;
 
-    public static void addOnInitializeListener(OnInitializeListener listener) {
-        onInitializeListeners.add(listener);
+    public static HypothermiaConfig getConfig() {
+        return config;
+    }
+
+    static {
+        config = HypothermiaConfigLoader.load();
     }
 
     @Override
-    public void onInitializeServer() {
-        LOGGER.info("Loading Lost in the Cold dedicated server");
-        onInitializeListeners.forEach(OnInitializeListener::onInitialize);
-        ModItems.registerItems();
+    public void onInitialize() {
+        LOGGER.info("Initializing Lost in the Cold");
+
+        Reflection.initialize(
+                ModItems.class,
+                ModEntityAttributes.class
+        );
+
+        LOGGER.info("Initialized Lost in the Cold");
     }
 }

@@ -1,36 +1,20 @@
 package com.github.thedeathlycow.lostinthecold.attributes;
 
-import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
-import com.github.thedeathlycow.lostinthecold.init.OnInitializeListener;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.github.thedeathlycow.lostinthecold.init.LostInTheColdClient;
 import net.minecraft.entity.attribute.ClampedEntityAttribute;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ModEntityAttributes implements OnInitializeListener {
+public class ModEntityAttributes {
 
     /**
      * Frost resistance is an attribute that determines the amount of time (in increments of 30 seconds) that a player
      * can last in the cold.
      */
-    public static final EntityAttribute FROST_RESISTANCE = (new ClampedEntityAttribute("attribute." + LostInTheCold.MODID + ".generic.frost_resistance", FreezingValues.BASE_FROST_RESISTANCE, 1.0D, 2048.0D)).setTracked(true);
+    public static final EntityAttribute FROST_RESISTANCE = register("generic.frost_resistance", (new ClampedEntityAttribute("attribute." + LostInTheCold.MODID + ".generic.frost_resistance", 3.0D, 1.0D, 2048.0D)).setTracked(true));
 
-    @Override
-    public void onInitialize() {
-        register("generic.frost_resistance", FROST_RESISTANCE);
+    private static EntityAttribute register(String id, EntityAttribute attribute) {
+        return Registry.register(Registry.ATTRIBUTE, new Identifier(LostInTheCold.MODID, id), attribute);
     }
-
-    private static void register(String id, EntityAttribute attribute) {
-        Registry.register(Registry.ATTRIBUTE, new Identifier(LostInTheCold.MODID, id), attribute);
-    }
-
-    private ModEntityAttributes() {
-        LostInTheCold.addOnInitializeListener(this);
-        LostInTheColdClient.addOnInitializeListener(this);
-    }
-
-    private static final ModEntityAttributes INSTANCE = new ModEntityAttributes();
-
 }

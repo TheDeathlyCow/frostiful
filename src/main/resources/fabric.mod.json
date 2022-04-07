@@ -18,8 +18,11 @@
 
   "environment": "*",
   "entrypoints": {
-    "server": [
+    "main": [
       "com.github.thedeathlycow.lostinthecold.init.LostInTheCold"
+    ],
+    "server": [
+      "com.github.thedeathlycow.lostinthecold.init.LostInTheColdServer"
     ],
     "client": [
       "com.github.thedeathlycow.lostinthecold.init.LostInTheColdClient"

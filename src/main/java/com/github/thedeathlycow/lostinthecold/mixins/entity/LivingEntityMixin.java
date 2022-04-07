@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
-import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
+import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
+import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -17,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public class LivingEntityMixin {
+public abstract class LivingEntityMixin {
 
     @Inject(
             method = "canFreeze",
@@ -51,6 +52,12 @@ public class LivingEntityMixin {
             return;
         }
 
+        HypothermiaConfig config = LostInTheCold.getConfig();
+        if (config == null) {
+            LostInTheCold.LOGGER.warn("LivingEntityMixin: Hypothermia config not found!");
+            return;
+        }
+
         int ticksFrozen = livingEntity.getFrozenTicks();
 
         World world = livingEntity.getWorld();
@@ -59,30 +66,30 @@ public class LivingEntityMixin {
 
         int ticksToAdd;
         if (biomeIn.isIn(BiomeTemperatureTags.IS_CHILLY)) {
-            ticksToAdd = FreezingValues.CHILLY_BIOME_FREEZE_RATE;
+            ticksToAdd = config.getChillyBiomeFreezeRate();
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_COLD)) {
-            ticksToAdd = FreezingValues.COLD_BIOME_FREEZE_RATE;
+            ticksToAdd = config.getColdBiomeFreezeRate();
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_FREEZING)) {
-            ticksToAdd = FreezingValues.FREEZING_BIOME_FREEZE_RATE;
+            ticksToAdd = config.getFreezingBiomeFreezeRate();
         } else {
-            ticksToAdd = FreezingValues.WARM_BIOME_FREEZE_RATE;
+            ticksToAdd = config.getWarmBiomeFreezeRate();
         }
 
         if (livingEntity.inPowderSnow) {
-            ticksToAdd = FreezingValues.POWDER_SNOW_FREEZE_RATE;
+            ticksToAdd *= config.getPowderSnowFreezeRateMultiplier();
         }
 
         if (livingEntity.isWet()) {
-            ticksToAdd *= FreezingValues.WET_FREEZE_RATE_MULTIPLIER;
+            ticksToAdd *= config.getWetFreezeRateMultiplier();
         }
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
-        if (lightLevel > FreezingValues.MIN_LIGHT_LEVEL_FOR_WARMTH) {
-            ticksToAdd -= FreezingValues.WARMTH_PER_LIGHT_LEVEL * lightLevel;
+        if (lightLevel >= config.getMinWarmthLightLevel()) {
+            ticksToAdd -= config.getWarmthPerLightLevel() * lightLevel;
         }
 
         if (livingEntity.isOnFire()) {
-            ticksToAdd = FreezingValues.ON_FIRE_FREEZE_RATE;
+            ticksToAdd = config.getOnFireFreezeRate();
         }
 
         ticksFrozen += ticksToAdd;

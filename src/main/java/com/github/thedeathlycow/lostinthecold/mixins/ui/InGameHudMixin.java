@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.mixins.ui;
 
-import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
+import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -38,16 +38,16 @@ abstract class InGameHudMixin {
     @Deprecated
     private void renderFrozenHeart(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci, InGameHud.HeartType heartType, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, boolean bl3) {
 
-        if (heartType == InGameHud.HeartType.WITHERED || !FreezingValues.USE_HEART_OVERLAY) {
-            return;
-        }
-
-        int frozenHealthPoints = (player.getFrozenTicks() / FreezingValues.SECONDS_PER_FROST_RESIST);
-        int frozenHealthHearts = MathHelper.ceil((double) frozenHealthPoints / 2.0D);
-        if (m < frozenHealthHearts) {
-            boolean isHalfHeart = m + 1 == frozenHealthHearts && (frozenHealthPoints & 1) == 1;
-            ((InGameHudInvoker) this).invokeDrawHeart(matrices, InGameHud.HeartType.FROZEN, p, q, i, false, isHalfHeart);
-        }
+//        if (heartType == InGameHud.HeartType.WITHERED) {
+//            return;
+//        }
+//
+//        int frozenHealthPoints = (player.getFrozenTicks() / HypothermiaConfig.SECONDS_PER_FROST_RESIST);
+//        int frozenHealthHearts = MathHelper.ceil((double) frozenHealthPoints / 2.0D);
+//        if (m < frozenHealthHearts) {
+//            boolean isHalfHeart = m + 1 == frozenHealthHearts && (frozenHealthPoints & 1) == 1;
+//            ((InGameHudInvoker) this).invokeDrawHeart(matrices, InGameHud.HeartType.FROZEN, p, q, i, false, isHalfHeart);
+//        }
     }
 
 }

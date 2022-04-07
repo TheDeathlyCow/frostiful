@@ -1,7 +1,8 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.FreezingValues;
+import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
+import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,6 +30,11 @@ abstract class EntityMixin {
     }
 
     private static double getTicksFromFrostResistance(final double frostResistance) {
-        return 20 * FreezingValues.SECONDS_PER_FROST_RESIST * frostResistance;
+        HypothermiaConfig config = LostInTheCold.getConfig();
+        if (config == null) {
+            LostInTheCold.LOGGER.warn("EntityMixin: Hypothermia config not found!");
+            return 0.0D;
+        }
+        return 20 * config.getSecondsPerFrostResist() * frostResistance;
     }
 }
