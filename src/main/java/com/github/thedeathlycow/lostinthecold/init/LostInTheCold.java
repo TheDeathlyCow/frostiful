@@ -6,6 +6,8 @@ import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfigLoader;
 import com.github.thedeathlycow.lostinthecold.items.ModItems;
 import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +27,13 @@ public class LostInTheCold implements ModInitializer {
     }
 
     public static HypothermiaConfig getConfig() {
-        return config;
+        return configLoader.getConfig();
     }
 
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing Lost in the Cold");
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(configLoader);
 
         Reflection.initialize(
                 ModItems.class,
@@ -40,9 +43,9 @@ public class LostInTheCold implements ModInitializer {
         LOGGER.info("Initialized Lost in the Cold");
     }
 
-    private static final HypothermiaConfig config;
+    private static final HypothermiaConfigLoader configLoader;
 
     static {
-        config = HypothermiaConfigLoader.load();
+        configLoader = new HypothermiaConfigLoader(getDataFolder());
     }
 }
