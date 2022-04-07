@@ -6,6 +6,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import org.spongepowered.asm.mixin.Mixin;
@@ -65,7 +66,6 @@ public class LivingEntityMixin {
             ticksToAdd = FreezingValues.FREEZING_BIOME_FREEZE_RATE;
         } else {
             ticksToAdd = FreezingValues.WARM_BIOME_FREEZE_RATE;
-            ;
         }
 
         if (livingEntity.inPowderSnow) {
@@ -74,6 +74,11 @@ public class LivingEntityMixin {
 
         if (livingEntity.isWet()) {
             ticksToAdd *= FreezingValues.WET_FREEZE_RATE_MULTIPLIER;
+        }
+
+        int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
+        if (lightLevel > FreezingValues.MIN_LIGHT_LEVEL_FOR_WARMTH) {
+            ticksToAdd -= FreezingValues.WARMTH_PER_LIGHT_LEVEL * lightLevel;
         }
 
         if (livingEntity.isOnFire()) {
