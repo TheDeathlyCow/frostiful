@@ -9,19 +9,23 @@ import net.fabricmc.api.ModInitializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
 public class LostInTheCold implements ModInitializer {
 
     public static final String MODID = "lost-in-the-cold";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    private static final HypothermiaConfig config;
+    public static File getDataFolder() {
+        File file = new File("mods/" + MODID);
+        if (!file.exists() && !file.mkdirs()) {
+            LOGGER.error("Could not create data folder!");
+        }
+        return file;
+    }
 
     public static HypothermiaConfig getConfig() {
         return config;
-    }
-
-    static {
-        config = HypothermiaConfigLoader.load();
     }
 
     @Override
@@ -34,5 +38,11 @@ public class LostInTheCold implements ModInitializer {
         );
 
         LOGGER.info("Initialized Lost in the Cold");
+    }
+
+    private static final HypothermiaConfig config;
+
+    static {
+        config = HypothermiaConfigLoader.load();
     }
 }
