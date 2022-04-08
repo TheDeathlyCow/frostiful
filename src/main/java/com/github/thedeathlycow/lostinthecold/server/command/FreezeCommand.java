@@ -1,14 +1,18 @@
 package com.github.thedeathlycow.lostinthecold.server.command;
 
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
+import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.datafixers.types.Func;
 import net.minecraft.command.argument.EntityArgumentType;
+import net.minecraft.command.argument.ScoreboardObjectiveArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.text.TranslatableText;
+import net.minecraft.util.math.MathHelper;
 
 import java.util.Collection;
 
@@ -26,11 +30,22 @@ public class FreezeCommand {
                                         .then(
                                                 literal("remove")
                                                         .then(
-                                                                argument("amount", IntegerArgumentType.integer())
+                                                                argument("amount", IntegerArgumentType.integer(0))
                                                                         .executes(context -> {
-                                                                            return runAdd(context.getSource(),
+                                                                            return runAdjust(context.getSource(),
                                                                                     EntityArgumentType.getEntities(context, "targets"),
                                                                                     -IntegerArgumentType.getInteger(context, "amount"));
+                                                                        })
+                                                        )
+                                        )
+                                        .then(
+                                                literal("add")
+                                                        .then(
+                                                                argument("amount", IntegerArgumentType.integer(0))
+                                                                        .executes(context -> {
+                                                                            return runAdjust(context.getSource(),
+                                                                                    EntityArgumentType.getEntities(context, "targets"),
+                                                                                    IntegerArgumentType.getInteger(context, "amount"));
                                                                         })
                                                         )
                                         )
@@ -43,33 +58,24 @@ public class FreezeCommand {
                                                                                     EntityArgumentType.getEntities(context, "targets"),
                                                                                     IntegerArgumentType.getInteger(context, "amount"));
                                                                         })
-                                                        ))
-                                        .then(
-                                                literal("add")
-                                                        .then(
-                                                                argument("amount", IntegerArgumentType.integer())
-                                                                        .executes(context -> {
-                                                                            return runAdd(context.getSource(),
-                                                                                    EntityArgumentType.getEntities(context, "targets"),
-                                                                                    IntegerArgumentType.getInteger(context, "amount"));
-                                                                        })
-                                                        ))
+                                                        )
+                                        )
                         ));
     }
 
-    private static int runAdd(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
-        LostInTheCold.LOGGER.trace("Run add");
+    private static int runAdjust(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
         for (Entity entity : targets) {
             int frozenTicks = entity.getFrozenTicks();
             entity.setFrozenTicks(frozenTicks + amount);
         }
 
+        String successMsgKey = amount < 0 ? "commands.lost-in-the-cold.freeze.remove.success." : "commands.lost-in-the-cold.freeze.add.success.";
         Text msg;
         if (targets.size() == 1) {
             Entity target = targets.iterator().next();
-            msg = new TranslatableText("commands.lost-in-the-cold.freeze.add.success.single", amount, target.getDisplayName(), target.getFrozenTicks());
+            msg = new TranslatableText(successMsgKey + "single", MathHelper.abs(amount), target.getDisplayName(), target.getFrozenTicks());
         } else {
-            msg = new TranslatableText("commands.lost-in-the-cold.freeze.add.success.multiple", amount, targets.size());
+            msg = new TranslatableText(successMsgKey + "multiple", MathHelper.abs(amount), targets.size());
         }
         source.sendFeedback(msg, true);
 
@@ -77,7 +83,6 @@ public class FreezeCommand {
     }
 
     private static int runSet(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
-        LostInTheCold.LOGGER.trace("Run set");
         for (Entity entity : targets) {
             entity.setFrozenTicks(amount);
         }
