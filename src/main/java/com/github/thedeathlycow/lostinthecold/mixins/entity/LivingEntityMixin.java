@@ -85,11 +85,11 @@ public abstract class LivingEntityMixin {
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
         if (lightLevel >= config.getMinWarmthLightLevel()) {
-            ticksToAdd -= config.getWarmthPerLightLevel() * lightLevel;
+            ticksToAdd -= config.getWarmthPerLightLevel() * (lightLevel - config.getMinWarmthLightLevel());
         }
 
         if (livingEntity.isOnFire()) {
-            ticksToAdd = config.getOnFireFreezeRate();
+            ticksToAdd += config.getOnFireFreezeRate();
         }
 
         ticksFrozen += ticksToAdd;
