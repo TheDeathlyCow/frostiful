@@ -73,6 +73,12 @@ public class Config {
             this.setValue(entry.getKey(), entry.getValue());
         }
     }
+
+    public void reset() {
+        values.clear();
+        values.putAll(defaultValues);
+    }
+
     private final Map<ConfigKey, Object> values = new HashMap<>();
     private final Map<ConfigKey, Object> defaultValues = new HashMap<>();
 }
