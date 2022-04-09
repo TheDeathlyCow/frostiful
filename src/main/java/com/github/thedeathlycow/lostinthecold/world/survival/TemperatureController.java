@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.world.survival;
 
 import com.github.thedeathlycow.lostinthecold.config.Config;
+import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import net.minecraft.entity.LivingEntity;
@@ -17,12 +18,12 @@ public class TemperatureController {
         int warmth = 0;
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
-        if (lightLevel >= config.getInt("min_warmth_light_level")) {
-            warmth += config.getInt("warmth_per_light_level") * (lightLevel - config.getInt("min_warmth_light_level"));
+        if (lightLevel >= config.getInt(ConfigKeys.MIN_WARMTH_LIGHT_LEVEL)) {
+            warmth += config.getInt(ConfigKeys.WARMTH_PER_LIGHT_LEVEL) * (lightLevel - config.getInt(ConfigKeys.MIN_WARMTH_LIGHT_LEVEL));
         }
 
         if (livingEntity.isOnFire()) {
-            warmth += config.getInt("on_fire_freeze_rate");
+            warmth += config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
         return warmth;
@@ -33,11 +34,11 @@ public class TemperatureController {
         double multiplier = 1.0D;
 
         if (livingEntity.inPowderSnow) {
-            multiplier += config.getDouble("powder_snow_freeze_rate_multiplier");
+            multiplier += config.getDouble(ConfigKeys.POWDER_SNOW_FREEZE_RATE_MULTIPLIER);
         }
 
         if (livingEntity.isWet()) {
-            multiplier += config.getDouble("wet_freeze_rate_multiplier");
+            multiplier += config.getDouble(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
         }
 
         return multiplier;
@@ -48,17 +49,17 @@ public class TemperatureController {
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
         if (!livingEntity.canFreeze()) {
-            return config.getInt("warm_biome_freeze_rate");
+            return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
         if (biomeIn.isIn(BiomeTemperatureTags.IS_CHILLY)) {
-            return config.getInt("chilly_biome_freeze_rate");
+            return config.getInt(ConfigKeys.CHILLY_BIOME_FREEZE_RATE);
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_COLD)) {
-            return config.getInt("cold_biome_freeze_rate");
+            return config.getInt(ConfigKeys.COLD_BIOME_FREEZE_RATE);
         } else if (biomeIn.isIn(BiomeTemperatureTags.IS_FREEZING)) {
-            return config.getInt("freezing_biome_freeze_rate");
+            return config.getInt(ConfigKeys.FREEZING_BIOME_FREEZE_RATE);
         } else {
-            return config.getInt("warm_biome_freeze_rate");
+            return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
     }
 

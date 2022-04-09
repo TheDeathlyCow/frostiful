@@ -2,6 +2,7 @@ package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.Config;
+import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import net.minecraft.entity.LivingEntity;
@@ -64,7 +65,7 @@ public abstract class LivingEntityMixin {
         }
 
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getDouble("base_entity_frost_resistance"));
+        attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getDouble(ConfigKeys.BASE_ENTITY_FROST_RESISTANCE));
         cir.setReturnValue(attributeBuilder);
     }
 

@@ -57,10 +57,6 @@ public class LostInTheCold implements ModInitializer {
     }
 
     private static File dataFolder = null;
-    private static ConfigLoader configLoader;
-
-    static {
-        constructDefaultConfig();
-    }
+    private static final Config config = Config.constructDefaultConfig();
 
 }
