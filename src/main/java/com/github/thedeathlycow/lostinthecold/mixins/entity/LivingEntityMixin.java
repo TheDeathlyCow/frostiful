@@ -30,7 +30,8 @@ public abstract class LivingEntityMixin {
     private void creativePlayersCannotFreeze(CallbackInfoReturnable<Boolean> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         if (livingEntity instanceof PlayerEntity player) {
-            if (player.isCreative()) {
+            World world = player.getWorld();
+            if (player.isCreative() && world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
                 cir.setReturnValue(false);
             }
         }
