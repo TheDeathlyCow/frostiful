@@ -78,8 +78,4 @@ public class PlayerEntityMixin {
         attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getBaseEntityFrostResistance());
         cir.setReturnValue(attributeBuilder);
     }
-
-    private boolean canFreeze(PlayerEntity player) {
-        return !player.isCreative() && player.canFreeze();
-    }
 }

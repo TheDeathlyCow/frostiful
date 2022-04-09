@@ -20,6 +20,22 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
+    @Inject(
+            method = "canFreeze",
+            at = @At(
+                    value = "HEAD"
+            ),
+            cancellable = true
+    )
+    private void creativePlayersCannotFreeze(CallbackInfoReturnable<Boolean> cir) {
+        LivingEntity livingEntity = (LivingEntity) (Object) this;
+        if (livingEntity instanceof PlayerEntity player) {
+            if (player.isCreative()) {
+                cir.setReturnValue(false);
+            }
+        }
+    }
+
     @Redirect(
             method = "tickMovement",
             at = @At(
