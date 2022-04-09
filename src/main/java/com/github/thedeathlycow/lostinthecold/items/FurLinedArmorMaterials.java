@@ -6,7 +6,7 @@ import net.minecraft.item.ArmorMaterials;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 
-public enum FurLinedArmorMaterials implements ArmorMaterial {
+public enum FurLinedArmorMaterials implements FurLinedArmorMaterial {
 
     FUR_LINED_GOLD(ArmorMaterials.GOLD, new double[]{0.5D, 1.5D, 2.0D, 1.0D}),
     FUR_LINED_CHAIN(ArmorMaterials.CHAIN, new double[]{0.5D, 1.5D, 2.0D, 1.0D}),
@@ -62,6 +62,7 @@ public enum FurLinedArmorMaterials implements ArmorMaterial {
         return parentMaterial.getKnockbackResistance();
     }
 
+    @Override
     public double getFrostResistance(EquipmentSlot slot) {
         return this.frostResistanceAmounts[slot.getEntitySlotId()];
     }

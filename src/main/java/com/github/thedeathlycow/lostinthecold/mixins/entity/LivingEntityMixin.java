@@ -50,13 +50,19 @@ public abstract class LivingEntityMixin {
     private void tickTemperature(CallbackInfo ci) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
 
+        World world = livingEntity.getWorld();
+        if (!world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
+            return;
+        }
+
         HypothermiaConfig config = LostInTheCold.getConfig();
         if (config == null) {
             LostInTheCold.LOGGER.warn("LivingEntityMixin: Hypothermia config not found!");
             return;
         }
 
-        World world = livingEntity.getWorld();
+
+
         int ticksFrozen = livingEntity.getFrozenTicks();
         BlockPos pos = livingEntity.getBlockPos();
 
@@ -109,7 +115,7 @@ public abstract class LivingEntityMixin {
     private int getBiomeFreezing(LivingEntity livingEntity, World world, BlockPos pos, HypothermiaConfig config) {
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
-        if (!livingEntity.canFreeze() || !world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
+        if (!livingEntity.canFreeze()) {
             return config.getWarmBiomeFreezeRate();
         }
 
