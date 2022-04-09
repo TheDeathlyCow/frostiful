@@ -3,6 +3,7 @@ package com.github.thedeathlycow.lostinthecold.mixins.entity;
 import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
+import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -48,7 +49,8 @@ public abstract class LivingEntityMixin {
     private void tickTemperature(CallbackInfo ci) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
 
-        if (!livingEntity.canFreeze()) {
+        World world = livingEntity.getWorld();
+        if (!livingEntity.canFreeze() || !world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
             return;
         }
 
@@ -59,8 +61,6 @@ public abstract class LivingEntityMixin {
         }
 
         int ticksFrozen = livingEntity.getFrozenTicks();
-
-        World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 

@@ -9,5 +9,6 @@
   "commands.lost-in-the-cold.freeze.remove.success.single": "Removed %d frozen ticks to %s (now %d)",
   "commands.lost-in-the-cold.freeze.remove.success.multiple": "Removed %d frozen ticks to %d targets",
   "commands.lost-in-the-cold.freeze.set.success.single": "Set the frozen ticks of %s to %d",
-  "commands.lost-in-the-cold.freeze.set.success.multiple": "Set the frozen ticks of %d targets to %d"
+  "commands.lost-in-the-cold.freeze.set.success.multiple": "Set the frozen ticks of %d targets to %d",
+  "gamerule.doPassiveFreezing": "Do passive freezing"
 }

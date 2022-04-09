@@ -5,6 +5,7 @@ import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
 import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfigLoader;
 import com.github.thedeathlycow.lostinthecold.items.ModItems;
 import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
+import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -46,7 +47,8 @@ public class LostInTheCold implements ModInitializer {
 
         Reflection.initialize(
                 ModItems.class,
-                ModEntityAttributes.class
+                ModEntityAttributes.class,
+                ModGameRules.class
         );
 
         LOGGER.info("Initialized Lost in the Cold");
