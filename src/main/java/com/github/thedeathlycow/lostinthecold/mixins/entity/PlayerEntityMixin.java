@@ -1,11 +1,10 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
+import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -36,18 +35,14 @@ public class PlayerEntityMixin {
             return;
         }
 
-        HypothermiaConfig config = LostInTheCold.getConfig();
-        if (config == null) {
-            LostInTheCold.LOGGER.warn("PlayerEntityMixin: Hypothermia config not found!");
-            return;
-        }
+        Config config = LostInTheCold.getConfig();
 
         int ticksFrozen = playerEntity.getFrozenTicks();
         BlockPos pos = playerEntity.getBlockPos();
 
-        int ticksToAdd = TemperatureController.getBiomeFreezing(playerEntity, world, pos, config);
-        ticksToAdd *= TemperatureController.getMultiplier(playerEntity, config);
-        ticksToAdd -= TemperatureController.getWarmth(playerEntity, world, pos, config);
+        int ticksToAdd = TemperatureController.getBiomeFreezing(playerEntity, world, pos);
+        ticksToAdd *= TemperatureController.getMultiplier(playerEntity);
+        ticksToAdd -= TemperatureController.getWarmth(playerEntity, world, pos);
         ticksFrozen += ticksToAdd;
 
         if (ticksFrozen < 0) {
@@ -68,14 +63,9 @@ public class PlayerEntityMixin {
             cancellable = true
     )
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        HypothermiaConfig config = LostInTheCold.getConfig();
-        if (config == null) {
-            LostInTheCold.LOGGER.warn("LivingEntityAttributes: Hypothermia config not found!");
-            return;
-        }
-
+        Config config = LostInTheCold.getConfig();
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getBaseEntityFrostResistance());
+        attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getDouble("base_player_frost_resistance"));
         cir.setReturnValue(attributeBuilder);
     }
 }

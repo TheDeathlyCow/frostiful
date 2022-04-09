@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
+import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -17,24 +17,24 @@ abstract class EntityMixin {
     private void getMinFreezeDamageTicks(CallbackInfoReturnable<Integer> cir) {
         Entity instance = (Entity) (Object) this;
 
-        int freezeTickDamageThreshold = 0;
         if (instance instanceof LivingEntity livingEntity) {
             // add more time to freeze based on frost resistance
             if (livingEntity.getAttributes().hasAttribute(ModEntityAttributes.FROST_RESISTANCE)) {
                 double frostResistance = livingEntity.getAttributes().getValue(ModEntityAttributes.FROST_RESISTANCE);
-                freezeTickDamageThreshold += getTicksFromFrostResistance(frostResistance);
+                int freezeTickDamageThreshold = getTicksFromFrostResistance(frostResistance);
+                cir.setReturnValue(freezeTickDamageThreshold);
             }
         }
 
-        cir.setReturnValue(freezeTickDamageThreshold);
+
     }
 
-    private static double getTicksFromFrostResistance(final double frostResistance) {
-        HypothermiaConfig config = LostInTheCold.getConfig();
+    private static int getTicksFromFrostResistance(final double frostResistance) {
+        Config config = LostInTheCold.getConfig();
         if (config == null) {
             LostInTheCold.LOGGER.warn("EntityMixin: Hypothermia config not found!");
-            return 0.0D;
+            return 0;
         }
-        return 20 * config.getSecondsPerFrostResist() * frostResistance;
+        return (int)(config.getInt("ticks_per_frost_resistance") * frostResistance);
     }
 }

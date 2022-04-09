@@ -12,7 +12,7 @@ public class ModEntityAttributes {
      * Frost resistance is an attribute that determines the amount of time (in increments of 30 seconds) that a player
      * can last in the cold.
      */
-    public static final EntityAttribute FROST_RESISTANCE = register("generic.frost_resistance", (new ClampedEntityAttribute("attribute." + LostInTheCold.MODID + ".generic.frost_resistance", 3.0D, 1.0D, 2048.0D)).setTracked(true));
+    public static final EntityAttribute FROST_RESISTANCE = register("generic.frost_resistance", (new ClampedEntityAttribute("attribute." + LostInTheCold.MODID + ".generic.frost_resistance", 3.0D, 0.0D, 2048.0D)).setTracked(true));
 
     private static EntityAttribute register(String id, EntityAttribute attribute) {
         return Registry.register(Registry.ATTRIBUTE, new Identifier(LostInTheCold.MODID, id), attribute);

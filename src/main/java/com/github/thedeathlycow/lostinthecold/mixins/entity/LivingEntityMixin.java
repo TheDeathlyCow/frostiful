@@ -1,20 +1,17 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
+import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
-import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
@@ -52,6 +49,23 @@ public abstract class LivingEntityMixin {
         } else {
             instance.setFrozenTicks(i);
         }
+    }
+
+    @Inject(
+            method = "createLivingAttributes",
+            at = @At("TAIL"),
+            cancellable = true
+    )
+    private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+        Config config = LostInTheCold.getConfig();
+        if (config == null) {
+            LostInTheCold.LOGGER.warn("LivingEntityMixin: Hypothermia config not found!");
+            return;
+        }
+
+        DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
+        attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getDouble("base_entity_frost_resistance"));
+        cir.setReturnValue(attributeBuilder);
     }
 
 }
