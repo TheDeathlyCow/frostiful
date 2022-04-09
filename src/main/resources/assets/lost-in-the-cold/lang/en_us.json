@@ -10,5 +10,7 @@
   "commands.lost-in-the-cold.freeze.remove.success.multiple": "Removed %d frozen ticks to %d targets",
   "commands.lost-in-the-cold.freeze.set.success.single": "Set the frozen ticks of %s to %d",
   "commands.lost-in-the-cold.freeze.set.success.multiple": "Set the frozen ticks of %d targets to %d",
+  "commands.lost-in-the-cold.get.current.success": "[%s] has %d frozen ticks",
+  "commands.lost-in-the-cold.get.max.success": "[%s] can have a maximum of %d frozen ticks",
   "gamerule.doPassiveFreezing": "Do passive freezing"
 }

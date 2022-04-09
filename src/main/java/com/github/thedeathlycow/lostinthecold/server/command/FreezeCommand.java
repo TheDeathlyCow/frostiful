@@ -1,13 +1,9 @@
 package com.github.thedeathlycow.lostinthecold.server.command;
 
-import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import com.mojang.datafixers.types.Func;
 import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.command.argument.ScoreboardObjectiveArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
@@ -26,9 +22,24 @@ public class FreezeCommand {
         dispatcher.register(
                 (literal("freeze").requires((src) -> src.hasPermissionLevel(2)))
                         .then(
-                                argument("targets", EntityArgumentType.entities())
+                                literal("get")
                                         .then(
-                                                literal("remove")
+                                                argument("target", EntityArgumentType.entity())
+                                                        .executes(context -> {
+                                                            return runGet(context.getSource(),
+                                                                    EntityArgumentType.getEntity(context, "target"));
+                                                        })
+                                                        .then(literal("max")
+                                                                .executes(context -> {
+                                                                    return runGetMax(context.getSource(),
+                                                                            EntityArgumentType.getEntity(context, "target"));
+                                                                }))
+                                        )
+                        )
+                        .then(
+                                literal("remove")
+                                        .then(
+                                                argument("targets", EntityArgumentType.entities())
                                                         .then(
                                                                 argument("amount", IntegerArgumentType.integer(0))
                                                                         .executes(context -> {
@@ -38,8 +49,11 @@ public class FreezeCommand {
                                                                         })
                                                         )
                                         )
+                        )
+                        .then(
+                                literal("add")
                                         .then(
-                                                literal("add")
+                                                argument("targets", EntityArgumentType.entities())
                                                         .then(
                                                                 argument("amount", IntegerArgumentType.integer(0))
                                                                         .executes(context -> {
@@ -49,10 +63,13 @@ public class FreezeCommand {
                                                                         })
                                                         )
                                         )
+                        )
+                        .then(
+                                literal("set")
                                         .then(
-                                                literal("set")
+                                                argument("targets", EntityArgumentType.entities())
                                                         .then(
-                                                                argument("amount", IntegerArgumentType.integer())
+                                                                argument("amount", IntegerArgumentType.integer(0))
                                                                         .executes(context -> {
                                                                             return runSet(context.getSource(),
                                                                                     EntityArgumentType.getEntities(context, "targets"),
@@ -60,13 +77,29 @@ public class FreezeCommand {
                                                                         })
                                                         )
                                         )
-                        ));
+                        )
+        );
+    }
+
+    private static int runGetMax(ServerCommandSource source, Entity target) {
+        int amount = target.getMinFreezeDamageTicks();
+        Text msg = new TranslatableText("commands.lost-in-the-cold.get.max.success", target.getDisplayName(), amount);
+        source.sendFeedback(msg, true);
+        return amount;
+    }
+
+    private static int runGet(ServerCommandSource source, Entity target) {
+        int amount = target.getFrozenTicks();
+        Text msg = new TranslatableText("commands.lost-in-the-cold.get.current.success", target.getDisplayName(), amount);
+        source.sendFeedback(msg, true);
+        return amount;
     }
 
     private static int runAdjust(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
         for (Entity entity : targets) {
             int frozenTicks = entity.getFrozenTicks();
-            int freezing = Math.max(frozenTicks + amount, entity.getMinFreezeDamageTicks());
+            int freezing = Math.min(frozenTicks + amount, entity.getMinFreezeDamageTicks());
+            freezing = Math.max(0, freezing);
             entity.setFrozenTicks(freezing);
         }
 
@@ -85,7 +118,8 @@ public class FreezeCommand {
 
     private static int runSet(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
         for (Entity entity : targets) {
-            int freezing = Math.max(amount, entity.getMinFreezeDamageTicks());
+            int freezing = Math.min(amount, entity.getMinFreezeDamageTicks());
+            freezing = Math.max(0, freezing);
             entity.setFrozenTicks(freezing);
         }
 
