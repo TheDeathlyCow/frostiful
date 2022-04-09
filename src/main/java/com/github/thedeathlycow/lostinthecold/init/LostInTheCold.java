@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.lostinthecold.init;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
-import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfigLoader;
+import com.github.thedeathlycow.lostinthecold.config.Config;
+import com.github.thedeathlycow.lostinthecold.config.ConfigLoader;
 import com.github.thedeathlycow.lostinthecold.items.ModItems;
 import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
@@ -31,8 +31,8 @@ public class LostInTheCold implements ModInitializer {
         return dataFolder;
     }
 
-    public static HypothermiaConfig getConfig() {
-        return configLoader.getConfig();
+    public static Config getConfig() {
+        return config;
     }
 
     @Override
@@ -45,7 +45,7 @@ public class LostInTheCold implements ModInitializer {
                 })
         );
 
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(configLoader);
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ConfigLoader());
 
         Reflection.initialize(
                 ModItems.class,
@@ -57,9 +57,6 @@ public class LostInTheCold implements ModInitializer {
     }
 
     private static File dataFolder = null;
-    private static final HypothermiaConfigLoader configLoader;
+    private static final Config config = Config.constructDefaultConfig();
 
-    static {
-        configLoader = new HypothermiaConfigLoader(getDataFolder());
-    }
 }

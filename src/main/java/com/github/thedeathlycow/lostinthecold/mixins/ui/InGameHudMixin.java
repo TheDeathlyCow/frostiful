@@ -1,10 +1,8 @@
 package com.github.thedeathlycow.lostinthecold.mixins.ui;
 
-import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
