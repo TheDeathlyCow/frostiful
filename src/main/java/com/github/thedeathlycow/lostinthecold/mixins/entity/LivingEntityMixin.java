@@ -4,7 +4,6 @@ import com.github.thedeathlycow.lostinthecold.config.HypothermiaConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
-import net.minecraft.block.Block;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -60,7 +59,6 @@ public abstract class LivingEntityMixin {
             LostInTheCold.LOGGER.warn("LivingEntityMixin: Hypothermia config not found!");
             return;
         }
-
 
 
         int ticksFrozen = livingEntity.getFrozenTicks();
@@ -138,7 +136,9 @@ public abstract class LivingEntityMixin {
             )
     )
     private void blockDefaultPowderSnowFreezing(LivingEntity instance, int i) {
-
+        if (!instance.getWorld().getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
+            instance.setFrozenTicks(i);
+        }
     }
 
 }
