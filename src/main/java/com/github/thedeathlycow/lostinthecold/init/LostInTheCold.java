@@ -2,6 +2,7 @@ package com.github.thedeathlycow.lostinthecold.init;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.Config;
+import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.config.ConfigLoader;
 import com.github.thedeathlycow.lostinthecold.items.ModItems;
 import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
@@ -57,6 +58,6 @@ public class LostInTheCold implements ModInitializer {
     }
 
     private static File dataFolder = null;
-    private static final Config config = Config.constructDefaultConfig();
+    private static final Config config = ConfigKeys.constructDefaultConfig();
 
 }
