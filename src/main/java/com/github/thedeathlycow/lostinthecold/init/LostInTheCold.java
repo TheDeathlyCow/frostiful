@@ -22,11 +22,13 @@ public class LostInTheCold implements ModInitializer {
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
     public static File getDataFolder() {
-        File file = new File("mods/" + MODID);
-        if (!file.exists() && !file.mkdirs()) {
-            LOGGER.error("Could not create data folder!");
+        if (dataFolder == null) {
+            dataFolder = new File("config/" + MODID);
+            if (!dataFolder.exists() && !dataFolder.mkdirs()) {
+                LOGGER.error("Could not create data folder!");
+            }
         }
-        return file;
+        return dataFolder;
     }
 
     public static HypothermiaConfig getConfig() {
@@ -54,6 +56,7 @@ public class LostInTheCold implements ModInitializer {
         LOGGER.info("Initialized Lost in the Cold");
     }
 
+    private static File dataFolder = null;
     private static final HypothermiaConfigLoader configLoader;
 
     static {

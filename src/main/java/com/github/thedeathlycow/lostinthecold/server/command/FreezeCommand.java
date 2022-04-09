@@ -66,7 +66,8 @@ public class FreezeCommand {
     private static int runAdjust(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
         for (Entity entity : targets) {
             int frozenTicks = entity.getFrozenTicks();
-            entity.setFrozenTicks(frozenTicks + amount);
+            int freezing = Math.max(frozenTicks + amount, entity.getMinFreezeDamageTicks());
+            entity.setFrozenTicks(freezing);
         }
 
         String successMsgKey = amount < 0 ? "commands.lost-in-the-cold.freeze.remove.success." : "commands.lost-in-the-cold.freeze.add.success.";
@@ -84,7 +85,8 @@ public class FreezeCommand {
 
     private static int runSet(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
         for (Entity entity : targets) {
-            entity.setFrozenTicks(amount);
+            int freezing = Math.max(amount, entity.getMinFreezeDamageTicks());
+            entity.setFrozenTicks(freezing);
         }
 
         Text msg;

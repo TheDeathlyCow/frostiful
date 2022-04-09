@@ -49,6 +49,6 @@ public class HypothermiaConfigLoader implements SimpleSynchronousResourceReloadL
     private static final HypothermiaConfig DEFAULT_CONFIG = new HypothermiaConfig(
             new FreezeRateConfig(1, 5, 15, 3.0, 1.5),
             new FrostResistanceConfig(60, 3.0),
-            new ThawRateConfig(-10, -100, 2, 1)
+            new ThawRateConfig(-10, 100, 2, 1)
     );
 }
