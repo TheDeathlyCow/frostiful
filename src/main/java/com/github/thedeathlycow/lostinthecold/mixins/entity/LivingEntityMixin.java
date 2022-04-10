@@ -5,6 +5,7 @@ import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
@@ -65,6 +66,17 @@ public abstract class LivingEntityMixin {
                 cir.setReturnValue(false);
             }
         }
+    }
+
+    @Redirect(
+            method = "addPowderSnowSlowIfNeeded",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/block/BlockState;isAir()Z"
+            )
+    )
+    private boolean addPowderSnowSlowInAir(BlockState instance) {
+        return false;
     }
 
     @Redirect(

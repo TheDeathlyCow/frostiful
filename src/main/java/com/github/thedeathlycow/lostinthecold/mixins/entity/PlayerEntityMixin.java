@@ -8,16 +8,20 @@ import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
-public class PlayerEntityMixin {
+public abstract class PlayerEntityMixin {
+
+    @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
     @Inject(
             method = "tick",
@@ -32,19 +36,14 @@ public class PlayerEntityMixin {
         PlayerEntity playerEntity = (PlayerEntity) (Object) this;
 
         World world = playerEntity.getWorld();
-        if (!world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
-            return;
-        }
-
-        LostInTheColdConfig config = LostInTheCold.getConfig();
-
         int ticksFrozen = playerEntity.getFrozenTicks();
         BlockPos pos = playerEntity.getBlockPos();
 
-        int ticksToAdd = TemperatureController.getBiomeFreezing(playerEntity, world, pos);
-        ticksToAdd *= TemperatureController.getMultiplier(playerEntity);
-        ticksToAdd -= TemperatureController.getWarmth(playerEntity, world, pos);
-        ticksFrozen += ticksToAdd;
+        if (world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
+            ticksFrozen += TemperatureController.getPassiveFreezing(playerEntity, world, pos);
+        }
+
+        ticksFrozen -= TemperatureController.getWarmth(playerEntity, world, pos);
 
         if (ticksFrozen < 0) {
             ticksFrozen = 0;

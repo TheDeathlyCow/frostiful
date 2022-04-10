@@ -13,6 +13,10 @@ import net.minecraft.world.biome.Biome;
 
 public class TemperatureController {
 
+    public static int getPassiveFreezing(LivingEntity livingEntity, World world, BlockPos pos) {
+        return (int) (getBiomeFreezing(livingEntity, world, pos) * getMultiplier(livingEntity));
+    }
+
     public static int getWarmth(LivingEntity livingEntity, World world, BlockPos pos) {
         LostInTheColdConfig config = LostInTheCold.getConfig();
         int warmth = 0;
