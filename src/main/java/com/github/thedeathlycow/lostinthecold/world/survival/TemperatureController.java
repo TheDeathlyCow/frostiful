@@ -23,7 +23,7 @@ public class TemperatureController {
         }
 
         if (livingEntity.isOnFire()) {
-            warmth += config.getInt(ConfigKeys.ON_FIRE_THAW_RATE);
+            warmth += config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
         return warmth;

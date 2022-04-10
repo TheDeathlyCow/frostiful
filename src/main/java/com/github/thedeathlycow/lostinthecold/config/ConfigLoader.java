@@ -37,12 +37,12 @@ public class ConfigLoader implements SimpleSynchronousResourceReloadListener {
     }
 
     private void updateConfig(JsonObject object) {
-        Map<ConfigKey<?>, ConfigValue<?>> configIn = new HashMap<>();
+        Map<ConfigKey, Object> configIn = new HashMap<>();
 
-        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+        for (Map.Entry<String, JsonElement> entry: object.entrySet()) {
             try {
-                ConfigKey<?> key = ConfigKeys.valueOf(entry.getKey());
-                configIn.put(key, new ConfigValue<>(key.deserialize(entry.getValue())));
+                ConfigKey key = ConfigKeys.valueOf(entry.getKey().toUpperCase());
+                configIn.put(key, key.deserialize(entry.getValue()));
             } catch (IllegalArgumentException ignored) {}
         }
 

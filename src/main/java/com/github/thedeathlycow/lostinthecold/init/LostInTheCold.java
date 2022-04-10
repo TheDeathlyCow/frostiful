@@ -11,18 +11,26 @@ import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.nio.file.Path;
 
 public class LostInTheCold implements ModInitializer {
 
     public static final String MODID = "lost-in-the-cold";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+
+    public static File getDataFolder() {
+        if (dataFolder == null) {
+            dataFolder = new File("config/" + MODID);
+            if (!dataFolder.exists() && !dataFolder.mkdirs()) {
+                LOGGER.error("Could not create data folder!");
+            }
+        }
+        return dataFolder;
+    }
 
     public static Config getConfig() {
         return config;
@@ -49,6 +57,7 @@ public class LostInTheCold implements ModInitializer {
         LOGGER.info("Initialized Lost in the Cold");
     }
 
+    private static File dataFolder = null;
     private static final Config config = ConfigKeys.constructDefaultConfig();
 
 }
