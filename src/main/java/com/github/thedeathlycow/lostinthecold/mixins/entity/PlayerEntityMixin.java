@@ -35,23 +35,16 @@ public abstract class PlayerEntityMixin {
     private void tickTemperature(CallbackInfo ci) {
         PlayerEntity playerEntity = (PlayerEntity) (Object) this;
 
-        World world = playerEntity.getWorld();
         int ticksFrozen = playerEntity.getFrozenTicks();
-        BlockPos pos = playerEntity.getBlockPos();
 
-        if (world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
-            ticksFrozen += TemperatureController.getPassiveFreezing(playerEntity, world, pos);
+        if (TemperatureController.canPassivelyFreeze(playerEntity)) {
+            ticksFrozen += TemperatureController.getPassiveFreezing(playerEntity);
         }
 
-        ticksFrozen -= TemperatureController.getWarmth(playerEntity, world, pos);
+        ticksFrozen -= TemperatureController.getWarmth(playerEntity);
 
         if (ticksFrozen < 0) {
             ticksFrozen = 0;
-        }
-
-        int freezeDamageThreshold = playerEntity.getMinFreezeDamageTicks();
-        if (ticksFrozen > freezeDamageThreshold) {
-            ticksFrozen = freezeDamageThreshold;
         }
 
         playerEntity.setFrozenTicks(ticksFrozen);

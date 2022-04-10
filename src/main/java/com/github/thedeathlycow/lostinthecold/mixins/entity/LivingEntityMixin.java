@@ -34,7 +34,7 @@ public abstract class LivingEntityMixin {
                     to = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
             )
     )
-    private boolean applyFrostDamageAccordingToGamerule(LivingEntity instance, DamageSource source, float amount) {
+    private boolean applyFrostDamageAccordingToConfig(LivingEntity instance, DamageSource source, float amount) {
 
         if (!source.equals(DamageSource.FREEZE)) {
             return false;

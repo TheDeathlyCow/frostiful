@@ -26,8 +26,6 @@ abstract class EntityMixin {
                 cir.setReturnValue(freezeTickDamageThreshold);
             }
         }
-
-
     }
 
     private static int getTicksFromFrostResistance(final double frostResistance) {

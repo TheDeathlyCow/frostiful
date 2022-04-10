@@ -4,6 +4,7 @@ import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
+import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
@@ -13,11 +14,13 @@ import net.minecraft.world.biome.Biome;
 
 public class TemperatureController {
 
-    public static int getPassiveFreezing(LivingEntity livingEntity, World world, BlockPos pos) {
-        return (int) (getBiomeFreezing(livingEntity, world, pos) * getMultiplier(livingEntity));
+    public static int getPassiveFreezing(LivingEntity livingEntity) {
+        return (int) (getBiomeFreezing(livingEntity) * getMultiplier(livingEntity));
     }
 
-    public static int getWarmth(LivingEntity livingEntity, World world, BlockPos pos) {
+    public static int getWarmth(LivingEntity livingEntity) {
+        World world = livingEntity.getWorld();
+        BlockPos pos = livingEntity.getBlockPos();
         LostInTheColdConfig config = LostInTheCold.getConfig();
         int warmth = 0;
 
@@ -48,7 +51,9 @@ public class TemperatureController {
         return multiplier;
     }
 
-    public static int getBiomeFreezing(LivingEntity livingEntity, World world, BlockPos pos) {
+    public static int getBiomeFreezing(LivingEntity livingEntity) {
+        World world = livingEntity.getWorld();
+        BlockPos pos = livingEntity.getBlockPos();
         LostInTheColdConfig config = LostInTheCold.getConfig();
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
@@ -65,6 +70,13 @@ public class TemperatureController {
         } else {
             return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
+    }
+
+    public static boolean canPassivelyFreeze(LivingEntity livingEntity) {
+        World world = livingEntity.getWorld();
+        return livingEntity.canFreeze()
+                && livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks()
+                && world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING);
     }
 
 }
