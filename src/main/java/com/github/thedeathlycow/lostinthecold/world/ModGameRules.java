@@ -37,25 +37,4 @@ public class ModGameRules {
                     GameRuleFactory.createBooleanRule(true)
             );
 
-    /**
-     * The base amount of damage to each whenever the freeze damage ticks.
-     */
-    public static final GameRules.Key<GameRules.IntRule> FREEZE_DAMAGE_AMOUNT =
-            GameRuleRegistry.register(
-                    "freezeDamageAmount",
-                    CATEGORY,
-                    GameRuleFactory.createIntRule(1, 0)
-            );
-
-    /**
-     * The extra damage multiplier that is applied to entities belonging
-     * to the tag #minecraft:freeze_hurts_extra_types.
-     */
-    public static final GameRules.Key<GameRules.IntRule> FREEZE_EXTRA_DAMAGE_AMOUNT =
-            GameRuleRegistry.register(
-                    "freezeExtraDamageAmount",
-                    CATEGORY,
-                    GameRuleFactory.createIntRule(5, 0)
-            );
-
 }

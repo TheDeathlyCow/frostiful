@@ -5,7 +5,15 @@ import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Config {
+public class LostInTheColdConfig {
+
+    public static LostInTheColdConfig constructDefaultConfig() {
+        LostInTheColdConfig config = new LostInTheColdConfig();
+        for (ConfigKey key : ConfigKeys.values()) {
+            config.addEntry(key);
+        }
+        return config;
+    }
 
     public double getDouble(ConfigKey key) {
         return (Double) getObject(key);
@@ -33,14 +41,7 @@ public class Config {
 
     public void setValue(ConfigKey key, Object value) {
         if (this.values.containsKey(key)) {
-            Object currentValue = this.values.get(key);
-            if (currentValue.getClass().equals(value.getClass())) {
-                this.values.put(key, value);
-            } else {
-                String msg = String.format("Attempted to update config key %s with type %s, but was expecting %s",
-                        key, value.getClass().getName(), currentValue.getClass().getName());
-                LostInTheCold.LOGGER.error(msg);
-            }
+            this.values.put(key, value);
         }
     }
 

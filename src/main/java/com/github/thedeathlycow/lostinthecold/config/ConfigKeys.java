@@ -17,15 +17,9 @@ public enum ConfigKeys implements ConfigKey{
     WARM_BIOME_THAW_RATE(10),
     ON_FIRE_THAW_RATE(100),
     WARMTH_PER_LIGHT_LEVEL(2),
-    MIN_WARMTH_LIGHT_LEVEL(7);
-
-    public static Config constructDefaultConfig() {
-        Config config = new Config();
-        for (ConfigKey key : ConfigKeys.values()) {
-            config.addEntry(key);
-        }
-        return config;
-    }
+    MIN_WARMTH_LIGHT_LEVEL(7),
+    FREEZE_DAMAGE_AMOUNT(1),
+    FREEZE_EXTRA_DAMAGE_AMOUNT(5);
 
     @Override
     @NotNull

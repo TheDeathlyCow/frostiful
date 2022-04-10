@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.Config;
+import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
@@ -36,7 +36,7 @@ public class PlayerEntityMixin {
             return;
         }
 
-        Config config = LostInTheCold.getConfig();
+        LostInTheColdConfig config = LostInTheCold.getConfig();
 
         int ticksFrozen = playerEntity.getFrozenTicks();
         BlockPos pos = playerEntity.getBlockPos();
@@ -64,7 +64,7 @@ public class PlayerEntityMixin {
             cancellable = true
     )
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        Config config = LostInTheCold.getConfig();
+        LostInTheColdConfig config = LostInTheCold.getConfig();
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
         attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getDouble(ConfigKeys.BASE_PLAYER_FROST_RESITANCE));
         cir.setReturnValue(attributeBuilder);

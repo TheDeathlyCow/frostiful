@@ -40,10 +40,14 @@ public class ConfigLoader implements SimpleSynchronousResourceReloadListener {
         Map<ConfigKey, Object> configIn = new HashMap<>();
 
         for (Map.Entry<String, JsonElement> entry: object.entrySet()) {
-            try {
-                ConfigKey key = ConfigKeys.valueOf(entry.getKey().toUpperCase());
-                configIn.put(key, key.deserialize(entry.getValue()));
-            } catch (IllegalArgumentException ignored) {}
+            String jsonEntry = entry.getKey();
+            if (jsonEntry.equals(jsonEntry.toLowerCase())) {
+                try {
+                    ConfigKey key = ConfigKeys.valueOf(jsonEntry.toUpperCase());
+                    configIn.put(key, key.deserialize(entry.getValue()));
+                } catch (Exception ignored) {
+                }
+            }
         }
 
         LostInTheCold.getConfig().update(configIn);
