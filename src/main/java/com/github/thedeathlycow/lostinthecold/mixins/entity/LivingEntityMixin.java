@@ -5,6 +5,7 @@ import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
+import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -86,11 +87,9 @@ public abstract class LivingEntityMixin {
                     target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
             )
     )
-    private void blockDefaultPowderSnowFreezingForPlayer(LivingEntity instance, int i) {
+    private void changePowderSnowFreezingForPlayer(LivingEntity instance, int i) {
         if (instance instanceof PlayerEntity) {
-            if (!instance.getWorld().getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING)) {
-                instance.setFrozenTicks(i);
-            }
+            instance.setFrozenTicks(TemperatureController.getPowderSnowFreezing(instance));
         } else {
             instance.setFrozenTicks(i);
         }

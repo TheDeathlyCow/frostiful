@@ -1,10 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.config;
 
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.google.gson.Gson;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
@@ -42,11 +39,15 @@ public class ConfigLoader implements SimpleSynchronousResourceReloadListener {
         for (Map.Entry<String, JsonElement> entry: object.entrySet()) {
             String jsonEntry = entry.getKey();
             if (jsonEntry.equals(jsonEntry.toLowerCase())) {
+                ConfigKey key;
                 try {
-                    ConfigKey key = ConfigKeys.valueOf(jsonEntry.toUpperCase());
-                    configIn.put(key, key.deserialize(entry.getValue()));
-                } catch (Exception ignored) {
+                    key = ConfigKeys.valueOf(jsonEntry.toUpperCase());
                 }
+                catch (IllegalArgumentException ignored) {
+                    // ignore entries that are not valid config keys
+                    continue;
+                }
+                configIn.put(key, key.deserialize(entry.getValue()));
             }
         }
 

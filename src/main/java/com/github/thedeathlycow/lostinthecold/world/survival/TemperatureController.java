@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.world.survival;
 
-import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
+import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
 import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
@@ -15,7 +15,11 @@ import net.minecraft.world.biome.Biome;
 public class TemperatureController {
 
     public static int getPassiveFreezing(LivingEntity livingEntity) {
-        return (int) (getBiomeFreezing(livingEntity) * getMultiplier(livingEntity));
+        int biomeFreezing = getBiomeFreezing(livingEntity);
+        if (biomeFreezing > 0) {
+            biomeFreezing *= getPassiveFreezingMultiplier(livingEntity);
+        }
+        return biomeFreezing;
     }
 
     public static int getWarmth(LivingEntity livingEntity) {
@@ -36,13 +40,16 @@ public class TemperatureController {
         return warmth;
     }
 
-    public static double getMultiplier(LivingEntity livingEntity) {
+    public static int getPowderSnowFreezing(LivingEntity livingEntity) {
+        LostInTheColdConfig config = LostInTheCold.getConfig();
+        return livingEntity.inPowderSnow ?
+                config.getInt(ConfigKeys.POWDER_SNOW_PLAYER_INCREASE_PER_TICK) :
+                -config.getInt(ConfigKeys.POWDER_SNOW_PLAYER_DECREASE_PER_TICK);
+    }
+
+    public static double getPassiveFreezingMultiplier(LivingEntity livingEntity) {
         LostInTheColdConfig config = LostInTheCold.getConfig();
         double multiplier = 1.0D;
-
-        if (livingEntity.inPowderSnow) {
-            multiplier += config.getDouble(ConfigKeys.POWDER_SNOW_FREEZE_RATE_MULTIPLIER);
-        }
 
         if (livingEntity.isWet()) {
             multiplier += config.getDouble(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
