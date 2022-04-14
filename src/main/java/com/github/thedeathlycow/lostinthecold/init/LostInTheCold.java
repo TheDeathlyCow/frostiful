@@ -25,7 +25,7 @@ public class LostInTheCold implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Initializing Lost in the Cold");
+        LOGGER.info("Initializing Lost in the Cold...");
 
         CommandRegistrationCallback.EVENT.register(
                 ((dispatcher, dedicated) -> {
@@ -41,7 +41,7 @@ public class LostInTheCold implements ModInitializer {
                 ModGameRules.class
         );
 
-        LOGGER.info("Initialized Lost in the Cold");
+        LOGGER.info("Initialized Lost in the Cold!");
     }
 
     private static final LostInTheColdConfig config = LostInTheColdConfig.constructDefaultConfig();
