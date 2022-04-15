@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import org.jetbrains.annotations.NotNull;
 
-public enum ConfigKeys implements ConfigKey{
+public enum ConfigKeys implements ConfigKey {
     TICKS_PER_FROST_RESISTANCE(1200),
     BASE_ENTITY_FROST_RESISTANCE(0.11666666666667),
     BASE_PLAYER_FROST_RESITANCE(3.0D),
