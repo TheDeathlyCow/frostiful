@@ -18,6 +18,7 @@ public class LostInTheCold implements ModInitializer {
 
     public static final String MODID = "lost-in-the-cold";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    private static final LostInTheColdConfig config = LostInTheColdConfig.constructDefaultConfig();
 
     public static LostInTheColdConfig getConfig() {
         return config;
@@ -43,7 +44,5 @@ public class LostInTheCold implements ModInitializer {
 
         LOGGER.info("Initialized Lost in the Cold!");
     }
-
-    private static final LostInTheColdConfig config = LostInTheColdConfig.constructDefaultConfig();
 
 }
