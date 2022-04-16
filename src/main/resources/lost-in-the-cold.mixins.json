@@ -6,6 +6,7 @@
   "mixins": [
     "entity.EntityMixin",
     "entity.LivingEntityMixin",
+    "entity.PiglinBrainMixin",
     "entity.PlayerEntityMixin",
     "item.ArmorItemMixin",
     "ui.InGameHudInvoker",

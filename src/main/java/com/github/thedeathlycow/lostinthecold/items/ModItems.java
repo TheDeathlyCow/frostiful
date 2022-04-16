@@ -20,10 +20,10 @@ public class ModItems {
     public static final Item FUR_LINED_DIAMOND_LEGGINGS = register("fur_lined_diamond_leggings", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_DIAMOND, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)));
     public static final Item FUR_LINED_DIAMOND_BOOTS = register("fur_lined_diamond_boots", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_DIAMOND, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT)));
 
-    public static final Item FUR_LINED_GOLD_HELMET = register("fur_lined_gold_helmet", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
-    public static final Item FUR_LINED_GOLD_CHESTPLATE = register("fur_lined_gold_chestplate", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
-    public static final Item FUR_LINED_GOLD_LEGGINGS = register("fur_lined_gold_leggings", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)));
-    public static final Item FUR_LINED_GOLD_BOOTS = register("fur_lined_gold_boots", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT)));
+    public static final Item FUR_LINED_GOLDEN_HELMET = register("fur_lined_golden_helmet", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
+    public static final Item FUR_LINED_GOLDEN_CHESTPLATE = register("fur_lined_golden_chestplate", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));
+    public static final Item FUR_LINED_GOLDEN_LEGGINGS = register("fur_lined_golden_leggings", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT)));
+    public static final Item FUR_LINED_GOLDEN_BOOTS = register("fur_lined_golden_boots", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_GOLD, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT)));
 
     public static final Item FUR_LINED_NETHERITE_HELMET = register("fur_lined_netherite_helmet", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_NETHERITE, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
     public static final Item FUR_LINED_NETHERITE_CHESTPLATE = register("fur_lined_netherite_chestplate", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_NETHERITE, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));

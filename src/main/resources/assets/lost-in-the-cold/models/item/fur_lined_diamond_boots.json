@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "lost-in-the-cold:item/fur_lined_diamond_boots"
+  }
+}
