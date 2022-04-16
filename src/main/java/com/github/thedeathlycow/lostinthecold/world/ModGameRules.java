@@ -37,4 +37,10 @@ public class ModGameRules {
                     GameRuleFactory.createBooleanRule(true)
             );
 
+    public static final GameRules.Key<GameRules.BooleanRule> DO_SNOW_BUILD_UP =
+            GameRuleRegistry.register(
+                    "doSnowBuildup",
+                    CATEGORY,
+                    GameRuleFactory.createBooleanRule(true)
+            );
 }

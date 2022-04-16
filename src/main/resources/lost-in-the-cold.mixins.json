@@ -6,11 +6,13 @@
   "mixins": [
     "entity.EntityMixin",
     "entity.LivingEntityMixin",
-    "entity.PiglinBrainMixin",
     "entity.PlayerEntityMixin",
+    "entity.mob.PiglinBrainMixin",
     "item.ArmorItemMixin",
+    "server.ServerWorldMixin",
     "ui.InGameHudInvoker",
-    "ui.InGameHudMixin"
+    "ui.InGameHudMixin",
+    "world.biome.BiomeMixin"
   ],
   "client": [
   ],

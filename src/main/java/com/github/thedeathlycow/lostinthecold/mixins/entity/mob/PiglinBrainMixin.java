@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.lostinthecold.mixins.entity;
+package com.github.thedeathlycow.lostinthecold.mixins.entity.mob;
 
 import com.github.thedeathlycow.lostinthecold.items.FurLinedArmorMaterials;
 import net.minecraft.entity.LivingEntity;
@@ -10,8 +10,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-
-import java.util.Iterator;
 
 @Mixin(PiglinBrain.class)
 public class PiglinBrainMixin {
