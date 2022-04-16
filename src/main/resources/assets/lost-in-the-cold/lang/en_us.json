@@ -19,5 +19,7 @@
   "gamerule.doPassiveFreezing": "Do passive freezing",
   "gamerule.freezeDamageAmount": "Freeze damage amount",
   "gamerule.freezeExtraDamageAmount": "Freeze extra damage amount",
-  "gamerule.category.lost-in-the-cold": "Lost in the Cold"
+  "gamerule.category.lost-in-the-cold": "Lost in the Cold",
+  "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.title": "An Ancient Fur Suit",
+  "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.description": "Get a full suit of Fur Lined Netherite Armor"
 }

@@ -1,0 +1,56 @@
+{
+  "parent": "minecraft:nether/obtain_ancient_debris",
+  "display": {
+    "icon": {
+      "item": "lost-in-the-cold:fur_lined_netherite_chestplate",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.title"
+    },
+    "description": {
+      "translate": "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 100
+  },
+  "criteria": {
+    "fur_lined_netherite_armor": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "lost-in-the-cold:fur_lined_netherite_helmet"
+            ]
+          },
+          {
+            "items": [
+              "lost-in-the-cold:fur_lined_netherite_chestplate"
+            ]
+          },
+          {
+            "items": [
+              "lost-in-the-cold:fur_lined_netherite_leggings"
+            ]
+          },
+          {
+            "items": [
+              "lost-in-the-cold:fur_lined_netherite_boots"
+            ]
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "fur_lined_netherite_armor"
+    ]
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:netherite_boots"
+  },
+  "addition": {
+    "tag": "lost-in-the-cold:fur"
+  },
+  "result": {
+    "item": "lost-in-the-cold:fur_lined_netherite_boots"
+  }
+}

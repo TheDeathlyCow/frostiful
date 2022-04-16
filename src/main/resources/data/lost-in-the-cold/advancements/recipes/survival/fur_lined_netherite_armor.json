@@ -1,0 +1,69 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "lost-in-the-cold:fur_lined_netherite_boots_smithing",
+      "lost-in-the-cold:fur_lined_netherite_leggings_smithing",
+      "lost-in-the-cold:fur_lined_netherite_chestplate_smithing",
+      "lost-in-the-cold:fur_lined_netherite_helmet_smithing"
+    ]
+  },
+  "criteria": {
+    "has_fur": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "lost-in-the-cold:fur"
+          }
+        ]
+      }
+    },
+    "has_netherite_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:netherite_ingot"
+            ]
+          }
+        ]
+      }
+    },
+    "has_boots_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_netherite_boots_smithing"
+      }
+    },
+    "has_leggings_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_netherite_leggings_smithing"
+      }
+    },
+    "has_chestplate_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_netherite_chestplate_smithing"
+      }
+    },
+    "has_helmet_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_netherite_helmet_smithing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_fur",
+      "has_netherite_ingot",
+      "has_boots_recipe",
+      "has_leggings_recipe",
+      "has_chestplate_recipe",
+      "has_helmet_recipe"
+    ]
+  ]
+}
