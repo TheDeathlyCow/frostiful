@@ -12,7 +12,8 @@
     "server.ServerWorldMixin",
     "ui.InGameHudInvoker",
     "ui.InGameHudMixin",
-    "world.biome.BiomeMixin"
+    "world.biome.BiomeMixin",
+    "world.gen.feature.FreezeTopLayerMixin"
   ],
   "client": [
   ],
