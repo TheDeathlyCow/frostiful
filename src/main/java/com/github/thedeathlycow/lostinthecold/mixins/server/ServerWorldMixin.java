@@ -1,5 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.mixins.server;
 
+import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
+import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.blocks.LostInTheColdBlockTags;
 import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import net.minecraft.block.BlockState;
@@ -95,7 +97,8 @@ public class ServerWorldMixin {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = current.get(SnowBlock.LAYERS);
-        if (currentLayers - lowestNeighbour < 2) {
+        byte maxStep = LostInTheCold.getConfig().get(ConfigKeys.MAX_SNOW_BUILDUP_STEP);
+        if (currentLayers - lowestNeighbour < maxStep) {
             return Math.min(SnowBlock.MAX_LAYERS, currentLayers + 1);
         }
         return currentLayers;

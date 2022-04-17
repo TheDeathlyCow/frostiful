@@ -1,5 +1,8 @@
 package com.github.thedeathlycow.lostinthecold.mixins.world.gen.feature;
 
+import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
+import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
+import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SideShapeType;
 import net.minecraft.block.SnowBlock;
@@ -33,7 +36,9 @@ public class FreezeTopLayerMixin {
 
         int layers = blockState.get(SnowBlock.LAYERS);
 
-        if (instance.getBlockState(blockPos.down()).isSideSolid(instance, blockPos, Direction.UP, SideShapeType.FULL)) {
+        BlockState down = instance.getBlockState(blockPos.down());
+        boolean doSnowStacking = LostInTheCold.getConfig().get(ConfigKeys.DO_RANDOM_SNOW_GENERATION);
+        if (doSnowStacking && down.isSideSolid(instance, blockPos, Direction.UP, SideShapeType.FULL)) {
             layers = instance.getRandom().nextInt(2) + 1;
         }
 

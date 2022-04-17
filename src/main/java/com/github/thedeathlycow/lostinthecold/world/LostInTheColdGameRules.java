@@ -43,4 +43,6 @@ public class LostInTheColdGameRules {
                     CATEGORY,
                     GameRuleFactory.createBooleanRule(true)
             );
+
+//    public static final GameRules.Key<GameRules.IntRule> WEATHER_SNOW_SPEED_RANDOM_FACTOR
 }
