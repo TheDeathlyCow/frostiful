@@ -46,8 +46,8 @@ public abstract class LivingEntityMixin {
         LostInTheColdConfig config = LostInTheCold.getConfig();
 
         amount = instance.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                config.getInt(ConfigKeys.FREEZE_EXTRA_DAMAGE_AMOUNT) :
-                config.getInt(ConfigKeys.FREEZE_DAMAGE_AMOUNT);
+                config.get(ConfigKeys.FREEZE_EXTRA_DAMAGE_AMOUNT) :
+                config.get(ConfigKeys.FREEZE_DAMAGE_AMOUNT);
 
         return instance.damage(source, amount);
     }
@@ -108,7 +108,7 @@ public abstract class LivingEntityMixin {
         }
 
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(LostInTheColdEntityAttributes.FROST_RESISTANCE, config.getDouble(ConfigKeys.BASE_ENTITY_FROST_RESISTANCE));
+        attributeBuilder.add(LostInTheColdEntityAttributes.FROST_RESISTANCE, config.get(ConfigKeys.BASE_ENTITY_FROST_RESISTANCE));
         cir.setReturnValue(attributeBuilder);
     }
 

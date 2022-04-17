@@ -34,21 +34,22 @@ public class ConfigLoader implements SimpleSynchronousResourceReloadListener {
     }
 
     private void updateConfig(JsonObject object) {
-        Map<ConfigKey, Object> configIn = new HashMap<>();
 
-        for (Map.Entry<String, JsonElement> entry: object.entrySet()) {
+        LostInTheColdConfig configIn = new LostInTheColdConfig("reloadConfigIn");
+
+        for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
             String jsonEntry = entry.getKey();
-            if (jsonEntry.equals(jsonEntry.toLowerCase())) {
-                ConfigKey key;
-                try {
-                    key = ConfigKeys.valueOf(jsonEntry.toUpperCase());
-                }
-                catch (IllegalArgumentException ignored) {
-                    // ignore entries that are not valid config keys
-                    continue;
-                }
-                configIn.put(key, key.deserialize(entry.getValue()));
+            ConfigKey<?> key;
+            try {
+                key = ConfigKeys.REGISTRY.getEntry(jsonEntry);
             }
+            catch (IllegalArgumentException exception) {
+                // ignore entries that are not valid config keys
+                LostInTheCold.LOGGER.info("Could not load config option '" + jsonEntry + "' with reason: " + exception.getMessage());
+                continue;
+            }
+            configIn.addEntry(key);
+            configIn.deserializeAndSet(key, entry.getValue());
         }
 
         LostInTheCold.getConfig().update(configIn);

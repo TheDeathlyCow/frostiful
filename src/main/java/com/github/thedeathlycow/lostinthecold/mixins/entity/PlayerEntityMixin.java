@@ -55,7 +55,7 @@ public abstract class PlayerEntityMixin {
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         LostInTheColdConfig config = LostInTheCold.getConfig();
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(LostInTheColdEntityAttributes.FROST_RESISTANCE, config.getDouble(ConfigKeys.BASE_PLAYER_FROST_RESITANCE));
+        attributeBuilder.add(LostInTheColdEntityAttributes.FROST_RESISTANCE, config.get(ConfigKeys.BASE_PLAYER_FROST_RESISTANCE));
         cir.setReturnValue(attributeBuilder);
     }
 }

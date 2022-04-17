@@ -34,6 +34,6 @@ abstract class EntityMixin {
             LostInTheCold.LOGGER.warn("EntityMixin: Hypothermia config not found!");
             return 0;
         }
-        return (int)(config.getInt(ConfigKeys.TICKS_PER_FROST_RESISTANCE) * frostResistance);
+        return (int)(config.get(ConfigKeys.TICKS_PER_FROST_RESISTANCE) * frostResistance);
     }
 }

@@ -29,12 +29,12 @@ public class TemperatureController {
         int warmth = 0;
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
-        if (lightLevel >= config.getInt(ConfigKeys.MIN_WARMTH_LIGHT_LEVEL)) {
-            warmth += config.getInt(ConfigKeys.WARMTH_PER_LIGHT_LEVEL) * (lightLevel - config.getInt(ConfigKeys.MIN_WARMTH_LIGHT_LEVEL));
+        if (lightLevel >= config.get(ConfigKeys.MIN_WARMTH_LIGHT_LEVEL)) {
+            warmth += config.get(ConfigKeys.WARMTH_PER_LIGHT_LEVEL) * (lightLevel - config.get(ConfigKeys.MIN_WARMTH_LIGHT_LEVEL));
         }
 
         if (livingEntity.isOnFire()) {
-            warmth += config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
+            warmth += config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
         return warmth;
@@ -43,8 +43,8 @@ public class TemperatureController {
     public static int getPowderSnowFreezing(LivingEntity livingEntity) {
         LostInTheColdConfig config = LostInTheCold.getConfig();
         return livingEntity.inPowderSnow ?
-                config.getInt(ConfigKeys.POWDER_SNOW_PLAYER_INCREASE_PER_TICK) :
-                -config.getInt(ConfigKeys.POWDER_SNOW_PLAYER_DECREASE_PER_TICK);
+                config.get(ConfigKeys.POWDER_SNOW_INCREASE_PER_TICK) :
+                -config.get(ConfigKeys.POWDER_SNOW_DECREASE_PER_TICK);
     }
 
     public static double getPassiveFreezingMultiplier(LivingEntity livingEntity) {
@@ -52,7 +52,7 @@ public class TemperatureController {
         double multiplier = 1.0D;
 
         if (livingEntity.isWet()) {
-            multiplier += config.getDouble(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
+            multiplier += config.get(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
         }
 
         return multiplier;
@@ -65,17 +65,17 @@ public class TemperatureController {
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
         if (!livingEntity.canFreeze()) {
-            return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
+            return -config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
         if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_CHILLY)) {
-            return config.getInt(ConfigKeys.CHILLY_BIOME_FREEZE_RATE);
+            return config.get(ConfigKeys.CHILLY_BIOME_FREEZE_RATE);
         } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_COLD)) {
-            return config.getInt(ConfigKeys.COLD_BIOME_FREEZE_RATE);
+            return config.get(ConfigKeys.COLD_BIOME_FREEZE_RATE);
         } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_FREEZING)) {
-            return config.getInt(ConfigKeys.FREEZING_BIOME_FREEZE_RATE);
+            return config.get(ConfigKeys.FREEZING_BIOME_FREEZE_RATE);
         } else {
-            return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
+            return -config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
     }
 
