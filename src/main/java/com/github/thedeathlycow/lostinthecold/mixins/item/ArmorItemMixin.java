@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.mixins.item;
 
-import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
+import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.items.FurLinedArmorMaterials;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -42,7 +42,7 @@ public class ArmorItemMixin {
             this.attributeModifiers.forEach(builder::put);
 
             builder.put(
-                    ModEntityAttributes.FROST_RESISTANCE,
+                    LostInTheColdEntityAttributes.FROST_RESISTANCE,
                     new EntityAttributeModifier(
                             uUID,
                             "Armor frost resistance",

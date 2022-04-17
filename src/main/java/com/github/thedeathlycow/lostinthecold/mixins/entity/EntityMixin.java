@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
-import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
+import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
@@ -20,8 +20,8 @@ abstract class EntityMixin {
 
         if (instance instanceof LivingEntity livingEntity) {
             // add more time to freeze based on frost resistance
-            if (livingEntity.getAttributes().hasAttribute(ModEntityAttributes.FROST_RESISTANCE)) {
-                double frostResistance = livingEntity.getAttributes().getValue(ModEntityAttributes.FROST_RESISTANCE);
+            if (livingEntity.getAttributes().hasAttribute(LostInTheColdEntityAttributes.FROST_RESISTANCE)) {
+                double frostResistance = livingEntity.getAttributes().getValue(LostInTheColdEntityAttributes.FROST_RESISTANCE);
                 int freezeTickDamageThreshold = getTicksFromFrostResistance(frostResistance);
                 cir.setReturnValue(freezeTickDamageThreshold);
             }

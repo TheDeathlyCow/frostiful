@@ -1,16 +1,13 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
-import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
+import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
 import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -58,7 +55,7 @@ public abstract class PlayerEntityMixin {
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         LostInTheColdConfig config = LostInTheCold.getConfig();
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(ModEntityAttributes.FROST_RESISTANCE, config.getDouble(ConfigKeys.BASE_PLAYER_FROST_RESITANCE));
+        attributeBuilder.add(LostInTheColdEntityAttributes.FROST_RESISTANCE, config.getDouble(ConfigKeys.BASE_PLAYER_FROST_RESITANCE));
         cir.setReturnValue(attributeBuilder);
     }
 }

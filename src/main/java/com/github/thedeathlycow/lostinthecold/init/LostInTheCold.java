@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.lostinthecold.init;
 
-import com.github.thedeathlycow.lostinthecold.attributes.ModEntityAttributes;
+import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.ConfigLoader;
 import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
-import com.github.thedeathlycow.lostinthecold.items.ModItems;
+import com.github.thedeathlycow.lostinthecold.items.LostInTheColdItems;
 import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
-import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
+import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import com.google.common.reflect.Reflection;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
@@ -37,9 +37,9 @@ public class LostInTheCold implements ModInitializer {
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(new ConfigLoader());
 
         Reflection.initialize(
-                ModItems.class,
-                ModEntityAttributes.class,
-                ModGameRules.class
+                LostInTheColdItems.class,
+                LostInTheColdEntityAttributes.class,
+                LostInTheColdGameRules.class
         );
 
         LOGGER.info("Initialized Lost in the Cold!");
