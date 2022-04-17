@@ -6,7 +6,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ModEntityAttributes {
+public class LostInTheColdEntityAttributes {
 
     /**
      * Frost resistance is an attribute that determines the amount of time (in increments of 30 seconds) that a player

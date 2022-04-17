@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 
-public class BiomeTemperatureTags {
+public class LostInTheColdBiomeTemperatureTags {
 
     public static final TagKey<Biome> IS_CHILLY = register("is_chilly");
     public static final TagKey<Biome> IS_COLD = register("is_cold");

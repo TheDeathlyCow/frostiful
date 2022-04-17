@@ -3,8 +3,8 @@ package com.github.thedeathlycow.lostinthecold.world.survival;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.github.thedeathlycow.lostinthecold.tag.biome.BiomeTemperatureTags;
-import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
+import com.github.thedeathlycow.lostinthecold.tag.biome.LostInTheColdBiomeTemperatureTags;
+import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
@@ -68,11 +68,11 @@ public class TemperatureController {
             return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
-        if (biomeIn.isIn(BiomeTemperatureTags.IS_CHILLY)) {
+        if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_CHILLY)) {
             return config.getInt(ConfigKeys.CHILLY_BIOME_FREEZE_RATE);
-        } else if (biomeIn.isIn(BiomeTemperatureTags.IS_COLD)) {
+        } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_COLD)) {
             return config.getInt(ConfigKeys.COLD_BIOME_FREEZE_RATE);
-        } else if (biomeIn.isIn(BiomeTemperatureTags.IS_FREEZING)) {
+        } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_FREEZING)) {
             return config.getInt(ConfigKeys.FREEZING_BIOME_FREEZE_RATE);
         } else {
             return -config.getInt(ConfigKeys.WARM_BIOME_THAW_RATE);
@@ -83,7 +83,7 @@ public class TemperatureController {
         World world = livingEntity.getWorld();
         return livingEntity.canFreeze()
                 && livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks()
-                && world.getGameRules().getBoolean(ModGameRules.DO_PASSIVE_FREEZING);
+                && world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING);
     }
 
 }

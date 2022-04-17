@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.mixins.server;
 
 import com.github.thedeathlycow.lostinthecold.tag.blocks.LostInTheColdBlockTags;
-import com.github.thedeathlycow.lostinthecold.world.ModGameRules;
+import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SideShapeType;
@@ -51,7 +51,7 @@ public class ServerWorldMixin {
     )
     private boolean doSnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
-        if (!instance.getGameRules().getBoolean(ModGameRules.DO_SNOW_ACCUMULATION)) {
+        if (!instance.getGameRules().getBoolean(LostInTheColdGameRules.DO_SNOW_ACCUMULATION)) {
             if (current.isAir()) {
                 return instance.setBlockState(blockPos, blockState);
             } else {

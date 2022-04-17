@@ -8,7 +8,7 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class ModItems {
+public class LostInTheColdItems {
 
     public static final Item FUR_LINED_IRON_HELMET = register("fur_lined_iron_helmet", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_IRON, EquipmentSlot.HEAD, new Item.Settings().group(ItemGroup.COMBAT)));
     public static final Item FUR_LINED_IRON_CHESTPLATE = register("fur_lined_iron_chestplate", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_IRON, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT)));

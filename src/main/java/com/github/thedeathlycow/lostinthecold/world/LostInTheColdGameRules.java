@@ -14,7 +14,7 @@ import net.minecraft.world.GameRules;
 /**
  * Custom game rules for Lost in the Cold
  */
-public class ModGameRules {
+public class LostInTheColdGameRules {
 
     /**
      * Mod's dedicated category for game rules
