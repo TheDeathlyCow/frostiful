@@ -61,11 +61,7 @@ public class ServerWorldMixin {
         BlockState toSet = blockState;
         if (current.isOf(Blocks.SNOW) && instance.getBlockState(blockPos.down()).isSolidBlock(instance, blockPos)) {
             int layers = getLayersForPlacement(instance, current, blockPos);
-            if (layers == SnowBlock.MAX_LAYERS) {
-                toSet = Blocks.POWDER_SNOW.getDefaultState();
-            } else {
-                toSet = current.with(SnowBlock.LAYERS, layers);
-            }
+            toSet = current.with(SnowBlock.LAYERS, layers);
         }
         return instance.setBlockState(blockPos, toSet);
     }
