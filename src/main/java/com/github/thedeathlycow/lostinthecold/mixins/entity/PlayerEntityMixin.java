@@ -34,10 +34,7 @@ public abstract class PlayerEntityMixin {
 
         int ticksFrozen = playerEntity.getFrozenTicks();
 
-        if (TemperatureController.canPassivelyFreeze(playerEntity)) {
-            ticksFrozen += TemperatureController.getPassiveFreezing(playerEntity);
-        }
-
+        ticksFrozen += TemperatureController.getPassiveFreezing(playerEntity);
         ticksFrozen -= TemperatureController.getWarmth(playerEntity);
 
         if (ticksFrozen < 0) {

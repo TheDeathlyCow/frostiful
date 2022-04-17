@@ -15,6 +15,7 @@ import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -23,6 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+
+    @Shadow protected abstract void initDataTracker();
 
     @Redirect(
             method = "tickMovement",
@@ -62,8 +65,7 @@ public abstract class LivingEntityMixin {
     private void creativePlayersCannotFreeze(CallbackInfoReturnable<Boolean> cir) {
         LivingEntity livingEntity = (LivingEntity) (Object) this;
         if (livingEntity instanceof PlayerEntity player) {
-            World world = player.getWorld();
-            if (player.isCreative() && world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING)) {
+            if (player.isCreative()) {
                 cir.setReturnValue(false);
             }
         }
@@ -88,8 +90,17 @@ public abstract class LivingEntityMixin {
             )
     )
     private void changePowderSnowFreezingForPlayer(LivingEntity instance, int i) {
+
+        if (i < instance.getFrozenTicks() || i == 0) {
+            // being out of powder snow should not thaw
+            return;
+        }
+
         if (instance instanceof PlayerEntity) {
-            instance.setFrozenTicks(TemperatureController.getPowderSnowFreezing(instance));
+            int currentTicks = instance.getFrozenTicks();
+            if (currentTicks < instance.getMinFreezeDamageTicks()) {
+                instance.setFrozenTicks(currentTicks + TemperatureController.getPowderSnowFreezing(instance));
+            } // else: stop freezing when at or exceeding freeze damage threshold - but do not clamp down
         } else {
             instance.setFrozenTicks(i);
         }

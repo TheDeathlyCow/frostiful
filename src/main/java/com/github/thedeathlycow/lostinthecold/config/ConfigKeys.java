@@ -15,7 +15,6 @@ public class ConfigKeys {
     public static final ConfigKey<Integer> FREEZE_DAMAGE_AMOUNT;
     public static final ConfigKey<Integer> FREEZE_EXTRA_DAMAGE_AMOUNT;
     public static final ConfigKey<Integer> POWDER_SNOW_INCREASE_PER_TICK;
-    public static final ConfigKey<Integer> POWDER_SNOW_DECREASE_PER_TICK;
     public static final ConfigKey<Boolean> DO_RANDOM_SNOW_GENERATION;
     public static final ConfigKey<Byte> MAX_SNOW_BUILDUP_STEP;
 
@@ -36,7 +35,6 @@ public class ConfigKeys {
         FREEZE_DAMAGE_AMOUNT = REGISTRY.register(new IntegerKey("freeze_damage_amount", 1, 0));
         FREEZE_EXTRA_DAMAGE_AMOUNT = REGISTRY.register(new IntegerKey("freeze_extra_damage_amount", 5, 0));
         POWDER_SNOW_INCREASE_PER_TICK = REGISTRY.register(new IntegerKey("powder_snow_increase_per_tick", 100, 0));
-        POWDER_SNOW_DECREASE_PER_TICK = REGISTRY.register(new IntegerKey("powder_snow_decrease_per_tick", 100, 0));
         DO_RANDOM_SNOW_GENERATION = REGISTRY.register(new BooleanKey("do_random_snow_generation", true));
         MAX_SNOW_BUILDUP_STEP = REGISTRY.register(new ByteKey("max_snow_buildup_step", (byte)2, (byte)1, (byte)8));
     }

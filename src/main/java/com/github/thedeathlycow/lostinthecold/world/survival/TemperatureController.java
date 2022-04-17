@@ -44,7 +44,7 @@ public class TemperatureController {
         LostInTheColdConfig config = LostInTheCold.getConfig();
         return livingEntity.inPowderSnow ?
                 config.get(ConfigKeys.POWDER_SNOW_INCREASE_PER_TICK) :
-                -config.get(ConfigKeys.POWDER_SNOW_DECREASE_PER_TICK);
+                0;
     }
 
     public static double getPassiveFreezingMultiplier(LivingEntity livingEntity) {
@@ -52,7 +52,7 @@ public class TemperatureController {
         double multiplier = 1.0D;
 
         if (livingEntity.isWet()) {
-            multiplier += config.get(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
+            multiplier = config.get(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
         }
 
         return multiplier;
@@ -68,22 +68,22 @@ public class TemperatureController {
             return -config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
-        if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_CHILLY)) {
+        if (!world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING)) {
+            return 0;
+        }
+
+        boolean freezingBelowDamageThreshold = livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks();
+        if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_CHILLY) && freezingBelowDamageThreshold) {
             return config.get(ConfigKeys.CHILLY_BIOME_FREEZE_RATE);
-        } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_COLD)) {
+        } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_COLD) && freezingBelowDamageThreshold) {
             return config.get(ConfigKeys.COLD_BIOME_FREEZE_RATE);
-        } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_FREEZING)) {
+        } else if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_FREEZING) && freezingBelowDamageThreshold) {
             return config.get(ConfigKeys.FREEZING_BIOME_FREEZE_RATE);
+        } else if (!freezingBelowDamageThreshold) {
+            return 0;
         } else {
             return -config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
-    }
-
-    public static boolean canPassivelyFreeze(LivingEntity livingEntity) {
-        World world = livingEntity.getWorld();
-        return livingEntity.canFreeze()
-                && livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks()
-                && world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING);
     }
 
 }
