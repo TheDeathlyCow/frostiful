@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.world.survival;
 
-import com.github.thedeathlycow.lostinthecold.config.Config;
+import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.LostInTheColdBiomeTemperatureTags;

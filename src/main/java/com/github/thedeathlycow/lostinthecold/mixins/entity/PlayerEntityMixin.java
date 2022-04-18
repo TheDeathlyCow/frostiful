@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
+import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
-import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
@@ -18,7 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
 
-    @Shadow public abstract void playSound(SoundEvent sound, float volume, float pitch);
+    @Shadow
+    public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
     @Inject(
             method = "tick",

@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
+import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
-import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
 import net.minecraft.block.BlockState;
@@ -24,7 +24,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-    @Shadow protected abstract void initDataTracker();
+    @Shadow
+    protected abstract void initDataTracker();
 
     @Redirect(
             method = "tickMovement",
