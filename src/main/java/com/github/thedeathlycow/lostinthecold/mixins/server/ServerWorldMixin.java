@@ -53,41 +53,35 @@ public class ServerWorldMixin {
     )
     private boolean doSnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
-        if (!instance.getGameRules().getBoolean(LostInTheColdGameRules.DO_SNOW_ACCUMULATION)) {
-            if (current.isAir()) {
-                return instance.setBlockState(blockPos, blockState);
-            } else {
-                return false;
-            }
+        int maxLayers = instance.getGameRules().getInt(LostInTheColdGameRules.MAX_SNOW_ACCUMULATION);
+
+        if (maxLayers == 0) {
+            return false;
         }
-        BlockState toSet = blockState;
-        if (current.isOf(Blocks.SNOW) && instance.getBlockState(blockPos.down()).isSolidBlock(instance, blockPos)) {
-            int layers = getLayersForPlacement(instance, current, blockPos);
-            toSet = current.with(SnowBlock.LAYERS, layers);
-        }
+
+        int layers = Math.min(maxLayers, getLayersForPlacement(instance, current, blockPos));
+        BlockState toSet = Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, layers);
+
         return instance.setBlockState(blockPos, toSet);
     }
 
-    private int getSnowLayers(ServerWorld world, BlockPos pos, Direction direction) {
-        BlockState state = world.getBlockState(pos);
+    private int getSnowLayers(BlockState state) {
         if (state.isOf(Blocks.SNOW)) {
             return state.get(SnowBlock.LAYERS);
-        } else if (state.isIn(LostInTheColdBlockTags.SNOW_ACCUMULATE_NEXT_TO)) {
-            return SnowBlock.MAX_LAYERS;
-        } else if (state.isSideSolid(world, pos, direction.getOpposite(), SideShapeType.FULL)) {
-            return SnowBlock.MAX_LAYERS;
-        } else {
+        } else if (state.isAir()) {
             return 0;
+        } else {
+            return SnowBlock.MAX_LAYERS;
         }
     }
 
     private int getLowestNeighbouringLayer(ServerWorld instance, BlockPos blockPos) {
 
         List<Integer> neighbourLayers = List.of(
-                getSnowLayers(instance, blockPos.north(), Direction.NORTH),
-                getSnowLayers(instance, blockPos.south(), Direction.SOUTH),
-                getSnowLayers(instance, blockPos.east(), Direction.EAST),
-                getSnowLayers(instance, blockPos.west(), Direction.WEST)
+                getSnowLayers(instance.getBlockState(blockPos.north())),
+                getSnowLayers(instance.getBlockState(blockPos.south())),
+                getSnowLayers(instance.getBlockState(blockPos.east())),
+                getSnowLayers(instance.getBlockState(blockPos.west()))
         );
 
         return Collections.min(neighbourLayers);
@@ -96,7 +90,7 @@ public class ServerWorldMixin {
     private int getLayersForPlacement(ServerWorld instance, BlockState current, BlockPos blockPos) {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
-        int currentLayers = current.get(SnowBlock.LAYERS);
+        int currentLayers = getSnowLayers(current);
         byte maxStep = LostInTheCold.getConfig().get(ConfigKeys.MAX_SNOW_BUILDUP_STEP);
         if (currentLayers - lowestNeighbour < maxStep) {
             return Math.min(SnowBlock.MAX_LAYERS, currentLayers + 1);

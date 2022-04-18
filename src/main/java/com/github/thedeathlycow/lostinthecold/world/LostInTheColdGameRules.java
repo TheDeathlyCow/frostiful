@@ -37,11 +37,11 @@ public class LostInTheColdGameRules {
                     GameRuleFactory.createBooleanRule(true)
             );
 
-    public static final GameRules.Key<GameRules.BooleanRule> DO_SNOW_ACCUMULATION =
+    public static final GameRules.Key<GameRules.IntRule> MAX_SNOW_ACCUMULATION =
             GameRuleRegistry.register(
-                    "doSnowAccumulation",
+                    "maxSnowAccumulation",
                     CATEGORY,
-                    GameRuleFactory.createBooleanRule(true)
+                    GameRuleFactory.createIntRule(8, 0, 8)
             );
 
 //    public static final GameRules.Key<GameRules.IntRule> WEATHER_SNOW_SPEED_RANDOM_FACTOR
