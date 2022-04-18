@@ -45,7 +45,6 @@ public abstract class LivingEntityMixin {
         }
 
         World world = instance.getWorld();
-        GameRules gameRules = world.getGameRules();
         Config config = LostInTheCold.getConfig();
 
         amount = instance.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
