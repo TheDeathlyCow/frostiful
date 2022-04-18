@@ -37,12 +37,14 @@ public class LostInTheColdGameRules {
                     GameRuleFactory.createBooleanRule(true)
             );
 
+    /**
+     * Determines the maximum number of layers that snow can accumulate. Default is 8.
+     * Set to 1.
+     */
     public static final GameRules.Key<GameRules.IntRule> MAX_SNOW_ACCUMULATION =
             GameRuleRegistry.register(
                     "maxSnowAccumulation",
                     CATEGORY,
                     GameRuleFactory.createIntRule(8, 0, 8)
             );
-
-//    public static final GameRules.Key<GameRules.IntRule> WEATHER_SNOW_SPEED_RANDOM_FACTOR
 }

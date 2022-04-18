@@ -20,7 +20,7 @@ public class BiomeMixin {
             ),
             cancellable = true
     )
-    private void canSetSnow(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
+    private void canSetSnowOnSnow(WorldView world, BlockPos pos, CallbackInfoReturnable<Boolean> cir) {
         if (world.getBlockState(pos).isOf(Blocks.SNOW)) {
             cir.setReturnValue(true);
         }

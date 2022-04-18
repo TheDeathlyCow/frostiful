@@ -2,15 +2,12 @@ package com.github.thedeathlycow.lostinthecold.mixins.server;
 
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.github.thedeathlycow.lostinthecold.tag.blocks.LostInTheColdBlockTags;
 import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SideShapeType;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -59,7 +56,7 @@ public class ServerWorldMixin {
             return false;
         }
 
-        int layers = Math.min(maxLayers, getLayersForPlacement(instance, current, blockPos));
+        int layers = getLayersForPlacement(instance, current, blockPos, maxLayers);
         BlockState toSet = Blocks.SNOW.getDefaultState().with(SnowBlock.LAYERS, layers);
 
         return instance.setBlockState(blockPos, toSet);
@@ -87,13 +84,13 @@ public class ServerWorldMixin {
         return Collections.min(neighbourLayers);
     }
 
-    private int getLayersForPlacement(ServerWorld instance, BlockState current, BlockPos blockPos) {
+    private int getLayersForPlacement(ServerWorld instance, BlockState current, BlockPos blockPos, final int maxLayers) {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = getSnowLayers(current);
         byte maxStep = LostInTheCold.getConfig().get(ConfigKeys.MAX_SNOW_BUILDUP_STEP);
-        if (currentLayers - lowestNeighbour < maxStep) {
-            return Math.min(SnowBlock.MAX_LAYERS, currentLayers + 1);
+        if (currentLayers - lowestNeighbour < maxStep && currentLayers < maxLayers) {
+            return Math.min(maxLayers, currentLayers + 1);
         }
         return currentLayers;
     }
