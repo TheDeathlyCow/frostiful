@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.lostinthecold.mixins.ui;
+package com.github.thedeathlycow.lostinthecold.mixins.client.gui;
 
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;

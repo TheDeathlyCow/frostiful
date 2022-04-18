@@ -10,12 +10,12 @@
     "entity.mob.PiglinBrainMixin",
     "item.ArmorItemMixin",
     "server.ServerWorldMixin",
-    "ui.InGameHudInvoker",
-    "ui.InGameHudMixin",
     "world.biome.BiomeMixin",
     "world.gen.feature.FreezeTopLayerMixin"
   ],
   "client": [
+    "client.gui.InGameHudInvoker",
+    "client.gui.InGameHudMixin"
   ],
   "injectors": {
     "defaultRequire": 1
