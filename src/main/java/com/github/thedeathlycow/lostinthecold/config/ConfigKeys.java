@@ -20,7 +20,7 @@ public class ConfigKeys {
     public static final ConfigKey<Integer> FREEZE_DAMAGE_AMOUNT = new IntegerKey("freeze_damage_amount", 1, 0);
     public static final ConfigKey<Integer> FREEZE_EXTRA_DAMAGE_AMOUNT = new IntegerKey("freeze_extra_damage_amount", 5, 0);
     public static final ConfigKey<Integer> POWDER_SNOW_INCREASE_PER_TICK = new IntegerKey("powder_snow_increase_per_tick", 100, 0);
-    public static final ConfigKey<Boolean> DO_RANDOM_SNOW_GENERATION = new BooleanKey("do_random_snow_generation", true);
+    public static final ConfigKey<Byte> FREEZE_TOP_LAYER_MAX_ACCUMULATION = new ByteKey("freeze_top_layer_max_accumulation", (byte) 2, (byte) 0, (byte) 8);
     public static final ConfigKey<Byte> MAX_SNOW_BUILDUP_STEP = new ByteKey("max_snow_buildup_step", (byte) 2, (byte) 1, (byte) 8);
 
     public static Config createConfig() {
@@ -40,7 +40,7 @@ public class ConfigKeys {
                 FREEZE_DAMAGE_AMOUNT,
                 FREEZE_EXTRA_DAMAGE_AMOUNT,
                 POWDER_SNOW_INCREASE_PER_TICK,
-                DO_RANDOM_SNOW_GENERATION,
+                FREEZE_TOP_LAYER_MAX_ACCUMULATION,
                 MAX_SNOW_BUILDUP_STEP
         );
     }

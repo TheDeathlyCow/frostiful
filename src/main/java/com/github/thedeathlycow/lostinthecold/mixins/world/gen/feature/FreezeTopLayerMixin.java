@@ -2,9 +2,7 @@ package com.github.thedeathlycow.lostinthecold.mixins.world.gen.feature;
 
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.SideShapeType;
-import net.minecraft.block.SnowBlock;
+import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
@@ -33,15 +31,41 @@ public class FreezeTopLayerMixin {
     )
     private boolean randomizeSnowLayers(StructureWorldAccess instance, BlockPos blockPos, BlockState blockState, int i) {
 
-        int layers = blockState.get(SnowBlock.LAYERS);
-
         BlockState down = instance.getBlockState(blockPos.down());
-        boolean doSnowStacking = LostInTheCold.getConfig().get(ConfigKeys.DO_RANDOM_SNOW_GENERATION);
-        if (doSnowStacking && down.isSideSolid(instance, blockPos, Direction.UP, SideShapeType.FULL)) {
-            layers = instance.getRandom().nextInt(2) + 1;
+        byte maxStackSize = LostInTheCold.getConfig().get(ConfigKeys.FREEZE_TOP_LAYER_MAX_ACCUMULATION);
+
+        if (maxStackSize == 0) {
+            blockState = Blocks.AIR.getDefaultState();
+        } else if (down.isSideSolid(instance, blockPos, Direction.UP, SideShapeType.FULL)) {
+            int layers = instance.getRandom().nextInt(maxStackSize) + 1;
+            blockState = blockState.with(SnowBlock.LAYERS, layers);
         }
 
-        return instance.setBlockState(blockPos, blockState.with(SnowBlock.LAYERS, layers), i);
+        return instance.setBlockState(blockPos, blockState, i);
+    }
+
+    @Redirect(
+            method = "generate",
+            slice = @Slice(
+                    from = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/world/biome/Biome;canSetSnow(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z"
+                    )
+            ),
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/StructureWorldAccess;setBlockState(Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/block/BlockState;I)Z",
+                    ordinal = 1
+            )
+    )
+    private boolean makeGrassNotSnowyWhenZeroLayers(StructureWorldAccess instance, BlockPos blockPos, BlockState blockState, int i) {
+        byte maxStackSize = LostInTheCold.getConfig().get(ConfigKeys.FREEZE_TOP_LAYER_MAX_ACCUMULATION);
+
+        if (maxStackSize == 0 && blockState.getBlock() instanceof SnowyBlock) {
+            return instance.setBlockState(blockPos, blockState.with(SnowyBlock.SNOWY, false), i);
+        } else {
+            return instance.setBlockState(blockPos, blockState, i);
+        }
     }
 
 }
