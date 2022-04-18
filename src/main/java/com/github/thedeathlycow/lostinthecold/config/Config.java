@@ -3,39 +3,27 @@ package com.github.thedeathlycow.lostinthecold.config;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.google.gson.JsonElement;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
-public class LostInTheColdConfig {
-
-    public LostInTheColdConfig(String name) {
-        this.name = name;
-    }
-
-    public static LostInTheColdConfig constructDefaultConfig() {
-        LostInTheColdConfig config = new LostInTheColdConfig("primary_config");
-        for (ConfigKey<?> key : ConfigKeys.REGISTRY.getEntries()) {
-            config.addEntry(key);
-        }
-        return config;
-    }
+public class Config {
 
     public <T extends Comparable<T>> T get(ConfigKey<T> key) {
         Comparable<?> value = this.values.get(key);
         if (value != null) {
             return key.getType().cast(value);
         } else {
-            throw new IllegalArgumentException("Cannot get value of " + key + " as it does not exist in config " + this.getName());
+            throw new IllegalArgumentException("Cannot get value of " + key + " as it does not exist in config");
         }
     }
 
-    public void addEntry(ConfigKey<?> key) {
+    public <T extends Comparable<T>> ConfigKey<T> addEntry(ConfigKey<T> key) {
         if (!this.values.containsKey(key)) {
+            keys.register(key);
             this.values.put(key, key.getDefaultValue());
+            return key;
         } else {
-            LostInTheCold.LOGGER.warn("Attempted to add duplicate value " + key + " to config " + this.getName());
+            LostInTheCold.LOGGER.warn("Attempted to add duplicate value " + key + " to config");
         }
     }
 
@@ -56,7 +44,7 @@ public class LostInTheColdConfig {
         }
     }
 
-    public void update(LostInTheColdConfig inConfig) {
+    public void update(Config inConfig) {
         this.values.putAll(inConfig.values);
     }
 
@@ -67,11 +55,7 @@ public class LostInTheColdConfig {
         }
     }
 
-    public String getName() {
-        return name;
-    }
-
+    private final ConfigKeyRegistry keys = new ConfigKeyRegistry();
     private final Map<ConfigKey<?>, Comparable<?>> values = new HashMap<>();
-    private final String name;
 
 }

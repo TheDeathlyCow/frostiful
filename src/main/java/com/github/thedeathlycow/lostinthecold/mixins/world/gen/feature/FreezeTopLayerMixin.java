@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.lostinthecold.mixins.world.gen.feature;
 
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
-import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SideShapeType;

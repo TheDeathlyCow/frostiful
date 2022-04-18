@@ -2,9 +2,8 @@ package com.github.thedeathlycow.lostinthecold.mixins.entity;
 
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
-import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
+import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
@@ -46,7 +45,7 @@ public abstract class LivingEntityMixin {
 
         World world = instance.getWorld();
         GameRules gameRules = world.getGameRules();
-        LostInTheColdConfig config = LostInTheCold.getConfig();
+        Config config = LostInTheCold.getConfig();
 
         amount = instance.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
                 config.get(ConfigKeys.FREEZE_EXTRA_DAMAGE_AMOUNT) :
@@ -112,7 +111,7 @@ public abstract class LivingEntityMixin {
             cancellable = true
     )
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        LostInTheColdConfig config = LostInTheCold.getConfig();
+        Config config = LostInTheCold.getConfig();
         if (config == null) {
             LostInTheCold.LOGGER.warn("LivingEntityMixin: Hypothermia config not found!");
             return;

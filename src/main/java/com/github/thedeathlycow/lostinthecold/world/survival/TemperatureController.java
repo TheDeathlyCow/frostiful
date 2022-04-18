@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.world.survival;
 
+import com.github.thedeathlycow.lostinthecold.config.Config;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
-import com.github.thedeathlycow.lostinthecold.config.LostInTheColdConfig;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import com.github.thedeathlycow.lostinthecold.tag.biome.LostInTheColdBiomeTemperatureTags;
 import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
@@ -25,7 +25,7 @@ public class TemperatureController {
     public static int getWarmth(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-        LostInTheColdConfig config = LostInTheCold.getConfig();
+        Config config = LostInTheCold.getConfig();
         int warmth = 0;
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
@@ -41,14 +41,14 @@ public class TemperatureController {
     }
 
     public static int getPowderSnowFreezing(LivingEntity livingEntity) {
-        LostInTheColdConfig config = LostInTheCold.getConfig();
+        Config config = LostInTheCold.getConfig();
         return livingEntity.inPowderSnow ?
                 config.get(ConfigKeys.POWDER_SNOW_INCREASE_PER_TICK) :
                 0;
     }
 
     public static double getPassiveFreezingMultiplier(LivingEntity livingEntity) {
-        LostInTheColdConfig config = LostInTheCold.getConfig();
+        Config config = LostInTheCold.getConfig();
         double multiplier = 1.0D;
 
         if (livingEntity.isWet()) {
@@ -61,7 +61,7 @@ public class TemperatureController {
     public static int getBiomeFreezing(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-        LostInTheColdConfig config = LostInTheCold.getConfig();
+        Config config = LostInTheCold.getConfig();
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
         if (!livingEntity.canFreeze()) {
