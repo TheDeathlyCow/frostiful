@@ -19,21 +19,17 @@ abstract class EntityMixin {
         Entity instance = (Entity) (Object) this;
 
         if (instance instanceof LivingEntity livingEntity) {
-            // add more time to freeze based on frost resistance
-            if (livingEntity.getAttributes().hasAttribute(LostInTheColdEntityAttributes.FROST_RESISTANCE)) {
-                double frostResistance = livingEntity.getAttributes().getValue(LostInTheColdEntityAttributes.FROST_RESISTANCE);
-                int freezeTickDamageThreshold = getTicksFromFrostResistance(frostResistance);
+            // add more time to freeze
+            if (livingEntity.getAttributes().hasAttribute(LostInTheColdEntityAttributes.MAX_FROST)) {
+                double maxFrost = livingEntity.getAttributes().getValue(LostInTheColdEntityAttributes.MAX_FROST);
+                int freezeTickDamageThreshold = getTicksFromMaxFrost(maxFrost);
                 cir.setReturnValue(freezeTickDamageThreshold);
             }
         }
     }
 
-    private static int getTicksFromFrostResistance(final double frostResistance) {
+    private static int getTicksFromMaxFrost(final double maxFrost) {
         Config config = LostInTheCold.getConfig();
-        if (config == null) {
-            LostInTheCold.LOGGER.warn("EntityMixin: Hypothermia config not found!");
-            return 0;
-        }
-        return (int) (config.get(ConfigKeys.TICKS_PER_FROST_RESISTANCE) * frostResistance);
+        return (int) (config.get(ConfigKeys.MAX_FROST_MULTIPLIER) * maxFrost);
     }
 }

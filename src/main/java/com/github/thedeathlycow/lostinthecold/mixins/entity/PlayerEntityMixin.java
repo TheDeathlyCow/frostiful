@@ -4,12 +4,11 @@ import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import com.github.thedeathlycow.lostinthecold.world.survival.TemperatureController;
+import com.github.thedeathlycow.lostinthecold.util.survival.FrostHelper;
+import com.github.thedeathlycow.lostinthecold.util.survival.PassiveFreezingHelper;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.sound.SoundEvent;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -17,9 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(PlayerEntity.class)
 public abstract class PlayerEntityMixin {
-
-    @Shadow
-    public abstract void playSound(SoundEvent sound, float volume, float pitch);
 
     @Inject(
             method = "tick",
@@ -30,19 +26,15 @@ public abstract class PlayerEntityMixin {
                     shift = At.Shift.AFTER
             )
     )
-    private void tickTemperature(CallbackInfo ci) {
+    private void applyPassiveFreezing(CallbackInfo ci) {
         PlayerEntity playerEntity = (PlayerEntity) (Object) this;
 
-        int ticksFrozen = playerEntity.getFrozenTicks();
+        int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
+        FrostHelper.addFrozenTicks(playerEntity, passiveFreezing);
 
-        ticksFrozen += TemperatureController.getPassiveFreezing(playerEntity);
-        ticksFrozen -= TemperatureController.getWarmth(playerEntity);
+        int warmth = PassiveFreezingHelper.getWarmth(playerEntity);
+        FrostHelper.removeFrozenTicks(playerEntity, warmth);
 
-        if (ticksFrozen < 0) {
-            ticksFrozen = 0;
-        }
-
-        playerEntity.setFrozenTicks(ticksFrozen);
     }
 
     @Inject(
@@ -54,6 +46,7 @@ public abstract class PlayerEntityMixin {
         Config config = LostInTheCold.getConfig();
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
         attributeBuilder.add(LostInTheColdEntityAttributes.FROST_RESISTANCE, config.get(ConfigKeys.BASE_PLAYER_FROST_RESISTANCE));
+        attributeBuilder.add(LostInTheColdEntityAttributes.MAX_FROST, config.get(ConfigKeys.PLAYER_MAX_FROST));
         cir.setReturnValue(attributeBuilder);
     }
 }

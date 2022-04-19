@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.lostinthecold.world.survival;
+package com.github.thedeathlycow.lostinthecold.util.survival;
 
 import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
@@ -12,7 +12,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
-public class TemperatureController {
+public class PassiveFreezingHelper {
 
     public static int getPassiveFreezing(LivingEntity livingEntity) {
         int biomeFreezing = getBiomeFreezing(livingEntity);
@@ -34,7 +34,7 @@ public class TemperatureController {
         }
 
         if (livingEntity.isOnFire()) {
-            warmth += config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
+            warmth += config.get(ConfigKeys.ON_FIRE_THAW_RATE);
         }
 
         return warmth;
@@ -49,20 +49,19 @@ public class TemperatureController {
 
     public static double getPassiveFreezingMultiplier(LivingEntity livingEntity) {
         Config config = LostInTheCold.getConfig();
-        double multiplier = 1.0D;
+        double multiplier = 0.0D;
 
         if (livingEntity.isWet()) {
-            multiplier = config.get(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
+            multiplier += config.get(ConfigKeys.WET_FREEZE_RATE_MULTIPLIER);
         }
 
-        return multiplier;
+        return multiplier == 0.0D ? 1 : multiplier;
     }
 
     public static int getBiomeFreezing(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
         Config config = LostInTheCold.getConfig();
-        RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
         if (!livingEntity.canFreeze()) {
             return -config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
@@ -71,6 +70,8 @@ public class TemperatureController {
         if (!world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING)) {
             return 0;
         }
+
+        RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
         boolean freezingBelowDamageThreshold = livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks();
         if (biomeIn.isIn(LostInTheColdBiomeTemperatureTags.IS_CHILLY) && freezingBelowDamageThreshold) {
