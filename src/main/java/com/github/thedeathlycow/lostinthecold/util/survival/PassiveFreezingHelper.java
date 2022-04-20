@@ -67,10 +67,6 @@ public class PassiveFreezingHelper {
             return -config.get(ConfigKeys.WARM_BIOME_THAW_RATE);
         }
 
-        if (!world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING)) {
-            return 0;
-        }
-
         RegistryEntry<Biome> biomeIn = world.getBiome(pos);
 
         boolean freezingBelowDamageThreshold = livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks();

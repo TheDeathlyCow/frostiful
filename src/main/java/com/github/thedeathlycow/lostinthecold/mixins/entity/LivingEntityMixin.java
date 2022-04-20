@@ -23,9 +23,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
 
-    @Shadow
-    protected abstract void initDataTracker();
-
     @Redirect(
             method = "tickMovement",
             at = @At(
@@ -88,16 +85,13 @@ public abstract class LivingEntityMixin {
     )
     private void modPowderSnowFreezing(LivingEntity instance, int i) {
 
-        if (i < instance.getFrozenTicks() || i == 0) {
+        if (!(instance.inPowderSnow && instance.canFreeze())) {
             // being out of powder snow should not thaw
             return;
         }
 
         if (instance instanceof PlayerEntity) {
-            int currentTicks = instance.getFrozenTicks();
-            if (currentTicks < instance.getMinFreezeDamageTicks()) {
-                FrostHelper.addFrozenTicks(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
-            } // else: stop freezing when at or exceeding freeze damage threshold - but do not clamp down
+            FrostHelper.addFrozenTicks(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
         } else {
             FrostHelper.setFrozenTicks(instance, i);
         }

@@ -17,7 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(InGameHud.class)
 abstract class InGameHudMixin {
 
-    private static int counter = 0;
     private static final Identifier HEART_OVERLAY_TEXTURE = new Identifier(LostInTheCold.MODID, "textures/gui/cold_heart_overlay.png");
 
     @Inject(
@@ -33,6 +32,7 @@ abstract class InGameHudMixin {
     private void renderFrozenHeart(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci, InGameHud.HeartType heartType, int i, int j, int k, int l, int m, int n, int o, int p, int q, int r, boolean bl3) {
 
         double freezingProgress = ((double) player.getFrozenTicks()) / player.getMinFreezeDamageTicks();
+
         freezingProgress = MathHelper.clamp(freezingProgress, 0.0D, 1.0D);
 
         // number of half cold hearts
@@ -47,6 +47,8 @@ abstract class InGameHudMixin {
             boolean isHalfHeart = m + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1;
             this.drawHeartOverLay(matrices, p, q, isHalfHeart);
         }
+
+        LostInTheCold.LOGGER.info("Overlay frozen ticks: " + player.getFrozenTicks());
     }
 
     private void drawHeartOverLay(MatrixStack matrices, int x, int y, boolean isHalfHeart) {
