@@ -4,17 +4,15 @@ import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
-import net.minecraft.block.BeaconBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
 
-    public static void addFrozenTicks(LivingEntity entity, int amount) {
+    public static void addFrost(LivingEntity entity, int amount) {
 
         final Config config = LostInTheCold.getConfig();
         double frostResistance = entity.getAttributeValue(LostInTheColdEntityAttributes.FROST_RESISTANCE);
@@ -24,7 +22,7 @@ public class FrostHelper {
         int toAdd = (int) ((1 - frostModifier) * amount);
 
         int current = entity.getFrozenTicks();
-        setFrozenTicks(entity, current + toAdd);
+        setFrost(entity, current + toAdd);
 
         double progress = getFrostProgress(entity);
 
@@ -35,12 +33,12 @@ public class FrostHelper {
         }
     }
 
-    public static void removeFrozenTicks(LivingEntity entity, int amount) {
+    public static void removeFrost(LivingEntity entity, int amount) {
         int current = entity.getFrozenTicks();
-        setFrozenTicks(entity, current - amount);
+        setFrost(entity, current - amount);
     }
 
-    public static void setFrozenTicks(Entity entity, int amount) {
+    public static void setFrost(Entity entity, int amount) {
         amount = MathHelper.clamp(amount, 0, entity.getMinFreezeDamageTicks());
         entity.setFrozenTicks(amount);
     }

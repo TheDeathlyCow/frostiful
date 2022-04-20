@@ -118,10 +118,10 @@ public class FreezeCommand {
     private static int runAdjust(ServerCommandSource source, Collection<? extends Entity> targets, int amount, boolean applyFrostResistance) throws CommandSyntaxException {
         for (Entity entity : targets) {
             if (applyFrostResistance && entity instanceof LivingEntity livingEntity) {
-                FrostHelper.addFrozenTicks(livingEntity, amount);
+                FrostHelper.addFrost(livingEntity, amount);
             } else {
                 int frozenTicks = entity.getFrozenTicks();
-                FrostHelper.setFrozenTicks(entity, frozenTicks + amount);
+                FrostHelper.setFrost(entity, frozenTicks + amount);
             }
         }
 
@@ -140,7 +140,7 @@ public class FreezeCommand {
 
     private static int runSet(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
         for (Entity entity : targets) {
-            FrostHelper.setFrozenTicks(entity, amount);
+            FrostHelper.setFrost(entity, amount);
         }
 
         Text msg;
