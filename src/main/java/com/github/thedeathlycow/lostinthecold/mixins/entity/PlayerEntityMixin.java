@@ -9,6 +9,7 @@ import com.github.thedeathlycow.lostinthecold.util.survival.PassiveFreezingHelpe
 import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -29,8 +30,13 @@ public abstract class PlayerEntityMixin {
     )
     private void tickFreezing(CallbackInfo ci) {
         PlayerEntity playerEntity = (PlayerEntity) (Object) this;
+        World world = playerEntity.getWorld();
 
-        boolean doPassiveFreezing = playerEntity.getWorld().getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING);
+        if (world.isClient()) {
+            return;
+        }
+
+        final boolean doPassiveFreezing = world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING);
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
             FrostHelper.addFrozenTicks(playerEntity, passiveFreezing);
@@ -38,8 +44,6 @@ public abstract class PlayerEntityMixin {
 
         int warmth = PassiveFreezingHelper.getWarmth(playerEntity);
         FrostHelper.removeFrozenTicks(playerEntity, warmth);
-
-        LostInTheCold.LOGGER.info("Overlay frozen ticks: " + playerEntity.getFrozenTicks());
 
     }
 

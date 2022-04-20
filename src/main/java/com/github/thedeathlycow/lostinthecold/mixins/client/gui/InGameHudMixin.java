@@ -47,8 +47,6 @@ abstract class InGameHudMixin {
             boolean isHalfHeart = m + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1;
             this.drawHeartOverLay(matrices, p, q, isHalfHeart);
         }
-
-        LostInTheCold.LOGGER.info("Overlay frozen ticks: " + player.getFrozenTicks());
     }
 
     private void drawHeartOverLay(MatrixStack matrices, int x, int y, boolean isHalfHeart) {
