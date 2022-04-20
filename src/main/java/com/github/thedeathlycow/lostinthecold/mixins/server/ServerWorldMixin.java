@@ -20,23 +20,18 @@ import java.util.Random;
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
 
-    /**
-     * @param instance
-     * @param bound
-     * @return
-     */
-    @Redirect(
-            method = "tickChunk",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Ljava/util/Random;nextInt(I)I",
-                    ordinal = 1
-            )
-    )
-    private int noRandomChanceForSnow(Random instance, int bound) {
-        //LostInTheCold.LOGGER.warn("If not in dev environment - delete noRandomChanceForSnow");
-        return 0;
-    }
+//    @Redirect(
+//            method = "tickChunk",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Ljava/util/Random;nextInt(I)I",
+//                    ordinal = 1
+//            )
+//    )
+//    private int noRandomChanceForSnow(Random instance, int bound) {
+//        //LostInTheCold.LOGGER.warn("If not in dev environment - delete noRandomChanceForSnow");
+//        return 0;
+//    }
 
     @Redirect(
             method = "tickChunk",
