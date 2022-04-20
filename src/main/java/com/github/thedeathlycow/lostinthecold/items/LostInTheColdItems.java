@@ -1,8 +1,11 @@
 package com.github.thedeathlycow.lostinthecold.items;
 
+import com.github.thedeathlycow.lostinthecold.block.LostInTheColdBlocks;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
+import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.util.Identifier;
@@ -29,6 +32,8 @@ public class LostInTheColdItems {
     public static final Item FUR_LINED_NETHERITE_CHESTPLATE = register("fur_lined_netherite_chestplate", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_NETHERITE, EquipmentSlot.CHEST, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
     public static final Item FUR_LINED_NETHERITE_LEGGINGS = register("fur_lined_netherite_leggings", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_NETHERITE, EquipmentSlot.LEGS, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
     public static final Item FUR_LINED_NETHERITE_BOOTS = register("fur_lined_netherite_boots", new ArmorItem(FurLinedArmorMaterials.FUR_LINED_NETHERITE, EquipmentSlot.FEET, new Item.Settings().group(ItemGroup.COMBAT).fireproof()));
+
+    public static final Item ICICLE_BLOCK = register("icicle_block", new BlockItem(LostInTheColdBlocks.ICICLE_BLOCK, new Item.Settings().group(ItemGroup.BUILDING_BLOCKS)));
 
     private static Item register(String id, Item item) {
         return Registry.register(Registry.ITEM, new Identifier(LostInTheCold.MODID, id), item);

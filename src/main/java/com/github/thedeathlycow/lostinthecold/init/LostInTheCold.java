@@ -2,6 +2,7 @@ package com.github.thedeathlycow.lostinthecold.init;
 
 import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
+import com.github.thedeathlycow.lostinthecold.block.LostInTheColdBlocks;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.items.LostInTheColdItems;
 import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
@@ -33,6 +34,7 @@ public class LostInTheCold implements ModInitializer {
         );
 
         Reflection.initialize(
+                LostInTheColdBlocks.class,
                 LostInTheColdItems.class,
                 LostInTheColdEntityAttributes.class,
                 LostInTheColdGameRules.class
