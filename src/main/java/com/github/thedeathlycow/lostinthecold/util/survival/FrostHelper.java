@@ -4,8 +4,12 @@ import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.lostinthecold.attributes.LostInTheColdEntityAttributes;
 import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
+import net.minecraft.block.BeaconBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
@@ -21,6 +25,14 @@ public class FrostHelper {
 
         int current = entity.getFrozenTicks();
         setFrozenTicks(entity, current + toAdd);
+
+        double progress = getFrostProgress(entity);
+
+        StatusEffectInstance effect = entity.getStatusEffect(StatusEffects.MINING_FATIGUE);
+
+        if (progress >= 0.5 && (effect == null || effect.getDuration() <= 1)) {
+            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 8, 0, true, true), null);
+        }
     }
 
     public static void removeFrozenTicks(LivingEntity entity, int amount) {
@@ -31,6 +43,10 @@ public class FrostHelper {
     public static void setFrozenTicks(Entity entity, int amount) {
         amount = MathHelper.clamp(amount, 0, entity.getMinFreezeDamageTicks());
         entity.setFrozenTicks(amount);
+    }
+
+    public static double getFrostProgress(Entity entity) {
+        return ((double) entity.getFrozenTicks()) / entity.getMinFreezeDamageTicks();
     }
 
 }
