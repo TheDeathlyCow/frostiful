@@ -14,7 +14,6 @@
     "world.gen.feature.FreezeTopLayerMixin"
   ],
   "client": [
-    "client.gui.InGameHudInvoker",
     "client.gui.InGameHudMixin"
   ],
   "injectors": {
