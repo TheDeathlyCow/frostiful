@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.lostinthecold.block;
 
 import com.github.thedeathlycow.lostinthecold.entity.damage.LostInTheColdDamageSource;
+import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
@@ -17,9 +18,12 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -28,7 +32,10 @@ import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.Random;
+import java.util.function.BiPredicate;
+import java.util.function.Predicate;
 
 @SuppressWarnings("deprecation")
 public class Icicle extends Block implements LandingBlock, Waterloggable {
@@ -44,10 +51,10 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     private static final VoxelShape BASE_SHAPE = Block.createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
     private static final VoxelShape FRUSTUM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
     private static final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
-    private static final VoxelShape DRIP_COLLISION_SHAPE = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D);
 
     private static final float BECOME_UNSTABLE_CHANCE = 0.2f;
-    private static final int UNSTABLE_TICKS_BEFORE_FALL = 60;
+    private static final float GROW_CHANCE = 0.3f;
+    private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformIntProvider.create(40, 80);
 
     public Icicle(Settings settings) {
         super(settings);
@@ -144,9 +151,13 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-            if (!isUnstable(state) && random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
-                world.setBlockState(pos, state.with(UNSTABLE, true));
-                world.createAndScheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL);
+
+            if (random.nextFloat() < GROW_CHANCE) { // grow
+                this.tryGrow(state, world, pos, random);
+            }
+
+            if (random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
+                this.tryFall(state, world, pos, random);
             }
         }
     }
@@ -217,6 +228,148 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         return 0.125F;
     }
 
+    private void tryFall(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+
+        if (isUnstable(state) || isPointingUp(state)) {
+            return;
+        }
+
+        BlockPos tipPos = getTipPos(state, world, pos, 25, false);
+        if (tipPos != null) {
+            world.setBlockState(pos, state.with(UNSTABLE, true));
+            world.createAndScheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL.get(random));
+        }
+    }
+
+    private void tryGrow(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+
+        if (isUnstable(state) || isPointingUp(state)) {
+            return;
+        }
+
+        BlockState anchor = world.getBlockState(pos.up());
+        if (isGrowableBlock(anchor)) {
+            BlockPos tipPos = getTipPos(state, world, pos, 7, false);
+            if (tipPos != null) {
+                BlockState tipState = world.getBlockState(tipPos);
+                if (canDrip(tipState) && canGrow(tipState, world, tipPos)) {
+                    if (random.nextBoolean()) {
+                        tryGrow(world, tipPos, Direction.DOWN);
+                    } else {
+                        tryGrowIcicle(world, tipPos);
+                    }
+                }
+            }
+        }
+    }
+
+    private static void tryGrowIcicle(ServerWorld world, BlockPos pos) {
+        BlockPos.Mutable mutable = pos.mutableCopy();
+
+        for(int i = 0; i < 10; ++i) {
+            mutable.move(Direction.DOWN);
+            BlockState blockState = world.getBlockState(mutable);
+            if (!blockState.getFluidState().isEmpty()) {
+                return;
+            }
+
+            if (isTip(blockState, Direction.UP) && canGrow(blockState, world, mutable)) {
+                tryGrow(world, mutable, Direction.UP);
+                return;
+            }
+
+            if (canPlaceAtWithDirection(world, mutable, Direction.UP) && !world.isWater(mutable.down())) {
+                tryGrow(world, mutable.down(), Direction.UP);
+                return;
+            }
+        }
+    }
+
+    private static void tryGrow(ServerWorld world, BlockPos pos, Direction direction) {
+        BlockPos blockPos = pos.offset(direction);
+        BlockState blockState = world.getBlockState(blockPos);
+        if (isTip(blockState, direction.getOpposite())) {
+            growMerged(blockState, world, blockPos);
+        } else if (blockState.isAir() || blockState.isOf(Blocks.WATER)) {
+            place(world, blockPos, direction, Thickness.TIP);
+        }
+    }
+
+    private static void place(WorldAccess world, BlockPos pos, Direction direction, Thickness thickness) {
+        BlockState blockState = LostInTheColdBlocks.ICICLE.getDefaultState().with(VERTICAL_DIRECTION, direction).with(THICKNESS, thickness).with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
+        world.setBlockState(pos, blockState, 3);
+    }
+
+    private static void growMerged(BlockState state, WorldAccess world, BlockPos pos) {
+        BlockPos upperPos;
+        BlockPos lowerPos;
+        if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
+            lowerPos = pos;
+            upperPos = pos.up();
+        } else {
+            upperPos = pos;
+            lowerPos = pos.down();
+        }
+
+        place(world, upperPos, Direction.DOWN, Thickness.TIP_MERGE);
+        place(world, lowerPos, Direction.UP, Thickness.TIP_MERGE);
+    }
+
+    @Nullable
+    private static BlockPos getTipPos(BlockState state, WorldAccess world, BlockPos pos, int range, boolean allowMerged) {
+        if (isTip(state, allowMerged)) {
+            return pos;
+        } else {
+            Direction direction = state.get(VERTICAL_DIRECTION);
+            BiPredicate<BlockPos, BlockState> continuePredicate = (posx, statex) -> {
+                return statex.isOf(LostInTheColdBlocks.ICICLE) && statex.get(VERTICAL_DIRECTION) == direction;
+            };
+            Predicate<BlockState> stopPredicate = (statex) -> {
+                return isTip(statex, allowMerged);
+            };
+            return searchInDirection(world, pos, direction.getDirection(), continuePredicate, stopPredicate, range).orElse(null);
+        }
+    }
+
+    public static boolean canDrip(BlockState state) {
+        return isPointingDown(state) && state.get(THICKNESS) == Thickness.TIP;
+    }
+
+    private static boolean canGrow(BlockState state, ServerWorld world, BlockPos pos) {
+        Direction direction = state.get(VERTICAL_DIRECTION);
+        BlockPos blockPos = pos.offset(direction);
+        BlockState blockState = world.getBlockState(blockPos);
+        if (!blockState.getFluidState().isEmpty()) {
+            return false;
+        } else {
+            return blockState.isAir() || isTip(blockState, direction.getOpposite());
+        }
+    }
+
+    private static boolean isGrowableBlock(BlockState anchorState) {
+        return anchorState.isIn(BlockTags.ICE);
+    }
+
+    private static Optional<BlockPos> searchInDirection(WorldAccess world, BlockPos pos, Direction.AxisDirection direction, BiPredicate<BlockPos, BlockState> continuePredicate, Predicate<BlockState> stopPredicate, int range) {
+        Direction toMove = Direction.get(direction, Direction.Axis.Y);
+        BlockPos.Mutable current = pos.mutableCopy();
+
+        for(int i = 1; i < range; i++) {
+            current.move(toMove);
+            BlockState blockState = world.getBlockState(current);
+            if (stopPredicate.test(blockState)) {
+                return Optional.of(current.toImmutable());
+            }
+
+            if (world.isOutOfHeightLimit(current.getY()) || !continuePredicate.test(current, blockState)) {
+                LostInTheCold.LOGGER.info("do not continue");
+                return Optional.empty();
+            }
+        }
+
+        return Optional.empty();
+    }
+
     private static boolean canPlaceAtWithDirection(WorldView world, BlockPos pos, Direction direction) {
         BlockPos blockPos = pos.offset(direction.getOpposite());
         BlockState blockState = world.getBlockState(blockPos);
@@ -272,27 +425,31 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         return state.isOf(LostInTheColdBlocks.ICICLE) && state.get(VERTICAL_DIRECTION) == direction;
     }
 
+    private static boolean isTip(BlockState state, Direction direction) {
+        return isTip(state, false) && state.get(VERTICAL_DIRECTION) == direction;
+    }
+
     private static boolean isTip(BlockState state, boolean allowMerged) {
         if (!state.isOf(LostInTheColdBlocks.ICICLE)) {
             return false;
         } else {
             Thickness thickness = state.get(THICKNESS);
-            return thickness == Thickness.TIP || allowMerged && thickness == Thickness.TIP_MERGE;
+            return thickness == Thickness.TIP || (allowMerged && thickness == Thickness.TIP_MERGE);
         }
     }
 
     private static void spawnFallingBlock(BlockState state, ServerWorld world, BlockPos pos) {
-        BlockPos.Mutable mutablePosition = pos.mutableCopy();
+        BlockPos.Mutable current = pos.mutableCopy();
 
-        for (BlockState blockState = state; isPointingDown(blockState); blockState = world.getBlockState(mutablePosition)) {
-            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, mutablePosition, blockState);
+        for (BlockState blockState = state; isPointingDown(blockState); blockState = world.getBlockState(current)) {
+            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, current, blockState);
             if (isTip(blockState, true)) {
-                float fallHurtAmount = Math.max(1 + pos.getY() - mutablePosition.getY(), 6);
+                float fallHurtAmount = Math.max(1 + pos.getY() - current.getY(), 6);
                 fallingBlockEntity.setHurtEntities(fallHurtAmount, 40);
                 break;
             }
 
-            mutablePosition.move(Direction.DOWN);
+            current.move(Direction.DOWN);
         }
     }
 
