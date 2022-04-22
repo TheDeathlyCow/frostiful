@@ -7,6 +7,7 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.particle.ParticleTypes;
@@ -19,6 +20,9 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.shape.VoxelShape;
+import net.minecraft.util.shape.VoxelShapes;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
@@ -33,6 +37,14 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     public static final EnumProperty<Thickness> THICKNESS = Properties.THICKNESS;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty UNSTABLE = Properties.UNSTABLE;
+
+    private static final VoxelShape TIP_MERGE_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
+    private static final VoxelShape UP_TIP_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 11.0D, 11.0D);
+    private static final VoxelShape DOWN_TIP_SHAPE = Block.createCuboidShape(5.0D, 5.0D, 5.0D, 11.0D, 16.0D, 11.0D);
+    private static final VoxelShape BASE_SHAPE = Block.createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
+    private static final VoxelShape FRUSTUM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+    private static final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    private static final VoxelShape DRIP_COLLISION_SHAPE = Block.createCuboidShape(6.0D, 0.0D, 6.0D, 10.0D, 16.0D, 10.0D);
 
     private static final float BECOME_UNSTABLE_CHANCE = 0.2f;
     private static final int UNSTABLE_TICKS_BEFORE_FALL = 60;
@@ -131,7 +143,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (isHeldByIcicle(state, world, pos)) {
+        if (isPointingDown(state)) {
             if (!isUnstable(state) && random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
                 world.setBlockState(pos, state.with(UNSTABLE, true));
                 world.createAndScheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL);
@@ -156,6 +168,54 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         return LostInTheColdDamageSource.FALLING_ICICLE;
     }
 
+    @Override
+    public FluidState getFluidState(BlockState state) {
+        return state.get(WATERLOGGED) ? Fluids.WATER.getStill(false) : super.getFluidState(state);
+    }
+
+    @Override
+    public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
+        return VoxelShapes.empty();
+    }
+
+    @Override
+    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+        Thickness thickness = state.get(THICKNESS);
+        VoxelShape voxelShape;
+        if (thickness == Thickness.TIP_MERGE) {
+            voxelShape = TIP_MERGE_SHAPE;
+        } else if (thickness == Thickness.TIP) {
+            if (state.get(VERTICAL_DIRECTION) == Direction.DOWN) {
+                voxelShape = DOWN_TIP_SHAPE;
+            } else {
+                voxelShape = UP_TIP_SHAPE;
+            }
+        } else if (thickness == Thickness.FRUSTUM) {
+            voxelShape = BASE_SHAPE;
+        } else if (thickness == Thickness.MIDDLE) {
+            voxelShape = FRUSTUM_SHAPE;
+        } else {
+            voxelShape = MIDDLE_SHAPE;
+        }
+
+        Vec3d vec3d = state.getModelOffset(world, pos);
+        return voxelShape.offset(vec3d.x, 0.0D, vec3d.z);
+    }
+
+    @Override
+    public boolean isShapeFullCube(BlockState state, BlockView world, BlockPos pos) {
+        return false;
+    }
+
+    @Override
+    public OffsetType getOffsetType() {
+        return OffsetType.XZ;
+    }
+
+    @Override
+    public float getMaxHorizontalModelOffset() {
+        return 0.125F;
+    }
 
     private static boolean canPlaceAtWithDirection(WorldView world, BlockPos pos, Direction direction) {
         BlockPos blockPos = pos.offset(direction.getOpposite());
