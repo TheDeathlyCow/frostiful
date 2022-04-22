@@ -52,8 +52,8 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     private static final VoxelShape FRUSTUM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
     private static final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
-    private static final float BECOME_UNSTABLE_CHANCE = 0.2f;
-    private static final float GROW_CHANCE = 0.3f;
+    private static final float BECOME_UNSTABLE_CHANCE = 0.01f;
+    private static final float GROW_CHANCE = 0.02f;
     private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformIntProvider.create(40, 80);
 
     public Icicle(Settings settings) {
@@ -154,9 +154,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
             if (random.nextFloat() < GROW_CHANCE) { // grow
                 this.tryGrow(state, world, pos, random);
-            }
-
-            if (random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
+            } else if (random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
                 this.tryFall(state, world, pos, random);
             }
         }
@@ -256,14 +254,14 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
                     if (random.nextBoolean()) {
                         tryGrow(world, tipPos, Direction.DOWN);
                     } else {
-                        tryGrowIcicle(world, tipPos);
+                        tryGrowGroundIcicle(world, tipPos);
                     }
                 }
             }
         }
     }
 
-    private static void tryGrowIcicle(ServerWorld world, BlockPos pos) {
+    private static void tryGrowGroundIcicle(ServerWorld world, BlockPos pos) {
         BlockPos.Mutable mutable = pos.mutableCopy();
 
         for(int i = 0; i < 10; ++i) {
