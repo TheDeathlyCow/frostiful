@@ -47,4 +47,9 @@ public class LostInTheColdGameRules {
                     CATEGORY,
                     GameRuleFactory.createIntRule(8, 0, 8)
             );
+
+    public static void registerGamerules() {
+        LostInTheCold.LOGGER.info("Registering gamerules...");
+        // game rules already registered - calling this method just loads this class
+    }
 }

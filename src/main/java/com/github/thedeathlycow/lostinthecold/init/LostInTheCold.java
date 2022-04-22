@@ -7,6 +7,7 @@ import com.github.thedeathlycow.lostinthecold.config.ConfigKeys;
 import com.github.thedeathlycow.lostinthecold.items.LostInTheColdItems;
 import com.github.thedeathlycow.lostinthecold.server.command.FreezeCommand;
 import com.github.thedeathlycow.lostinthecold.tag.biome.LostInTheColdBiomeTemperatureTags;
+import com.github.thedeathlycow.lostinthecold.world.LostInTheColdGameRules;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import org.slf4j.Logger;
@@ -35,6 +36,7 @@ public class LostInTheCold implements ModInitializer {
         LostInTheColdEntityAttributes.registerAttributes();
         LostInTheColdBlocks.registerBlocks();
         LostInTheColdItems.registerItems();
+        LostInTheColdGameRules.registerGamerules();
 
         LOGGER.info("Initialized Lost in the Cold!");
     }

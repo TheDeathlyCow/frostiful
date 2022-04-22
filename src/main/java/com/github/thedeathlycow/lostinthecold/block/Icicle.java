@@ -34,6 +34,9 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
     public static final BooleanProperty UNSTABLE = Properties.UNSTABLE;
 
+    private static final float BECOME_UNSTABLE_CHANCE = 0.2f;
+    private static final int UNSTABLE_TICKS_BEFORE_FALL = 60;
+
     public Icicle(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState()
@@ -72,11 +75,11 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         if (direction != Direction.UP && direction != Direction.DOWN) {
             return state;
         } else {
-            Direction direction2 = state.get(VERTICAL_DIRECTION);
-            if (direction2 == Direction.DOWN && world.getBlockTickScheduler().isQueued(pos, this)) {
+            Direction pointingIn = state.get(VERTICAL_DIRECTION);
+            if (pointingIn == Direction.DOWN && world.getBlockTickScheduler().isQueued(pos, this)) {
                 return state;
-            } else if (direction == direction2.getOpposite() && !this.canPlaceAt(state, world, pos)) {
-                if (direction2 == Direction.DOWN) {
+            } else if (direction == pointingIn.getOpposite() && !this.canPlaceAt(state, world, pos)) {
+                if (pointingIn == Direction.DOWN) {
                     world.createAndScheduleBlockTick(pos, this, 2);
                 } else {
                     world.createAndScheduleBlockTick(pos, this, 1);
@@ -84,9 +87,10 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
                 return state;
             } else {
-                boolean bl = state.get(THICKNESS) == Thickness.TIP_MERGE;
-                Thickness thickness = getThickness(world, pos, direction2, bl);
-                return state.with(THICKNESS, thickness);
+                boolean tryMerge = state.get(THICKNESS) == Thickness.TIP_MERGE;
+                Thickness thickness = getThickness(world, pos, pointingIn, tryMerge);
+
+                return state.with(THICKNESS, thickness).with(UNSTABLE, isUnstable(neighborState));
             }
         }
     }
@@ -103,13 +107,9 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isHeldByIcicle(state, world, pos)) {
-            if (random.nextFloat() < 0.2) { // fall
+            if (!isUnstable(state) && random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
                 world.setBlockState(pos, state.with(UNSTABLE, true));
-                world.createAndScheduleBlockTick(pos, this, 60);
-            }
-
-            if (random.nextFloat() < 0.1) { // grow
-
+                world.createAndScheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL);
             }
         }
     }
