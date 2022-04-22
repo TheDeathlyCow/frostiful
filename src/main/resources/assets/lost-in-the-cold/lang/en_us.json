@@ -16,6 +16,7 @@
   "item.lost-in-the-cold.fur_lined_netherite_chestplate": "Fur Lined Netherite Chestplate",
   "item.lost-in-the-cold.fur_lined_netherite_leggings": "Fur Lined Netherite Leggings",
   "item.lost-in-the-cold.fur_lined_netherite_boots": "Fur Lined Netherite Boots",
+  "block.lost-in-the-cold.icicle": "Icicle",
   "commands.lost-in-the-cold.freeze.add.success.single": "Added %d frozen ticks to %s (now %d)",
   "commands.lost-in-the-cold.freeze.add.success.multiple": "Added %d frozen ticks to %d targets",
   "commands.lost-in-the-cold.freeze.remove.success.single": "Removed %d frozen ticks to %s (now %d)",

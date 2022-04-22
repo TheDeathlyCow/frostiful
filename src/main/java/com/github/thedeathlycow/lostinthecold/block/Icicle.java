@@ -66,6 +66,30 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         }
     }
 
+    @Nullable
+    public BlockState getPlacementState(ItemPlacementContext ctx) {
+        WorldAccess worldAccess = ctx.getWorld();
+        BlockPos blockPos = ctx.getBlockPos();
+        Direction lookingDirection = ctx.getVerticalPlayerLookDirection().getOpposite();
+        Direction direction = getDirectionToPlaceAt(worldAccess, blockPos, lookingDirection);
+        if (direction == null) {
+            return null;
+        }
+
+        boolean bl = !ctx.shouldCancelInteraction();
+        Thickness thickness = getThickness(worldAccess, blockPos, direction, bl);
+
+        boolean unstable = false;
+        if (direction == Direction.DOWN) {
+            unstable = isUnstable(worldAccess.getBlockState(blockPos.up()));
+        }
+        return thickness == null ? null : this.getDefaultState()
+                .with(VERTICAL_DIRECTION, direction)
+                .with(THICKNESS, thickness)
+                .with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER)
+                .with(UNSTABLE, unstable);
+    }
+
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
@@ -90,6 +114,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
                 boolean tryMerge = state.get(THICKNESS) == Thickness.TIP_MERGE;
                 Thickness thickness = getThickness(world, pos, pointingIn, tryMerge);
 
+                //boolean makeUnstable = !isUnstable(state) && isUnstable(neighborState);
                 return state.with(THICKNESS, thickness).with(UNSTABLE, isUnstable(neighborState));
             }
         }
@@ -117,28 +142,13 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
         if (isUnstable(state)) {
-            createParticle(world, pos, state);
+            createUnstableParticle(world, pos, state);
         }
     }
 
     @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
         return PistonBehavior.DESTROY;
-    }
-
-    @Nullable
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        WorldAccess worldAccess = ctx.getWorld();
-        BlockPos blockPos = ctx.getBlockPos();
-        Direction lookingDirection = ctx.getVerticalPlayerLookDirection().getOpposite();
-        Direction direction = getDirectionToPlaceAt(worldAccess, blockPos, lookingDirection);
-        if (direction == null) {
-            return null;
-        } else {
-            boolean bl = !ctx.shouldCancelInteraction();
-            Thickness thickness = getThickness(worldAccess, blockPos, direction, bl);
-            return thickness == null ? null : this.getDefaultState().with(VERTICAL_DIRECTION, direction).with(THICKNESS, thickness).with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER);
-        }
     }
 
     @Override
@@ -230,7 +240,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         return isPointingDown(state) && !world.getBlockState(pos.up()).isOf(LostInTheColdBlocks.ICICLE);
     }
 
-    private static void createParticle(World world, BlockPos pos, BlockState state) {
+    private static void createUnstableParticle(World world, BlockPos pos, BlockState state) {
         Vec3d vec3d = state.getModelOffset(world, pos);
         double xOffset = (double)pos.getX() + 0.5D + vec3d.x;
         double yOffset = (double)((float)(pos.getY() + 1) - 0.6875F) - 0.0625D;
