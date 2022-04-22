@@ -9,6 +9,7 @@ import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -17,6 +18,7 @@ import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
@@ -24,27 +26,68 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
+@SuppressWarnings("deprecation")
+public class Icicle extends Block implements LandingBlock, Waterloggable {
 
     public static final DirectionProperty VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;
     public static final EnumProperty<Thickness> THICKNESS = Properties.THICKNESS;
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    public static final BooleanProperty UNSTABLE = Properties.UNSTABLE;
 
-    public IcicleBlock(Settings settings) {
+    public Icicle(Settings settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState().with(VERTICAL_DIRECTION, Direction.UP).with(WATERLOGGED, false));
+        this.setDefaultState(this.stateManager.getDefaultState()
+                .with(VERTICAL_DIRECTION, Direction.UP)
+                .with(THICKNESS, Thickness.TIP)
+                .with(WATERLOGGED, false)
+                .with(UNSTABLE, false)
+        );
     }
 
     @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        builder.add(VERTICAL_DIRECTION, THICKNESS, WATERLOGGED);
+        builder.add(VERTICAL_DIRECTION, THICKNESS, WATERLOGGED, UNSTABLE);
     }
 
+    @Override
+    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+        return canPlaceAtWithDirection(world, pos, state.get(VERTICAL_DIRECTION));
+    }
+
+    @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
             entity.handleFallDamage(fallDistance + 2.0F, 2.0F, LostInTheColdDamageSource.ICICLE);
         } else {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
+        }
+    }
+
+    @Override
+    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
+        if (state.get(WATERLOGGED)) {
+            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+        }
+
+        if (direction != Direction.UP && direction != Direction.DOWN) {
+            return state;
+        } else {
+            Direction direction2 = state.get(VERTICAL_DIRECTION);
+            if (direction2 == Direction.DOWN && world.getBlockTickScheduler().isQueued(pos, this)) {
+                return state;
+            } else if (direction == direction2.getOpposite() && !this.canPlaceAt(state, world, pos)) {
+                if (direction2 == Direction.DOWN) {
+                    world.createAndScheduleBlockTick(pos, this, 2);
+                } else {
+                    world.createAndScheduleBlockTick(pos, this, 1);
+                }
+
+                return state;
+            } else {
+                boolean bl = state.get(THICKNESS) == Thickness.TIP_MERGE;
+                Thickness thickness = getThickness(world, pos, direction2, bl);
+                return state.with(THICKNESS, thickness);
+            }
         }
     }
 
@@ -57,6 +100,28 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         }
     }
 
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        if (isHeldByIcicle(state, world, pos)) {
+            if (random.nextFloat() < 0.2) { // fall
+                world.setBlockState(pos, state.with(UNSTABLE, true));
+                world.createAndScheduleBlockTick(pos, this, 60);
+            }
+
+            if (random.nextFloat() < 0.1) { // grow
+
+            }
+        }
+    }
+
+    @Override
+    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+        if (isUnstable(state)) {
+            createParticle(world, pos, state);
+        }
+    }
+
+    @Override
     public PistonBehavior getPistonBehavior(BlockState state) {
         return PistonBehavior.DESTROY;
     }
@@ -80,7 +145,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     public DamageSource getDamageSource() {
         return LostInTheColdDamageSource.FALLING_ICICLE;
     }
-    
+
 
     private static boolean canPlaceAtWithDirection(WorldView world, BlockPos pos, Direction direction) {
         BlockPos blockPos = pos.offset(direction.getOpposite());
@@ -111,7 +176,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         } else if (!isIcicleFacingDirection(blockState, direction)) {
             return Thickness.TIP;
         } else {
-            Thickness thickness = (Thickness)blockState.get(THICKNESS);
+            Thickness thickness = blockState.get(THICKNESS);
             if (thickness != Thickness.TIP && thickness != Thickness.TIP_MERGE) {
                 BlockState blockState2 = world.getBlockState(pos.offset(direction2));
                 return !isIcicleFacingDirection(blockState2, direction) ? Thickness.BASE : Thickness.MIDDLE;
@@ -119,6 +184,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
                 return Thickness.FRUSTUM;
             }
         }
+    }
+
+    private static boolean isUnstable(BlockState state) {
+        return state.isOf(LostInTheColdBlocks.ICICLE) && state.get(UNSTABLE);
     }
 
     private static boolean isPointingUp(BlockState state) {
@@ -130,11 +199,11 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isIcicleFacingDirection(BlockState state, Direction direction) {
-        return state.isOf(LostInTheColdBlocks.ICICLE_BLOCK) && state.get(VERTICAL_DIRECTION) == direction;
+        return state.isOf(LostInTheColdBlocks.ICICLE) && state.get(VERTICAL_DIRECTION) == direction;
     }
 
     private static boolean isTip(BlockState state, boolean allowMerged) {
-        if (!state.isOf(Blocks.POINTED_DRIPSTONE)) {
+        if (!state.isOf(LostInTheColdBlocks.ICICLE)) {
             return false;
         } else {
             Thickness thickness = state.get(THICKNESS);
@@ -145,7 +214,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     private static void spawnFallingBlock(BlockState state, ServerWorld world, BlockPos pos) {
         BlockPos.Mutable mutablePosition = pos.mutableCopy();
 
-        for(BlockState blockState = state; isPointingDown(blockState); blockState = world.getBlockState(mutablePosition)) {
+        for (BlockState blockState = state; isPointingDown(blockState); blockState = world.getBlockState(mutablePosition)) {
             FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, mutablePosition, blockState);
             if (isTip(blockState, true)) {
                 float fallHurtAmount = Math.max(1 + pos.getY() - mutablePosition.getY(), 6);
@@ -155,6 +224,17 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
 
             mutablePosition.move(Direction.DOWN);
         }
+    }
 
+    private static boolean isHeldByIcicle(BlockState state, WorldView world, BlockPos pos) {
+        return isPointingDown(state) && !world.getBlockState(pos.up()).isOf(LostInTheColdBlocks.ICICLE);
+    }
+
+    private static void createParticle(World world, BlockPos pos, BlockState state) {
+        Vec3d vec3d = state.getModelOffset(world, pos);
+        double xOffset = (double)pos.getX() + 0.5D + vec3d.x;
+        double yOffset = (double)((float)(pos.getY() + 1) - 0.6875F) - 0.0625D;
+        double zOffset = (double)pos.getZ() + 0.5D + vec3d.z;
+        world.addParticle(ParticleTypes.SNOWFLAKE, xOffset, yOffset, zOffset, 0.0D, 0.0D, 0.0D);
     }
 }

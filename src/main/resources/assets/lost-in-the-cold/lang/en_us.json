@@ -25,8 +25,12 @@
   "commands.lost-in-the-cold.get.current.success": "%s has %d frozen ticks",
   "commands.lost-in-the-cold.get.max.success": "%s can have a maximum of %d frozen ticks",
   "gamerule.doPassiveFreezing": "Do passive freezing",
-  "gamerule.doSnowAccumulation": "Do snow accumulation",
+  "gamerule.maxSnowAccumulation": "Max snow accumulation",
   "gamerule.category.lost-in-the-cold": "Lost in the Cold",
   "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.title": "An Ancient Fur Suit",
-  "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.description": "Get a full suit of Fur Lined Netherite Armor"
+  "advancements.lost-in-the-cold.nether.fur_lined_netherite_armor.description": "Get a full suit of Fur Lined Netherite Armor",
+  "death.attack.lost-in-the-cold.icicle": "%1$s was impaled on an icicle",
+  "death.attack.lost-in-the-cold.icicle.player": "%1$s was impaled on an icicle whilst fighting %2$s",
+  "death.attack.lost-in-the-cold.fallingIcicle": "%1$s was skewered by a falling icicle",
+  "death.attack.lost-in-the-cold.fallingIcicle.player": "%1$s was skewered by a falling icicle whilst fighting %2$s"
 }

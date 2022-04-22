@@ -11,9 +11,13 @@ import net.minecraft.util.registry.Registry;
 
 public class LostInTheColdBlocks {
 
-    public static final Block ICICLE_BLOCK = register("icicle_block", new IcicleBlock(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).ticksRandomly().strength(0.5F).sounds(BlockSoundGroup.GLASS).dynamicBounds()));
+    public static final Block ICICLE = new Icicle(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).ticksRandomly().strength(0.5F).sounds(BlockSoundGroup.GLASS).dynamicBounds());
 
-    private static Block register(String id, Block item) {
-        return Registry.register(Registry.BLOCK, new Identifier(LostInTheCold.MODID, id), item);
+    public static void registerBlocks() {
+        register("icicle", ICICLE);
+    }
+
+    private static void register(String id, Block item) {
+        Registry.register(Registry.BLOCK, new Identifier(LostInTheCold.MODID, id), item);
     }
 }
