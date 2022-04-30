@@ -3,6 +3,7 @@ package com.github.thedeathlycow.lostinthecold.util.survival;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffects;
 
+import java.util.Collections;
 import java.util.List;
 
 public record FrostStatusEffect(double progressThreshold, StatusEffect effect, int duration, int amplifier) {
@@ -15,7 +16,7 @@ public record FrostStatusEffect(double progressThreshold, StatusEffect effect, i
     );
 
     public static List<FrostStatusEffect> getPassiveFreezingEffects() {
-        return effects;
+        return Collections.unmodifiableList(effects);
     }
 
 }
