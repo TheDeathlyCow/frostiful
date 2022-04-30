@@ -51,5 +51,6 @@ public class LostInTheColdGameRules {
     public static void registerGamerules() {
         LostInTheCold.LOGGER.info("Registering gamerules...");
         // game rules already registered - calling this method just loads this class
+        LostInTheCold.LOGGER.info("Gamerules registered!");
     }
 }

@@ -39,7 +39,12 @@ public abstract class PlayerEntityMixin {
         final boolean doPassiveFreezing = world.getGameRules().getBoolean(LostInTheColdGameRules.DO_PASSIVE_FREEZING);
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
-            FrostHelper.addFrost(playerEntity, passiveFreezing);
+
+            if (passiveFreezing > 0) {
+                FrostHelper.addFrost(playerEntity, passiveFreezing);
+            } else {
+                FrostHelper.removeFrost(playerEntity, -passiveFreezing);
+            }
         }
 
         int warmth = PassiveFreezingHelper.getWarmth(playerEntity);

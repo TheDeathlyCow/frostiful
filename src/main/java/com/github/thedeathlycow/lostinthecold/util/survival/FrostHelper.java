@@ -7,7 +7,6 @@ import com.github.thedeathlycow.lostinthecold.init.LostInTheCold;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
@@ -22,25 +21,37 @@ public class FrostHelper {
         int toAdd = (int) ((1 - frostModifier) * amount);
 
         int current = entity.getFrozenTicks();
-        setFrost(entity, current + toAdd);
-
-        double progress = getFrostProgress(entity);
-
-        StatusEffectInstance effect = entity.getStatusEffect(StatusEffects.MINING_FATIGUE);
-
-        if (progress >= 0.5 && (effect == null || effect.getDuration() <= 1)) {
-            entity.addStatusEffect(new StatusEffectInstance(StatusEffects.MINING_FATIGUE, 8, 0, true, true), null);
-        }
+        setLivingFrost(entity, current + toAdd);
     }
 
     public static void removeFrost(LivingEntity entity, int amount) {
         int current = entity.getFrozenTicks();
-        setFrost(entity, current - amount);
+        setLivingFrost(entity, current - amount);
+    }
+
+    public static void setLivingFrost(LivingEntity entity, int amount) {
+        setFrost(entity, amount);
+        applyEffects(entity);
     }
 
     public static void setFrost(Entity entity, int amount) {
         amount = MathHelper.clamp(amount, 0, entity.getMinFreezeDamageTicks());
         entity.setFrozenTicks(amount);
+    }
+
+    private static void applyEffects(LivingEntity entity) {
+        double progress = getFrostProgress(entity);
+        for (FrostStatusEffect effect : FrostStatusEffect.EFFECTS) {
+            StatusEffectInstance effectInstance = entity.getStatusEffect(effect.effect());
+            boolean applyEffect = progress >= effect.progressThreshold()
+                    && (effectInstance == null || effectInstance.getDuration() <= 1);
+            if (applyEffect) {
+                entity.addStatusEffect(
+                        new StatusEffectInstance(effect.effect(), effect.duration(), effect.amplifier(), true, true),
+                        null
+                );
+            }
+        }
     }
 
     public static double getFrostProgress(Entity entity) {
