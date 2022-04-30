@@ -41,7 +41,7 @@ public class FrostHelper {
 
     private static void applyEffects(LivingEntity entity) {
         double progress = getFrostProgress(entity);
-        for (FrostStatusEffect effect : FrostStatusEffect.EFFECTS) {
+        for (FrostStatusEffect effect : FrostStatusEffect.getPassiveFreezingEffects()) {
             StatusEffectInstance effectInstance = entity.getStatusEffect(effect.effect());
             boolean applyEffect = progress >= effect.progressThreshold()
                     && (effectInstance == null || effectInstance.getAmplifier() < effect.amplifier());
