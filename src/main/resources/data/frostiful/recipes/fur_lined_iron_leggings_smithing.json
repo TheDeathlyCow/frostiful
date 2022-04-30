@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "minecraft:iron_leggings"
+  },
+  "addition": {
+    "tag": "frostiful:fur"
+  },
+  "result": {
+    "item": "frostiful:fur_lined_iron_leggings"
+  }
+}

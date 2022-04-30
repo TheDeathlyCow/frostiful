@@ -75,5 +75,5 @@ publishing {
 }
 
 loom {
-	accessWidenerPath = file("src/main/resources/lost-in-the-cold.accesswidener")
+	accessWidenerPath = file("src/main/resources/frostiful.accesswidener")
 }

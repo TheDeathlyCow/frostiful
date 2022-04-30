@@ -1,0 +1,69 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "frostiful:fur_lined_iron_boots_smithing",
+      "frostiful:fur_lined_iron_leggings_smithing",
+      "frostiful:fur_lined_iron_chestplate_smithing",
+      "frostiful:fur_lined_iron_helmet_smithing"
+    ]
+  },
+  "criteria": {
+    "has_fur": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "frostiful:fur"
+          }
+        ]
+      }
+    },
+    "has_iron_ingot": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:iron_ingot"
+            ]
+          }
+        ]
+      }
+    },
+    "has_boots_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_iron_boots_smithing"
+      }
+    },
+    "has_leggings_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_iron_leggings_smithing"
+      }
+    },
+    "has_chestplate_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_iron_chestplate_smithing"
+      }
+    },
+    "has_helmet_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "minecraft:fur_lined_iron_helmet_smithing"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_fur",
+      "has_iron_ingot",
+      "has_boots_recipe",
+      "has_leggings_recipe",
+      "has_chestplate_recipe",
+      "has_helmet_recipe"
+    ]
+  ]
+}

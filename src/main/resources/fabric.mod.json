@@ -1,9 +1,9 @@
 {
   "schemaVersion": 1,
-  "id": "lost-in-the-cold",
+  "id": "frostiful",
   "version": "${version}",
 
-  "name": "Lost in the Cold",
+  "name": "Frostiful",
   "description": "Expands upon the freezing system added with Powdered Snow in 1.17.",
   "authors": [
     "TheDeathlyCow"
@@ -14,22 +14,22 @@
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/lost-in-the-cold/icon.png",
+  "icon": "assets/frostiful/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.thedeathlycow.lostinthecold.init.LostInTheCold"
+      "com.github.thedeathlycow.frostiful.init.Frostiful"
     ],
     "server": [
-      "com.github.thedeathlycow.lostinthecold.init.LostInTheColdServer"
+      "com.github.thedeathlycow.frostiful.init.FrostifulServer"
     ],
     "client": [
-      "com.github.thedeathlycow.lostinthecold.init.LostInTheColdClient"
+      "com.github.thedeathlycow.frostiful.init.FrostifulClient"
     ]
   },
   "mixins": [
-    "lost-in-the-cold.mixins.json"
+    "frostiful.mixins.json"
   ],
 
   "depends": {
@@ -41,5 +41,5 @@
   "suggests": {
     "another-mod": "*"
   },
-  "accessWidener" : "lost-in-the-cold.accesswidener"
+  "accessWidener" : "frostiful.accesswidener"
 }
