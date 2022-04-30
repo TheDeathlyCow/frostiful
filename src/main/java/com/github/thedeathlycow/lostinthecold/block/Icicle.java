@@ -100,7 +100,8 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
         boolean unstable = false;
         if (direction == Direction.DOWN) {
-            unstable = isUnstable(worldAccess.getBlockState(blockPos.up()));
+            BlockState state = worldAccess.getBlockState(blockPos.up());
+            unstable = isUnstable(state) && isHeldByIcicle(state, worldAccess, blockPos);
         }
         return thickness == null ? null : this.getDefaultState()
                 .with(VERTICAL_DIRECTION, direction)
@@ -133,8 +134,8 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
                 boolean tryMerge = state.get(THICKNESS) == Thickness.TIP_MERGE;
                 Thickness thickness = getThickness(world, pos, pointingIn, tryMerge);
 
-                //boolean makeUnstable = !isUnstable(state) && isUnstable(neighborState);
-                return state.with(THICKNESS, thickness).with(UNSTABLE, isUnstable(neighborState));
+                boolean makeUnstable = isUnstable(state) || (isHeldByIcicle(state, world, pos) && isUnstable(neighborState));
+                return state.with(THICKNESS, thickness).with(UNSTABLE, makeUnstable);
             }
         }
     }
@@ -154,7 +155,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
             if (random.nextFloat() < GROW_CHANCE) { // grow
                 this.tryGrow(state, world, pos, random);
-            } else if (random.nextFloat() < BECOME_UNSTABLE_CHANCE) { // fall
+            } else if (random.nextFloat() < BECOME_UNSTABLE_CHANCE && isHeldByIcicle(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
         }
@@ -264,7 +265,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     private static void tryGrowGroundIcicle(ServerWorld world, BlockPos pos) {
         BlockPos.Mutable mutable = pos.mutableCopy();
 
-        for(int i = 0; i < 10; ++i) {
+        for (int i = 0; i < 10; ++i) {
             mutable.move(Direction.DOWN);
             BlockState blockState = world.getBlockState(mutable);
             if (!blockState.getFluidState().isEmpty()) {
@@ -352,7 +353,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         Direction toMove = Direction.get(direction, Direction.Axis.Y);
         BlockPos.Mutable current = pos.mutableCopy();
 
-        for(int i = 1; i < range; i++) {
+        for (int i = 1; i < range; i++) {
             current.move(toMove);
             BlockState blockState = world.getBlockState(current);
             if (stopPredicate.test(blockState)) {
@@ -452,14 +453,14 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isHeldByIcicle(BlockState state, WorldView world, BlockPos pos) {
-        return isPointingDown(state) && !world.getBlockState(pos.up()).isOf(LostInTheColdBlocks.ICICLE);
+        return isPointingDown(state) && world.getBlockState(pos.up()).isOf(LostInTheColdBlocks.ICICLE);
     }
 
     private static void createUnstableParticle(World world, BlockPos pos, BlockState state) {
         Vec3d vec3d = state.getModelOffset(world, pos);
-        double xOffset = (double)pos.getX() + 0.5D + vec3d.x;
-        double yOffset = (double)((float)(pos.getY() + 1) - 0.6875F) - 0.0625D;
-        double zOffset = (double)pos.getZ() + 0.5D + vec3d.z;
+        double xOffset = (double) pos.getX() + 0.5D + vec3d.x;
+        double yOffset = (double) ((float) (pos.getY() + 1) - 0.6875F) - 0.0625D;
+        double zOffset = (double) pos.getZ() + 0.5D + vec3d.z;
         world.addParticle(ParticleTypes.SNOWFLAKE, xOffset, yOffset, zOffset, 0.0D, 0.0D, 0.0D);
     }
 }
