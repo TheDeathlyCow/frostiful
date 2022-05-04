@@ -1,7 +1,10 @@
 package com.github.thedeathlycow.frostiful.block;
 
+import com.github.thedeathlycow.frostiful.config.IcicleConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.simple.config.Config;
+import com.github.thedeathlycow.simple.config.ConfigFactory;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
@@ -9,7 +12,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -72,9 +74,6 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     private static final VoxelShape FRUSTUM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
     private static final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
-    // TODO: make these configurable
-    private static final float BECOME_UNSTABLE_CHANCE = 0.01f;
-    private static final float GROW_CHANCE = 0.02f;
     private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformIntProvider.create(40, 80);
 
     public Icicle(Settings settings) {
@@ -97,7 +96,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
      *
      * @param state State of the icicle to test
      * @param world World the icicle is in
-     * @param pos The position of the icicle
+     * @param pos   The position of the icicle
      * @return Returns true if the icicle can be placed, false otherwise
      */
     @Override
@@ -108,9 +107,9 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     /**
      * Icicles collapse when hit by any projectile
      *
-     * @param world The world the icicle is in
-     * @param state The state of the icicle
-     * @param hit How the projectile hit the icicle
+     * @param world      The world the icicle is in
+     * @param state      The state of the icicle
+     * @param hit        How the projectile hit the icicle
      * @param projectile The projectile that hit the icicle
      */
     @Override
@@ -124,10 +123,10 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     /**
      * Hurt entities when they fall on icicles
      *
-     * @param world The world the icicle is in
-     * @param state The state of the icicle
-     * @param pos The position of the icicle
-     * @param entity The entity that fell
+     * @param world        The world the icicle is in
+     * @param state        The state of the icicle
+     * @param pos          The position of the icicle
+     * @param entity       The entity that fell
      * @param fallDistance How far the entity fell
      */
     @Override
@@ -176,13 +175,12 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
      * Schedules the icicle to be broken if its support has been broken or if its support
      * is unstable.
      *
-     *
-     * @param state Old icicle state
-     * @param direction Direction the block update came from
+     * @param state         Old icicle state
+     * @param direction     Direction the block update came from
      * @param neighborState The state of the neighbour
-     * @param world The world the icicle is in
-     * @param pos The position of the icicle
-     * @param neighborPos The position of the neighbour
+     * @param world         The world the icicle is in
+     * @param pos           The position of the icicle
+     * @param neighborPos   The position of the neighbour
      * @return Returns the updated {@link BlockState} of the icicle
      */
     @Override
@@ -227,10 +225,9 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-
-            if (random.nextFloat() < GROW_CHANCE) { // grow
+            if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.GROW_CHANCE)) { // grow
                 this.tryGrow(state, world, pos, random);
-            } else if (random.nextFloat() < BECOME_UNSTABLE_CHANCE && isHeldByIcicle(state, world, pos)) { // fall
+            } else if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.BECOME_UNSTABLE_CHANCE) && isHeldByIcicle(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
         }
