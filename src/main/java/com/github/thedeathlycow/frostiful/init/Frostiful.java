@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.init;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
-import com.github.thedeathlycow.frostiful.config.ConfigKeys;
+import com.github.thedeathlycow.frostiful.config.GlobalConfig;
 import com.github.thedeathlycow.frostiful.config.ConfigReloader;
 import com.github.thedeathlycow.frostiful.items.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
@@ -20,7 +20,7 @@ public class Frostiful implements ModInitializer {
 
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    private static final Config CONFIG = ConfigKeys.createConfig();
+    private static final Config CONFIG = GlobalConfig.createConfig();
 
     public static Config getConfig() {
         return CONFIG;

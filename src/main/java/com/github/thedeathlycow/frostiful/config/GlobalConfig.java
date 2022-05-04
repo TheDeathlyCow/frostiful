@@ -9,7 +9,7 @@ import com.github.thedeathlycow.simple.config.key.DoubleEntry;
 import com.github.thedeathlycow.simple.config.key.IntegerEntry;
 import net.fabricmc.loader.api.FabricLoader;
 
-public class ConfigKeys {
+public class GlobalConfig {
     public static final ConfigEntry<Double> PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE = new DoubleEntry("percent_frost_reduction_per_frost_resistance", 10.0D, 0.0D, 100.0D);
     public static final ConfigEntry<Integer> MAX_FROST_MULTIPLIER = new IntegerEntry("max_frost_multiplier", 140, 1);
     public static final ConfigEntry<Double> BASE_ENTITY_FROST_RESISTANCE = new DoubleEntry("base_entity_frost_resistance", 0.0D, 0.0D);

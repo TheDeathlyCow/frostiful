@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.ConfigKeys;
+import com.github.thedeathlycow.frostiful.config.GlobalConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.Entity;
@@ -15,7 +15,7 @@ public class FrostHelper {
 
         final Config config = Frostiful.getConfig();
         double frostResistance = entity.getAttributeValue(FrostifulEntityAttributes.FROST_RESISTANCE);
-        double frostModifier = frostResistance * config.get(ConfigKeys.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE);
+        double frostModifier = frostResistance * config.get(GlobalConfig.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE);
         frostModifier /= 100.0D;
 
         int toAdd = (int) ((1 - frostModifier) * amount);

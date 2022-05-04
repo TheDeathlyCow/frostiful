@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.server;
 
-import com.github.thedeathlycow.frostiful.config.ConfigKeys;
+import com.github.thedeathlycow.frostiful.config.GlobalConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import net.minecraft.block.BlockState;
@@ -82,7 +82,7 @@ public class ServerWorldMixin {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = getSnowLayers(current);
-        byte maxStep = Frostiful.getConfig().get(ConfigKeys.MAX_SNOW_BUILDUP_STEP);
+        byte maxStep = Frostiful.getConfig().get(GlobalConfig.MAX_SNOW_BUILDUP_STEP);
         if (currentLayers - lowestNeighbour < maxStep && currentLayers < maxLayers) {
             return Math.min(maxLayers, currentLayers + 1);
         }
