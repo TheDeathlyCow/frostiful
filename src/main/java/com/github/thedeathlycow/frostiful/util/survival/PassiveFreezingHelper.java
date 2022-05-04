@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
-import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.frostiful.config.ConfigKeys;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FrostifulBiomeTemperatureTags;
+import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;

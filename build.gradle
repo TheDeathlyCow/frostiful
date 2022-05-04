@@ -27,8 +27,8 @@ dependencies {
 	// Fabric API. This is technically optional, but you probably want it anyway.
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	// Datapack config mod, required.
-	modImplementation files("libs/datapack-config-${project.datapack_config_version}.jar")
+	// Simple config library.
+	implementation files("libs/simple-config-${project.simple_config_version}.jar")
 }
 
 processResources {

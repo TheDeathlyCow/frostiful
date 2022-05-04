@@ -103,14 +103,14 @@ public class FreezeCommand {
 
     private static int runGetMax(ServerCommandSource source, Entity target) {
         int amount = target.getMinFreezeDamageTicks();
-        Text msg = new TranslatableText("commands.lost-in-the-cold.get.max.success", target.getDisplayName(), amount);
+        Text msg = new TranslatableText("commands.frostiful.get.max.success", target.getDisplayName(), amount);
         source.sendFeedback(msg, true);
         return amount;
     }
 
     private static int runGet(ServerCommandSource source, Entity target) {
         int amount = target.getFrozenTicks();
-        Text msg = new TranslatableText("commands.lost-in-the-cold.get.current.success", target.getDisplayName(), amount);
+        Text msg = new TranslatableText("commands.frostiful.get.current.success", target.getDisplayName(), amount);
         source.sendFeedback(msg, true);
         return amount;
     }
@@ -146,9 +146,9 @@ public class FreezeCommand {
         Text msg;
         if (targets.size() == 1) {
             Entity target = targets.iterator().next();
-            msg = new TranslatableText("commands.lost-in-the-cold.freeze.set.success.single", target.getDisplayName(), amount);
+            msg = new TranslatableText("commands.frostiful.freeze.set.success.single", target.getDisplayName(), amount);
         } else {
-            msg = new TranslatableText("commands.lost-in-the-cold.freeze.set.success.multiple", targets.size(), amount);
+            msg = new TranslatableText("commands.frostiful.freeze.set.success.multiple", targets.size(), amount);
         }
         source.sendFeedback(msg, true);
 

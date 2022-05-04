@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.datapack.config.config.Config;
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.ConfigKeys;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
