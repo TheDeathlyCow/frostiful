@@ -8,6 +8,8 @@ import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.TridentEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
@@ -19,6 +21,7 @@ import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
+import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
@@ -37,12 +40,29 @@ import java.util.Random;
 import java.util.function.BiPredicate;
 import java.util.function.Predicate;
 
+/**
+ * Icicles are growths of ice that sometimes will fall and
+ * damage players.
+ * Largely based on code from {@link PointedDripstoneBlock}.
+ */
 @SuppressWarnings("deprecation")
 public class Icicle extends Block implements LandingBlock, Waterloggable {
 
+    /**
+     * Icicles can point up and down
+     */
     public static final DirectionProperty VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;
+    /**
+     * Icicles have varying levels of thickness
+     */
     public static final EnumProperty<Thickness> THICKNESS = Properties.THICKNESS;
+    /**
+     * Icicles can be waterlogged
+     */
     public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    /**
+     * An unstable icicle is about to fall
+     */
     public static final BooleanProperty UNSTABLE = Properties.UNSTABLE;
 
     private static final VoxelShape TIP_MERGE_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
@@ -52,6 +72,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     private static final VoxelShape FRUSTUM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
     private static final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
+    // TODO: make these configurable
     private static final float BECOME_UNSTABLE_CHANCE = 0.01f;
     private static final float GROW_CHANCE = 0.02f;
     private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformIntProvider.create(40, 80);
@@ -71,11 +92,44 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         builder.add(VERTICAL_DIRECTION, THICKNESS, WATERLOGGED, UNSTABLE);
     }
 
+    /**
+     * Determine if the state can legally be placed as an icicle
+     *
+     * @param state State of the icicle to test
+     * @param world World the icicle is in
+     * @param pos The position of the icicle
+     * @return Returns true if the icicle can be placed, false otherwise
+     */
     @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return canPlaceAtWithDirection(world, pos, state.get(VERTICAL_DIRECTION));
     }
 
+    /**
+     * Icicles collapse when hit by any projectile
+     *
+     * @param world The world the icicle is in
+     * @param state The state of the icicle
+     * @param hit How the projectile hit the icicle
+     * @param projectile The projectile that hit the icicle
+     */
+    @Override
+    public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
+        BlockPos blockPos = hit.getBlockPos();
+        if (!world.isClient && projectile.canModifyAt(world, blockPos) && projectile.getVelocity().length() > 0.6D) {
+            world.breakBlock(blockPos, true);
+        }
+    }
+
+    /**
+     * Hurt entities when they fall on icicles
+     *
+     * @param world The world the icicle is in
+     * @param state The state of the icicle
+     * @param pos The position of the icicle
+     * @param entity The entity that fell
+     * @param fallDistance How far the entity fell
+     */
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
@@ -85,6 +139,12 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         }
     }
 
+    /**
+     * Get the state of an icicle to be placed
+     *
+     * @param ctx Context for placement
+     * @return Returns the {@link BlockState} to be placed
+     */
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         WorldAccess worldAccess = ctx.getWorld();
@@ -110,6 +170,21 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
                 .with(UNSTABLE, unstable);
     }
 
+    /**
+     * Gets an updated block state to change the icicle to when a neighbour is updated.
+     * Handles fluid ticking when water logged.
+     * Schedules the icicle to be broken if its support has been broken or if its support
+     * is unstable.
+     *
+     *
+     * @param state Old icicle state
+     * @param direction Direction the block update came from
+     * @param neighborState The state of the neighbour
+     * @param world The world the icicle is in
+     * @param pos The position of the icicle
+     * @param neighborPos The position of the neighbour
+     * @return Returns the updated {@link BlockState} of the icicle
+     */
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {

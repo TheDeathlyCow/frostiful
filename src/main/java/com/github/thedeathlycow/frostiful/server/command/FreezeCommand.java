@@ -125,7 +125,7 @@ public class FreezeCommand {
             }
         }
 
-        String successMsgKey = amount < 0 ? "commands.lost-in-the-cold.freeze.remove.success." : "commands.lost-in-the-cold.freeze.add.success.";
+        String successMsgKey = amount < 0 ? "commands.frostiful.freeze.remove.success." : "commands.frostiful.freeze.add.success.";
         Text msg;
         if (targets.size() == 1) {
             Entity target = targets.iterator().next();

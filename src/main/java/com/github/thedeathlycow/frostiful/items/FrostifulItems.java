@@ -55,7 +55,7 @@ public class FrostifulItems {
         register("fur_lined_netherite_leggings", FUR_LINED_NETHERITE_LEGGINGS);
         register("fur_lined_netherite_boots", FUR_LINED_NETHERITE_BOOTS);
 
-        register("icicle_block", ICICLE);
+        register("icicle", ICICLE);
     }
 
     private static void register(String id, Item item) {
