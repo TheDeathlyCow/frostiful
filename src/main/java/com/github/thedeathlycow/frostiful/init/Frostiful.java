@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.config.GlobalConfig;
 import com.github.thedeathlycow.frostiful.config.ConfigReloader;
 import com.github.thedeathlycow.frostiful.config.IcicleConfig;
-import com.github.thedeathlycow.frostiful.items.FrostifulItems;
+import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.github.thedeathlycow.simple.config.Config;

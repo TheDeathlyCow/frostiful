@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
-import com.github.thedeathlycow.frostiful.items.FurLinedArmorMaterials;
+import com.github.thedeathlycow.frostiful.item.FurLinedArmorMaterials;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.item.ArmorItem;

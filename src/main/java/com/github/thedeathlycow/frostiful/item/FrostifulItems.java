@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.items;
+package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.init.Frostiful;

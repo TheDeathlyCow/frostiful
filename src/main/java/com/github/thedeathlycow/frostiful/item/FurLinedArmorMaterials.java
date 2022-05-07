@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.items;
+package com.github.thedeathlycow.frostiful.item;
 
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorMaterial;
