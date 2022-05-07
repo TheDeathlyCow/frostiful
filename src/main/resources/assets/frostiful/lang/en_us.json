@@ -16,6 +16,7 @@
   "item.frostiful.fur_lined_netherite_chestplate": "Fur Lined Netherite Chestplate",
   "item.frostiful.fur_lined_netherite_leggings": "Fur Lined Netherite Leggings",
   "item.frostiful.fur_lined_netherite_boots": "Fur Lined Netherite Boots",
+  "item.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
   "block.frostiful.icicle": "Icicle",
   "commands.frostiful.freeze.add.success.single": "Added %d frozen ticks to %s (now %d)",
   "commands.frostiful.freeze.add.success.multiple": "Added %d frozen ticks to %d targets",

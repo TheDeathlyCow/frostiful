@@ -5,8 +5,6 @@ import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
@@ -15,26 +13,24 @@ import net.minecraft.world.World;
 
 public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
-    private int freezeAmount;
+    private int freezeAmount = IcicleConfig.CONFIG.get(IcicleConfig.FROST_ARROW_FREEZE_AMOUNT);;
 
     public FrostTippedArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
         super(entityType, world);
-        freezeAmount = IcicleConfig.CONFIG.get(IcicleConfig.FROST_ARROW_FREEZE_AMOUNT);
     }
 
     public FrostTippedArrowEntity(World world, LivingEntity owner) {
-        super(EntityType.SPECTRAL_ARROW, owner, world);
+        super(FrostifulEntityTypes.FROST_TIPPED_ARROW, owner, world);
     }
 
     public FrostTippedArrowEntity(World world, double x, double y, double z) {
-        super(EntityType.SPECTRAL_ARROW, x, y, z, world);
+        super(FrostifulEntityTypes.FROST_TIPPED_ARROW, x, y, z, world);
     }
 
     @Override
     protected ItemStack asItemStack() {
-        return new ItemStack(FrostifulItems.ICICLE);
+        return new ItemStack(FrostifulItems.FROST_TIPPED_ARROW);
     }
-
 
     public void tick() {
         super.tick();
