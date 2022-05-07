@@ -15,7 +15,7 @@ public class FrostifulBlocks {
         register("icicle", ICICLE);
     }
 
-    private static void register(String id, Block item) {
-        Registry.register(Registry.BLOCK, new Identifier(Frostiful.MODID, id), item);
+    private static void register(String id, Block block) {
+        Registry.register(Registry.BLOCK, new Identifier(Frostiful.MODID, id), block);
     }
 }

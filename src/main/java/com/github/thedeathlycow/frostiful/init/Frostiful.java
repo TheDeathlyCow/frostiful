@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.config.GlobalConfig;
 import com.github.thedeathlycow.frostiful.config.ConfigReloader;
 import com.github.thedeathlycow.frostiful.config.IcicleConfig;
+import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
@@ -46,6 +47,7 @@ public class Frostiful implements ModInitializer {
         FrostifulEntityAttributes.registerAttributes();
         FrostifulBlocks.registerBlocks();
         FrostifulItems.registerItems();
+        FrostifulEntityTypes.registerEntities();
         FrostifulGameRules.registerGamerules();
 
         LOGGER.info("Initialized Frostiful!");

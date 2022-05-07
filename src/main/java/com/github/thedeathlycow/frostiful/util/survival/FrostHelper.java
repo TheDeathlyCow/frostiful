@@ -12,11 +12,18 @@ import net.minecraft.util.math.MathHelper;
 public class FrostHelper {
 
     public static void addFrost(LivingEntity entity, int amount) {
+        addFrost(entity, amount, true);
+    }
 
-        final Config config = Frostiful.getConfig();
-        double frostResistance = entity.getAttributeValue(FrostifulEntityAttributes.FROST_RESISTANCE);
-        double frostModifier = frostResistance * config.get(GlobalConfig.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE);
-        frostModifier /= 100.0D;
+    public static void addFrost(LivingEntity entity, int amount, boolean applyFrostResistance) {
+        double frostModifier = 0.0D;
+
+        if (applyFrostResistance) {
+            final Config config = Frostiful.getConfig();
+            double frostResistance = entity.getAttributeValue(FrostifulEntityAttributes.FROST_RESISTANCE);
+            frostModifier = frostResistance * config.get(GlobalConfig.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE);
+            frostModifier /= 100.0D;
+        }
 
         int toAdd = (int) ((1 - frostModifier) * amount);
 
