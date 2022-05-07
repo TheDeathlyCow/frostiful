@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.frostiful.config;
 
+import com.github.thedeathlycow.frostiful.config.type.FrostStatusEffectEntry;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.util.survival.FrostStatusEffect;
 import com.github.thedeathlycow.simple.config.Config;
 import com.github.thedeathlycow.simple.config.ConfigFactory;
 import com.github.thedeathlycow.simple.config.key.ByteEntry;
@@ -8,6 +10,9 @@ import com.github.thedeathlycow.simple.config.key.ConfigEntry;
 import com.github.thedeathlycow.simple.config.key.DoubleEntry;
 import com.github.thedeathlycow.simple.config.key.IntegerEntry;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.effect.StatusEffects;
+
+import java.util.List;
 
 public class GlobalConfig {
     public static final ConfigEntry<Double> PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE = new DoubleEntry("percent_frost_reduction_per_frost_resistance", 10.0D, 0.0D, 100.0D);
@@ -30,6 +35,16 @@ public class GlobalConfig {
     public static final ConfigEntry<Byte> FREEZE_TOP_LAYER_MAX_ACCUMULATION = new ByteEntry("freeze_top_layer_max_accumulation", (byte) 2, (byte) 0, (byte) 8);
     public static final ConfigEntry<Byte> MAX_SNOW_BUILDUP_STEP = new ByteEntry("max_snow_buildup_step", (byte) 2, (byte) 1, (byte) 8);
 
+    public static final ConfigEntry<List<FrostStatusEffect>> PASSIVE_FREEZING_EFFECTS = new FrostStatusEffectEntry("passive_freezing_effects",
+            List.of(
+                    new FrostStatusEffect(0.5, StatusEffects.MINING_FATIGUE, 100, 0),
+                    new FrostStatusEffect(0.75, StatusEffects.MINING_FATIGUE, 100, 1),
+                    new FrostStatusEffect(0.99, StatusEffects.MINING_FATIGUE, 100, 2),
+                    new FrostStatusEffect(0.67, StatusEffects.WEAKNESS, 100, 0)
+            )
+    );
+
+
     public static Config createConfig() {
         return ConfigFactory.createConfigWithKeys(
                 Frostiful.MODID, "config", FabricLoader.getInstance().getConfigDir(),
@@ -51,7 +66,8 @@ public class GlobalConfig {
                 FREEZE_EXTRA_DAMAGE_AMOUNT,
                 POWDER_SNOW_INCREASE_PER_TICK,
                 FREEZE_TOP_LAYER_MAX_ACCUMULATION,
-                MAX_SNOW_BUILDUP_STEP
+                MAX_SNOW_BUILDUP_STEP,
+                PASSIVE_FREEZING_EFFECTS
         );
     }
 }
