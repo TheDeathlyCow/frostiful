@@ -18,7 +18,9 @@ public class FrostifulEntityTypes {
     );
 
     public static void registerEntities() {
+        Frostiful.LOGGER.info("Registering entities...");
         // entities already registered - just ensure this class is loaded
+        Frostiful.LOGGER.info("Registered entities!");
     }
 
     private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> type) {

@@ -35,6 +35,7 @@ public class GlobalConfig {
     public static final ConfigEntry<Integer> POWDER_SNOW_INCREASE_PER_TICK = new IntegerEntry("powder_snow_increase_per_tick", 100, 0);
     public static final ConfigEntry<Byte> FREEZE_TOP_LAYER_MAX_ACCUMULATION = new ByteEntry("freeze_top_layer_max_accumulation", (byte) 2, (byte) 0, (byte) 8);
     public static final ConfigEntry<Byte> MAX_SNOW_BUILDUP_STEP = new ByteEntry("max_snow_buildup_step", (byte) 2, (byte) 1, (byte) 8);
+    public static final ConfigEntry<Byte> MAX_SNOW_BUILDUP = new ByteEntry("max_snow_buildup", (byte) 8, (byte) 0, (byte) 8);
 
     public static final ListEntry<FrostStatusEffect> PASSIVE_FREEZING_EFFECTS = new FrostStatusEffectEntry("passive_freezing_effects",
             List.of(
@@ -68,6 +69,7 @@ public class GlobalConfig {
                 POWDER_SNOW_INCREASE_PER_TICK,
                 FREEZE_TOP_LAYER_MAX_ACCUMULATION,
                 MAX_SNOW_BUILDUP_STEP,
+                MAX_SNOW_BUILDUP,
                 PASSIVE_FREEZING_EFFECTS
         );
     }
