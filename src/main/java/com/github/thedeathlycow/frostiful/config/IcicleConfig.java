@@ -3,9 +3,9 @@ package com.github.thedeathlycow.frostiful.config;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.simple.config.Config;
 import com.github.thedeathlycow.simple.config.ConfigFactory;
-import com.github.thedeathlycow.simple.config.key.ConfigEntry;
-import com.github.thedeathlycow.simple.config.key.DoubleEntry;
-import com.github.thedeathlycow.simple.config.key.IntegerEntry;
+import com.github.thedeathlycow.simple.config.entry.ConfigEntry;
+import com.github.thedeathlycow.simple.config.entry.DoubleEntry;
+import com.github.thedeathlycow.simple.config.entry.IntegerEntry;
 import net.fabricmc.loader.api.FabricLoader;
 
 public class IcicleConfig {

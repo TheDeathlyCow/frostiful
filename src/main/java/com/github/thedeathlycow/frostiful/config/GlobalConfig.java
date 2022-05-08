@@ -5,10 +5,11 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostStatusEffect;
 import com.github.thedeathlycow.simple.config.Config;
 import com.github.thedeathlycow.simple.config.ConfigFactory;
-import com.github.thedeathlycow.simple.config.key.ByteEntry;
-import com.github.thedeathlycow.simple.config.key.ConfigEntry;
-import com.github.thedeathlycow.simple.config.key.DoubleEntry;
-import com.github.thedeathlycow.simple.config.key.IntegerEntry;
+import com.github.thedeathlycow.simple.config.entry.ByteEntry;
+import com.github.thedeathlycow.simple.config.entry.ConfigEntry;
+import com.github.thedeathlycow.simple.config.entry.DoubleEntry;
+import com.github.thedeathlycow.simple.config.entry.IntegerEntry;
+import com.github.thedeathlycow.simple.config.entry.collection.ListEntry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.effect.StatusEffects;
 
@@ -35,7 +36,7 @@ public class GlobalConfig {
     public static final ConfigEntry<Byte> FREEZE_TOP_LAYER_MAX_ACCUMULATION = new ByteEntry("freeze_top_layer_max_accumulation", (byte) 2, (byte) 0, (byte) 8);
     public static final ConfigEntry<Byte> MAX_SNOW_BUILDUP_STEP = new ByteEntry("max_snow_buildup_step", (byte) 2, (byte) 1, (byte) 8);
 
-    public static final ConfigEntry<List<FrostStatusEffect>> PASSIVE_FREEZING_EFFECTS = new FrostStatusEffectEntry("passive_freezing_effects",
+    public static final ListEntry<FrostStatusEffect> PASSIVE_FREEZING_EFFECTS = new FrostStatusEffectEntry("passive_freezing_effects",
             List.of(
                     new FrostStatusEffect(0.5, StatusEffects.MINING_FATIGUE, 100, 0),
                     new FrostStatusEffect(0.75, StatusEffects.MINING_FATIGUE, 100, 1),

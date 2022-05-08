@@ -29,8 +29,13 @@ public record FrostStatusEffect(double progressThreshold, StatusEffect effect, i
 
             // get numbers
             double progressThreshold = object.get("progress_threshold").getAsDouble();
-            int duration = object.get("duration").getAsInt();
             int amplifier = object.get("amplifier").getAsInt();
+
+            // duration defaults to 100
+            int duration = 100;
+            if (object.has("duration")) {
+                duration = object.get("duration").getAsInt();
+            }
 
             // get effect
             Identifier effectKey = new Identifier(object.get("effect").getAsString());
