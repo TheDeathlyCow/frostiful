@@ -1,8 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.GlobalConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.config.AttributeConfig;
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -29,7 +28,7 @@ abstract class EntityMixin {
     }
 
     private static int getTicksFromMaxFrost(final double maxFrost) {
-        Config config = Frostiful.getConfig();
-        return (int) (config.get(GlobalConfig.MAX_FROST_MULTIPLIER) * maxFrost);
+        Config config = AttributeConfig.CONFIG;
+        return (int) (config.get(AttributeConfig.MAX_FROST_MULTIPLIER) * maxFrost);
     }
 }

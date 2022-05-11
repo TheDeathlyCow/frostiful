@@ -2,9 +2,7 @@ package com.github.thedeathlycow.frostiful.init;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
-import com.github.thedeathlycow.frostiful.config.GlobalConfig;
-import com.github.thedeathlycow.frostiful.config.ConfigReloader;
-import com.github.thedeathlycow.frostiful.config.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.*;
 import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
@@ -22,19 +20,16 @@ public class Frostiful implements ModInitializer {
 
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    private static final Config CONFIG = GlobalConfig.createConfig();
-
-    public static Config getConfig() {
-        return CONFIG;
-    }
 
     @Override
     public void onInitialize() {
         LOGGER.info("Initializing Frostiful...");
 
         ConfigReloader reloader = new ConfigReloader();
-        reloader.addListener(new Reloadable(CONFIG));
+        reloader.addListener(new Reloadable(WeatherConfig.CONFIG));
         reloader.addListener(new Reloadable(IcicleConfig.CONFIG));
+        reloader.addListener(new Reloadable(AttributeConfig.CONFIG));
+        reloader.addListener(new Reloadable(FreezingConfig.CONFIG));
         ResourceManagerHelper.get(ResourceType.SERVER_DATA)
                 .registerReloadListener(reloader);
 

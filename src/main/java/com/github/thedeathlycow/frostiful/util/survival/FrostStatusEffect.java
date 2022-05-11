@@ -1,11 +1,9 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
-import com.github.thedeathlycow.frostiful.config.GlobalConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FreezingConfig;
 import com.github.thedeathlycow.simple.config.Config;
 import com.google.gson.*;
 import net.minecraft.entity.effect.StatusEffect;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -16,8 +14,8 @@ import java.util.List;
 public record FrostStatusEffect(double progressThreshold, StatusEffect effect, int duration, int amplifier) {
 
     public static List<FrostStatusEffect> getPassiveFreezingEffects() {
-        Config config = Frostiful.getConfig();
-        return Collections.unmodifiableList(config.get(GlobalConfig.PASSIVE_FREEZING_EFFECTS));
+        Config config = FreezingConfig.CONFIG;
+        return Collections.unmodifiableList(config.get(FreezingConfig.PASSIVE_FREEZING_EFFECTS));
     }
 
     public static class Deserializer implements JsonDeserializer<FrostStatusEffect> {

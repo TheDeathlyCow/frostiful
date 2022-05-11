@@ -1,8 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.server;
 
-import com.github.thedeathlycow.frostiful.config.GlobalConfig;
+import com.github.thedeathlycow.frostiful.config.WeatherConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -45,8 +44,8 @@ public class ServerWorldMixin {
     )
     private boolean doSnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
-        Config config = Frostiful.getConfig();
-        int maxLayers = config.get(GlobalConfig.MAX_SNOW_BUILDUP);
+        Config config = WeatherConfig.CONFIG;
+        int maxLayers = config.get(WeatherConfig.MAX_SNOW_BUILDUP);
 
         if (maxLayers == 0) {
             return false;
@@ -84,7 +83,7 @@ public class ServerWorldMixin {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = getSnowLayers(current);
-        byte maxStep = Frostiful.getConfig().get(GlobalConfig.MAX_SNOW_BUILDUP_STEP);
+        byte maxStep = WeatherConfig.CONFIG.get(WeatherConfig.MAX_SNOW_BUILDUP_STEP);
         if (currentLayers - lowestNeighbour < maxStep && currentLayers < maxLayers) {
             return Math.min(maxLayers, currentLayers + 1);
         }
