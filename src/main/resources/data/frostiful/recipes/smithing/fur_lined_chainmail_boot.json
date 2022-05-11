@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "frostiful:fur_boots"
+  },
+  "addition": {
+    "item": "minecraft:chainmail_boots"
+  },
+  "result": {
+    "item": "frostiful:fur_lined_chainmail_boots"
+  }
+}

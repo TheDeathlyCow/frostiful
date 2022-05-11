@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "frostiful:fur_helmet"
+  },
+  "addition": {
+    "item": "minecraft:chainmail_helmet"
+  },
+  "result": {
+    "item": "frostiful:fur_lined_chainmail_helmet"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:smithing",
+  "base": {
+    "item": "frostiful:fur_leggings"
+  },
+  "addition": {
+    "item": "minecraft:chainmail_leggings"
+  },
+  "result": {
+    "item": "frostiful:fur_lined_chainmail_leggings"
+  }
+}

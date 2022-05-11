@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
-import com.github.thedeathlycow.frostiful.item.FurLinedArmorMaterials;
+import com.github.thedeathlycow.frostiful.item.FrostResistantArmorMaterials;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.item.ArmorItem;
@@ -23,7 +23,7 @@ public class PiglinBrainMixin {
         for (ItemStack stack : entity.getArmorItems()) {
             Item item = stack.getItem();
             if (item instanceof ArmorItem armorItem) {
-                if (armorItem.getMaterial() == FurLinedArmorMaterials.FUR_LINED_GOLD) {
+                if (armorItem.getMaterial() == FrostResistantArmorMaterials.FUR_LINED_GOLD) {
                     cir.setReturnValue(true);
                 }
             }

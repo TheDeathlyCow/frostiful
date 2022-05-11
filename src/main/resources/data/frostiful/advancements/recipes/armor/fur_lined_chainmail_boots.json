@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "frostiful:smithing/fur_lined_chainmail_boots"
+        ]
+    },
+    "criteria": {
+        "has_fur_armor": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "frostiful:fur_boots"
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:smithing/fur_lined_chainmail_boots"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_fur_armor",
+            "has_the_recipe"
+        ]
+    ]
+}
