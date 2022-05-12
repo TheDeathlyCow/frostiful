@@ -20,7 +20,7 @@ public class FrostifulItems {
     public static final Item FUR_LINED_CHAINMAIL_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT));
     public static final Item FUR_LINED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT));
 
-    public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.BUILDING_BLOCKS));
+    public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
 //    public static final Item FUR_LINED_IRON_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_IRON, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT));
