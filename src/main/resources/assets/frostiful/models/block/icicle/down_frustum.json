@@ -1,0 +1,6 @@
+{
+  "parent": "frostiful:block/icicle",
+  "textures": {
+    "cross": "frostiful:block/icicle/down_frustum"
+  }
+}

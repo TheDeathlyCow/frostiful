@@ -2,9 +2,7 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.IcicleConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.simple.config.Config;
-import com.github.thedeathlycow.simple.config.ConfigFactory;
+import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
@@ -22,7 +20,6 @@ import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.DirectionProperty;
 import net.minecraft.state.property.EnumProperty;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -35,6 +32,7 @@ import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
+import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -154,8 +152,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
             return null;
         }
 
-        boolean bl = !ctx.shouldCancelInteraction();
-        Thickness thickness = getThickness(worldAccess, blockPos, direction, bl);
+        Thickness thickness = getThickness(worldAccess, blockPos, direction, !ctx.shouldCancelInteraction());
 
         boolean unstable = false;
         if (direction == Direction.DOWN) {
@@ -175,12 +172,12 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
      * Schedules the icicle to be broken if its support has been broken or if its support
      * is unstable.
      *
-     * @param state         Old icicle state
-     * @param direction     Direction the block update came from
-     * @param neighborState The state of the neighbour
-     * @param world         The world the icicle is in
-     * @param pos           The position of the icicle
-     * @param neighborPos   The position of the neighbour
+     * @param state         the state of this block
+     * @param direction     the direction from this block to the neighbor
+     * @param neighborState the state of the updated neighbor block
+     * @param world         the world
+     * @param pos           the position of this block
+     * @param neighborPos   the position of the neighbor block
      * @return Returns the updated {@link BlockState} of the icicle
      */
     @Override
@@ -207,7 +204,11 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
                 boolean tryMerge = state.get(THICKNESS) == Thickness.TIP_MERGE;
                 Thickness thickness = getThickness(world, pos, pointingIn, tryMerge);
 
-                boolean makeUnstable = isUnstable(state) || (isHeldByIcicle(state, world, pos) && isUnstable(neighborState));
+                boolean makeUnstable = isUnstable(state)
+                        || (isHeldByIcicle(state, world, pos)
+                        && isUnstable(neighborState)
+                        && direction == Direction.UP);
+
                 return state.with(THICKNESS, thickness).with(UNSTABLE, makeUnstable);
             }
         }
@@ -225,10 +226,11 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-            if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.GROW_CHANCE)) { // grow
-                this.tryGrow(state, world, pos, random);
-            } else if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.BECOME_UNSTABLE_CHANCE) && isHeldByIcicle(state, world, pos)) { // fall
+            if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.BECOME_UNSTABLE_CHANCE) && isHeldByIcicle(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
+            }
+            if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.GROW_CHANCE)) { // grow
+                this.tryGrowIcicle(state, world, pos, random);
             }
         }
     }
@@ -312,18 +314,19 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    private void tryGrow(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    private void tryGrowIcicle(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         if (isUnstable(state) || isPointingUp(state)) {
             return;
         }
 
-        BlockState anchor = world.getBlockState(pos.up());
-        if (isGrowableBlock(anchor)) {
+        BlockPos anchorPos = pos.up();
+        BlockState anchor = world.getBlockState(anchorPos);
+        if (isGrowableBlock(world, anchorPos, anchor)) {
             BlockPos tipPos = getTipPos(state, world, pos, 7, false);
             if (tipPos != null) {
                 BlockState tipState = world.getBlockState(tipPos);
-                if (canDrip(tipState) && canGrow(tipState, world, tipPos)) {
+                if (!isUnstable(tipState) && canDrip(tipState) && canGrow(tipState, world, tipPos)) {
                     if (random.nextBoolean()) {
                         tryGrow(world, tipPos, Direction.DOWN);
                     } else {
@@ -417,8 +420,14 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    private static boolean isGrowableBlock(BlockState anchorState) {
-        return anchorState.isIn(BlockTags.ICE);
+    private static boolean isGrowableBlock(ServerWorld world, BlockPos anchorPos, BlockState anchorState) {
+
+        if (world.isRaining()) {
+            Biome biome = world.getBiome(anchorPos).value();
+            return biome.isCold(anchorPos);
+        }
+
+        return anchorState.isIn(FrostifulBlockTags.ICICLE_GROWABLE);
     }
 
     private static Optional<BlockPos> searchInDirection(WorldAccess world, BlockPos pos, Direction.AxisDirection direction, BiPredicate<BlockPos, BlockState> continuePredicate, Predicate<BlockState> stopPredicate, int range) {
@@ -433,7 +442,6 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
             }
 
             if (world.isOutOfHeightLimit(current.getY()) || !continuePredicate.test(current, blockState)) {
-                Frostiful.LOGGER.info("do not continue");
                 return Optional.empty();
             }
         }

@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 
 public class FrostifulBlockTags {
 
-    public static final TagKey<Block> SNOW_ACCUMULATE_NEXT_TO = register("snow_accumulate_next_to");
+    public static final TagKey<Block> ICICLE_GROWABLE = register("icicle_growable");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registry.BLOCK_KEY, new Identifier(Frostiful.MODID, id));

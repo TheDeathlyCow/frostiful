@@ -1,20 +1,31 @@
 package com.github.thedeathlycow.frostiful.mixins.server;
 
+import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
+import com.github.thedeathlycow.frostiful.block.Icicle;
 import com.github.thedeathlycow.frostiful.config.WeatherConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
+import net.minecraft.block.SideShapeType;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Direction;
+import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.function.Predicate;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
@@ -31,7 +42,6 @@ public class ServerWorldMixin {
 //        //LostInTheCold.LOGGER.warn("If not in dev environment - delete noRandomChanceForSnow");
 //        return 0;
 //    }
-
     @Redirect(
             method = "tickChunk",
             at = @At(
@@ -42,8 +52,11 @@ public class ServerWorldMixin {
                     from = @At(value = "INVOKE", target = "Lnet/minecraft/world/biome/Biome;canSetSnow(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z")
             )
     )
-    private boolean doSnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
+    private boolean applySnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
+
+        doIcicleGrowth(instance, blockPos, instance.random);
+
         Config config = WeatherConfig.CONFIG;
         int maxLayers = config.get(WeatherConfig.MAX_SNOW_BUILDUP);
 
@@ -56,6 +69,29 @@ public class ServerWorldMixin {
 
         return instance.setBlockState(blockPos, toSet);
     }
+
+    private void doIcicleGrowth(ServerWorld instance, BlockPos pos, Random random) {
+
+
+        Predicate<BlockPos> validCondition = (testPos) -> {
+            BlockState anchor = instance.getBlockState(testPos.up());
+            BlockState at = instance.getBlockState(testPos);
+            return at.isAir() && (anchor.isIn(FrostifulBlockTags.ICICLE_GROWABLE) ||
+                    anchor.isSideSolid(instance, testPos, Direction.DOWN, SideShapeType.FULL));
+        };
+
+        BlockPos.Mutable placePos = pos.mutableCopy();
+        for (int i = 0; i < 10; i++) {
+            if (validCondition.test(placePos)) {
+                BlockState icicle = FrostifulBlocks.ICICLE.getDefaultState()
+                        .with(Icicle.VERTICAL_DIRECTION, Direction.DOWN);
+                instance.setBlockState(placePos, icicle);
+                return;
+            }
+            placePos.move(Direction.DOWN);
+        }
+    }
+
 
     private int getSnowLayers(BlockState state) {
         if (state.isOf(Blocks.SNOW)) {
