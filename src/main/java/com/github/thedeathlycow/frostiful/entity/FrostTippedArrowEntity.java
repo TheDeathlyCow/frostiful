@@ -41,7 +41,7 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
     protected void onHit(LivingEntity target) {
         super.onHit(target);
-        FrostHelper.addFrost(target, freezeAmount);
+        FrostHelper.addLivingFrost(target, freezeAmount);
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {

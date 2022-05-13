@@ -118,7 +118,7 @@ public class FreezeCommand {
     private static int runAdjust(ServerCommandSource source, Collection<? extends Entity> targets, int amount, boolean applyFrostResistance) throws CommandSyntaxException {
         for (Entity entity : targets) {
             if (applyFrostResistance && entity instanceof LivingEntity livingEntity) {
-                FrostHelper.addFrost(livingEntity, amount);
+                FrostHelper.addLivingFrost(livingEntity, amount);
             } else {
                 int frozenTicks = entity.getFrozenTicks();
                 FrostHelper.setFrost(entity, frozenTicks + amount);

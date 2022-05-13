@@ -10,11 +10,11 @@ import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
 
-    public static void addFrost(LivingEntity entity, int amount) {
-        addFrost(entity, amount, true);
+    public static void addLivingFrost(LivingEntity entity, int amount) {
+        addLivingFrost(entity, amount, true);
     }
 
-    public static void addFrost(LivingEntity entity, int amount, boolean applyFrostResistance) {
+    public static void addLivingFrost(LivingEntity entity, int amount, boolean applyFrostResistance) {
         double frostModifier = 0.0D;
 
         if (applyFrostResistance) {
@@ -30,7 +30,7 @@ public class FrostHelper {
         setLivingFrost(entity, current + toAdd);
     }
 
-    public static void removeFrost(LivingEntity entity, int amount) {
+    public static void removeLivingFrost(LivingEntity entity, int amount) {
         int current = entity.getFrozenTicks();
         setLivingFrost(entity, current - amount);
     }
@@ -38,6 +38,16 @@ public class FrostHelper {
     public static void setLivingFrost(LivingEntity entity, int amount) {
         setFrost(entity, amount);
         applyEffects(entity);
+    }
+
+    public static void addFrost(Entity entity, int amount) {
+        int current = entity.getFrozenTicks();
+        setFrost(entity, current + amount);
+    }
+
+    public static void removeFrost(Entity entity, int amount) {
+        int current = entity.getFrozenTicks();
+        setFrost(entity, current - amount);
     }
 
     public static void setFrost(Entity entity, int amount) {

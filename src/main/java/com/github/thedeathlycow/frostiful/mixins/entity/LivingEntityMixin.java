@@ -46,7 +46,7 @@ public abstract class LivingEntityMixin {
         }
 
         int warmth = PassiveFreezingHelper.getWarmth(livingEntity);
-        FrostHelper.removeFrost(livingEntity, warmth);
+        FrostHelper.removeLivingFrost(livingEntity, warmth);
     }
 
     @Redirect(
@@ -127,7 +127,7 @@ public abstract class LivingEntityMixin {
             return;
         }
 
-        FrostHelper.addFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
+        FrostHelper.addLivingFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
     }
 
     @Inject(

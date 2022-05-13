@@ -21,7 +21,7 @@ public class FreezingConfig {
     public static final ConfigEntry<Float> PASSIVE_FREEZING_START_TEMP = new FloatEntry("passive_freezing_start_temp", 0.25f, -1.0f, 1.0f);
     public static final ConfigEntry<Double> WET_FREEZE_RATE_MULTIPLIER = new DoubleEntry("wet_freeze_rate_multiplier", 1.5D, 1.0D);
     public static final ConfigEntry<Integer> CANNOT_FREEZE_WARM_RATE = new IntegerEntry("warm_biome_thaw_rate", 10, 0);
-    public static final ConfigEntry<Integer> ON_FIRE_THAW_RATE = new IntegerEntry("on_fire_thaw_rate", 100, 0);
+    public static final ConfigEntry<Integer> ON_FIRE_THAW_RATE = new IntegerEntry("on_fire_thaw_rate", 10, 0);
     public static final ConfigEntry<Integer> WARMTH_PER_LIGHT_LEVEL = new IntegerEntry("warmth_per_light_level", 2, 0);
     public static final ConfigEntry<Integer> MIN_WARMTH_LIGHT_LEVEL_DAY = new IntegerEntry("min_warmth_light_level_day", 7, 0);
     public static final ConfigEntry<Integer> MIN_WARMTH_LIGHT_LEVEL_NIGHT = new IntegerEntry("min_warmth_light_level_night", 10, 0);

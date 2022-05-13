@@ -39,9 +39,9 @@ public abstract class PlayerEntityMixin {
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
             if (passiveFreezing > 0) {
-                FrostHelper.addFrost(playerEntity, passiveFreezing);
+                FrostHelper.addLivingFrost(playerEntity, passiveFreezing);
             } else {
-                FrostHelper.removeFrost(playerEntity, -passiveFreezing);
+                FrostHelper.removeLivingFrost(playerEntity, -passiveFreezing);
             }
         }
     }
