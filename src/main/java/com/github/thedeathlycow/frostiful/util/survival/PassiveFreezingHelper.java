@@ -1,18 +1,14 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.config.FreezingConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.biome.FrostifulBiomeTemperatureTags;
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.gen.densityfunction.DensityFunction;
 
 public class PassiveFreezingHelper {
 
@@ -74,28 +70,18 @@ public class PassiveFreezingHelper {
         }
 
         RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
-        Biome biome = biomeEntry.value();
-        float temperature = biome.getTemperature();
+
         boolean inNaturalDimension = world.getDimension().isNatural();
+        if (inNaturalDimension) {
+            Biome biome = biomeEntry.value();
+            float temperature = biome.getTemperature();
 
-        boolean freezingBelowDamageThreshold = livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks();
-//
-//        if (freezingBelowDamageThreshold && inNaturalDimension) {
-//
-//        }
+            int mul = config.get(FreezingConfig.BIOME_TEMPERATURE_MULTIPLIER);
+            float cutoff = config.get(FreezingConfig.PASSIVE_FREEZING_START_TEMP);
 
-
-        if (biomeEntry.isIn(FrostifulBiomeTemperatureTags.IS_CHILLY) && freezingBelowDamageThreshold) {
-            return config.get(FreezingConfig.CHILLY_BIOME_FREEZE_RATE);
-        } else if (biomeEntry.isIn(FrostifulBiomeTemperatureTags.IS_COLD) && freezingBelowDamageThreshold) {
-            return config.get(FreezingConfig.COLD_BIOME_FREEZE_RATE);
-        } else if (biomeEntry.isIn(FrostifulBiomeTemperatureTags.IS_FREEZING) && freezingBelowDamageThreshold) {
-            return config.get(FreezingConfig.FREEZING_BIOME_FREEZE_RATE);
-        } else if (!freezingBelowDamageThreshold) {
-            return 0;
-        } else {
-            return -config.get(FreezingConfig.WARM_BIOME_THAW_RATE);
+            return MathHelper.floor(-mul * (Math.pow(temperature - cutoff, 3)) + 1);
         }
+        return 0;
     }
 
 }

@@ -7,6 +7,7 @@ import com.github.thedeathlycow.simple.config.Config;
 import com.github.thedeathlycow.simple.config.ConfigFactory;
 import com.github.thedeathlycow.simple.config.entry.ConfigEntry;
 import com.github.thedeathlycow.simple.config.entry.DoubleEntry;
+import com.github.thedeathlycow.simple.config.entry.FloatEntry;
 import com.github.thedeathlycow.simple.config.entry.IntegerEntry;
 import com.github.thedeathlycow.simple.config.entry.collection.ListEntry;
 import net.fabricmc.loader.api.FabricLoader;
@@ -16,10 +17,8 @@ import java.util.List;
 
 public class FreezingConfig {
 
-
-    public static final ConfigEntry<Integer> CHILLY_BIOME_FREEZE_RATE = new IntegerEntry("chilly_biome_freeze_rate", 1, 0);
-    public static final ConfigEntry<Integer> COLD_BIOME_FREEZE_RATE = new IntegerEntry("cold_biome_freeze_rate", 2, 0);
-    public static final ConfigEntry<Integer> FREEZING_BIOME_FREEZE_RATE = new IntegerEntry("freezing_biome_freeze_rate", 5, 0);
+    public static final ConfigEntry<Integer> BIOME_TEMPERATURE_MULTIPLIER = new IntegerEntry("biome_temperature_multiplier", 19, 0);
+    public static final ConfigEntry<Float> PASSIVE_FREEZING_START_TEMP = new FloatEntry("passive_freezing_start_temp", 0.25f, -1.0f, 1.0f);
     public static final ConfigEntry<Double> WET_FREEZE_RATE_MULTIPLIER = new DoubleEntry("wet_freeze_rate_multiplier", 1.5D, 1.0D);
     public static final ConfigEntry<Integer> WARM_BIOME_THAW_RATE = new IntegerEntry("warm_biome_thaw_rate", 10, 0);
     public static final ConfigEntry<Integer> ON_FIRE_THAW_RATE = new IntegerEntry("on_fire_thaw_rate", 100, 0);
@@ -39,9 +38,8 @@ public class FreezingConfig {
 
     public static final Config CONFIG = ConfigFactory.createConfigWithKeys(
             Frostiful.MODID, "freezing_config", FabricLoader.getInstance().getConfigDir(),
-            CHILLY_BIOME_FREEZE_RATE,
-            COLD_BIOME_FREEZE_RATE,
-            FREEZING_BIOME_FREEZE_RATE,
+            BIOME_TEMPERATURE_MULTIPLIER,
+            PASSIVE_FREEZING_START_TEMP,
             WET_FREEZE_RATE_MULTIPLIER,
             WARM_BIOME_THAW_RATE,
             ON_FIRE_THAW_RATE,
