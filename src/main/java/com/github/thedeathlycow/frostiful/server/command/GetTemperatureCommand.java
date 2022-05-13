@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
+import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
@@ -36,7 +37,8 @@ public class GetTemperatureCommand {
     private static int execute(ServerCommandSource source, Entity target) {
         World world = target.getEntityWorld();
         Biome biome = world.getBiome(target.getBlockPos()).value();
-        String msg = String.format("This biome's temperature is %.4f", biome.getTemperature());
+        float temperature = biome.getTemperature();
+        String msg = String.format("This biome's temperature is %.4f with a per-tick freeze rate of %d", temperature, PassiveFreezingHelper.getPerTickFreezing(temperature));
         source.sendFeedback(new LiteralText(msg), false);
         return 1;
     }

@@ -27,8 +27,12 @@ public class PassiveFreezingHelper {
         int warmth = 0;
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
-        if (lightLevel >= config.get(FreezingConfig.MIN_WARMTH_LIGHT_LEVEL)) {
-            warmth += config.get(FreezingConfig.WARMTH_PER_LIGHT_LEVEL) * (lightLevel - config.get(FreezingConfig.MIN_WARMTH_LIGHT_LEVEL));
+        int minLightLevel = world.isDay() ?
+                config.get(FreezingConfig.MIN_WARMTH_LIGHT_LEVEL_DAY) :
+                config.get(FreezingConfig.MIN_WARMTH_LIGHT_LEVEL_NIGHT);
+
+        if (lightLevel >= minLightLevel) {
+            warmth += config.get(FreezingConfig.WARMTH_PER_LIGHT_LEVEL) * (lightLevel - minLightLevel);
         }
 
         if (livingEntity.isOnFire()) {
@@ -36,7 +40,7 @@ public class PassiveFreezingHelper {
         }
 
         if (!livingEntity.canFreeze()) {
-            warmth += config.get(FreezingConfig.WARM_BIOME_THAW_RATE);
+            warmth += config.get(FreezingConfig.CANNOT_FREEZE_WARM_RATE);
         }
 
         return warmth;
@@ -63,7 +67,7 @@ public class PassiveFreezingHelper {
     public static int getBiomeFreezing(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-        Config config = FreezingConfig.CONFIG;
+
 
         if (!livingEntity.canFreeze()) {
             return 0;
@@ -75,13 +79,17 @@ public class PassiveFreezingHelper {
         if (inNaturalDimension) {
             Biome biome = biomeEntry.value();
             float temperature = biome.getTemperature();
-
-            int mul = config.get(FreezingConfig.BIOME_TEMPERATURE_MULTIPLIER);
-            float cutoff = config.get(FreezingConfig.PASSIVE_FREEZING_START_TEMP);
-
-            return MathHelper.floor(-mul * (Math.pow(temperature - cutoff, 3)) + 1);
+            return getPerTickFreezing(temperature);
         }
         return 0;
+    }
+
+    public static int getPerTickFreezing(float temperature) {
+        Config config = FreezingConfig.CONFIG;
+        int mul = config.get(FreezingConfig.BIOME_TEMPERATURE_MULTIPLIER);
+        float cutoff = config.get(FreezingConfig.PASSIVE_FREEZING_START_TEMP);
+
+        return MathHelper.floor(-mul * (Math.pow(temperature - cutoff, 3)) + 1);
     }
 
 }
