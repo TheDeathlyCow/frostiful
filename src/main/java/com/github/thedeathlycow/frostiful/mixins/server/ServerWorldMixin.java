@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.mixins.server;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.Icicle;
 import com.github.thedeathlycow.frostiful.config.WeatherConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.BlockState;
@@ -13,14 +12,10 @@ import net.minecraft.block.SnowBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.Collections;
 import java.util.List;
@@ -30,7 +25,7 @@ import java.util.function.Predicate;
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
 
-//    @Redirect(
+    //    @Redirect(
 //            method = "tickChunk",
 //            at = @At(
 //                    value = "INVOKE",
@@ -72,12 +67,19 @@ public class ServerWorldMixin {
 
     private void doIcicleGrowth(ServerWorld instance, BlockPos pos, Random random) {
 
-
+        BlockState[] cache = { null };
         Predicate<BlockPos> validCondition = (testPos) -> {
-            BlockState anchor = instance.getBlockState(testPos.up());
+            BlockState anchor = cache[0];
+
+            if (anchor == null) {
+                anchor = instance.getBlockState(testPos.up());
+            }
+
             BlockState at = instance.getBlockState(testPos);
-            return at.isAir() && (anchor.isIn(FrostifulBlockTags.ICICLE_GROWABLE) ||
+            boolean isValid = at.isAir() && (anchor.isIn(FrostifulBlockTags.ICICLE_GROWABLE) ||
                     anchor.isSideSolid(instance, testPos, Direction.DOWN, SideShapeType.FULL));
+            cache[0] = at;
+            return isValid;
         };
 
         BlockPos.Mutable placePos = pos.mutableCopy();

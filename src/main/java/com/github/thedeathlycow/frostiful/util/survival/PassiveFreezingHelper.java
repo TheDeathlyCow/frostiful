@@ -6,11 +6,13 @@ import com.github.thedeathlycow.frostiful.tag.biome.FrostifulBiomeTemperatureTag
 import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.gen.densityfunction.DensityFunction;
 
 public class PassiveFreezingHelper {
 
@@ -77,6 +79,12 @@ public class PassiveFreezingHelper {
         boolean inNaturalDimension = world.getDimension().isNatural();
 
         boolean freezingBelowDamageThreshold = livingEntity.getFrozenTicks() < livingEntity.getMinFreezeDamageTicks();
+//
+//        if (freezingBelowDamageThreshold && inNaturalDimension) {
+//
+//        }
+
+
         if (biomeEntry.isIn(FrostifulBiomeTemperatureTags.IS_CHILLY) && freezingBelowDamageThreshold) {
             return config.get(FreezingConfig.CHILLY_BIOME_FREEZE_RATE);
         } else if (biomeEntry.isIn(FrostifulBiomeTemperatureTags.IS_COLD) && freezingBelowDamageThreshold) {

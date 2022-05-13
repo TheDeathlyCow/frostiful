@@ -7,7 +7,6 @@
     "entity.EntityMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
-    "entity.mob.PiglinBrainMixin",
     "item.ArmorItemMixin",
     "server.ServerWorldMixin",
     "world.biome.BiomeMixin",

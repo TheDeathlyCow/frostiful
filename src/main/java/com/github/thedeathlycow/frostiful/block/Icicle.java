@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.config.IcicleConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
+import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
@@ -229,7 +230,8 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
             if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.BECOME_UNSTABLE_CHANCE) && isHeldByIcicle(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
-            if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.GROW_CHANCE)) { // grow
+            final float growChance = this.getGrowChance(world);
+            if (random.nextFloat() < growChance) { // grow
                 this.tryGrowIcicle(state, world, pos, random);
             }
         }
@@ -301,6 +303,17 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         return 0.125F;
     }
 
+    private float getGrowChance(ServerWorld world) {
+        Config config = IcicleConfig.CONFIG;
+        if (world.isThundering()) {
+            return config.get(IcicleConfig.GROW_CHANCE_DURING_THUNDER);
+        } else if (world.isRaining()) {
+            return config.get(IcicleConfig.GROW_CHANGE_DURING_RAIN);
+        } else {
+            return config.get(IcicleConfig.GROW_CHANCE);
+        }
+    }
+
     private void tryFall(BlockState state, ServerWorld world, BlockPos pos, Random random) {
 
         if (isUnstable(state) || isPointingUp(state)) {
@@ -326,7 +339,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
             BlockPos tipPos = getTipPos(state, world, pos, 7, false);
             if (tipPos != null) {
                 BlockState tipState = world.getBlockState(tipPos);
-                if (!isUnstable(tipState) && canDrip(tipState) && canGrow(tipState, world, tipPos)) {
+                if (!isUnstable(tipState) && isTipDown(tipState) && canGrow(tipState, world, tipPos)) {
                     if (random.nextBoolean()) {
                         tryGrow(world, tipPos, Direction.DOWN);
                     } else {
@@ -405,7 +418,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    public static boolean canDrip(BlockState state) {
+    public static boolean isTipDown(BlockState state) {
         return isPointingDown(state) && state.get(THICKNESS) == Thickness.TIP;
     }
 
