@@ -10,7 +10,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public class IcicleConfig {
 
-    public static final ConfigEntry<Float> BECOME_UNSTABLE_CHANCE = new FloatEntry("become_unstable_chance", 0.01f, 0.0f, 1.0f);
+    public static final ConfigEntry<Float> BECOME_UNSTABLE_CHANCE = new FloatEntry("become_unstable_chance", 0.05f, 0.0f, 1.0f);
     public static final ConfigEntry<Float> GROW_CHANCE = new FloatEntry("grow_chance", 0.02f, 0.0f, 1.0f);
     public static final ConfigEntry<Float> GROW_CHANGE_DURING_RAIN = new FloatEntry("grow_chance_during_rain", 0.09f, 0.0f, 1.0f);
     public static final ConfigEntry<Float> GROW_CHANCE_DURING_THUNDER = new FloatEntry("grow_chance_during_thunder", 0.15f, 0.0f, 1.0f);
