@@ -38,17 +38,12 @@ public abstract class PlayerEntityMixin {
         final boolean doPassiveFreezing = world.getGameRules().getBoolean(FrostifulGameRules.DO_PASSIVE_FREEZING);
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
-
             if (passiveFreezing > 0) {
                 FrostHelper.addFrost(playerEntity, passiveFreezing);
             } else {
                 FrostHelper.removeFrost(playerEntity, -passiveFreezing);
             }
         }
-
-        int warmth = PassiveFreezingHelper.getWarmth(playerEntity);
-        FrostHelper.removeFrost(playerEntity, warmth);
-
     }
 
     @Inject(

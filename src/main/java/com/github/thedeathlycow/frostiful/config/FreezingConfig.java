@@ -27,7 +27,7 @@ public class FreezingConfig {
     public static final ConfigEntry<Integer> MIN_WARMTH_LIGHT_LEVEL = new IntegerEntry("min_warmth_light_level", 7, 0);
     public static final ConfigEntry<Integer> FREEZE_DAMAGE_AMOUNT = new IntegerEntry("freeze_damage_amount", 2, 0);
     public static final ConfigEntry<Integer> FREEZE_EXTRA_DAMAGE_AMOUNT = new IntegerEntry("freeze_extra_damage_amount", 5, 0);
-    public static final ConfigEntry<Integer> POWDER_SNOW_INCREASE_PER_TICK = new IntegerEntry("powder_snow_increase_per_tick", 100, 0);
+    public static final ConfigEntry<Integer> POWDER_SNOW_INCREASE_PER_TICK = new IntegerEntry("powder_snow_increase_per_tick", 20, 0);
     public static final ListEntry<FrostStatusEffect> PASSIVE_FREEZING_EFFECTS = new FrostStatusEffectEntry("passive_freezing_effects",
             List.of(
                     new FrostStatusEffect(0.5, StatusEffects.MINING_FATIGUE, 100, 0),

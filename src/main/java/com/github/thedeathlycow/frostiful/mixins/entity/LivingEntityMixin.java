@@ -15,15 +15,39 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.tag.TagKey;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityMixin {
+
+
+    @Inject(
+            method = "tick",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/Entity;tick()V",
+                    ordinal = 0,
+                    shift = At.Shift.AFTER
+            )
+    )
+    private void doHeating(CallbackInfo ci) {
+        LivingEntity livingEntity = (LivingEntity) (Object) this;
+        World world = livingEntity.getWorld();
+
+        if (world.isClient()) {
+            return;
+        }
+
+        int warmth = PassiveFreezingHelper.getWarmth(livingEntity);
+        FrostHelper.removeFrost(livingEntity, warmth);
+    }
 
     @Redirect(
             method = "canFreeze",
@@ -103,11 +127,7 @@ public abstract class LivingEntityMixin {
             return;
         }
 
-        if (instance instanceof PlayerEntity) {
-            FrostHelper.addFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
-        } else {
-            FrostHelper.setFrost(instance, i);
-        }
+        FrostHelper.addFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
     }
 
     @Inject(

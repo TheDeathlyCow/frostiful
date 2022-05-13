@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.config.*;
 import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
+import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.github.thedeathlycow.simple.config.Config;
 import com.github.thedeathlycow.simple.config.reload.Reloadable;
@@ -35,6 +36,7 @@ public class Frostiful implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register(
                 ((dispatcher, dedicated) -> {
+                    GetTemperatureCommand.register(dispatcher);
                     FreezeCommand.register(dispatcher);
                 })
         );
