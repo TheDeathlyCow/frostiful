@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "frostiful:item/fur_lined_chainmail_boots"
+    "layer0": "frostiful:item/fur_padded_chainmail_helmet"
   }
 }

@@ -2,7 +2,8 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "frostiful:smithing/fur_lined_chainmail_chestplate"
+            "frostiful:smithing/fur_padded_chainmail_chestplate",
+            "frostiful:smithing/fur_padded_chainmail_chestplate_reversed"
         ]
     },
     "criteria": {
@@ -19,14 +20,21 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "frostiful:smithing/fur_lined_chainmail_chestplate"
+                "recipe": "frostiful:smithing/fur_padded_chainmail_chestplate"
+            }
+        },
+        "has_the_reversed_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:smithing/fur_padded_chainmail_chestplate_reversed"
             }
         }
     },
     "requirements": [
         [
             "has_fur_armor",
-            "has_the_recipe"
+            "has_the_recipe",
+            "has_the_reversed_recipe"
         ]
     ]
 }

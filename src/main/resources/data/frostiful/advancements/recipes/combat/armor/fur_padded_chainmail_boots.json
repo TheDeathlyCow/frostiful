@@ -2,7 +2,8 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "frostiful:smithing/fur_lined_chainmail_leggings"
+            "frostiful:smithing/fur_padded_chainmail_boots",
+            "frostiful:smithing/fur_padded_chainmail_boots_reversed"
         ]
     },
     "criteria": {
@@ -11,7 +12,7 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "frostiful:fur_leggings"
+                        "item": "frostiful:fur_boots"
                     }
                 ]
             }
@@ -19,7 +20,13 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "frostiful:smithing/fur_lined_chainmail_leggings"
+                "recipe": "frostiful:smithing/fur_padded_chainmail_boots"
+            }
+        },
+        "has_the_reversed_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:smithing/fur_padded_chainmail_boots_reversed"
             }
         }
     },

@@ -15,10 +15,10 @@ public class FrostifulItems {
     public static final Item FUR_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT));
     public static final Item FUR_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT));
 
-    public static final Item FUR_LINED_CHAINMAIL_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT));
-    public static final Item FUR_LINED_CHAINMAIL_CHESTPLATE = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT));
-    public static final Item FUR_LINED_CHAINMAIL_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT));
-    public static final Item FUR_LINED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT));
+    public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT));
+    public static final Item FUR_PADDED_CHAINMAIL_CHESTPLATE = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT));
+    public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.LEGS, new FabricItemSettings().group(ItemGroup.COMBAT));
+    public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT));
 
     public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
@@ -50,10 +50,10 @@ public class FrostifulItems {
         register("fur_leggings", FUR_LEGGINGS);
         register("fur_boots", FUR_BOOTS);
 
-        register("fur_lined_chainmail_helmet", FUR_LINED_CHAINMAIL_HELMET);
-        register("fur_lined_chainmail_chestplate", FUR_LINED_CHAINMAIL_CHESTPLATE);
-        register("fur_lined_chainmail_leggings", FUR_LINED_CHAINMAIL_LEGGINGS);
-        register("fur_lined_chainmail_boots", FUR_LINED_CHAINMAIL_BOOTS);
+        register("fur_padded_chainmail_helmet", FUR_PADDED_CHAINMAIL_HELMET);
+        register("fur_padded_chainmail_chestplate", FUR_PADDED_CHAINMAIL_CHESTPLATE);
+        register("fur_padded_chainmail_leggings", FUR_PADDED_CHAINMAIL_LEGGINGS);
+        register("fur_padded_chainmail_boots", FUR_PADDED_CHAINMAIL_BOOTS);
 
         register("icicle", ICICLE);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
