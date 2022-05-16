@@ -10,11 +10,9 @@ import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.oroarmor.config.Config;
-import com.oroarmor.config.command.ConfigCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.minecraft.command.CommandSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

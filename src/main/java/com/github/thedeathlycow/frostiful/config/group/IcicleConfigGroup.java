@@ -4,10 +4,6 @@ import com.google.common.collect.ImmutableList;
 import com.oroarmor.config.ConfigItemGroup;
 import com.oroarmor.config.DoubleConfigItem;
 import com.oroarmor.config.IntegerConfigItem;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.server.MinecraftServer;
-
-import java.util.List;
 
 public class IcicleConfigGroup extends ConfigItemGroup {
 

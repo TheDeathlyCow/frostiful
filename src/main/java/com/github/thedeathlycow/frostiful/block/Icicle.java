@@ -2,9 +2,7 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
-import com.oroarmor.config.Config;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;

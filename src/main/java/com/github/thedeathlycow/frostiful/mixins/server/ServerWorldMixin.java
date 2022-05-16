@@ -65,7 +65,7 @@ public class ServerWorldMixin {
 
     private void doIcicleGrowth(ServerWorld instance, BlockPos pos, Random random) {
 
-        BlockState[] cache = { null };
+        BlockState[] cache = {null};
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState anchor = cache[0];
 

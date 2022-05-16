@@ -27,7 +27,7 @@ public class PassiveFreezingHelper {
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
         int minLightLevel = world.isDay() ?
-                FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_DAY.getValue():
+                FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_DAY.getValue() :
                 FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_NIGHT.getValue();
 
         if (lightLevel >= minLightLevel) {
@@ -47,7 +47,7 @@ public class PassiveFreezingHelper {
 
     public static int getPowderSnowFreezing(LivingEntity livingEntity) {
         return livingEntity.inPowderSnow ?
-                FreezingConfigGroup.POWDER_SNOW_INCREASE_PER_TICK.getValue() :
+                FreezingConfigGroup.POWDER_SNOW_FREEZE_RATE.getValue() :
                 0;
     }
 

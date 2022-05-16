@@ -33,9 +33,6 @@ dependencies {
 
 	modImplementation "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 	include "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
-
-	// Simple config library.
-	implementation files("libs/simple-config-${project.simple_config_version}.jar")
 }
 
 processResources {
