@@ -4,16 +4,20 @@ import com.google.common.collect.ImmutableList;
 import com.oroarmor.config.ConfigItemGroup;
 import com.oroarmor.config.DoubleConfigItem;
 import com.oroarmor.config.IntegerConfigItem;
+import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.server.MinecraftServer;
 
 import java.util.List;
 
 public class IcicleConfigGroup extends ConfigItemGroup {
 
-    public static final DoubleConfigItem BECOME_UNSTABLE_CHANCE = new DoubleConfigItem("become_unstable_chance", 0.05, "config.frostiful.icicle_config.become_unstable_chance");
-    public static final DoubleConfigItem GROW_CHANCE = new DoubleConfigItem("grow_chance", 0.02, "config.frostiful.icicle_config.grow_chance");
-    public static final DoubleConfigItem GROW_CHANGE_DURING_RAIN = new DoubleConfigItem("grow_chance_during_rain", 0.09, "config.frostiful.icicle_config.grow_chance_during_rain");
-    public static final DoubleConfigItem GROW_CHANCE_DURING_THUNDER = new DoubleConfigItem("grow_chance_during_thunder", 0.15, "config.frostiful.icicle_config.grow_chance_during_thunder");
-    public static final IntegerConfigItem FROST_ARROW_FREEZE_AMOUNT = new IntegerConfigItem("frost_arrow_freeze_amount", 100, "config.frostiful.icicle_config.frost_arrow_freeze_amount");
+    private static final String TRANSLATE_BASE_STRING = "config.frostiful.icicle_config.";
+
+    public static final DoubleConfigItem BECOME_UNSTABLE_CHANCE = new DoubleConfigItem("become_unstable_chance", 0.05, TRANSLATE_BASE_STRING + "become_unstable_chance", null, 0.0, 1.0);
+    public static final DoubleConfigItem GROW_CHANCE = new DoubleConfigItem("grow_chance", 0.02, TRANSLATE_BASE_STRING + "grow_chance", null, 0.0, 1.0);
+    public static final DoubleConfigItem GROW_CHANGE_DURING_RAIN = new DoubleConfigItem("grow_chance_during_rain", 0.09, TRANSLATE_BASE_STRING + "grow_chance_during_rain", null, 0.0, 1.0);
+    public static final DoubleConfigItem GROW_CHANCE_DURING_THUNDER = new DoubleConfigItem("grow_chance_during_thunder", 0.15, TRANSLATE_BASE_STRING + "grow_chance_during_thunder", null, 0.0, 1.0);
+    public static final IntegerConfigItem FROST_ARROW_FREEZE_AMOUNT = new IntegerConfigItem("frost_arrow_freeze_amount", 100, TRANSLATE_BASE_STRING + "frost_arrow_freeze_amount");
 
     /**
      * Creates a new {@link ConfigItemGroup} with the list of configs and the name
@@ -21,4 +25,5 @@ public class IcicleConfigGroup extends ConfigItemGroup {
     public IcicleConfigGroup() {
         super(ImmutableList.of(BECOME_UNSTABLE_CHANCE, GROW_CHANCE, GROW_CHANGE_DURING_RAIN, GROW_CHANCE_DURING_THUNDER, FROST_ARROW_FREEZE_AMOUNT), "icicle_config");
     }
+
 }

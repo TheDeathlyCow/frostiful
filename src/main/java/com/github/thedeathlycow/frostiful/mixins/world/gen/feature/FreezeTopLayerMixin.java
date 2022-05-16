@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.world.gen.feature;
 
-import com.github.thedeathlycow.frostiful.config.WeatherConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
 import net.minecraft.block.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
@@ -32,7 +31,7 @@ public class FreezeTopLayerMixin {
     private boolean randomizeSnowLayers(StructureWorldAccess instance, BlockPos blockPos, BlockState blockState, int i) {
 
         BlockState down = instance.getBlockState(blockPos.down());
-        byte maxStackSize = WeatherConfig.CONFIG.get(WeatherConfig.FREEZE_TOP_LAYER_MAX_ACCUMULATION);
+        int maxStackSize = WeatherConfigGroup.FREEZE_TOP_LAYER_MAX_ACCUMULATION.getValue();
 
         if (maxStackSize == 0) {
             blockState = Blocks.AIR.getDefaultState();
@@ -59,7 +58,7 @@ public class FreezeTopLayerMixin {
             )
     )
     private boolean makeGrassNotSnowyWhenZeroLayers(StructureWorldAccess instance, BlockPos blockPos, BlockState blockState, int i) {
-        byte maxStackSize = WeatherConfig.CONFIG.get(WeatherConfig.FREEZE_TOP_LAYER_MAX_ACCUMULATION);
+        int maxStackSize = WeatherConfigGroup.FREEZE_TOP_LAYER_MAX_ACCUMULATION.getValue();
 
         if (maxStackSize == 0 && blockState.getBlock() instanceof SnowyBlock) {
             return instance.setBlockState(blockPos, blockState.with(SnowyBlock.SNOWY, false), i);

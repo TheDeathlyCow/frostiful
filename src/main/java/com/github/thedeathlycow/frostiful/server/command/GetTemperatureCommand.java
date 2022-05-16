@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.server.command.KillCommand;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.world.World;
@@ -31,6 +30,7 @@ public class GetTemperatureCommand {
                             return execute(ctx.getSource(), ctx.getSource().getEntityOrThrow());
                         }
                 );
+
         dispatcher.register(getTemperature);
     }
 

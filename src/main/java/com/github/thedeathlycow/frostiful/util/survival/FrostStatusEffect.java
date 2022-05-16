@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
-import com.github.thedeathlycow.frostiful.config.FreezingConfig;
-import com.github.thedeathlycow.simple.config.Config;
+import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.google.gson.*;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -9,14 +8,13 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 import java.lang.reflect.Type;
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public record FrostStatusEffect(float progressThreshold, StatusEffect effect, int duration, int amplifier) {
 
     public static List<FrostStatusEffect> getPassiveFreezingEffects() {
-        Config config = FreezingConfig.CONFIG;
-        return Collections.unmodifiableList(config.get(FreezingConfig.PASSIVE_FREEZING_EFFECTS));
+        return List.of(FreezingConfigGroup.EFFECTS);
     }
 
     public StatusEffectInstance createEffectInstance() {
@@ -27,7 +25,7 @@ public record FrostStatusEffect(float progressThreshold, StatusEffect effect, in
         return new StatusEffectInstance(this.effect(), this.duration(), this.amplifier(), ambient, visible);
     }
 
-    public static class Deserializer implements JsonDeserializer<FrostStatusEffect> {
+    public static class Deserializer implements JsonDeserializer<FrostStatusEffect>, JsonSerializer<FrostStatusEffect> {
 
         @Override
         public FrostStatusEffect deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
@@ -49,6 +47,16 @@ public record FrostStatusEffect(float progressThreshold, StatusEffect effect, in
             StatusEffect effect = Registry.STATUS_EFFECT.get(effectKey);
 
             return new FrostStatusEffect(progressThreshold, effect, duration, amplifier);
+        }
+
+        @Override
+        public JsonElement serialize(FrostStatusEffect src, Type typeOfSrc, JsonSerializationContext context) {
+            JsonObject json = new JsonObject();
+            json.add("progress_threshold", new JsonPrimitive(src.progressThreshold()));
+            json.add("amplifier", new JsonPrimitive(src.amplifier()));
+            json.add("duration", new JsonPrimitive(src.duration));
+            json.add("effect", new JsonPrimitive(Objects.requireNonNull(Registry.STATUS_EFFECT.getId(src.effect())).toString()));
+            return json;
         }
     }
 }

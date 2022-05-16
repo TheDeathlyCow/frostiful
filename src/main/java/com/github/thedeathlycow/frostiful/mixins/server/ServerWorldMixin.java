@@ -2,9 +2,8 @@ package com.github.thedeathlycow.frostiful.mixins.server;
 
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.Icicle;
-import com.github.thedeathlycow.frostiful.config.WeatherConfig;
+import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
-import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SideShapeType;
@@ -52,8 +51,7 @@ public class ServerWorldMixin {
 
         doIcicleGrowth(instance, blockPos, instance.random);
 
-        Config config = WeatherConfig.CONFIG;
-        int maxLayers = config.get(WeatherConfig.MAX_SNOW_BUILDUP);
+        int maxLayers = WeatherConfigGroup.MAX_SNOW_BUILDUP.getValue();
 
         if (maxLayers == 0) {
             return false;
@@ -121,7 +119,7 @@ public class ServerWorldMixin {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = getSnowLayers(current);
-        byte maxStep = WeatherConfig.CONFIG.get(WeatherConfig.MAX_SNOW_BUILDUP_STEP);
+        int maxStep = WeatherConfigGroup.MAX_SNOW_BUILDUP_STEP.getValue();
         if (currentLayers - lowestNeighbour < maxStep && currentLayers < maxLayers) {
             return Math.min(maxLayers, currentLayers + 1);
         }

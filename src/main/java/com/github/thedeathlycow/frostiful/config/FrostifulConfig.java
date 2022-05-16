@@ -1,6 +1,9 @@
 package com.github.thedeathlycow.frostiful.config;
 
+import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
+import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
+import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.google.common.collect.ImmutableList;
 import com.oroarmor.config.Config;
@@ -12,9 +15,11 @@ import java.util.List;
 
 public class FrostifulConfig extends Config {
 
-    public static final ConfigItemGroup icicleConfigGroup = new IcicleConfigGroup();
-
-    public static final List<ConfigItemGroup> configs = ImmutableList.of(icicleConfigGroup);
+    public static final ConfigItemGroup ICICLE = new IcicleConfigGroup();
+    public static final ConfigItemGroup ATTRIBUTE = new AttributeConfigGroup();
+    public static final ConfigItemGroup WEATHER = new WeatherConfigGroup();
+    public static final ConfigItemGroup FREEZING = new FreezingConfigGroup();
+    public static final List<ConfigItemGroup> configs = ImmutableList.of(ICICLE, ATTRIBUTE, WEATHER, FREEZING);
 
     /**
      * Creates a new config

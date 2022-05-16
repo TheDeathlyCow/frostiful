@@ -1,14 +1,10 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.AttributeConfig;
-import com.github.thedeathlycow.frostiful.config.FreezingConfig;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import com.github.thedeathlycow.simple.config.Config;
+import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -43,7 +39,6 @@ abstract class EntityMixin {
     }
 
     private static int getTicksFromMaxFrost(final double maxFrost) {
-        Config config = AttributeConfig.CONFIG;
-        return (int) (config.get(AttributeConfig.MAX_FROST_MULTIPLIER) * maxFrost);
+        return (int) (AttributeConfigGroup.MAX_FROST_MULTIPLIER.getValue() * maxFrost);
     }
 }

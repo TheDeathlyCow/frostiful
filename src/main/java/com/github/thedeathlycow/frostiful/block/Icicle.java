@@ -228,7 +228,6 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-            Config config = Frostiful.CONFIG;
             if (random.nextFloat() < IcicleConfigGroup.BECOME_UNSTABLE_CHANCE.getValue() && isHeldByIcicle(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
@@ -306,7 +305,6 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     }
 
     private Double getGrowChance(ServerWorld world) {
-        Config config = Frostiful.CONFIG;
         if (world.isThundering()) {
             return IcicleConfigGroup.GROW_CHANCE_DURING_THUNDER.getValue();
         } else if (world.isRaining()) {

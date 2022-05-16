@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
-import com.github.thedeathlycow.frostiful.config.FreezingConfig;
-import com.github.thedeathlycow.simple.config.Config;
+import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -14,9 +13,8 @@ public class PassiveFreezingHelper {
 
     public static int getPassiveFreezing(LivingEntity livingEntity) {
         int biomeFreezing = getBiomeFreezing(livingEntity);
-        Config config = FreezingConfig.CONFIG;
         if (livingEntity.isWet()) {
-            biomeFreezing += config.get(FreezingConfig.WET_FREEZE_RATE);
+            biomeFreezing += FreezingConfigGroup.WET_FREEZE_RATE.getValue();
         }
 
         return biomeFreezing;
@@ -25,40 +23,37 @@ public class PassiveFreezingHelper {
     public static int getWarmth(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-        Config config = FreezingConfig.CONFIG;
         int warmth = 0;
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
         int minLightLevel = world.isDay() ?
-                config.get(FreezingConfig.MIN_WARMTH_LIGHT_LEVEL_DAY) :
-                config.get(FreezingConfig.MIN_WARMTH_LIGHT_LEVEL_NIGHT);
+                FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_DAY.getValue():
+                FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_NIGHT.getValue();
 
         if (lightLevel >= minLightLevel) {
-            warmth += config.get(FreezingConfig.WARMTH_PER_LIGHT_LEVEL) * (lightLevel - minLightLevel);
+            warmth += FreezingConfigGroup.WARMTH_PER_LIGHT_LEVEL.getValue() * (lightLevel - minLightLevel);
         }
 
         if (livingEntity.isOnFire()) {
-            warmth += config.get(FreezingConfig.ON_FIRE_THAW_RATE);
+            warmth += FreezingConfigGroup.ON_FIRE_THAW_RATE.getValue();
         }
 
         if (!livingEntity.canFreeze()) {
-            warmth += config.get(FreezingConfig.CANNOT_FREEZE_WARM_RATE);
+            warmth += FreezingConfigGroup.CANNOT_FREEZE_WARM_RATE.getValue();
         }
 
         return warmth;
     }
 
     public static int getPowderSnowFreezing(LivingEntity livingEntity) {
-        Config config = FreezingConfig.CONFIG;
         return livingEntity.inPowderSnow ?
-                config.get(FreezingConfig.POWDER_SNOW_INCREASE_PER_TICK) :
+                FreezingConfigGroup.POWDER_SNOW_INCREASE_PER_TICK.getValue() :
                 0;
     }
 
     public static int getBiomeFreezing(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-
 
         if (!livingEntity.canFreeze()) {
             return 0;
@@ -76,9 +71,8 @@ public class PassiveFreezingHelper {
     }
 
     public static int getPerTickFreezing(float temperature) {
-        Config config = FreezingConfig.CONFIG;
-        int mul = config.get(FreezingConfig.BIOME_TEMPERATURE_MULTIPLIER);
-        float cutoff = config.get(FreezingConfig.PASSIVE_FREEZING_START_TEMP);
+        int mul = FreezingConfigGroup.BIOME_TEMPERATURE_MULTIPLIER.getValue();
+        double cutoff = FreezingConfigGroup.PASSIVE_FREEZING_START_TEMP.getValue();
 
         return MathHelper.floor(-mul * (Math.pow(temperature - cutoff, 3)) + 1);
     }
