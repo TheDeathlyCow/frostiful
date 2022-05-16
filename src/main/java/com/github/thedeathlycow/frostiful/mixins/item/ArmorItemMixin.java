@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.item;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
+import com.github.thedeathlycow.frostiful.item.FrostResistantArmorMaterial;
 import com.github.thedeathlycow.frostiful.item.FrostResistantArmorMaterials;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -36,7 +37,7 @@ public class ArmorItemMixin {
     private void addFrostResistanceToFurLinedArmour(ArmorMaterial material, EquipmentSlot slot, Item.Settings settings, CallbackInfo ci) {
         UUID uUID = MODIFIERS[slot.getEntitySlotId()];
 
-        if (material instanceof FrostResistantArmorMaterials furLinedMaterial) {
+        if (material instanceof FrostResistantArmorMaterial frostResistantArmorMaterial) {
             ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
 
             this.attributeModifiers.forEach(builder::put);
@@ -46,7 +47,7 @@ public class ArmorItemMixin {
                     new EntityAttributeModifier(
                             uUID,
                             "Armor frost resistance",
-                            furLinedMaterial.getFrostResistance(slot),
+                            frostResistantArmorMaterial.getFrostResistance(slot),
                             EntityAttributeModifier.Operation.ADDITION
                     )
             );

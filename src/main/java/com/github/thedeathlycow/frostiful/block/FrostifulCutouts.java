@@ -5,7 +5,7 @@ import net.minecraft.client.render.RenderLayer;
 
 public class FrostifulCutouts {
 
-    public static void registerCutouts() {
+    public static void  registerCutouts() {
         BlockRenderLayerMap.INSTANCE.putBlock(FrostifulBlocks.ICICLE, RenderLayer.getCutout());
     }
 

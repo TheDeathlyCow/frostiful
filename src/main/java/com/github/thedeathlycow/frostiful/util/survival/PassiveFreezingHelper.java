@@ -14,9 +14,11 @@ public class PassiveFreezingHelper {
 
     public static int getPassiveFreezing(LivingEntity livingEntity) {
         int biomeFreezing = getBiomeFreezing(livingEntity);
-        if (biomeFreezing > 0) {
-            biomeFreezing *= getPassiveFreezingMultiplier(livingEntity);
+        Config config = FreezingConfig.CONFIG;
+        if (livingEntity.isWet()) {
+            biomeFreezing += config.get(FreezingConfig.WET_FREEZE_RATE);
         }
+
         return biomeFreezing;
     }
 
@@ -51,17 +53,6 @@ public class PassiveFreezingHelper {
         return livingEntity.inPowderSnow ?
                 config.get(FreezingConfig.POWDER_SNOW_INCREASE_PER_TICK) :
                 0;
-    }
-
-    public static double getPassiveFreezingMultiplier(LivingEntity livingEntity) {
-        Config config = FreezingConfig.CONFIG;
-        double multiplier = 0.0D;
-
-        if (livingEntity.isWet()) {
-            multiplier += config.get(FreezingConfig.WET_FREEZE_RATE_MULTIPLIER);
-        }
-
-        return multiplier == 0.0D ? 1 : multiplier;
     }
 
     public static int getBiomeFreezing(LivingEntity livingEntity) {

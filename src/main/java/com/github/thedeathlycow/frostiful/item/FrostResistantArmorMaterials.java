@@ -6,7 +6,7 @@ import net.minecraft.item.ArmorMaterials;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 
-public enum FrostResistantArmorMaterials implements FurLinedArmorMaterial {
+public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial {
 
     FUR_ARMOR(ArmorMaterials.LEATHER, new double[]{0.5D, 1.0D, 2.0D, 1.5D}),
     FUR_LINED_CHAIN(ArmorMaterials.CHAIN, new double[]{0.5D, 1.0D, 2.0D, 1.5D}),
