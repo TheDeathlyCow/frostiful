@@ -62,6 +62,7 @@
   "attribute_config.base_max_frost": "Per-entity Base Max Frost",
   "config.frostiful.attribute_config.base_max_frost.base": "Default",
   "config.frostiful.attribute_config.base_max_frost.player": "Player",
+  "config.frostiful.weather_config": "Weather Config",
   "config.frostiful.weather_config.freeze_top_layer_max_accumulation": "Max random snow accumulation during worldgen",
   "config.frostiful.weather_config.max_snow_buildup_step": "Max snow buildup step",
   "config.frostiful.weather_config.max_snow_buildup": "Max snow buildup",
