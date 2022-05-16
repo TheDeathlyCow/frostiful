@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.config.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.entity.EntityType;
@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 
 public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
-    private int freezeAmount = IcicleConfig.CONFIG.get(IcicleConfig.FROST_ARROW_FREEZE_AMOUNT);;
+    private int freezeAmount = IcicleConfigGroup.FROST_ARROW_FREEZE_AMOUNT.getValue();
 
     public FrostTippedArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
         super(entityType, world);

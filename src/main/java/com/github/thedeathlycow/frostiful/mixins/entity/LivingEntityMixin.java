@@ -1,11 +1,10 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.AttributeConfig;
-import com.github.thedeathlycow.frostiful.config.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
+import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
-import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -77,11 +76,9 @@ public abstract class LivingEntityMixin {
             return false;
         }
 
-        Config config = FreezingConfig.CONFIG;
-
         amount = instance.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                config.get(FreezingConfig.FREEZE_EXTRA_DAMAGE_AMOUNT) :
-                config.get(FreezingConfig.FREEZE_DAMAGE_AMOUNT);
+                FreezingConfigGroup.FREEZE_EXTRA_DAMAGE_AMOUNT.getValue() :
+                FreezingConfigGroup.FREEZE_DAMAGE_AMOUNT.getValue();
 
         return instance.damage(source, amount);
     }
@@ -136,10 +133,9 @@ public abstract class LivingEntityMixin {
             cancellable = true
     )
     private static void addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        Config config = AttributeConfig.CONFIG;
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE, config.get(AttributeConfig.BASE_ENTITY_FROST_RESISTANCE));
-        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, config.get(AttributeConfig.ENTITY_MAX_FROST));
+        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE, AttributeConfigGroup.BaseFrostResistance.BASE.getValue());
+        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, AttributeConfigGroup.BaseMaxFrost.BASE.getValue());
         cir.setReturnValue(attributeBuilder);
     }
 

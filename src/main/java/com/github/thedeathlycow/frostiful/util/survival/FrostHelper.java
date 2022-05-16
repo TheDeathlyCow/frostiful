@@ -1,8 +1,7 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.AttributeConfig;
-import com.github.thedeathlycow.simple.config.Config;
+import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -18,9 +17,8 @@ public class FrostHelper {
         double frostModifier = 0.0D;
 
         if (applyFrostResistance) {
-            final Config config = AttributeConfig.CONFIG;
             double frostResistance = entity.getAttributeValue(FrostifulEntityAttributes.FROST_RESISTANCE);
-            frostModifier = frostResistance * config.get(AttributeConfig.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE);
+            frostModifier = frostResistance * AttributeConfigGroup.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE.getValue();
             frostModifier /= 100.0D;
         }
 

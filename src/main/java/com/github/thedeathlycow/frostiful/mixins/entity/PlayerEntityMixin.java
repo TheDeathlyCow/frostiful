@@ -1,11 +1,10 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.AttributeConfig;
+import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
-import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
@@ -52,10 +51,9 @@ public abstract class PlayerEntityMixin {
             cancellable = true
     )
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
-        Config config = AttributeConfig.CONFIG;
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE, config.get(AttributeConfig.BASE_PLAYER_FROST_RESISTANCE));
-        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, config.get(AttributeConfig.PLAYER_MAX_FROST));
+        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE, AttributeConfigGroup.BaseFrostResistance.PLAYER.getValue());
+        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, AttributeConfigGroup.BaseMaxFrost.PLAYER.getValue());
         cir.setReturnValue(attributeBuilder);
     }
 }

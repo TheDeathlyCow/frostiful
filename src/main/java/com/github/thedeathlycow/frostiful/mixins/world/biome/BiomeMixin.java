@@ -13,7 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(Biome.class)
 public abstract class BiomeMixin {
 
-    @Shadow protected abstract float computeTemperature(BlockPos pos);
+    @Shadow
+    protected abstract float computeTemperature(BlockPos pos);
 
     @Inject(
             method = "canSetSnow",

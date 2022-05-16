@@ -1,9 +1,8 @@
 package com.github.thedeathlycow.frostiful.block;
 
-import com.github.thedeathlycow.frostiful.config.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
-import com.github.thedeathlycow.simple.config.Config;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
@@ -227,10 +226,10 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-            if (random.nextFloat() < IcicleConfig.CONFIG.get(IcicleConfig.BECOME_UNSTABLE_CHANCE) && isHeldByIcicle(state, world, pos)) { // fall
+            if (random.nextFloat() < IcicleConfigGroup.BECOME_UNSTABLE_CHANCE.getValue() && isHeldByIcicle(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
-            final float growChance = this.getGrowChance(world);
+            final double growChance = this.getGrowChance(world);
             if (random.nextFloat() < growChance) { // grow
                 this.tryGrowIcicle(state, world, pos, random);
             }
@@ -303,14 +302,13 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
         return 0.125F;
     }
 
-    private float getGrowChance(ServerWorld world) {
-        Config config = IcicleConfig.CONFIG;
+    private Double getGrowChance(ServerWorld world) {
         if (world.isThundering()) {
-            return config.get(IcicleConfig.GROW_CHANCE_DURING_THUNDER);
+            return IcicleConfigGroup.GROW_CHANCE_DURING_THUNDER.getValue();
         } else if (world.isRaining()) {
-            return config.get(IcicleConfig.GROW_CHANGE_DURING_RAIN);
+            return IcicleConfigGroup.GROW_CHANGE_DURING_RAIN.getValue();
         } else {
-            return config.get(IcicleConfig.GROW_CHANCE);
+            return IcicleConfigGroup.GROW_CHANGE_DURING_RAIN.getValue();
         }
     }
 

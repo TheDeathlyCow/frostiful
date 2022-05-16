@@ -5,7 +5,6 @@ import com.github.thedeathlycow.frostiful.client.render.entity.FrostifulEntityRe
 import net.fabricmc.api.ClientModInitializer;
 
 public class FrostifulClient implements ClientModInitializer {
-
     @Override
     public void onInitializeClient() {
         Frostiful.LOGGER.info("Initializing Frostiful client...");
