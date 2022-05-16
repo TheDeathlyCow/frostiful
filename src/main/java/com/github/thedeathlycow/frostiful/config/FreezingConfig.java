@@ -30,11 +30,11 @@ public class FreezingConfig {
     public static final ConfigEntry<Integer> POWDER_SNOW_INCREASE_PER_TICK = new IntegerEntry("powder_snow_increase_per_tick", 20, 0);
     public static final ListEntry<FrostStatusEffect> PASSIVE_FREEZING_EFFECTS = new FrostStatusEffectEntry("passive_freezing_effects",
             List.of(
-                    new FrostStatusEffect(0.33, StatusEffects.WEAKNESS, 100, 0),
-                    new FrostStatusEffect(0.5, StatusEffects.MINING_FATIGUE, 100, 0),
-                    new FrostStatusEffect(0.67, StatusEffects.WEAKNESS, 100, 1),
-                    new FrostStatusEffect(0.75, StatusEffects.MINING_FATIGUE, 100, 1),
-                    new FrostStatusEffect(0.99, StatusEffects.MINING_FATIGUE, 100, 2)
+                    new FrostStatusEffect(0.33f, StatusEffects.WEAKNESS, 100, 0),
+                    new FrostStatusEffect(0.5f, StatusEffects.MINING_FATIGUE, 100, 0),
+                    new FrostStatusEffect(0.67f, StatusEffects.WEAKNESS, 100, 1),
+                    new FrostStatusEffect(0.75f, StatusEffects.MINING_FATIGUE, 100, 1),
+                    new FrostStatusEffect(0.99f, StatusEffects.MINING_FATIGUE, 100, 2)
             )
     );
 

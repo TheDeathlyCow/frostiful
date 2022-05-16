@@ -23,11 +23,11 @@ import java.util.UUID;
 @Mixin(ArmorItem.class)
 public class ArmorItemMixin {
 
-    @Shadow @Final private static UUID[] MODIFIERS;
+    @Shadow @Final
+    private static UUID[] MODIFIERS;
+
     @Shadow @Final @Mutable
     private Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-
-    @Shadow @Final protected EquipmentSlot slot;
 
     @Inject(
             method = "<init>",

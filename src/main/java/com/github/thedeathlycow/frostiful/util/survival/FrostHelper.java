@@ -56,22 +56,18 @@ public class FrostHelper {
     }
 
     private static void applyEffects(LivingEntity entity) {
-        double progress = getFrostProgress(entity);
+        float progress = entity.getFreezingScale();
         for (FrostStatusEffect effect : FrostStatusEffect.getPassiveFreezingEffects()) {
-            StatusEffectInstance effectInstance = entity.getStatusEffect(effect.effect());
+            StatusEffectInstance currentEffectInstance = entity.getStatusEffect(effect.effect());
             boolean shouldApplyEffect = progress >= effect.progressThreshold()
-                    && (effectInstance == null || effectInstance.getAmplifier() < effect.amplifier());
+                    && (currentEffectInstance == null || currentEffectInstance.getAmplifier() < effect.amplifier());
             if (shouldApplyEffect) {
                 entity.addStatusEffect(
-                        new StatusEffectInstance(effect.effect(), effect.duration(), effect.amplifier(), true, true),
+                        effect.createEffectInstance(),
                         null
                 );
             }
         }
-    }
-
-    public static double getFrostProgress(Entity entity) {
-        return ((double) entity.getFrozenTicks()) / entity.getMinFreezeDamageTicks();
     }
 
 }
