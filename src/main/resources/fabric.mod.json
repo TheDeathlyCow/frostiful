@@ -26,6 +26,9 @@
     ],
     "client": [
       "com.github.thedeathlycow.frostiful.init.FrostifulClient"
+    ],
+    "modmenu": [
+      "com.github.thedeathlycow.frostiful.init.FrostifulModMenu"
     ]
   },
   "mixins": [

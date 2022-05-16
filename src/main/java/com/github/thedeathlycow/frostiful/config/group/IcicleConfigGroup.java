@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.config.group;
 
+import com.google.common.collect.ImmutableList;
 import com.oroarmor.config.ConfigItemGroup;
 import com.oroarmor.config.DoubleConfigItem;
 import com.oroarmor.config.IntegerConfigItem;
@@ -18,6 +19,6 @@ public class IcicleConfigGroup extends ConfigItemGroup {
      * Creates a new {@link ConfigItemGroup} with the list of configs and the name
      */
     public IcicleConfigGroup() {
-        super(List.of(BECOME_UNSTABLE_CHANCE, GROW_CHANCE, GROW_CHANGE_DURING_RAIN, GROW_CHANCE_DURING_THUNDER, FROST_ARROW_FREEZE_AMOUNT), "icicle_config");
+        super(ImmutableList.of(BECOME_UNSTABLE_CHANCE, GROW_CHANCE, GROW_CHANGE_DURING_RAIN, GROW_CHANCE_DURING_THUNDER, FROST_ARROW_FREEZE_AMOUNT), "icicle_config");
     }
 }

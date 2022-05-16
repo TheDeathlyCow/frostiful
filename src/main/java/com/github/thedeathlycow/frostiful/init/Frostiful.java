@@ -2,23 +2,19 @@ package com.github.thedeathlycow.frostiful.init;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
-import com.github.thedeathlycow.frostiful.config.*;
-import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
-import com.github.thedeathlycow.simple.config.Config;
-import com.github.thedeathlycow.simple.config.reload.Reloadable;
-import com.google.common.reflect.Reflection;
 import com.oroarmor.config.Config;
+import com.oroarmor.config.command.ConfigCommand;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceType;
+import net.minecraft.command.CommandSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
