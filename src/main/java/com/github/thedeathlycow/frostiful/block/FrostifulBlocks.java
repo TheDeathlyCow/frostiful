@@ -11,7 +11,7 @@ import net.minecraft.util.registry.Registry;
 
 public class FrostifulBlocks {
 
-    public static final Block ICICLE = new Icicle(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds());
+    public static final Block ICICLE = new Icicle(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds().requiresTool());
 
     public static void registerBlocks() {
         register("icicle", ICICLE);
