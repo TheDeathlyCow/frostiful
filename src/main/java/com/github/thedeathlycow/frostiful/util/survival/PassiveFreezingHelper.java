@@ -71,10 +71,10 @@ public class PassiveFreezingHelper {
     }
 
     public static int getPerTickFreezing(float temperature) {
-        int mul = FreezingConfigGroup.BIOME_TEMPERATURE_MULTIPLIER.getValue();
+        double mul = FreezingConfigGroup.BIOME_TEMPERATURE_MULTIPLIER.getValue();
         double cutoff = FreezingConfigGroup.PASSIVE_FREEZING_START_TEMP.getValue();
 
-        return MathHelper.floor(-mul * (Math.pow(temperature - cutoff, 3)) + 1);
+        return MathHelper.floor(-mul * (temperature - cutoff) + 1);
     }
 
 }
