@@ -65,6 +65,11 @@ public class ServerWorldMixin {
 
     private void doIcicleGrowth(ServerWorld instance, BlockPos pos, Random random) {
 
+        // slow down icicles appearing in world
+        if (random.nextInt(5) != 0) {
+            return;
+        }
+
         BlockState[] cache = {null};
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState anchor = cache[0];
