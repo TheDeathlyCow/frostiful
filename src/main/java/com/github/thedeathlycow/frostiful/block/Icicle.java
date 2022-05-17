@@ -226,7 +226,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-            if (random.nextFloat() < IcicleConfigGroup.BECOME_UNSTABLE_CHANCE.getValue() && isHeldByIcicle(state, world, pos)) { // fall
+            if (random.nextFloat() < IcicleConfigGroup.BECOME_UNSTABLE_CHANCE.getValue() && isHeldByIcicleFallable(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
             final double growChance = this.getGrowChance(world);
@@ -541,6 +541,10 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
             current.move(Direction.DOWN);
         }
+    }
+
+    private static boolean isHeldByIcicleFallable(BlockState state, WorldView world, BlockPos pos) {
+        return !(world.getBlockState(pos.up()).isIn(FrostifulBlockTags.ICICLE_GROWABLE)) || isHeldByIcicle(state, world, pos);
     }
 
     private static boolean isHeldByIcicle(BlockState state, WorldView world, BlockPos pos) {
