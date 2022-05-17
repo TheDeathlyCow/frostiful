@@ -8,12 +8,15 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.google.common.collect.ImmutableList;
 import com.oroarmor.config.Config;
 import com.oroarmor.config.ConfigItemGroup;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.resource.ResourceManager;
+import net.minecraft.util.Identifier;
 
 import java.io.File;
 import java.util.List;
 
-public class FrostifulConfig extends Config {
+public class FrostifulConfig extends Config implements SimpleSynchronousResourceReloadListener {
 
     public static final ConfigItemGroup ICICLE = new IcicleConfigGroup();
     public static final ConfigItemGroup ATTRIBUTE = new AttributeConfigGroup();
@@ -26,5 +29,16 @@ public class FrostifulConfig extends Config {
      */
     public FrostifulConfig() {
         super(configs, new File(FabricLoader.getInstance().getConfigDir().toFile(), Frostiful.MODID + ".json"), Frostiful.MODID);
+    }
+
+    @Override
+    public Identifier getFabricId() {
+        return new Identifier(Frostiful.MODID, "config");
+    }
+
+    @Override
+    public void reload(ResourceManager manager) {
+        this.readConfigFromFile();
+        this.saveConfigToFile();
     }
 }

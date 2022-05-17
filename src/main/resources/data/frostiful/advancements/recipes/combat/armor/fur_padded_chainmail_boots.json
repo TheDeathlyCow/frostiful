@@ -33,7 +33,8 @@
     "requirements": [
         [
             "has_fur_armor",
-            "has_the_recipe"
+            "has_the_recipe",
+            "has_the_reversed_recipe"
         ]
     ]
 }
