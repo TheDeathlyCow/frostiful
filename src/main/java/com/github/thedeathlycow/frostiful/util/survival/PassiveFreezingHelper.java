@@ -12,8 +12,17 @@ import net.minecraft.world.biome.Biome;
 public class PassiveFreezingHelper {
 
     public static int getPassiveFreezing(LivingEntity livingEntity) {
+
+        if (!livingEntity.canFreeze()) {
+            return 0;
+        }
+
         int biomeFreezing = getBiomeFreezing(livingEntity);
-        if (livingEntity.isWet()) {
+        World world = livingEntity.getWorld();
+        BlockPos pos = livingEntity.getBlockPos();
+        Biome biome = world.getBiome(pos).value();
+        // applies regardless of biome
+        if (biome.isCold(pos) && livingEntity.isWet()) {
             biomeFreezing += FreezingConfigGroup.WET_FREEZE_RATE.getValue();
         }
 
@@ -54,15 +63,9 @@ public class PassiveFreezingHelper {
     public static int getBiomeFreezing(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-
-        if (!livingEntity.canFreeze()) {
-            return 0;
-        }
-
-        RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
-
         boolean inNaturalDimension = world.getDimension().isNatural();
         if (inNaturalDimension) {
+            RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
             Biome biome = biomeEntry.value();
             float temperature = biome.getTemperature();
             return getPerTickFreezing(temperature);
