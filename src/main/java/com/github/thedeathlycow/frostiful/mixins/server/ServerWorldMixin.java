@@ -81,7 +81,7 @@ public class ServerWorldMixin {
         };
 
         BlockPos.Mutable placePos = pos.mutableCopy();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             if (validCondition.test(placePos)) {
                 BlockState icicle = FrostifulBlocks.ICICLE.getDefaultState()
                         .with(Icicle.VERTICAL_DIRECTION, Direction.DOWN);

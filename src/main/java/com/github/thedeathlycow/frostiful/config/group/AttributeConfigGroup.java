@@ -31,8 +31,8 @@ public class AttributeConfigGroup extends ConfigItemGroup {
 
         public static final String TRANSLATE_BASE_STRING = AttributeConfigGroup.TRANSLATE_BASE_STRING + "base_max_frost.";
 
-        public static final DoubleConfigItem BASE = new DoubleConfigItem("base", 30.0D, TRANSLATE_BASE_STRING + "base", null, 0.0D, Double.POSITIVE_INFINITY);
-        public static final DoubleConfigItem PLAYER = new DoubleConfigItem("player", 35.0D, TRANSLATE_BASE_STRING + "player", null, 0.0D, Double.POSITIVE_INFINITY);
+        public static final DoubleConfigItem BASE = new DoubleConfigItem("base", 40.0D, TRANSLATE_BASE_STRING + "base", null, 0.0D, Double.POSITIVE_INFINITY);
+        public static final DoubleConfigItem PLAYER = new DoubleConfigItem("player", 45.0D, TRANSLATE_BASE_STRING + "player", null, 0.0D, Double.POSITIVE_INFINITY);
 
         /**
          * Creates a new {@link ConfigItemGroup} with the list of configs and the name
