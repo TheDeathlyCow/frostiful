@@ -73,14 +73,13 @@ public class ServerWorldMixin {
         BlockState[] cache = {null};
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState anchor = cache[0];
-
+            BlockPos anchorPos = testPos.up();
             if (anchor == null) {
-                anchor = instance.getBlockState(testPos.up());
+                anchor = instance.getBlockState(anchorPos);
             }
 
             BlockState at = instance.getBlockState(testPos);
-            boolean isValid = at.isAir() && (anchor.isIn(FrostifulBlockTags.ICICLE_GROWABLE) ||
-                    anchor.isSideSolid(instance, testPos, Direction.DOWN, SideShapeType.FULL));
+            boolean isValid = at.isAir() && anchor.isSideSolidFullSquare(instance, anchorPos, Direction.DOWN);
             cache[0] = at;
             return isValid;
         };
