@@ -48,7 +48,7 @@ public class SunLichenBlock extends GlowLichenBlock {
                 int heat = FreezingConfigGroup.FIRE_LICHEN_HEAT_PER_LEVEL.getValue() * heatLevel;
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
-                this.createFireParticles(world, pos);
+                this.createFireParticles(world, entity.getBlockPos());
                 world.setBlockState(pos, state.with(HEAT_LEVEL, 0));
                 this.playSound(livingEntity, world.getRandom());
             }
@@ -61,7 +61,7 @@ public class SunLichenBlock extends GlowLichenBlock {
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int skyLight = world.getLightLevel(LightType.SKY, pos);
         int heatLevel = getHeatLevel(state);
-        if (skyLight > 0 && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
+        if ((skyLight > 0 && world.isDay()) && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
             if (heatLevel < MAX_HEAT_LEVEL) {
                 world.setBlockState(pos, state.with(HEAT_LEVEL, heatLevel + 1));
             }
@@ -93,9 +93,9 @@ public class SunLichenBlock extends GlowLichenBlock {
 
     private void createFireParticles(World world, BlockPos pos) {
         for (int i = 0; i < 10; i++) {
-            double xOffset = pos.getX() + 0.5D + world.getRandom().nextDouble();
+            double xOffset = pos.getX() - 0.25 + world.getRandom().nextDouble(0.5);
             double yOffset = pos.getY() + world.getRandom().nextDouble();
-            double zOffset = pos.getZ() + 0.5D + world.getRandom().nextDouble();
+            double zOffset = pos.getZ() - 0.25 + world.getRandom().nextDouble(0.5);
             world.addParticle(ParticleTypes.FLAME, xOffset, yOffset, zOffset, 0.0D, 0.1D, 0.0D);
         }
     }
