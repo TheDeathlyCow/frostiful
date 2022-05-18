@@ -19,7 +19,7 @@ public class FrostifulGameRules {
      */
     public static CustomGameRuleCategory CATEGORY = new CustomGameRuleCategory(
             new Identifier(Frostiful.MODID, "gamerule_category"),
-            new TranslatableText("gamerule.category.lost-in-the-cold")
+            new TranslatableText("gamerule.category." + Frostiful.MODID)
                     .setStyle(TextStyles.GAME_RULE_TITLE)
     );
 

@@ -13,7 +13,8 @@
     "world.gen.feature.FreezeTopLayerMixin"
   ],
   "client": [
-    "client.gui.InGameHudMixin"
+    "client.gui.ColdHeartOverlay",
+    "client.gui.FrostVinetteOverlay"
   ],
   "injectors": {
     "defaultRequire": 1
