@@ -15,9 +15,9 @@ import java.util.Objects;
 public record FrostStatusEffect(float progressThreshold, StatusEffect effect, int duration, int amplifier) {
 
     private static final List<FrostStatusEffect> EFFECTS = ImmutableList.of(
-            new FrostStatusEffect(0.33f, StatusEffects.WEAKNESS, 100, 0),
-            new FrostStatusEffect(0.5f, StatusEffects.MINING_FATIGUE, 100, 0),
-            new FrostStatusEffect(0.75f, StatusEffects.WEAKNESS, 100, 1),
+            new FrostStatusEffect(0.5f, StatusEffects.WEAKNESS, 100, 0),
+            new FrostStatusEffect(0.75f, StatusEffects.MINING_FATIGUE, 100, 0),
+            new FrostStatusEffect(0.99f, StatusEffects.WEAKNESS, 100, 1),
             new FrostStatusEffect(0.99f, StatusEffects.MINING_FATIGUE, 100, 1)
     );
 
