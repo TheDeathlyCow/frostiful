@@ -5,6 +5,7 @@
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "entity.EntityMixin",
+    "entity.LivingEntityFreezingTickOverrides",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
     "entity.mob.PiglinBrainMixin",
