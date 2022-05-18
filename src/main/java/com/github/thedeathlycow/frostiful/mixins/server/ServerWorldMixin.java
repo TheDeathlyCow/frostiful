@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.server;
 
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
-import com.github.thedeathlycow.frostiful.block.Icicle;
+import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -72,7 +72,7 @@ public class ServerWorldMixin {
             BlockState at = instance.getBlockState(testPos);
 
             return at.isAir() && FrostifulBlocks.ICICLE.getDefaultState()
-                    .with(Icicle.VERTICAL_DIRECTION, Direction.DOWN)
+                    .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN)
                     .canPlaceAt(instance, testPos);
         };
 
@@ -80,7 +80,7 @@ public class ServerWorldMixin {
         for (int i = 0; i < 5; i++) {
             if (validCondition.test(placePos)) {
                 BlockState icicle = FrostifulBlocks.ICICLE.getDefaultState()
-                        .with(Icicle.VERTICAL_DIRECTION, Direction.DOWN);
+                        .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
                 instance.setBlockState(placePos, icicle);
                 return;
             }

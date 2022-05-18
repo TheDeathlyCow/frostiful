@@ -46,7 +46,7 @@ import java.util.function.Predicate;
  * Largely based on code from {@link PointedDripstoneBlock}.
  */
 @SuppressWarnings("deprecation")
-public class Icicle extends Block implements LandingBlock, Waterloggable {
+public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
 
     /**
      * Icicles can point up and down
@@ -74,7 +74,7 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
 
     private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformIntProvider.create(40, 80);
 
-    public Icicle(Settings settings) {
+    public IcicleBlock(Settings settings) {
         super(settings);
         this.setDefaultState(this.stateManager.getDefaultState()
                 .with(VERTICAL_DIRECTION, Direction.UP)

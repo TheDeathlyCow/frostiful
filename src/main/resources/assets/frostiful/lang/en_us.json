@@ -27,6 +27,7 @@
   "item.frostiful.fur_padded_chainmail_boots": "Fur Padded Chainmail Boots",
   "item.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
   "block.frostiful.icicle": "Icicle",
+  "block.frostiful.sun_lichen": "Sun Lichen",
   "commands.frostiful.freeze.add.success.single": "Added %d frozen ticks to %s (now %d)",
   "commands.frostiful.freeze.add.success.multiple": "Added %d frozen ticks to %d targets",
   "commands.frostiful.freeze.remove.success.single": "Removed %d frozen ticks to %s (now %d)",
