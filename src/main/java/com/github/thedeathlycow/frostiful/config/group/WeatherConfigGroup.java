@@ -16,6 +16,6 @@ public class WeatherConfigGroup extends ConfigItemGroup {
      * Creates a new {@link ConfigItemGroup} with the list of configs and the name
      */
     public WeatherConfigGroup() {
-        super(ImmutableList.of(FREEZE_TOP_LAYER_MAX_ACCUMULATION, MAX_SNOW_BUILDUP_STEP, MAX_SNOW_BUILDUP), "weather_config");
+        super(ImmutableList.of(MAX_SNOW_BUILDUP_STEP, MAX_SNOW_BUILDUP), "weather_config");
     }
 }

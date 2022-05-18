@@ -9,8 +9,7 @@
     "entity.PlayerEntityMixin",
     "item.ArmorItemMixin",
     "server.ServerWorldMixin",
-    "world.biome.BiomeMixin",
-    "world.gen.feature.FreezeTopLayerMixin"
+    "world.biome.BiomeMixin"
   ],
   "client": [
     "client.gui.ColdHeartOverlay",
