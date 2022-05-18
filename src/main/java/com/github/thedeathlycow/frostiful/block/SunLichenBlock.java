@@ -70,10 +70,8 @@ public class SunLichenBlock extends GlowLichenBlock {
         }
     }
 
-    public static ToIntFunction<BlockState> getLuminanceSupplier() {
-        return (state) -> {
-            return SunLichenBlock.getHeatLevel(state) * 2;
-        };
+    public static int getLuminance(BlockState state) {
+        return SunLichenBlock.getHeatLevel(state) * 2;
     }
 
     private float getChargeChance(int skyLight) {
