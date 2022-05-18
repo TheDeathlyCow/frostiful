@@ -7,6 +7,7 @@
     "entity.EntityMixin",
     "entity.LivingEntityFreezingTickOverrides",
     "entity.LivingEntityMixin",
+    "entity.PlayerEntityFreezeOverrides",
     "entity.PlayerEntityMixin",
     "entity.mob.PiglinBrainMixin",
     "entity.mob.StrayDefaultArrowItemMixin",

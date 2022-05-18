@@ -461,9 +461,9 @@ public class Icicle extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean canPlaceAtWithDirection(WorldView world, BlockPos pos, Direction direction) {
-        BlockPos blockPos = pos.offset(direction.getOpposite());
-        BlockState blockState = world.getBlockState(blockPos);
-        return blockState.isSideSolidFullSquare(world, blockPos, direction) || isIcicleFacingDirection(blockState, direction);
+        BlockPos candidateAnchorPos = pos.offset(direction.getOpposite());
+        BlockState candidateAnchorState = world.getBlockState(candidateAnchorPos);
+        return candidateAnchorState.isSideSolidFullSquare(world, candidateAnchorPos, direction) || isIcicleFacingDirection(candidateAnchorState, direction);
     }
 
     @Nullable

@@ -83,22 +83,6 @@ public abstract class LivingEntityMixin {
         return instance.damage(source, amount);
     }
 
-    @Inject(
-            method = "canFreeze",
-            at = @At(
-                    value = "HEAD"
-            ),
-            cancellable = true
-    )
-    private void creativePlayersCannotFreeze(CallbackInfoReturnable<Boolean> cir) {
-        LivingEntity livingEntity = (LivingEntity) (Object) this;
-        if (livingEntity instanceof PlayerEntity player) {
-            if (player.isCreative()) {
-                cir.setReturnValue(false);
-            }
-        }
-    }
-
     @Redirect(
             method = "addPowderSnowSlowIfNeeded",
             at = @At(

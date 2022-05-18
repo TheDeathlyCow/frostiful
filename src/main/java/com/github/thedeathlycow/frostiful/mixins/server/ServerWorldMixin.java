@@ -3,10 +3,8 @@ package com.github.thedeathlycow.frostiful.mixins.server;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.Icicle;
 import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
-import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.SideShapeType;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
@@ -70,18 +68,12 @@ public class ServerWorldMixin {
             return;
         }
 
-        BlockState[] cache = {null};
         Predicate<BlockPos> validCondition = (testPos) -> {
-            BlockState anchor = cache[0];
-            BlockPos anchorPos = testPos.up();
-            if (anchor == null) {
-                anchor = instance.getBlockState(anchorPos);
-            }
-
             BlockState at = instance.getBlockState(testPos);
-            boolean isValid = at.isAir() && anchor.isSideSolidFullSquare(instance, anchorPos, Direction.DOWN);
-            cache[0] = at;
-            return isValid;
+
+            return at.isAir() && FrostifulBlocks.ICICLE.getDefaultState()
+                    .with(Icicle.VERTICAL_DIRECTION, Direction.DOWN)
+                    .canPlaceAt(instance, testPos);
         };
 
         BlockPos.Mutable placePos = pos.mutableCopy();
