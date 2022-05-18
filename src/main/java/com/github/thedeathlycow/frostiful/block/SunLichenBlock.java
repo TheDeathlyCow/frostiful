@@ -93,10 +93,10 @@ public class SunLichenBlock extends GlowLichenBlock {
 
     private void createFireParticles(World world, BlockPos pos) {
         for (int i = 0; i < 10; i++) {
-            double x = pos.getX() + world.getRandom().nextDouble() - 0.5;
-            double y = pos.getZ() + world.getRandom().nextDouble() - 0.5;
-            double z = pos.getY() + world.getRandom().nextDouble() - 0.5;
-            world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.1D, 0.0D);
+            double xOffset = pos.getX() + 0.5D + world.getRandom().nextDouble();
+            double yOffset = pos.getY() + world.getRandom().nextDouble();
+            double zOffset = pos.getZ() + 0.5D + world.getRandom().nextDouble();
+            world.addParticle(ParticleTypes.FLAME, xOffset, yOffset, zOffset, 0.0D, 0.1D, 0.0D);
         }
     }
 

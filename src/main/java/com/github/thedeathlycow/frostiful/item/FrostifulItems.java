@@ -24,7 +24,7 @@ public class FrostifulItems {
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT));
 
     public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item FIRE_LICHEN = new BlockItem(FrostifulBlocks.FIRE_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item SUN_LICHEN = new BlockItem(FrostifulBlocks.SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
 //    public static final Item FUR_LINED_IRON_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_IRON, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT));
@@ -60,7 +60,7 @@ public class FrostifulItems {
         register("fur_padded_chainmail_boots", FUR_PADDED_CHAINMAIL_BOOTS);
 
         register("icicle", ICICLE);
-        register("fire_lichen", FIRE_LICHEN);
+        register("sun_lichen", SUN_LICHEN);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
 
 //        register("fur_lined_iron_helmet", FUR_LINED_IRON_HELMET);
