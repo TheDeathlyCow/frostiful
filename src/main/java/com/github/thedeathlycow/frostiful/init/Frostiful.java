@@ -5,14 +5,15 @@ import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
+import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableListener;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
-import com.oroarmor.config.Config;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
+import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import org.slf4j.Logger;
@@ -38,6 +39,8 @@ public class Frostiful implements ModInitializer {
                     FreezeCommand.register(dispatcher);
                 })
         );
+
+        LootTableLoadingCallback.EVENT.register(StrayLootTableListener::addFrostTippedArrows);
 
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(CONFIG);
 
