@@ -6,12 +6,12 @@ import net.minecraft.entity.mob.PiglinBrain;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Deprecated
 @Mixin(PiglinBrain.class)
 public class PiglinBrainMixin {
 

@@ -7,6 +7,8 @@
     "entity.EntityMixin",
     "entity.LivingEntityMixin",
     "entity.PlayerEntityMixin",
+    "entity.mob.PiglinBrainMixin",
+    "entity.mob.StrayDefaultArrowItemMixin",
     "item.ArmorItemMixin",
     "server.ServerWorldMixin",
     "world.biome.BiomeMixin"
