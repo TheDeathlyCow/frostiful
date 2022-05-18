@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
+import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawableHelper;
@@ -47,6 +48,10 @@ abstract class ColdHeartOverlay {
             )
     )
     private void drawColdHeartOverlayBar(MatrixStack matrices, PlayerEntity player, int x, int y, int lines, int regeneratingHeartIndex, float maxHealth, int lastHealth, int health, int absorption, boolean blinking, CallbackInfo ci) {
+        if (!ClientConfigGroup.DO_COLD_HEART_OVERLAY.getValue()) {
+            return;
+        }
+
         double freezingProgress = ((double) player.getFrozenTicks()) / player.getMinFreezeDamageTicks();
 
         freezingProgress = MathHelper.clamp(freezingProgress, 0.0D, 1.0D);
