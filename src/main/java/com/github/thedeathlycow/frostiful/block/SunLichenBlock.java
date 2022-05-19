@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.block.state.property.FrostifulProperties;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,7 +13,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvents;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
@@ -20,7 +21,6 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 import java.util.Random;
-import java.util.function.ToIntFunction;
 
 @SuppressWarnings("deprecation")
 public class SunLichenBlock extends GlowLichenBlock {
@@ -48,9 +48,9 @@ public class SunLichenBlock extends GlowLichenBlock {
                 int heat = FreezingConfigGroup.FIRE_LICHEN_HEAT_PER_LEVEL.getValue() * heatLevel;
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
-                this.createFireParticles(world, entity.getBlockPos());
+                this.createFireParticles(world, pos);
                 world.setBlockState(pos, state.with(HEAT_LEVEL, 0));
-                this.playSound(livingEntity, world.getRandom());
+                this.playSound(livingEntity, world, pos);
             }
         }
 
@@ -85,16 +85,25 @@ public class SunLichenBlock extends GlowLichenBlock {
         return !entity.isFireImmune();
     }
 
-    private void playSound(Entity entity, Random random) {
-        entity.playSound(SoundEvents.BLOCK_FIRE_EXTINGUISH, 0.7F, 1.6F + (random.nextFloat() - random.nextFloat()) * 0.4F);
+    private void playSound(Entity entity, World world, BlockPos pos) {
+        if (world.isClient()) {
+            return;
+        }
+        Random random = world.getRandom();
+        float pitch = 0.8F + (random.nextFloat() - random.nextFloat()) * 0.4F;
+        world.playSound(null, pos, FrostifulSoundEvents.FIRE_LICHEN_DISCHARGE, SoundCategory.BLOCKS, 0.7F, pitch);
     }
 
     private void createFireParticles(World world, BlockPos pos) {
+        final double maxHorizontalOffset = 0.5;
         for (int i = 0; i < 10; i++) {
-            double xOffset = pos.getX() - 0.25 + world.getRandom().nextDouble(0.5);
-            double yOffset = pos.getY() + world.getRandom().nextDouble();
-            double zOffset = pos.getZ() - 0.25 + world.getRandom().nextDouble(0.5);
-            world.addParticle(ParticleTypes.FLAME, xOffset, yOffset, zOffset, 0.0D, 0.1D, 0.0D);
+            double x = pos.getX() + 0.5;
+            double y = pos.getY() + world.getRandom().nextDouble(0.33);
+            double z = pos.getZ() + 0.5;
+
+            x += world.getRandom().nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
+            z += world.getRandom().nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
+            world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.1D, 0.0D);
         }
     }
 
