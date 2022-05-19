@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "frostiful:block/sun_lichen"
+    "layer0": "frostiful:block/sun_lichen/level_3"
   }
 }
