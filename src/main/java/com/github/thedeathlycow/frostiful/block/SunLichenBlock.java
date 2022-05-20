@@ -108,6 +108,6 @@ public class SunLichenBlock extends GlowLichenBlock {
     }
 
     private static int getHeatLevel(BlockState state) {
-        return !state.isOf(FrostifulBlocks.SUN_LICHEN) ? 0 : state.get(HEAT_LEVEL);
+        return state.isOf(FrostifulBlocks.SUN_LICHEN) ? state.get(HEAT_LEVEL) : 0;
     }
 }

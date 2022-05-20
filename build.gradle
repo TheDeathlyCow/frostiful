@@ -21,6 +21,9 @@ repositories {
 }
 
 dependencies {
+//	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
+//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
+
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -60,6 +63,18 @@ jar {
 		rename { "${it}_${project.archivesBaseName}"}
 	}
 }
+
+sourceSets {
+	test {
+		java {
+			srcDir("test")
+		}
+	}
+}
+
+//test {
+//	useJUnitPlatform()
+//}
 
 // configure the maven publication
 publishing {
