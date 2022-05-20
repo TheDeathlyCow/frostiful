@@ -21,8 +21,6 @@ repositories {
 }
 
 dependencies {
-//	testImplementation 'org.junit.jupiter:junit-jupiter:5.8.2'
-//	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.2'
 
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
@@ -36,6 +34,9 @@ dependencies {
 
 	modImplementation "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 	include "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
+
+	// Use main class path as dependency
+	gametestImplementation sourceSets.main.output
 }
 
 processResources {
@@ -65,10 +66,10 @@ jar {
 }
 
 sourceSets {
-	test {
-		java {
-			srcDir("test")
-		}
+	gametest {
+		// Inherit main class path
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
 	}
 }
 
