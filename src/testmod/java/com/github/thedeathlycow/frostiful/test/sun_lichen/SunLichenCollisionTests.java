@@ -12,7 +12,7 @@ import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
-public class SunLichenTests implements FabricGameTest {
+public class SunLichenCollisionTests implements FabricGameTest {
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
     public void coolLichenDoesNotDamage(TestContext context) {

@@ -8,7 +8,7 @@
   "entrypoints": {
     "fabric-gametest" : [
       "com.github.thedeathlycow.frostiful.test.icicle.IcicleBreakTests",
-      "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenTests"
+      "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenCollisionTests"
     ]
   }
 }
