@@ -45,7 +45,7 @@ public class SunLichenBlock extends GlowLichenBlock {
         if (entity instanceof LivingEntity livingEntity) {
             int heatLevel = getHeatLevel(state);
             if (heatLevel > 0 && this.canBurn(livingEntity)) {
-                int heat = FreezingConfigGroup.FIRE_LICHEN_HEAT_PER_LEVEL.getValue() * heatLevel;
+                int heat = FreezingConfigGroup.SUN_LICHEN_HEAT_PER_LEVEL.getValue() * heatLevel;
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);

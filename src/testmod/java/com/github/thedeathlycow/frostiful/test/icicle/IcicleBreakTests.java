@@ -9,37 +9,37 @@ import net.minecraft.test.TestContext;
 
 public class IcicleBreakTests implements FabricGameTest {
 
-    @GameTest(structureName = "frostiful-test:icicletests.breakiciclewitharrow")
+    @GameTest(structureName = "frostiful-test:icicle_tests.arrow")
     public void iciclesBreakWhenStruckByArrow(TestContext context) {
         strikeIcicleViaDispenser(context);
     }
 
-    @GameTest(structureName = "frostiful-test:icicletests.breakiciclewithspectralarrow")
+    @GameTest(structureName = "frostiful-test:icicle_tests.spectral_arrow")
     public void iciclesBreakWhenStruckBySpectralArrow(TestContext context) {
         strikeIcicleViaDispenser(context);
     }
 
-    @GameTest(structureName = "frostiful-test:icicletests.breakiciclewithfrosttippedarrow")
+    @GameTest(structureName = "frostiful-test:icicle_tests.frost_tipped_arrow")
     public void iciclesBreakWhenStruckByFrostTippedArrow(TestContext context) {
         strikeIcicleViaDispenser(context);
     }
 
-    @GameTest(structureName = "frostiful-test:icicletests.breakiciclewithsnowball")
+    @GameTest(structureName = "frostiful-test:icicle_tests.snowball")
     public void iciclesBreakWhenStruckBySnowball(TestContext context) {
         strikeIcicleViaDispenser(context);
     }
 
-    @GameTest(structureName = "frostiful-test:icicletests.iciclesbreaksempty")
+    @GameTest(structureName = "frostiful-test:icicle_tests.empty")
     public void iciclesBreakWhenStruckByTrident(TestContext context) {
         strikeIcicleWithProjectile(context, EntityType.TRIDENT);
     }
 
-    @GameTest(structureName = "frostiful-test:icicletests.iciclesbreaksempty")
+    @GameTest(structureName = "frostiful-test:icicle_tests.empty")
     public void iciclesBreakWhenStruckByFirework(TestContext context) {
         strikeIcicleWithProjectile(context, EntityType.FIREWORK_ROCKET);
     }
 
-    @GameTest(structureName = "frostiful-test:icicletests.iciclesbreaksempty")
+    @GameTest(structureName = "frostiful-test:icicle_tests.empty")
     public void iciclesBreakWhenStruckByFireball(TestContext context) {
         strikeIcicleWithProjectile(context, EntityType.FIREBALL);
     }

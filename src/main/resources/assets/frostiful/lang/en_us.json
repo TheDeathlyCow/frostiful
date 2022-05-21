@@ -79,6 +79,7 @@
   "config.frostiful.freezing.freeze_damage_amount": "Freeze damage amount",
   "config.frostiful.freezing.freeze_extra_damage_amount": "Freeze damage extra amount",
   "config.frostiful.freezing.powder_snow_freeze_rate": "Powder snow freeze rate",
+  "config.frostiful.freezing.sun_lichen_heat_per_level": "Sun lichen heat per level",
   "config.frostiful.client_config": "Client Config",
   "config.frostiful.client_config.frost_overlay_start": "Frost overlay start percent",
   "config.frostiful.client_config.do_cold_heart_overlay": "Do cold heart overlay",
