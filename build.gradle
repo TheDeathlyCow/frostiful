@@ -35,7 +35,17 @@ dependencies {
 	modImplementation "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 	include "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 
-	testmodImplementation sourceSets.main.output
+	afterEvaluate {
+		subprojects.each {
+			api project(path: ":${it.name}", configuration: "namedElements")
+
+			if (!(it.name in devOnlyModules)) {
+				include project("${it.name}:")
+			}
+
+			testmodImplementation project("${it.name}:").sourceSets.testmod.output
+		}
+	}
 }
 
 processResources {
@@ -64,8 +74,6 @@ jar {
 	}
 }
 
-
-
 // configure the maven publication
 publishing {
 	publications {
@@ -85,15 +93,22 @@ publishing {
 
 sourceSets {
 	testmod {
-		// Inherit main class path
 		compileClasspath += main.compileClasspath
 		runtimeClasspath += main.runtimeClasspath
+		compileClasspath += main.output
+		runtimeClasspath += main.output
+	}
+}
+
+subprojects {
+	dependencies {
+		testmodImplementation sourceSets.main.output
+		testmodImplementation project(path: ':', configuration: 'namedElements')
 	}
 }
 
 loom {
 	accessWidenerPath = file("src/main/resources/frostiful.accesswidener")
-
 	runs {
 		testmodClient {
 			client()
