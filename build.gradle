@@ -33,6 +33,18 @@ dependencies {
 
 	modImplementation "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 	include "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
+
+	afterEvaluate {
+		subprojects.each {
+			api project(path: ":${it.name}", configuration: "namedElements")
+
+			if (!(it.name in devOnlyModules)) {
+				include project("${it.name}:")
+			}
+
+			testmodImplementation project("${it.name}:").sourceSets.testmod.output
+		}
+	}
 }
 
 processResources {
@@ -78,6 +90,36 @@ publishing {
 	}
 }
 
+sourceSets {
+	testmod {
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+		compileClasspath += main.output
+		runtimeClasspath += main.output
+	}
+}
+
+subprojects {
+	dependencies {
+		testmodImplementation sourceSets.main.output
+		testmodImplementation project(path: ':', configuration: 'namedElements')
+	}
+}
+
 loom {
 	accessWidenerPath = file("src/main/resources/frostiful.accesswidener")
+	runs {
+		testmodClient {
+			client()
+			ideConfigGenerated project.rootProject == project
+			name = "Testmod Client"
+			source sourceSets.testmod
+		}
+		testmodServer {
+			server()
+			ideConfigGenerated project.rootProject == project
+			name = "Testmod Server"
+			source sourceSets.testmod
+		}
+	}
 }
