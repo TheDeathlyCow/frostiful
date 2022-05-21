@@ -1,0 +1,13 @@
+{
+  "schemaVersion": 1,
+  "id": "frostiful-test",
+  "name": "Frostiful Test Mod",
+  "version": "1.0.0",
+  "environment": "*",
+  "license": "Apache-2.0",
+  "entrypoints": {
+    "fabric-gametest" : [
+      "com.github.thedeathlycow.frostiful.test.icicle.IcicleTests"
+    ]
+  }
+}

@@ -35,8 +35,7 @@ dependencies {
 	modImplementation "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 	include "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
 
-	// Use main class path as dependency
-	gametestImplementation sourceSets.main.output
+	testmodImplementation sourceSets.main.output
 }
 
 processResources {
@@ -65,17 +64,7 @@ jar {
 	}
 }
 
-sourceSets {
-	gametest {
-		// Inherit main class path
-		compileClasspath += main.compileClasspath
-		runtimeClasspath += main.runtimeClasspath
-	}
-}
 
-//test {
-//	useJUnitPlatform()
-//}
 
 // configure the maven publication
 publishing {
@@ -94,6 +83,29 @@ publishing {
 	}
 }
 
+sourceSets {
+	testmod {
+		// Inherit main class path
+		compileClasspath += main.compileClasspath
+		runtimeClasspath += main.runtimeClasspath
+	}
+}
+
 loom {
 	accessWidenerPath = file("src/main/resources/frostiful.accesswidener")
+
+	runs {
+		testmodClient {
+			client()
+			ideConfigGenerated project.rootProject == project
+			name = "Testmod Client"
+			source sourceSets.testmod
+		}
+		testmodServer {
+			server()
+			ideConfigGenerated project.rootProject == project
+			name = "Testmod Server"
+			source sourceSets.testmod
+		}
+	}
 }
