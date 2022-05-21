@@ -7,7 +7,7 @@
   "license": "Apache-2.0",
   "entrypoints": {
     "fabric-gametest" : [
-      "com.github.thedeathlycow.frostiful.test.icicle.IcicleTests"
+      "com.github.thedeathlycow.frostiful.test.icicle.IcicleBreakTests"
     ]
   }
 }
