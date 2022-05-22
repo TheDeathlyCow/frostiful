@@ -27,7 +27,8 @@ public class SunLichenBlock extends GlowLichenBlock {
 
     public static final IntProperty HEAT_LEVEL = FrostifulProperties.LEVEL_0_3;
     public static final int MAX_HEAT_LEVEL = 3;
-    public static final float BASE_GROW_CHANCE = 0.013f;
+    private static final float BASE_GROW_CHANCE = 0.017f;
+    private static final float RANDOM_DISCHARGE_CHANCE = 0.13f;
 
     public SunLichenBlock(Settings settings) {
         super(settings);
@@ -50,7 +51,7 @@ public class SunLichenBlock extends GlowLichenBlock {
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
                 world.setBlockState(pos, state.with(HEAT_LEVEL, 0));
-                this.playSound(livingEntity, world, pos);
+                this.playSound(world, pos);
             }
         }
 
@@ -65,13 +66,9 @@ public class SunLichenBlock extends GlowLichenBlock {
             if (heatLevel < MAX_HEAT_LEVEL) {
                 world.setBlockState(pos, state.with(HEAT_LEVEL, heatLevel + 1));
             }
-        } else if ((skyLight == 0 || world.isNight()) && world.getRandom().nextFloat() < 0.13f) {
+        } else if ((skyLight == 0 || world.isNight()) && world.getRandom().nextFloat() < RANDOM_DISCHARGE_CHANCE) {
             world.setBlockState(pos, state.with(HEAT_LEVEL, Math.max(0, heatLevel - 1)));
         }
-    }
-
-    public static int getLuminance(BlockState state) {
-        return SunLichenBlock.getHeatLevel(state) * 2;
     }
 
     private float getChargeChance(int skyLight) {
@@ -85,7 +82,7 @@ public class SunLichenBlock extends GlowLichenBlock {
         return !entity.isFireImmune();
     }
 
-    private void playSound(Entity entity, World world, BlockPos pos) {
+    private void playSound(World world, BlockPos pos) {
         if (world.isClient()) {
             return;
         }
