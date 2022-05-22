@@ -39,22 +39,22 @@ public class SunLichenCollisionTests implements FabricGameTest {
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
-    public void level3LichenWarmsAppropriateAmount(TestContext context) {
+    public void hotLichenWarmsAppropriateAmount(TestContext context) {
         doWarmVillagerTest(context, 3);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
-    public void level2LichenWarmsAppropriateAmount(TestContext context) {
+    public void warmLichenWarmsAppropriateAmount(TestContext context) {
         doWarmVillagerTest(context, 2);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
-    public void level1LichenWarmsAppropriateAmount(TestContext context) {
+    public void coolLichenWarmsAppropriateAmount(TestContext context) {
         doWarmVillagerTest(context, 1);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
-    public void level0LichenDoesNotWarm(TestContext context) {
+    public void coldLichenDoesNotWarm(TestContext context) {
         doWarmVillagerTest(context, 0);
     }
 
