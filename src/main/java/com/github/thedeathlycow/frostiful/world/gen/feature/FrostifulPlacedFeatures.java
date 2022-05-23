@@ -10,10 +10,14 @@ import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.GenerationStep;
-import net.minecraft.world.gen.YOffset;
+import net.minecraft.world.gen.feature.MiscPlacedFeatures;
 import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.PlacedFeatures;
 import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
-import net.minecraft.world.gen.placementmodifier.*;
+import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;
+import net.minecraft.world.gen.placementmodifier.HeightmapPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.RarityFilterPlacementModifier;
+import net.minecraft.world.gen.placementmodifier.SquarePlacementModifier;
 
 import java.util.Objects;
 
@@ -21,18 +25,17 @@ public class FrostifulPlacedFeatures {
 
     public static final RegistryEntry<PlacedFeature> SUN_LICHEN_COVERED_ROCK = register("sun_lichen_covered_rock", new PlacedFeature(FrostifulConfiguredFeatures.SUN_LICHEN_COVERED_ROCK,
             ImmutableList.of(
-                    RarityFilterPlacementModifier.of(24),
+                    RarityFilterPlacementModifier.of(15),
                     SquarePlacementModifier.of(),
-                    HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG),
+                    HeightmapPlacementModifier.of(Heightmap.Type.MOTION_BLOCKING_NO_LEAVES),
                     BiomePlacementModifier.of()
             )
     ));
 
     public static void placeFeatures() {
-
         BiomeModifications.addFeature(
                 BiomeSelectors.tag(FrostifulHasFeatureTags.SUN_LICHEN_COVERED_ROCK),
-                GenerationStep.Feature.TOP_LAYER_MODIFICATION,
+                GenerationStep.Feature.VEGETAL_DECORATION,
                 Objects.requireNonNull(FrostifulPlacedFeatures.SUN_LICHEN_COVERED_ROCK.getKey().orElse(null))
         );
     }

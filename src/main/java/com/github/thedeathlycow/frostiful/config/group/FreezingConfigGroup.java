@@ -20,7 +20,7 @@ public class FreezingConfigGroup extends ConfigItemGroup {
     public static final IntegerConfigItem FREEZE_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_damage_amount", 2, TRANSLATE_BASE_STRING + "freeze_damage_amount", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem FREEZE_EXTRA_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_extra_damage_amount", 5, TRANSLATE_BASE_STRING + "freeze_extra_damage_amount", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem POWDER_SNOW_FREEZE_RATE = new IntegerConfigItem("powder_snow_freeze_rate", 30, TRANSLATE_BASE_STRING + "powder_snow_freeze_rate", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem SUN_LICHEN_HEAT_PER_LEVEL = new IntegerConfigItem("sun_lichen_heat_per_level", 333, TRANSLATE_BASE_STRING + "sun_lichen_heat_per_level", null, 0, Integer.MAX_VALUE);
+    public static final IntegerConfigItem SUN_LICHEN_HEAT_PER_LEVEL = new IntegerConfigItem("sun_lichen_heat_per_level", 100, TRANSLATE_BASE_STRING + "sun_lichen_heat_per_level", null, 0, Integer.MAX_VALUE);
 
     /**
      * Creates a new {@link ConfigItemGroup} with the list of configs and the name

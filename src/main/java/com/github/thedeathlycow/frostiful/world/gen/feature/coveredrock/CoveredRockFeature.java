@@ -5,17 +5,15 @@ import com.mojang.serialization.Codec;
 import net.minecraft.block.AbstractLichenBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.UndergroundConfiguredFeatures;
+import net.minecraft.world.gen.feature.VegetationConfiguredFeatures;
 import net.minecraft.world.gen.feature.util.FeatureContext;
-import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
     public CoveredRockFeature(Codec<CoveredRockFeatureConfig> configCodec) {
@@ -48,7 +46,7 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
         int dy = config.size().sizeY().get(random);
         int dz = config.size().sizeZ().get(random);
         BlockPos from = origin.add(-dx, -dy, -dz);
-        BlockPos to = origin.add(dx, dy, dz);
+        BlockPos to = origin.add(dx, dy == 0 ? 1 : dy, dz);
 
         for (BlockPos pos : BlockPos.iterate(from, to)) {
             BlockState current = world.getBlockState(pos);
@@ -64,36 +62,34 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
 
         for (BlockPos pos : BlockPos.iterate(from, to)) {
             BlockState current = world.getBlockState(pos);
-            if (this.isAirOrWaterOrSnow(current) && random.nextFloat() < config.placeCoveringChance()) {
-                this.placeCovering(context, pos);
+            if (this.isCoveringReplaceable(current) && random.nextFloat() < config.placeCoveringChance()) {
+                this.tryPlaceCovering(context, pos);
             }
         }
     }
 
-    private void placeCovering(FeatureContext<CoveredRockFeatureConfig> context, BlockPos origin) {
+    private void tryPlaceCovering(FeatureContext<CoveredRockFeatureConfig> context, BlockPos origin) {
         BlockPos.Mutable placingOnPos = origin.mutableCopy();
         CoveredRockFeatureConfig config = context.getConfig();
         StructureWorldAccess world = context.getWorld();
-        for (Direction direction : Direction.values()) {
+        Random random = context.getRandom();
+
+        List<Direction> directions = new ArrayList<>(Arrays.asList(Direction.values()));
+        Collections.shuffle(directions, random);
+        for (Direction direction : directions) {
             BlockState state = context.getWorld().getBlockState(placingOnPos.set(origin, direction));
             if (state.isIn(config.canPlaceOn())) {
-                this.setCoveringBlockState(config, context.getRandom(), world, origin, direction);
+                this.setCovering(config, random, world, origin, direction);
             }
         }
     }
 
-    private void setCoveringBlockState(CoveredRockFeatureConfig config, Random random, StructureWorldAccess world, BlockPos placeAt, Direction direction) {
+    private void setCovering(CoveredRockFeatureConfig config, Random random, StructureWorldAccess world, BlockPos placeAt, Direction direction) {
         BlockState covering = config.covering().getBlockState(random, placeAt);
-        AbstractLichenBlock lichenBlock = null;
-        if (covering.getBlock() instanceof AbstractLichenBlock) {
-            lichenBlock = (AbstractLichenBlock) covering.getBlock();
+        if (covering.getBlock() instanceof AbstractLichenBlock lichenBlock) {
             covering = lichenBlock.withDirection(covering, world, placeAt, direction);
         }
         world.setBlockState(placeAt, covering, Block.NOTIFY_ALL);
-
-        if (lichenBlock != null) {
-            lichenBlock.trySpreadRandomly(covering, world, placeAt, direction, random, true);
-        }
     }
 
     private Optional<BlockPos> lookForGround(FeatureContext<CoveredRockFeatureConfig> context) {
@@ -111,7 +107,7 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
         return isSoil(below) || isStone(below);
     }
 
-    private boolean isAirOrWaterOrSnow(BlockState state) {
-        return state.isAir() || state.isOf(Blocks.WATER) || state.isOf(Blocks.SNOW);
+    private boolean isCoveringReplaceable(BlockState state) {
+        return state.isAir() || state.isIn(FrostifulBlockTags.COVERED_ROCK_COVERING_REPLACEABLE);
     }
 }

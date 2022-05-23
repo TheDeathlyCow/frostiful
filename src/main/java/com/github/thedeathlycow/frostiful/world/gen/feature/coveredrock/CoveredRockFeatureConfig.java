@@ -16,7 +16,7 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider;
  * @param covering            The block that covers the block, e.g. lichen
  * @param size                The size of the rock.
  * @param canPlaceOn          Blocks that the lichen can be placed on
- * @param placeCoveringChance The chance to place the covering. Note that lichen blocks will be spread.
+ * @param placeCoveringChance The chance to place the covering.
  */
 public record CoveredRockFeatureConfig(BlockStateProvider base, BlockStateProvider covering,
                                        CoveredRockSizeConfig size, RegistryEntryList<Block> canPlaceOn,
