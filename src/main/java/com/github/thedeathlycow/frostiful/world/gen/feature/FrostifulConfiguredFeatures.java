@@ -17,7 +17,7 @@ public class FrostifulConfiguredFeatures {
             new CoveredRockFeatureConfig(
                     SimpleBlockStateProvider.of(Blocks.STONE.getDefaultState()),
                     SimpleBlockStateProvider.of(FrostifulBlocks.SUN_LICHEN.getDefaultState()),
-                    UniformIntProvider.create(1, 2)
+                    UniformIntProvider.create(0, 1)
             )));
 
     public static RegistryEntry<ConfiguredFeature<?, ?>> register(String name, ConfiguredFeature<?, ?> configuredFeature) {
