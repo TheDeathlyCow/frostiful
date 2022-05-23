@@ -53,7 +53,7 @@ public class FrostHelper {
         entity.setFrozenTicks(amount);
     }
 
-    private static void applyEffects(LivingEntity entity) {
+    public static void applyEffects(LivingEntity entity) {
         float progress = entity.getFreezingScale();
         for (FrostStatusEffect effect : FrostStatusEffect.getPassiveFreezingEffects()) {
             StatusEffectInstance currentEffectInstance = entity.getStatusEffect(effect.effect());
