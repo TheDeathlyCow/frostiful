@@ -12,6 +12,7 @@ import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.YOffset;
 import net.minecraft.world.gen.feature.PlacedFeature;
+import net.minecraft.world.gen.feature.VegetationPlacedFeatures;
 import net.minecraft.world.gen.placementmodifier.*;
 
 import java.util.Objects;
@@ -20,7 +21,7 @@ public class FrostifulPlacedFeatures {
 
     public static final RegistryEntry<PlacedFeature> SUN_LICHEN_COVERED_ROCK = register("sun_lichen_covered_rock", new PlacedFeature(FrostifulConfiguredFeatures.SUN_LICHEN_COVERED_ROCK,
             ImmutableList.of(
-                    RarityFilterPlacementModifier.of(12),
+                    RarityFilterPlacementModifier.of(24),
                     SquarePlacementModifier.of(),
                     HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG),
                     BiomePlacementModifier.of()
@@ -28,9 +29,10 @@ public class FrostifulPlacedFeatures {
     ));
 
     public static void placeFeatures() {
+
         BiomeModifications.addFeature(
                 BiomeSelectors.tag(FrostifulHasFeatureTags.SUN_LICHEN_COVERED_ROCK),
-                GenerationStep.Feature.VEGETAL_DECORATION,
+                GenerationStep.Feature.TOP_LAYER_MODIFICATION,
                 Objects.requireNonNull(FrostifulPlacedFeatures.SUN_LICHEN_COVERED_ROCK.getKey().orElse(null))
         );
     }

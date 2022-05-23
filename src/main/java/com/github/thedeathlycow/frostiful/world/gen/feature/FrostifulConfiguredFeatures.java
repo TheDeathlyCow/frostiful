@@ -3,11 +3,18 @@ package com.github.thedeathlycow.frostiful.world.gen.feature;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredRockFeatureConfig;
+import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredRockSizeConfig;
+import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.floatprovider.ConstantFloatProvider;
+import net.minecraft.util.math.floatprovider.FloatProvider;
+import net.minecraft.util.math.intprovider.ConstantIntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.registry.BuiltinRegistries;
 import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.util.registry.RegistryEntryList;
+import net.minecraft.util.registry.RegistryEntryListCodec;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 
@@ -17,7 +24,13 @@ public class FrostifulConfiguredFeatures {
             new CoveredRockFeatureConfig(
                     SimpleBlockStateProvider.of(Blocks.STONE.getDefaultState()),
                     SimpleBlockStateProvider.of(FrostifulBlocks.SUN_LICHEN.getDefaultState()),
-                    UniformIntProvider.create(0, 1)
+                    new CoveredRockSizeConfig(
+                            UniformIntProvider.create(0, 1),
+                            ConstantIntProvider.create(1),
+                            UniformIntProvider.create(0, 1)
+                    ),
+                    RegistryEntryList.of(Block::getRegistryEntry, Blocks.STONE, Blocks.DIRT, Blocks.GRASS_BLOCK),
+                    0.2f
             )));
 
     public static RegistryEntry<ConfiguredFeature<?, ?>> register(String name, ConfiguredFeature<?, ?> configuredFeature) {
