@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import net.minecraft.block.BlockState;
@@ -48,6 +49,30 @@ public abstract class LivingEntityMixin {
 
         int warmth = PassiveFreezingHelper.getWarmth(livingEntity);
         FrostHelper.removeLivingFrost(livingEntity, warmth);
+    }
+
+    @Inject(
+            method = "tickMovement",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/util/profiler/Profiler;pop()V",
+                    ordinal = 1
+            ),
+            slice = @Slice(
+                    from = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"
+                    )
+            )
+    )
+    private void tickFrozenEffect(CallbackInfo ci) {
+        LivingEntity entity = (LivingEntity) (Object) this;
+        if (entity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
+            entity.setJumping(false);
+            entity.sidewaysSpeed = 0.0F;
+            entity.forwardSpeed = 0.0F;
+            Frostiful.LOGGER.info("has frozen effect");
+        }
     }
 
     @Redirect(
