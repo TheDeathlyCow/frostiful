@@ -8,8 +8,7 @@ import net.minecraft.world.biome.Biome;
 
 public class FrostifulBiomeTags {
 
-
-    private static TagKey<Biome> register(String id) {
+    public static TagKey<Biome> register(String id) {
         return TagKey.of(Registry.BIOME_KEY, new Identifier(Frostiful.MODID, id));
     }
 

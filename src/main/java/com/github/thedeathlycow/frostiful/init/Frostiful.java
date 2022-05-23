@@ -11,6 +11,7 @@ import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
+import com.github.thedeathlycow.frostiful.world.gen.feature.FrostifulPlacedFeatures;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v1.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -52,6 +53,7 @@ public class Frostiful implements ModInitializer {
         FrostifulEntityTypes.registerEntities();
         FrostifulGameRules.registerGamerules();
         FrostifulSoundEvents.registerSoundEvents();
+        FrostifulPlacedFeatures.placeFeatures();
 
         LOGGER.info("Initialized Frostiful!");
     }
