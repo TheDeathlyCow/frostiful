@@ -48,7 +48,7 @@ public class PassiveFreezingHelper {
         }
 
         if (!livingEntity.canFreeze()) {
-            warmth += FreezingConfigGroup.CANNOT_FREEZE_WARM_RATE.getValue();
+            warmth += FreezingConfigGroup.CANNOT_FREEZE_THAW_RATE.getValue();
         }
 
         return warmth;
