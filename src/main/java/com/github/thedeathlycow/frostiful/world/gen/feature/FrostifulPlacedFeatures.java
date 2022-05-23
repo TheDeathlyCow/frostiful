@@ -20,9 +20,9 @@ public class FrostifulPlacedFeatures {
 
     public static final RegistryEntry<PlacedFeature> SUN_LICHEN_COVERED_ROCK = register("sun_lichen_covered_rock", new PlacedFeature(FrostifulConfiguredFeatures.SUN_LICHEN_COVERED_ROCK,
             ImmutableList.of(
-                    RarityFilterPlacementModifier.of(24),
+                    RarityFilterPlacementModifier.of(12),
                     SquarePlacementModifier.of(),
-                    HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE),
+                    HeightmapPlacementModifier.of(Heightmap.Type.WORLD_SURFACE_WG),
                     BiomePlacementModifier.of()
             )
     ));
