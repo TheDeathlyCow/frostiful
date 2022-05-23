@@ -71,7 +71,6 @@ public abstract class LivingEntityMixin {
             entity.setJumping(false);
             entity.sidewaysSpeed = 0.0F;
             entity.forwardSpeed = 0.0F;
-            Frostiful.LOGGER.info("has frozen effect");
         }
     }
 
