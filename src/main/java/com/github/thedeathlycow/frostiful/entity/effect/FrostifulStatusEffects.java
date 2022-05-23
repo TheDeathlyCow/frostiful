@@ -1,9 +1,11 @@
 package com.github.thedeathlycow.frostiful.entity.effect;
 
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class FrostifulStatusEffects {
@@ -15,6 +17,6 @@ public class FrostifulStatusEffects {
     }
 
     private static void register(String name, StatusEffect entry) {
-        Registry.register(Registry.STATUS_EFFECT, name, entry);
+        Registry.register(Registry.STATUS_EFFECT, new Identifier(Frostiful.MODID, name), entry);
     }
 }
