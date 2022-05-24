@@ -4,6 +4,7 @@
   "package": "com.github.thedeathlycow.frostiful.mixins",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "block.CampfireWarmthMixin",
     "entity.EntityMixin",
     "entity.LivingEntityFreezingTickOverrides",
     "entity.LivingEntityMixin",

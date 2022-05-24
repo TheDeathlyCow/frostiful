@@ -80,9 +80,12 @@
   "config.frostiful.freezing.freeze_extra_damage_amount": "Freeze damage extra amount",
   "config.frostiful.freezing.powder_snow_freeze_rate": "Powder snow freeze rate",
   "config.frostiful.freezing.sun_lichen_heat_per_level": "Sun lichen heat per level",
+  "config.frostiful.freezing.campfire_warmth_search_delta": "Campfire warmth search radius",
+  "config.frostiful.freezing.campfire_warmth_time": "Campfire warmth duration (ticks)",
   "config.frostiful.client_config": "Client Config",
   "config.frostiful.client_config.frost_overlay_start": "Frost overlay start percent",
   "config.frostiful.client_config.do_cold_heart_overlay": "Do cold heart overlay",
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
-  "effect.frostiful.frozen": "Frozen"
+  "effect.frostiful.frozen": "Frozen",
+  "effect.frostiful.warmth": "Warmth"
 }

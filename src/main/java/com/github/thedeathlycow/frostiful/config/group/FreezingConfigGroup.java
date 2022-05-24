@@ -21,6 +21,8 @@ public class FreezingConfigGroup extends ConfigItemGroup {
     public static final IntegerConfigItem FREEZE_EXTRA_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_extra_damage_amount", 5, TRANSLATE_BASE_STRING + "freeze_extra_damage_amount", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem POWDER_SNOW_FREEZE_RATE = new IntegerConfigItem("powder_snow_freeze_rate", 30, TRANSLATE_BASE_STRING + "powder_snow_freeze_rate", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem SUN_LICHEN_HEAT_PER_LEVEL = new IntegerConfigItem("sun_lichen_heat_per_level", 100, TRANSLATE_BASE_STRING + "sun_lichen_heat_per_level", null, 0, Integer.MAX_VALUE);
+    public static final DoubleConfigItem CAMPFIRE_WARMTH_SEARCH_DELTA = new DoubleConfigItem("campfire_warmth_search_delta", 3.0, TRANSLATE_BASE_STRING + "campfire_warmth_search_delta", null, 0, Double.MAX_VALUE);
+    public static final IntegerConfigItem CAMPFIRE_WARMTH_TIME = new IntegerConfigItem("campfire_warmth_time", 1200, TRANSLATE_BASE_STRING + "campfire_warmth_time", null, 0, Integer.MAX_VALUE);
 
     /**
      * Creates a new {@link ConfigItemGroup} with the list of configs and the name
@@ -38,7 +40,9 @@ public class FreezingConfigGroup extends ConfigItemGroup {
                         FREEZE_DAMAGE_AMOUNT,
                         FREEZE_EXTRA_DAMAGE_AMOUNT,
                         POWDER_SNOW_FREEZE_RATE,
-                        SUN_LICHEN_HEAT_PER_LEVEL
+                        SUN_LICHEN_HEAT_PER_LEVEL,
+                        CAMPFIRE_WARMTH_SEARCH_DELTA,
+                        CAMPFIRE_WARMTH_TIME
                 ),
                 "freezing");
     }
