@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 
 public class FrostifulStatusEffects {
 
-    public static final StatusEffect FROZEN = new FrozenStatusEffect(StatusEffectCategory.HARMFUL, 0xADD8E6);
+    public static final StatusEffect FROZEN = new SimpleStatusEffect(StatusEffectCategory.HARMFUL, 0xADD8E6);
 
     public static void registerStatusEffects() {
         register("frozen", FROZEN);
