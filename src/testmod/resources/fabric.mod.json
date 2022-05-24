@@ -10,7 +10,8 @@
       "com.github.thedeathlycow.frostiful.test.icicle.IcicleBreakTests",
       "com.github.thedeathlycow.frostiful.test.icicle.FrostTippedArrowTests",
       "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenCollisionTests",
-      "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenPathfindingTests"
+      "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenPathfindingTests",
+      "com.github.thedeathlycow.frostiful.test.effects.FrozenStatusEffectTests"
     ]
   }
 }
