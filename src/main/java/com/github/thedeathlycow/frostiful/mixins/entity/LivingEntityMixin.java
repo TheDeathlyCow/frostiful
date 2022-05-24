@@ -49,6 +49,7 @@ public abstract class LivingEntityMixin {
 
         int warmth = PassiveFreezingHelper.getWarmth(livingEntity);
         FrostHelper.removeLivingFrost(livingEntity, warmth);
+        FrostHelper.applyEffects(livingEntity);
     }
 
     @Inject(

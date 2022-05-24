@@ -21,7 +21,8 @@ public class FrostifulConfig extends Config implements SimpleSynchronousResource
     public static final ConfigItemGroup ATTRIBUTE = new AttributeConfigGroup();
     public static final ConfigItemGroup WEATHER = new WeatherConfigGroup();
     public static final ConfigItemGroup FREEZING = new FreezingConfigGroup();
-    public static final List<ConfigItemGroup> configs = ImmutableList.of(CLIENT, ICICLE, ATTRIBUTE, WEATHER, FREEZING);
+    public static final ConfigItemGroup COMBAT = new CombatConfigGroup();
+    public static final List<ConfigItemGroup> configs = ImmutableList.of(CLIENT, ICICLE, ATTRIBUTE, WEATHER, FREEZING, COMBAT);
 
     /**
      * Creates a new config

@@ -24,18 +24,11 @@ public class FrostHelper {
 
         int toAdd = (int) ((1 - frostModifier) * amount);
 
-        int current = entity.getFrozenTicks();
-        setLivingFrost(entity, current + toAdd);
+        addFrost(entity, toAdd);
     }
 
     public static void removeLivingFrost(LivingEntity entity, int amount) {
-        int current = entity.getFrozenTicks();
-        setLivingFrost(entity, current - amount);
-    }
-
-    public static void setLivingFrost(LivingEntity entity, int amount) {
-        setFrost(entity, amount);
-        applyEffects(entity);
+        removeFrost(entity, amount);
     }
 
     public static void addFrost(Entity entity, int amount) {
