@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
+import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
@@ -43,12 +44,15 @@ public abstract class CampfireWarmthMixin {
         }
 
         ItemStack inHand = player.getStackInHand(hand);
+        inHand = player.isCreative() ? inHand.copy() : inHand;
         if (!inHand.isEmpty() && inHand.isIn(ItemTags.LOGS_THAT_BURN)) {
             if (!world.isClient) {
                 player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE);
                 inHand.decrement(1);
                 warmNearbyEntities(world, pos);
                 cir.setReturnValue(ActionResult.SUCCESS);
+            } else {
+                cir.setReturnValue(ActionResult.CONSUME);
             }
         }
     }
@@ -74,6 +78,6 @@ public abstract class CampfireWarmthMixin {
             entity.addStatusEffect(instance);
         }
 
-        world.playSound(null, pos, SoundEvents.BLOCK_CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 1.0F, 1.0f);
+        world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 1.75f);
     }
 }
