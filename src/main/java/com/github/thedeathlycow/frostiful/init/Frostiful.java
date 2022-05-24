@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.init;
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantments;
 import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
@@ -56,6 +57,7 @@ public class Frostiful implements ModInitializer {
         FrostifulSoundEvents.registerSoundEvents();
         FrostifulPlacedFeatures.placeFeatures();
         FrostifulStatusEffects.registerStatusEffects();
+        FrostifulEnchantments.registerEnchantments();
 
         LOGGER.info("Initialized Frostiful!");
     }

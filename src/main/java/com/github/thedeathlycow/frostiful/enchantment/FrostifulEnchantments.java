@@ -10,8 +10,12 @@ public class FrostifulEnchantments {
 
     public static final Enchantment HEAT_DRAIN = new HeatDrainEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 
-    private static Enchantment register(String name, Enchantment enchantment) {
-        return Registry.register(Registry.ENCHANTMENT, new Identifier(Frostiful.MODID, name), enchantment);
+    public static void registerEnchantments() {
+        register("heat_drain", HEAT_DRAIN);
+    }
+
+    private static void register(String name, Enchantment enchantment) {
+        Registry.register(Registry.ENCHANTMENT, new Identifier(Frostiful.MODID, name), enchantment);
     }
 
 }
