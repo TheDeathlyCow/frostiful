@@ -9,6 +9,7 @@ import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableListener;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
+import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
 import com.github.thedeathlycow.frostiful.server.command.FreezeCommand;
 import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
@@ -58,6 +59,7 @@ public class Frostiful implements ModInitializer {
         FrostifulPlacedFeatures.placeFeatures();
         FrostifulStatusEffects.registerStatusEffects();
         FrostifulEnchantments.registerEnchantments();
+        FrostifulParticleTypes.registerParticleTypes();
 
         LOGGER.info("Initialized Frostiful!");
     }

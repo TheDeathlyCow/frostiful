@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
+import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.world.ClientWorld;
@@ -66,7 +67,7 @@ public class HeatDrainEnchantment extends Enchantment {
             double fromX = from.getX();
             double fromY = from.getY();
             double fromZ = from.getZ();
-            serverWorld.spawnParticles(ParticleTypes.FLAME, fromX, fromY + 1, fromZ, numParticles, 0.2, 1.0, 0.2, 0.3);
+            serverWorld.spawnParticles(FrostifulParticleTypes.HEAT_DRAIN, fromX, fromY + 1, fromZ, numParticles, 0.2, 1.0, 0.2, 0.3);
         }
     }
 }
