@@ -8,6 +8,7 @@ import com.oroarmor.config.ConfigItem;
 import com.oroarmor.config.ConfigItemGroup;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.fabricmc.loader.api.FabricLoader;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
 

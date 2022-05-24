@@ -9,11 +9,11 @@ import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
 
-    public static void addLivingFrost(LivingEntity entity, int amount) {
-        addLivingFrost(entity, amount, true);
+    public static int addLivingFrost(LivingEntity entity, int amount) {
+        return addLivingFrost(entity, amount, true);
     }
 
-    public static void addLivingFrost(LivingEntity entity, int amount, boolean applyFrostResistance) {
+    public static int addLivingFrost(LivingEntity entity, int amount, boolean applyFrostResistance) {
         double frostModifier = 0.0D;
 
         if (applyFrostResistance) {
@@ -24,26 +24,29 @@ public class FrostHelper {
 
         int toAdd = (int) ((1 - frostModifier) * amount);
 
-        addFrost(entity, toAdd);
+        return addFrost(entity, toAdd);
     }
 
-    public static void removeLivingFrost(LivingEntity entity, int amount) {
+    public static int removeLivingFrost(LivingEntity entity, int amount) {
         removeFrost(entity, amount);
+        return amount;
     }
 
-    public static void addFrost(Entity entity, int amount) {
+    public static int addFrost(Entity entity, int amount) {
         int current = entity.getFrozenTicks();
-        setFrost(entity, current + amount);
+        return setFrost(entity, current + amount);
     }
 
-    public static void removeFrost(Entity entity, int amount) {
+    public static int removeFrost(Entity entity, int amount) {
         int current = entity.getFrozenTicks();
         setFrost(entity, current - amount);
+        return amount;
     }
 
-    public static void setFrost(Entity entity, int amount) {
+    public static int setFrost(Entity entity, int amount) {
         amount = MathHelper.clamp(amount, 0, entity.getMinFreezeDamageTicks());
         entity.setFrozenTicks(amount);
+        return amount;
     }
 
     public static void applyEffects(LivingEntity entity) {

@@ -89,5 +89,6 @@
   "config.frostiful.client_config.do_cold_heart_overlay": "Do cold heart overlay",
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "effect.frostiful.frozen": "Frozen",
-  "effect.frostiful.warmth": "Warmth"
+  "effect.frostiful.warmth": "Warmth",
+  "enchantment.frostiful.heat_drain": "Heat Drain"
 }
