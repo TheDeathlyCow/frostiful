@@ -11,7 +11,7 @@ public class FrostifulEntityAttributes {
     /**
      * Reduces incoming frost damage by a percentage. In units of 10%.
      */
-    public static final EntityAttribute FROST_RESISTANCE = new ClampedEntityAttribute(getTranslateKey("generic.frost_resistance"), 0.0D, 0.0D, 10.0D).setTracked(true);
+    public static final EntityAttribute FROST_RESISTANCE = new ClampedEntityAttribute(getTranslateKey("generic.frost_resistance"), 0.0D, -10.0D, 10.0D).setTracked(true);
 
     /**
      * Determines the base amount of frost an entity can have before
