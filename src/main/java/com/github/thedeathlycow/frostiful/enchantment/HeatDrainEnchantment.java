@@ -1,22 +1,14 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
-import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
+import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.enchantment.DamageEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.network.packet.s2c.play.ParticleS2CPacket;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -67,7 +59,8 @@ public class HeatDrainEnchantment extends Enchantment {
             double fromX = from.getX();
             double fromY = from.getY();
             double fromZ = from.getZ();
-            serverWorld.spawnParticles(FrostifulParticleTypes.HEAT_DRAIN, fromX, fromY + 1, fromZ, numParticles, 0.2, 1.0, 0.2, 0.3);
+            HeatDrainParticleEffect effect = new HeatDrainParticleEffect(user.getEyePos());
+            serverWorld.spawnParticles(effect, fromX, fromY + 1, fromZ, numParticles, 0.2, 1.0, 0.2, 0.3);
         }
     }
 }
