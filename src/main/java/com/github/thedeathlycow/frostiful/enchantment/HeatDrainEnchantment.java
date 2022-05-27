@@ -53,14 +53,22 @@ public class HeatDrainEnchantment extends Enchantment {
     public static void addHeatDrainParticles(LivingEntity user, Entity target, int level) {
         World world = user.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) {
-            Vec3d from = target.getPos();
+            Vec3d from = getMidPoint(target.getEyePos(), target.getPos());
             final int numParticles = level * 3 + 5;
 
             double fromX = from.getX();
             double fromY = from.getY();
             double fromZ = from.getZ();
             HeatDrainParticleEffect effect = new HeatDrainParticleEffect(user.getEyePos());
-            serverWorld.spawnParticles(effect, fromX, fromY + 1, fromZ, numParticles, 0.2, 1.0, 0.2, 0.3);
+            serverWorld.spawnParticles(effect, fromX, fromY, fromZ, numParticles, 0.5, 0.5, 0.5, 0.3);
         }
+    }
+
+    private static Vec3d getMidPoint(Vec3d vec1, Vec3d vec2) {
+        return new Vec3d(
+                (vec1.x + vec2.x) / 2,
+                (vec1.y + vec2.y) / 2,
+                (vec1.z + vec2.z) / 2
+        );
     }
 }

@@ -1,5 +1,7 @@
 {
   "textures": [
-    "frostiful:heat_drain"
+    "frostiful:heat_drain/var1",
+    "frostiful:heat_drain/var2",
+    "frostiful:heat_drain/var3"
   ]
 }
