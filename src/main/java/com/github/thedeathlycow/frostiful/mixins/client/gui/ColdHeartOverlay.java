@@ -1,7 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
 import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FrostDataTracker;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.mixins.entity.frost_tracker.PlayerTracker;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -52,7 +54,9 @@ abstract class ColdHeartOverlay {
             return;
         }
 
-        double freezingProgress = ((double) player.getFrozenTicks()) / player.getMinFreezeDamageTicks();
+        FrostDataTracker tracker = (FrostDataTracker) player;
+
+        double freezingProgress = tracker.frostiful$getFrostProgress();
 
         freezingProgress = MathHelper.clamp(freezingProgress, 0.0D, 1.0D);
 

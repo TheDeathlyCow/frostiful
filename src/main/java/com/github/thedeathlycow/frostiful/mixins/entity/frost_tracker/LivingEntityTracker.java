@@ -26,6 +26,11 @@ public abstract class LivingEntityTracker extends EntityTracker {
         }
     }
 
+    @Override
+    public boolean frostiful$canApplyFrost() {
+        return !this.isSpectator() && super.frostiful$canApplyFrost();
+    }
+
     private static int getTicksFromMaxFrost(final double maxFrost) {
         return (int) (AttributeConfigGroup.MAX_FROST_MULTIPLIER.getValue() * maxFrost);
     }

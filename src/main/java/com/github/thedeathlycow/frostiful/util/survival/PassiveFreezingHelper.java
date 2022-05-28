@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FrostDataTracker;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -13,7 +14,7 @@ public class PassiveFreezingHelper {
 
     public static int getPassiveFreezing(LivingEntity livingEntity) {
 
-        if (!livingEntity.canFreeze()) {
+        if (!((FrostDataTracker) livingEntity).frostiful$canApplyFrost()) {
             return 0;
         }
 
@@ -47,7 +48,7 @@ public class PassiveFreezingHelper {
             warmth += FreezingConfigGroup.ON_FIRE_THAW_RATE.getValue();
         }
 
-        if (!livingEntity.canFreeze()) {
+        if (!((FrostDataTracker) livingEntity).frostiful$canApplyFrost()) {
             warmth += FreezingConfigGroup.CANNOT_FREEZE_THAW_RATE.getValue();
         }
 

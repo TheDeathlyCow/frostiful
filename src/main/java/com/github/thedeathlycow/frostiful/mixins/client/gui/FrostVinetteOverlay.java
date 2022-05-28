@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
 import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FrostDataTracker;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -30,7 +31,6 @@ public abstract class FrostVinetteOverlay {
     @Shadow
     protected abstract void renderOverlay(Identifier texture, float opacity);
 
-
     @Redirect(
             method = "render",
             at = @At(
@@ -59,7 +59,9 @@ public abstract class FrostVinetteOverlay {
     )
     private void renderPowderSnowOverlayAtThreshold(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         assert this.client.player != null;
-        float freezeScale = this.client.player.getFreezingScale();
+
+        FrostDataTracker tracker = (FrostDataTracker) this.client.player;
+        float freezeScale = tracker.frostiful$getFrostProgress();
         float renderThreshold = ClientConfigGroup.FROST_OVERLAY_START.getValue().floatValue();
 
         if (freezeScale >= renderThreshold) {

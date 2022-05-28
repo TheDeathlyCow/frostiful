@@ -7,6 +7,7 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Final;
@@ -25,7 +26,9 @@ public abstract class EntityTracker implements FrostDataTracker {
 
     @Shadow @Final protected DataTracker dataTracker;
 
-    @Shadow public abstract boolean canFreeze();
+    @Shadow public abstract EntityType<?> getType();
+
+    @Shadow public abstract boolean isSpectator();
 
     @Inject(
             method = "<init>",
@@ -94,6 +97,13 @@ public abstract class EntityTracker implements FrostDataTracker {
     @Override
     @Unique
     public boolean frostiful$canApplyFrost() {
-        return this.canFreeze();
+        return !this.getType().isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES);
+    }
+
+    @Override
+    @Unique
+    public float frostiful$getFrostProgress() {
+        final int maxFrost = this.frostiful$getMaxFrost();
+        return (float)Math.min(this.frostiful$getFrost(), maxFrost) / (float)maxFrost;
     }
 }

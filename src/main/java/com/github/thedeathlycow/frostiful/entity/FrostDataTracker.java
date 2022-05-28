@@ -11,4 +11,6 @@ public interface FrostDataTracker {
     void frostiful$applyEffects();
 
     boolean frostiful$canApplyFrost();
+
+    float frostiful$getFrostProgress();
 }

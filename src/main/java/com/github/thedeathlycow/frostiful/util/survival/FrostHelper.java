@@ -2,12 +2,21 @@ package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FrostDataTracker;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
+
+    public static int getFrost(Entity entity) {
+        return ((FrostDataTracker) entity).frostiful$getFrost();
+    }
+
+    public static int getMaxFrost(Entity entity) {
+        return ((FrostDataTracker) entity).frostiful$getMaxFrost();
+    }
 
     public static int addLivingFrost(LivingEntity entity, int amount) {
         return addLivingFrost(entity, amount, true);
@@ -44,13 +53,18 @@ public class FrostHelper {
     }
 
     public static int setFrost(Entity entity, int amount) {
+
+        FrostDataTracker tracker = (FrostDataTracker) entity;
+
         amount = MathHelper.clamp(amount, 0, entity.getMinFreezeDamageTicks());
-        entity.setFrozenTicks(amount);
+        tracker.frostiful$setFrost(amount);
         return amount;
     }
 
     public static void applyEffects(LivingEntity entity) {
-        float progress = entity.getFreezingScale();
+        FrostDataTracker tracker = (FrostDataTracker) entity;
+        float progress = tracker.frostiful$getFrostProgress();
+
         for (FrostStatusEffect effect : FrostStatusEffect.getPassiveFreezingEffects()) {
             StatusEffectInstance currentEffectInstance = entity.getStatusEffect(effect.effect());
             boolean shouldApplyEffect = progress >= effect.progressThreshold()
