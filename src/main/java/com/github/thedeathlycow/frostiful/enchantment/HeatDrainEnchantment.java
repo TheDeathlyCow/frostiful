@@ -59,7 +59,7 @@ public class HeatDrainEnchantment extends Enchantment {
         World world = user.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) {
             Vec3d from = getMidPoint(target.getEyePos(), target.getPos());
-            final int numParticles = level * 3 + 5;
+            final int numParticles = (level << 1) + 5;
 
             double fromX = from.getX();
             double fromY = from.getY();

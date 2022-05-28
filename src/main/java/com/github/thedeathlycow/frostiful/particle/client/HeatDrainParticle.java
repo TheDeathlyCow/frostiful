@@ -26,7 +26,7 @@ public class HeatDrainParticle extends AbstractSlowingParticle {
         this.velocityY *= slowFactor * this.velocityMultiplier;
         this.velocityZ *= slowFactor * this.velocityMultiplier;
         this.maxAge = this.random.nextInt(1, 10);
-        this.scale = 0.6f * this.random.nextFloat(0.5f, 1.0f);
+        this.scale = 0.5f * this.random.nextFloat(0.5f, 1.0f);
 
         this.green *= this.random.nextFloat(0.5f, 1.0f);
     }
