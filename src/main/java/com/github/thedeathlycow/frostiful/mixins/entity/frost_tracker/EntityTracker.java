@@ -52,8 +52,9 @@ public abstract class EntityTracker implements FrostDataTracker {
     )
     private void writeFrostToNbt(NbtCompound nbt, CallbackInfoReturnable<NbtCompound> cir) {
         int frost = this.frostiful$getFrost();
+
         if (frost > 0) {
-            nbt.putInt("Frostiful.Frost", frost);
+            nbt.putInt("Frostiful$Frost", frost);
         }
     }
 
@@ -66,7 +67,7 @@ public abstract class EntityTracker implements FrostDataTracker {
             )
     )
     private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        this.frostiful$setFrost(nbt.getInt("Frostiful.Frost"));
+        this.frostiful$setFrost(nbt.getInt("Frostiful$Frost"));
     }
 
     @Override
