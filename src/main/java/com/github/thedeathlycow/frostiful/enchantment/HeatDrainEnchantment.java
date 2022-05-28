@@ -19,13 +19,18 @@ public class HeatDrainEnchantment extends Enchantment {
     }
 
     @Override
+    public boolean isTreasure() {
+        return true;
+    }
+
+    @Override
     public int getMinPower(int level) {
         return level * 10;
     }
 
     @Override
     public int getMaxLevel() {
-        return 5;
+        return 3;
     }
 
     @Override
