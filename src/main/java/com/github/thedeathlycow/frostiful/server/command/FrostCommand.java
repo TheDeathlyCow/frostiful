@@ -18,7 +18,7 @@ import java.util.Collection;
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
-public class FreezeCommand {
+public class FrostCommand {
 
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
@@ -93,7 +93,7 @@ public class FreezeCommand {
                 );
 
         dispatcher.register(
-                (literal("freeze").requires((src) -> src.hasPermissionLevel(2)))
+                (literal("frost").requires((src) -> src.hasPermissionLevel(2)))
                         .then(getSubCommand)
                         .then(removeSubCommand)
                         .then(addSubCommand)
