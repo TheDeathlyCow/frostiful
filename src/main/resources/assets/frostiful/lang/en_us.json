@@ -87,6 +87,8 @@
   "config.frostiful.client_config": "Client Config",
   "config.frostiful.client_config.frost_overlay_start": "Frost overlay start percent",
   "config.frostiful.client_config.do_cold_heart_overlay": "Do cold heart overlay",
+  "config.frostiful.combat_config": "Combat Config",
+  "config.frostiful.combat_config.heat_drain_per_level": "Heat drained per level",
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "effect.frostiful.frozen": "Frozen",
   "effect.frostiful.warmth": "Warmth",
