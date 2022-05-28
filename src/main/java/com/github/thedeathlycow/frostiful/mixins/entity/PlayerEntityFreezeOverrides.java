@@ -15,8 +15,8 @@ public abstract class PlayerEntityFreezeOverrides extends LivingEntity {
         super(entityType, world);
     }
 
-    @Override
-    public boolean canFreeze() {
-        return !this.isCreative() && super.canFreeze();
-    }
+//    @Override
+//    public boolean canFreeze() {
+//        return !this.isCreative() && super.canFreeze();
+//    }
 }

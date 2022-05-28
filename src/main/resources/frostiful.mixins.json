@@ -10,6 +10,8 @@
     "entity.LivingEntityMixin",
     "entity.PlayerEntityFreezeOverrides",
     "entity.PlayerEntityMixin",
+    "entity.frost_tracker.EntityTracker",
+    "entity.frost_tracker.LivingEntityTracker",
     "entity.mob.PiglinBrainMixin",
     "entity.mob.StrayDefaultArrowItemMixin",
     "item.ArmorItemMixin",
