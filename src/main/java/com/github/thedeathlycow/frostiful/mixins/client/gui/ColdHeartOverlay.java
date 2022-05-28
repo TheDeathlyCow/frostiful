@@ -62,6 +62,7 @@ abstract class ColdHeartOverlay {
         // number of whole hearts
         int frozenHealthHearts = MathHelper.ceil((double) frozenHealthPoints / 2.0D);
 
+        RenderSystem.setShaderTexture(0, HEART_OVERLAY_TEXTURE);
         for (int m = 0; m < frozenHealthHearts; m++) {
             // is half heart if this is the last heart being rendered and we have an odd
             // number of frozen health points
@@ -70,13 +71,12 @@ abstract class ColdHeartOverlay {
             boolean isHalfHeart = m + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1;
             this.drawHeartOverLay(matrices, p, q, isHalfHeart);
         }
+        RenderSystem.setShaderTexture(0, DrawableHelper.GUI_ICONS_TEXTURE);
     }
 
     private void drawHeartOverLay(MatrixStack matrices, int x, int y, boolean isHalfHeart) {
-        RenderSystem.setShaderTexture(0, HEART_OVERLAY_TEXTURE);
-        int u = !isHalfHeart ? 0 : 9;
+        int u = isHalfHeart ? 9 : 0;
         DrawableHelper.drawTexture(matrices, x, y, u, 0, 9, 10, 18, 10);
-        RenderSystem.setShaderTexture(0, DrawableHelper.GUI_ICONS_TEXTURE);
     }
 
 }
