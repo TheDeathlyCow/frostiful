@@ -3,6 +3,8 @@ package com.github.thedeathlycow.frostiful.particle.client;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
@@ -31,7 +33,9 @@ public class HeatDrainParticle extends AbstractSlowingParticle {
 
     @Override
     public int getBrightness(float tickDelta) {
-        return 0xFFFFFF;
+        int brightness = super.getBrightness(tickDelta);
+        int red = brightness >> 16 & 0xFF;
+        return 0x0000F0 | red << 16;
     }
 
     @Override
