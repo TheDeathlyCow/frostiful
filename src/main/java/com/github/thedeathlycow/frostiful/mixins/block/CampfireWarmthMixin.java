@@ -78,6 +78,6 @@ public abstract class CampfireWarmthMixin {
             entity.addStatusEffect(instance);
         }
 
-        world.playSound(null, pos, SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 1.75f);
+        world.playSound(null, pos, FrostifulSoundEvents.CAMPFIRE_HISS, SoundCategory.BLOCKS, 0.5F, 1.5f);
     }
 }

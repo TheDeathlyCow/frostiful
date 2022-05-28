@@ -1,8 +1,14 @@
 {
-  "block.sun_lichen.discharge": {
+  "block.frostiful.sun_lichen.discharge": {
     "sounds": [
       "minecraft:random/fizz"
     ],
     "subtitle": "subtitles.frostiful.block.sun_lichen.discharge"
+  },
+  "block.frostiful.campfire.hiss": {
+    "sounds": [
+      "minecraft:random/fizz"
+    ],
+    "subtitle": "subtitles.frostiful.block.campfire.hiss"
   }
 }
