@@ -11,6 +11,7 @@
     "entity.PlayerEntityFreezeOverrides",
     "entity.PlayerEntityMixin",
     "entity.mob.PiglinBrainMixin",
+    "entity.mob.PolarBearMixin",
     "entity.mob.StrayDefaultArrowItemMixin",
     "item.ArmorItemMixin",
     "server.ServerWorldMixin",
