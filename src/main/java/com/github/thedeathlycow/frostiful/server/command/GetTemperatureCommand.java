@@ -31,7 +31,10 @@ public class GetTemperatureCommand {
                         }
                 );
 
-        dispatcher.register(getTemperature);
+        dispatcher.register(
+                (literal("frostiful").requires(src -> src.hasPermissionLevel(2)))
+                        .then(getTemperature)
+        );
     }
 
     private static int execute(ServerCommandSource source, Entity target) {
