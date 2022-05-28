@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "minecraft:rabbit_hide"
+        "minecraft:rabbit_hide",
+        "frostiful:polar_bear_fur_tuft"
     ]
 }

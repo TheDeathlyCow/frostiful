@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:empty",
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "frostiful:polar_bear_fur_tuft"
+        }
+      ]
+    }
+  ]
+}
