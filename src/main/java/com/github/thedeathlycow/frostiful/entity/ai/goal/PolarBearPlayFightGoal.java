@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.ItemEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
@@ -20,8 +21,8 @@ public class PolarBearPlayFightGoal extends PlayFightGoal {
     private static final Identifier PLAYFIGHT_LOOT_TABLE = new Identifier(Frostiful.MODID, "gameplay/polar_bear_playfight");
     private boolean droppedFur = false;
 
-    public PolarBearPlayFightGoal(PolarBearEntity mob, double chance) {
-        super(mob, chance);
+    public PolarBearPlayFightGoal(PolarBearEntity mob, float adultChance, float babyChance) {
+        super(mob, adultChance, babyChance);
     }
 
     @Override

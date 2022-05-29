@@ -10,6 +10,7 @@ import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -28,28 +29,34 @@ public class PlayFightGoal extends Goal {
             ImmutableMultimap.of(
                     EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(NO_DAMAGE_ID, "play fight no damage", -10000.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
             );
-    private static final int MAX_FIGHT_TIME = 20;
+    private static final int MAX_FIGHT_TIME = 30;
 
     protected final PathAwareEntity mob;
     @Nullable
     protected PathAwareEntity target;
-    private final double chance;
+    private final float adultChance;
+    private final float babyChance;
     private int timer;
 
-    public PlayFightGoal(PathAwareEntity mob, double chance) {
+    public PlayFightGoal(PathAwareEntity mob, float adultChance, float babyChance) {
         this.mob = mob;
-        this.chance = chance;
+        this.adultChance = adultChance;
+        this.babyChance = babyChance;
         this.target = null;
         this.timer = 0;
     }
 
     @Override
     public boolean canStart() {
-        if (this.mob.getRandom().nextFloat() < this.chance) {
+
+        float chance = this.mob.isBaby() ? this.babyChance : this.adultChance;
+
+        if (this.mob.getRandom().nextFloat() < chance) {
             this.target = this.findTarget();
             return this.target != null;
+        } else {
+            return false;
         }
-        return false;
     }
 
     @Override
@@ -72,10 +79,10 @@ public class PlayFightGoal extends Goal {
         }
 
         this.mob.getLookControl().lookAt(this.target, 30.0F, 30.0F);
-        this.mob.getNavigation().startMovingTo(this.target, this.chance);
+        this.mob.getNavigation().startMovingTo(this.target, 1.0f);
 
         this.timer++;
-        if (this.timer >= this.getTickCount(60) && this.mob.squaredDistanceTo(this.target) < 9.0D) {
+        if (this.timer >= this.getTickCount(MAX_FIGHT_TIME) && this.mob.squaredDistanceTo(this.target) < 9.0D) {
             this.playFight();
         }
     }
@@ -85,6 +92,11 @@ public class PlayFightGoal extends Goal {
         if (target != null) {
             this.target.lookAtEntity(this.mob, 30f, 30f);
             this.target.swingHand(Hand.MAIN_HAND);
+
+            if (this.timer == this.getTickCount(MAX_FIGHT_TIME)) {
+                this.mob.damage(DamageSource.GENERIC, 0.0f);
+                this.target.damage(DamageSource.GENERIC, 0.0f);
+            }
         }
     }
 

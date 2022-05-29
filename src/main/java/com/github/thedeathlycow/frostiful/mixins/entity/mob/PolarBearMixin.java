@@ -26,6 +26,6 @@ public abstract class PolarBearMixin extends AnimalEntity {
             )
     )
     private void addPlayFightGoal(CallbackInfo ci) {
-        this.goalSelector.add(5, new PolarBearPlayFightGoal((PolarBearEntity) (Object) this, 1));
+        this.goalSelector.add(8, new PolarBearPlayFightGoal((PolarBearEntity) (Object) this, 0.00001f, 0.01f));
     }
 }
