@@ -22,7 +22,7 @@ public class FrostHelper {
             frostModifier /= 100.0D;
         }
 
-        int toAdd = (int) ((1 - frostModifier) * amount);
+        int toAdd = MathHelper.ceil((1 - frostModifier) * amount);
 
         return addFrost(entity, toAdd);
     }
