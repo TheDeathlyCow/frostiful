@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.block.state.property.FrostifulProperti
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.GlowLichenBlock;
@@ -29,6 +30,9 @@ public class SunLichenBlock extends GlowLichenBlock {
     public static final int MAX_HEAT_LEVEL = 3;
     private static final float BASE_GROW_CHANCE = 0.017f;
     private static final float RANDOM_DISCHARGE_CHANCE = 0.13f;
+
+    private final ImmutableBiMap<Block, Block> HEAT_LEVEL_INCREASES = new ImmutableBiMap.Builder<Block, Block>()
+            .build();
 
     public SunLichenBlock(Settings settings) {
         super(settings);
