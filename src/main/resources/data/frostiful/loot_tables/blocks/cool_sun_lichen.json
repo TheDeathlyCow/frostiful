@@ -23,7 +23,7 @@
                             "conditions": [
                                 {
                                     "condition": "minecraft:block_state_property",
-                                    "block": "frostiful:sun_lichen",
+                                    "block": "frostiful:cool_sun_lichen",
                                     "properties": {
                                         "east": "true"
                                     }
@@ -37,7 +37,7 @@
                             "conditions": [
                                 {
                                     "condition": "minecraft:block_state_property",
-                                    "block": "frostiful:sun_lichen",
+                                    "block": "frostiful:cool_sun_lichen",
                                     "properties": {
                                         "west": "true"
                                     }
@@ -51,7 +51,7 @@
                             "conditions": [
                                 {
                                     "condition": "minecraft:block_state_property",
-                                    "block": "frostiful:sun_lichen",
+                                    "block": "frostiful:cool_sun_lichen",
                                     "properties": {
                                         "north": "true"
                                     }
@@ -65,7 +65,7 @@
                             "conditions": [
                                 {
                                     "condition": "minecraft:block_state_property",
-                                    "block": "frostiful:sun_lichen",
+                                    "block": "frostiful:cool_sun_lichen",
                                     "properties": {
                                         "south": "true"
                                     }
@@ -79,7 +79,7 @@
                             "conditions": [
                                 {
                                     "condition": "minecraft:block_state_property",
-                                    "block": "frostiful:sun_lichen",
+                                    "block": "frostiful:cool_sun_lichen",
                                     "properties": {
                                         "up": "true"
                                     }
@@ -93,7 +93,7 @@
                             "conditions": [
                                 {
                                     "condition": "minecraft:block_state_property",
-                                    "block": "frostiful:sun_lichen",
+                                    "block": "frostiful:cool_sun_lichen",
                                     "properties": {
                                         "down": "true"
                                     }
@@ -111,7 +111,7 @@
                             "function": "minecraft:explosion_decay"
                         }
                     ],
-                    "name": "frostiful:sun_lichen"
+                    "name": "frostiful:cool_sun_lichen"
                 }
             ]
         }

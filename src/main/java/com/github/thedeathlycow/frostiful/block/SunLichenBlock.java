@@ -67,11 +67,11 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         int heatLevel = this.getHeatLevel();
         if ((skyLight > 0 && world.isDay()) && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
             if (heatLevel < MAX_HEAT_LEVEL) {
-                Optional<BlockState> nextState = this.getNextState(state);
+                Optional<BlockState> nextState = Heatable.getNextState(state);
                 nextState.ifPresent(blockState -> world.setBlockState(pos, blockState));
             }
         } else if ((skyLight == 0) && world.getRandom().nextFloat() < RANDOM_DISCHARGE_CHANCE) {
-            Optional<BlockState> previousState = this.getPreviousState(state);
+            Optional<BlockState> previousState = Heatable.getPreviousState(state);
             previousState.ifPresent(blockState -> world.setBlockState(pos, blockState));
         }
     }

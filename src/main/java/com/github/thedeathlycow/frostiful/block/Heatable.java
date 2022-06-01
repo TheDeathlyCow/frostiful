@@ -28,7 +28,7 @@ public interface Heatable {
         return previous != null ? Optional.of(previous) : Optional.empty();
     }
 
-    default Optional<BlockState> getNextState(BlockState current) {
+    static Optional<BlockState> getNextState(BlockState current) {
         Optional<Block> next = getNextBlock(current.getBlock());
         if (next.isPresent()) {
             BlockState nextState = next.get().getStateWithProperties(current);
@@ -38,7 +38,7 @@ public interface Heatable {
         }
     }
 
-    default Optional<BlockState> getPreviousState(BlockState current) {
+    static Optional<BlockState> getPreviousState(BlockState current) {
         Optional<Block> previous = getPreviousBlock(current.getBlock());
         if (previous.isPresent()) {
             BlockState nextState = previous.get().getStateWithProperties(current);

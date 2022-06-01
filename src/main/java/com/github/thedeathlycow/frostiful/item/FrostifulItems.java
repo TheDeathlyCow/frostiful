@@ -27,9 +27,9 @@ public class FrostifulItems {
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item COLD_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item COOL_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item WARM_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item HOT_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item COOL_SUN_LICHEN = new BlockItem(FrostifulBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item WARM_SUN_LICHEN = new BlockItem(FrostifulBlocks.WARM_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item HOT_SUN_LICHEN = new BlockItem(FrostifulBlocks.HOT_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
     public static void registerItems() {
