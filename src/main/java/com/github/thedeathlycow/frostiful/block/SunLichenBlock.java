@@ -24,25 +24,23 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
-public class SunLichenBlock extends GlowLichenBlock {
+public class SunLichenBlock extends GlowLichenBlock implements Heatable {
 
+    @Deprecated
     public static final IntProperty HEAT_LEVEL = FrostifulProperties.LEVEL_0_3;
+
     public static final int MAX_HEAT_LEVEL = 3;
     private static final float BASE_GROW_CHANCE = 0.017f;
     private static final float RANDOM_DISCHARGE_CHANCE = 0.13f;
 
-    private final ImmutableBiMap<Block, Block> HEAT_LEVEL_INCREASES = new ImmutableBiMap.Builder<Block, Block>()
+    private static final ImmutableBiMap<Block, Block> HEAT_LEVEL_INCREASES = new ImmutableBiMap.Builder<Block, Block>()
             .build();
 
-    public SunLichenBlock(Settings settings) {
-        super(settings);
-        this.setDefaultState(this.getDefaultState().with(HEAT_LEVEL, 3));
-    }
+    private final int heatLevel;
 
-    @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
-        builder.add(HEAT_LEVEL);
+    public SunLichenBlock(final int heatLevel, Settings settings) {
+        super(settings);
+        this.heatLevel = heatLevel;
     }
 
     @Override
@@ -54,7 +52,7 @@ public class SunLichenBlock extends GlowLichenBlock {
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
-                world.setBlockState(pos, state.with(HEAT_LEVEL, 0));
+                //!world.setBlockState(pos, state.with(HEAT_LEVEL, 0));
                 this.playSound(world, pos);
             }
         }
@@ -65,14 +63,23 @@ public class SunLichenBlock extends GlowLichenBlock {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         int skyLight = world.getLightLevel(LightType.SKY, pos);
-        int heatLevel = getHeatLevel(state);
+        int heatLevel = this.getHeatLevel();
         if ((skyLight > 0 && world.isDay()) && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
             if (heatLevel < MAX_HEAT_LEVEL) {
-                world.setBlockState(pos, state.with(HEAT_LEVEL, heatLevel + 1));
+                //!world.setBlockState(pos, state.with(HEAT_LEVEL, heatLevel + 1));
             }
-        } else if ((skyLight == 0 || world.isNight()) && world.getRandom().nextFloat() < RANDOM_DISCHARGE_CHANCE) {
-            world.setBlockState(pos, state.with(HEAT_LEVEL, Math.max(0, heatLevel - 1)));
+        } else if ((skyLight == 0) && world.getRandom().nextFloat() < RANDOM_DISCHARGE_CHANCE) {
+            //!world.setBlockState(pos, state.with(HEAT_LEVEL, Math.max(0, heatLevel - 1)));
         }
+    }
+
+    @Override
+    public ImmutableBiMap<Block, Block> getHeatLevelIncreases() {
+        return HEAT_LEVEL_INCREASES;
+    }
+
+    public int getHeatLevel() {
+        return this.heatLevel;
     }
 
     private float getChargeChance(int skyLight) {
@@ -109,6 +116,6 @@ public class SunLichenBlock extends GlowLichenBlock {
     }
 
     private static int getHeatLevel(BlockState state) {
-        return state.isOf(FrostifulBlocks.SUN_LICHEN) ? state.get(HEAT_LEVEL) : 0;
+        return state.isOf(FrostifulBlocks.SUN_LICHEN) ? ((SunLichenBlock) state.getBlock()).getHeatLevel() : 0;
     }
 }
