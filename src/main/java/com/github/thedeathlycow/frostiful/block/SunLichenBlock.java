@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.block.state.property.FrostifulProperties;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
+import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.block.Block;
@@ -15,12 +16,12 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
+import java.util.Optional;
 import java.util.Random;
 
 @SuppressWarnings("deprecation")
@@ -32,9 +33,6 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     public static final int MAX_HEAT_LEVEL = 3;
     private static final float BASE_GROW_CHANCE = 0.017f;
     private static final float RANDOM_DISCHARGE_CHANCE = 0.13f;
-
-    private static final ImmutableBiMap<Block, Block> HEAT_LEVEL_INCREASES = new ImmutableBiMap.Builder<Block, Block>()
-            .build();
 
     private final int heatLevel;
 
@@ -52,7 +50,10 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
-                //!world.setBlockState(pos, state.with(HEAT_LEVEL, 0));
+
+                BlockState coldSunLichenState = FrostifulBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
+                world.setBlockState(pos, coldSunLichenState);
+
                 this.playSound(world, pos);
             }
         }
@@ -66,18 +67,16 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         int heatLevel = this.getHeatLevel();
         if ((skyLight > 0 && world.isDay()) && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
             if (heatLevel < MAX_HEAT_LEVEL) {
-                //!world.setBlockState(pos, state.with(HEAT_LEVEL, heatLevel + 1));
+                Optional<BlockState> nextState = this.getNextState(state);
+                nextState.ifPresent(blockState -> world.setBlockState(pos, blockState));
             }
         } else if ((skyLight == 0) && world.getRandom().nextFloat() < RANDOM_DISCHARGE_CHANCE) {
-            //!world.setBlockState(pos, state.with(HEAT_LEVEL, Math.max(0, heatLevel - 1)));
+            Optional<BlockState> previousState = this.getPreviousState(state);
+            previousState.ifPresent(blockState -> world.setBlockState(pos, blockState));
         }
     }
 
     @Override
-    public ImmutableBiMap<Block, Block> getHeatLevelIncreases() {
-        return HEAT_LEVEL_INCREASES;
-    }
-
     public int getHeatLevel() {
         return this.heatLevel;
     }
@@ -116,6 +115,6 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     }
 
     private static int getHeatLevel(BlockState state) {
-        return state.isOf(FrostifulBlocks.SUN_LICHEN) ? ((SunLichenBlock) state.getBlock()).getHeatLevel() : 0;
+        return state.isIn(FrostifulBlockTags.SUN_LICHENS) ? ((SunLichenBlock) state.getBlock()).getHeatLevel() : 0;
     }
 }

@@ -20,7 +20,7 @@ public class FrostifulConfiguredFeatures {
     public static final RegistryEntry<ConfiguredFeature<?, ?>> SUN_LICHEN_COVERED_ROCK = register("sun_lichen_covered_rock", new ConfiguredFeature<>(FrostifulFeatures.COVERED_ROCK,
             new CoveredRockFeatureConfig(
                     SimpleBlockStateProvider.of(Blocks.STONE.getDefaultState()),
-                    SimpleBlockStateProvider.of(FrostifulBlocks.SUN_LICHEN.getDefaultState()),
+                    SimpleBlockStateProvider.of(FrostifulBlocks.HOT_SUN_LICHEN.getDefaultState()),
                     new CoveredRockSizeConfig(
                             UniformIntProvider.create(0, 1),
                             UniformIntProvider.create(0, 2),

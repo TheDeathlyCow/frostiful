@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
@@ -25,7 +26,10 @@ public class FrostifulItems {
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item SUN_LICHEN = new BlockItem(FrostifulBlocks.SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item COLD_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item COOL_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item WARM_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item HOT_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
     public static void registerItems() {
@@ -41,7 +45,10 @@ public class FrostifulItems {
 
         register("polar_bear_fur_tuft", POLAR_BEAR_FUR_TUFT);
         register("icicle", ICICLE);
-        register("sun_lichen", SUN_LICHEN);
+        register("cold_sun_lichen", COLD_SUN_LICHEN);
+        register("cool_sun_lichen", COOL_SUN_LICHEN);
+        register("warm_sun_lichen", WARM_SUN_LICHEN);
+        register("hot_sun_lichen", HOT_SUN_LICHEN);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
     }
 

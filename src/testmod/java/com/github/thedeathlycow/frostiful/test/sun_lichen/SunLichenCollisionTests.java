@@ -4,6 +4,8 @@ import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -21,7 +23,7 @@ public class SunLichenCollisionTests implements FabricGameTest {
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
         context.expectEntityWithData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
 
-        context.setBlockState(pos, FrostifulBlocks.SUN_LICHEN.getDefaultState().with(SunLichenBlock.HEAT_LEVEL, 0));
+        context.setBlockState(pos, FrostifulBlocks.HOT_SUN_LICHEN.getDefaultState());
         context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
     }
 
@@ -33,40 +35,40 @@ public class SunLichenCollisionTests implements FabricGameTest {
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
         context.expectEntityWithData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
 
-        context.setBlockState(pos, FrostifulBlocks.SUN_LICHEN.getDefaultState()
-                .with(SunLichenBlock.HEAT_LEVEL, level));
+        context.setBlockState(pos, FrostifulBlocks.HOT_SUN_LICHEN.getDefaultState());
         context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
     public void hotLichenWarmsAppropriateAmount(TestContext context) {
-        doWarmVillagerTest(context, 3);
+        doWarmVillagerTest(context, FrostifulBlocks.HOT_SUN_LICHEN);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
     public void warmLichenWarmsAppropriateAmount(TestContext context) {
-        doWarmVillagerTest(context, 2);
+        doWarmVillagerTest(context, FrostifulBlocks.WARM_SUN_LICHEN);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
     public void coolLichenWarmsAppropriateAmount(TestContext context) {
-        doWarmVillagerTest(context, 1);
+        doWarmVillagerTest(context, FrostifulBlocks.COOL_SUN_LICHEN);
     }
 
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
     public void coldLichenDoesNotWarm(TestContext context) {
-        doWarmVillagerTest(context, 0);
+        doWarmVillagerTest(context, FrostifulBlocks.COLD_SUN_LICHEN);
     }
 
-    private static void doWarmVillagerTest(TestContext context, int level) {
+    private static void doWarmVillagerTest(TestContext context, Block block) {
         final BlockPos pos = new BlockPos(1, 2, 1);
         final int freezeAmount = 1000;
+        final int level = ((SunLichenBlock) block).getHeatLevel();
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
         entity.setFrozenTicks(freezeAmount);
         context.expectEntityWithData(pos, EntityType.VILLAGER, Entity::getFrozenTicks, freezeAmount);
 
-        context.setBlockState(pos, FrostifulBlocks.SUN_LICHEN.getDefaultState().with(SunLichenBlock.HEAT_LEVEL, level));
+        context.setBlockState(pos, block.getDefaultState());
         context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, Entity::getFrozenTicks, freezeAmount - level * FreezingConfigGroup.SUN_LICHEN_HEAT_PER_LEVEL.getValue());
     }
 }

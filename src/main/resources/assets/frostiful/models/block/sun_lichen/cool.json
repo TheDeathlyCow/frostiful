@@ -1,6 +1,6 @@
 {
     "parent": "frostiful:block/sun_lichen",
     "textures": {
-        "lichen": "frostiful:block/sun_lichen/level_1"
+        "lichen": "frostiful:block/sun_lichen/cool"
     }
 }
