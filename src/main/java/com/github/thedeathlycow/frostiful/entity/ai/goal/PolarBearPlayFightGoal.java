@@ -22,7 +22,7 @@ public class PolarBearPlayFightGoal extends PlayFightGoal {
     private boolean droppedFur = false;
 
     public PolarBearPlayFightGoal(PolarBearEntity mob, float adultChance, float babyChance) {
-        super(mob, adultChance, babyChance);
+        super(mob, adultChance, babyChance, PLAYFIGHT_LOOT_TABLE);
     }
 
     @Override
@@ -41,27 +41,6 @@ public class PolarBearPlayFightGoal extends PlayFightGoal {
         if (this.target != null) {
             ((PolarBearEntity) this.target).setWarning(true);
         }
-        this.dropFur();
         super.playFight();
-    }
-
-    private void dropFur() {
-
-        if (this.target == null || this.droppedFur) {
-            return;
-        }
-
-        World world = this.target.getWorld();
-        LootTable lootTable = Objects.requireNonNull(world.getServer())
-                .getLootManager().getTable(PLAYFIGHT_LOOT_TABLE);
-        LootContext.Builder builder = new LootContext.Builder((ServerWorld) world)
-                .random(this.target.getRandom());
-        List<ItemStack> generatedItems = lootTable.generateLoot(builder.build(LootContextTypes.EMPTY));
-        Vec3d pos = this.target.getPos();
-        for (ItemStack stack : generatedItems) {
-            world.spawnEntity(new ItemEntity(world, pos.x, pos.y, pos.z, stack));
-        }
-
-        this.droppedFur = true;
     }
 }

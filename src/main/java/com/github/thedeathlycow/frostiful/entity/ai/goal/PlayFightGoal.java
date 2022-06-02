@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity.ai.goal;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.Goal;
@@ -12,11 +13,19 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.item.ItemStack;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 public class PlayFightGoal extends Goal {
@@ -24,26 +33,26 @@ public class PlayFightGoal extends Goal {
     private static final TargetPredicate VALID_PLAYFIGHT_PREDICATE = TargetPredicate.createAttackable()
             .setBaseMaxDistance(8.0D)
             .ignoreVisibility();
-    private static final UUID NO_DAMAGE_ID = UUID.fromString("ff0c233a-900a-4846-ac48-7d6a1330d6a8");
-    private static final Multimap<EntityAttribute, EntityAttributeModifier> NO_DAMAGE_MODIFIERS =
-            ImmutableMultimap.of(
-                    EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(NO_DAMAGE_ID, "play fight no damage", -10000.0, EntityAttributeModifier.Operation.MULTIPLY_TOTAL)
-            );
+
     private static final int MAX_FIGHT_TIME = 30;
 
     protected final PathAwareEntity mob;
     @Nullable
     protected PathAwareEntity target;
+    @Nullable
+    protected final Identifier furLootTable;
     private final float adultChance;
     private final float babyChance;
     private int timer;
+    private boolean droppedFur = false;
 
-    public PlayFightGoal(PathAwareEntity mob, float adultChance, float babyChance) {
+    public PlayFightGoal(PathAwareEntity mob, float adultChance, float babyChance, @Nullable Identifier furLootTable) {
         this.mob = mob;
         this.adultChance = adultChance;
         this.babyChance = babyChance;
         this.target = null;
         this.timer = 0;
+        this.furLootTable = furLootTable;
     }
 
     @Override
@@ -88,8 +97,8 @@ public class PlayFightGoal extends Goal {
     }
 
     protected void playFight() {
-        this.mob.swingHand(Hand.MAIN_HAND);
         if (target != null) {
+            this.mob.swingHand(Hand.MAIN_HAND);
             this.target.lookAtEntity(this.mob, 30f, 30f);
             this.target.swingHand(Hand.MAIN_HAND);
 
@@ -97,9 +106,30 @@ public class PlayFightGoal extends Goal {
                 this.mob.damage(DamageSource.GENERIC, 0.0f);
                 this.target.damage(DamageSource.GENERIC, 0.0f);
             }
+
+            this.dropFur();
         }
+
     }
 
+    protected void dropFur() {
+        if (this.target == null || this.droppedFur) {
+            return;
+        }
+
+        World world = this.target.getWorld();
+        LootTable lootTable = Objects.requireNonNull(world.getServer())
+                .getLootManager().getTable(this.furLootTable);
+        LootContext.Builder builder = new LootContext.Builder((ServerWorld) world)
+                .random(this.target.getRandom());
+        List<ItemStack> generatedItems = lootTable.generateLoot(builder.build(LootContextTypes.EMPTY));
+        Vec3d pos = this.target.getPos();
+        for (ItemStack stack : generatedItems) {
+            world.spawnEntity(new ItemEntity(world, pos.x, pos.y, pos.z, stack));
+        }
+
+        this.droppedFur = true;
+    }
 
     /**
      * Finds the closest possible target to playfight with

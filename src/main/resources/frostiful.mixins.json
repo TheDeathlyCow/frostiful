@@ -13,6 +13,7 @@
     "entity.mob.PiglinBrainMixin",
     "entity.mob.PolarBearMixin",
     "entity.mob.StrayDefaultArrowItemMixin",
+    "entity.mob.WolfMixin",
     "item.ArmorItemMixin",
     "server.ServerWorldMixin",
     "world.biome.BiomeMixin"
