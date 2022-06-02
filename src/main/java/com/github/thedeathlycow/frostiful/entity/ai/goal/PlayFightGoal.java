@@ -16,6 +16,8 @@ import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameter;
+import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
@@ -79,6 +81,7 @@ public class PlayFightGoal extends Goal {
     public void stop() {
         this.target = null;
         this.timer = 0;
+        this.droppedFur = false;
     }
 
     @Override
@@ -121,6 +124,8 @@ public class PlayFightGoal extends Goal {
         LootTable lootTable = Objects.requireNonNull(world.getServer())
                 .getLootManager().getTable(this.furLootTable);
         LootContext.Builder builder = new LootContext.Builder((ServerWorld) world)
+                .parameter(LootContextParameters.THIS_ENTITY, this.mob)
+                .parameter(LootContextParameters.ORIGIN, this.mob.getPos())
                 .random(this.target.getRandom());
         List<ItemStack> generatedItems = lootTable.generateLoot(builder.build(LootContextTypes.EMPTY));
         Vec3d pos = this.target.getPos();
