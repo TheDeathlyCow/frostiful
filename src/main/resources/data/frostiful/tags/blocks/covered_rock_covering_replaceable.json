@@ -1,8 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#minecraft:water",
-    "frostiful:sun_lichen",
+    "#frostiful:sun_lichens",
     "minecraft:glow_lichen",
     "minecraft:snow"
   ]
