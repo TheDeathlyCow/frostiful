@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
+import com.github.thedeathlycow.frostiful.util.FrostifulMathHelper;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentTarget;
@@ -60,7 +61,7 @@ public class HeatDrainEnchantment extends Enchantment {
     public static void addHeatDrainParticles(LivingEntity user, Entity target, int level) {
         World world = user.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) {
-            Vec3d from = getMidPoint(target.getEyePos(), target.getPos());
+            Vec3d from = FrostifulMathHelper.getMidPoint(target.getEyePos(), target.getPos());
             final int numParticles = (level << 1) + 5;
 
             double fromX = from.getX();
@@ -69,13 +70,5 @@ public class HeatDrainEnchantment extends Enchantment {
             HeatDrainParticleEffect effect = new HeatDrainParticleEffect(user.getEyePos());
             serverWorld.spawnParticles(effect, fromX, fromY, fromZ, numParticles, 0.5, 0.5, 0.5, 0.3);
         }
-    }
-
-    private static Vec3d getMidPoint(Vec3d vec1, Vec3d vec2) {
-        return new Vec3d(
-                (vec1.x + vec2.x) / 2,
-                (vec1.y + vec2.y) / 2,
-                (vec1.z + vec2.z) / 2
-        );
     }
 }
