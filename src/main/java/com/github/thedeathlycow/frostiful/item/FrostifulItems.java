@@ -25,6 +25,7 @@ public class FrostifulItems {
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(ItemGroup.COMBAT));
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
+    public static final Item WOLF_FUR_TUFT = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item COLD_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item COOL_SUN_LICHEN = new BlockItem(FrostifulBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
@@ -44,6 +45,7 @@ public class FrostifulItems {
         register("fur_padded_chainmail_boots", FUR_PADDED_CHAINMAIL_BOOTS);
 
         register("polar_bear_fur_tuft", POLAR_BEAR_FUR_TUFT);
+        register("wolf_fur_tuft", WOLF_FUR_TUFT);
         register("icicle", ICICLE);
         register("cold_sun_lichen", COLD_SUN_LICHEN);
         register("cool_sun_lichen", COOL_SUN_LICHEN);
