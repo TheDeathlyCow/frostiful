@@ -94,6 +94,7 @@
   "config.frostiful.client_config.do_cold_heart_overlay": "Do cold heart overlay",
   "config.frostiful.combat_config": "Combat Config",
   "config.frostiful.combat_config.heat_drain_per_level": "Heat drained per level",
+  "config.frostiful.combat_config.heat_drain_efficiency": "Heat drain efficiency",
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "subtitles.frostiful.block.campfire.hiss": "Campfire hisses",
   "effect.frostiful.frozen": "Frozen",

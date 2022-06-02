@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -48,7 +49,8 @@ public class HeatDrainEnchantment extends Enchantment {
             heatDrained = FrostHelper.addFrost(target, heatDrained);
         }
 
-        FrostHelper.removeLivingFrost(user, heatDrained);
+        int frostRemoved = MathHelper.floor(heatDrained * CombatConfigGroup.HEAT_DRAIN_EFFICIENCY.getValue());
+        FrostHelper.removeLivingFrost(user, frostRemoved);
 
         if (heatDrained > 0) {
             addHeatDrainParticles(user, target, level);
