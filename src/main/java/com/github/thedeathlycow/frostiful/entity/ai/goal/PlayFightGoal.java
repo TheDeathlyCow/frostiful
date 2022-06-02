@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity.ai.goal;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.AnimalMateGoal;
@@ -23,6 +24,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -127,12 +129,11 @@ public class PlayFightGoal extends Goal {
                 .parameter(LootContextParameters.THIS_ENTITY, this.mob)
                 .parameter(LootContextParameters.ORIGIN, this.mob.getPos())
                 .random(this.target.getRandom());
-        List<ItemStack> generatedItems = lootTable.generateLoot(builder.build(LootContextTypes.EMPTY));
+        List<ItemStack> generatedItems = lootTable.generateLoot(builder.build(LootContextTypes.SELECTOR));
         Vec3d pos = this.target.getPos();
         for (ItemStack stack : generatedItems) {
             world.spawnEntity(new ItemEntity(world, pos.x, pos.y, pos.z, stack));
         }
-
         this.droppedFur = true;
     }
 
