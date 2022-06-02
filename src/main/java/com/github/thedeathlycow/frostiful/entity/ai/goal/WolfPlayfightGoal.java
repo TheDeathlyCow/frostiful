@@ -17,7 +17,7 @@ public class WolfPlayfightGoal extends PlayFightGoal {
             assert this.target != null;
             WolfEntity wolfMob = ((WolfEntity) this.mob);
             WolfEntity targetWolf = ((WolfEntity) this.target);
-            return !wolfMob.isTamed() && wolfMob.isTamed() == targetWolf.isTamed();
+            return !wolfMob.isTamed() && !targetWolf.isTamed();
         }
 
         return false;
