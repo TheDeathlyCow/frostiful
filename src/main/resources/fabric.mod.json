@@ -11,7 +11,8 @@
   "contact": {
     "homepage": "https://github.com/TheDeathlyCow",
     "sources": "https://github.com/TheDeathlyCow/frostiful",
-    "issues": "https://github.com/TheDeathlyCow/frostiful/issues"
+    "issues": "https://github.com/TheDeathlyCow/frostiful/issues",
+    "wiki": "https://github.com/TheDeathlyCow/frostiful/wiki"
   },
 
   "license": "LGPL-3.0",
