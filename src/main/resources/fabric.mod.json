@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Frostiful",
-  "description": "Expands upon the freezing system added with Powdered Snow in 1.17.",
+  "description": "A Vanilla+ Snow & Frost Update Experience",
   "authors": [
     "TheDeathlyCow"
   ],
