@@ -3,8 +3,6 @@ package com.github.thedeathlycow.frostiful.server.command;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.LiteralText;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +13,7 @@ import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 
-public class GetTemperatureCommand {
+public class FrostifulCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
         var getTemperature = literal("gettemperature")

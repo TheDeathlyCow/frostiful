@@ -11,7 +11,7 @@ import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableListener;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
 import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
-import com.github.thedeathlycow.frostiful.server.command.GetTemperatureCommand;
+import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FrostifulPlacedFeatures;
@@ -40,7 +40,7 @@ public class Frostiful implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register(
                 ((dispatcher, dedicated) -> {
-                    GetTemperatureCommand.register(dispatcher);
+                    FrostifulCommand.register(dispatcher);
                     FrostCommand.register(dispatcher);
                 })
         );
