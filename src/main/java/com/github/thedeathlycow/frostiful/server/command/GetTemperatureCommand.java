@@ -43,7 +43,7 @@ public class GetTemperatureCommand {
         float temperature = biome.getTemperature();
         String msg = String.format("This biome's temperature is %.4f with a per-tick freeze rate of %d", temperature, PassiveFreezingHelper.getPerTickFreezing(temperature));
         source.sendFeedback(new LiteralText(msg), false);
-        return 1;
+        return (int)temperature;
     }
 
 }
