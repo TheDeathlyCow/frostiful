@@ -14,7 +14,7 @@
     "issues": "https://github.com/TheDeathlyCow/frostiful/issues"
   },
 
-  "license": "CC0-1.0",
+  "license": "LGPL-3.0",
   "icon": "assets/frostiful/icon.png",
 
   "environment": "*",
