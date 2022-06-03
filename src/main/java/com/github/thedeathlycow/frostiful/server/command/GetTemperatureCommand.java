@@ -41,9 +41,10 @@ public class GetTemperatureCommand {
         World world = target.getEntityWorld();
         Biome biome = world.getBiome(target.getBlockPos()).value();
         float temperature = biome.getTemperature();
+        int freezeRate = PassiveFreezingHelper.getPerTickFreezing(temperature);
         String msg = String.format("This biome's temperature is %.4f with a per-tick freeze rate of %d", temperature, PassiveFreezingHelper.getPerTickFreezing(temperature));
         source.sendFeedback(new LiteralText(msg), false);
-        return (int)temperature;
+        return freezeRate;
     }
 
 }
