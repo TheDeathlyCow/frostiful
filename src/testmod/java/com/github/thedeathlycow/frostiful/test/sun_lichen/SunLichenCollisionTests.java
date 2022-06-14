@@ -30,7 +30,6 @@ public class SunLichenCollisionTests implements FabricGameTest {
     @GameTest(structureName = "frostiful-test:sun_lichen_tests.platform")
     public void hotLichenDamages(TestContext context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
-        final int level = SunLichenBlock.MAX_HEAT_LEVEL;
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
         context.expectEntityWithData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
