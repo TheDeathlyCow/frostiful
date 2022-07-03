@@ -19,14 +19,14 @@ public class FrostifulConfiguredFeatures {
     @SuppressWarnings("deprecation")
     public static final RegistryEntry<ConfiguredFeature<?, ?>> SUN_LICHEN_COVERED_ROCK = register("sun_lichen_covered_rock", new ConfiguredFeature<>(FrostifulFeatures.COVERED_ROCK,
             new CoveredRockFeatureConfig(
-                    SimpleBlockStateProvider.of(Blocks.STONE.getDefaultState()),
+                    SimpleBlockStateProvider.of(Blocks.COBBLESTONE.getDefaultState()),
                     SimpleBlockStateProvider.of(FrostifulBlocks.HOT_SUN_LICHEN.getDefaultState()),
                     new CoveredRockSizeConfig(
-                            UniformIntProvider.create(0, 1),
                             UniformIntProvider.create(0, 2),
-                            UniformIntProvider.create(0, 1)
+                            UniformIntProvider.create(0, 2),
+                            UniformIntProvider.create(0, 2)
                     ),
-                    RegistryEntryList.of(Block::getRegistryEntry, Blocks.STONE, Blocks.DIRT, Blocks.GRASS_BLOCK),
+                    RegistryEntryList.of(Block::getRegistryEntry, Blocks.COBBLESTONE, Blocks.DIRT, Blocks.GRASS_BLOCK),
                     0.3f
             )));
 

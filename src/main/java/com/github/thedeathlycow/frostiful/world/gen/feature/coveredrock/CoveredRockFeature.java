@@ -7,8 +7,10 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
+import net.minecraft.world.gen.feature.ForestRockFeature;
 import net.minecraft.world.gen.feature.VegetationConfiguredFeatures;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
@@ -45,12 +47,13 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
         int dx = config.size().sizeX().get(random);
         int dy = config.size().sizeY().get(random);
         int dz = config.size().sizeZ().get(random);
+        final float maxSquareDistance = MathHelper.square((dx + dy + dz) / 3.f + 0.5f);
         BlockPos from = origin.add(-dx, -dy, -dz);
         BlockPos to = origin.add(dx, dy == 0 ? 1 : dy, dz);
 
         for (BlockPos pos : BlockPos.iterate(from, to)) {
             BlockState current = world.getBlockState(pos);
-            if (!current.isIn(FrostifulBlockTags.COVERED_ROCKS_CANNOT_REPLACE)) {
+            if (pos.getSquaredDistance(origin) < maxSquareDistance && !current.isIn(FrostifulBlockTags.COVERED_ROCKS_CANNOT_REPLACE)) {
                 BlockState baseState = config.base().getBlockState(random, pos);
                 world.setBlockState(pos, baseState, Block.NOTIFY_ALL);
             }

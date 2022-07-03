@@ -18,9 +18,12 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider;
  * @param canPlaceOn          Blocks that the lichen can be placed on
  * @param placeCoveringChance The chance to place the covering.
  */
-public record CoveredRockFeatureConfig(BlockStateProvider base, BlockStateProvider covering,
-                                       CoveredRockSizeConfig size, RegistryEntryList<Block> canPlaceOn,
-                                       float placeCoveringChance) implements FeatureConfig {
+public record CoveredRockFeatureConfig(
+        BlockStateProvider base, BlockStateProvider covering,
+        CoveredRockSizeConfig size, RegistryEntryList<Block> canPlaceOn,
+        float placeCoveringChance
+)
+        implements FeatureConfig {
     public static final Codec<CoveredRockFeatureConfig> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     BlockStateProvider.TYPE_CODEC.fieldOf("base").forGetter(CoveredRockFeatureConfig::base),
