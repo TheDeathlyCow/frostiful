@@ -1,0 +1,36 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "frostiful:shaped/ice_from_icicle"
+    ]
+  },
+  "criteria": {
+    "has_icicle": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": [
+              {
+                "item": "frostiful:icicle"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "frostiful:shaped/ice_from_icicle"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_icicle",
+      "has_the_recipe"
+    ]
+  ]
+}
