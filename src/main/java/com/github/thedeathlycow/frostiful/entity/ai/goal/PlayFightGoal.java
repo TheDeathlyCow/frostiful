@@ -1,38 +1,26 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
-import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.entity.ItemEntity;
 import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.ai.goal.AnimalMateGoal;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.loot.LootTable;
 import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameter;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
-public class PlayFightGoal extends Goal {
+public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
 
     private static final TargetPredicate VALID_PLAYFIGHT_PREDICATE = TargetPredicate.createAttackable()
             .setBaseMaxDistance(8.0D)
@@ -40,9 +28,10 @@ public class PlayFightGoal extends Goal {
 
     private static final int MAX_FIGHT_TIME = 30;
 
-    protected final PathAwareEntity mob;
+    protected final T mob;
+    private final Class<T> type;
     @Nullable
-    protected PathAwareEntity target;
+    protected T target;
     @Nullable
     protected final Identifier furLootTable;
     private final float adultChance;
@@ -50,8 +39,9 @@ public class PlayFightGoal extends Goal {
     private int timer;
     private boolean droppedFur = false;
 
-    public PlayFightGoal(PathAwareEntity mob, float adultChance, float babyChance, @Nullable Identifier furLootTable) {
+    public PlayFightGoal(T mob, Class<T> type, float adultChance, float babyChance, @Nullable Identifier furLootTable) {
         this.mob = mob;
+        this.type = type;
         this.adultChance = adultChance;
         this.babyChance = babyChance;
         this.target = null;
@@ -144,14 +134,14 @@ public class PlayFightGoal extends Goal {
      * fight with.
      */
     @Nullable
-    private PathAwareEntity findTarget() {
+    private T findTarget() {
 
         World world = this.mob.world;
-        List<? extends PathAwareEntity> candidates = world.getTargets(this.mob.getClass(), VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().expand(8.0));
+        List<? extends T> candidates = world.getTargets(this.type, VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().expand(8.0));
         double closestEntityDistance = Double.POSITIVE_INFINITY;
 
-        PathAwareEntity target = null;
-        for (PathAwareEntity candidate : candidates) {
+        T target = null;
+        for (T candidate : candidates) {
             double distance = this.mob.squaredAttackRange(candidate);
             if (this.canPlayfightWith(candidate) && distance < closestEntityDistance) {
                 target = candidate;
