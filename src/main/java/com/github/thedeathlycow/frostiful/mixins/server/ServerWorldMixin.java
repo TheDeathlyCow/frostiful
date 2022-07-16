@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.mixins.server;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
@@ -47,7 +48,7 @@ public class ServerWorldMixin {
     private boolean applySnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
 
-        doIcicleGrowth(instance, blockPos, instance.random);
+        this.doIcicleGrowth(instance, blockPos, instance.random);
 
         int maxLayers = WeatherConfigGroup.MAX_SNOW_BUILDUP.getValue();
 
@@ -68,20 +69,19 @@ public class ServerWorldMixin {
             return;
         }
 
+        final BlockState toPlace = FrostifulBlocks.ICICLE.getDefaultState()
+                .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
+
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState at = instance.getBlockState(testPos);
 
-            return at.isAir() && FrostifulBlocks.ICICLE.getDefaultState()
-                    .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN)
-                    .canPlaceAt(instance, testPos);
+            return at.isAir() && toPlace.canPlaceAt(instance, testPos);
         };
 
         BlockPos.Mutable placePos = pos.mutableCopy();
         for (int i = 0; i < 5; i++) {
             if (validCondition.test(placePos)) {
-                BlockState icicle = FrostifulBlocks.ICICLE.getDefaultState()
-                        .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
-                instance.setBlockState(placePos, icicle);
+                instance.setBlockState(placePos, toPlace, Block.NOTIFY_ALL);
                 return;
             }
             placePos.move(Direction.DOWN);
