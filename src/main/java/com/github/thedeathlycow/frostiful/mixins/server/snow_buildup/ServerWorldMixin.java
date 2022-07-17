@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.mixins.server;
+package com.github.thedeathlycow.frostiful.mixins.server.snow_buildup;
 
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
@@ -23,18 +23,6 @@ import java.util.function.Predicate;
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
 
-    //    @Redirect(
-//            method = "tickChunk",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Ljava/util/Random;nextInt(I)I",
-//                    ordinal = 1
-//            )
-//    )
-//    private int noRandomChanceForSnow(Random instance, int bound) {
-//        //LostInTheCold.LOGGER.warn("If not in dev environment - delete noRandomChanceForSnow");
-//        return 0;
-//    }
     @Redirect(
             method = "tickChunk",
             at = @At(
@@ -48,8 +36,6 @@ public class ServerWorldMixin {
     private boolean applySnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
 
-        this.doIcicleGrowth(instance, blockPos, instance.random);
-
         int maxLayers = WeatherConfigGroup.MAX_SNOW_BUILDUP.getValue();
 
         if (maxLayers == 0) {
@@ -62,34 +48,8 @@ public class ServerWorldMixin {
         return instance.setBlockState(blockPos, toSet);
     }
 
-    private void doIcicleGrowth(ServerWorld instance, BlockPos pos, Random random) {
 
-        // slow down icicles appearing in world
-        if (random.nextInt(5) != 0) {
-            return;
-        }
-
-        final BlockState toPlace = FrostifulBlocks.ICICLE.getDefaultState()
-                .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
-
-        Predicate<BlockPos> validCondition = (testPos) -> {
-            BlockState at = instance.getBlockState(testPos);
-
-            return at.isAir() && toPlace.canPlaceAt(instance, testPos);
-        };
-
-        BlockPos.Mutable placePos = pos.mutableCopy();
-        for (int i = 0; i < 5; i++) {
-            if (validCondition.test(placePos)) {
-                instance.setBlockState(placePos, toPlace, Block.NOTIFY_ALL);
-                return;
-            }
-            placePos.move(Direction.DOWN);
-        }
-    }
-
-
-    private int getSnowLayers(BlockState state) {
+    private static int getSnowLayers(BlockState state) {
         if (state.isOf(Blocks.SNOW)) {
             return state.get(SnowBlock.LAYERS);
         } else if (state.isAir()) {
@@ -99,7 +59,7 @@ public class ServerWorldMixin {
         }
     }
 
-    private int getLowestNeighbouringLayer(ServerWorld instance, BlockPos blockPos) {
+    private static int getLowestNeighbouringLayer(ServerWorld instance, BlockPos blockPos) {
 
         List<Integer> neighbourLayers = List.of(
                 getSnowLayers(instance.getBlockState(blockPos.north())),
@@ -111,7 +71,7 @@ public class ServerWorldMixin {
         return Collections.min(neighbourLayers);
     }
 
-    private int getLayersForPlacement(ServerWorld instance, BlockState current, BlockPos blockPos, final int maxLayers) {
+    private static int getLayersForPlacement(ServerWorld instance, BlockState current, BlockPos blockPos, final int maxLayers) {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = getSnowLayers(current);

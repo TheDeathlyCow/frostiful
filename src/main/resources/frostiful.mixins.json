@@ -15,7 +15,8 @@
     "entity.mob.StrayDefaultArrowItemMixin",
     "entity.mob.WolfMixin",
     "item.ArmorItemMixin",
-    "server.ServerWorldMixin",
+    "server.IcicleGrowthMixin",
+    "server.snow_buildup.ServerWorldMixin",
     "world.biome.BiomeMixin"
   ],
   "client": [
