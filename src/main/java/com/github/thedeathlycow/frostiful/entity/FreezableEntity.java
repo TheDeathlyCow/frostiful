@@ -5,11 +5,15 @@ import net.minecraft.nbt.NbtElement;
 
 public interface FreezableEntity {
 
+    String FROST_KEY = "Frostiful.CurrentFrost";
+
     int frostiful$getCurrentFrost();
 
     int frostiful$getMaxFrost();
 
     void frostiful$setFrost(int amount);
+
+    boolean frostiful$canFreeze();
 
     default void frostiful$addFrost(int amount) {
         this.frostiful$setFrost(this.frostiful$getCurrentFrost() + amount);
@@ -24,21 +28,17 @@ public interface FreezableEntity {
         return Math.min(this.frostiful$getCurrentFrost(), maxFrost) / ((float) maxFrost);
     }
 
-    default boolean frostiful$canFreeze() {
-        return true;
+    default void addToNbt(NbtCompound nbt) {
+        if (this.frostiful$getCurrentFrost() > 0) {
+            nbt.putInt(FROST_KEY, this.frostiful$getCurrentFrost());
+        }
     }
 
-    default NbtElement toNbt() {
-        NbtCompound nbt = new NbtCompound();
-        nbt.putInt("CurrentFrost", this.frostiful$getCurrentFrost());
-        return nbt;
-    }
-
-    static void setFrostFromNbt(FreezableEntity entity, NbtCompound nbt) {
-        if (nbt.contains("CurrentFrost", NbtElement.INT_TYPE)) {
-            entity.frostiful$setFrost(nbt.getInt("CurrentFrost"));
+    default void setFrostFromNbt(NbtCompound nbt) {
+        if (nbt.contains(FROST_KEY, NbtElement.INT_TYPE)) {
+            this.frostiful$setFrost(nbt.getInt(FROST_KEY));
         } else {
-            entity.frostiful$setFrost(0);
+            this.frostiful$setFrost(0);
         }
     }
 }
