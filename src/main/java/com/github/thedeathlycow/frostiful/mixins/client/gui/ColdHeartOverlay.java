@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
 import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.gui.DrawableHelper;
@@ -52,15 +53,14 @@ abstract class ColdHeartOverlay {
             return;
         }
 
-        double freezingProgress = ((double) player.getFrozenTicks()) / player.getMinFreezeDamageTicks();
-
-        freezingProgress = MathHelper.clamp(freezingProgress, 0.0D, 1.0D);
+        final FreezableEntity freezable = (FreezableEntity) player;
+        float freezingProgress = freezable.frostiful$getFrostProgress();
 
         // number of half cold hearts
         int frozenHealthPoints = (int) (freezingProgress * MAX_COLD_HEARTS);
 
         // number of whole hearts
-        int frozenHealthHearts = MathHelper.ceil((double) frozenHealthPoints / 2.0D);
+        int frozenHealthHearts = MathHelper.ceil( frozenHealthPoints / 2.0f);
 
         RenderSystem.setShaderTexture(0, HEART_OVERLAY_TEXTURE);
         for (int m = 0; m < frozenHealthHearts; m++) {
@@ -70,6 +70,7 @@ abstract class ColdHeartOverlay {
             int q = heartYPositions[m];
             boolean isHalfHeart = m + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1;
             this.drawHeartOverLay(matrices, p, q, isHalfHeart);
+
         }
         RenderSystem.setShaderTexture(0, DrawableHelper.GUI_ICONS_TEXTURE);
     }

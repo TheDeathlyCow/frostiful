@@ -46,8 +46,6 @@ public class HeatDrainEnchantment extends Enchantment {
 
         if (target instanceof LivingEntity livingTarget) {
             heatDrained = FrostHelper.addLivingFrost(livingTarget, heatDrained);
-        } else {
-            heatDrained = FrostHelper.addFrost(target, heatDrained);
         }
 
         int frostRemoved = MathHelper.floor(heatDrained * CombatConfigGroup.HEAT_DRAIN_EFFICIENCY.getValue());

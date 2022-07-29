@@ -3,31 +3,53 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.AttributeContainer;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.tag.EntityTypeTags;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityFreezingMixin implements FreezableEntity {
+public abstract class FreezableEntityImplMixin extends Entity implements FreezableEntity {
+
+    public FreezableEntityImplMixin(EntityType<?> type, World world) {
+        super(type, world);
+    }
 
     @Shadow public abstract AttributeContainer getAttributes();
 
-    @Shadow public abstract boolean canFreeze();
+    private static final TrackedData<Integer> FROST = DataTracker.registerData(FreezableEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);;
 
-    private int frostiful$frost = 0;
 
-    @Override
-    public int frostiful$getCurrentFrost() {
-        return this.frostiful$frost;
+    @Inject(
+            method = "initDataTracker",
+            at = @At("TAIL")
+    )
+    private void trackFrostData(CallbackInfo ci) {
+        this.dataTracker.startTracking(FROST, 0);
     }
 
     @Override
+    @Unique
+    public int frostiful$getCurrentFrost() {
+        return this.dataTracker.get(FROST);
+    }
+
+    @Override
+    @Unique
     public int frostiful$getMaxFrost() {
         final AttributeContainer attributes = this.getAttributes();
         final double maxFrost = attributes.getValue(FrostifulEntityAttributes.MAX_FROST);
@@ -35,13 +57,25 @@ public abstract class LivingEntityFreezingMixin implements FreezableEntity {
     }
 
     @Override
+    @Unique
     public void frostiful$setFrost(int amount) {
-        this.frostiful$frost = amount;
+        this.dataTracker.set(FROST, amount);
     }
 
     @Override
+    @Unique
     public boolean frostiful$canFreeze() {
-        return this.canFreeze();
+        final LivingEntity instance = (LivingEntity) (Object) this;
+        if (instance.getType().isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)) {
+            return false;
+        }
+        if (instance.isSpectator()) {
+            return false;
+        }
+        if (instance instanceof PlayerEntity player) {
+            return !player.isCreative();
+        }
+        return true;
     }
 
     @Inject(
@@ -49,7 +83,7 @@ public abstract class LivingEntityFreezingMixin implements FreezableEntity {
             at = @At("TAIL")
     )
     private void writeFrostToNbt(NbtCompound nbt, CallbackInfo ci) {
-        FreezableEntity.super.addToNbt(nbt);
+        FreezableEntity.frostiful$addFrostToNbt(this, nbt);
     }
 
     @Inject(
@@ -57,7 +91,7 @@ public abstract class LivingEntityFreezingMixin implements FreezableEntity {
             at = @At("TAIL")
     )
     private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        FreezableEntity.super.setFrostFromNbt(nbt);
+        FreezableEntity.frostiful$setFrostFromNbt(this, nbt);
     }
 
     private static int getTicksFromMaxFrost(double maxFrost) {

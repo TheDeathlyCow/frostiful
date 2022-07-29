@@ -6,10 +6,8 @@
   "mixins": [
     "block.CampfireWarmthMixin",
     "entity.EntityMixin",
-    "entity.LivingEntityFreezingMixin",
-    "entity.LivingEntityFreezingTickOverrides",
-    "entity.LivingEntityMixin",
-    "entity.PlayerEntityFreezeOverrides",
+    "entity.FreezableEntityImplMixin",
+    "entity.LivingEntityFreezingEffects",
     "entity.PlayerEntityMixin",
     "entity.mob.PiglinBrainMixin",
     "entity.mob.PolarBearMixin",

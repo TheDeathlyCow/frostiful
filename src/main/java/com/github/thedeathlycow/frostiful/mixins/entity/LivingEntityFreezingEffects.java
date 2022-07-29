@@ -4,19 +4,12 @@ import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import net.minecraft.tag.EntityTypeTags;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -27,7 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin {
+public abstract class LivingEntityFreezingEffects {
 
 
     @Inject(
@@ -75,16 +68,16 @@ public abstract class LivingEntityMixin {
         }
     }
 
-    @Redirect(
-            method = "canFreeze",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/item/ItemStack;isIn(Lnet/minecraft/tag/TagKey;)Z"
-            )
-    )
-    private boolean ignoreFreezeImmuneWearables(ItemStack instance, TagKey<Item> tag) {
-        return false;
-    }
+//    @Redirect(
+//            method = "canFreeze",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/item/ItemStack;isIn(Lnet/minecraft/tag/TagKey;)Z"
+//            )
+//    )
+//    private boolean ignoreFreezeImmuneWearables(ItemStack instance, TagKey<Item> tag) {
+//        return false;
+//    }
 
     @Redirect(
             method = "tickMovement",
@@ -110,33 +103,33 @@ public abstract class LivingEntityMixin {
         return instance.damage(source, amount);
     }
 
-    @Redirect(
-            method = "addPowderSnowSlowIfNeeded",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/block/BlockState;isAir()Z"
-            )
-    )
-    private boolean addPowderSnowSlowInAir(BlockState instance) {
-        return false;
-    }
+//    @Redirect(
+//            method = "addPowderSnowSlowIfNeeded",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/block/BlockState;isAir()Z"
+//            )
+//    )
+//    private boolean addPowderSnowSlowInAir(BlockState instance) {
+//        return false;
+//    }
 
-    @Redirect(
-            method = "tickMovement",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
-            )
-    )
-    private void modPowderSnowFreezing(LivingEntity instance, int i) {
-
-        if (!(instance.inPowderSnow && instance.canFreeze())) {
-            // being out of powder snow should not thaw
-            return;
-        }
-
-        FrostHelper.addLivingFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
-    }
+//    @Redirect(
+//            method = "tickMovement",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
+//            )
+//    )
+//    private void modPowderSnowFreezing(LivingEntity instance, int i) {
+//
+//        if (!(instance.inPowderSnow && instance.canFreeze())) {
+//            // being out of powder snow should not thaw
+//            return;
+//        }
+//
+//        FrostHelper.addLivingFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
+//    }
 
     @Inject(
             method = "createLivingAttributes",
