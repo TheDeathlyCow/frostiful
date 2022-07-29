@@ -32,7 +32,9 @@ public class FrostHelper {
     }
 
     public static void addFrost(FreezableEntity entity, int amount) {
-        entity.frostiful$addFrost(amount);
+        if (entity.frostiful$canFreeze()) {
+            entity.frostiful$addFrost(amount);
+        }
     }
 
     public static void removeFrost(FreezableEntity entity, int amount) {

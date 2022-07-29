@@ -6,6 +6,7 @@
   "mixins": [
     "block.CampfireWarmthMixin",
     "entity.EntityMixin",
+    "entity.FallingIcicleMixin",
     "entity.FreezableEntityImplMixin",
     "entity.LivingEntityFreezingEffects",
     "entity.PlayerEntityMixin",
