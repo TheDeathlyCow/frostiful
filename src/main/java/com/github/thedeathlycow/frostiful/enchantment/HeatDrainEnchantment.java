@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.FrostifulMathHelper;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
@@ -42,10 +43,10 @@ public class HeatDrainEnchantment extends Enchantment {
             return;
         }
 
-        int heatDrained = CombatConfigGroup.HEAT_DRAIN_PER_LEVEL.getValue() * level;
+        int heatDrained = 0;
 
         if (target instanceof LivingEntity livingTarget) {
-            heatDrained = FrostHelper.addLivingFrost(livingTarget, heatDrained);
+            heatDrained = FrostHelper.addLivingFrost(livingTarget, CombatConfigGroup.HEAT_DRAIN_PER_LEVEL.getValue() * level);
         }
 
         int frostRemoved = MathHelper.floor(heatDrained * CombatConfigGroup.HEAT_DRAIN_EFFICIENCY.getValue());

@@ -23,17 +23,16 @@ public class FrostHelper {
         }
 
         int toAdd = MathHelper.ceil((1 - frostModifier) * amount);
-
-        return addFrost((FreezableEntity) entity, toAdd);
+        addFrost((FreezableEntity) entity, toAdd);
+        return toAdd;
     }
 
     public static void removeLivingFrost(LivingEntity entity, int amount) {
         removeFrost((FreezableEntity) entity, amount);
     }
 
-    public static int addFrost(FreezableEntity entity, int amount) {
+    public static void addFrost(FreezableEntity entity, int amount) {
         entity.frostiful$addFrost(amount);
-        return amount;
     }
 
     public static void removeFrost(FreezableEntity entity, int amount) {
