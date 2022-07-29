@@ -94,10 +94,23 @@ public abstract class LivingEntityFreezingEffects extends Entity {
     private void tickFreezingEffects(CallbackInfo ci) {
         final LivingEntity instance = (LivingEntity) (Object) this;
         final FreezableEntity freezable = (FreezableEntity) this;
-        this.frostiful$removeFreezingSlow();
-        this.frostiful$addFreezingSlow(freezable);
+        this.frostiful$removeAttributeEffects();
+        this.frostiful$addAttributeEffects(freezable);
         this.frostiful$tickFreezeDamage(freezable);
+        this.frostiful$tickEntityFreezing(freezable);
         FrostHelper.applyEffects(instance);
+    }
+
+    private void frostiful$tickEntityFreezing(FreezableEntity freezable) {
+        if (this.isAlive()) {
+            int amount = 0;
+
+            if (this.inPowderSnow) {
+                amount += FreezingConfigGroup.POWDER_SNOW_FREEZE_RATE.getValue();
+            }
+
+            freezable.frostiful$addFrost(amount);
+        }
     }
 
     private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
@@ -119,7 +132,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         }
     }
 
-    private void frostiful$removeFreezingSlow() {
+    private void frostiful$removeAttributeEffects() {
         EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
         if (entityAttributeInstance != null) {
             if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
@@ -128,7 +141,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         }
     }
 
-    private void frostiful$addFreezingSlow(FreezableEntity freezable) {
+    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
         if (freezable.frostiful$getCurrentFrost() > 0) {
             EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
             if (entityAttributeInstance == null) {
