@@ -21,7 +21,8 @@
   ],
   "client": [
     "client.gui.ColdHeartOverlay",
-    "client.gui.FrostVinetteOverlay"
+    "client.gui.FrostVinetteOverlay",
+    "client.gui.HeartTypeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

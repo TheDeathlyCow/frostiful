@@ -17,6 +17,7 @@ public class FreezingConfigGroup extends ConfigItemGroup {
     public static final IntegerConfigItem WARMTH_PER_LIGHT_LEVEL = new IntegerConfigItem("warmth_per_light_level", 4, TRANSLATE_BASE_STRING + "warmth_per_light_level", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem MIN_WARMTH_LIGHT_LEVEL_DAY = new IntegerConfigItem("min_warmth_light_level_day", 7, TRANSLATE_BASE_STRING + "min_warmth_light_level_day", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem MIN_WARMTH_LIGHT_LEVEL_NIGHT = new IntegerConfigItem("min_warmth_light_level_night", 9, TRANSLATE_BASE_STRING + "min_warmth_light_level_night", null, 0, Integer.MAX_VALUE);
+    public static final IntegerConfigItem FREEZE_DAMAGE_RATE = new IntegerConfigItem("freeze_damage_rate", 20, TRANSLATE_BASE_STRING + "freeze_damage_rate", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem FREEZE_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_damage_amount", 2, TRANSLATE_BASE_STRING + "freeze_damage_amount", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem FREEZE_EXTRA_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_extra_damage_amount", 5, TRANSLATE_BASE_STRING + "freeze_extra_damage_amount", null, 0, Integer.MAX_VALUE);
     public static final IntegerConfigItem POWDER_SNOW_FREEZE_RATE = new IntegerConfigItem("powder_snow_freeze_rate", 30, TRANSLATE_BASE_STRING + "powder_snow_freeze_rate", null, 0, Integer.MAX_VALUE);
@@ -37,6 +38,7 @@ public class FreezingConfigGroup extends ConfigItemGroup {
                         WARMTH_PER_LIGHT_LEVEL,
                         MIN_WARMTH_LIGHT_LEVEL_DAY,
                         MIN_WARMTH_LIGHT_LEVEL_NIGHT,
+                        FREEZE_DAMAGE_RATE,
                         FREEZE_DAMAGE_AMOUNT,
                         FREEZE_EXTRA_DAMAGE_AMOUNT,
                         POWDER_SNOW_FREEZE_RATE,

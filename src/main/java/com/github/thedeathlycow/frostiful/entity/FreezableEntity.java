@@ -38,6 +38,10 @@ public interface FreezableEntity {
         return Math.min(this.frostiful$getCurrentFrost(), maxFrost) / ((float) maxFrost);
     }
 
+    default boolean frostiful$isFrozen() {
+        return this.frostiful$getCurrentFrost() >= this.frostiful$getMaxFrost();
+    }
+
     static void frostiful$addFrostToNbt(FreezableEntity entity, NbtCompound nbt) {
         NbtCompound frostifulNbt = new NbtCompound();
         if (entity.frostiful$getCurrentFrost() > 0) {

@@ -3,25 +3,42 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
+import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(LivingEntity.class)
-public abstract class LivingEntityFreezingEffects {
+import java.util.UUID;
 
+@Mixin(LivingEntity.class)
+public abstract class LivingEntityFreezingEffects extends Entity {
+
+    private static final UUID FREEZING_SLOW_ID = UUID.fromString("31e65736-ac14-4951-925a-f30969276138");
+
+    public LivingEntityFreezingEffects(EntityType<?> type, World world) {
+        super(type, world);
+    }
+
+    @Shadow
+    @Nullable
+    public abstract EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
+
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
 
     @Inject(
             method = "tick",
@@ -42,7 +59,6 @@ public abstract class LivingEntityFreezingEffects {
 
         int warmth = PassiveFreezingHelper.getWarmth(livingEntity);
         FrostHelper.removeLivingFrost(livingEntity, warmth);
-        FrostHelper.applyEffects(livingEntity);
     }
 
     @Inject(
@@ -68,68 +84,68 @@ public abstract class LivingEntityFreezingEffects {
         }
     }
 
-//    @Redirect(
-//            method = "canFreeze",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/minecraft/item/ItemStack;isIn(Lnet/minecraft/tag/TagKey;)Z"
-//            )
-//    )
-//    private boolean ignoreFreezeImmuneWearables(ItemStack instance, TagKey<Item> tag) {
-//        return false;
-//    }
-
-    @Redirect(
+    @Inject(
             method = "tickMovement",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z"
-            ),
-            slice = @Slice(
-                    from = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;addPowderSnowSlowIfNeeded()V"),
-                    to = @At(value = "INVOKE", target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/entity/damage/DamageSource;F)Z")
+                    target = "Lnet/minecraft/entity/LivingEntity;removePowderSnowSlow()V"
             )
     )
-    private boolean applyFrostDamageAccordingToConfig(LivingEntity instance, DamageSource source, float amount) {
-
-        if (!source.equals(DamageSource.FREEZE)) {
-            return false;
-        }
-
-        amount = instance.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                FreezingConfigGroup.FREEZE_EXTRA_DAMAGE_AMOUNT.getValue() :
-                FreezingConfigGroup.FREEZE_DAMAGE_AMOUNT.getValue();
-
-        return instance.damage(source, amount);
+    private void tickFreezingEffects(CallbackInfo ci) {
+        final LivingEntity instance = (LivingEntity) (Object) this;
+        final FreezableEntity freezable = (FreezableEntity) this;
+        this.frostiful$removeFreezingSlow();
+        this.frostiful$addFreezingSlow(freezable);
+        this.frostiful$tickFreezeDamage(freezable);
+        FrostHelper.applyEffects(instance);
     }
 
-//    @Redirect(
-//            method = "addPowderSnowSlowIfNeeded",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/minecraft/block/BlockState;isAir()Z"
-//            )
-//    )
-//    private boolean addPowderSnowSlowInAir(BlockState instance) {
-//        return false;
-//    }
+    private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
 
-//    @Redirect(
-//            method = "tickMovement",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
-//            )
-//    )
-//    private void modPowderSnowFreezing(LivingEntity instance, int i) {
-//
-//        if (!(instance.inPowderSnow && instance.canFreeze())) {
-//            // being out of powder snow should not thaw
-//            return;
-//        }
-//
-//        FrostHelper.addLivingFrost(instance, PassiveFreezingHelper.getPowderSnowFreezing(instance));
-//    }
+        if (this.world.isClient) {
+            return;
+        }
+
+        if (this.age % FreezingConfigGroup.FREEZE_DAMAGE_RATE.getValue() != 0) {
+            return;
+        }
+
+        if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
+            int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
+                    FreezingConfigGroup.FREEZE_EXTRA_DAMAGE_AMOUNT.getValue() :
+                    FreezingConfigGroup.FREEZE_DAMAGE_AMOUNT.getValue();
+
+            this.damage(DamageSource.FREEZE, amount);
+        }
+    }
+
+    private void frostiful$removeFreezingSlow() {
+        EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        if (entityAttributeInstance != null) {
+            if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
+                entityAttributeInstance.removeModifier(FREEZING_SLOW_ID);
+            }
+        }
+    }
+
+    private void frostiful$addFreezingSlow(FreezableEntity freezable) {
+        if (freezable.frostiful$getCurrentFrost() > 0) {
+            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+            if (entityAttributeInstance == null) {
+                return;
+            }
+
+            double slownessModifier = -0.05 * freezable.frostiful$getFrostProgress();
+            entityAttributeInstance.addTemporaryModifier(
+                    new EntityAttributeModifier(
+                            FREEZING_SLOW_ID,
+                            "Frostiful freezing slow",
+                            slownessModifier,
+                            EntityAttributeModifier.Operation.ADDITION
+                    )
+            );
+        }
+    }
 
     @Inject(
             method = "createLivingAttributes",
