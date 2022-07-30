@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.MathHelper;
@@ -55,7 +56,7 @@ public interface FreezableEntity {
         if (nbt.contains(FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE)) {
             NbtCompound frostifulNbt = nbt.getCompound(FROSTIFUL_KEY);
             if (frostifulNbt.contains(FROST_KEY, NbtElement.INT_TYPE)) {
-                amount = nbt.getInt(FROST_KEY);
+                amount = frostifulNbt.getInt(FROST_KEY);
             }
         }
 
