@@ -133,8 +133,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
-            entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FrostifulDamageSource.ICICLE);
-            if (entity instanceof LivingEntity livingEntity) {
+            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FrostifulDamageSource.ICICLE);
+            if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostHelper.addLivingFrost(livingEntity, IcicleConfigGroup.ICICLE_COLLISION_FREEZE_AMOUNT.getValue());
             }
         } else {
