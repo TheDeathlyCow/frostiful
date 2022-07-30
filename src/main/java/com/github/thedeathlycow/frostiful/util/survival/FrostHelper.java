@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
-import net.minecraft.entity.Entity;
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
@@ -23,34 +23,34 @@ public class FrostHelper {
         }
 
         int toAdd = MathHelper.ceil((1 - frostModifier) * amount);
-
-        return addFrost(entity, toAdd);
+        addFrost((FreezableEntity) entity, toAdd);
+        return toAdd;
     }
 
-    public static int removeLivingFrost(LivingEntity entity, int amount) {
-        removeFrost(entity, amount);
-        return amount;
+    public static void removeLivingFrost(LivingEntity entity, int amount) {
+        removeFrost((FreezableEntity) entity, amount);
     }
 
-    public static int addFrost(Entity entity, int amount) {
-        int current = entity.getFrozenTicks();
-        return setFrost(entity, current + amount);
+    public static void addFrost(FreezableEntity entity, int amount) {
+        if (entity.frostiful$canFreeze()) {
+            entity.frostiful$addFrost(amount);
+        }
     }
 
-    public static int removeFrost(Entity entity, int amount) {
-        int current = entity.getFrozenTicks();
-        setFrost(entity, current - amount);
-        return amount;
+    public static void removeFrost(FreezableEntity entity, int amount) {
+        entity.frostiful$removeFrost(amount);
     }
 
-    public static int setFrost(Entity entity, int amount) {
-        amount = MathHelper.clamp(amount, 0, entity.getMinFreezeDamageTicks());
-        entity.setFrozenTicks(amount);
-        return amount;
+    public static void setFrost(LivingEntity entity, int amount) {
+        setFrost((FreezableEntity) entity, amount);
+    }
+
+    public static void setFrost(FreezableEntity entity, int amount) {
+        entity.frostiful$setFrost(amount, true);
     }
 
     public static void applyEffects(LivingEntity entity) {
-        float progress = entity.getFreezingScale();
+        float progress = ((FreezableEntity) entity).frostiful$getFrostProgress();
         for (FrostStatusEffect effect : FrostStatusEffect.getPassiveFreezingEffects()) {
             StatusEffectInstance currentEffectInstance = entity.getStatusEffect(effect.effect());
             boolean shouldApplyEffect = progress >= effect.progressThreshold()

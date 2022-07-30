@@ -4,11 +4,13 @@ import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
+import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.FluidState;
@@ -131,7 +133,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
-            entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FrostifulDamageSource.ICICLE);
+            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FrostifulDamageSource.ICICLE);
+            if (tookDamage && entity instanceof LivingEntity livingEntity) {
+                FrostHelper.addLivingFrost(livingEntity, IcicleConfigGroup.ICICLE_COLLISION_FREEZE_AMOUNT.getValue());
+            }
         } else {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
         }

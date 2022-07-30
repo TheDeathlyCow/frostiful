@@ -8,14 +8,14 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(Entity.class)
 abstract class EntityMixin {
 
-    @Redirect(
-            method = "baseTick",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/Entity;getFrozenTicks()I"
-            )
-    )
-    private int doNotExtinguishColdPlayers(Entity instance) {
-        return 0;
-    }
+//    @Redirect(
+//            method = "baseTick",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/entity/Entity;getFrozenTicks()I"
+//            )
+//    )
+//    private int doNotExtinguishColdPlayers(Entity instance) {
+//        return 0;
+//    }
 }

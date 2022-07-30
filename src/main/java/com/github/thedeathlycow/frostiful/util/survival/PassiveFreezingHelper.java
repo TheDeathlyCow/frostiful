@@ -1,7 +1,9 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.registry.RegistryEntry;
@@ -11,18 +13,17 @@ import net.minecraft.world.biome.Biome;
 
 public class PassiveFreezingHelper {
 
-    public static int getPassiveFreezing(LivingEntity livingEntity) {
-
-        if (!livingEntity.canFreeze()) {
+    public static int getPassiveFreezing(PlayerEntity player) {
+        final FreezableEntity freezable = (FreezableEntity) player;
+        if (!freezable.frostiful$canFreeze()) {
             return 0;
         }
 
-        int biomeFreezing = getBiomeFreezing(livingEntity);
-        World world = livingEntity.getWorld();
-        BlockPos pos = livingEntity.getBlockPos();
+        int biomeFreezing = getBiomeFreezing(player);
+        World world = player.getWorld();
+        BlockPos pos = player.getBlockPos();
         Biome biome = world.getBiome(pos).value();
-        // applies regardless of biome
-        if (biome.isCold(pos) && livingEntity.isWet()) {
+        if (biome.isCold(pos) && player.isWet()) {
             biomeFreezing += FreezingConfigGroup.WET_FREEZE_RATE.getValue();
         }
 
@@ -30,6 +31,7 @@ public class PassiveFreezingHelper {
     }
 
     public static int getWarmth(LivingEntity livingEntity) {
+        final FreezableEntity freezable = (FreezableEntity) livingEntity;
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
         int warmth = 0;
@@ -47,17 +49,11 @@ public class PassiveFreezingHelper {
             warmth += FreezingConfigGroup.ON_FIRE_THAW_RATE.getValue();
         }
 
-        if (!livingEntity.canFreeze()) {
+        if (!freezable.frostiful$canFreeze()) {
             warmth += FreezingConfigGroup.CANNOT_FREEZE_THAW_RATE.getValue();
         }
 
         return warmth;
-    }
-
-    public static int getPowderSnowFreezing(LivingEntity livingEntity) {
-        return livingEntity.inPowderSnow ?
-                FreezingConfigGroup.POWDER_SNOW_FREEZE_RATE.getValue() :
-                0;
     }
 
     public static int getBiomeFreezing(LivingEntity livingEntity) {

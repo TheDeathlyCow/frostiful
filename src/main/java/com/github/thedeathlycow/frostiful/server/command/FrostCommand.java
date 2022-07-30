@@ -1,10 +1,12 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import com.mojang.brigadier.exceptions.SimpleCommandExceptionType;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
@@ -20,6 +22,7 @@ import static net.minecraft.server.command.CommandManager.literal;
 
 public class FrostCommand {
 
+    private static final SimpleCommandExceptionType NOT_LIVING_ENTITY = new SimpleCommandExceptionType(new TranslatableText("frostiful.commands.frost.exception.not_living_entity"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
 
@@ -28,9 +31,10 @@ public class FrostCommand {
                         .executes(context -> {
                             return runAdjust(
                                     context.getSource(),
-                                    EntityArgumentType.getEntities(context, "targets"),
+                                    EntityArgumentType.getEntity(context, "target"),
                                     IntegerArgumentType.getInteger(context, "amount"),
-                                    BoolArgumentType.getBool(context, "apply frost resistance")
+                                    BoolArgumentType.getBool(context, "apply frost resistance"),
+                                    false
                             );
                         });
 
@@ -50,28 +54,34 @@ public class FrostCommand {
 
         var removeSubCommand = literal("remove")
                 .then(
-                        argument("targets", EntityArgumentType.entities())
+                        argument("target", EntityArgumentType.entity())
                                 .then(
                                         argument("amount", IntegerArgumentType.integer(0))
                                                 .executes(context -> {
-                                                    return runAdjust(context.getSource(),
-                                                            EntityArgumentType.getEntities(context, "targets"),
+                                                    return runAdjust(
+                                                            context.getSource(),
+                                                            EntityArgumentType.getEntity(context, "target"),
                                                             -IntegerArgumentType.getInteger(context, "amount"),
-                                                            false);
+                                                            false,
+                                                            true
+                                                    );
                                                 })
                                 )
                 );
 
         var addSubCommand = literal("add")
                 .then(
-                        argument("targets", EntityArgumentType.entities())
+                        argument("target", EntityArgumentType.entity())
                                 .then(
                                         argument("amount", IntegerArgumentType.integer(0))
                                                 .executes(context -> {
-                                                    return runAdjust(context.getSource(),
-                                                            EntityArgumentType.getEntities(context, "targets"),
+                                                    return runAdjust(
+                                                            context.getSource(),
+                                                            EntityArgumentType.getEntity(context, "target"),
                                                             IntegerArgumentType.getInteger(context, "amount"),
-                                                            false);
+                                                            false,
+                                                            false
+                                                    );
                                                 })
                                                 .then(
                                                         applyFrostResistanceArg
@@ -81,12 +91,12 @@ public class FrostCommand {
 
         var setSubCommand = literal("set")
                 .then(
-                        argument("targets", EntityArgumentType.entities())
+                        argument("target", EntityArgumentType.entity())
                                 .then(
                                         argument("amount", IntegerArgumentType.integer(0))
                                                 .executes(context -> {
                                                     return runSet(context.getSource(),
-                                                            EntityArgumentType.getEntities(context, "targets"),
+                                                            EntityArgumentType.getEntity(context, "target"),
                                                             IntegerArgumentType.getInteger(context, "amount"));
                                                 })
                                 )
@@ -101,57 +111,51 @@ public class FrostCommand {
         );
     }
 
-    private static int runGetMax(ServerCommandSource source, Entity target) {
-        int amount = target.getMinFreezeDamageTicks();
-        Text msg = new TranslatableText("commands.frostiful.get.max.success", target.getDisplayName(), amount);
-        source.sendFeedback(msg, true);
-        return amount;
-    }
-
-    private static int runGet(ServerCommandSource source, Entity target) {
-        int amount = target.getFrozenTicks();
-        Text msg = new TranslatableText("commands.frostiful.get.current.success", target.getDisplayName(), amount);
-        source.sendFeedback(msg, true);
-        return amount;
-    }
-
-    private static int runAdjust(ServerCommandSource source, Collection<? extends Entity> targets, int amount, boolean applyFrostResistance) throws CommandSyntaxException {
-        for (Entity entity : targets) {
-            if (applyFrostResistance && entity instanceof LivingEntity livingEntity) {
-                FrostHelper.addLivingFrost(livingEntity, amount);
-            } else {
-                int frozenTicks = entity.getFrozenTicks();
-                FrostHelper.setFrost(entity, frozenTicks + amount);
-            }
-        }
-
-        String successMsgKey = amount < 0 ? "commands.frostiful.freeze.remove.success." : "commands.frostiful.freeze.add.success.";
-        Text msg;
-        if (targets.size() == 1) {
-            Entity target = targets.iterator().next();
-            msg = new TranslatableText(successMsgKey + "single", MathHelper.abs(amount), target.getDisplayName(), target.getFrozenTicks());
+    private static int runGetMax(ServerCommandSource source, Entity target) throws CommandSyntaxException {
+        if (target instanceof LivingEntity livingEntity) {
+            int amount = ((FreezableEntity) livingEntity).frostiful$getMaxFrost();
+            Text msg = new TranslatableText("commands.frostiful.frost.get.max.success", target.getDisplayName(), amount);
+            source.sendFeedback(msg, true);
+            return amount;
         } else {
-            msg = new TranslatableText(successMsgKey + "multiple", MathHelper.abs(amount), targets.size());
+            throw NOT_LIVING_ENTITY.create();
         }
-        source.sendFeedback(msg, true);
-
-        return targets.size();
     }
 
-    private static int runSet(ServerCommandSource source, Collection<? extends Entity> targets, int amount) throws CommandSyntaxException {
-        for (Entity entity : targets) {
-            FrostHelper.setFrost(entity, amount);
+    private static int runGet(ServerCommandSource source, Entity target) throws CommandSyntaxException {
+        if (target instanceof LivingEntity livingEntity) {
+            int amount = ((FreezableEntity) livingEntity).frostiful$getCurrentFrost();
+            Text msg = new TranslatableText("commands.frostiful.frost.get.current.success", target.getDisplayName(), amount);
+            source.sendFeedback(msg, true);
+            return amount;
+        } else {
+            throw NOT_LIVING_ENTITY.create();
+        }
+    }
+
+    private static int runAdjust(ServerCommandSource source, Entity target, int amount, boolean applyFrostResistance, boolean isRemoving) throws CommandSyntaxException {
+        if (target instanceof LivingEntity livingEntity) {
+            FrostHelper.addLivingFrost(livingEntity, amount, applyFrostResistance);
+        } else {
+            throw NOT_LIVING_ENTITY.create();
         }
 
-        Text msg;
-        if (targets.size() == 1) {
-            Entity target = targets.iterator().next();
-            msg = new TranslatableText("commands.frostiful.freeze.set.success.single", target.getDisplayName(), amount);
+        String successMsgKey = isRemoving ? "commands.frostiful.frost.remove.success" : "commands.frostiful.frost.add.success";
+        Text msg = new TranslatableText(successMsgKey, MathHelper.abs(amount), target.getDisplayName(), target.getFrozenTicks());
+        source.sendFeedback(msg, true);
+        return 1;
+    }
+
+    private static int runSet(ServerCommandSource source, Entity target, int amount) throws CommandSyntaxException {
+        if (target instanceof LivingEntity livingEntity) {
+            FrostHelper.setFrost(livingEntity, amount);
         } else {
-            msg = new TranslatableText("commands.frostiful.freeze.set.success.multiple", targets.size(), amount);
+            throw NOT_LIVING_ENTITY.create();
         }
+
+        Text msg = new TranslatableText("commands.frostiful.frost.set.success", target.getDisplayName(), amount);
         source.sendFeedback(msg, true);
 
-        return targets.size();
+        return 1;
     }
 }

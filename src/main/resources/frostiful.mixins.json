@@ -6,9 +6,9 @@
   "mixins": [
     "block.CampfireWarmthMixin",
     "entity.EntityMixin",
-    "entity.LivingEntityFreezingTickOverrides",
-    "entity.LivingEntityMixin",
-    "entity.PlayerEntityFreezeOverrides",
+    "entity.FallingIcicleMixin",
+    "entity.FreezableEntityImplMixin",
+    "entity.LivingEntityFreezingEffects",
     "entity.PlayerEntityMixin",
     "entity.mob.PiglinBrainMixin",
     "entity.mob.PolarBearMixin",
@@ -21,7 +21,8 @@
   ],
   "client": [
     "client.gui.ColdHeartOverlay",
-    "client.gui.FrostVinetteOverlay"
+    "client.gui.FrostVinetteOverlay",
+    "client.gui.HeartTypeMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.test.sun_lichen;
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
 import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -10,9 +11,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
+
+import java.util.function.Function;
 
 public class SunLichenCollisionTests implements FabricGameTest {
 
@@ -64,10 +68,16 @@ public class SunLichenCollisionTests implements FabricGameTest {
         final int level = ((SunLichenBlock) block).getHeatLevel();
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        entity.setFrozenTicks(freezeAmount);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, Entity::getFrozenTicks, freezeAmount);
+        final FreezableEntity freezable = (FreezableEntity) entity;
+        final Function<VillagerEntity, Integer> frostGetter = (e) -> {
+            final FreezableEntity f = (FreezableEntity) e;
+            return f.frostiful$getCurrentFrost();
+        };
+
+        freezable.frostiful$setFrost(freezeAmount);
+        context.expectEntityWithData(pos, EntityType.VILLAGER, frostGetter, freezeAmount);
 
         context.setBlockState(pos, block.getDefaultState());
-        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, Entity::getFrozenTicks, freezeAmount - level * FreezingConfigGroup.SUN_LICHEN_HEAT_PER_LEVEL.getValue());
+        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, frostGetter, freezeAmount - level * FreezingConfigGroup.SUN_LICHEN_HEAT_PER_LEVEL.getValue());
     }
 }
