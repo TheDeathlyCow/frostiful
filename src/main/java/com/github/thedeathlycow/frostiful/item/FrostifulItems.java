@@ -5,10 +5,7 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemGroup;
+import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -31,6 +28,7 @@ public class FrostifulItems {
     public static final Item COOL_SUN_LICHEN = new BlockItem(FrostifulBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item WARM_SUN_LICHEN = new BlockItem(FrostifulBlocks.WARM_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item HOT_SUN_LICHEN = new BlockItem(FrostifulBlocks.HOT_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item FROST_WAND = new FrostWandItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1).maxDamage(250));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
     public static void registerItems() {
@@ -51,6 +49,7 @@ public class FrostifulItems {
         register("cool_sun_lichen", COOL_SUN_LICHEN);
         register("warm_sun_lichen", WARM_SUN_LICHEN);
         register("hot_sun_lichen", HOT_SUN_LICHEN);
+        register("frost_wand", FROST_WAND);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
     }
 

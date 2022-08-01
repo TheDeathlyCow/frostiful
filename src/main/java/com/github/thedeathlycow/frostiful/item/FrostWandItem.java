@@ -1,9 +1,11 @@
 package com.github.thedeathlycow.frostiful.item;
 
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -14,21 +16,23 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.TridentItem;
 import net.minecraft.item.Vanishable;
 import net.minecraft.stat.Stats;
+import net.minecraft.util.Hand;
+import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class FrostWandItem extends Item implements Vanishable {
 
-    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
-
     public FrostWandItem(Settings settings) {
         super(settings);
-        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
-        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", 8.0, EntityAttributeModifier.Operation.ADDITION));
-        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", -2.9000000953674316, EntityAttributeModifier.Operation.ADDITION));
-        this.attributeModifiers = builder.build();
+    }
+
+    public UseAction getUseAction(ItemStack stack) {
+        return UseAction.SPEAR;
     }
 
     @Override
@@ -47,8 +51,7 @@ public class FrostWandItem extends Item implements Vanishable {
         if (useTime > 10) {
             if (!world.isClient) {
 
-                FireballEntity fireball = new FireballEntity(EntityType.FIREBALL, world);
-                fireball.setOwner(user);
+                FireballEntity fireball = new FireballEntity(world, user, 0.0, 0.0, 0.0, 1);
                 fireball.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
                 world.spawnEntity(fireball);
 
@@ -58,7 +61,19 @@ public class FrostWandItem extends Item implements Vanishable {
                     });
                     player.incrementStat(Stats.USED.getOrCreateStat(this));
                 }
+                Frostiful.LOGGER.info("Created fireball");
             }
+        }
+        Frostiful.LOGGER.info("On stopped using");
+    }
+
+    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
+        ItemStack itemStack = user.getStackInHand(hand);
+        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
+            return TypedActionResult.fail(itemStack);
+        } else {
+            user.setCurrentHand(hand);
+            return TypedActionResult.consume(itemStack);
         }
     }
 
@@ -68,6 +83,16 @@ public class FrostWandItem extends Item implements Vanishable {
         });
 
         FrostHelper.addLivingFrost(target, 1000);
+
+        return true;
+    }
+
+    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if ((double)state.getHardness(world, pos) != 0.0) {
+            stack.damage(2, miner, (e) -> {
+                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+            });
+        }
 
         return true;
     }
