@@ -59,7 +59,7 @@ public class PassiveFreezingHelper {
     public static int getBiomeFreezing(LivingEntity livingEntity) {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
-        boolean inNaturalDimension = world.getDimension().isNatural();
+        boolean inNaturalDimension = world.getDimension().natural();
         if (inNaturalDimension) {
             RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
             Biome biome = biomeEntry.value();

@@ -53,5 +53,4 @@ public class FrostifulMathHelper {
                 (vec1.getZ() + vec2.getZ()) / 2
         );
     }
-
 }

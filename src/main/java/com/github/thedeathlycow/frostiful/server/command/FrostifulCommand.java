@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.argument.BlockPosArgumentType;
 import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.LiteralText;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -50,7 +50,7 @@ public class FrostifulCommand {
         float temperature = biome.getTemperature();
         int freezeRate = PassiveFreezingHelper.getPerTickFreezing(temperature);
         String msg = String.format("This biome's temperature is %.4f with a per-tick freeze rate of %d", temperature, freezeRate);
-        source.sendFeedback(new LiteralText(msg), false);
+        source.sendFeedback(Text.literal(msg), false);
         return freezeRate;
     }
 

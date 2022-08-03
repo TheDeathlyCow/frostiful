@@ -2,20 +2,20 @@ package com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock;
 
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import com.mojang.serialization.Codec;
-import net.minecraft.block.AbstractLichenBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.ForestRockFeature;
-import net.minecraft.world.gen.feature.VegetationConfiguredFeatures;
+import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.*;
-import java.util.stream.Collectors;
+
 
 public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
     public CoveredRockFeature(Codec<CoveredRockFeatureConfig> configCodec) {
@@ -72,27 +72,17 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
     }
 
     private void tryPlaceCovering(FeatureContext<CoveredRockFeatureConfig> context, BlockPos origin) {
-        BlockPos.Mutable placingOnPos = origin.mutableCopy();
         CoveredRockFeatureConfig config = context.getConfig();
         StructureWorldAccess world = context.getWorld();
         Random random = context.getRandom();
 
-        List<Direction> directions = new ArrayList<>(Arrays.asList(Direction.values()));
-        Collections.shuffle(directions, random);
-        for (Direction direction : directions) {
-            BlockState state = context.getWorld().getBlockState(placingOnPos.set(origin, direction));
-            if (state.isIn(config.canPlaceOn())) {
-                this.setCovering(config, random, world, origin, direction);
-            }
-        }
-    }
-
-    private void setCovering(CoveredRockFeatureConfig config, Random random, StructureWorldAccess world, BlockPos placeAt, Direction direction) {
-        BlockState covering = config.covering().getBlockState(random, placeAt);
-        if (covering.getBlock() instanceof AbstractLichenBlock lichenBlock) {
-            covering = lichenBlock.withDirection(covering, world, placeAt, direction);
-        }
-        world.setBlockState(placeAt, covering, Block.NOTIFY_ALL);
+        config.coveringFeature().value()
+                .generateUnregistered(
+                        world,
+                        context.getGenerator(),
+                        random,
+                        origin
+                );
     }
 
     private Optional<BlockPos> lookForGround(FeatureContext<CoveredRockFeatureConfig> context) {

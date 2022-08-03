@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.util.TextStyles;
 import net.fabricmc.fabric.api.gamerule.v1.CustomGameRuleCategory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 
@@ -19,7 +19,7 @@ public class FrostifulGameRules {
      */
     public static CustomGameRuleCategory CATEGORY = new CustomGameRuleCategory(
             new Identifier(Frostiful.MODID, "gamerule_category"),
-            new TranslatableText("gamerule.category." + Frostiful.MODID)
+            Text.translatable("gamerule.category." + Frostiful.MODID)
                     .setStyle(TextStyles.GAME_RULE_TITLE)
     );
 

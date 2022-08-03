@@ -12,17 +12,14 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
-import net.minecraft.text.TranslatableText;
 import net.minecraft.util.math.MathHelper;
-
-import java.util.Collection;
 
 import static net.minecraft.server.command.CommandManager.argument;
 import static net.minecraft.server.command.CommandManager.literal;
 
 public class FrostCommand {
 
-    private static final SimpleCommandExceptionType NOT_LIVING_ENTITY = new SimpleCommandExceptionType(new TranslatableText("frostiful.commands.frost.exception.not_living_entity"));
+    private static final SimpleCommandExceptionType NOT_LIVING_ENTITY = new SimpleCommandExceptionType(Text.translatable("frostiful.commands.frost.exception.not_living_entity"));
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
 
@@ -114,7 +111,7 @@ public class FrostCommand {
     private static int runGetMax(ServerCommandSource source, Entity target) throws CommandSyntaxException {
         if (target instanceof LivingEntity livingEntity) {
             int amount = ((FreezableEntity) livingEntity).frostiful$getMaxFrost();
-            Text msg = new TranslatableText("commands.frostiful.frost.get.max.success", target.getDisplayName(), amount);
+            Text msg = Text.translatable("commands.frostiful.frost.get.max.success", target.getDisplayName(), amount);
             source.sendFeedback(msg, true);
             return amount;
         } else {
@@ -125,7 +122,7 @@ public class FrostCommand {
     private static int runGet(ServerCommandSource source, Entity target) throws CommandSyntaxException {
         if (target instanceof LivingEntity livingEntity) {
             int amount = ((FreezableEntity) livingEntity).frostiful$getCurrentFrost();
-            Text msg = new TranslatableText("commands.frostiful.frost.get.current.success", target.getDisplayName(), amount);
+            Text msg = Text.translatable("commands.frostiful.frost.get.current.success", target.getDisplayName(), amount);
             source.sendFeedback(msg, true);
             return amount;
         } else {
@@ -141,7 +138,7 @@ public class FrostCommand {
         }
 
         String successMsgKey = isRemoving ? "commands.frostiful.frost.remove.success" : "commands.frostiful.frost.add.success";
-        Text msg = new TranslatableText(successMsgKey, MathHelper.abs(amount), target.getDisplayName(), target.getFrozenTicks());
+        Text msg = Text.translatable(successMsgKey, MathHelper.abs(amount), target.getDisplayName(), target.getFrozenTicks());
         source.sendFeedback(msg, true);
         return 1;
     }
@@ -153,7 +150,7 @@ public class FrostCommand {
             throw NOT_LIVING_ENTITY.create();
         }
 
-        Text msg = new TranslatableText("commands.frostiful.frost.set.success", target.getDisplayName(), amount);
+        Text msg = Text.translatable("commands.frostiful.frost.set.success", target.getDisplayName(), amount);
         source.sendFeedback(msg, true);
 
         return 1;
