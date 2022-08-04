@@ -32,7 +32,6 @@ public class Frostiful implements ModInitializer {
 
     @Override
     public void onInitialize() {
-        LOGGER.info("Initializing Frostiful...");
 
         CONFIG.readConfigFromFile();
         CONFIG.saveConfigToFile();

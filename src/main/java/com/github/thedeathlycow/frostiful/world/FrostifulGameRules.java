@@ -36,8 +36,6 @@ public class FrostifulGameRules {
             );
 
     public static void registerGamerules() {
-        Frostiful.LOGGER.info("Registering gamerules...");
         // game rules already registered - calling this method just loads this class
-        Frostiful.LOGGER.info("Gamerules registered!");
     }
 }

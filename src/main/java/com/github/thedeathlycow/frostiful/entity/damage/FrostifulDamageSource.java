@@ -13,8 +13,6 @@ public class FrostifulDamageSource extends DamageSource {
     }
 
     public static void registerDamageSources() {
-        Frostiful.LOGGER.info("Registering damage sources...");
         // damage sources already registered - just ensure this class is loaded
-        Frostiful.LOGGER.info("Registered damage sources!");
     }
 }
