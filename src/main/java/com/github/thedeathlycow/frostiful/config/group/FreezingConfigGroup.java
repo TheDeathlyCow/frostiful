@@ -1,51 +1,30 @@
 package com.github.thedeathlycow.frostiful.config.group;
 
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.google.common.collect.ImmutableList;
 import com.oroarmor.config.ConfigItemGroup;
 import com.oroarmor.config.DoubleConfigItem;
 import com.oroarmor.config.IntegerConfigItem;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
 
-public class FreezingConfigGroup extends ConfigItemGroup {
+@Config(name = Frostiful.MODID + ".freezing")
+public class FreezingConfigGroup implements ConfigData {
 
-    private static final String TRANSLATE_BASE_STRING = "config.frostiful.freezing.";
+    double biomeTemperatureMultiplier = 4.0;
+    double passiveFreezingStartTemp = 0.25;
+    int wetFreezeRate = 2;
+    int cannotFreezeThawRate = 100;
+    int onFireThawRate = 10;
+    int warmthPerLightLevel = 4;
+    int minWarmthForLightDay = 7;
+    int minWarmthForLightNight = 9;
+    int freezeDamageRate = 20;
+    int freezeDamageAmount = 2;
+    int freezeDamageExtraAmount = 5;
+    int powderSnowFreezeRate = 30;
+    int sunLichenHeatPerLevel = 100;
+    double campfireWarmthSearchRadius = 10;
+    int campfireWarmthTime = 1200;
 
-    public static final DoubleConfigItem BIOME_TEMPERATURE_MULTIPLIER = new DoubleConfigItem("biome_temperature_multiplier", 4.0, TRANSLATE_BASE_STRING + "biome_temperature_multiplier", null, 0.0, Double.POSITIVE_INFINITY);
-    public static final DoubleConfigItem PASSIVE_FREEZING_START_TEMP = new DoubleConfigItem("passive_freezing_start_temp", 0.25, TRANSLATE_BASE_STRING + "passive_freezing_start_temp", null, -2.0, 2.0);
-    public static final IntegerConfigItem WET_FREEZE_RATE = new IntegerConfigItem("wet_freeze_rate", 2, TRANSLATE_BASE_STRING + "wet_freeze_rate", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem CANNOT_FREEZE_THAW_RATE = new IntegerConfigItem("cannot_freeze_thaw_rate", 100, TRANSLATE_BASE_STRING + "cannot_freeze_thaw_rate", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem ON_FIRE_THAW_RATE = new IntegerConfigItem("on_fire_thaw_rate", 10, TRANSLATE_BASE_STRING + "on_fire_thaw_rate", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem WARMTH_PER_LIGHT_LEVEL = new IntegerConfigItem("warmth_per_light_level", 4, TRANSLATE_BASE_STRING + "warmth_per_light_level", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem MIN_WARMTH_LIGHT_LEVEL_DAY = new IntegerConfigItem("min_warmth_light_level_day", 7, TRANSLATE_BASE_STRING + "min_warmth_light_level_day", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem MIN_WARMTH_LIGHT_LEVEL_NIGHT = new IntegerConfigItem("min_warmth_light_level_night", 9, TRANSLATE_BASE_STRING + "min_warmth_light_level_night", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem FREEZE_DAMAGE_RATE = new IntegerConfigItem("freeze_damage_rate", 20, TRANSLATE_BASE_STRING + "freeze_damage_rate", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem FREEZE_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_damage_amount", 2, TRANSLATE_BASE_STRING + "freeze_damage_amount", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem FREEZE_EXTRA_DAMAGE_AMOUNT = new IntegerConfigItem("freeze_extra_damage_amount", 5, TRANSLATE_BASE_STRING + "freeze_extra_damage_amount", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem POWDER_SNOW_FREEZE_RATE = new IntegerConfigItem("powder_snow_freeze_rate", 30, TRANSLATE_BASE_STRING + "powder_snow_freeze_rate", null, 0, Integer.MAX_VALUE);
-    public static final IntegerConfigItem SUN_LICHEN_HEAT_PER_LEVEL = new IntegerConfigItem("sun_lichen_heat_per_level", 100, TRANSLATE_BASE_STRING + "sun_lichen_heat_per_level", null, 0, Integer.MAX_VALUE);
-    public static final DoubleConfigItem CAMPFIRE_WARMTH_SEARCH_DELTA = new DoubleConfigItem("campfire_warmth_search_delta", 10.0, TRANSLATE_BASE_STRING + "campfire_warmth_search_delta", null, 0, Double.MAX_VALUE);
-    public static final IntegerConfigItem CAMPFIRE_WARMTH_TIME = new IntegerConfigItem("campfire_warmth_time", 1200, TRANSLATE_BASE_STRING + "campfire_warmth_time", null, 0, Integer.MAX_VALUE);
-
-    /**
-     * Creates a new {@link ConfigItemGroup} with the list of configs and the name
-     */
-    public FreezingConfigGroup() {
-        super(ImmutableList.of(
-                        BIOME_TEMPERATURE_MULTIPLIER,
-                        PASSIVE_FREEZING_START_TEMP,
-                        WET_FREEZE_RATE,
-                        CANNOT_FREEZE_THAW_RATE,
-                        ON_FIRE_THAW_RATE,
-                        WARMTH_PER_LIGHT_LEVEL,
-                        MIN_WARMTH_LIGHT_LEVEL_DAY,
-                        MIN_WARMTH_LIGHT_LEVEL_NIGHT,
-                        FREEZE_DAMAGE_RATE,
-                        FREEZE_DAMAGE_AMOUNT,
-                        FREEZE_EXTRA_DAMAGE_AMOUNT,
-                        POWDER_SNOW_FREEZE_RATE,
-                        SUN_LICHEN_HEAT_PER_LEVEL,
-                        CAMPFIRE_WARMTH_SEARCH_DELTA,
-                        CAMPFIRE_WARMTH_TIME
-                ),
-                "freezing");
-    }
 }

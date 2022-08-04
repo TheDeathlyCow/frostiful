@@ -15,6 +15,8 @@ import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FrostifulPlacedFeatures;
+import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
@@ -28,14 +30,11 @@ public class Frostiful implements ModInitializer {
 
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
-    public static final FrostifulConfig CONFIG = new FrostifulConfig();
 
     @Override
     public void onInitialize() {
 
-        CONFIG.readConfigFromFile();
-        CONFIG.saveConfigToFile();
-        ServerLifecycleEvents.SERVER_STOPPED.register(instance -> CONFIG.saveConfigToFile());
+        AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
 
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {
@@ -45,8 +44,6 @@ public class Frostiful implements ModInitializer {
         );
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(CONFIG);
 
         FrostifulEntityAttributes.registerAttributes();
         FrostifulDamageSource.registerDamageSources();
@@ -63,4 +60,7 @@ public class Frostiful implements ModInitializer {
         LOGGER.info("Initialized Frostiful!");
     }
 
+    public static FrostifulConfig getConfig() {
+        return AutoConfig.getConfigHolder(FrostifulConfig.class).getConfig();
+    }
 }

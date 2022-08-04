@@ -1,12 +1,18 @@
 package com.github.thedeathlycow.frostiful.init;
 
-import com.oroarmor.config.screen.ModMenuConfigScreen;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.terraformersmc.modmenu.api.ConfigScreenFactory;
+import com.terraformersmc.modmenu.api.ModMenuApi;
+import me.shedaniel.autoconfig.AutoConfig;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-public class FrostifulModMenu extends ModMenuConfigScreen {
-    /**
-     * Creates a new {@link ModMenuConfigScreen}
-     */
-    public FrostifulModMenu() {
-        super(Frostiful.CONFIG);
+@Environment(EnvType.CLIENT)
+public class FrostifulModMenu implements ModMenuApi {
+
+
+    @Override
+    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+        return parent -> AutoConfig.getConfigScreen(FrostifulConfig.class, parent).get();
     }
 }
