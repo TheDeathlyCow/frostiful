@@ -1,7 +1,8 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
-import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
@@ -19,12 +20,14 @@ public class PassiveFreezingHelper {
             return 0;
         }
 
+        FrostifulConfig config = Frostiful.getConfig();
+
         int biomeFreezing = getBiomeFreezing(player);
         World world = player.getWorld();
         BlockPos pos = player.getBlockPos();
         Biome biome = world.getBiome(pos).value();
         if (biome.isCold(pos) && player.isWet()) {
-            biomeFreezing += FreezingConfigGroup.WET_FREEZE_RATE.getValue();
+            biomeFreezing += config.freezingConfig.getWetFreezeRate();
         }
 
         return biomeFreezing;
@@ -35,22 +38,23 @@ public class PassiveFreezingHelper {
         World world = livingEntity.getWorld();
         BlockPos pos = livingEntity.getBlockPos();
         int warmth = 0;
+        FrostifulConfig config = Frostiful.getConfig();
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
         int minLightLevel = world.isDay() ?
-                FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_DAY.getValue() :
-                FreezingConfigGroup.MIN_WARMTH_LIGHT_LEVEL_NIGHT.getValue();
+                config.freezingConfig.getMinWarmthForLightDay() :
+                config.freezingConfig.getMinWarmthForLightNight();
 
         if (lightLevel >= minLightLevel) {
-            warmth += FreezingConfigGroup.WARMTH_PER_LIGHT_LEVEL.getValue() * (lightLevel - minLightLevel);
+            warmth += config.freezingConfig.getWarmthPerLightLevel() * (lightLevel - minLightLevel);
         }
 
         if (livingEntity.isOnFire()) {
-            warmth += FreezingConfigGroup.ON_FIRE_THAW_RATE.getValue();
+            warmth += config.freezingConfig.getOnFireThawRate();
         }
 
         if (!freezable.frostiful$canFreeze()) {
-            warmth += FreezingConfigGroup.CANNOT_FREEZE_THAW_RATE.getValue();
+            warmth += config.freezingConfig.getCannotFreezeThawRate();
         }
 
         return warmth;
@@ -70,8 +74,9 @@ public class PassiveFreezingHelper {
     }
 
     public static int getPerTickFreezing(float temperature) {
-        double mul = FreezingConfigGroup.BIOME_TEMPERATURE_MULTIPLIER.getValue();
-        double cutoff = FreezingConfigGroup.PASSIVE_FREEZING_START_TEMP.getValue();
+        FrostifulConfig config = Frostiful.getConfig();
+        double mul = config.freezingConfig.getBiomeTemperatureMultiplier();
+        double cutoff =config.freezingConfig.getPassiveFreezingStartTemp();
 
         return MathHelper.floor(-mul * (temperature - cutoff) + 1);
     }

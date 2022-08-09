@@ -1,10 +1,6 @@
 package com.github.thedeathlycow.frostiful.config.group;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.google.common.collect.ImmutableList;
-import com.oroarmor.config.ConfigItemGroup;
-import com.oroarmor.config.DoubleConfigItem;
-import com.oroarmor.config.IntegerConfigItem;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 
@@ -27,4 +23,63 @@ public class FreezingConfigGroup implements ConfigData {
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
 
+    public double getBiomeTemperatureMultiplier() {
+        return biomeTemperatureMultiplier;
+    }
+
+    public double getPassiveFreezingStartTemp() {
+        return passiveFreezingStartTemp;
+    }
+
+    public int getWetFreezeRate() {
+        return wetFreezeRate;
+    }
+
+    public int getCannotFreezeThawRate() {
+        return cannotFreezeThawRate;
+    }
+
+    public int getOnFireThawRate() {
+        return onFireThawRate;
+    }
+
+    public int getWarmthPerLightLevel() {
+        return warmthPerLightLevel;
+    }
+
+    public int getMinWarmthForLightDay() {
+        return minWarmthForLightDay;
+    }
+
+    public int getMinWarmthForLightNight() {
+        return minWarmthForLightNight;
+    }
+
+    public int getFreezeDamageRate() {
+        return freezeDamageRate;
+    }
+
+    public int getFreezeDamageAmount() {
+        return freezeDamageAmount;
+    }
+
+    public int getFreezeDamageExtraAmount() {
+        return freezeDamageExtraAmount;
+    }
+
+    public int getPowderSnowFreezeRate() {
+        return powderSnowFreezeRate;
+    }
+
+    public int getSunLichenHeatPerLevel() {
+        return sunLichenHeatPerLevel;
+    }
+
+    public double getCampfireWarmthSearchRadius() {
+        return campfireWarmthSearchRadius;
+    }
+
+    public int getCampfireWarmthTime() {
+        return campfireWarmthTime;
+    }
 }

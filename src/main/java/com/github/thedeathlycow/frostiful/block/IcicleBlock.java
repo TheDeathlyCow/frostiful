@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.block;
 
-import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
@@ -135,7 +135,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
             boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FrostifulDamageSource.ICICLE);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
-                FrostHelper.addLivingFrost(livingEntity, IcicleConfigGroup.ICICLE_COLLISION_FREEZE_AMOUNT.getValue());
+                FrostifulConfig config = Frostiful.getConfig();
+                FrostHelper.addLivingFrost(livingEntity, config.icicleConfig.getIcicleCollisionFreezeAmount());
             }
         } else {
             super.onLandedUpon(world, state, pos, entity, fallDistance);
@@ -232,7 +233,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
-            if (random.nextFloat() < IcicleConfigGroup.BECOME_UNSTABLE_CHANCE.getValue() && isHeldByIcicleFallable(state, world, pos)) { // fall
+            FrostifulConfig config = Frostiful.getConfig();
+            if (random.nextFloat() < config.icicleConfig.getBecomeUnstableChance() && isHeldByIcicleFallable(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
             final double growChance = this.getGrowChance(world);
@@ -304,12 +306,13 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private Double getGrowChance(ServerWorld world) {
+        FrostifulConfig config = Frostiful.getConfig();
         if (world.isThundering()) {
-            return IcicleConfigGroup.GROW_CHANCE_DURING_THUNDER.getValue();
+            return config.icicleConfig.getGrowChanceDuringThunder();
         } else if (world.isRaining()) {
-            return IcicleConfigGroup.GROW_CHANGE_DURING_RAIN.getValue();
+            return config.icicleConfig.getGrowChanceDuringRain();
         } else {
-            return IcicleConfigGroup.GROW_CHANGE_DURING_RAIN.getValue();
+            return config.icicleConfig.getGrowChance();
         }
     }
 

@@ -93,6 +93,6 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     }
 
     private static int getTicksFromMaxFrost(double maxFrost) {
-        return (int) (AttributeConfigGroup.MAX_FROST_MULTIPLIER.getValue() * maxFrost);
+        return (int) (140 * maxFrost);
     }
 }

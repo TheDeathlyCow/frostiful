@@ -51,8 +51,8 @@ public abstract class PlayerEntityMixin {
     )
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE, AttributeConfigGroup.BaseFrostResistance.PLAYER.getValue());
-        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, AttributeConfigGroup.BaseMaxFrost.PLAYER.getValue());
+        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE);
+        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, 45.0d);
         cir.setReturnValue(attributeBuilder);
     }
 }

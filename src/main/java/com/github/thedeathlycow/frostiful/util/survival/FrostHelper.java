@@ -17,7 +17,7 @@ public class FrostHelper {
 
         if (applyFrostResistance) {
             double frostResistance = entity.getAttributeValue(FrostifulEntityAttributes.FROST_RESISTANCE);
-            frostModifier = frostResistance * AttributeConfigGroup.PERCENT_FROST_REDUCTION_PER_FROST_RESISTANCE.getValue();
+            frostModifier = frostResistance * 10.0;
             frostModifier /= 100.0D;
         }
 

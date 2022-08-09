@@ -1,15 +1,12 @@
 package com.github.thedeathlycow.frostiful.mixins.server.snow_buildup;
 
-import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
-import com.github.thedeathlycow.frostiful.block.IcicleBlock;
-import com.github.thedeathlycow.frostiful.config.group.WeatherConfigGroup;
-import net.minecraft.block.Block;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
@@ -17,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.Slice;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
-import java.util.function.Predicate;
 
 @Mixin(ServerWorld.class)
 public class ServerWorldMixin {
@@ -36,7 +31,8 @@ public class ServerWorldMixin {
     private boolean applySnowBuildup(ServerWorld instance, BlockPos blockPos, BlockState blockState) {
         BlockState current = instance.getBlockState(blockPos);
 
-        int maxLayers = WeatherConfigGroup.MAX_SNOW_BUILDUP.getValue();
+        FrostifulConfig config = Frostiful.getConfig();
+        int maxLayers = config.weatherConfig.getMaxSnowBuildup();
 
         if (maxLayers == 0) {
             return false;
@@ -75,7 +71,8 @@ public class ServerWorldMixin {
 
         int lowestNeighbour = getLowestNeighbouringLayer(instance, blockPos);
         int currentLayers = getSnowLayers(current);
-        int maxStep = WeatherConfigGroup.MAX_SNOW_BUILDUP_STEP.getValue();
+        FrostifulConfig config = Frostiful.getConfig();
+        int maxStep = config.weatherConfig.getMaxSnowStep();
         if (currentLayers - lowestNeighbour < maxStep && currentLayers < maxLayers) {
             return Math.min(maxLayers, currentLayers + 1);
         }

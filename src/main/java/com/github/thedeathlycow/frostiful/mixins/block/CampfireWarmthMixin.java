@@ -1,18 +1,16 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
-import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
-import net.minecraft.block.ChestBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.tag.ItemTags;
 import net.minecraft.util.ActionResult;
@@ -58,8 +56,9 @@ public abstract class CampfireWarmthMixin {
     }
 
     private static void warmNearbyEntities(World world, BlockPos pos) {
-        final double boxLength = FreezingConfigGroup.CAMPFIRE_WARMTH_SEARCH_DELTA.getValue();
-        final int duration = FreezingConfigGroup.CAMPFIRE_WARMTH_TIME.getValue();
+        FrostifulConfig config = Frostiful.getConfig();
+        final double boxLength = config.freezingConfig.getCampfireWarmthSearchRadius();
+        final int duration = config.freezingConfig.getCampfireWarmthTime();
 
         // get all nearby living entities that do not have warmth or
         // who have a weak warmth effect

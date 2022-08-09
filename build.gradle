@@ -36,9 +36,6 @@ dependencies {
 		exclude(group: "net.fabricmc.fabric-api")
 	}
 
-	modImplementation "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
-	include "com.oroarmor:oro-config-fabric:${project.oro_config_version}"
-
 	afterEvaluate {
 		subprojects.each {
 			api project(path: ":${it.name}", configuration: "namedElements")

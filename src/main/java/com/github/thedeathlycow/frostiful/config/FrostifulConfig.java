@@ -13,18 +13,21 @@ public class FrostifulConfig extends PartitioningSerializer.GlobalData {
 
     @Environment(EnvType.CLIENT)
     @ConfigEntry.Gui.CollapsibleObject
-    ClientConfigGroup clientConfig = new ClientConfigGroup();
+    public final ClientConfigGroup clientConfig = new ClientConfigGroup();
 
     @ConfigEntry.Gui.CollapsibleObject
-    CombatConfigGroup combatConfig = new CombatConfigGroup();
+    public final CombatConfigGroup combatConfig = new CombatConfigGroup();
 
     @ConfigEntry.Gui.CollapsibleObject
-    FreezingConfigGroup freezingConfig = new FreezingConfigGroup();
+    public final FreezingConfigGroup freezingConfig = new FreezingConfigGroup();
 
     @ConfigEntry.Gui.CollapsibleObject
-    IcicleConfigGroup icicleConfig = new IcicleConfigGroup();
+    public final IcicleConfigGroup icicleConfig = new IcicleConfigGroup();
 
     @ConfigEntry.Gui.CollapsibleObject
-    WeatherConfigGroup weatherConfig = new WeatherConfigGroup();
+    public final WeatherConfigGroup weatherConfig = new WeatherConfigGroup();
 
+    public FrostifulConfig() {
+
+    }
 }

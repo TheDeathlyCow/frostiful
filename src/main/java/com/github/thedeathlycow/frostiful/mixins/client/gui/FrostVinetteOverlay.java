@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
@@ -13,7 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
@@ -62,7 +61,8 @@ public abstract class FrostVinetteOverlay {
         assert this.client.player != null;
         final FreezableEntity entity = (FreezableEntity) this.client.player;
         float freezeScale = entity.frostiful$getFrostProgress();
-        float renderThreshold = ClientConfigGroup.FROST_OVERLAY_START.getValue().floatValue();
+        FrostifulConfig config = Frostiful.getConfig();
+        float renderThreshold = config.clientConfig.getFrostOverlayStart();
 
         if (freezeScale >= renderThreshold) {
             Frostiful.LOGGER.info(String.format("Render frost vignette %.2f %.2f", freezeScale, renderThreshold));

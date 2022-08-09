@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.block;
 
-import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
-import com.github.thedeathlycow.frostiful.util.FrostifulMathHelper;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.GlowLichenBlock;
@@ -40,7 +40,8 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         if (entity instanceof LivingEntity livingEntity) {
             int heatLevel = getHeatLevel(state);
             if (heatLevel > 0 && this.canBurn(livingEntity)) {
-                int heat = FreezingConfigGroup.SUN_LICHEN_HEAT_PER_LEVEL.getValue() * heatLevel;
+                FrostifulConfig config = Frostiful.getConfig();
+                int heat = config.freezingConfig.getSunLichenHeatPerLevel() * heatLevel;
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
