@@ -24,8 +24,7 @@ public record CoveredRockFeatureConfig(
         CoveredRockSizeConfig size,
         RegistryEntry<PlacedFeature> coveringFeature,
         float placeCoveringChance
-)
-        implements FeatureConfig {
+) implements FeatureConfig {
     public static final Codec<CoveredRockFeatureConfig> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     BlockStateProvider.TYPE_CODEC.fieldOf("base").forGetter(CoveredRockFeatureConfig::base),
