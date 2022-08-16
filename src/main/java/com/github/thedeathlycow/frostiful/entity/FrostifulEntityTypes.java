@@ -13,12 +13,23 @@ public class FrostifulEntityTypes {
 
     public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW =
             FabricEntityTypeBuilder.create(
-                            SpawnGroup.CREATURE,
-                            (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
-                    ).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
+                    SpawnGroup.CREATURE,
+                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
+            ).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
+
+    public static final EntityType<FrostSpellEntity> FROST_SPELL =
+            FabricEntityTypeBuilder.create(
+                            SpawnGroup.MISC,
+                            (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
+                    )
+                    .dimensions(EntityDimensions.fixed(1.0f, 1.0f))
+                    .trackRangeBlocks(4)
+                    .trackedUpdateRate(10)
+                    .build();
 
     public static void registerEntities() {
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
+        register("frost_spell", FROST_SPELL);
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {

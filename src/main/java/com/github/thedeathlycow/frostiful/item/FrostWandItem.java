@@ -1,22 +1,14 @@
 package com.github.thedeathlycow.frostiful.item;
 
+import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.TridentItem;
 import net.minecraft.item.Vanishable;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
@@ -50,10 +42,9 @@ public class FrostWandItem extends Item implements Vanishable {
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
         if (useTime > 10) {
             if (!world.isClient) {
-
-                FireballEntity fireball = new FireballEntity(world, user, 0.0, 0.0, 0.0, 1);
-                fireball.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
-                world.spawnEntity(fireball);
+                FrostSpellEntity spell = new FrostSpellEntity(world, user, 0.0, 0.0, 0.0);
+                spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
+                world.spawnEntity(spell);
 
                 if (user instanceof PlayerEntity player) {
                     stack.damage(1, player, (p) -> {
