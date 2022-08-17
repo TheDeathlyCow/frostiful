@@ -49,10 +49,10 @@ public class FrostWandItem extends Item implements Vanishable {
 
                 if (user instanceof PlayerEntity player) {
                     stack.damage(1, player, (p) -> {
-                        p.sendToolBreakStatus(user.getActiveHand());
+                        p.sendToolBreakStatus(p.getActiveHand());
                     });
                     player.incrementStat(Stats.USED.getOrCreateStat(this));
-                    player.getItemCooldownManager().set(this, 20);
+                    player.getItemCooldownManager().set(this, 30);
                 }
             }
         }

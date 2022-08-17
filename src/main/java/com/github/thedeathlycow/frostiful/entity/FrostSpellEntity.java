@@ -45,7 +45,7 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
     public void tick() {
         super.tick();
 
-        if (!this.world.isClient) {
+        if (!this.world.isClient && this.isAlive()) {
             if (this.startPosition == null) {
                 this.startPosition = this.getPos();
             }
@@ -109,6 +109,10 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
     }
 
     private void createFrozenCloud() {
+
+        if (this.isRemoved()) {
+            return;
+        }
 
         this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), 0.01f, Explosion.DestructionType.NONE);
 
