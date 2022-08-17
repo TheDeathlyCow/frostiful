@@ -22,11 +22,10 @@ public class FrostifulEntityTypes {
                             SpawnGroup.MISC,
                             (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
                     )
-                    .dimensions(EntityDimensions.fixed(1.0f, 1.0f))
+                    .dimensions(EntityDimensions.fixed(3f/8f, 3f/8f))
                     .trackRangeChunks(4)
                     .trackedUpdateRate(10)
                     .build();
-
 
     public static void registerEntities() {
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
