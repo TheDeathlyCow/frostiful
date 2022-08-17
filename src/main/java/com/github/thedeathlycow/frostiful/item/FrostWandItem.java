@@ -7,6 +7,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.EnderPearlItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
@@ -42,7 +43,7 @@ public class FrostWandItem extends Item implements Vanishable {
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
         if (useTime > 10) {
             if (!world.isClient) {
-                FrostSpellEntity spell = new FrostSpellEntity(world, user, 0.0, 0.0, 0.0);
+                FrostSpellEntity spell = new FrostSpellEntity(world, user, 0.0, 0.0, 0.0, 0, 20);
                 spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
                 world.spawnEntity(spell);
 
@@ -51,11 +52,10 @@ public class FrostWandItem extends Item implements Vanishable {
                         p.sendToolBreakStatus(user.getActiveHand());
                     });
                     player.incrementStat(Stats.USED.getOrCreateStat(this));
+                    player.getItemCooldownManager().set(this, 20);
                 }
-                Frostiful.LOGGER.info("Created fireball");
             }
         }
-        Frostiful.LOGGER.info("On stopped using");
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {

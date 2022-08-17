@@ -3,10 +3,7 @@ package com.github.thedeathlycow.frostiful.client.render.entity;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.*;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
@@ -44,7 +41,14 @@ public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity> {
     }
 
     private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, int light, float x, int y, int textureU, int textureV) {
-        vertexConsumer.vertex(positionMatrix, x - 0.5F, (float)y - 0.25F, 0.0F).color(255, 255, 255, 255).texture((float)textureU, (float)textureV).overlay(OverlayTexture.DEFAULT_UV).light(light).normal(normalMatrix, 0.0F, 1.0F, 0.0F).next();
+        vertexConsumer
+                .vertex(positionMatrix, x - 0.5f, y - 0.25f, 0.0f)
+                .color(0xff, 0xff, 0xff, 0xff)
+                .texture(textureU, textureV)
+                .overlay(OverlayTexture.DEFAULT_UV)
+                .light(light)
+                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
+                .next();
     }
 
     @Override

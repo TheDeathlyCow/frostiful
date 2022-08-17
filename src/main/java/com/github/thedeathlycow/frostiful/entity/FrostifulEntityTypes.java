@@ -23,9 +23,10 @@ public class FrostifulEntityTypes {
                             (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
                     )
                     .dimensions(EntityDimensions.fixed(1.0f, 1.0f))
-                    .trackRangeBlocks(4)
+                    .trackRangeChunks(4)
                     .trackedUpdateRate(10)
                     .build();
+
 
     public static void registerEntities() {
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
