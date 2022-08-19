@@ -23,7 +23,7 @@ public class FrostWandItem extends Item implements Vanishable {
     }
 
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.TOOT_HORN;
+        return UseAction.BOW;
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class FrostTippedArrowTests {
 
-    @GameTest(structureName = "frostiful-test:icicle_tests.frost_tipped_arrow.dispenser")
+    @GameTest(templateName = "frostiful-test:icicle_tests.frost_tipped_arrow.dispenser")
     public void frostTippedArrowCanBeFiredFromDispenser(TestContext context) {
         context.pushButton(0, 3, 0);
         context.expectBlockAtEnd(Blocks.POLISHED_ANDESITE, 0, 5, 3);

@@ -9,7 +9,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class SunLichenPathfindingTests {
 
-    @GameTest(structureName = "frostiful-test:sun_lichen_tests.pathfinding.big", required = false)
+    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.big", required = false)
     public void villagerDoesNotCollideWithSunLichen(TestContext context) {
         final BlockPos start = new BlockPos(1, 2, 1);
         final BlockPos end = new BlockPos(10, 2, 7);
