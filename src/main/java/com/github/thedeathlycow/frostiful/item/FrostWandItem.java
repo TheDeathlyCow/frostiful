@@ -82,7 +82,7 @@ public class FrostWandItem extends Item implements Vanishable {
         StatusEffectInstance frozenEffect = target.getStatusEffect(FrostifulStatusEffects.FROZEN);
         if (frozenEffect != null) {
             if (target.world instanceof ServerWorld serverWorld) {
-                int amplifier = frozenEffect.getAmplifier();
+                int amplifier = frozenEffect.getAmplifier() + 1;
                 float damage = amplifier * 3.f;
                 target.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
                 target.removeStatusEffect(FrostifulStatusEffects.FROZEN);
