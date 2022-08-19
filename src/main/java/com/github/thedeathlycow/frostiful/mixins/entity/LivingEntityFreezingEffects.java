@@ -80,7 +80,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
     )
     private void tickFrozenEffect(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (entity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
+        if (!entity.isSpectator() && entity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
             entity.setJumping(false);
             entity.sidewaysSpeed = 0.0F;
             entity.forwardSpeed = 0.0F;
