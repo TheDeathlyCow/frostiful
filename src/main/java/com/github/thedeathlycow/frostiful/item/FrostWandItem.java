@@ -1,13 +1,11 @@
 package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.EnderPearlItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
@@ -25,7 +23,7 @@ public class FrostWandItem extends Item implements Vanishable {
     }
 
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.SPEAR;
+        return UseAction.TOOT_HORN;
     }
 
     @Override
@@ -45,6 +43,7 @@ public class FrostWandItem extends Item implements Vanishable {
             if (!world.isClient) {
                 FrostSpellEntity spell = new FrostSpellEntity(world, user, 0.0, 0.0, 0.0, 0, 20);
                 spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
+                spell.setPosition(user.getEyePos());
                 world.spawnEntity(spell);
 
                 if (user instanceof PlayerEntity player) {

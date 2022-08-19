@@ -11,6 +11,8 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -55,19 +57,6 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
                 this.createFrozenCloud();
             }
         }
-
-    }
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-    }
-
-    protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
-        if (!this.world.isClient) {
-            this.createFrozenCloud();
-        }
     }
 
     @Override
@@ -99,6 +88,24 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
         }
     }
 
+    @Override
+    protected void initDataTracker() {
+        super.initDataTracker();
+    }
+
+    protected void onCollision(HitResult hitResult) {
+        super.onCollision(hitResult);
+        if (!this.world.isClient) {
+            this.createFrozenCloud();
+        }
+    }
+
+    @Override
+    protected ParticleEffect getParticleType() {
+        return ParticleTypes.SNOWFLAKE;
+    }
+
+    @Override
     protected float getDrag() {
         return 1.0f;
     }
