@@ -10,6 +10,8 @@ import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 @Environment(EnvType.CLIENT)
 public class HeatDrainParticle extends AbstractSlowingParticle {
 
@@ -25,10 +27,11 @@ public class HeatDrainParticle extends AbstractSlowingParticle {
         this.velocityX *= slowFactor * this.velocityMultiplier;
         this.velocityY *= slowFactor * this.velocityMultiplier;
         this.velocityZ *= slowFactor * this.velocityMultiplier;
-        this.maxAge = this.random.nextInt(1, 10);
-        this.scale = 0.5f * this.random.nextFloat(0.5f, 1.0f);
+        this.maxAge = this.random.nextBetween(1, 10);
 
-        this.green *= this.random.nextFloat(0.5f, 1.0f);
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+        this.scale = 0.5f * random.nextFloat();
+        this.green *= random.nextFloat(0.5f, 1.0f);
     }
 
     @Override

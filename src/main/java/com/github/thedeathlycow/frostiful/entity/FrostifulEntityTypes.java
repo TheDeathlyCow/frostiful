@@ -11,19 +11,28 @@ import net.minecraft.util.registry.Registry;
 
 public class FrostifulEntityTypes {
 
-    public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW = register(
-            "frost_tipped_arrow",
-            FabricEntityTypeBuilder.create(SpawnGroup.CREATURE, (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new)
-                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f))
-    );
+    public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW =
+            FabricEntityTypeBuilder.create(
+                    SpawnGroup.CREATURE,
+                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
+            ).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
+
+    public static final EntityType<FrostSpellEntity> FROST_SPELL =
+            FabricEntityTypeBuilder.create(
+                            SpawnGroup.MISC,
+                            (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
+                    )
+                    .dimensions(EntityDimensions.fixed(3f/8f, 3f/8f))
+                    .trackRangeChunks(4)
+                    .trackedUpdateRate(10)
+                    .build();
 
     public static void registerEntities() {
-        Frostiful.LOGGER.info("Registering entities...");
-        // entities already registered - just ensure this class is loaded
-        Frostiful.LOGGER.info("Registered entities!");
+        register("frost_tipped_arrow", FROST_TIPPED_ARROW);
+        register("frost_spell", FROST_SPELL);
     }
 
-    private static <T extends Entity> EntityType<T> register(String id, FabricEntityTypeBuilder<T> type) {
-        return Registry.register(Registry.ENTITY_TYPE, new Identifier(Frostiful.MODID, id), type.build());
+    private static <T extends Entity> void register(String id, EntityType<T> type) {
+        Registry.register(Registry.ENTITY_TYPE, new Identifier(Frostiful.MODID, id), type);
     }
 }

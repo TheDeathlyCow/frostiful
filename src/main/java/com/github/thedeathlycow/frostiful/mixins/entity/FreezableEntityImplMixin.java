@@ -1,9 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -95,6 +93,6 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     }
 
     private static int getTicksFromMaxFrost(double maxFrost) {
-        return (int) (AttributeConfigGroup.MAX_FROST_MULTIPLIER.getValue() * maxFrost);
+        return (int) (140 * maxFrost);
     }
 }

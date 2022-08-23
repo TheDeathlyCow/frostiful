@@ -1,21 +1,23 @@
 package com.github.thedeathlycow.frostiful.config.group;
 
-import com.google.common.collect.ImmutableList;
-import com.oroarmor.config.ConfigItemGroup;
-import com.oroarmor.config.IntegerConfigItem;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
+import me.shedaniel.autoconfig.ConfigData;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
 
-public class WeatherConfigGroup extends ConfigItemGroup {
+@Config(name = Frostiful.MODID + ".weather_config")
+public class WeatherConfigGroup implements ConfigData {
+    @ConfigEntry.BoundedDiscrete(max = 8)
+    int maxSnowStep = 2;
+    @ConfigEntry.BoundedDiscrete(min = 1, max = 8)
+    int maxSnowBuildup = 8;
 
-    private static final String TRANSLATE_BASE_STRING = "config.frostiful.weather_config.";
 
-    public static final IntegerConfigItem FREEZE_TOP_LAYER_MAX_ACCUMULATION = new IntegerConfigItem("freeze_top_layer_max_accumulation", 2, TRANSLATE_BASE_STRING + "freeze_top_layer_max_accumulation", null, 0, 8);
-    public static final IntegerConfigItem MAX_SNOW_BUILDUP_STEP = new IntegerConfigItem("max_snow_buildup_step", 2, TRANSLATE_BASE_STRING + "max_snow_buildup_step", null, 1, 8);
-    public static final IntegerConfigItem MAX_SNOW_BUILDUP = new IntegerConfigItem("max_snow_buildup", 8, TRANSLATE_BASE_STRING + "max_snow_buildup", null, 0, 8);
+    public int getMaxSnowStep() {
+        return maxSnowStep;
+    }
 
-    /**
-     * Creates a new {@link ConfigItemGroup} with the list of configs and the name
-     */
-    public WeatherConfigGroup() {
-        super(ImmutableList.of(MAX_SNOW_BUILDUP_STEP, MAX_SNOW_BUILDUP), "weather_config");
+    public int getMaxSnowBuildup() {
+        return maxSnowBuildup;
     }
 }

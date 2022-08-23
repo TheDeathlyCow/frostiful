@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 
 public class FrozenStatusEffectTests {
 
-    @GameTest(structureName = "frostiful-test:effects.platform")
+    @GameTest(templateName = "frostiful-test:effects.platform")
     public void frozenEffectStopsWalking(TestContext context) {
         BlockPos start = new BlockPos(1, 2, 1);
         BlockPos end = start.add(2, 0, 2);
@@ -22,7 +22,7 @@ public class FrozenStatusEffectTests {
         context.expectEntityAtEnd(EntityType.VILLAGER, start);
     }
 
-    @GameTest(structureName = "frostiful-test:effects.platform")
+    @GameTest(templateName = "frostiful-test:effects.platform")
     public void canWalkWithoutFrozenEffect(TestContext context) {
         BlockPos start = new BlockPos(1, 2, 1);
         BlockPos end = start.add(2, 0, 2);

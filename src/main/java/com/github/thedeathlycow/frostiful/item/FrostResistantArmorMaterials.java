@@ -24,43 +24,8 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     }
 
     @Override
-    public int getDurability(EquipmentSlot slot) {
-        return parentMaterial.getDurability(slot);
-    }
-
-    @Override
-    public int getProtectionAmount(EquipmentSlot slot) {
-        return parentMaterial.getProtectionAmount(slot);
-    }
-
-    @Override
-    public int getEnchantability() {
-        return parentMaterial.getEnchantability();
-    }
-
-    @Override
-    public SoundEvent getEquipSound() {
-        return parentMaterial.getEquipSound();
-    }
-
-    @Override
-    public Ingredient getRepairIngredient() {
-        return parentMaterial.getRepairIngredient();
-    }
-
-    @Override
-    public String getName() {
-        return "fur_lined_" + parentMaterial.getName();
-    }
-
-    @Override
-    public float getToughness() {
-        return parentMaterial.getToughness();
-    }
-
-    @Override
-    public float getKnockbackResistance() {
-        return parentMaterial.getKnockbackResistance();
+    public ArmorMaterial getParentMaterial() {
+        return this.parentMaterial;
     }
 
     @Override

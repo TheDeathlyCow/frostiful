@@ -11,13 +11,13 @@ public class FrostifulEntityAttributes {
     /**
      * Reduces incoming frost damage by a percentage. In units of 10%.
      */
-    public static final EntityAttribute FROST_RESISTANCE = new ClampedEntityAttribute(getTranslateKey("generic.frost_resistance"), 0.0D, -10.0D, 10.0D).setTracked(true);
+    public static final EntityAttribute FROST_RESISTANCE = new ClampedEntityAttribute(getTranslateKey("generic.frost_resistance"), 00.0D, -10.0D, 10.0D).setTracked(true);
 
     /**
      * Determines the base amount of frost an entity can have before
      * they begin taking damage. In units of 140 ticks.
      */
-    public static final EntityAttribute MAX_FROST = new ClampedEntityAttribute(getTranslateKey("generic.max_frost"), 1.0, 0.0, 8192.0D).setTracked(true);
+    public static final EntityAttribute MAX_FROST = new ClampedEntityAttribute(getTranslateKey("generic.max_frost"), 40.0, 0.0, 8192.0D).setTracked(true);
 
     public static void registerAttributes() {
         register("generic.frost_resistance", FROST_RESISTANCE);

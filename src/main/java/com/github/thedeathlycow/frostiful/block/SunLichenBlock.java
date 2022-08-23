@@ -1,12 +1,10 @@
 package com.github.thedeathlycow.frostiful.block;
 
-import com.github.thedeathlycow.frostiful.block.state.property.FrostifulProperties;
-import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import com.google.common.collect.ImmutableBiMap;
-import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.Entity;
@@ -16,13 +14,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 
 import java.util.Optional;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 @SuppressWarnings("deprecation")
 public class SunLichenBlock extends GlowLichenBlock implements Heatable {
@@ -42,7 +40,8 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         if (entity instanceof LivingEntity livingEntity) {
             int heatLevel = getHeatLevel(state);
             if (heatLevel > 0 && this.canBurn(livingEntity)) {
-                int heat = FreezingConfigGroup.SUN_LICHEN_HEAT_PER_LEVEL.getValue() * heatLevel;
+                FrostifulConfig config = Frostiful.getConfig();
+                int heat = config.freezingConfig.getSunLichenHeatPerLevel() * heatLevel;
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
@@ -96,13 +95,14 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
 
     private void createFireParticles(World world, BlockPos pos) {
         final double maxHorizontalOffset = 0.5;
+
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         for (int i = 0; i < 10; i++) {
             double x = pos.getX() + 0.5;
-            double y = pos.getY() + world.getRandom().nextDouble(0.33);
+            double y = pos.getY() + random.nextDouble(0.33);
             double z = pos.getZ() + 0.5;
-
-            x += world.getRandom().nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
-            z += world.getRandom().nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
+            x += random.nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
+            z += random.nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
             world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.1D, 0.0D);
         }
     }

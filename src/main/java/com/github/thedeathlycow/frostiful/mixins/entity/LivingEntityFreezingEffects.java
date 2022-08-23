@@ -1,13 +1,15 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.group.AttributeConfigGroup;
-import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.*;
@@ -23,6 +25,7 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Mixin(LivingEntity.class)
@@ -77,7 +80,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
     )
     private void tickFrozenEffect(CallbackInfo ci) {
         LivingEntity entity = (LivingEntity) (Object) this;
-        if (entity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
+        if (!entity.isSpectator() && entity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
             entity.setJumping(false);
             entity.sidewaysSpeed = 0.0F;
             entity.forwardSpeed = 0.0F;
@@ -104,9 +107,9 @@ public abstract class LivingEntityFreezingEffects extends Entity {
     private void frostiful$tickEntityFreezing(FreezableEntity freezable) {
         if (this.isAlive()) {
             int amount = 0;
-
+            FrostifulConfig config = Frostiful.getConfig();
             if (this.inPowderSnow) {
-                amount += FreezingConfigGroup.POWDER_SNOW_FREEZE_RATE.getValue();
+                amount += config.freezingConfig.getPowderSnowFreezeRate();
             }
 
             freezable.frostiful$addFrost(amount);
@@ -119,14 +122,15 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             return;
         }
 
-        if (this.age % FreezingConfigGroup.FREEZE_DAMAGE_RATE.getValue() != 0) {
+        FrostifulConfig config = Frostiful.getConfig();
+        if (this.age % config.freezingConfig.getFreezeDamageRate() != 0) {
             return;
         }
 
         if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
             int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                    FreezingConfigGroup.FREEZE_EXTRA_DAMAGE_AMOUNT.getValue() :
-                    FreezingConfigGroup.FREEZE_DAMAGE_AMOUNT.getValue();
+                    config.freezingConfig.getFreezeDamageExtraAmount() :
+                    config.freezingConfig.getFreezeDamageAmount();
 
             this.damage(DamageSource.FREEZE, amount);
         }
@@ -167,9 +171,24 @@ public abstract class LivingEntityFreezingEffects extends Entity {
     )
     private static void addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE, AttributeConfigGroup.BaseFrostResistance.BASE.getValue());
-        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST, AttributeConfigGroup.BaseMaxFrost.BASE.getValue());
+        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE);
+        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST);
         cir.setReturnValue(attributeBuilder);
+    }
+
+    @Inject(
+            method = "damage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/World;sendEntityStatus(Lnet/minecraft/entity/Entity;B)V",
+                    ordinal = 2
+            )
+    )
+    private void syncFrozenAttackSourceAsFrozenSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (FrostifulDamageSource.FROZEN_ATTACK_NAME.equals(source.name)) {
+            LivingEntity instance = (LivingEntity) (Object) this;
+            this.world.sendEntityStatus(instance, EntityStatuses.DAMAGE_FROM_FREEZING);
+        }
     }
 
 }

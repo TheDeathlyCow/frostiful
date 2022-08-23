@@ -1,23 +1,21 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import com.google.common.collect.ImmutableMultimap;
-import com.google.common.collect.Multimap;
+import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
+import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.TridentItem;
 import net.minecraft.item.Vanishable;
+import net.minecraft.particle.ParticleType;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -32,7 +30,7 @@ public class FrostWandItem extends Item implements Vanishable {
     }
 
     public UseAction getUseAction(ItemStack stack) {
-        return UseAction.SPEAR;
+        return UseAction.BOW;
     }
 
     @Override
@@ -50,21 +48,20 @@ public class FrostWandItem extends Item implements Vanishable {
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
         if (useTime > 10) {
             if (!world.isClient) {
-
-                FireballEntity fireball = new FireballEntity(world, user, 0.0, 0.0, 0.0, 1);
-                fireball.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
-                world.spawnEntity(fireball);
+                FrostSpellEntity spell = new FrostSpellEntity(world, user, 0.0, 0.0, 0.0, 0, 20);
+                spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
+                spell.setPosition(user.getEyePos());
+                world.spawnEntity(spell);
 
                 if (user instanceof PlayerEntity player) {
-                    stack.damage(1, player, (p) -> {
-                        p.sendToolBreakStatus(user.getActiveHand());
+                    stack.damage(2, player, (p) -> {
+                        p.sendToolBreakStatus(p.getActiveHand());
                     });
                     player.incrementStat(Stats.USED.getOrCreateStat(this));
+                    player.getItemCooldownManager().set(this, 30);
                 }
-                Frostiful.LOGGER.info("Created fireball");
             }
         }
-        Frostiful.LOGGER.info("On stopped using");
     }
 
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
@@ -82,7 +79,18 @@ public class FrostWandItem extends Item implements Vanishable {
             e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
         });
 
-        FrostHelper.addLivingFrost(target, 1000);
+        StatusEffectInstance frozenEffect = target.getStatusEffect(FrostifulStatusEffects.FROZEN);
+        if (frozenEffect != null) {
+            if (target.world instanceof ServerWorld serverWorld) {
+                int amplifier = frozenEffect.getAmplifier() + 1;
+                float damage = amplifier * 3.f;
+                target.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
+                target.removeStatusEffect(FrostifulStatusEffects.FROZEN);
+                serverWorld.spawnParticles(ParticleTypes.CLOUD, target.getX(), target.getY(), target.getZ(), 1000, 0.5 , 0.5, 0.5, 1.0);
+            }
+            target.world.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, SoundCategory.HOSTILE, 1.0f, 1.0f);
+
+        }
 
         return true;
     }

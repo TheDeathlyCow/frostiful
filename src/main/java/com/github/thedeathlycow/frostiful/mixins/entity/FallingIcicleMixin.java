@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
-import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.BlockState;
@@ -36,7 +36,8 @@ public class FallingIcicleMixin {
 
         return par1.andThen((entity) -> {
             if (entity instanceof LivingEntity livingEntity) {
-                FrostHelper.addLivingFrost(livingEntity, IcicleConfigGroup.ICICLE_COLLISION_FREEZE_AMOUNT.getValue());
+                FrostifulConfig config = Frostiful.getConfig();
+                FrostHelper.addLivingFrost(livingEntity, config.icicleConfig.getIcicleCollisionFreezeAmount());
             }
         });
     }

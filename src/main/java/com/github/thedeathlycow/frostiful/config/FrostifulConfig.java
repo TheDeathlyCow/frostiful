@@ -2,44 +2,32 @@ package com.github.thedeathlycow.frostiful.config;
 
 import com.github.thedeathlycow.frostiful.config.group.*;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.google.common.collect.ImmutableList;
-import com.oroarmor.config.Config;
-import com.oroarmor.config.ConfigItem;
-import com.oroarmor.config.ConfigItemGroup;
-import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
+import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.autoconfig.serializer.PartitioningSerializer;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 
-import java.io.File;
-import java.util.List;
+@Config(name = Frostiful.MODID)
+public class FrostifulConfig extends PartitioningSerializer.GlobalData {
 
-public class FrostifulConfig extends Config implements SimpleSynchronousResourceReloadListener {
+    @Environment(EnvType.CLIENT)
+    @ConfigEntry.Gui.CollapsibleObject
+    public final ClientConfigGroup clientConfig = new ClientConfigGroup();
 
-    public static final ConfigItemGroup CLIENT = new ClientConfigGroup();
-    public static final ConfigItemGroup ICICLE = new IcicleConfigGroup();
-    public static final ConfigItemGroup ATTRIBUTE = new AttributeConfigGroup();
-    public static final ConfigItemGroup WEATHER = new WeatherConfigGroup();
-    public static final ConfigItemGroup FREEZING = new FreezingConfigGroup();
-    public static final ConfigItemGroup COMBAT = new CombatConfigGroup();
-    public static final List<ConfigItemGroup> configs = ImmutableList.of(CLIENT, ICICLE, ATTRIBUTE, WEATHER, FREEZING, COMBAT);
+    @ConfigEntry.Gui.CollapsibleObject
+    public final CombatConfigGroup combatConfig = new CombatConfigGroup();
 
-    /**
-     * Creates a new config
-     */
+    @ConfigEntry.Gui.CollapsibleObject
+    public final FreezingConfigGroup freezingConfig = new FreezingConfigGroup();
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public final IcicleConfigGroup icicleConfig = new IcicleConfigGroup();
+
+    @ConfigEntry.Gui.CollapsibleObject
+    public final WeatherConfigGroup weatherConfig = new WeatherConfigGroup();
+
     public FrostifulConfig() {
-        super(configs, new File(FabricLoader.getInstance().getConfigDir().toFile(), Frostiful.MODID + ".json"), Frostiful.MODID);
-    }
 
-    @Override
-    public Identifier getFabricId() {
-        return new Identifier(Frostiful.MODID, "config");
-    }
-
-    @Override
-    public void reload(ResourceManager manager) {
-        this.readConfigFromFile();
-        this.saveConfigToFile();
     }
 }
