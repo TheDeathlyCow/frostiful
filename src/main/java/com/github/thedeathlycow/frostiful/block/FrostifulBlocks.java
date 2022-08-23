@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 
 public class FrostifulBlocks {
 
-    public static final Block ICICLE = new IcicleBlock(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds().requiresTool());
+    public static final Block ICICLE = new IcicleBlock(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds().offsetType(AbstractBlock.OffsetType.XZ).requiresTool());
     public static final Block COLD_SUN_LICHEN = new SunLichenBlock(0, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 0));
     public static final Block COOL_SUN_LICHEN = new SunLichenBlock(1, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 2));
     public static final Block WARM_SUN_LICHEN = new SunLichenBlock(2, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 4));
@@ -32,12 +32,13 @@ public class FrostifulBlocks {
         register("hot_sun_lichen", HOT_SUN_LICHEN);
 
         DispenserBlock.registerBehavior(FrostifulItems.FROST_TIPPED_ARROW, new ProjectileDispenserBehavior() {
-            protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-                FrostTippedArrowEntity arrowEntity = new FrostTippedArrowEntity(world, position.getX(), position.getY(), position.getZ());
-                arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
-                return arrowEntity;
-            }
-        });
+                    protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                        FrostTippedArrowEntity arrowEntity = new FrostTippedArrowEntity(world, position.getX(), position.getY(), position.getZ());
+                        arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
+                        return arrowEntity;
+                    }
+                }
+        );
     }
 
     private static void register(String id, Block block) {
