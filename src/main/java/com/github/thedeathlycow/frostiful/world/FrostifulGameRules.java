@@ -30,7 +30,7 @@ public class FrostifulGameRules {
      */
     public static final GameRules.Key<GameRules.BooleanRule> DO_PASSIVE_FREEZING =
             GameRuleRegistry.register(
-                    "doPassiveFreezing",
+                    Frostiful.MODID + ".doPassiveFreezing",
                     CATEGORY,
                     GameRuleFactory.createBooleanRule(true)
             );

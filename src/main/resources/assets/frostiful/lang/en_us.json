@@ -40,7 +40,7 @@
   "commands.frostiful.frost.set.success": "Set the frost of %s to %d",
   "commands.frostiful.frost.get.current.success": "%s has %d frost",
   "commands.frostiful.frost.get.max.success": "%s can have a maximum of %d frost",
-  "gamerule.doPassiveFreezing": "Do passive freezing",
+  "gamerule.frostiful.doPassiveFreezing": "Do passive freezing",
   "gamerule.maxSnowAccumulation": "Max snow accumulation",
   "gamerule.category.frostiful": "Frostiful",
   "advancements.frostiful.adventure.fur_armor.title": "A Fur Suit",

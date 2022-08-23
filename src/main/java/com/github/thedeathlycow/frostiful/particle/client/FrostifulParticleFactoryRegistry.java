@@ -17,15 +17,14 @@ import net.minecraft.util.Identifier;
 public class FrostifulParticleFactoryRegistry {
 
     public static void registerFactories() {
-        registerFactory("heat_drain", FrostifulParticleTypes.HEAT_DRAIN, HeatDrainParticle.Factory::new);
+        registerFactory(FrostifulParticleTypes.HEAT_DRAIN, HeatDrainParticle.Factory::new);
     }
 
-    private static <T extends ParticleEffect> void registerFactory(String name, ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {
-        addParticleToResourceReload(name);
+    private static <T extends ParticleEffect> void registerFactory(ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {
         ParticleFactoryRegistry.getInstance().register(particle, factory);
     }
 
-    private static <T extends ParticleEffect> void registerFactory(String name, ParticleType<T> particle, ParticleFactory<T> factory) {
+    private static <T extends ParticleEffect> void registerFactory(String name, ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {
         addParticleToResourceReload(name);
         ParticleFactoryRegistry.getInstance().register(particle, factory);
     }
