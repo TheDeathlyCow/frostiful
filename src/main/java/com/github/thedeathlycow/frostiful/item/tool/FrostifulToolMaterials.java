@@ -6,7 +6,7 @@ import net.minecraft.recipe.Ingredient;
 
 import java.util.function.Supplier;
 
-public enum FToolMaterials implements ToolMaterial {
+public enum FrostifulToolMaterials implements ToolMaterial {
 
 
     FROST_WAND(3, 1561, 8.0F, 3.0F, 10, () -> {
@@ -20,7 +20,7 @@ public enum FToolMaterials implements ToolMaterial {
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
 
-    FToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+    FrostifulToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;
