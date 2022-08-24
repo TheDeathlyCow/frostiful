@@ -1,7 +1,9 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -123,11 +125,14 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
 
         this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), 0.01f, Explosion.DestructionType.NONE);
 
+
+        FrostifulConfig config = Frostiful.getConfig();
+
         AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
         areaEffectCloudEntity.setRadius(2.5F);
         areaEffectCloudEntity.setRadiusOnUse(-0.5F);
         areaEffectCloudEntity.setWaitTime(10);
-        areaEffectCloudEntity.setDuration(areaEffectCloudEntity.getDuration() / 2);
+        areaEffectCloudEntity.setDuration(config.combatConfig.getFrostWandFrozenEffectTime());
         areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / areaEffectCloudEntity.getDuration());
 
         Entity owner = this.getOwner();

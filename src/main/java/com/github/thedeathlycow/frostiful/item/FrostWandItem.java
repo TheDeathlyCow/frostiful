@@ -1,10 +1,14 @@
 package com.github.thedeathlycow.frostiful.item;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantmentHelper;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.tool.FrostifulToolMaterials;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -12,8 +16,11 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.Vanishable;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
@@ -48,7 +55,17 @@ public class FrostWandItem extends SwordItem implements Vanishable {
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
         if (useTime > 10) {
             if (!world.isClient) {
-                FrostSpellEntity spell = new FrostSpellEntity(world, user, 0.0, 0.0, 0.0, 0, 20);
+
+                FrostifulConfig config = Frostiful.getConfig();
+                int iceBreakerLevel = FrostifulEnchantmentHelper.getIceBreakerLevel(user);
+
+                FrostSpellEntity spell = new FrostSpellEntity(
+                        world,
+                        user,
+                        0.0, 0.0, 0.0,
+                        iceBreakerLevel,
+                        config.combatConfig.getMaxFrostSpellDistance()
+                );
                 spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
                 spell.setPosition(user.getEyePos());
                 world.spawnEntity(spell);
@@ -58,7 +75,7 @@ public class FrostWandItem extends SwordItem implements Vanishable {
                         p.sendToolBreakStatus(p.getActiveHand());
                     });
                     player.incrementStat(Stats.USED.getOrCreateStat(this));
-                    player.getItemCooldownManager().set(this, 30);
+                    player.getItemCooldownManager().set(this, config.combatConfig.getFrostWandCooldown());
                 }
             }
         }
@@ -82,13 +99,27 @@ public class FrostWandItem extends SwordItem implements Vanishable {
         StatusEffectInstance frozenEffect = target.getStatusEffect(FrostifulStatusEffects.FROZEN);
         if (frozenEffect != null) {
             if (target.world instanceof ServerWorld serverWorld) {
+                FrostifulConfig config = Frostiful.getConfig();
                 int amplifier = frozenEffect.getAmplifier() + 1;
-                float damage = amplifier * 3.f;
+                float damage = amplifier * config.combatConfig.getIceBreakerDamagePerLevel();
                 target.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
                 target.removeStatusEffect(FrostifulStatusEffects.FROZEN);
-                serverWorld.spawnParticles(ParticleTypes.CLOUD, target.getX(), target.getY(), target.getZ(), 1000, 0.5 , 0.5, 0.5, 1.0);
+
+                ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
+
+                serverWorld.spawnParticles(
+                        shatteredIce,
+                        target.getX(), target.getY(), target.getZ(),
+                        500, 0.5 , 0.5, 0.5, 1.0
+                );
             }
-            target.world.playSound(null, target.getBlockPos(), SoundEvents.ENTITY_ZOMBIE_BREAK_WOODEN_DOOR, SoundCategory.HOSTILE, 1.0f, 1.0f);
+            target.world.playSound(
+                    null,
+                    target.getBlockPos(),
+                    SoundEvents.BLOCK_GLASS_BREAK,
+                    SoundCategory.AMBIENT,
+                    1.0f, 1.0f
+            );
 
         }
 
