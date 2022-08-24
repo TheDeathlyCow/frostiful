@@ -92,10 +92,7 @@ public class FrostWandItem extends SwordItem implements Vanishable {
     }
 
     public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damage(1, attacker, (e) -> {
-            e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
-        });
-
+        super.postHit(stack, target, attacker);
         StatusEffectInstance frozenEffect = target.getStatusEffect(FrostifulStatusEffects.FROZEN);
         if (frozenEffect != null) {
             if (target.world instanceof ServerWorld serverWorld) {
@@ -110,7 +107,7 @@ public class FrostWandItem extends SwordItem implements Vanishable {
                 serverWorld.spawnParticles(
                         shatteredIce,
                         target.getX(), target.getY(), target.getZ(),
-                        500, 0.5 , 1.0, 0.5, 1.0
+                        500, 0.5, 1.0, 0.5, 1.0
                 );
             }
             target.world.playSound(
@@ -127,7 +124,7 @@ public class FrostWandItem extends SwordItem implements Vanishable {
     }
 
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if ((double)state.getHardness(world, pos) != 0.0) {
+        if ((double) state.getHardness(world, pos) != 0.0) {
             stack.damage(2, miner, (e) -> {
                 e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
             });
