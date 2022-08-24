@@ -110,7 +110,7 @@ public class FrostWandItem extends SwordItem implements Vanishable {
                 serverWorld.spawnParticles(
                         shatteredIce,
                         target.getX(), target.getY(), target.getZ(),
-                        500, 0.5 , 0.5, 0.5, 1.0
+                        500, 0.5 , 1.0, 0.5, 1.0
                 );
             }
             target.world.playSound(
@@ -118,7 +118,7 @@ public class FrostWandItem extends SwordItem implements Vanishable {
                     target.getBlockPos(),
                     SoundEvents.BLOCK_GLASS_BREAK,
                     SoundCategory.AMBIENT,
-                    1.0f, 1.0f
+                    1.0f, 0.75f
             );
 
         }
