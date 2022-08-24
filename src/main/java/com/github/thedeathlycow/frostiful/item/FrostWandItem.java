@@ -3,15 +3,15 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.item.tool.FToolMaterials;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.item.Vanishable;
-import net.minecraft.particle.ParticleType;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -23,10 +23,10 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class FrostWandItem extends Item implements Vanishable {
+public class FrostWandItem extends SwordItem implements Vanishable {
 
     public FrostWandItem(Settings settings) {
-        super(settings);
+        super(FToolMaterials.FROST_WAND, 3, -2.9f, settings);
     }
 
     public UseAction getUseAction(ItemStack stack) {
