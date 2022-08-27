@@ -1,18 +1,18 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
+import com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargets;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.EquipmentSlot;
 
 public class IceBreakerEnchantment extends Enchantment {
 
     protected IceBreakerEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, EnchantmentTarget.WEAPON, slotTypes);
+        super(weight, FrostifulEnchantmentTargets.FROST_WAND, slotTypes);
     }
 
     @Override
     public boolean isTreasure() {
-        return true;
+        return false;
     }
 
     @Override

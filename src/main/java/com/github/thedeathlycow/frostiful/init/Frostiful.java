@@ -20,6 +20,7 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -58,5 +59,14 @@ public class Frostiful implements ModInitializer {
 
     public static FrostifulConfig getConfig() {
         return AutoConfig.getConfigHolder(FrostifulConfig.class).getConfig();
+    }
+
+    /**
+     * Creates a new {@link Identifier} in the namespace {@value MODID}.
+     * @param path The path of the identifier
+     * @return Returns a new {@link Identifier}
+     */
+    public static Identifier id(String path) {
+        return new Identifier(Frostiful.MODID, path);
     }
 }

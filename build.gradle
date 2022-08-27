@@ -19,6 +19,8 @@ repositories {
 	mavenCentral()
 	maven { url "https://maven.terraformersmc.com/" }
 	maven { url "https://maven.shedaniel.me/" }
+	maven { url "https://raw.githubusercontent.com/moddingplayground/maven/main/" }
+	maven { url "https://jitpack.io/" }
 }
 
 dependencies {
@@ -31,6 +33,8 @@ dependencies {
 	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
 	modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
+
+	modImplementation "net.moddingplayground.frame:frame-fabric:${project.frame_version}"
 
 	modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
 		exclude(group: "net.fabricmc.fabric-api")

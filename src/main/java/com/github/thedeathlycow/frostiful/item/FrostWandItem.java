@@ -13,6 +13,7 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
 import net.minecraft.item.Vanishable;
@@ -30,10 +31,10 @@ import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class FrostWandItem extends SwordItem implements Vanishable {
+public class FrostWandItem extends Item implements Vanishable {
 
     public FrostWandItem(Settings settings) {
-        super(FrostifulToolMaterials.FROST_WAND, 3, -2.9f, settings);
+        super(settings);
     }
 
     public UseAction getUseAction(ItemStack stack) {
