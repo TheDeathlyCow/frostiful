@@ -2,18 +2,26 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantmentHelper;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -191,4 +199,43 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         }
     }
 
+    @Inject(
+            method = "onAttacking",
+            at = @At("HEAD")
+    )
+    private void breakFrozenEffect(Entity target, CallbackInfo ci) {
+        if (target instanceof LivingEntity livingTarget) {
+            var frozenEffect = livingTarget.getStatusEffect(FrostifulStatusEffects.FROZEN);
+            final LivingEntity attacker = (LivingEntity) (Object) this;
+            if (frozenEffect != null) {
+                if (target.world instanceof ServerWorld serverWorld) {
+                    FrostifulConfig config = Frostiful.getConfig();
+
+                    // calculate break damage
+                    int iceBreakerLevel = FrostifulEnchantmentHelper.getIceBreakerLevel(attacker);
+                    float damage = config.combatConfig.getBreakFrozenDamage();
+                    damage += iceBreakerLevel * config.combatConfig.getIceBreakerDamagePerLevel();
+
+                    // apply damage and remove frozen effect
+                    livingTarget.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
+                    livingTarget.removeStatusEffect(FrostifulStatusEffects.FROZEN);
+
+                    // spawn particles
+                    ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
+                    serverWorld.spawnParticles(
+                            shatteredIce,
+                            target.getX(), target.getY(), target.getZ(),
+                            500, 0.5, 1.0, 0.5, 1.0
+                    );
+                }
+                target.world.playSound(
+                        null,
+                        target.getBlockPos(),
+                        SoundEvents.BLOCK_GLASS_BREAK,
+                        SoundCategory.AMBIENT,
+                        1.0f, 0.75f
+                );
+            }
+        }
+    }
 }

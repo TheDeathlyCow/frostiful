@@ -25,23 +25,20 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
 
     private static final String AMPLIFIER_NBT_KEY = "EffectAmplifier";
     private static final String MAX_DISTANCE_NBT_KEY = "MaxDistance";
-    private int effectAmplifier;
     private double maxDistance = Double.POSITIVE_INFINITY;
     @Nullable
     private Vec3d startPosition = null;
 
     protected FrostSpellEntity(EntityType<? extends FrostSpellEntity> entityType, World world) {
         super(entityType, world);
-        this.effectAmplifier = 0;
     }
 
     public FrostSpellEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
-        this(world, owner, velocityX, velocityY, velocityZ, 0, Double.POSITIVE_INFINITY);
+        this(world, owner, velocityX, velocityY, velocityZ, Double.POSITIVE_INFINITY);
     }
 
-    public FrostSpellEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ, int effectAmplifier, double maxDistance) {
+    public FrostSpellEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
         super(FrostifulEntityTypes.FROST_SPELL, owner, velocityX, velocityY, velocityZ, world);
-        this.effectAmplifier = effectAmplifier;
         this.maxDistance = maxDistance;
     }
 
@@ -74,15 +71,11 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt(AMPLIFIER_NBT_KEY, this.effectAmplifier);
         nbt.putDouble(MAX_DISTANCE_NBT_KEY, this.maxDistance);
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        if (nbt.contains(AMPLIFIER_NBT_KEY, NbtElement.INT_TYPE)) {
-            this.effectAmplifier = nbt.getInt(AMPLIFIER_NBT_KEY);
-        }
 
         if (nbt.contains(MAX_DISTANCE_NBT_KEY, NbtElement.DOUBLE_TYPE)) {
             this.maxDistance = nbt.getDouble(MAX_DISTANCE_NBT_KEY);
@@ -138,7 +131,7 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
         if (owner instanceof LivingEntity livingOwner) {
             areaEffectCloudEntity.setOwner(livingOwner);
         }
-        areaEffectCloudEntity.addEffect(new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200, effectAmplifier));
+        areaEffectCloudEntity.addEffect(new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200, 0));
 
         this.world.spawnEntity(areaEffectCloudEntity);
 

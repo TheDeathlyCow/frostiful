@@ -10,7 +10,9 @@ public class CombatConfigGroup implements ConfigData {
     int heatDrainPerLevel = 630;
     double heatDrainEfficiency = 0.5;
 
-    float iceBreakerDamagePerLevel = 1.5f;
+    float iceBreakerDamagePerLevel = 1.0f;
+
+    float breakFrozenDamage = 3.0f;
 
     double maxFrostSpellDistance = 20;
 
@@ -28,6 +30,10 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getIceBreakerDamagePerLevel() {
         return iceBreakerDamagePerLevel;
+    }
+
+    public float getBreakFrozenDamage() {
+        return breakFrozenDamage;
     }
 
     public double getMaxFrostSpellDistance() {

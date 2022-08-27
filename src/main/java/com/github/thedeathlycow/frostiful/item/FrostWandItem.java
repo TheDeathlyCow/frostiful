@@ -58,13 +58,11 @@ public class FrostWandItem extends Item implements Vanishable {
             if (!world.isClient) {
 
                 FrostifulConfig config = Frostiful.getConfig();
-                int iceBreakerLevel = FrostifulEnchantmentHelper.getIceBreakerLevel(user);
 
                 FrostSpellEntity spell = new FrostSpellEntity(
                         world,
                         user,
                         0.0, 0.0, 0.0,
-                        iceBreakerLevel,
                         config.combatConfig.getMaxFrostSpellDistance()
                 );
                 spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
@@ -90,38 +88,6 @@ public class FrostWandItem extends Item implements Vanishable {
             user.setCurrentHand(hand);
             return TypedActionResult.consume(itemStack);
         }
-    }
-
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        super.postHit(stack, target, attacker);
-        StatusEffectInstance frozenEffect = target.getStatusEffect(FrostifulStatusEffects.FROZEN);
-        if (frozenEffect != null) {
-            if (target.world instanceof ServerWorld serverWorld) {
-                FrostifulConfig config = Frostiful.getConfig();
-                int amplifier = frozenEffect.getAmplifier() + 1;
-                float damage = amplifier * config.combatConfig.getIceBreakerDamagePerLevel();
-                target.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
-                target.removeStatusEffect(FrostifulStatusEffects.FROZEN);
-
-                ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
-
-                serverWorld.spawnParticles(
-                        shatteredIce,
-                        target.getX(), target.getY(), target.getZ(),
-                        500, 0.5, 1.0, 0.5, 1.0
-                );
-            }
-            target.world.playSound(
-                    null,
-                    target.getBlockPos(),
-                    SoundEvents.BLOCK_GLASS_BREAK,
-                    SoundCategory.AMBIENT,
-                    1.0f, 0.75f
-            );
-
-        }
-
-        return true;
     }
 
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
