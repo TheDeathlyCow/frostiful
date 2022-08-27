@@ -12,8 +12,12 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.command.EffectCommand;
+import net.minecraft.server.world.ServerChunkManager;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -64,7 +68,19 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
             Entity entityHit = hitResult.getEntity();
             entityHit.damage(FrostifulDamageSource.frozenAttack(this.getOwner()), 3.0f);
             if (entityHit instanceof LivingEntity livingHitEntity) {
-                livingHitEntity.addStatusEffect(new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200));
+                StatusEffectInstance frozenEffect = new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200);
+                if (livingHitEntity.addStatusEffect(frozenEffect)) {
+
+                    ServerChunkManager chunkManager = ((ServerWorld)this.world).getChunkManager();
+
+                    EntityStatusEffectS2CPacket effectPacket = new EntityStatusEffectS2CPacket(
+                            livingHitEntity.getId(),
+                            frozenEffect
+                    );
+
+                    chunkManager.sendToOtherNearbyPlayers(this, effectPacket);
+                }
+                EffectCommand
             }
         }
     }
