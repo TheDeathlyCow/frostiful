@@ -1,12 +1,12 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargets;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.FrostifulMathHelper;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.enchantment.Enchantment;
-import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -18,12 +18,12 @@ import net.minecraft.world.World;
 public class HeatDrainEnchantment extends Enchantment {
 
     public HeatDrainEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, EnchantmentTarget.WEAPON, slotTypes);
+        super(weight, FrostifulEnchantmentTargets.FROST_WAND, slotTypes);
     }
 
     @Override
     public boolean isTreasure() {
-        return true;
+        return false;
     }
 
     @Override
