@@ -8,7 +8,6 @@ import net.minecraft.entity.AreaEffectCloudEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -139,7 +138,6 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
         if (owner instanceof LivingEntity livingOwner) {
             areaEffectCloudEntity.setOwner(livingOwner);
         }
-
         areaEffectCloudEntity.addEffect(new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200, effectAmplifier));
 
         this.world.spawnEntity(areaEffectCloudEntity);
