@@ -57,10 +57,10 @@
   "death.attack.frostiful.fallingIcicle.player": "%1$s was skewered by a falling icicle whilst fighting %2$s",
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "subtitles.frostiful.block.campfire.hiss": "Campfire hisses",
-  "subtitles.item.frostiful.frost_want.cast_spell": "Frost spell casts",
+  "subtitles.item.frostiful.frost_wand.cast_spell": "Frost wand fires spell",
   "subtitles.entity.frostiful.frost_spell.freeze": "Entity freezes",
   "effect.frostiful.frozen": "Frozen",
   "effect.frostiful.warmth": "Warmth",
-  "enchantment.frostiful.heat_drain": "Heat Drain",
+  "enchantment.frostiful.heat_drain": "Enervation",
   "enchantment.frostiful.ice_breaker": "Ice Breaker"
 }

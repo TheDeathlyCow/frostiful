@@ -9,7 +9,7 @@ public class FrostifulSoundEvents {
 
     public static final SoundEvent FIRE_LICHEN_DISCHARGE = FrostifulSoundEvents.of("block.frostiful.sun_lichen.discharge");
     public static final SoundEvent CAMPFIRE_HISS = FrostifulSoundEvents.of("block.frostiful.campfire.hiss");
-    public static final SoundEvent ITEM_FROST_WANT_CAST_SPELL = FrostifulSoundEvents.of("item.frostiful.frost_want.cast_spell");
+    public static final SoundEvent ITEM_FROST_WANT_CAST_SPELL = FrostifulSoundEvents.of("item.frostiful.frost_wand.cast_spell");
     public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FrostifulSoundEvents.of("entity.frostiful.frost_spell.freeze");
 
     public static void registerSoundEvents() {
