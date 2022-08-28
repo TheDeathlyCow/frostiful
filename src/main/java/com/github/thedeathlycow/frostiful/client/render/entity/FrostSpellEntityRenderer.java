@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
-import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.github.thedeathlycow.frostiful.entity.SpellEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -16,7 +16,7 @@ import net.minecraft.util.math.Matrix4f;
 import net.minecraft.util.math.Vec3f;
 
 @Environment(EnvType.CLIENT)
-public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity> {
+public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
 
     private static final Identifier TEXTURE = new Identifier("textures/entity/enderdragon/dragon_fireball.png");//new Identifier(Frostiful.MODID, "textures/entity/frost_spell.png");
     private static final RenderLayer LAYER;
@@ -26,7 +26,7 @@ public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity> {
     }
 
     @Override
-    public void render(FrostSpellEntity spellEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+    public void render(SpellEntity spellEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
         matrixStack.multiply(this.dispatcher.getRotation());
         matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
@@ -54,7 +54,7 @@ public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity> {
     }
 
     @Override
-    public Identifier getTexture(FrostSpellEntity entity) {
+    public Identifier getTexture(SpellEntity entity) {
         return TEXTURE;
     }
 
