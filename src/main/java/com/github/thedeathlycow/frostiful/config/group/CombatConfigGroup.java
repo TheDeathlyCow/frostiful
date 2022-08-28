@@ -18,7 +18,7 @@ public class CombatConfigGroup implements ConfigData {
 
     int frostWandCooldown = 100;
 
-    int frostWandFrozenEffectTime = 10;
+    int frostWandRootTime = 100;
 
     public int getHeatDrainPerLevel() {
         return heatDrainPerLevel;
@@ -44,7 +44,7 @@ public class CombatConfigGroup implements ConfigData {
         return frostWandCooldown;
     }
 
-    public int getFrostWandFrozenEffectTime() {
-        return frostWandFrozenEffectTime;
+    public int getFrostWandRootTime() {
+        return frostWandRootTime;
     }
 }

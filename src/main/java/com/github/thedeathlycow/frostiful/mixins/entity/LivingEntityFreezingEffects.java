@@ -76,29 +76,6 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             method = "tickMovement",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/util/profiler/Profiler;pop()V",
-                    ordinal = 1
-            ),
-            slice = @Slice(
-                    from = @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/entity/LivingEntity;setVelocity(DDD)V"
-                    )
-            )
-    )
-    private void tickFrozenEffect(CallbackInfo ci) {
-        LivingEntity entity = (LivingEntity) (Object) this;
-        if (!entity.isSpectator() && entity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
-            entity.setJumping(false);
-            entity.sidewaysSpeed = 0.0F;
-            entity.forwardSpeed = 0.0F;
-        }
-    }
-
-    @Inject(
-            method = "tickMovement",
-            at = @At(
-                    value = "INVOKE",
                     target = "Lnet/minecraft/entity/LivingEntity;removePowderSnowSlow()V"
             )
     )
@@ -196,46 +173,6 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         if (FrostifulDamageSource.FROZEN_ATTACK_NAME.equals(source.name)) {
             LivingEntity instance = (LivingEntity) (Object) this;
             this.world.sendEntityStatus(instance, EntityStatuses.DAMAGE_FROM_FREEZING);
-        }
-    }
-
-    @Inject(
-            method = "onAttacking",
-            at = @At("HEAD")
-    )
-    private void breakFrozenEffect(Entity target, CallbackInfo ci) {
-        if (target instanceof LivingEntity livingTarget) {
-            var frozenEffect = livingTarget.getStatusEffect(FrostifulStatusEffects.FROZEN);
-            final LivingEntity attacker = (LivingEntity) (Object) this;
-            if (frozenEffect != null) {
-                if (target.world instanceof ServerWorld serverWorld) {
-                    FrostifulConfig config = Frostiful.getConfig();
-
-                    // calculate break damage
-                    int iceBreakerLevel = FrostifulEnchantmentHelper.getIceBreakerLevel(attacker);
-                    float damage = config.combatConfig.getBreakFrozenDamage();
-                    damage += iceBreakerLevel * config.combatConfig.getIceBreakerDamagePerLevel();
-
-                    // apply damage and remove frozen effect
-                    livingTarget.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
-                    livingTarget.removeStatusEffect(FrostifulStatusEffects.FROZEN);
-
-                    // spawn particles
-                    ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
-                    serverWorld.spawnParticles(
-                            shatteredIce,
-                            target.getX(), target.getY(), target.getZ(),
-                            500, 0.5, 1.0, 0.5, 1.0
-                    );
-                }
-                target.world.playSound(
-                        null,
-                        target.getBlockPos(),
-                        SoundEvents.BLOCK_GLASS_BREAK,
-                        SoundCategory.AMBIENT,
-                        1.0f, 0.75f
-                );
-            }
         }
     }
 }

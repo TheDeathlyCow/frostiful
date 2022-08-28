@@ -15,7 +15,6 @@ import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.packet.s2c.play.EntityStatusEffectS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.command.EffectCommand;
 import net.minecraft.server.world.ServerChunkManager;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.hit.EntityHitResult;
@@ -64,24 +63,13 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
     @Override
     public void onEntityHit(EntityHitResult hitResult) {
         super.onEntityHit(hitResult);
-        if (!this.world.isClient) {
+        if (!this.world.isClient && this.isAlive()) {
             Entity entityHit = hitResult.getEntity();
             entityHit.damage(FrostifulDamageSource.frozenAttack(this.getOwner()), 3.0f);
-            if (entityHit instanceof LivingEntity livingHitEntity) {
-                StatusEffectInstance frozenEffect = new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200);
-                if (livingHitEntity.addStatusEffect(frozenEffect)) {
-
-                    ServerChunkManager chunkManager = ((ServerWorld)this.world).getChunkManager();
-
-                    EntityStatusEffectS2CPacket effectPacket = new EntityStatusEffectS2CPacket(
-                            livingHitEntity.getId(),
-                            frozenEffect
-                    );
-
-                    chunkManager.sendToOtherNearbyPlayers(this, effectPacket);
-                }
-                EffectCommand
+            if (entityHit instanceof RootedEntity rootedEntity) {
+                rootedEntity.frostiful$root();
             }
+            this.createFrozenCloud();
         }
     }
 
@@ -132,24 +120,6 @@ public class FrostSpellEntity extends ExplosiveProjectileEntity {
         }
 
         this.world.createExplosion(this, this.getX(), this.getY(), this.getZ(), 0.01f, Explosion.DestructionType.NONE);
-
-
-        FrostifulConfig config = Frostiful.getConfig();
-
-        AreaEffectCloudEntity areaEffectCloudEntity = new AreaEffectCloudEntity(this.world, this.getX(), this.getY(), this.getZ());
-        areaEffectCloudEntity.setRadius(2.5F);
-        areaEffectCloudEntity.setRadiusOnUse(-0.5F);
-        areaEffectCloudEntity.setWaitTime(10);
-        areaEffectCloudEntity.setDuration(config.combatConfig.getFrostWandFrozenEffectTime());
-        areaEffectCloudEntity.setRadiusGrowth(-areaEffectCloudEntity.getRadius() / areaEffectCloudEntity.getDuration());
-
-        Entity owner = this.getOwner();
-        if (owner instanceof LivingEntity livingOwner) {
-            areaEffectCloudEntity.setOwner(livingOwner);
-        }
-        areaEffectCloudEntity.addEffect(new StatusEffectInstance(FrostifulStatusEffects.FROZEN, 200, 0));
-
-        this.world.spawnEntity(areaEffectCloudEntity);
 
         this.discard();
     }

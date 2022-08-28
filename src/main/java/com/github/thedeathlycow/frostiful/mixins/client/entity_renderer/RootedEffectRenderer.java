@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer;
 
+import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -25,7 +25,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntityRenderer.class)
 @Environment(EnvType.CLIENT)
-public class FrozenEffectRenderer<T extends LivingEntity, M extends EntityModel<T>> {
+public class RootedEffectRenderer<T extends LivingEntity, M extends EntityModel<T>> {
 
     private BlockRenderManager frostiful$blockRenderManager;
     private final BlockState frostiful$BLOCK_STATE = Blocks.ICE.getDefaultState();
@@ -48,7 +48,7 @@ public class FrozenEffectRenderer<T extends LivingEntity, M extends EntityModel<
             )
     )
     private void renderIceOnEntity(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
-        if (livingEntity.hasStatusEffect(FrostifulStatusEffects.FROZEN)) {
+        if (livingEntity instanceof RootedEntity rootedEntity && rootedEntity.frostiful$isRooted()) {
             matrixStack.push();
             float blockSize = 1.75f;
             Box boundingBox = livingEntity.getBoundingBox();

@@ -8,6 +8,7 @@
 		"entity.EntityMixin",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",
+		"entity.RootedEntityImplMixin",
 		"entity.LivingEntityFreezingEffects",
 		"entity.PlayerEntityMixin",
 		"entity.mob.PiglinBrainMixin",
@@ -20,7 +21,7 @@
 		"world.biome.BiomeMixin"
 	],
 	"client": [
-		"client.entity_renderer.FrozenEffectRenderer",
+		"client.entity_renderer.RootedEffectRenderer",
 		"client.gui.ColdHeartOverlay",
 		"client.gui.FrostVinetteOverlay",
 		"client.gui.HeartTypeMixin"

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import java.util.function.Consumer;
 
 @Mixin(FallingBlockEntity.class)
-public class FallingIcicleMixin {
+public abstract class FallingIcicleMixin {
 
     @Shadow private BlockState block;
 
