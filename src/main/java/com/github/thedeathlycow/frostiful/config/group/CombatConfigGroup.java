@@ -7,7 +7,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 @Config(name = Frostiful.MODID + ".combat_config")
 public class CombatConfigGroup implements ConfigData {
 
-    int heatDrainPerLevel = 630;
+    int heatDrainPerLevel = 210;
     double heatDrainEfficiency = 0.5;
 
     float iceBreakerDamagePerLevel = 1.0f;
