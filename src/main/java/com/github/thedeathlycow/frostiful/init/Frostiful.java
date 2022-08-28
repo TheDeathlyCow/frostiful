@@ -12,6 +12,7 @@ import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
 import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
 import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
+import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FrostifulPlacedFeatures;
@@ -37,6 +38,7 @@ public class Frostiful implements ModInitializer {
                 (dispatcher, registryAccess, environment) -> {
                     FrostifulCommand.register(dispatcher);
                     FrostCommand.register(dispatcher);
+                    RootCommand.register(dispatcher);
                 }
         );
 

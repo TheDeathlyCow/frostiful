@@ -68,7 +68,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             )
     )
     private void tickRoot(CallbackInfo ci) {
-        if (!this.world.isClient && !this.isSpectator() && this.frostiful$isRooted()) {
+        if (!this.isSpectator() && this.frostiful$isRooted()) {
             final LivingEntity instance = (LivingEntity) (Object) this;
             instance.setJumping(false);
             instance.sidewaysSpeed = 0.0F;
