@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
@@ -45,12 +46,20 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
         this.dataTracker.startTracking(FROZEN_TICKS, 0);
     }
 
+    @Override
     public int frostiful$getRootedTicks() {
         return this.dataTracker.get(FROZEN_TICKS);
     }
 
+    @Override
     public void frostiful$setRootedTicks(int amount) {
         this.dataTracker.set(FROZEN_TICKS, amount);
+    }
+
+    @Override
+    public boolean frostiful$canRoot() {
+        final LivingEntity instance = (LivingEntity) (Object) this;
+        return ((FreezableEntity) instance).frostiful$canFreeze();
     }
 
     @Inject(
@@ -77,6 +86,20 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             // remove tick
             int ticksLeft = this.frostiful$getRootedTicks();
             this.frostiful$setRootedTicks(--ticksLeft);
+
+            if (!this.world.isClient && this.isOnFire()) {
+                this.frostiful$breakRoot();
+                this.extinguish();
+                ServerWorld serverWorld = (ServerWorld) this.world;
+                serverWorld.spawnParticles(
+                        ParticleTypes.POOF,
+                        this.getX(), this.getY(), this.getZ(),
+                        100,
+                        0.5, 0.5, 0.5,
+                        0.1f
+                );
+                this.playExtinguishSound();
+            }
         }
     }
 

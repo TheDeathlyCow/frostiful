@@ -2,8 +2,10 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.util.FrostifulNbtHelper;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import net.minecraft.nbt.NbtHelper;
 
 public interface RootedEntity {
 
@@ -13,9 +15,13 @@ public interface RootedEntity {
 
     void frostiful$setRootedTicks(int amount);
 
+    boolean frostiful$canRoot();
+
     default void frostiful$root() {
-        FrostifulConfig config = Frostiful.getConfig();
-        this.frostiful$setRootedTicks(config.combatConfig.getFrostWandRootTime());
+        if (this.frostiful$canRoot()) {
+            FrostifulConfig config = Frostiful.getConfig();
+            this.frostiful$setRootedTicks(config.combatConfig.getFrostWandRootTime());
+        }
     }
 
     default void frostiful$breakRoot() {
@@ -27,7 +33,13 @@ public interface RootedEntity {
     }
 
     static void frostiful$addRootedTicksToNbt(RootedEntity entity, NbtCompound nbt) {
-        NbtCompound frostifulNbt = new NbtCompound();
+        NbtCompound frostifulNbt = FrostifulNbtHelper.getOrDefault(
+                nbt,
+                FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
+                NbtCompound::getCompound,
+                new NbtCompound()
+        );
+
         if (entity.frostiful$isRooted()) {
             frostifulNbt.putInt(ROOTED_KEY, entity.frostiful$getRootedTicks());
         }

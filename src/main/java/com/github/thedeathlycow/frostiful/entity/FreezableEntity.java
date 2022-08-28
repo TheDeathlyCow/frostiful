@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.util.FrostifulNbtHelper;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.MathHelper;
@@ -43,7 +44,12 @@ public interface FreezableEntity {
     }
 
     static void frostiful$addFrostToNbt(FreezableEntity entity, NbtCompound nbt) {
-        NbtCompound frostifulNbt = new NbtCompound();
+        NbtCompound frostifulNbt = FrostifulNbtHelper.getOrDefault(
+                nbt,
+                FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
+                NbtCompound::getCompound,
+                new NbtCompound()
+        );
         if (entity.frostiful$getCurrentFrost() > 0) {
             frostifulNbt.putInt(FROST_KEY, entity.frostiful$getCurrentFrost());
         }

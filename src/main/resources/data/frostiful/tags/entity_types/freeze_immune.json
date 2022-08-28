@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"#minecraft:freeze_immune_entity_types",
+		"minecraft:wither",
+		"minecraft:ender_dragon",
+		"minecraft:warden",
+		"#c:bosses"
+	]
+}

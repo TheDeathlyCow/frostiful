@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.tag.entitytype.FrostifulEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -11,7 +12,6 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -64,7 +64,7 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Unique
     public boolean frostiful$canFreeze() {
         final LivingEntity instance = (LivingEntity) (Object) this;
-        if (instance.getType().isIn(EntityTypeTags.FREEZE_IMMUNE_ENTITY_TYPES)) {
+        if (instance.getType().isIn(FrostifulEntityTypeTags.FREEZE_IMMUNE)) {
             return false;
         }
         if (instance.isSpectator()) {

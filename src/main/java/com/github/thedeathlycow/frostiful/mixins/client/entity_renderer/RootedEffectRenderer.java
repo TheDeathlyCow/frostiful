@@ -42,9 +42,7 @@ public class RootedEffectRenderer<T extends LivingEntity, M extends EntityModel<
     @Inject(
             method = "render(Lnet/minecraft/entity/LivingEntity;FFLnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
             at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/math/MatrixStack;pop()V",
-                    shift = At.Shift.BEFORE
+                    value = "TAIL"
             )
     )
     private void renderIceOnEntity(T livingEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i, CallbackInfo ci) {
