@@ -2,12 +2,16 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
-import com.github.thedeathlycow.frostiful.entity.SpellEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,8 +27,14 @@ import net.minecraft.world.World;
 
 public class FrostWandItem extends Item implements Vanishable {
 
+    private final Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers;
+
     public FrostWandItem(Settings settings) {
         super(settings);
+        ImmutableMultimap.Builder<EntityAttribute, EntityAttributeModifier> builder = ImmutableMultimap.builder();
+        builder.put(EntityAttributes.GENERIC_ATTACK_DAMAGE, new EntityAttributeModifier(ATTACK_DAMAGE_MODIFIER_ID, "Tool modifier", 7.0, EntityAttributeModifier.Operation.ADDITION));
+        builder.put(EntityAttributes.GENERIC_ATTACK_SPEED, new EntityAttributeModifier(ATTACK_SPEED_MODIFIER_ID, "Tool modifier", -2.9, EntityAttributeModifier.Operation.ADDITION));
+        this.attributeModifiers = builder.build();
     }
 
     public UseAction getUseAction(ItemStack stack) {
@@ -77,6 +87,7 @@ public class FrostWandItem extends Item implements Vanishable {
         }
     }
 
+    @Override
     public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
         ItemStack itemStack = user.getStackInHand(hand);
         if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
@@ -87,6 +98,7 @@ public class FrostWandItem extends Item implements Vanishable {
         }
     }
 
+    @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
         if ((double) state.getHardness(world, pos) != 0.0) {
             stack.damage(2, miner, (e) -> {
@@ -95,5 +107,15 @@ public class FrostWandItem extends Item implements Vanishable {
         }
 
         return true;
+    }
+
+    @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
+        return slot == EquipmentSlot.MAINHAND ? this.attributeModifiers : super.getAttributeModifiers(slot);
+    }
+
+    @Override
+    public int getEnchantability() {
+        return 15;
     }
 }

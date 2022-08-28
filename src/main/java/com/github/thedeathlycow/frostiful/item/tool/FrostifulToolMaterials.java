@@ -9,7 +9,7 @@ import java.util.function.Supplier;
 public enum FrostifulToolMaterials implements ToolMaterial {
 
 
-    FROST_WAND(3, 1561, 8.0F, 3.0F, 10, () -> {
+    FROST_WAND(3, 1561, 8.0F, 3.0F, 15, () -> {
         return Ingredient.ofItems(FrostifulItems.ICICLE);
     });
 
