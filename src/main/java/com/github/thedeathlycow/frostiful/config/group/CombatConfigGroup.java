@@ -14,9 +14,9 @@ public class CombatConfigGroup implements ConfigData {
 
     float breakFrozenDamage = 3.0f;
 
-    double maxFrostSpellDistance = 20;
+    double maxFrostSpellDistance = 35;
 
-    int frostWandCooldown = 100;
+    int frostWandCooldown = 40;
 
     int frostWandRootTime = 100;
 
