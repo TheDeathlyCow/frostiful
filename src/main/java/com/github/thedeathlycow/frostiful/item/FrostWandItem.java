@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.entity.SpellEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -11,11 +12,13 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class FrostWandItem extends Item implements Vanishable {
@@ -55,6 +58,13 @@ public class FrostWandItem extends Item implements Vanishable {
                 spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
                 spell.setPosition(user.getEyePos());
                 world.spawnEntity(spell);
+                Vec3d soundPos = user.getEyePos();
+                world.playSound(
+                        null,
+                        soundPos.getX(), soundPos.getY(), soundPos.getZ(),
+                        FrostifulSoundEvents.ITEM_FROST_WANT_CAST_SPELL, SoundCategory.AMBIENT,
+                        1.0f, 1.0f
+                );
 
                 if (user instanceof PlayerEntity player) {
                     stack.damage(2, player, (p) -> {

@@ -9,10 +9,12 @@ public class FrostifulSoundEvents {
 
     public static final SoundEvent FIRE_LICHEN_DISCHARGE = FrostifulSoundEvents.of("block.frostiful.sun_lichen.discharge");
     public static final SoundEvent CAMPFIRE_HISS = FrostifulSoundEvents.of("block.frostiful.campfire.hiss");
+    public static final SoundEvent ITEM_FROST_WANT_CAST_SPELL = FrostifulSoundEvents.of("item.frostiful.frost_want.cast_spell");
 
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
         register(CAMPFIRE_HISS);
+        register(ITEM_FROST_WANT_CAST_SPELL);
     }
 
     private static SoundEvent of(String name) {

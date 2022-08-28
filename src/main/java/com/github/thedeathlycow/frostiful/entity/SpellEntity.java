@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -13,7 +12,6 @@ import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.explosion.Explosion;
 import org.jetbrains.annotations.Nullable;
 
 public abstract class SpellEntity extends ExplosiveProjectileEntity {

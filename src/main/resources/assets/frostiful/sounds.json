@@ -10,5 +10,12 @@
       "minecraft:random/fizz"
     ],
     "subtitle": "subtitles.frostiful.block.campfire.hiss"
+  },
+  "item.frostiful.frost_want.cast_spell": {
+    "sounds": [
+      "mob/evocation_illager/cast1",
+      "mob/evocation_illager/cast2"
+    ],
+    "subtitle": "subtitles.item.frostiful.frost_want.cast_spell"
   }
 }
