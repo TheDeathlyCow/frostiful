@@ -17,7 +17,7 @@ public class FrostifulGameRules {
     /**
      * Mod's dedicated category for game rules
      */
-    public static CustomGameRuleCategory CATEGORY = new CustomGameRuleCategory(
+    public static final CustomGameRuleCategory CATEGORY = new CustomGameRuleCategory(
             new Identifier(Frostiful.MODID, "gamerule_category"),
             Text.translatable("gamerule.category." + Frostiful.MODID)
                     .setStyle(TextStyles.GAME_RULE_TITLE)

@@ -1,23 +1,19 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.particle.DustParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import net.minecraft.world.World;
 
 import java.util.List;
 
 public class FrostSpellEntity extends SpellEntity {
-
-    private static final Vec3f EXPLOSION_COLOUR = new Vec3f(Vec3d.unpackRgb(0x61BBE8));
 
     public FrostSpellEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
         super(world, owner, velocityX, velocityY, velocityZ);
@@ -66,7 +62,14 @@ public class FrostSpellEntity extends SpellEntity {
     @Override
     protected void applySingleTargetEffect(Entity target) {
         if (!target.world.isClient && target instanceof RootedEntity rootedEntity) {
-            rootedEntity.frostiful$root();
+            if (rootedEntity.frostiful$root()) {
+                target.world.playSound(
+                        null,
+                        target.getX(), target.getY(), target.getZ(),
+                        FrostifulSoundEvents.ENTITY_FROST_SPELL_FREEZE, SoundCategory.AMBIENT,
+                        1.0f, 1.0f
+                );
+            }
         }
     }
 }

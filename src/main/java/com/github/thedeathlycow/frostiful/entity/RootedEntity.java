@@ -17,11 +17,13 @@ public interface RootedEntity {
 
     boolean frostiful$canRoot();
 
-    default void frostiful$root() {
+    default boolean frostiful$root() {
         if (this.frostiful$canRoot()) {
             FrostifulConfig config = Frostiful.getConfig();
             this.frostiful$setRootedTicks(config.combatConfig.getFrostWandRootTime());
+            return true;
         }
+        return false;
     }
 
     default void frostiful$breakRoot() {

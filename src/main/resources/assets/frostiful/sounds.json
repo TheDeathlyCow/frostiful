@@ -17,5 +17,11 @@
       "mob/evocation_illager/cast2"
     ],
     "subtitle": "subtitles.item.frostiful.frost_want.cast_spell"
+  },
+  "entity.frostiful.frost_spell.freeze": {
+    "sounds": [
+      "frostiful:entity/frost_spell/freeze"
+    ],
+    "subtitle": "subtitles.entity.frostiful.frost_spell.freeze"
   }
 }

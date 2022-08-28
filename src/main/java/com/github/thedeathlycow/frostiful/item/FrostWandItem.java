@@ -62,7 +62,7 @@ public class FrostWandItem extends Item implements Vanishable {
                 world.playSound(
                         null,
                         soundPos.getX(), soundPos.getY(), soundPos.getZ(),
-                        FrostifulSoundEvents.ITEM_FROST_WANT_CAST_SPELL, SoundCategory.AMBIENT,
+                        FrostifulSoundEvents.ITEM_FR    OST_WANT_CAST_SPELL, SoundCategory.AMBIENT,
                         1.0f, 1.0f
                 );
 
