@@ -7,9 +7,9 @@
 		"block.CampfireWarmthMixin",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",
-		"entity.RootedEntityImplMixin",
 		"entity.LivingEntityFreezingEffects",
 		"entity.PlayerEntityMixin",
+		"entity.RootedEntityImplMixin",
 		"entity.mob.PiglinBrainMixin",
 		"entity.mob.PolarBearMixin",
 		"entity.mob.StrayDefaultArrowItemMixin",
@@ -23,7 +23,8 @@
 		"client.entity_renderer.RootedEffectRenderer",
 		"client.gui.ColdHeartOverlay",
 		"client.gui.FrostVinetteOverlay",
-		"client.gui.HeartTypeMixin"
+		"client.gui.HeartTypeMixin",
+		"client.gui.RootedEffectOverlay"
 	],
 	"injectors": {
 		"defaultRequire": 1

@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -17,18 +17,16 @@ import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(InGameHud.class)
-public abstract class FrostVinetteOverlay {
+public abstract class RootedEffectOverlay {
 
     @Shadow
     @Final
     private MinecraftClient client;
 
     @Shadow
-    @Final
-    private static Identifier POWDER_SNOW_OUTLINE;
-
-    @Shadow
     protected abstract void renderOverlay(Identifier texture, float opacity);
+
+    private static final Identifier ROOTED_OVERLAY = new Identifier("textures/block/ice.png");
 
     @Inject(
             method = "render",
@@ -45,18 +43,14 @@ public abstract class FrostVinetteOverlay {
                     )
             )
     )
-    private void renderPowderSnowOverlayAtThreshold(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+    private void renderRootedOverlay(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         assert this.client.player != null;
-        final FreezableEntity entity = (FreezableEntity) this.client.player;
-        float freezeScale = entity.frostiful$getFrostProgress();
-        FrostifulConfig config = Frostiful.getConfig();
-        float renderThreshold = config.clientConfig.getFrostOverlayStart();
+        final RootedEntity entity = (RootedEntity) this.client.player;
 
-        if (freezeScale >= renderThreshold) {
-            float opacity = renderThreshold == 1.0f ? 0.0f : (freezeScale - renderThreshold) / (1.0f - renderThreshold);
-            this.renderOverlay(POWDER_SNOW_OUTLINE, opacity);
+        if (entity.frostiful$isRooted()) {
+            FrostifulConfig config = Frostiful.getConfig();
+            float opacity = ((float)entity.frostiful$getRootedTicks()) / config.combatConfig.getFrostWandRootTime();
+            this.renderOverlay(ROOTED_OVERLAY, opacity);
         }
-
-
     }
 }
