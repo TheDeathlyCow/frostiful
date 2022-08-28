@@ -7,6 +7,7 @@ import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
+@SuppressWarnings("unused")
 public class SunLichenPathfindingTests {
 
     @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.big", required = false)

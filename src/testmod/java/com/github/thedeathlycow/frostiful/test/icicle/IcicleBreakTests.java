@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 
+@SuppressWarnings("unused")
 public class IcicleBreakTests implements FabricGameTest {
 
     @GameTest(templateName = "frostiful-test:icicle_tests.empty")

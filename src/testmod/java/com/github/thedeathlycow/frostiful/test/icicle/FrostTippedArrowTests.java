@@ -6,6 +6,7 @@ import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
+@SuppressWarnings("unused")
 public class FrostTippedArrowTests {
 
     @GameTest(templateName = "frostiful-test:icicle_tests.frost_tipped_arrow.dispenser")

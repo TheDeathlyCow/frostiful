@@ -20,6 +20,7 @@ import net.minecraft.util.math.BlockPos;
 
 import java.util.function.Function;
 
+@SuppressWarnings("unused")
 public class SunLichenCollisionTests implements FabricGameTest {
 
     @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
