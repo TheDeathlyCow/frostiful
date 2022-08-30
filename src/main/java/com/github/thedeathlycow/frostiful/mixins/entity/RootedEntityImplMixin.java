@@ -10,6 +10,7 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -21,18 +22,21 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class RootedEntityImplMixin extends Entity implements RootedEntity {
 
+    @Shadow public abstract boolean damage(DamageSource source, float amount);
 
     private static final TrackedData<Integer> FROZEN_TICKS = DataTracker.registerData(RootedEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);
-
 
     public RootedEntityImplMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -120,41 +124,38 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     }
 
     @Inject(
-            method = "onAttacking",
-            at = @At("HEAD")
+            method = "modifyAppliedDamage",
+            at = @At("TAIL"),
+            cancellable = true
     )
-    private void breakRootOnAttack(Entity target, CallbackInfo ci) {
-        if (target instanceof LivingEntity livingTarget) {
-            final RootedEntity rootedTarget = (RootedEntity) livingTarget;
-            final LivingEntity attacker = (LivingEntity) (Object) this;
-            if (rootedTarget.frostiful$isRooted()) {
-                if (target.world instanceof ServerWorld serverWorld) {
-                    FrostifulConfig config = Frostiful.getConfig();
+    private void breakRootOnAttack(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
+        if (this.frostiful$isRooted()) {
+            if (this.world instanceof ServerWorld serverWorld) {
+                FrostifulConfig config = Frostiful.getConfig();
+                float damage = config.combatConfig.getBreakFrozenDamage() + cir.getReturnValue();
+                this.frostiful$breakRoot();
 
-                    // calculate break damage
-                    int iceBreakerLevel = FrostifulEnchantmentHelper.getIceBreakerLevel(attacker);
-                    float damage = config.combatConfig.getBreakFrozenDamage();
-                    damage += iceBreakerLevel * config.combatConfig.getIceBreakerDamagePerLevel();
-
-                    // apply damage and remove frozen effect
-                    livingTarget.damage(FrostifulDamageSource.frozenAttack(attacker), damage);
-                    rootedTarget.frostiful$breakRoot();
-
-                    // spawn particles
-                    ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
-                    serverWorld.spawnParticles(
-                            shatteredIce,
-                            target.getX(), target.getY(), target.getZ(),
-                            500, 0.5, 1.0, 0.5, 1.0
-                    );
-                }
-                target.world.playSound(
+                ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
+                serverWorld.spawnParticles(
+                        shatteredIce,
+                        this.getX(), this.getY(), this.getZ(),
+                        500,
+                        0.5, 1.0, 0.5,
+                        1.0
+                );
+                this.world.playSound(
                         null,
-                        target.getBlockPos(),
+                        this.getBlockPos(),
                         SoundEvents.BLOCK_GLASS_BREAK,
                         SoundCategory.AMBIENT,
                         1.0f, 0.75f
                 );
+
+                if (source.getAttacker() instanceof LivingEntity attacker) {
+                    damage += FrostifulEnchantmentHelper.getIceBreakerDamage(attacker);
+                }
+
+                cir.setReturnValue(damage);
             }
         }
     }
