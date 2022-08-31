@@ -15,7 +15,7 @@ public class FrostifulEnchantmentHelper {
         return EnchantmentHelper.getEquipmentLevel(FrostifulEnchantments.HEAT_DRAIN, entity);
     }
 
-    public static float getIceBreakerDamage(LivingEntity user) {
+    public static float getIceBreakerBonusDamage(LivingEntity user) {
         FrostifulConfig config = Frostiful.getConfig();
         int level = EnchantmentHelper.getEquipmentLevel(FrostifulEnchantments.ICE_BREAKER, user);
         return level * config.combatConfig.getIceBreakerDamagePerLevel();

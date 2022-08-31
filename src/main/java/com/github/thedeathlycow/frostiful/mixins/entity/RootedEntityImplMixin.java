@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantmentHelper;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
-import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -22,7 +21,6 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -132,7 +130,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
         if (this.frostiful$isRooted()) {
             if (this.world instanceof ServerWorld serverWorld) {
                 FrostifulConfig config = Frostiful.getConfig();
-                float damage = config.combatConfig.getBreakFrozenDamage() + cir.getReturnValue();
+                float damage = config.combatConfig.getIceBreakerBaseDamage() + cir.getReturnValue();
                 this.frostiful$breakRoot();
 
                 ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
@@ -152,7 +150,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                 );
 
                 if (source.getAttacker() instanceof LivingEntity attacker) {
-                    damage += FrostifulEnchantmentHelper.getIceBreakerDamage(attacker);
+                    damage += FrostifulEnchantmentHelper.getIceBreakerBonusDamage(attacker);
                 }
 
                 cir.setReturnValue(damage);

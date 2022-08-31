@@ -12,7 +12,7 @@ public class CombatConfigGroup implements ConfigData {
 
     float iceBreakerDamagePerLevel = 1.0f;
 
-    float breakFrozenDamage = 3.0f;
+    float iceBreakerBaseDamage = 3.0f;
 
     double maxFrostSpellDistance = 25;
 
@@ -32,8 +32,8 @@ public class CombatConfigGroup implements ConfigData {
         return iceBreakerDamagePerLevel;
     }
 
-    public float getBreakFrozenDamage() {
-        return breakFrozenDamage;
+    public float getIceBreakerBaseDamage() {
+        return iceBreakerBaseDamage;
     }
 
     public double getMaxFrostSpellDistance() {
