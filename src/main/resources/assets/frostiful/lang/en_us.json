@@ -61,6 +61,6 @@
   "subtitles.entity.frostiful.frost_spell.freeze": "Entity freezes",
   "effect.frostiful.frozen": "Frozen",
   "effect.frostiful.warmth": "Warmth",
-  "enchantment.frostiful.heat_drain": "Enervation",
+  "enchantment.frostiful.enervation": "Enervation",
   "enchantment.frostiful.ice_breaker": "Ice Breaker"
 }

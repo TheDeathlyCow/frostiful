@@ -15,9 +15,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
-public class HeatDrainEnchantment extends Enchantment {
+public class EnervationEnchantment extends Enchantment {
 
-    public HeatDrainEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
+    public EnervationEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
         super(weight, FrostifulEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
     }
 

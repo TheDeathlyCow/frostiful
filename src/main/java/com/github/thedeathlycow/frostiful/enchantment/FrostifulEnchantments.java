@@ -8,11 +8,11 @@ import net.minecraft.util.registry.Registry;
 
 public class FrostifulEnchantments {
 
-    public static final Enchantment HEAT_DRAIN = new HeatDrainEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
+    public static final Enchantment ENERVATION = new EnervationEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
     public static final Enchantment ICE_BREAKER = new IceBreakerEnchantment(Enchantment.Rarity.RARE, new EquipmentSlot[]{EquipmentSlot.MAINHAND});
 
     public static void registerEnchantments() {
-        register("heat_drain", HEAT_DRAIN);
+        register("enervation", ENERVATION);
         register("ice_breaker", ICE_BREAKER);
     }
 

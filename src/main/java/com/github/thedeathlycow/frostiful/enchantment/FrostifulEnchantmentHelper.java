@@ -12,7 +12,7 @@ public class FrostifulEnchantmentHelper {
     }
 
     public static int getHeatDrainLevel(LivingEntity entity) {
-        return EnchantmentHelper.getEquipmentLevel(FrostifulEnchantments.HEAT_DRAIN, entity);
+        return EnchantmentHelper.getEquipmentLevel(FrostifulEnchantments.ENERVATION, entity);
     }
 
     public static float getIceBreakerBonusDamage(LivingEntity user) {
