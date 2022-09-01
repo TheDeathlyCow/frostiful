@@ -24,4 +24,5 @@ public class IceBreakerEnchantment extends Enchantment {
     public int getMaxLevel() {
         return 5;
     }
+
 }
