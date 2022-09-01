@@ -32,8 +32,8 @@
     "modmenu": [
       "com.github.thedeathlycow.frostiful.init.FrostifulModMenu"
     ],
-    "frame-enchantments:targets": [
-      "com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargetsEntryPoint"
+    "mm:early_risers": [
+      "com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargetASM"
     ]
   },
   "mixins": [
@@ -44,7 +44,7 @@
     "fabricloader": ">=0.14.9",
     "fabric": "*",
     "minecraft": "1.19.2",
-    "frame": "*",
+    "mm": ">=2.3",
     "java": ">=17"
   },
   "suggests": {

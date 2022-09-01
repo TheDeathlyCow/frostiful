@@ -4,6 +4,7 @@
 	"package": "com.github.thedeathlycow.frostiful.mixins",
 	"compatibilityLevel": "JAVA_17",
 	"mixins": [
+		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",

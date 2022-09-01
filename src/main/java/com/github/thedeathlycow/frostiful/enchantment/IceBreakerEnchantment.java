@@ -7,7 +7,7 @@ import net.minecraft.entity.EquipmentSlot;
 public class IceBreakerEnchantment extends Enchantment {
 
     protected IceBreakerEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, FrostifulEnchantmentTargets.FROST_WAND, slotTypes);
+        super(weight, FrostifulEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
     }
 
     @Override

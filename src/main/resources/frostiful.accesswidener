@@ -9,4 +9,5 @@ accessible  class   net/minecraft/client/gui/hud/InGameHud$HeartType
 # ProjectileEntity constructor is package private for some reason...
 extendable  method  net/minecraft/entity/projectile/ProjectileEntity <init> (Lnet/minecraft/entity/EntityType;Lnet/minecraft/world/World;)V
 
-
+# Unseal EnchantmentTarget
+extendable class net/minecraft/enchantment/EnchantmentTarget

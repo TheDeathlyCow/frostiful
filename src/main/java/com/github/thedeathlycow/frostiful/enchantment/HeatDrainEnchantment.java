@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class HeatDrainEnchantment extends Enchantment {
 
     public HeatDrainEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, FrostifulEnchantmentTargets.FROST_WAND, slotTypes);
+        super(weight, FrostifulEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
     }
 
     @Override
