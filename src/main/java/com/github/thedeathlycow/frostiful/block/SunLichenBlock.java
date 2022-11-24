@@ -34,10 +34,12 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
 
     private final int heatLevel;
 
-    public SunLichenBlock(final int heatLevel, Settings settings) {
+    public SunLichenBlock(int heatLevel, Settings settings) {
         super(settings);
         this.heatLevel = heatLevel;
-        LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DANGER_OTHER);
+        if (heatLevel > 0){
+            LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DANGER_OTHER);
+        }
     }
 
     @Override
