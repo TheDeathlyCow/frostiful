@@ -2,17 +2,14 @@ package com.github.thedeathlycow.frostiful.test.sun_lichen;
 
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.server.command.TimeCommand;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
-public class SunLichenPathfindingTests {
+public final class SunLichenPathfindingTests {
 
     @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.big")
     public void villager_does_not_collide_with_sun_lichen(TestContext context) {
