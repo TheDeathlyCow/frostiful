@@ -36,7 +36,10 @@ public class FrostSpellEntity extends SpellEntity {
         Box box = this.getBoundingBox().expand(4.0, 4.0, 4.0);
         List<LivingEntity> targets = this.world.getNonSpectatingEntities(LivingEntity.class, box);
         for (var target : targets) {
-            this.applySingleTargetEffect(target);
+            Entity owner = this.getOwner();
+            if (owner == null || !target.getUuid().equals(owner.getUuid())) {
+                this.applySingleTargetEffect(target);
+            }
         }
         this.world.playSound(
                 null,
