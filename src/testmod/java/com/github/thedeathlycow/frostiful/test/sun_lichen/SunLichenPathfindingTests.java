@@ -10,7 +10,7 @@ import net.minecraft.util.math.BlockPos;
 @SuppressWarnings("unused")
 public class SunLichenPathfindingTests {
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.big", required = false)
+    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.big")
     public void villagerDoesNotCollideWithSunLichen(TestContext context) {
         final BlockPos start = new BlockPos(1, 2, 1);
         final BlockPos end = new BlockPos(10, 2, 7);
@@ -19,7 +19,7 @@ public class SunLichenPathfindingTests {
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);
         entity.setFrozenTicks(freezeAmount);
         context.expectEntityWithData(start, EntityType.VILLAGER, Entity::getFrozenTicks, freezeAmount);
-        context.startMovingTowards(entity, end, 1.0f);
+        context.startMovingTowards(entity, end, 0.7f);
         context.expectEntityWithDataEnd(end, EntityType.VILLAGER, Entity::getFrozenTicks, freezeAmount);
     }
 

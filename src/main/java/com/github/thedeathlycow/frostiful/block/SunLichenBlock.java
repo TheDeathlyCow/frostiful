@@ -5,11 +5,15 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.FireBlock;
 import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.damage.DamageSource;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -33,6 +37,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     public SunLichenBlock(final int heatLevel, Settings settings) {
         super(settings);
         this.heatLevel = heatLevel;
+        LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DANGER_OTHER);
     }
 
     @Override
