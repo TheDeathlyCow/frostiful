@@ -18,6 +18,8 @@
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
   "block.frostiful.warm_sun_lichen": "Warm Sun Lichen",
   "block.frostiful.hot_sun_lichen": "Hot Sun Lichen",
+  "entity.frostiful.frost_spell": "Frost Spell",
+  "entity.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
   "frostiful.commands.frost.exception.not_living_entity": "Target is not a living entity!",
   "commands.frostiful.frost.add.success": "Added %d frost to %s (now %d)",
   "commands.frostiful.frost.remove.success": "Removed %d frost to %s (now %d)",
