@@ -12,12 +12,10 @@ public class FrostifulStatusEffects {
 
     public static final String WARMTH_MODIFIER_ID = "c374d1af-dbea-4d2c-bbb1-7d1702a0ab6b";
 
-    public static final StatusEffect FROZEN = new SimpleStatusEffect(StatusEffectCategory.HARMFUL, 0xADD8E6);
     public static final StatusEffect WARMTH = new SimpleStatusEffect(StatusEffectCategory.BENEFICIAL, 0xE3963E)
             .addAttributeModifier(FrostifulEntityAttributes.FROST_RESISTANCE, WARMTH_MODIFIER_ID, 1.0, EntityAttributeModifier.Operation.ADDITION);
 
     public static void registerStatusEffects() {
-        register("frozen", FROZEN);
         register("warmth", WARMTH);
     }
 
