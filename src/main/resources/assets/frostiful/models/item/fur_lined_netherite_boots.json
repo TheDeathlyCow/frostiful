@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "frostiful:item/fur_lined_netherite_boots"
-  }
-}
