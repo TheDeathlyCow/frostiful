@@ -25,13 +25,13 @@ public class FrostWandModel extends Model {
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
         ModelPartData root = modelData.getRoot();
-        ModelPartData bb_main = root.addChild("frost_wand", ModelPartBuilder.create().uv(0, 0).cuboid(0.0F, -23.0F, -1.0F, 1.0F, 23.0F, 1.0F, new Dilation(0.0F))
+        ModelPartData bb_main = modelPartData.addChild("bb_main", ModelPartBuilder.create().uv(0, 0).cuboid(0.0F, -23.0F, -1.0F, 1.0F, 23.0F, 1.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(-1.0F, -25.0F, -2.0F, 3.0F, 2.0F, 3.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(0.0F, -31.0F, -1.0F, 1.0F, 5.0F, 1.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(0.0F, -30.0F, -3.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(2.0F, -30.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(0.0F, -30.0F, 1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(-2.0F, -30.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -33.0F, -1.0F, 1.0F, 7.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -31.0F, -3.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(2.0F, -31.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -31.0F, 1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-2.0F, -31.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(2.0F, -25.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 1.0F, 3.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(-2.0F, -25.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F))
@@ -53,7 +53,6 @@ public class FrostWandModel extends Model {
                 .uv(0, 0).cuboid(-1.0F, -24.0F, -3.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(2.0F, -24.0F, -3.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(1.0F, -24.0F, -3.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
-
 
         return TexturedModelData.of(modelData, 32, 32);
     }
