@@ -10,16 +10,19 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
 public class FrostSpellEntity extends SpellEntity {
 
-    public FrostSpellEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
+    private static final double EFFECT_CLOUD_SIZE = 4.0;
+
+    public FrostSpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
         super(world, owner, velocityX, velocityY, velocityZ);
     }
 
-    public FrostSpellEntity(World world, LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
+    public FrostSpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
         super(world, owner, velocityX, velocityY, velocityZ, maxDistance);
     }
 
@@ -33,7 +36,7 @@ public class FrostSpellEntity extends SpellEntity {
             return;
         }
 
-        Box box = this.getBoundingBox().expand(4.0, 4.0, 4.0);
+        Box box = this.getBoundingBox().expand(EFFECT_CLOUD_SIZE, EFFECT_CLOUD_SIZE, EFFECT_CLOUD_SIZE);
         List<LivingEntity> targets = this.world.getNonSpectatingEntities(LivingEntity.class, box);
         for (var target : targets) {
             Entity owner = this.getOwner();
