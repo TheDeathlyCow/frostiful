@@ -9,8 +9,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.TridentEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
 import net.minecraft.client.render.model.json.ModelTransformation;
@@ -27,7 +25,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
     public static final ModelIdentifier INVENTORY_MODEL_ID = new ModelIdentifier(new Identifier(Frostiful.MODID, "frost_wand_in_inventory"), "inventory");
 
     private final EntityModelLayer modelLayer;
-    private TridentEntityModel model;
+    private FrostWandModel model;
     private ItemRenderer itemRenderer;
     private BakedModel inventoryModel;
 
@@ -50,7 +48,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
             matrices.push();
             matrices.scale(1.0F, -1.0F, -1.0F);
             VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(
-                    vertexConsumers, this.model.getLayer(TridentEntityModel.TEXTURE), false, stack.hasGlint()
+                    vertexConsumers, this.model.getLayer(FrostWandModel.TEXTURE), false, stack.hasGlint()
             );
             this.model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
             matrices.pop();
@@ -65,7 +63,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
     @Override
     public void reload(ResourceManager manager) {
         MinecraftClient client = MinecraftClient.getInstance();
-        this.model = new TridentEntityModel(client.getEntityModelLoader().getModelPart(this.modelLayer));
+        this.model = new FrostWandModel(client.getEntityModelLoader().getModelPart(this.modelLayer));
         this.itemRenderer = client.getItemRenderer();
         this.inventoryModel = client.getBakedModelManager().getModel(INVENTORY_MODEL_ID);
     }

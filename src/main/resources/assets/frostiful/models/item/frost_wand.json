@@ -2,7 +2,7 @@
 	"parent": "builtin/entity",
 	"gui_light": "front",
 	"textures": {
-		"particle": "item/trident"
+		"particle": "frostiful:item/frost_wand_in_inventory"
 	},
 	"display": {
 		"thirdperson_righthand": {

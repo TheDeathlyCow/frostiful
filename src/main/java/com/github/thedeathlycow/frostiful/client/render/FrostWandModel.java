@@ -1,24 +1,61 @@
 package com.github.thedeathlycow.frostiful.client.render;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import net.fabricmc.api.EnvType;
-import net.fabricmc.api.Environment;
-import net.minecraft.client.model.Model;
-import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
+import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
-@Environment(EnvType.CLIENT)
+/**
+ * Made with Block Bench
+ */
 public class FrostWandModel extends Model {
     public static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/frost_wand.png");
+    public static final EntityModelLayer FROST_WAND_LAYER = new EntityModelLayer(new Identifier(Frostiful.MODID, "frost_wand"), "main");
 
     private final ModelPart root;
 
     public FrostWandModel(ModelPart root) {
         super(RenderLayer::getEntitySolid);
         this.root = root;
+    }
+
+    public static TexturedModelData getTexturedModelData() {
+        ModelData modelData = new ModelData();
+        ModelPartData root = modelData.getRoot();
+        ModelPartData bb_main = root.addChild("frost_wand", ModelPartBuilder.create().uv(0, 0).cuboid(0.0F, -23.0F, -1.0F, 1.0F, 23.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -25.0F, -2.0F, 3.0F, 2.0F, 3.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -31.0F, -1.0F, 1.0F, 5.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -30.0F, -3.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(2.0F, -30.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -30.0F, 1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-2.0F, -30.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(2.0F, -25.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 1.0F, 3.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-2.0F, -25.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -25.0F, 1.0F, 3.0F, 1.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -25.0F, -3.0F, 3.0F, 1.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(3.0F, -24.0F, 0.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(3.0F, -24.0F, -2.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(2.0F, -24.0F, -2.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -24.0F, -3.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -24.0F, -3.0F, 1.0F, 1.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(2.0F, -24.0F, 1.0F, 1.0F, 1.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(1.0F, -24.0F, 2.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(0.0F, -24.0F, 2.0F, 1.0F, 1.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -24.0F, 2.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -24.0F, 1.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-2.0F, -24.0F, 0.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-2.0F, -24.0F, -1.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-2.0F, -24.0F, -2.0F, 0.0F, 3.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -24.0F, -3.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(2.0F, -24.0F, -3.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(1.0F, -24.0F, -3.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
+
+
+        return TexturedModelData.of(modelData, 32, 32);
     }
 
     @Override
