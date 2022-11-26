@@ -24,7 +24,7 @@ public class FrostWandModel extends Model {
 
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
-        ModelPartData root = modelData.getRoot();
+        ModelPartData modelPartData = modelData.getRoot();
         ModelPartData bb_main = modelPartData.addChild("bb_main", ModelPartBuilder.create().uv(0, 0).cuboid(0.0F, -23.0F, -1.0F, 1.0F, 23.0F, 1.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(-1.0F, -25.0F, -2.0F, 3.0F, 2.0F, 3.0F, new Dilation(0.0F))
                 .uv(0, 0).cuboid(0.0F, -33.0F, -1.0F, 1.0F, 7.0F, 1.0F, new Dilation(0.0F))
