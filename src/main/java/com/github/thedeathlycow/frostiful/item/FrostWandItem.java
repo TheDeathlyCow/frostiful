@@ -17,6 +17,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -72,7 +73,7 @@ public class FrostWandItem extends Item implements Vanishable {
                 world.playSound(
                         null,
                         soundPos.getX(), soundPos.getY(), soundPos.getZ(),
-                        FrostifulSoundEvents.ITEM_FROST_WANT_CAST_SPELL, SoundCategory.AMBIENT,
+                        FrostifulSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
                         1.0f, 1.0f
                 );
 
@@ -93,6 +94,17 @@ public class FrostWandItem extends Item implements Vanishable {
         if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
             return TypedActionResult.fail(itemStack);
         } else {
+
+            if (!world.isClient) {
+                world.playSound(
+                        null,
+                        user.getX(), user.getY(), user.getZ(),
+                        FrostifulSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
+                        SoundCategory.PLAYERS,
+                        1.0f, 1.0f
+                );
+            }
+
             user.setCurrentHand(hand);
             return TypedActionResult.consume(itemStack);
         }

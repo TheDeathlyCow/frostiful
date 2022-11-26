@@ -44,6 +44,7 @@
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "subtitles.frostiful.block.campfire.hiss": "Campfire hisses",
   "subtitles.item.frostiful.frost_wand.cast_spell": "Frost wand fires spell",
+  "subtitles.item.frostiful.frost_wand.prepare_cast": "Frost wand charges spell",
   "subtitles.entity.frostiful.frost_spell.freeze": "Entity freezes",
   "effect.frostiful.frozen": "Frozen",
   "effect.frostiful.warmth": "Warmth",

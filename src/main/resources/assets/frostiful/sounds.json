@@ -1,27 +1,33 @@
 {
-  "block.frostiful.sun_lichen.discharge": {
-    "sounds": [
-      "minecraft:random/fizz"
-    ],
-    "subtitle": "subtitles.frostiful.block.sun_lichen.discharge"
-  },
-  "block.frostiful.campfire.hiss": {
-    "sounds": [
-      "minecraft:random/fizz"
-    ],
-    "subtitle": "subtitles.frostiful.block.campfire.hiss"
-  },
-  "item.frostiful.frost_wand.cast_spell": {
-    "sounds": [
-      "mob/evocation_illager/cast1",
-      "mob/evocation_illager/cast2"
-    ],
-    "subtitle": "subtitles.item.frostiful.frost_wand.cast_spell"
-  },
-  "entity.frostiful.frost_spell.freeze": {
-    "sounds": [
-      "frostiful:entity/frost_spell/freeze"
-    ],
-    "subtitle": "subtitles.entity.frostiful.frost_spell.freeze"
-  }
+	"block.frostiful.sun_lichen.discharge": {
+		"sounds": [
+			"minecraft:random/fizz"
+		],
+		"subtitle": "subtitles.frostiful.block.sun_lichen.discharge"
+	},
+	"block.frostiful.campfire.hiss": {
+		"sounds": [
+			"minecraft:random/fizz"
+		],
+		"subtitle": "subtitles.frostiful.block.campfire.hiss"
+	},
+	"item.frostiful.frost_wand.cast_spell": {
+		"sounds": [
+			"mob/evocation_illager/cast1",
+			"mob/evocation_illager/cast2"
+		],
+		"subtitle": "subtitles.item.frostiful.frost_wand.cast_spell"
+	},
+	"item.frostiful.frost_wand.prepare_cast": {
+		"sounds": [
+			"mob/illusion_illager/prepare_blindness"
+		],
+		"subtitle": "subtitles.item.frostiful.frost_wand.prepare_cast"
+	},
+	"entity.frostiful.frost_spell.freeze": {
+		"sounds": [
+			"frostiful:entity/frost_spell/freeze"
+		],
+		"subtitle": "subtitles.entity.frostiful.frost_spell.freeze"
+	}
 }
