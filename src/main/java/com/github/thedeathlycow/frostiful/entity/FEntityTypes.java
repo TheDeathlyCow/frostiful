@@ -9,7 +9,7 @@ import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulEntityTypes {
+public class FEntityTypes {
 
     public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW =
             FabricEntityTypeBuilder.create(

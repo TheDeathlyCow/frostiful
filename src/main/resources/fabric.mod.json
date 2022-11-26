@@ -1,54 +1,50 @@
 {
-  "schemaVersion": 1,
-  "id": "frostiful",
-  "version": "${version}",
-
-  "name": "Frostiful",
-  "description": "A Vanilla+ Snow & Frost Update Experience",
-  "authors": [
-    "TheDeathlyCow"
-  ],
-  "contact": {
-    "homepage": "https://github.com/TheDeathlyCow",
-    "sources": "https://github.com/TheDeathlyCow/frostiful",
-    "issues": "https://github.com/TheDeathlyCow/frostiful/issues",
-    "wiki": "https://github.com/TheDeathlyCow/frostiful/wiki"
-  },
-
-  "license": "LGPL-3.0",
-  "icon": "assets/frostiful/icon.png",
-
-  "environment": "*",
-  "entrypoints": {
-    "main": [
-      "com.github.thedeathlycow.frostiful.init.Frostiful"
-    ],
-    "server": [
-      "com.github.thedeathlycow.frostiful.init.FrostifulServer"
-    ],
-    "client": [
-      "com.github.thedeathlycow.frostiful.init.FrostifulClient"
-    ],
-    "modmenu": [
-      "com.github.thedeathlycow.frostiful.init.FrostifulModMenu"
-    ],
-    "mm:early_risers": [
-      "com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargetASM"
-    ]
-  },
-  "mixins": [
-    "frostiful.mixins.json"
-  ],
-
-  "depends": {
-    "fabricloader": ">=0.14.9",
-    "fabric": "*",
-    "minecraft": "1.19.2",
-    "mm": ">=2.3",
-    "java": ">=17"
-  },
-  "suggests": {
-    "another-mod": "*"
-  },
-  "accessWidener" : "frostiful.accesswidener"
+	"schemaVersion": 1,
+	"id": "frostiful",
+	"version": "${version}",
+	"name": "Frostiful",
+	"description": "A Vanilla+ Snow & Frost Update Experience",
+	"authors": [
+		"TheDeathlyCow"
+	],
+	"contact": {
+		"homepage": "https://github.com/TheDeathlyCow",
+		"sources": "https://github.com/TheDeathlyCow/frostiful",
+		"issues": "https://github.com/TheDeathlyCow/frostiful/issues",
+		"wiki": "https://github.com/TheDeathlyCow/frostiful/wiki"
+	},
+	"license": "LGPL-3.0",
+	"icon": "assets/frostiful/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.github.thedeathlycow.frostiful.init.Frostiful"
+		],
+		"server": [
+			"com.github.thedeathlycow.frostiful.init.FrostifulServer"
+		],
+		"client": [
+			"com.github.thedeathlycow.frostiful.init.FrostifulClient"
+		],
+		"modmenu": [
+			"com.github.thedeathlycow.frostiful.init.FrostifulModMenu"
+		],
+		"mm:early_risers": [
+			"com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
+		]
+	},
+	"mixins": [
+		"frostiful.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.14.9",
+		"fabric": "*",
+		"minecraft": "1.19.2",
+		"mm": ">=2.3",
+		"java": ">=17"
+	},
+	"suggests": {
+		"another-mod": "*"
+	},
+	"accessWidener": "frostiful.accesswidener"
 }

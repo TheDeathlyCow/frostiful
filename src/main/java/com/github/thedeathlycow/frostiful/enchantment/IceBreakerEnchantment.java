@@ -1,13 +1,13 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
-import com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargets;
+import com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargets;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 
 public class IceBreakerEnchantment extends Enchantment {
 
     protected IceBreakerEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, FrostifulEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
+        super(weight, FEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
     }
 
     @Override

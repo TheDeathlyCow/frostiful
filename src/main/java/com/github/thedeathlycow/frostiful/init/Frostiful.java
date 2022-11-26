@@ -1,21 +1,21 @@
 package com.github.thedeathlycow.frostiful.init;
 
-import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
-import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
+import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantments;
-import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
-import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
-import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.enchantment.FEnchantments;
+import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
+import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
-import com.github.thedeathlycow.frostiful.item.FrostifulItems;
-import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
+import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
 import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
-import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
-import com.github.thedeathlycow.frostiful.world.FrostifulGameRules;
-import com.github.thedeathlycow.frostiful.world.gen.feature.FrostifulPlacedFeatures;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.world.FGameRules;
+import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -44,17 +44,17 @@ public class Frostiful implements ModInitializer {
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
 
-        FrostifulEntityAttributes.registerAttributes();
-        FrostifulDamageSource.registerDamageSources();
-        FrostifulBlocks.registerBlocks();
-        FrostifulItems.registerItems();
-        FrostifulEntityTypes.registerEntities();
-        FrostifulGameRules.registerGamerules();
-        FrostifulSoundEvents.registerSoundEvents();
-        FrostifulPlacedFeatures.placeFeatures();
-        FrostifulStatusEffects.registerStatusEffects();
-        FrostifulEnchantments.registerEnchantments();
-        FrostifulParticleTypes.registerParticleTypes();
+        FEntityAttributes.registerAttributes();
+        FDamageSource.registerDamageSources();
+        FBlocks.registerBlocks();
+        FItems.registerItems();
+        FEntityTypes.registerEntities();
+        FGameRules.registerGamerules();
+        FSoundEvents.registerSoundEvents();
+        FPlacedFeatures.placeFeatures();
+        FStatusEffects.registerStatusEffects();
+        FEnchantments.registerEnchantments();
+        FParticleTypes.registerParticleTypes();
 
         LOGGER.info("Initialized Frostiful!");
     }

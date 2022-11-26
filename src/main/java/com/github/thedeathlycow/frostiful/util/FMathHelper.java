@@ -4,7 +4,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.Vec3f;
 import net.minecraft.util.math.Vec3i;
 
-public class FrostifulMathHelper {
+public class FMathHelper {
 
     /**
      * Returns the mid point of two vectors.

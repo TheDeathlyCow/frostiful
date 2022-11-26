@@ -2,10 +2,9 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.util.FrostifulNbtHelper;
+import com.github.thedeathlycow.frostiful.util.FNbtHelper;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.nbt.NbtHelper;
 
 public interface RootedEntity {
 
@@ -35,7 +34,7 @@ public interface RootedEntity {
     }
 
     static void frostiful$addRootedTicksToNbt(RootedEntity entity, NbtCompound nbt) {
-        NbtCompound frostifulNbt = FrostifulNbtHelper.getOrDefault(
+        NbtCompound frostifulNbt = FNbtHelper.getOrDefault(
                 nbt,
                 FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
                 NbtCompound::getCompound,

@@ -6,6 +6,9 @@ import com.github.thedeathlycow.frostiful.client.render.FrostWandModel;
 import com.github.thedeathlycow.frostiful.client.render.entity.FrostifulEntityRenderers;
 import com.github.thedeathlycow.frostiful.item.FrostifulItems;
 import com.github.thedeathlycow.frostiful.particle.client.FrostifulParticleFactoryRegistry;
+import com.github.thedeathlycow.frostiful.block.FCutouts;
+import com.github.thedeathlycow.frostiful.client.render.entity.FEntityRenderers;
+import com.github.thedeathlycow.frostiful.particle.client.FParticleFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -37,6 +40,9 @@ public class FrostifulClient implements ClientModInitializer {
                 }
         );
 
+        FCutouts.registerCutouts();
+        FEntityRenderers.registerEntityRenderers();
+        FParticleFactoryRegistry.registerFactories();
         Frostiful.LOGGER.info("Initialized Frostiful client!");
     }
 }

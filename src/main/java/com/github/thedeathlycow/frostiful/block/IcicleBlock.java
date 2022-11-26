@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
+import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
@@ -133,7 +133,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
-            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FrostifulDamageSource.ICICLE);
+            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FDamageSource.ICICLE);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
                 FrostHelper.addLivingFrost(livingEntity, config.icicleConfig.getIcicleCollisionFreezeAmount());
@@ -258,7 +258,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
 
     @Override
     public DamageSource getDamageSource() {
-        return FrostifulDamageSource.FALLING_ICICLE;
+        return FDamageSource.FALLING_ICICLE;
     }
 
     @Override
@@ -385,7 +385,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static void place(WorldAccess world, BlockPos pos, Direction direction, Thickness thickness) {
-        BlockState blockState = FrostifulBlocks.ICICLE.getDefaultState().with(VERTICAL_DIRECTION, direction).with(THICKNESS, thickness).with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
+        BlockState blockState = FBlocks.ICICLE.getDefaultState().with(VERTICAL_DIRECTION, direction).with(THICKNESS, thickness).with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
         world.setBlockState(pos, blockState, 3);
     }
 
@@ -411,7 +411,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         } else {
             Direction direction = state.get(VERTICAL_DIRECTION);
             BiPredicate<BlockPos, BlockState> continuePredicate = (posx, statex) -> {
-                return statex.isOf(FrostifulBlocks.ICICLE) && statex.get(VERTICAL_DIRECTION) == direction;
+                return statex.isOf(FBlocks.ICICLE) && statex.get(VERTICAL_DIRECTION) == direction;
             };
             Predicate<BlockState> stopPredicate = (statex) -> {
                 return isTip(statex, allowMerged);
@@ -442,7 +442,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
             return biome.isCold(anchorPos);
         }
 
-        return anchorState.isIn(FrostifulBlockTags.ICICLE_GROWABLE);
+        return anchorState.isIn(FBlockTags.ICICLE_GROWABLE);
     }
 
     private static Optional<BlockPos> searchInDirection(WorldAccess world, BlockPos pos, Direction.AxisDirection direction, BiPredicate<BlockPos, BlockState> continuePredicate, Predicate<BlockState> stopPredicate, int range) {
@@ -505,7 +505,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isUnstable(BlockState state) {
-        return state.isOf(FrostifulBlocks.ICICLE) && state.get(UNSTABLE);
+        return state.isOf(FBlocks.ICICLE) && state.get(UNSTABLE);
     }
 
     private static boolean isPointingUp(BlockState state) {
@@ -517,7 +517,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isIcicleFacingDirection(BlockState state, Direction direction) {
-        return state.isOf(FrostifulBlocks.ICICLE) && state.get(VERTICAL_DIRECTION) == direction;
+        return state.isOf(FBlocks.ICICLE) && state.get(VERTICAL_DIRECTION) == direction;
     }
 
     private static boolean isTip(BlockState state, Direction direction) {
@@ -525,7 +525,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isTip(BlockState state, boolean allowMerged) {
-        if (!state.isOf(FrostifulBlocks.ICICLE)) {
+        if (!state.isOf(FBlocks.ICICLE)) {
             return false;
         } else {
             Thickness thickness = state.get(THICKNESS);
@@ -549,11 +549,11 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isHeldByIcicleFallable(BlockState state, WorldView world, BlockPos pos) {
-        return !(world.getBlockState(pos.up()).isIn(FrostifulBlockTags.ICICLE_GROWABLE)) || isHeldByIcicle(state, world, pos);
+        return !(world.getBlockState(pos.up()).isIn(FBlockTags.ICICLE_GROWABLE)) || isHeldByIcicle(state, world, pos);
     }
 
     private static boolean isHeldByIcicle(BlockState state, WorldView world, BlockPos pos) {
-        return isPointingDown(state) && world.getBlockState(pos.up()).isOf(FrostifulBlocks.ICICLE);
+        return isPointingDown(state) && world.getBlockState(pos.up()).isOf(FBlocks.ICICLE);
     }
 
     private static void createUnstableParticle(World world, BlockPos pos, BlockState state) {

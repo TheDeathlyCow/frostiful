@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer;
 
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
-import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;

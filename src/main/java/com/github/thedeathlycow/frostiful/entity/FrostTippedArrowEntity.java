@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FrostifulItems;
+import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -20,16 +20,16 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
     }
 
     public FrostTippedArrowEntity(World world, LivingEntity owner) {
-        super(FrostifulEntityTypes.FROST_TIPPED_ARROW, owner, world);
+        super(FEntityTypes.FROST_TIPPED_ARROW, owner, world);
     }
 
     public FrostTippedArrowEntity(World world, double x, double y, double z) {
-        super(FrostifulEntityTypes.FROST_TIPPED_ARROW, x, y, z, world);
+        super(FEntityTypes.FROST_TIPPED_ARROW, x, y, z, world);
     }
 
     @Override
     protected ItemStack asItemStack() {
-        return new ItemStack(FrostifulItems.FROST_TIPPED_ARROW);
+        return new ItemStack(FItems.FROST_TIPPED_ARROW);
     }
 
     public void tick() {

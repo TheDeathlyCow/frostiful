@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
@@ -150,7 +150,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                 );
 
                 if (source.getAttacker() instanceof LivingEntity attacker) {
-                    damage += FrostifulEnchantmentHelper.getIceBreakerBonusDamage(attacker);
+                    damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
                 }
 
                 cir.setReturnValue(damage);

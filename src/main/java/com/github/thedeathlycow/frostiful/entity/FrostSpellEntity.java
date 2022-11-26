@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -72,7 +72,7 @@ public class FrostSpellEntity extends SpellEntity {
                 target.world.playSound(
                         null,
                         target.getX(), target.getY(), target.getZ(),
-                        FrostifulSoundEvents.ENTITY_FROST_SPELL_FREEZE, SoundCategory.AMBIENT,
+                        FSoundEvents.ENTITY_FROST_SPELL_FREEZE, SoundCategory.AMBIENT,
                         1.0f, 1.0f
                 );
             }

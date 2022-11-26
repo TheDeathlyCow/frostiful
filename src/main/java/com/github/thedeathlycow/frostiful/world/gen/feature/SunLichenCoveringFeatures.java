@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature;
 
-import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
+import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
@@ -15,12 +15,12 @@ import net.minecraft.world.gen.feature.PlacedFeature;
 public class SunLichenCoveringFeatures {
 
     @SuppressWarnings("deprecation")
-    public static final RegistryEntry<ConfiguredFeature<?, ?>> SUN_LICHEN = FrostifulConfiguredFeatures.register(
+    public static final RegistryEntry<ConfiguredFeature<?, ?>> SUN_LICHEN = FConfiguredFeatures.register(
             "sun_lichen",
             new ConfiguredFeature<>(
                     Feature.MULTIFACE_GROWTH,
                     new MultifaceGrowthFeatureConfig(
-                            (MultifaceGrowthBlock) FrostifulBlocks.HOT_SUN_LICHEN,
+                            (MultifaceGrowthBlock) FBlocks.HOT_SUN_LICHEN,
                             20,
                             false,
                             true,
@@ -31,7 +31,7 @@ public class SunLichenCoveringFeatures {
             )
     );
 
-    public static final RegistryEntry<PlacedFeature> PLACED_SUN_LICHEN = FrostifulPlacedFeatures.register("sun_lichen", new PlacedFeature(
+    public static final RegistryEntry<PlacedFeature> PLACED_SUN_LICHEN = FPlacedFeatures.register("sun_lichen", new PlacedFeature(
                     SUN_LICHEN,
                     ImmutableList.of()
             )
