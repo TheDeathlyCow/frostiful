@@ -44,25 +44,25 @@ public abstract class LivingEntityPowderSnowMixin extends Entity {
     }
 
     @Redirect(
-            method = "addPowderSnowSlowIfNeeded()V",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;getLandingBlockState()Lnet/minecraft/block/BlockState;"
-            )
-    )
-    private BlockState doNotGetBlockState(LivingEntity instance) {
-        return null;
-    }
-
-    @Redirect(
             method = "addPowderSnowSlowIfNeeded",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/block/BlockState;isAir()Z"
             )
     )
-    private boolean doNotTestForAir(BlockState instance) {
+    private boolean ignoreAirTest(BlockState instance) {
         return false;
+    }
+
+    @Redirect(
+            method = "addPowderSnowSlowIfNeeded()V",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;getLandingBlockState()Lnet/minecraft/block/BlockState;"
+            )
+    )
+    private BlockState ignoreAirTestBlockStateOptimization(LivingEntity instance) {
+        return null;
     }
 
 }
