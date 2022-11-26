@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.LivingEntity;
@@ -66,17 +66,17 @@ public abstract class CampfireWarmthMixin {
                 LivingEntity.class,
                 Box.of(Vec3d.ofCenter(pos), boxLength, boxLength, boxLength),
                 (entity) -> {
-                    StatusEffectInstance instance = entity.getStatusEffect(FrostifulStatusEffects.WARMTH);
+                    StatusEffectInstance instance = entity.getStatusEffect(FStatusEffects.WARMTH);
                     return !entity.isSpectator() && (instance == null || (instance.getAmplifier() == 0 && instance.getDuration() < duration));
                 }
         );
 
         // apply warmth effect to all nearby entities
         for (LivingEntity entity : nearbyEntities) {
-            StatusEffectInstance instance = new StatusEffectInstance(FrostifulStatusEffects.WARMTH, duration, 0, true, true);
+            StatusEffectInstance instance = new StatusEffectInstance(FStatusEffects.WARMTH, duration, 0, true, true);
             entity.addStatusEffect(instance);
         }
 
-        world.playSound(null, pos, FrostifulSoundEvents.CAMPFIRE_HISS, SoundCategory.BLOCKS, 0.5F, 1.5f);
+        world.playSound(null, pos, FSoundEvents.CAMPFIRE_HISS, SoundCategory.BLOCKS, 0.5F, 1.5f);
     }
 }

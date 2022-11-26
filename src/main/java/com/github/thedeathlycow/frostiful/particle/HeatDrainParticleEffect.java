@@ -23,7 +23,7 @@ public class HeatDrainParticleEffect implements ParticleEffect {
 
     @Override
     public ParticleType<?> getType() {
-        return FrostifulParticleTypes.HEAT_DRAIN;
+        return FParticleTypes.HEAT_DRAIN;
     }
 
     @Override

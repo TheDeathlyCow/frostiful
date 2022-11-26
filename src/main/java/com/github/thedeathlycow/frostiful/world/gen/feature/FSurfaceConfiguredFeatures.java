@@ -8,9 +8,9 @@ import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 
-public class FrostifulSurfaceConfiguredFeatures {
+public class FSurfaceConfiguredFeatures {
 
-    public static final RegistryEntry<ConfiguredFeature<?, ?>> SUN_LICHEN_COVERED_ROCK = FrostifulConfiguredFeatures.register("sun_lichen_covered_rock", new ConfiguredFeature<>(FrostifulFeatures.COVERED_ROCK,
+    public static final RegistryEntry<ConfiguredFeature<?, ?>> SUN_LICHEN_COVERED_ROCK = FConfiguredFeatures.register("sun_lichen_covered_rock", new ConfiguredFeature<>(FFeatures.COVERED_ROCK,
             new CoveredRockFeatureConfig(
                     SimpleBlockStateProvider.of(Blocks.COBBLESTONE.getDefaultState()),
                     new CoveredRockSizeConfig(

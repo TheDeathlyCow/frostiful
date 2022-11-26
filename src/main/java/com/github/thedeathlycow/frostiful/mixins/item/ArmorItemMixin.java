@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.item;
 
-import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
+import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FrostResistantArmorMaterial;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
@@ -45,7 +45,7 @@ public class ArmorItemMixin {
             this.attributeModifiers.forEach(builder::put);
 
             builder.put(
-                    FrostifulEntityAttributes.FROST_RESISTANCE,
+                    FEntityAttributes.FROST_RESISTANCE,
                     new EntityAttributeModifier(
                             uUID,
                             "Armor frost resistance",

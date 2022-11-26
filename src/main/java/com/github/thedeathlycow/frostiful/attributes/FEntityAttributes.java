@@ -6,7 +6,7 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulEntityAttributes {
+public class FEntityAttributes {
 
     /**
      * Reduces incoming frost damage by a percentage. In units of 10%.

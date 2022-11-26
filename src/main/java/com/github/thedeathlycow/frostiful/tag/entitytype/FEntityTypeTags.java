@@ -6,7 +6,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulEntityTypeTags {
+public class FEntityTypeTags {
 
     public static final TagKey<EntityType<?>> FREEZE_IMMUNE = register("freeze_immune");
 

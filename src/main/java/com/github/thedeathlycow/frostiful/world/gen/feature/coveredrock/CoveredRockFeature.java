@@ -1,17 +1,14 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock;
 
-import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
+import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.MultifaceGrowthBlock;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
 import java.util.*;
@@ -53,7 +50,7 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
 
         for (BlockPos pos : BlockPos.iterate(from, to)) {
             BlockState current = world.getBlockState(pos);
-            if (pos.getSquaredDistance(origin) < maxSquareDistance && !current.isIn(FrostifulBlockTags.COVERED_ROCKS_CANNOT_REPLACE)) {
+            if (pos.getSquaredDistance(origin) < maxSquareDistance && !current.isIn(FBlockTags.COVERED_ROCKS_CANNOT_REPLACE)) {
                 BlockState baseState = config.base().getBlockState(random, pos);
                 world.setBlockState(pos, baseState, Block.NOTIFY_ALL);
             }
@@ -101,6 +98,6 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
     }
 
     private boolean isCoveringReplaceable(BlockState state) {
-        return state.isAir() || state.isIn(FrostifulBlockTags.COVERED_ROCK_COVERING_REPLACEABLE);
+        return state.isAir() || state.isIn(FBlockTags.COVERED_ROCK_COVERING_REPLACEABLE);
     }
 }

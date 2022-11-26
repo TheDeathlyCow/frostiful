@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
-import com.github.thedeathlycow.frostiful.item.FrostifulItems;
+import com.github.thedeathlycow.frostiful.item.FItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.AbstractSkeletonEntity;
 import net.minecraft.entity.mob.StrayEntity;
@@ -23,7 +23,7 @@ public abstract class StrayDefaultArrowItemMixin extends AbstractSkeletonEntity 
         if (stack.getItem() instanceof RangedWeaponItem) {
             Predicate<ItemStack> predicate = ((RangedWeaponItem) stack.getItem()).getHeldProjectiles();
             ItemStack itemStack = RangedWeaponItem.getHeldProjectile(this, predicate);
-            return itemStack.isEmpty() ? new ItemStack(FrostifulItems.FROST_TIPPED_ARROW) : itemStack;
+            return itemStack.isEmpty() ? new ItemStack(FItems.FROST_TIPPED_ARROW) : itemStack;
         } else {
             return ItemStack.EMPTY;
         }

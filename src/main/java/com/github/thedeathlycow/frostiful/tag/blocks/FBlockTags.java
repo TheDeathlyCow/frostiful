@@ -6,7 +6,7 @@ import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulBlockTags {
+public class FBlockTags {
 
     public static final TagKey<Block> ICICLE_GROWABLE = register("icicle_growable");
     public static final TagKey<Block> COVERED_ROCKS_CANNOT_REPLACE = register("covered_rocks_cannot_replace");

@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface Heatable {
 
     ImmutableBiMap<Block, Block> HEAT_LEVEL_INCREASES = new ImmutableBiMap.Builder<Block, Block>()
-            .put(FrostifulBlocks.COLD_SUN_LICHEN, FrostifulBlocks.COOL_SUN_LICHEN)
-            .put(FrostifulBlocks.COOL_SUN_LICHEN, FrostifulBlocks.WARM_SUN_LICHEN)
-            .put(FrostifulBlocks.WARM_SUN_LICHEN, FrostifulBlocks.HOT_SUN_LICHEN)
+            .put(FBlocks.COLD_SUN_LICHEN, FBlocks.COOL_SUN_LICHEN)
+            .put(FBlocks.COOL_SUN_LICHEN, FBlocks.WARM_SUN_LICHEN)
+            .put(FBlocks.WARM_SUN_LICHEN, FBlocks.HOT_SUN_LICHEN)
             .build();
 
     ImmutableBiMap<Block, Block> HEAT_LEVEL_DECREASES = HEAT_LEVEL_INCREASES.inverse();

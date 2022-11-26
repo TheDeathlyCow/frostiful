@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 
-public class FrostifulBiomeTags {
+public class FBiomeTags {
 
     public static TagKey<Biome> register(String id) {
         return TagKey.of(Registry.BIOME_KEY, new Identifier(Frostiful.MODID, id));

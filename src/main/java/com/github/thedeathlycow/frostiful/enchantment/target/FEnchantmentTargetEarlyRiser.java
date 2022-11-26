@@ -4,7 +4,7 @@ import com.chocohead.mm.api.ClassTinkerers;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.MappingResolver;
 
-public class FrostifulEnchantmentTargetASM implements Runnable {
+public class FEnchantmentTargetEarlyRiser implements Runnable {
 
     static final String FROSTIFUL_FROST_WAND = "FROSTIFUL_FROST_WAND";
 

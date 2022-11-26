@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
+import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
@@ -30,7 +30,7 @@ public abstract class FallingIcicleMixin {
     )
     private Consumer<Entity> freezeVictimsOnFall(Consumer<Entity> par1) {
 
-        if (this.block.getBlock() != FrostifulBlocks.ICICLE) {
+        if (this.block.getBlock() != FBlocks.ICICLE) {
             return par1;
         }
 

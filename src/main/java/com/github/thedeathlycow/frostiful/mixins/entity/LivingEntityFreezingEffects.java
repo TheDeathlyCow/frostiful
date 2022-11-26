@@ -1,27 +1,18 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
+import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.FrostifulEnchantmentHelper;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.entity.damage.FrostifulDamageSource;
-import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.*;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -29,11 +20,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.Objects;
 import java.util.UUID;
 
 @Mixin(LivingEntity.class)
@@ -156,8 +145,8 @@ public abstract class LivingEntityFreezingEffects extends Entity {
     )
     private static void addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
-        attributeBuilder.add(FrostifulEntityAttributes.FROST_RESISTANCE);
-        attributeBuilder.add(FrostifulEntityAttributes.MAX_FROST);
+        attributeBuilder.add(FEntityAttributes.FROST_RESISTANCE);
+        attributeBuilder.add(FEntityAttributes.MAX_FROST);
         cir.setReturnValue(attributeBuilder);
     }
 
@@ -170,7 +159,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             )
     )
     private void syncFrozenAttackSourceAsFrozenSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (FrostifulDamageSource.FROZEN_ATTACK_NAME.equals(source.name)) {
+        if (FDamageSource.FROZEN_ATTACK_NAME.equals(source.name)) {
             LivingEntity instance = (LivingEntity) (Object) this;
             this.world.sendEntityStatus(instance, EntityStatuses.DAMAGE_FROM_FREEZING);
         }
