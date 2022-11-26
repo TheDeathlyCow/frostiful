@@ -69,12 +69,17 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             )
     )
     private void tickFreezingEffects(CallbackInfo ci) {
+        if (this.world.isClient) {
+            return;
+        }
+
+
         this.world.getProfiler().push("frostifulFreezing");
         final LivingEntity instance = (LivingEntity) (Object) this;
-        final FreezableEntity freezable = (FreezableEntity) this;
-        this.frostiful$removeAttributeEffects();
+        //final FreezableEntity freezable = (FreezableEntity) this;
+        //this.frostiful$removeAttributeEffects();
         //this.frostiful$addAttributeEffects(freezable);
-        this.frostiful$tickFreezeDamage(freezable);
+        //this.frostiful$tickFreezeDamage(freezable);
         //this.frostiful$tickEntityFreezing();
         FrostHelper.applyEffects(instance);
         this.world.getProfiler().pop();
@@ -91,34 +96,34 @@ public abstract class LivingEntityFreezingEffects extends Entity {
 //        }
 //    }
 
-    private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
+//    private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
+//
+//        if (this.world.isClient) {
+//            return;
+//        }
+//
+//        FrostifulConfig config = Frostiful.getConfig();
+//        if (this.age % config.freezingConfig.getFreezeDamageRate() != 0) {
+//            return;
+//        }
+//
+//        if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
+//            int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
+//                    config.freezingConfig.getFreezeDamageExtraAmount() :
+//                    config.freezingConfig.getFreezeDamageAmount();
+//
+//            this.damage(DamageSource.FREEZE, amount);
+//        }
+//    }
 
-        if (this.world.isClient) {
-            return;
-        }
-
-        FrostifulConfig config = Frostiful.getConfig();
-        if (this.age % config.freezingConfig.getFreezeDamageRate() != 0) {
-            return;
-        }
-
-        if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
-            int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                    config.freezingConfig.getFreezeDamageExtraAmount() :
-                    config.freezingConfig.getFreezeDamageAmount();
-
-            this.damage(DamageSource.FREEZE, amount);
-        }
-    }
-
-    private void frostiful$removeAttributeEffects() {
-        EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-        if (entityAttributeInstance != null) {
-            if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
-                entityAttributeInstance.removeModifier(FREEZING_SLOW_ID);
-            }
-        }
-    }
+//    private void frostiful$removeAttributeEffects() {
+//        EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+//        if (entityAttributeInstance != null) {
+//            if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
+//                entityAttributeInstance.removeModifier(FREEZING_SLOW_ID);
+//            }
+//        }
+//    }
 
 //    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
 //        if (freezable.frostiful$getCurrentFrost() > 0) {

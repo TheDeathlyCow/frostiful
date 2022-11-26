@@ -9,6 +9,7 @@
 		"entity.EntityFreezeMixin",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",
+		"entity.LivingEntityFreezeDamageConfigMixin",
 		"entity.LivingEntityFreezingEffects",
 		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
