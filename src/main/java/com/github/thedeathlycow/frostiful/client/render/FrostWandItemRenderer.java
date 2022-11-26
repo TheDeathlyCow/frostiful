@@ -33,6 +33,17 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
         this.modelLayer = modelLayer;
     }
 
+    /**
+     * Code largely based on similar functionality in the mod 'Impaled':
+     * https://github.com/Ladysnake/Impaled/
+     *
+     * @param stack           the rendered item stack
+     * @param mode            the model transformation mode
+     * @param matrices        the matrix stack
+     * @param vertexConsumers the vertex consumer provider
+     * @param light           packed lightmap coordinates
+     * @param overlay         the overlay UV passed to {@link net.minecraft.client.render.VertexConsumer#overlay(int)}
+     */
     @Override
     public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
         boolean renderAsItem = mode == ModelTransformation.Mode.GUI
