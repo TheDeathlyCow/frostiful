@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.attributes.FrostifulEntityAttributes;
+import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.tag.entitytype.FrostifulEntityTypeTags;
+import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -50,7 +50,7 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Unique
     public int frostiful$getMaxFrost() {
         final AttributeContainer attributes = this.getAttributes();
-        final double maxFrost = attributes.getValue(FrostifulEntityAttributes.MAX_FROST);
+        final double maxFrost = attributes.getValue(FEntityAttributes.MAX_FROST);
         return getTicksFromMaxFrost(maxFrost);
     }
 
@@ -64,7 +64,7 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Unique
     public boolean frostiful$canFreeze() {
         final LivingEntity instance = (LivingEntity) (Object) this;
-        if (instance.getType().isIn(FrostifulEntityTypeTags.FREEZE_IMMUNE)) {
+        if (instance.getType().isIn(FEntityTypeTags.FREEZE_IMMUNE)) {
             return false;
         }
         if (instance.isSpectator()) {

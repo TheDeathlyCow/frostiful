@@ -12,7 +12,7 @@ import net.minecraft.world.GameRules;
 /**
  * Custom game rules for Lost in the Cold
  */
-public class FrostifulGameRules {
+public class FGameRules {
 
     /**
      * Mod's dedicated category for game rules

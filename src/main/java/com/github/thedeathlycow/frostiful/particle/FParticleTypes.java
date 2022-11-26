@@ -6,7 +6,7 @@ import net.minecraft.particle.ParticleType;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulParticleTypes {
+public class FParticleTypes {
 
     public static final ParticleType<HeatDrainParticleEffect> HEAT_DRAIN = FabricParticleTypes.complex(HeatDrainParticleEffect.FACTORY);
 

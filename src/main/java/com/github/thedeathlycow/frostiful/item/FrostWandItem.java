@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
@@ -17,7 +17,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
 import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
@@ -73,7 +72,7 @@ public class FrostWandItem extends Item implements Vanishable {
                 world.playSound(
                         null,
                         soundPos.getX(), soundPos.getY(), soundPos.getZ(),
-                        FrostifulSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
+                        FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
                         1.0f, 1.0f
                 );
 
@@ -99,7 +98,7 @@ public class FrostWandItem extends Item implements Vanishable {
                 world.playSound(
                         null,
                         user.getX(), user.getY(), user.getZ(),
-                        FrostifulSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
+                        FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
                         SoundCategory.PLAYERS,
                         1.0f, 1.0f
                 );

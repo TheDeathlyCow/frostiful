@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity.loot;
 
-import com.github.thedeathlycow.frostiful.item.FrostifulItems;
+import com.github.thedeathlycow.frostiful.item.FItems;
 import net.fabricmc.fabric.api.loot.v2.LootTableSource;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.LootManager;
@@ -23,7 +23,7 @@ public class StrayLootTableModifier {
             LootPool.Builder builder = LootPool.builder()
                     .rolls(ConstantLootNumberProvider.create(1))
                     .with(
-                            ItemEntry.builder(FrostifulItems.FROST_TIPPED_ARROW)
+                            ItemEntry.builder(FItems.FROST_TIPPED_ARROW)
                                     .apply(
                                             LootingEnchantLootFunction.builder(UniformLootNumberProvider.create(0.0f, 1.0f))
                                     )

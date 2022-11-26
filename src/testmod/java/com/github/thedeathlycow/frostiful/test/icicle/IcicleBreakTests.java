@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.icicle;
 
-import com.github.thedeathlycow.frostiful.entity.FrostifulEntityTypes;
+import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
@@ -23,7 +23,7 @@ public final class IcicleBreakTests implements FabricGameTest {
 
     @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
     public void icicles_break_when_struck_by_frost_tipped_arrow(TestContext context) {
-        strikeIcicleWithProjectile(context, FrostifulEntityTypes.FROST_TIPPED_ARROW);
+        strikeIcicleWithProjectile(context, FEntityTypes.FROST_TIPPED_ARROW);
     }
 
     @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")

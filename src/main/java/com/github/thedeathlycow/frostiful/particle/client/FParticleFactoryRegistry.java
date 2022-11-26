@@ -1,23 +1,21 @@
 package com.github.thedeathlycow.frostiful.particle.client;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.particle.FrostifulParticleTypes;
+import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.particle.v1.FabricSpriteProvider;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
-import net.minecraft.client.particle.ParticleFactory;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.screen.PlayerScreenHandler;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class FrostifulParticleFactoryRegistry {
+public class FParticleFactoryRegistry {
 
     public static void registerFactories() {
-        registerFactory(FrostifulParticleTypes.HEAT_DRAIN, HeatDrainParticle.Factory::new);
+        registerFactory(FParticleTypes.HEAT_DRAIN, HeatDrainParticle.Factory::new);
     }
 
     private static <T extends ParticleEffect> void registerFactory(ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {

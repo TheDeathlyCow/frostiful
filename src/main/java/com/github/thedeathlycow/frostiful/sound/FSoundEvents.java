@@ -5,15 +5,15 @@ import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulSoundEvents {
+public class FSoundEvents {
 
-    public static final SoundEvent FIRE_LICHEN_DISCHARGE = FrostifulSoundEvents.of("block.frostiful.sun_lichen.discharge");
-    public static final SoundEvent CAMPFIRE_HISS = FrostifulSoundEvents.of("block.frostiful.campfire.hiss");
-    public static final SoundEvent ITEM_FROST_WAND_CAST_SPELL = FrostifulSoundEvents.of("item.frostiful.frost_wand.cast_spell");
+    public static final SoundEvent FIRE_LICHEN_DISCHARGE = FSoundEvents.of("block.frostiful.sun_lichen.discharge");
+    public static final SoundEvent CAMPFIRE_HISS = FSoundEvents.of("block.frostiful.campfire.hiss");
+    public static final SoundEvent ITEM_FROST_WAND_CAST_SPELL = FSoundEvents.of("item.frostiful.frost_wand.cast_spell");
 
-    public static final SoundEvent ITEM_FROST_WAND_PREPARE_CAST = FrostifulSoundEvents.of("item.frostiful.frost_wand.prepare_cast");
+    public static final SoundEvent ITEM_FROST_WAND_PREPARE_CAST = FSoundEvents.of("item.frostiful.frost_wand.prepare_cast");
 
-    public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FrostifulSoundEvents.of("entity.frostiful.frost_spell.freeze");
+    public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FSoundEvents.of("entity.frostiful.frost_spell.freeze");
 
 
     public static void registerSoundEvents() {

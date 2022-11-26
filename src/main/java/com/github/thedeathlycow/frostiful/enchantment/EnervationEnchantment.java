@@ -1,10 +1,10 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.target.FrostifulEnchantmentTargets;
+import com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargets;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
-import com.github.thedeathlycow.frostiful.util.FrostifulMathHelper;
+import com.github.thedeathlycow.frostiful.util.FMathHelper;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class EnervationEnchantment extends Enchantment {
 
     public EnervationEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, FrostifulEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
+        super(weight, FEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class EnervationEnchantment extends Enchantment {
     public static void addHeatDrainParticles(LivingEntity user, Entity target, int level) {
         World world = user.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) {
-            Vec3d from = FrostifulMathHelper.getMidPoint(target.getEyePos(), target.getPos());
+            Vec3d from = FMathHelper.getMidPoint(target.getEyePos(), target.getPos());
             final int numParticles = (level << 1) + 5;
 
             double fromX = from.getX();

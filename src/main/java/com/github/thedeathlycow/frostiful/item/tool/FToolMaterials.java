@@ -1,16 +1,16 @@
 package com.github.thedeathlycow.frostiful.item.tool;
 
-import com.github.thedeathlycow.frostiful.item.FrostifulItems;
+import com.github.thedeathlycow.frostiful.item.FItems;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 
 import java.util.function.Supplier;
 
-public enum FrostifulToolMaterials implements ToolMaterial {
+public enum FToolMaterials implements ToolMaterial {
 
 
     FROST_WAND(3, 1561, 8.0F, 3.0F, 15, () -> {
-        return Ingredient.ofItems(FrostifulItems.ICICLE);
+        return Ingredient.ofItems(FItems.ICICLE);
     });
 
     private final int miningLevel;
@@ -20,7 +20,7 @@ public enum FrostifulToolMaterials implements ToolMaterial {
     private final int enchantability;
     private final Supplier<Ingredient> repairIngredient;
 
-    FrostifulToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
+    FToolMaterials(int miningLevel, int itemDurability, float miningSpeed, float attackDamage, int enchantability, Supplier<Ingredient> repairIngredient) {
         this.miningLevel = miningLevel;
         this.itemDurability = itemDurability;
         this.miningSpeed = miningSpeed;

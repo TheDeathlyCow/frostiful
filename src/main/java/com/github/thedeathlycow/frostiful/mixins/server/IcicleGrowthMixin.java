@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.server;
 
-import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
+import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -50,7 +50,7 @@ public class IcicleGrowthMixin {
             return;
         }
 
-        final BlockState downwardIcicle = FrostifulBlocks.ICICLE.getDefaultState()
+        final BlockState downwardIcicle = FBlocks.ICICLE.getDefaultState()
                 .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
 
         Predicate<BlockPos> validCondition = (testPos) -> {

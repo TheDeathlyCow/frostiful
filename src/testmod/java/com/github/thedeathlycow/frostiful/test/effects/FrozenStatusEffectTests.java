@@ -1,9 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.effects;
 
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
-import com.github.thedeathlycow.frostiful.entity.effect.FrostifulStatusEffects;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;

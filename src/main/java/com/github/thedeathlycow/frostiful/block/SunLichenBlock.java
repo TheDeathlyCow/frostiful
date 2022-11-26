@@ -2,18 +2,16 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.sound.FrostifulSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.blocks.FrostifulBlockTags;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.block.BlockState;
-import net.minecraft.block.FireBlock;
 import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
@@ -53,7 +51,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
 
-                BlockState coldSunLichenState = FrostifulBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
+                BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
                 world.setBlockState(pos, coldSunLichenState);
 
                 this.playSound(world, pos);
@@ -97,7 +95,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         }
         Random random = world.getRandom();
         float pitch = 0.8F + (random.nextFloat() - random.nextFloat()) * 0.4F;
-        world.playSound(null, pos, FrostifulSoundEvents.FIRE_LICHEN_DISCHARGE, SoundCategory.BLOCKS, 0.7F, pitch);
+        world.playSound(null, pos, FSoundEvents.FIRE_LICHEN_DISCHARGE, SoundCategory.BLOCKS, 0.7F, pitch);
     }
 
     private void createFireParticles(World world, BlockPos pos) {
@@ -115,6 +113,6 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     }
 
     private static int getHeatLevel(BlockState state) {
-        return state.isIn(FrostifulBlockTags.SUN_LICHENS) ? ((SunLichenBlock) state.getBlock()).getHeatLevel() : 0;
+        return state.isIn(FBlockTags.SUN_LICHENS) ? ((SunLichenBlock) state.getBlock()).getHeatLevel() : 0;
     }
 }

@@ -8,7 +8,7 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 
-public class FrostifulFeatures {
+public class FFeatures {
 
     public static final Feature<CoveredRockFeatureConfig> COVERED_ROCK = register("covered_rock", new CoveredRockFeature(CoveredRockFeatureConfig.CODEC));
 

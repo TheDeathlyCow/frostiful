@@ -27,7 +27,7 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     }
 
     public SpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
-        super(FrostifulEntityTypes.FROST_SPELL, owner, velocityX, velocityY, velocityZ, world);
+        super(FEntityTypes.FROST_SPELL, owner, velocityX, velocityY, velocityZ, world);
         this.maxDistance = maxDistance;
     }
 

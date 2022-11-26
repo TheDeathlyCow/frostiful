@@ -1,15 +1,14 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.block.FrostifulBlocks;
+import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class FrostifulItems {
+public class FItems {
 
     public static final Item FUR_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.HEAD, new FabricItemSettings().group(ItemGroup.COMBAT));
     public static final Item FUR_CHESTPLATE = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.CHEST, new FabricItemSettings().group(ItemGroup.COMBAT));
@@ -23,11 +22,11 @@ public class FrostifulItems {
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
     public static final Item WOLF_FUR_TUFT = new Item(new FabricItemSettings().group(ItemGroup.MATERIALS));
-    public static final Item ICICLE = new BlockItem(FrostifulBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item COLD_SUN_LICHEN = new BlockItem(FrostifulBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item COOL_SUN_LICHEN = new BlockItem(FrostifulBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item WARM_SUN_LICHEN = new BlockItem(FrostifulBlocks.WARM_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
-    public static final Item HOT_SUN_LICHEN = new BlockItem(FrostifulBlocks.HOT_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item ICICLE = new BlockItem(FBlocks.ICICLE, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item COLD_SUN_LICHEN = new BlockItem(FBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item COOL_SUN_LICHEN = new BlockItem(FBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item WARM_SUN_LICHEN = new BlockItem(FBlocks.WARM_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
+    public static final Item HOT_SUN_LICHEN = new BlockItem(FBlocks.HOT_SUN_LICHEN, new FabricItemSettings().group(ItemGroup.DECORATIONS));
     public static final Item FROST_WAND = new FrostWandItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1).maxDamage(250));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
