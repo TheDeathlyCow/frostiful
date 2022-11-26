@@ -20,7 +20,7 @@
 	},
 	"item.frostiful.frost_wand.prepare_cast": {
 		"sounds": [
-			"mob/illusion_illager/prepare_blindness"
+			"mob/illusion_illager/prepare_blind"
 		],
 		"subtitle": "subtitles.item.frostiful.frost_wand.prepare_cast"
 	},
