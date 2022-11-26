@@ -73,7 +73,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         final LivingEntity instance = (LivingEntity) (Object) this;
         final FreezableEntity freezable = (FreezableEntity) this;
         this.frostiful$removeAttributeEffects();
-        this.frostiful$addAttributeEffects(freezable);
+        //this.frostiful$addAttributeEffects(freezable);
         this.frostiful$tickFreezeDamage(freezable);
         //this.frostiful$tickEntityFreezing();
         FrostHelper.applyEffects(instance);
@@ -120,24 +120,24 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         }
     }
 
-    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
-        if (freezable.frostiful$getCurrentFrost() > 0) {
-            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-            if (entityAttributeInstance == null) {
-                return;
-            }
-
-            double slownessModifier = -0.05 * freezable.frostiful$getFrostProgress();
-            entityAttributeInstance.addTemporaryModifier(
-                    new EntityAttributeModifier(
-                            FREEZING_SLOW_ID,
-                            "Frostiful freezing slow",
-                            slownessModifier,
-                            EntityAttributeModifier.Operation.ADDITION
-                    )
-            );
-        }
-    }
+//    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
+//        if (freezable.frostiful$getCurrentFrost() > 0) {
+//            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+//            if (entityAttributeInstance == null) {
+//                return;
+//            }
+//
+//            double slownessModifier = -0.05 * freezable.frostiful$getFrostProgress();
+//            entityAttributeInstance.addTemporaryModifier(
+//                    new EntityAttributeModifier(
+//                            FREEZING_SLOW_ID,
+//                            "Frostiful freezing slow",
+//                            slownessModifier,
+//                            EntityAttributeModifier.Operation.ADDITION
+//                    )
+//            );
+//        }
+//    }
 
     @Inject(
             method = "createLivingAttributes",
