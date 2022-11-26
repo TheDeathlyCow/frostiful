@@ -1,7 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -43,7 +45,7 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Override
     @Unique
     public int frostiful$getCurrentFrost() {
-        return this.dataTracker.get(FROST);
+        return this.getFrozenTicks();
     }
 
     @Override
@@ -57,7 +59,7 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Override
     @Unique
     public void frostiful$setFrost(int amount) {
-        this.dataTracker.set(FROST, amount);
+        this.setFrozenTicks(amount);
     }
 
     @Override

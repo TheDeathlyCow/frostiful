@@ -69,26 +69,27 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             )
     )
     private void tickFreezingEffects(CallbackInfo ci) {
+        this.world.getProfiler().push("frostifulFreezing");
         final LivingEntity instance = (LivingEntity) (Object) this;
         final FreezableEntity freezable = (FreezableEntity) this;
         this.frostiful$removeAttributeEffects();
         this.frostiful$addAttributeEffects(freezable);
         this.frostiful$tickFreezeDamage(freezable);
-        this.frostiful$tickEntityFreezing(freezable);
+        //this.frostiful$tickEntityFreezing();
         FrostHelper.applyEffects(instance);
+        this.world.getProfiler().pop();
     }
 
-    private void frostiful$tickEntityFreezing(FreezableEntity freezable) {
-        if (this.isAlive()) {
-            int amount = 0;
-            FrostifulConfig config = Frostiful.getConfig();
-            if (this.inPowderSnow) {
-                amount += config.freezingConfig.getPowderSnowFreezeRate();
-            }
-
-            freezable.frostiful$addFrost(amount);
-        }
-    }
+//    private void frostiful$tickEntityFreezing() {
+//        if (this.isAlive()) {
+//            int amount = 0;
+//            FrostifulConfig config = Frostiful.getConfig();
+//            if (this.inPowderSnow) {
+//                amount += config.freezingConfig.getPowderSnowFreezeRate();
+//            }
+//            FrostHelper.addLivingFrost((LivingEntity) (Object) this, amount);
+//        }
+//    }
 
     private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
 

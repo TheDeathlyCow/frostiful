@@ -6,9 +6,11 @@
 	"mixins": [
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
+		"entity.EntityFreezeMixin",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",
 		"entity.LivingEntityFreezingEffects",
+		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
 		"entity.RootedEntityImplMixin",
 		"entity.mob.PiglinBrainMixin",
