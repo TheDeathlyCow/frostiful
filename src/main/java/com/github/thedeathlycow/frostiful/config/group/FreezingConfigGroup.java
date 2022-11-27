@@ -3,6 +3,8 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".freezing")
 public class FreezingConfigGroup implements ConfigData {
@@ -22,6 +24,8 @@ public class FreezingConfigGroup implements ConfigData {
     int sunLichenHeatPerLevel = 100;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
+
+    float shakingStartPercent = 0.5f;
 
     public double getBiomeTemperatureMultiplier() {
         return biomeTemperatureMultiplier;
@@ -81,5 +85,9 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getCampfireWarmthTime() {
         return campfireWarmthTime;
+    }
+
+    public float getShakingStartPercent() {
+        return MathHelper.clamp(shakingStartPercent, 0.0f, 1.0f);
     }
 }
