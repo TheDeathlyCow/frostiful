@@ -59,12 +59,12 @@ abstract class ColdHeartOverlay {
         float freezingProgress = freezable.frostiful$getFrostProgress();
 
         // number of half cold hearts
-        int frozenHealthPoints = (int) (freezingProgress * MAX_COLD_HEARTS);
+        int frozenHealthPoints = (int) (freezingProgress * player.getMaxHealth());
 
         // number of whole hearts
         int frozenHealthHearts = MathHelper.ceil( frozenHealthPoints / 2.0f);
 
-        var previousTexture = RenderSystem.getShaderTexture(0);
+        int previousTexture = RenderSystem.getShaderTexture(0);
         RenderSystem.setShaderTexture(0, HEART_OVERLAY_TEXTURE);
         for (int m = 0; m < frozenHealthHearts; m++) {
             // is half heart if this is the last heart being rendered and we have an odd

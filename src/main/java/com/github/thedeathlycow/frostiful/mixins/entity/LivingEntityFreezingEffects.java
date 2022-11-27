@@ -69,74 +69,80 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             )
     )
     private void tickFreezingEffects(CallbackInfo ci) {
-        final LivingEntity instance = (LivingEntity) (Object) this;
-        final FreezableEntity freezable = (FreezableEntity) this;
-        this.frostiful$removeAttributeEffects();
-        this.frostiful$addAttributeEffects(freezable);
-        this.frostiful$tickFreezeDamage(freezable);
-        this.frostiful$tickEntityFreezing(freezable);
-        FrostHelper.applyEffects(instance);
-    }
-
-    private void frostiful$tickEntityFreezing(FreezableEntity freezable) {
-        if (this.isAlive()) {
-            int amount = 0;
-            FrostifulConfig config = Frostiful.getConfig();
-            if (this.inPowderSnow) {
-                amount += config.freezingConfig.getPowderSnowFreezeRate();
-            }
-
-            freezable.frostiful$addFrost(amount);
-        }
-    }
-
-    private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
-
         if (this.world.isClient) {
             return;
         }
 
-        FrostifulConfig config = Frostiful.getConfig();
-        if (this.age % config.freezingConfig.getFreezeDamageRate() != 0) {
-            return;
-        }
 
-        if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
-            int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                    config.freezingConfig.getFreezeDamageExtraAmount() :
-                    config.freezingConfig.getFreezeDamageAmount();
-
-            this.damage(DamageSource.FREEZE, amount);
-        }
+        this.world.getProfiler().push("frostifulFreezing");
+        final LivingEntity instance = (LivingEntity) (Object) this;
+        //final FreezableEntity freezable = (FreezableEntity) this;
+        //this.frostiful$removeAttributeEffects();
+        //this.frostiful$addAttributeEffects(freezable);
+        //this.frostiful$tickFreezeDamage(freezable);
+        //this.frostiful$tickEntityFreezing();
+        FrostHelper.applyEffects(instance);
+        this.world.getProfiler().pop();
     }
 
-    private void frostiful$removeAttributeEffects() {
-        EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-        if (entityAttributeInstance != null) {
-            if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
-                entityAttributeInstance.removeModifier(FREEZING_SLOW_ID);
-            }
-        }
-    }
+//    private void frostiful$tickEntityFreezing() {
+//        if (this.isAlive()) {
+//            int amount = 0;
+//            FrostifulConfig config = Frostiful.getConfig();
+//            if (this.inPowderSnow) {
+//                amount += config.freezingConfig.getPowderSnowFreezeRate();
+//            }
+//            FrostHelper.addLivingFrost((LivingEntity) (Object) this, amount);
+//        }
+//    }
 
-    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
-        if (freezable.frostiful$getCurrentFrost() > 0) {
-            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-            if (entityAttributeInstance == null) {
-                return;
-            }
+//    private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
+//
+//        if (this.world.isClient) {
+//            return;
+//        }
+//
+//        FrostifulConfig config = Frostiful.getConfig();
+//        if (this.age % config.freezingConfig.getFreezeDamageRate() != 0) {
+//            return;
+//        }
+//
+//        if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
+//            int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
+//                    config.freezingConfig.getFreezeDamageExtraAmount() :
+//                    config.freezingConfig.getFreezeDamageAmount();
+//
+//            this.damage(DamageSource.FREEZE, amount);
+//        }
+//    }
 
-            double slownessModifier = -0.05 * freezable.frostiful$getFrostProgress();
-            entityAttributeInstance.addTemporaryModifier(
-                    new EntityAttributeModifier(
-                            FREEZING_SLOW_ID,
-                            "Frostiful freezing slow",
-                            slownessModifier,
-                            EntityAttributeModifier.Operation.ADDITION
-                    )
-            );
-        }
-    }
+//    private void frostiful$removeAttributeEffects() {
+//        EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+//        if (entityAttributeInstance != null) {
+//            if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
+//                entityAttributeInstance.removeModifier(FREEZING_SLOW_ID);
+//            }
+//        }
+//    }
+
+//    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
+//        if (freezable.frostiful$getCurrentFrost() > 0) {
+//            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+//            if (entityAttributeInstance == null) {
+//                return;
+//            }
+//
+//            double slownessModifier = -0.05 * freezable.frostiful$getFrostProgress();
+//            entityAttributeInstance.addTemporaryModifier(
+//                    new EntityAttributeModifier(
+//                            FREEZING_SLOW_ID,
+//                            "Frostiful freezing slow",
+//                            slownessModifier,
+//                            EntityAttributeModifier.Operation.ADDITION
+//                    )
+//            );
+//        }
+//    }
 
     @Inject(
             method = "createLivingAttributes",
