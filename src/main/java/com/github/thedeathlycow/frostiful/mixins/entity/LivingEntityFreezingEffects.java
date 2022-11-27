@@ -74,7 +74,7 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         }
 
 
-        this.world.getProfiler().push("frostifulFreezing");
+        this.world.getProfiler().push("frostiful.freezing_effects");
         final LivingEntity instance = (LivingEntity) (Object) this;
         //final FreezableEntity freezable = (FreezableEntity) this;
         //this.frostiful$removeAttributeEffects();

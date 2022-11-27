@@ -19,9 +19,7 @@
 		"entity.mob.StrayDefaultArrowItemMixin",
 		"entity.mob.WolfMixin",
 		"item.ArmorItemMixin",
-		"server.IcicleGrowthMixin",
-		"server.snow_buildup.ServerWorldMixin",
-		"world.biome.BiomeMixin"
+		"server.IcicleGrowthMixin"
 	],
 	"client": [
 		"client.entity_renderer.RootedEffectRenderer",

@@ -16,7 +16,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Mixin(ServerWorld.class)
-public class ServerWorldMixin {
+public class SnowLayerMixin {
 
     @Redirect(
             method = "tickChunk",
