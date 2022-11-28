@@ -49,5 +49,47 @@
   "effect.frostiful.frozen": "Frozen",
   "effect.frostiful.warmth": "Warmth",
   "enchantment.frostiful.enervation": "Enervation",
-  "enchantment.frostiful.ice_breaker": "Ice Breaker"
+  "enchantment.frostiful.ice_breaker": "Ice Breaker",
+  
+  
+  "text.autoconfig.frostiful.title": "Frostiful Config",
+  
+  "text.autoconfig.frostiful.option.clientConfig": "Client Config",
+  "text.autoconfig.frostiful.option.clientConfig.frostOverlayStart": "Frost overlay start percent (0-1)",
+  "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Do cold heart overlay",
+  
+  "text.autoconfig.frostiful.option.combatConfig": "Combat Config",
+  "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Heat drain per level of Enervation",
+  "text.autoconfig.frostiful.option.combatConfig.heatDrainEfficiency": "Enervation heat drain efficiency",
+  "text.autoconfig.frostiful.option.combatConfig.iceBreakerDamagePerLevel": "Ice Breaker damage per level",
+  "text.autoconfig.frostiful.option.combatConfig.iceBreakerBaseDamage": "Ice Breaker base damage",
+  "text.autoconfig.frostiful.option.combatConfig.maxFrostSpellDistance": "Max frost spell distance",
+  "text.autoconfig.frostiful.option.combatConfig.frostWandCooldown": "Frost Wand cool down",
+  "text.autoconfig.frostiful.option.combatConfig.frostWandRootTime": "Frost Wand root time",
+  
+  "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
+  "text.autoconfig.frostiful.option.freezingConfig.biomeTemperatureMultiplier": "Biome temperature multiplier",
+  "text.autoconfig.frostiful.option.freezingConfig.passiveFreezingStartTemp": "Passive freezing start temp",
+  "text.autoconfig.frostiful.option.freezingConfig.wetFreezeRate": "Wet freeze rate",
+  "text.autoconfig.frostiful.option.freezingConfig.cannotFreezeThawRate": "Cannot freeze thaw rate",
+  "text.autoconfig.frostiful.option.freezingConfig.onFireThawRate": "On fire thaw rate",
+  "text.autoconfig.frostiful.option.freezingConfig.warmthPerLightLevel": "Warmth per light level",
+  "text.autoconfig.frostiful.option.freezingConfig.minLightForWarmthDay": "Minimum block light level for warmth during the day",
+  "text.autoconfig.frostiful.option.freezingConfig.minLightForWarmthNight": "Minimum block light level for warmth during the night",
+  "text.autoconfig.frostiful.option.freezingConfig.freezeDamageRate": "Ticks per freeze damage pulse",
+  "text.autoconfig.frostiful.option.freezingConfig.freezeDamageAmount": "Freeze damage amount",
+  "text.autoconfig.frostiful.option.freezingConfig.freezeDamageExtraAmount": "Freeze damage extra amount",
+  "text.autoconfig.frostiful.option.freezingConfig.powderSnowFreezeRate": "Powder Snow freeze rate",
+  "text.autoconfig.frostiful.option.freezingConfig.sunLichenHeatPerLevel": "Sun Lichen heat per level",
+  "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
+  "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time",
+  "text.autoconfig.frostiful.option.freezingConfig.shakingStartPercent": "Shaking start percent (0-1)",
+  
+  "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
+  "text.autoconfig.frostiful.option.icicleConfig.becomeUnstableChance": "Become unstable chance",
+  "text.autoconfig.frostiful.option.icicleConfig.growChance": "Grow chance",
+  "text.autoconfig.frostiful.option.icicleConfig.growChanceDuringRain": "Grow chance during rain",
+  "text.autoconfig.frostiful.option.icicleConfig.growChanceDuringThunder": "Grow chance during thunder",
+  "text.autoconfig.frostiful.option.icicleConfig.frostArrowFreezeAmount": "Frost arrow freeze amount",
+  "text.autoconfig.frostiful.option.icicleConfig.icicleCollisionFreezeAmount": "Icicle collision freeze amount"
 }

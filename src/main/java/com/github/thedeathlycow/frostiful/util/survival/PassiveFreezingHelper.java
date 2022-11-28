@@ -42,8 +42,8 @@ public class PassiveFreezingHelper {
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
         int minLightLevel = world.isDay() ?
-                config.freezingConfig.getMinWarmthForLightDay() :
-                config.freezingConfig.getMinWarmthForLightNight();
+                config.freezingConfig.getMinLightForWarmthDay() :
+                config.freezingConfig.getMinLightForWarmthNight();
 
         if (lightLevel >= minLightLevel) {
             warmth += config.freezingConfig.getWarmthPerLightLevel() * (lightLevel - minLightLevel);

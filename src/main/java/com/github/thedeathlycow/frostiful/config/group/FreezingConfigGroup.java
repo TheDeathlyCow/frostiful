@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".freezing")
@@ -15,8 +14,8 @@ public class FreezingConfigGroup implements ConfigData {
     int cannotFreezeThawRate = 100;
     int onFireThawRate = 10;
     int warmthPerLightLevel = 4;
-    int minWarmthForLightDay = 7;
-    int minWarmthForLightNight = 9;
+    int minLightForWarmthDay = 7;
+    int minLightForWarmthNight = 9;
     int freezeDamageRate = 20;
     int freezeDamageAmount = 2;
     int freezeDamageExtraAmount = 5;
@@ -51,12 +50,12 @@ public class FreezingConfigGroup implements ConfigData {
         return warmthPerLightLevel;
     }
 
-    public int getMinWarmthForLightDay() {
-        return minWarmthForLightDay;
+    public int getMinLightForWarmthDay() {
+        return minLightForWarmthDay;
     }
 
-    public int getMinWarmthForLightNight() {
-        return minWarmthForLightNight;
+    public int getMinLightForWarmthNight() {
+        return minLightForWarmthNight;
     }
 
     public int getFreezeDamageRate() {
