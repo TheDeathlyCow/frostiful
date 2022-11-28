@@ -16,7 +16,7 @@
 		"entity.RootedEntityImplMixin",
 		"entity.mob.PiglinBrainMixin",
 		"entity.mob.PolarBearMixin",
-		"entity.mob.StrayDefaultArrowItemMixin",
+		"entity.mob.StrayCarriesFrostArrowMixin",
 		"entity.mob.WolfMixin",
 		"item.ArmorItemMixin",
 		"server.IcicleGrowthMixin"
