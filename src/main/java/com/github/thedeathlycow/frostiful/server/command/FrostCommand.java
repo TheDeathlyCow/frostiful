@@ -110,7 +110,7 @@ public class FrostCommand {
 
     private static int runGetMax(ServerCommandSource source, Entity target) throws CommandSyntaxException {
         if (target instanceof LivingEntity livingEntity) {
-            int amount = ((FreezableEntity) livingEntity).frostiful$getMaxFrost();
+            int amount = livingEntity.getMinFreezeDamageTicks();;
             Text msg = Text.translatable("commands.frostiful.frost.get.max.success", target.getDisplayName(), amount);
             source.sendFeedback(msg, true);
             return amount;
@@ -121,7 +121,7 @@ public class FrostCommand {
 
     private static int runGet(ServerCommandSource source, Entity target) throws CommandSyntaxException {
         if (target instanceof LivingEntity livingEntity) {
-            int amount = ((FreezableEntity) livingEntity).frostiful$getCurrentFrost();
+            int amount = livingEntity.getFrozenTicks();
             Text msg = Text.translatable("commands.frostiful.frost.get.current.success", target.getDisplayName(), amount);
             source.sendFeedback(msg, true);
             return amount;
