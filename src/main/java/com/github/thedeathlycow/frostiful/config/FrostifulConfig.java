@@ -24,9 +24,6 @@ public class FrostifulConfig extends PartitioningSerializer.GlobalData {
     @ConfigEntry.Gui.CollapsibleObject
     public final IcicleConfigGroup icicleConfig = new IcicleConfigGroup();
 
-    @ConfigEntry.Gui.CollapsibleObject
-    public final WeatherConfigGroup weatherConfig = new WeatherConfigGroup();
-
     public FrostifulConfig() {
 
     }
