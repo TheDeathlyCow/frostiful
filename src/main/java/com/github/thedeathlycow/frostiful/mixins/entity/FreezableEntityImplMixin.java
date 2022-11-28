@@ -78,21 +78,21 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
         return true;
     }
 
-    @Inject(
-            method = "writeCustomDataToNbt",
-            at = @At("TAIL")
-    )
-    private void writeFrostToNbt(NbtCompound nbt, CallbackInfo ci) {
-        FreezableEntity.frostiful$addFrostToNbt(this, nbt);
-    }
-
-    @Inject(
-            method = "readCustomDataFromNbt",
-            at = @At("TAIL")
-    )
-    private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        FreezableEntity.frostiful$setFrostFromNbt(this, nbt);
-    }
+//    @Inject(
+//            method = "writeCustomDataToNbt",
+//            at = @At("TAIL")
+//    )
+//    private void writeFrostToNbt(NbtCompound nbt, CallbackInfo ci) {
+//        FreezableEntity.frostiful$addFrostToNbt(this, nbt);
+//    }
+//
+//    @Inject(
+//            method = "readCustomDataFromNbt",
+//            at = @At("TAIL")
+//    )
+//    private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
+//        FreezableEntity.frostiful$setFrostFromNbt(this, nbt);
+//    }
 
     private static int getTicksFromMaxFrost(double maxFrost) {
         return (int) (140 * maxFrost);

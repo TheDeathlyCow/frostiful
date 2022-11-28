@@ -57,6 +57,7 @@
   "text.autoconfig.frostiful.option.clientConfig": "Client Config",
   "text.autoconfig.frostiful.option.clientConfig.frostOverlayStart": "Frost overlay start percent (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Do cold heart overlay",
+  "text.autoconfig.frostiful.option.clientConfig.shakingStartPercent": "Shaking start percent (0-1)",
   
   "text.autoconfig.frostiful.option.combatConfig": "Combat Config",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Heat drain per level of Enervation",
@@ -68,6 +69,7 @@
   "text.autoconfig.frostiful.option.combatConfig.frostWandRootTime": "Frost Wand root time",
   
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
+  "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
   "text.autoconfig.frostiful.option.freezingConfig.biomeTemperatureMultiplier": "Biome temperature multiplier",
   "text.autoconfig.frostiful.option.freezingConfig.passiveFreezingStartTemp": "Passive freezing start temp",
   "text.autoconfig.frostiful.option.freezingConfig.wetFreezeRate": "Wet freeze rate",
@@ -83,7 +85,6 @@
   "text.autoconfig.frostiful.option.freezingConfig.sunLichenHeatPerLevel": "Sun Lichen heat per level",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time",
-  "text.autoconfig.frostiful.option.freezingConfig.shakingStartPercent": "Shaking start percent (0-1)",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.becomeUnstableChance": "Become unstable chance",

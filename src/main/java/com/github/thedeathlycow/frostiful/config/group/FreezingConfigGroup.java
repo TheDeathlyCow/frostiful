@@ -8,6 +8,7 @@ import net.minecraft.util.math.MathHelper;
 @Config(name = Frostiful.MODID + ".freezing")
 public class FreezingConfigGroup implements ConfigData {
 
+    boolean doPassiveFreezing = true;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
     int wetFreezeRate = 2;
@@ -24,7 +25,9 @@ public class FreezingConfigGroup implements ConfigData {
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
 
-    float shakingStartPercent = 0.5f;
+    public boolean doPassiveFreezing() {
+        return doPassiveFreezing;
+    }
 
     public double getBiomeTemperatureMultiplier() {
         return biomeTemperatureMultiplier;
@@ -86,7 +89,4 @@ public class FreezingConfigGroup implements ConfigData {
         return campfireWarmthTime;
     }
 
-    public float getShakingStartPercent() {
-        return MathHelper.clamp(shakingStartPercent, 0.0f, 1.0f);
-    }
 }

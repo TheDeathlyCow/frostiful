@@ -27,7 +27,7 @@ public class ShakingRendererMixin<T extends LivingEntity, M extends EntityModel<
     private void shakeWhenFreezing(T entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof FreezableEntity freezable) {
             FrostifulConfig config = Frostiful.getConfig();
-            if (freezable.frostiful$getFrostProgress() >= config.freezingConfig.getShakingStartPercent()) {
+            if (freezable.frostiful$getFrostProgress() >= config.clientConfig.getShakingStartPercent()) {
                 cir.setReturnValue(true);
             }
         }

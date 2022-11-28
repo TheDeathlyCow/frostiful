@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
@@ -33,7 +34,9 @@ public abstract class PlayerEntityMixin {
             return;
         }
 
-        final boolean doPassiveFreezing = world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
+        final boolean doPassiveFreezing = Frostiful.getConfig().freezingConfig.doPassiveFreezing()
+                && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
+
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
             if (passiveFreezing > 0) {
