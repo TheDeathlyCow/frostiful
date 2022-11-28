@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.server;
 
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;
@@ -28,8 +29,15 @@ public abstract class IcicleGrowthMixin {
             method = "tickChunk",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/world/biome/Biome;canSetSnow(Lnet/minecraft/world/WorldView;Lnet/minecraft/util/math/BlockPos;)Z",
-                    shift = At.Shift.BEFORE
+                    target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
+                    shift = At.Shift.AFTER,
+                    ordinal = 0
+            ),
+            slice = @Slice(
+                    from = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/block/Block;precipitationTick(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/biome/Biome$Precipitation;)V"
+                    )
             )
     )
     private void doIcicleGrowth(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
@@ -49,6 +57,11 @@ public abstract class IcicleGrowthMixin {
                 Heightmap.Type.WORLD_SURFACE,
                 instance.getRandomPosInChunk(chunkPos.getStartX(), 0, chunkPos.getStartZ(), 15)
         );
+
+        if (instance.getBiome(startPos).value().doesNotSnow(startPos)) {
+            profiler.pop();
+            return;
+        }
 
         final BlockState downwardIcicle = FBlocks.ICICLE.getDefaultState()
                 .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
