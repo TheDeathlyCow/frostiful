@@ -65,8 +65,8 @@
   "text.autoconfig.frostiful.option.combatConfig.iceBreakerDamagePerLevel": "Ice Breaker damage per level",
   "text.autoconfig.frostiful.option.combatConfig.iceBreakerBaseDamage": "Ice Breaker base damage",
   "text.autoconfig.frostiful.option.combatConfig.maxFrostSpellDistance": "Max frost spell distance",
-  "text.autoconfig.frostiful.option.combatConfig.frostWandCooldown": "Frost Wand cool down",
-  "text.autoconfig.frostiful.option.combatConfig.frostWandRootTime": "Frost Wand root time",
+  "text.autoconfig.frostiful.option.combatConfig.frostWandCooldown": "Frost Wand cool down (ticks)",
+  "text.autoconfig.frostiful.option.combatConfig.frostWandRootTime": "Frost Wand root time (ticks)",
   
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
@@ -84,7 +84,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.powderSnowFreezeRate": "Powder Snow freeze rate",
   "text.autoconfig.frostiful.option.freezingConfig.sunLichenHeatPerLevel": "Sun Lichen heat per level",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
-  "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time",
+  "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time (ticks)",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.becomeUnstableChance": "Become unstable chance",
