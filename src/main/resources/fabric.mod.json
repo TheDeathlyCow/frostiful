@@ -3,15 +3,14 @@
 	"id": "frostiful",
 	"version": "${version}",
 	"name": "Frostiful",
-	"description": "A Vanilla+ Snow & Frost Update Experience",
+	"description": "A Vanilla+ Snow & Frost Update Survival Experience",
 	"authors": [
 		"TheDeathlyCow"
 	],
 	"contact": {
-		"homepage": "https://github.com/TheDeathlyCow",
+		"homepage": "https://github.com/TheDeathlyCow/wiki",
 		"sources": "https://github.com/TheDeathlyCow/frostiful",
-		"issues": "https://github.com/TheDeathlyCow/frostiful/issues",
-		"wiki": "https://github.com/TheDeathlyCow/frostiful/wiki"
+		"issues": "https://github.com/TheDeathlyCow/frostiful/issues"
 	},
 	"license": "LGPL-3.0",
 	"icon": "assets/frostiful/icon.png",
