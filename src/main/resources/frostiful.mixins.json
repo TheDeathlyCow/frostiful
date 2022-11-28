@@ -26,7 +26,6 @@
 		"client.entity_renderer.ShakingRendererMixin",
 		"client.gui.ColdHeartOverlay",
 		"client.gui.FrostVinetteOverlay",
-		"client.gui.HeartTypeMixin",
 		"client.gui.RootedEffectOverlay"
 	],
 	"injectors": {

@@ -34,6 +34,8 @@ public abstract class PlayerEntityMixin {
             return;
         }
 
+        world.getProfiler().push("frostiful.passiveFreezingTick");
+
         final boolean doPassiveFreezing = Frostiful.getConfig().freezingConfig.doPassiveFreezing()
                 && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
@@ -45,6 +47,8 @@ public abstract class PlayerEntityMixin {
                 FrostHelper.removeLivingFrost(playerEntity, -passiveFreezing);
             }
         }
+
+        world.getProfiler().pop();
     }
 
     @Inject(

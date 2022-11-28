@@ -1,16 +1,10 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
-import com.github.thedeathlycow.frostiful.entity.ai.goal.PlayFightGoal;
-import com.github.thedeathlycow.frostiful.entity.ai.goal.PolarBearPlayFightGoal;
 import com.github.thedeathlycow.frostiful.entity.ai.goal.WolfPlayfightGoal;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.PassiveEntity;
-import net.minecraft.entity.passive.PolarBearEntity;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

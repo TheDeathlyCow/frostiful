@@ -79,6 +79,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             )
     )
     private void tickRoot(CallbackInfo ci) {
+        this.world.getProfiler().push("frostiful.rooted_tick");
         if (!this.isSpectator() && this.frostiful$isRooted()) {
             final LivingEntity instance = (LivingEntity) (Object) this;
             instance.setJumping(false);
@@ -103,6 +104,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                 this.playExtinguishSound();
             }
         }
+        this.world.getProfiler().pop();
     }
 
     @Inject(

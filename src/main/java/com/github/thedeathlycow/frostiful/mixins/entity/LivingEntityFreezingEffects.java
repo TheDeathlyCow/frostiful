@@ -1,21 +1,16 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.*;
+import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.tag.EntityTypeTags;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -23,22 +18,15 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.UUID;
-
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityFreezingEffects extends Entity {
-
-    private static final UUID FREEZING_SLOW_ID = UUID.fromString("31e65736-ac14-4951-925a-f30969276138");
 
     public LivingEntityFreezingEffects(EntityType<?> type, World world) {
         super(type, world);
     }
 
     @Shadow
-    @Nullable
-    public abstract EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
-
-    @Shadow public abstract boolean damage(DamageSource source, float amount);
+    public abstract boolean damage(DamageSource source, float amount);
 
     @Inject(
             method = "tick",
