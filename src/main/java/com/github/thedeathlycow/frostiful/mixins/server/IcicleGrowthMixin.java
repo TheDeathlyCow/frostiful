@@ -45,7 +45,7 @@ public abstract class IcicleGrowthMixin {
         final Random random = instance.random;
 
         // slow down icicles appearing in world
-        if (random.nextInt(5) != 0) {
+        if (random.nextInt(16 * 5) != 0) {
             return;
         }
 
