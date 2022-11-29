@@ -43,10 +43,9 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            int heatLevel = getHeatLevel(state);
-            if (heatLevel > 0 && this.canBurn(livingEntity)) {
+            if (this.heatLevel > 0 && this.canBurn(livingEntity)) {
                 FrostifulConfig config = Frostiful.getConfig();
-                int heat = config.freezingConfig.getSunLichenHeatPerLevel() * heatLevel;
+                int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
                 FrostHelper.removeLivingFrost(livingEntity, heat);
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
@@ -110,9 +109,5 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             z += random.nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
             world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.1D, 0.0D);
         }
-    }
-
-    private static int getHeatLevel(BlockState state) {
-        return state.isIn(FBlockTags.SUN_LICHENS) ? ((SunLichenBlock) state.getBlock()).getHeatLevel() : 0;
     }
 }
