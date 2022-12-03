@@ -24,6 +24,7 @@
 		"server.IcicleGrowthMixin"
 	],
 	"client": [
+		"client.DrippingWetPlayerMixin",
 		"client.entity_renderer.RootedEffectRenderer",
 		"client.entity_renderer.ShakingRendererMixin",
 		"client.gui.ColdHeartOverlay",
