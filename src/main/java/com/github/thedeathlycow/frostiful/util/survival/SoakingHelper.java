@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
 
 public class SoakingHelper {
@@ -49,12 +50,21 @@ public class SoakingHelper {
         return wetness;
     }
 
+    /**
+     * Returns by how much percentage the player's passive freezing could be increased
+     * based on how wet they are.
+     *
+     * @param player Affected player
+     * @return Returns the percentage change to passive freezing that the player should experience
+     * based on their wetness, where return values of 0 means no change, and 1 means double the freezing.
+     */
     public static float getWetnessFreezeModifier(PlayerEntity player) {
         if (hasWaterFreezingImmuneEffect(player)) {
-            return 0.0f;
+            return 1.0f;
         }
         SoakableEntity soakable = (SoakableEntity) player;
-        return soakable.frostiful$getWetnessScale();
+        FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
+        return config.getBaseWetPassiveFreezingIncrease() * soakable.frostiful$getWetnessScale();
     }
 
     private static boolean hasWaterFreezingImmuneEffect(PlayerEntity player) {

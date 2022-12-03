@@ -23,8 +23,8 @@ public class PassiveFreezingHelper {
         int biomeFreezing = getBiomeFreezing(player);
 
         if (biomeFreezing > 0) {
-            float increasePercent = 1 + SoakingHelper.getWetnessFreezeModifier(player);
-            biomeFreezing *= increasePercent;
+            float modifier = SoakingHelper.getWetnessFreezeModifier(player);
+            biomeFreezing = MathHelper.ceil(biomeFreezing * (1 + modifier));
         }
 
         return biomeFreezing;
@@ -73,7 +73,7 @@ public class PassiveFreezingHelper {
     public static int getPerTickFreezing(float temperature) {
         FrostifulConfig config = Frostiful.getConfig();
         double mul = config.freezingConfig.getBiomeTemperatureMultiplier();
-        double cutoff =config.freezingConfig.getPassiveFreezingStartTemp();
+        double cutoff = config.freezingConfig.getPassiveFreezingStartTemp();
 
         return MathHelper.floor(-mul * (temperature - cutoff) + 1);
     }
