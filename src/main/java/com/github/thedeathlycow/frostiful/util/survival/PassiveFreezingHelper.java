@@ -26,8 +26,9 @@ public class PassiveFreezingHelper {
         World world = player.getWorld();
         BlockPos pos = player.getBlockPos();
         Biome biome = world.getBiome(pos).value();
-        if (biome.isCold(pos) && player.isWet()) {
-            biomeFreezing += config.freezingConfig.getWetFreezeRate();
+
+        if (biomeFreezing > 0) {
+            biomeFreezing += getWetnessFreezeModifier(player, biomeFreezing);
         }
 
         return biomeFreezing;
@@ -79,6 +80,10 @@ public class PassiveFreezingHelper {
         double cutoff =config.freezingConfig.getPassiveFreezingStartTemp();
 
         return MathHelper.floor(-mul * (temperature - cutoff) + 1);
+    }
+
+    public static int getWetnessFreezeModifier(PlayerEntity player, int baseFreezing) {
+        return 0;
     }
 
 }

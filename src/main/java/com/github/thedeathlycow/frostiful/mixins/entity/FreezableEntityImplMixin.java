@@ -1,9 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -31,7 +29,7 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
 
     @Shadow public abstract AttributeContainer getAttributes();
 
-    private static final TrackedData<Integer> FROST = DataTracker.registerData(FreezableEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);;
+    private static final TrackedData<Integer> WET_TICKS = DataTracker.registerData(FreezableEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);;
 
 
     @Inject(
@@ -39,7 +37,12 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
             at = @At("TAIL")
     )
     private void trackFrostData(CallbackInfo ci) {
-        this.dataTracker.startTracking(FROST, 0);
+        this.dataTracker.startTracking(WET_TICKS, 0);
+    }
+
+    @Override
+    public float frostiful$getFrostProgress() {
+        return this.getFreezingScale();
     }
 
     @Override
@@ -78,21 +81,33 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
         return true;
     }
 
-//    @Inject(
-//            method = "writeCustomDataToNbt",
-//            at = @At("TAIL")
-//    )
-//    private void writeFrostToNbt(NbtCompound nbt, CallbackInfo ci) {
-//        FreezableEntity.frostiful$addFrostToNbt(this, nbt);
-//    }
-//
-//    @Inject(
-//            method = "readCustomDataFromNbt",
-//            at = @At("TAIL")
-//    )
-//    private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
-//        FreezableEntity.frostiful$setFrostFromNbt(this, nbt);
-//    }
+    @Override
+    @Unique
+    public int frostiful$getWetTicks() {
+        return this.dataTracker.get(WET_TICKS);
+    }
+
+    @Override
+    @Unique
+    public void frostiful$setWetTicks(int amount) {
+        this.dataTracker.set(WET_TICKS, amount);
+    }
+
+    @Inject(
+            method = "writeCustomDataToNbt",
+            at = @At("TAIL")
+    )
+    private void writeFrostToNbt(NbtCompound nbt, CallbackInfo ci) {
+        FreezableEntity.frostiful$addDataToNbt(this, nbt);
+    }
+
+    @Inject(
+            method = "readCustomDataFromNbt",
+            at = @At("TAIL")
+    )
+    private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
+        FreezableEntity.frostiful$setDataFromNbt(this, nbt);
+    }
 
     private static int getTicksFromMaxFrost(double maxFrost) {
         return (int) (140 * maxFrost);

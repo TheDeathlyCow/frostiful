@@ -8,13 +8,34 @@ import net.minecraft.util.math.MathHelper;
 public interface FreezableEntity {
 
     String FROSTIFUL_KEY = "Frostiful";
-    String FROST_KEY = "CurrentFrost";
+    String WET_KEY = "TicksWet";
 
     int frostiful$getCurrentFrost();
 
     int frostiful$getMaxFrost();
 
     void frostiful$setFrost(int amount);
+
+    boolean frostiful$canFreeze();
+
+    void frostiful$setWetTicks(int amount);
+
+    int frostiful$getWetTicks();
+
+    default boolean frostiful$isWet() {
+        return this.frostiful$getWetTicks() > 0;
+    }
+
+    default int frostiful$getMaxWetTicks() {
+        return 20 * 30;
+    }
+
+    default float frostiful$getWetnessScale() {
+        return MathHelper.clamp(
+                ((float)this.frostiful$getWetTicks()) / this.frostiful$getMaxWetTicks(),
+                0.0f, 1.0f
+        );
+    }
 
     default void frostiful$setFrost(int amount, boolean clamp) {
         int toSet = amount;
@@ -23,8 +44,6 @@ public interface FreezableEntity {
         }
         this.frostiful$setFrost(toSet);
     }
-
-    boolean frostiful$canFreeze();
 
     default void frostiful$addFrost(int amount) {
         this.frostiful$setFrost(this.frostiful$getCurrentFrost() + amount, true);
@@ -43,28 +62,32 @@ public interface FreezableEntity {
         return this.frostiful$getCurrentFrost() >= this.frostiful$getMaxFrost();
     }
 
-    static void frostiful$addFrostToNbt(FreezableEntity entity, NbtCompound nbt) {
+    static void frostiful$addDataToNbt(FreezableEntity entity, NbtCompound nbt) {
         NbtCompound frostifulNbt = FNbtHelper.getOrDefault(
                 nbt,
                 FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
                 NbtCompound::getCompound,
-                new NbtCompound()
+                FNbtHelper.NEW_COMPOUND_FALLBACK
         );
-        if (entity.frostiful$getCurrentFrost() > 0) {
-            frostifulNbt.putInt(FROST_KEY, entity.frostiful$getCurrentFrost());
+
+
+        if (entity.frostiful$isWet()) {
+            frostifulNbt.putInt(WET_KEY, entity.frostiful$getWetTicks());
         }
+
+
         nbt.put(FROSTIFUL_KEY, frostifulNbt);
     }
 
-    static void frostiful$setFrostFromNbt(FreezableEntity entity, NbtCompound nbt) {
-        int amount = 0;
+    static void frostiful$setDataFromNbt(FreezableEntity entity, NbtCompound nbt) {
         if (nbt.contains(FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE)) {
-            NbtCompound frostifulNbt = nbt.getCompound(FROSTIFUL_KEY);
-            if (frostifulNbt.contains(FROST_KEY, NbtElement.INT_TYPE)) {
-                amount = frostifulNbt.getInt(FROST_KEY);
-            }
-        }
 
-        entity.frostiful$setFrost(amount);
+            NbtCompound frostifulNbt = nbt.getCompound(FROSTIFUL_KEY);
+            if (frostifulNbt.contains(WET_KEY, NbtElement.INT_TYPE)) {
+                int wetTicks = frostifulNbt.getInt(WET_KEY);
+                entity.frostiful$setWetTicks(wetTicks);
+            }
+
+        }
     }
 }
