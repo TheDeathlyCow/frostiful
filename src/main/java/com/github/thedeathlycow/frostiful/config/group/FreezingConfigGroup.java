@@ -12,6 +12,7 @@ public class FreezingConfigGroup implements ConfigData {
     double passiveFreezingStartTemp = 0.25;
     int rainWetnessIncrease = 1;
     int dryRate = 1;
+    int onFireDryDate = 50;
     int cannotFreezeThawRate = 100;
     int onFireThawRate = 10;
     int warmthPerLightLevel = 4;
@@ -43,6 +44,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getDryRate() {
         return dryRate;
+    }
+
+    public int getOnFireDryRate() {
+        return onFireDryDate;
     }
 
     public int getCannotFreezeThawRate() {

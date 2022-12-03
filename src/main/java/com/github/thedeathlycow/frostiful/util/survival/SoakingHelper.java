@@ -13,17 +13,18 @@ public class SoakingHelper {
     public static int getWetnessChange(PlayerEntity player) {
         FreezingConfigGroup freezingConfig = Frostiful.getConfig().freezingConfig;
         SoakableEntity soakableEntity = (SoakableEntity) player;
+        EntityInvoker invoker = (EntityInvoker) player;
 
         boolean isDry = true;
         int wetness = 0;
 
         //* set wetness from rain
-        if (((EntityInvoker) player).frostiful$invokeIsBeingRainedOn()) {
+        if (invoker.frostiful$invokeIsBeingRainedOn()) {
             wetness = freezingConfig.getRainWetnessIncrease();
             isDry = false;
         }
 
-        //* immediately soak players submerged in water
+        //* immediately soak players in water
         if (player.isSubmergedInWater() || player.isInsideWaterOrBubbleColumn()) {
             wetness = soakableEntity.frostiful$getMaxWetTicks() - soakableEntity.frostiful$getWetTicks();
             isDry = false;
@@ -38,6 +39,11 @@ public class SoakingHelper {
         int blockLightLevel = player.getWorld().getLightLevel(LightType.BLOCK, player.getBlockPos());
         if (blockLightLevel > 0) {
             wetness -= blockLightLevel >> 2; // fast divide by 4
+        }
+
+        //* increase dryness when on fire
+        if (player.isOnFire()) {
+            wetness -= freezingConfig.getOnFireDryRate();
         }
 
         return wetness;
