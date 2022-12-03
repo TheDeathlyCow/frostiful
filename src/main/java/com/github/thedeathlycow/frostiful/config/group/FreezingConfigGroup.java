@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".freezing")
 public class FreezingConfigGroup implements ConfigData {
@@ -11,7 +10,8 @@ public class FreezingConfigGroup implements ConfigData {
     boolean doPassiveFreezing = true;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
-    int wetFreezeRate = 2;
+    int rainWetnessIncrease = 1;
+    int dryRate = 1;
     int cannotFreezeThawRate = 100;
     int onFireThawRate = 10;
     int warmthPerLightLevel = 4;
@@ -37,8 +37,12 @@ public class FreezingConfigGroup implements ConfigData {
         return passiveFreezingStartTemp;
     }
 
-    public int getWetFreezeRate() {
-        return wetFreezeRate;
+    public int getRainWetnessIncrease() {
+        return rainWetnessIncrease;
+    }
+
+    public int getDryRate() {
+        return dryRate;
     }
 
     public int getCannotFreezeThawRate() {
