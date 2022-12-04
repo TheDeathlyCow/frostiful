@@ -58,6 +58,7 @@
   "text.autoconfig.frostiful.option.clientConfig.frostOverlayStart": "Frost overlay start percent (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Do cold heart overlay",
   "text.autoconfig.frostiful.option.clientConfig.shakingStartPercent": "Shaking start percent (0-1)",
+  "text.autoconfig.frostiful.option.clientConfig.renderDripParticles": "Render water drip particles when wet",
   
   "text.autoconfig.frostiful.option.combatConfig": "Combat Config",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Heat drain per level of Enervation",

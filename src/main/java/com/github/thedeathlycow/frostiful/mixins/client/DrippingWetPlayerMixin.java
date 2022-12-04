@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.client;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.particle.BlockLeakParticle;
@@ -24,6 +26,8 @@ import java.util.concurrent.ThreadLocalRandom;
 @Environment(EnvType.CLIENT)
 public abstract class DrippingWetPlayerMixin extends LivingEntity {
 
+    private static final float SLOW_DRIP_MULTIPLIER = 2.0f;
+
     @Shadow protected boolean isSubmergedInWater;
 
     protected DrippingWetPlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -44,6 +48,11 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
     private void dripParticles(CallbackInfo ci) {
         if (this.world.isClient) { // only show particles on client to save bandwidth
 
+            // allow config to disable particles
+            if (!Frostiful.getConfig().clientConfig.renderDripParticles()) {
+                return;
+            }
+
             // only spawn particles when out of water
             if (this.isSubmergedInWater || this.isWet()) {
                 return;
@@ -59,7 +68,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             ThreadLocalRandom random = ThreadLocalRandom.current();
 
             // Spawn drip with probability equal to wetness scale
-            if (random.nextFloat() < soakableEntity.frostiful$getWetnessScale()) {
+            if (SLOW_DRIP_MULTIPLIER * random.nextFloat() < soakableEntity.frostiful$getWetnessScale()) {
 
                 World world = this.getWorld();
                 Box boundingBox = this.getBoundingBox();
