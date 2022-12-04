@@ -3,14 +3,17 @@ package com.github.thedeathlycow.frostiful.mixins.client;
 import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.particle.BlockLeakParticle;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -21,31 +24,53 @@ import java.util.concurrent.ThreadLocalRandom;
 @Environment(EnvType.CLIENT)
 public abstract class DrippingWetPlayerMixin extends LivingEntity {
 
+    @Shadow protected boolean isSubmergedInWater;
+
     protected DrippingWetPlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
 
+    /**
+     * Renders water particles on players that are wet. The chance of a drip spawning is the same
+     * as the player's wetness scale.
+     * This is done on the client side to avoid sending unnecessary packets and save bandwidth.
+     *
+     * @param ci Callback info
+     */
     @Inject(
             method = "tick",
             at = @At("TAIL")
     )
     private void dripParticles(CallbackInfo ci) {
-        if (this.world.isClient) { // only render on client to save bandwidth
+        if (this.world.isClient) { // only show particles on client to save bandwidth
 
+            // only spawn particles when out of water
+            if (this.isSubmergedInWater || this.isWet()) {
+                return;
+            }
             SoakableEntity soakableEntity = (SoakableEntity) this;
 
-            if (soakableEntity.frostiful$getWetnessScale() > 0.5f) {
+            // Ensure that only players with non-zero wetness have particles
+            // (I mostly just don't trust floats lol)
+            if (!soakableEntity.frostiful$isWet()) {
+                return;
+            }
+
+            ThreadLocalRandom random = ThreadLocalRandom.current();
+
+            // Spawn drip with probability equal to wetness scale
+            if (random.nextFloat() < soakableEntity.frostiful$getWetnessScale()) {
+
                 World world = this.getWorld();
                 Box boundingBox = this.getBoundingBox();
-                ThreadLocalRandom random = ThreadLocalRandom.current();
-                Vec3d pos = this.getPos();
 
-                double x = pos.x + random.nextDouble(boundingBox.getXLength());
-                double y = pos.y + random.nextDouble(boundingBox.getYLength());
-                double z = pos.z + random.nextDouble(boundingBox.getZLength());
+                // pick random pos in player bounding box
+                double x = boundingBox.getMin(Direction.Axis.X) + random.nextDouble(boundingBox.getXLength());
+                double y = boundingBox.getMin(Direction.Axis.Y) + random.nextDouble(boundingBox.getYLength());
+                double z = boundingBox.getMin(Direction.Axis.Z) + random.nextDouble(boundingBox.getZLength());
 
                 world.addParticle(
-                        ParticleTypes.DRIPPING_WATER,
+                        ParticleTypes.FALLING_DRIPSTONE_WATER,
                         x, y, z,
                         0, 0, 0
                 );
