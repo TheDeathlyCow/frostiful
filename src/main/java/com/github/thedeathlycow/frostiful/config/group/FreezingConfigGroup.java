@@ -17,7 +17,7 @@ public class FreezingConfigGroup implements ConfigData {
     int onFireDryDate = 50;
     int cannotFreezeThawRate = 100;
     int onFireThawRate = 50;
-    int conduitPowerWarmthPerTick = 5;
+    int conduitPowerWarmthPerTick = 12;
     int warmthPerLightLevel = 4;
     int minLightForWarmthDay = 7;
     int minLightForWarmthNight = 9;
