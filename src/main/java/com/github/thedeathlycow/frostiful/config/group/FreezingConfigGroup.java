@@ -10,8 +10,9 @@ public class FreezingConfigGroup implements ConfigData {
     boolean doPassiveFreezing = true;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
-    float baseWetPassiveFreezingIncrease = 2.1f;
+    float passiveFreezingWetnessScaleMultiplier = 2.1f;
     int rainWetnessIncrease = 1;
+    int touchingWaterWetnessIncrease = 5;
     int dryRate = 1;
     int onFireDryDate = 50;
     int cannotFreezeThawRate = 100;
@@ -39,12 +40,16 @@ public class FreezingConfigGroup implements ConfigData {
         return passiveFreezingStartTemp;
     }
 
-    public float getBaseWetPassiveFreezingIncrease() {
-        return baseWetPassiveFreezingIncrease;
+    public float getPassiveFreezingWetnessScaleMultiplier() {
+        return passiveFreezingWetnessScaleMultiplier;
     }
 
     public int getRainWetnessIncrease() {
         return rainWetnessIncrease;
+    }
+
+    public int getTouchingWaterWetnessIncrease() {
+        return touchingWaterWetnessIncrease;
     }
 
     public int getDryRate() {

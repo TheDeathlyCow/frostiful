@@ -6,7 +6,6 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
 
 public class SoakingHelper {
@@ -25,9 +24,15 @@ public class SoakingHelper {
             isDry = false;
         }
 
+        //* add wetness when touching, but not submerged in, water
+        if (player.isTouchingWater()) {
+            wetness += freezingConfig.getTouchingWaterWetnessIncrease();
+            isDry = false;
+        }
+
         //* immediately soak players in water
-        if (player.isSubmergedInWater() || player.isInsideWaterOrBubbleColumn()) {
-            wetness = soakableEntity.frostiful$getMaxWetTicks() - soakableEntity.frostiful$getWetTicks();
+        if (player.isSubmergedInWater() || invoker.frostiful$invokeIsInsideBubbleColumn()) {
+            wetness = soakableEntity.frostiful$getMaxWetTicks();
             isDry = false;
         }
 
@@ -64,7 +69,7 @@ public class SoakingHelper {
         }
         SoakableEntity soakable = (SoakableEntity) player;
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
-        return config.getBaseWetPassiveFreezingIncrease() * soakable.frostiful$getWetnessScale();
+        return config.getPassiveFreezingWetnessScaleMultiplier() * soakable.frostiful$getWetnessScale();
     }
 
     private static boolean hasWaterFreezingImmuneEffect(PlayerEntity player) {

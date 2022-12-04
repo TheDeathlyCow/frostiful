@@ -10,4 +10,7 @@ public interface EntityInvoker {
     @Invoker("isBeingRainedOn")
     boolean frostiful$invokeIsBeingRainedOn();
 
+    @Invoker("isInsideBubbleColumn")
+    boolean frostiful$invokeIsInsideBubbleColumn();
+
 }
