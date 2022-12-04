@@ -1,9 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -18,6 +17,7 @@ import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.gen.Invoker;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -31,15 +31,9 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
 
     @Shadow public abstract AttributeContainer getAttributes();
 
-    private static final TrackedData<Integer> FROST = DataTracker.registerData(FreezableEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);;
-
-
-    @Inject(
-            method = "initDataTracker",
-            at = @At("TAIL")
-    )
-    private void trackFrostData(CallbackInfo ci) {
-        this.dataTracker.startTracking(FROST, 0);
+    @Override
+    public float frostiful$getFrostProgress() {
+        return this.getFreezingScale();
     }
 
     @Override
@@ -77,22 +71,6 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
         }
         return true;
     }
-
-//    @Inject(
-//            method = "writeCustomDataToNbt",
-//            at = @At("TAIL")
-//    )
-//    private void writeFrostToNbt(NbtCompound nbt, CallbackInfo ci) {
-//        FreezableEntity.frostiful$addFrostToNbt(this, nbt);
-//    }
-//
-//    @Inject(
-//            method = "readCustomDataFromNbt",
-//            at = @At("TAIL")
-//    )
-//    private void readFrostFromNbt(NbtCompound nbt, CallbackInfo ci) {
-//        FreezableEntity.frostiful$setFrostFromNbt(this, nbt);
-//    }
 
     private static int getTicksFromMaxFrost(double maxFrost) {
         return (int) (140 * maxFrost);

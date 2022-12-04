@@ -10,8 +10,8 @@ public class ClientConfigGroup implements ConfigData {
 
     float frostOverlayStart = 0.5f;
     boolean doColdHeartOverlay = true;
-
     float shakingStartPercent = 0.75f;
+    boolean renderDripParticles = true;
 
     public float getFrostOverlayStart() {
         return frostOverlayStart;
@@ -25,4 +25,7 @@ public class ClientConfigGroup implements ConfigData {
         return MathHelper.clamp(shakingStartPercent, 0.0f, 1.0f);
     }
 
+    public boolean renderDripParticles() {
+        return renderDripParticles;
+    }
 }

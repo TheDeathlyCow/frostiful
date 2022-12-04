@@ -20,14 +20,11 @@ public class PassiveFreezingHelper {
             return 0;
         }
 
-        FrostifulConfig config = Frostiful.getConfig();
-
         int biomeFreezing = getBiomeFreezing(player);
-        World world = player.getWorld();
-        BlockPos pos = player.getBlockPos();
-        Biome biome = world.getBiome(pos).value();
-        if (biome.isCold(pos) && player.isWet()) {
-            biomeFreezing += config.freezingConfig.getWetFreezeRate();
+
+        if (biomeFreezing > 0) {
+            float modifier = SoakingHelper.getWetnessFreezeModifier(player);
+            biomeFreezing = MathHelper.ceil(biomeFreezing * (1 + modifier));
         }
 
         return biomeFreezing;
@@ -76,9 +73,11 @@ public class PassiveFreezingHelper {
     public static int getPerTickFreezing(float temperature) {
         FrostifulConfig config = Frostiful.getConfig();
         double mul = config.freezingConfig.getBiomeTemperatureMultiplier();
-        double cutoff =config.freezingConfig.getPassiveFreezingStartTemp();
+        double cutoff = config.freezingConfig.getPassiveFreezingStartTemp();
 
         return MathHelper.floor(-mul * (temperature - cutoff) + 1);
     }
+
+
 
 }

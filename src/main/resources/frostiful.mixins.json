@@ -7,6 +7,7 @@
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
 		"entity.EntityFreezeMixin",
+		"entity.EntityInvoker",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",
 		"entity.LivingEntityFreezeDamageConfigMixin",
@@ -14,6 +15,7 @@
 		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
 		"entity.RootedEntityImplMixin",
+		"entity.SoakableEntityMixin",
 		"entity.mob.PiglinBrainMixin",
 		"entity.mob.PolarBearMixin",
 		"entity.mob.StrayCarriesFrostArrowMixin",
@@ -22,6 +24,7 @@
 		"server.IcicleGrowthMixin"
 	],
 	"client": [
+		"client.DrippingWetPlayerMixin",
 		"client.entity_renderer.RootedEffectRenderer",
 		"client.entity_renderer.ShakingRendererMixin",
 		"client.gui.ColdHeartOverlay",

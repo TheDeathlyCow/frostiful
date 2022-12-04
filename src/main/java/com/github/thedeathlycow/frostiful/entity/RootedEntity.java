@@ -38,7 +38,7 @@ public interface RootedEntity {
                 nbt,
                 FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
                 NbtCompound::getCompound,
-                new NbtCompound()
+                FNbtHelper.NEW_COMPOUND_FALLBACK
         );
 
         if (entity.frostiful$isRooted()) {

@@ -1,12 +1,16 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
+import com.github.thedeathlycow.frostiful.util.survival.SoakingHelper;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -34,11 +38,13 @@ public abstract class PlayerEntityMixin {
             return;
         }
 
-        world.getProfiler().push("frostiful.passiveFreezingTick");
+        Profiler profiler = world.getProfiler();
+        profiler.push("frostiful.passiveFreezingTick");
 
         final boolean doPassiveFreezing = Frostiful.getConfig().freezingConfig.doPassiveFreezing()
                 && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
+        //* tick passive freezing
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
             if (passiveFreezing > 0) {
@@ -48,7 +54,18 @@ public abstract class PlayerEntityMixin {
             }
         }
 
-        world.getProfiler().pop();
+        //* tick wetness
+        if (!playerEntity.isSpectator()) {
+            SoakableEntity soakableEntity = (SoakableEntity) this;
+
+            int current = soakableEntity.frostiful$getWetTicks();
+            int wetnessIncrease = SoakingHelper.getWetnessChange(playerEntity);
+
+            soakableEntity.frostiful$setWetTicks(
+                    MathHelper.clamp(current + wetnessIncrease, 0, soakableEntity.frostiful$getMaxWetTicks())
+            );
+        }
+        profiler.pop();
     }
 
     @Inject(
