@@ -65,7 +65,7 @@ public class SoakingHelper {
      */
     public static float getWetnessFreezeModifier(PlayerEntity player) {
         if (hasWaterFreezingImmuneEffect(player)) {
-            return 1.0f;
+            return 0.0f;
         }
         SoakableEntity soakable = (SoakableEntity) player;
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
