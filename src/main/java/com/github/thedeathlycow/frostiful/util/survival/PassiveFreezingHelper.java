@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -52,6 +53,10 @@ public class PassiveFreezingHelper {
 
         if (!freezable.frostiful$canFreeze()) {
             warmth += config.freezingConfig.getCannotFreezeThawRate();
+        }
+
+        if (livingEntity.hasStatusEffect(StatusEffects.CONDUIT_POWER)) {
+            warmth += config.freezingConfig.getConduitPowerWarmthPerTick();
         }
 
         return warmth;

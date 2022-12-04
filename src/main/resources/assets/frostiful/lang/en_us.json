@@ -80,6 +80,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.onFireDryDate": "On fire dry rate",
   "text.autoconfig.frostiful.option.freezingConfig.cannotFreezeThawRate": "Cannot freeze thaw rate",
   "text.autoconfig.frostiful.option.freezingConfig.onFireThawRate": "On fire thaw rate",
+  "text.autoconfig.frostiful.option.freezingConfig.conduitPowerWarmthPerTick": "Conduit Power warmth per tick",
   "text.autoconfig.frostiful.option.freezingConfig.warmthPerLightLevel": "Warmth per light level",
   "text.autoconfig.frostiful.option.freezingConfig.minLightForWarmthDay": "Minimum block light level for warmth during the day",
   "text.autoconfig.frostiful.option.freezingConfig.minLightForWarmthNight": "Minimum block light level for warmth during the night",
