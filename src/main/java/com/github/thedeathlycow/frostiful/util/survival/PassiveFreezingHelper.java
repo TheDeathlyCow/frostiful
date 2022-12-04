@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.util.survival;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
@@ -55,7 +56,9 @@ public class PassiveFreezingHelper {
             warmth += config.freezingConfig.getCannotFreezeThawRate();
         }
 
-        if (livingEntity.hasStatusEffect(StatusEffects.CONDUIT_POWER)) {
+        boolean isSubmerged = livingEntity.isSubmergedInWater()
+                || ((EntityInvoker) livingEntity).frostiful$invokeIsInsideBubbleColumn();
+        if (isSubmerged && livingEntity.hasStatusEffect(StatusEffects.CONDUIT_POWER)) {
             warmth += config.freezingConfig.getConduitPowerWarmthPerTick();
         }
 
