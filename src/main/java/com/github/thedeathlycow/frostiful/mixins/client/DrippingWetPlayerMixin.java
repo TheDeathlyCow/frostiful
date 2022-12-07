@@ -30,6 +30,8 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
 
     @Shadow protected boolean isSubmergedInWater;
 
+    @Shadow public abstract boolean isSpectator();
+
     protected DrippingWetPlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
         super(entityType, world);
     }
@@ -47,6 +49,11 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
     )
     private void dripParticles(CallbackInfo ci) {
         if (this.world.isClient) { // only show particles on client to save bandwidth
+
+            // spectators should not drip
+            if (this.isSpectator()) {
+                return;
+            }
 
             // allow config to disable particles
             if (!Frostiful.getConfig().clientConfig.renderDripParticles()) {
