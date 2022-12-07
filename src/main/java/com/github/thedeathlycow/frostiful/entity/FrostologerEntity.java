@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 
 public class FrostologerEntity extends IllagerEntity {
 
-    protected FrostologerEntity(EntityType<? extends SpellcastingIllagerEntity> entityType, World world) {
+    protected FrostologerEntity(EntityType<? extends IllagerEntity> entityType, World world) {
         super(entityType, world);
     }
 

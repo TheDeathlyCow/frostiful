@@ -11,6 +11,15 @@ import net.minecraft.util.registry.Registry;
 
 public class FEntityTypes {
 
+    public static final EntityType<FrostologerEntity> FROSTOLOGER =
+            FabricEntityTypeBuilder.create(
+                            SpawnGroup.MONSTER,
+                            FrostologerEntity::new
+                    )
+                    .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
+                    .trackRangeBlocks(8)
+                    .build();
+
     public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW =
             FabricEntityTypeBuilder.create(
                     SpawnGroup.CREATURE,
@@ -22,12 +31,13 @@ public class FEntityTypes {
                             SpawnGroup.MISC,
                             (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
                     )
-                    .dimensions(EntityDimensions.fixed(3f/8f, 3f/8f))
+                    .dimensions(EntityDimensions.fixed(3f / 8f, 3f / 8f))
                     .trackRangeChunks(4)
                     .trackedUpdateRate(10)
                     .build();
 
     public static void registerEntities() {
+        register("frostologer", FROSTOLOGER);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frost_spell", FROST_SPELL);
     }
