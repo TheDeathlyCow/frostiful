@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
@@ -40,6 +41,8 @@ public class FEntityTypes {
         register("frostologer", FROSTOLOGER);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frost_spell", FROST_SPELL);
+
+        FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {
