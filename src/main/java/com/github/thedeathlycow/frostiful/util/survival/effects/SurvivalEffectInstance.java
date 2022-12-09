@@ -2,6 +2,8 @@ package com.github.thedeathlycow.frostiful.util.survival.effects;
 
 import com.google.gson.*;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Type;
@@ -12,13 +14,20 @@ public class SurvivalEffectInstance<C> {
 
     private final C config;
 
-    public SurvivalEffectInstance(SurvivalEffectType<C> type, JsonElement json) {
+    private final EntityPredicate predicate;
+
+    public SurvivalEffectInstance(SurvivalEffectType<C> type, JsonElement config, EntityPredicate predicate) {
         this.type = type;
-        this.config = type.configFromJson(json);
+        this.config = type.configFromJson(config);
+        this.predicate = predicate;
     }
 
     public void applyIfPossible(LivingEntity victim) {
-        if (this.type.shouldApply(victim, this.config)) {
+
+        boolean shouldApply = this.type.shouldApply(victim, this.config)
+                && this.predicate.test((ServerWorld) victim.getWorld(), victim.getPos(), victim);
+
+        if (shouldApply) {
             this.type.apply(victim, this.config);
         }
     }
@@ -33,10 +42,17 @@ public class SurvivalEffectInstance<C> {
         public SurvivalEffectInstance<?> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonObject json = jsonElement.getAsJsonObject();
 
+            // set required values
             Identifier typeID = new Identifier(json.get("type").getAsString());
             SurvivalEffectType<?> effectType = SurvivalEffectTypes.VALUES.get(typeID);
 
-            return new SurvivalEffectInstance<>(effectType, json.get("config"));
+            // set optional values
+            EntityPredicate predicate = EntityPredicate.ANY;
+            if (json.has("entity")) {
+                predicate = EntityPredicate.fromJson(json.get("entity"));
+            }
+
+            return new SurvivalEffectInstance<>(effectType, json.get("config"), predicate);
         }
     }
 
