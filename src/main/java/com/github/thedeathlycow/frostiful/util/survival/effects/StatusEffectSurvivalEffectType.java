@@ -18,9 +18,22 @@ public class StatusEffectSurvivalEffectType extends SurvivalEffectType<StatusEff
 
     @Override
     public boolean shouldApply(LivingEntity victim, Config config) {
-        StatusEffectInstance currentEffectInstance = victim.getStatusEffect(config.effect());
-        return victim.getFreezingScale() >= config.progressThreshold()
-                    && (currentEffectInstance == null || currentEffectInstance.getAmplifier() < config.amplifier());
+
+        if (victim.getFreezingScale() >= config.progressThreshold()) {
+            StatusEffectInstance currentEffectInstance = victim.getStatusEffect(config.effect());
+
+            if (currentEffectInstance == null) {
+                return true;
+            }
+
+            if (currentEffectInstance.getAmplifier() < config.amplifier()) {
+                return true;
+            }
+
+            return currentEffectInstance.getDuration() < (config.duration >> 1); // fast divide by 2
+        }
+
+        return false;
     }
 
     @Override
