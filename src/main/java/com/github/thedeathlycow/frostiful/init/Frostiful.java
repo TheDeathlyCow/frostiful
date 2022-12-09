@@ -69,7 +69,7 @@ public class Frostiful implements ModInitializer {
 
     /**
      * Creates a new {@link Identifier} in the namespace {@value MODID}.
-     * @param path The path of the identifier
+     * @param path The path of the uuid
      * @return Returns a new {@link Identifier}
      */
     public static Identifier id(String path) {

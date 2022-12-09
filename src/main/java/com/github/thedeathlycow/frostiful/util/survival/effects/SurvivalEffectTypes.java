@@ -11,6 +11,7 @@ public class SurvivalEffectTypes {
     public static final Map<Identifier, SurvivalEffectType<?>> VALUES = new HashMap<>();
 
     public static final SurvivalEffectType<?> STATUS_EFFECT = create("status_effect", new StatusEffectSurvivalEffectType());
+    public static final SurvivalEffectType<?> SCALING_ATTRIBUTE_MODIFIER = create("scaling_attribute_modifier", new ScalingAttributeModifierSurvivalEffectType());
 
     public static SurvivalEffectType<?> create(Identifier id, SurvivalEffectType<?> type) {
         return VALUES.put(id, type);
