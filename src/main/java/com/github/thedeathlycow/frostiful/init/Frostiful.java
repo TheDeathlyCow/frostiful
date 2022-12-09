@@ -15,6 +15,7 @@ import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.util.survival.effects.SurvivalEffectLoader;
+import com.github.thedeathlycow.frostiful.util.survival.effects.SurvivalEffectTypes;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -46,6 +47,8 @@ public class Frostiful implements ModInitializer {
         );
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
+
+        SurvivalEffectTypes.createSurvivalEffectTypes();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(SurvivalEffectLoader.FROSTIFUL);
 
         FEntityAttributes.registerAttributes();
