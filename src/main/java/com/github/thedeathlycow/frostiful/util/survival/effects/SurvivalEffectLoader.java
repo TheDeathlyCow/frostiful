@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.util.survival.effects;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.google.gson.JsonParseException;
 import com.google.gson.JsonSyntaxException;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.resource.ResourceManager;
@@ -50,7 +51,7 @@ public class SurvivalEffectLoader implements SimpleSynchronousResourceReloadList
                 );
 
                 newEffects.add(effect);
-            } catch (IOException | JsonSyntaxException e) {
+            } catch (IOException | JsonParseException e) {
                 LOGGER.error("An error occurred while loading survival effect {}: {}", entry.getKey(), e);
             }
         }

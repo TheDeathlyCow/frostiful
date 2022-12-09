@@ -44,6 +44,11 @@ public class SurvivalEffectInstance<C> {
 
             // set required values
             Identifier typeID = new Identifier(json.get("type").getAsString());
+
+            if (!SurvivalEffectTypes.VALUES.containsKey(typeID)) {
+                throw new JsonParseException("Unknown survival effect type: " + typeID);
+            }
+
             SurvivalEffectType<?> effectType = SurvivalEffectTypes.VALUES.get(typeID);
 
             // set optional values

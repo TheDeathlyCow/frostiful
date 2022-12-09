@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.util.survival.effects;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
@@ -55,8 +56,11 @@ public class StatusEffectSurvivalEffectType extends SurvivalEffectType<StatusEff
             }
 
             // get effect
-            Identifier effectKey = new Identifier(object.get("effect").getAsString());
-            StatusEffect effect = Registry.STATUS_EFFECT.get(effectKey);
+            Identifier effectID = new Identifier(object.get("effect").getAsString());
+            StatusEffect effect = Registry.STATUS_EFFECT.get(effectID);
+            if (effect == null) {
+                throw new JsonParseException("Unknown status effect: " + effectID);
+            }
 
             return new Config(progressThreshold, effect, duration, amplifier);
         }

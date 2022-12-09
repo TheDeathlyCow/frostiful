@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.util.survival.effects;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParseException;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
@@ -76,7 +77,6 @@ public class ScalingAttributeModifierSurvivalEffectType extends SurvivalEffectTy
             UUID id = UUID.randomUUID();
             String name = "";
 
-
             JsonObject json = jsonElement.getAsJsonObject();
 
             //// overwrite defaults if present ////
@@ -94,7 +94,12 @@ public class ScalingAttributeModifierSurvivalEffectType extends SurvivalEffectTy
 
             //// grab required values ////
 
-            EntityAttribute attribute = Registry.ATTRIBUTE.get(new Identifier(json.get("attribute_type").getAsString()));
+            Identifier attrID = new Identifier(json.get("attribute_type").getAsString());
+            EntityAttribute attribute = Registry.ATTRIBUTE.get(attrID);
+
+            if (attribute == null) {
+                throw new JsonParseException("Unknown attribute: " + attrID);
+            }
 
             EntityAttributeModifier.Operation operation = EntityAttributeModifier.Operation.valueOf(
                     json.get("operation").getAsString().toUpperCase()
