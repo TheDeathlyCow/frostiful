@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.mixins.entity;
+package com.github.thedeathlycow.frostiful.mixins.entity.soaking;
 
 import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import net.minecraft.entity.EntityType;

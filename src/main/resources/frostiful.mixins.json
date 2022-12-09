@@ -15,11 +15,12 @@
 		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
 		"entity.RootedEntityImplMixin",
-		"entity.SoakableEntityMixin",
 		"entity.mob.PiglinBrainMixin",
 		"entity.mob.PolarBearMixin",
 		"entity.mob.StrayCarriesFrostArrowMixin",
 		"entity.mob.WolfMixin",
+		"entity.soaking.SoakableEntityMixin",
+		"entity.soaking.WaterPotionSoakingMixin",
 		"item.ArmorItemMixin",
 		"server.IcicleGrowthMixin"
 	],
