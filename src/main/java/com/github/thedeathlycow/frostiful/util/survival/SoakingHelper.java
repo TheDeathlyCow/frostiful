@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.LightType;
@@ -25,7 +26,7 @@ public class SoakingHelper {
         }
 
         //* add wetness when touching, but not submerged in, water
-        if (player.isTouchingWater()) {
+        if (player.isTouchingWater() || player.getBlockStateAtPos().isOf(Blocks.WATER_CAULDRON)) {
             wetness += freezingConfig.getTouchingWaterWetnessIncrease();
             isDry = false;
         }
