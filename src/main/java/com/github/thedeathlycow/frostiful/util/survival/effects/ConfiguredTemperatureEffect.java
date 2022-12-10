@@ -26,7 +26,7 @@ public class ConfiguredTemperatureEffect<C> {
             TemperatureEffect<C> type,
             JsonElement configJson,
             EntityPredicate predicate
-    ) {
+    ) throws JsonParseException {
         return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson), predicate);
     }
 

@@ -26,7 +26,7 @@ public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect
     }
 
     @Override
-    public Config configFromJson(JsonElement json) {
+    public Config configFromJson(JsonElement json) throws JsonParseException {
         return Config.fromJson(json);
     }
 
@@ -70,7 +70,7 @@ public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect
             EntityAttributeModifier.Operation operation
     ) {
 
-        public static Config fromJson(JsonElement jsonElement) {
+        public static Config fromJson(JsonElement jsonElement) throws JsonParseException {
 
             //// init defaults ////
             float scale = 1.0f;

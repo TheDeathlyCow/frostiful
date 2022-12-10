@@ -37,7 +37,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
     }
 
     @Override
-    public Config configFromJson(JsonElement json) {
+    public Config configFromJson(JsonElement json) throws JsonParseException {
         return Config.fromJson(json);
     }
 
@@ -55,7 +55,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
             int duration,
             int amplifier
     ) {
-        public static Config fromJson(JsonElement json) {
+        public static Config fromJson(JsonElement json) throws JsonParseException {
             JsonObject object = json.getAsJsonObject();
 
             // get numbers
