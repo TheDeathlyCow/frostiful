@@ -16,10 +16,18 @@ public class ConfiguredTemperatureEffect<C> {
 
     private final EntityPredicate predicate;
 
-    public ConfiguredTemperatureEffect(TemperatureEffect<C> type, JsonElement config, EntityPredicate predicate) {
+    public ConfiguredTemperatureEffect(TemperatureEffect<C> type, C config, EntityPredicate predicate) {
         this.type = type;
-        this.config = type.configFromJson(config);
+        this.config = config;
         this.predicate = predicate;
+    }
+
+    public static <C> ConfiguredTemperatureEffect<C> fromJson(
+            TemperatureEffect<C> type,
+            JsonElement configJson,
+            EntityPredicate predicate
+    ) {
+        return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson), predicate);
     }
 
     public void applyIfPossible(LivingEntity victim) {
@@ -57,7 +65,7 @@ public class ConfiguredTemperatureEffect<C> {
                 predicate = EntityPredicate.fromJson(json.get("entity"));
             }
 
-            return new ConfiguredTemperatureEffect<>(effectType, json.get("config"), predicate);
+            return ConfiguredTemperatureEffect.fromJson(effectType, json.get("config"), predicate);
         }
     }
 
