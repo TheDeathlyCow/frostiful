@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".freezing")
 public class FreezingConfigGroup implements ConfigData {
@@ -15,6 +16,7 @@ public class FreezingConfigGroup implements ConfigData {
     int touchingWaterWetnessIncrease = 5;
     int dryRate = 1;
     int onFireDryDate = 50;
+    float soakPercentFromWaterPotion = 0.5f;
     int cannotFreezeThawRate = 100;
     int onFireThawRate = 50;
     int conduitPowerWarmthPerTick = 12;
@@ -59,6 +61,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getOnFireDryRate() {
         return onFireDryDate;
+    }
+
+    public float getSoakPercentFromWaterPotion() {
+        return MathHelper.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
     }
 
     public int getCannotFreezeThawRate() {

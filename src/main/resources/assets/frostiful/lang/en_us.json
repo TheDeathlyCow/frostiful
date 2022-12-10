@@ -78,6 +78,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.touchingWaterWetnessIncrease": "Touching water wetness increase per tick",
   "text.autoconfig.frostiful.option.freezingConfig.dryRate": "Dry rate",
   "text.autoconfig.frostiful.option.freezingConfig.onFireDryDate": "On fire dry rate",
+  "text.autoconfig.frostiful.option.freezingConfig.soakPercentFromWaterPotion": "Soak percent from splash water bottle (0-1)",
   "text.autoconfig.frostiful.option.freezingConfig.cannotFreezeThawRate": "Cannot freeze thaw rate",
   "text.autoconfig.frostiful.option.freezingConfig.onFireThawRate": "On fire thaw rate",
   "text.autoconfig.frostiful.option.freezingConfig.conduitPowerWarmthPerTick": "Conduit Power warmth per tick",
