@@ -12,7 +12,7 @@ import net.minecraft.util.registry.Registry;
 
 import java.util.UUID;
 
-public class ScalingAttributeModifierSurvivalEffectType extends SurvivalEffectType<ScalingAttributeModifierSurvivalEffectType.Config> {
+public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect<ScalingAttributeModifierTemperatureEffect.Config> {
 
     @Override
     public void apply(LivingEntity victim, Config config) {

@@ -2,11 +2,10 @@ package com.github.thedeathlycow.frostiful.util.survival.effects;
 
 import com.google.gson.JsonElement;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 
-public abstract class SurvivalEffectType<C> {
+public abstract class TemperatureEffect<C> {
 
-    public SurvivalEffectType() {
+    public TemperatureEffect() {
 
     }
 

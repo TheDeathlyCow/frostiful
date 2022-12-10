@@ -2,8 +2,8 @@ package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.util.survival.effects.SurvivalEffectInstance;
-import com.github.thedeathlycow.frostiful.util.survival.effects.SurvivalEffectLoader;
+import com.github.thedeathlycow.frostiful.util.survival.effects.ConfiguredTemperatureEffect;
+import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffectLoader;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
@@ -50,7 +50,7 @@ public class FrostHelper {
     }
 
     public static void applyEffects(LivingEntity entity) {
-        for (SurvivalEffectInstance<?> effect : SurvivalEffectLoader.FROSTIFUL.getEffects()) {
+        for (ConfiguredTemperatureEffect<?> effect : TemperatureEffectLoader.INSTANCE.getEffects()) {
             effect.applyIfPossible(entity);
         }
     }

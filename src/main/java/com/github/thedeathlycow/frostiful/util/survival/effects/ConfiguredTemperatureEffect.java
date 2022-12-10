@@ -8,15 +8,15 @@ import net.minecraft.util.Identifier;
 
 import java.lang.reflect.Type;
 
-public class SurvivalEffectInstance<C> {
+public class ConfiguredTemperatureEffect<C> {
 
-    private final SurvivalEffectType<C> type;
+    private final TemperatureEffect<C> type;
 
     private final C config;
 
     private final EntityPredicate predicate;
 
-    public SurvivalEffectInstance(SurvivalEffectType<C> type, JsonElement config, EntityPredicate predicate) {
+    public ConfiguredTemperatureEffect(TemperatureEffect<C> type, JsonElement config, EntityPredicate predicate) {
         this.type = type;
         this.config = type.configFromJson(config);
         this.predicate = predicate;
@@ -32,24 +32,24 @@ public class SurvivalEffectInstance<C> {
         }
     }
 
-    public static class Serializer implements JsonDeserializer<SurvivalEffectInstance<?>> {
+    public static class Serializer implements JsonDeserializer<ConfiguredTemperatureEffect<?>> {
 
         public static final Gson GSON = new GsonBuilder()
-                .registerTypeAdapter(SurvivalEffectInstance.class, new Serializer())
+                .registerTypeAdapter(ConfiguredTemperatureEffect.class, new Serializer())
                 .create();
 
         @Override
-        public SurvivalEffectInstance<?> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
+        public ConfiguredTemperatureEffect<?> deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
             JsonObject json = jsonElement.getAsJsonObject();
 
             // set required values
             Identifier typeID = new Identifier(json.get("type").getAsString());
 
-            if (!SurvivalEffectTypes.VALUES.containsKey(typeID)) {
+            if (!TemperatureEffects.VALUES.containsKey(typeID)) {
                 throw new JsonParseException("Unknown survival effect type: " + typeID);
             }
 
-            SurvivalEffectType<?> effectType = SurvivalEffectTypes.VALUES.get(typeID);
+            TemperatureEffect<?> effectType = TemperatureEffects.VALUES.get(typeID);
 
             // set optional values
             EntityPredicate predicate = EntityPredicate.ANY;
@@ -57,7 +57,7 @@ public class SurvivalEffectInstance<C> {
                 predicate = EntityPredicate.fromJson(json.get("entity"));
             }
 
-            return new SurvivalEffectInstance<>(effectType, json.get("config"), predicate);
+            return new ConfiguredTemperatureEffect<>(effectType, json.get("config"), predicate);
         }
     }
 

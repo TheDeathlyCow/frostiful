@@ -14,7 +14,8 @@ import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
 import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.util.survival.effects.SurvivalEffectLoader;
+import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffectLoader;
+import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffects;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -46,7 +47,8 @@ public class Frostiful implements ModInitializer {
         );
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(SurvivalEffectLoader.FROSTIFUL);
+        TemperatureEffects.createEffectTypes();
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(TemperatureEffectLoader.INSTANCE);
 
         FEntityAttributes.registerAttributes();
         FDamageSource.registerDamageSources();

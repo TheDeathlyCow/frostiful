@@ -9,7 +9,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-public class StatusEffectSurvivalEffectType extends SurvivalEffectType<StatusEffectSurvivalEffectType.Config> {
+public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffectTemperatureEffect.Config> {
 
     @Override
     public void apply(LivingEntity victim, Config config) {
