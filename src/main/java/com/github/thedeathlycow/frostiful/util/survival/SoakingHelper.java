@@ -64,10 +64,10 @@ public class SoakingHelper {
      * based on their wetness, where return values of 0 means no change, and 1 means double the freezing.
      */
     public static float getWetnessFreezeModifier(PlayerEntity player) {
-        if (hasWaterFreezingImmuneEffect(player)) {
+        SoakableEntity soakable = (SoakableEntity) player;
+        if (soakable.frostiful$ignoresFrigidWater()) {
             return 0.0f;
         }
-        SoakableEntity soakable = (SoakableEntity) player;
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
         return config.getPassiveFreezingWetnessScaleMultiplier() * soakable.frostiful$getWetnessScale();
     }

@@ -13,6 +13,8 @@ public interface SoakableEntity {
 
     int frostiful$getWetTicks();
 
+    boolean frostiful$ignoresFrigidWater();
+
     default boolean frostiful$isWet() {
         return this.frostiful$getWetTicks() > 0;
     }
