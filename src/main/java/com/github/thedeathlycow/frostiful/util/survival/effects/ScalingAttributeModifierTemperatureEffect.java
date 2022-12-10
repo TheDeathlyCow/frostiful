@@ -74,7 +74,6 @@ public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect
 
             //// init defaults ////
             float scale = 1.0f;
-            UUID id = UUID.randomUUID();
             String name = "";
 
             JsonObject json = jsonElement.getAsJsonObject();
@@ -84,15 +83,13 @@ public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect
                 scale = json.get("scale").getAsFloat();
             }
 
-            if (json.has("modifier_uuid")) {
-                id = UUID.fromString(json.get("modifier_uuid").getAsString());
-            }
-
             if (json.has("name")) {
                 name = json.get("name").getAsString();
             }
 
             //// grab required values ////
+
+            UUID id = UUID.fromString(json.get("modifier_uuid").getAsString());
 
             Identifier attrID = new Identifier(json.get("attribute_type").getAsString());
             EntityAttribute attribute = Registry.ATTRIBUTE.get(attrID);
