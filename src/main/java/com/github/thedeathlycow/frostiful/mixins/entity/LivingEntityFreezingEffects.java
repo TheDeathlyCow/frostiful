@@ -53,84 +53,19 @@ public abstract class LivingEntityFreezingEffects extends Entity {
             method = "tickMovement",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;removePowderSnowSlow()V"
+                    target = "Lnet/minecraft/entity/LivingEntity;addPowderSnowSlowIfNeeded()V",
+                    shift = At.Shift.AFTER
             )
     )
     private void tickFreezingEffects(CallbackInfo ci) {
         if (this.world.isClient) {
             return;
         }
-
-
         this.world.getProfiler().push("frostiful.freezing_effects");
         final LivingEntity instance = (LivingEntity) (Object) this;
-        //final FreezableEntity freezable = (FreezableEntity) this;
-        //this.frostiful$removeAttributeEffects();
-        //this.frostiful$addAttributeEffects(freezable);
-        //this.frostiful$tickFreezeDamage(freezable);
-        //this.frostiful$tickEntityFreezing();
         FrostHelper.applyEffects(instance);
         this.world.getProfiler().pop();
     }
-
-//    private void frostiful$tickEntityFreezing() {
-//        if (this.isAlive()) {
-//            int amount = 0;
-//            FrostifulConfig config = Frostiful.getConfig();
-//            if (this.inPowderSnow) {
-//                amount += config.freezingConfig.getPowderSnowFreezeRate();
-//            }
-//            FrostHelper.addLivingFrost((LivingEntity) (Object) this, amount);
-//        }
-//    }
-
-//    private void frostiful$tickFreezeDamage(FreezableEntity freezable) {
-//
-//        if (this.world.isClient) {
-//            return;
-//        }
-//
-//        FrostifulConfig config = Frostiful.getConfig();
-//        if (this.age % config.freezingConfig.getFreezeDamageRate() != 0) {
-//            return;
-//        }
-//
-//        if (freezable.frostiful$isFrozen() && freezable.frostiful$canFreeze()) {
-//            int amount = this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-//                    config.freezingConfig.getFreezeDamageExtraAmount() :
-//                    config.freezingConfig.getFreezeDamageAmount();
-//
-//            this.damage(DamageSource.FREEZE, amount);
-//        }
-//    }
-
-//    private void frostiful$removeAttributeEffects() {
-//        EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-//        if (entityAttributeInstance != null) {
-//            if (entityAttributeInstance.getModifier(FREEZING_SLOW_ID) != null) {
-//                entityAttributeInstance.removeModifier(FREEZING_SLOW_ID);
-//            }
-//        }
-//    }
-
-//    private void frostiful$addAttributeEffects(FreezableEntity freezable) {
-//        if (freezable.frostiful$getCurrentFrost() > 0) {
-//            EntityAttributeInstance entityAttributeInstance = this.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
-//            if (entityAttributeInstance == null) {
-//                return;
-//            }
-//
-//            double slownessModifier = -0.05 * freezable.frostiful$getFrostProgress();
-//            entityAttributeInstance.addTemporaryModifier(
-//                    new EntityAttributeModifier(
-//                            FREEZING_SLOW_ID,
-//                            "Frostiful freezing slow",
-//                            slownessModifier,
-//                            EntityAttributeModifier.Operation.ADDITION
-//                    )
-//            );
-//        }
-//    }
 
     @Inject(
             method = "createLivingAttributes",

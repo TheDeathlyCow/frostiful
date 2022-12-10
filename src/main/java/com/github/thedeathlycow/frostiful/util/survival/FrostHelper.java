@@ -2,8 +2,9 @@ package com.github.thedeathlycow.frostiful.util.survival;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
+import com.github.thedeathlycow.frostiful.util.survival.effects.ConfiguredTemperatureEffect;
+import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffectLoader;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.util.math.MathHelper;
 
 public class FrostHelper {
@@ -49,17 +50,8 @@ public class FrostHelper {
     }
 
     public static void applyEffects(LivingEntity entity) {
-        float progress = ((FreezableEntity) entity).frostiful$getFrostProgress();
-        for (FrostStatusEffect effect : FrostStatusEffect.getPassiveFreezingEffects()) {
-            StatusEffectInstance currentEffectInstance = entity.getStatusEffect(effect.effect());
-            boolean shouldApplyEffect = progress >= effect.progressThreshold()
-                    && (currentEffectInstance == null || currentEffectInstance.getAmplifier() < effect.amplifier());
-            if (shouldApplyEffect) {
-                entity.addStatusEffect(
-                        effect.createEffectInstance(),
-                        null
-                );
-            }
+        for (ConfiguredTemperatureEffect<?> effect : TemperatureEffectLoader.INSTANCE.getEffects()) {
+            effect.applyIfPossible(entity);
         }
     }
 

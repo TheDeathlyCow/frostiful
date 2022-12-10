@@ -14,6 +14,8 @@ import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
 import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffectLoader;
+import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffects;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -21,6 +23,8 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,6 +47,8 @@ public class Frostiful implements ModInitializer {
         );
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
+        TemperatureEffects.createEffectTypes();
+        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(TemperatureEffectLoader.INSTANCE);
 
         FEntityAttributes.registerAttributes();
         FDamageSource.registerDamageSources();
@@ -65,7 +71,7 @@ public class Frostiful implements ModInitializer {
 
     /**
      * Creates a new {@link Identifier} in the namespace {@value MODID}.
-     * @param path The path of the identifier
+     * @param path The path of the uuid
      * @return Returns a new {@link Identifier}
      */
     public static Identifier id(String path) {

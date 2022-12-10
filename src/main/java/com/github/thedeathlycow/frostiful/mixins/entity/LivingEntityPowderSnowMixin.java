@@ -9,8 +9,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Redirect;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityPowderSnowMixin extends Entity {
@@ -44,26 +46,26 @@ public abstract class LivingEntityPowderSnowMixin extends Entity {
         return this.getFrozenTicks();
     }
 
-    @Redirect(
+    @Inject(
             method = "addPowderSnowSlowIfNeeded",
             at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/block/BlockState;isAir()Z"
-            )
+                    value = "HEAD"
+            ),
+            cancellable = true
     )
-    private boolean ignoreAirTest(BlockState instance) {
-        return false;
+    private void blockDefaultPowderSnowSlow(CallbackInfo ci) {
+        ci.cancel();
     }
 
-    @Redirect(
-            method = "addPowderSnowSlowIfNeeded()V",
+    @Inject(
+            method = "removePowderSnowSlow",
             at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;getLandingBlockState()Lnet/minecraft/block/BlockState;"
-            )
+                    value = "HEAD"
+            ),
+            cancellable = true
     )
-    private BlockState ignoreAirTestBlockStateOptimization(LivingEntity instance) {
-        return null;
+    private void dontNeedToRemovePowderSnowSlow(CallbackInfo ci) {
+        ci.cancel();
     }
 
 }
