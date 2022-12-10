@@ -8,8 +8,7 @@ import net.minecraft.util.Identifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public final class TemperatureEffectLoader implements SimpleSynchronousResourceReloadListener {
 
@@ -17,15 +16,15 @@ public final class TemperatureEffectLoader implements SimpleSynchronousResourceR
             new Identifier(Frostiful.MODID, "temperature_effects")
     );
 
-    private final List<ConfiguredTemperatureEffect<?>> effects = new ArrayList<>();
+    private final Map<Identifier, ConfiguredTemperatureEffect<?>> effects = new HashMap<>();
     private final Identifier identifier;
 
     private TemperatureEffectLoader(Identifier identifier) {
         this.identifier = identifier;
     }
 
-    public List<ConfiguredTemperatureEffect<?>> getEffects() {
-        return effects;
+    public Collection<ConfiguredTemperatureEffect<?>> getEffects() {
+        return effects.values();
     }
 
     @Override
@@ -36,7 +35,7 @@ public final class TemperatureEffectLoader implements SimpleSynchronousResourceR
     @Override
     public void reload(ResourceManager manager) {
 
-        List<ConfiguredTemperatureEffect<?>> newEffects = new ArrayList<>();
+        Map<Identifier, ConfiguredTemperatureEffect<?>> newEffects = new HashMap<>();
 
         for (var entry : manager.findResources("frostiful/temperature_effects", id -> id.getPath().endsWith(".json")).entrySet()) {
             try (BufferedReader reader = entry.getValue().getReader()) {
@@ -46,14 +45,14 @@ public final class TemperatureEffectLoader implements SimpleSynchronousResourceR
                         ConfiguredTemperatureEffect.class
                 );
 
-                newEffects.add(effect);
+                newEffects.put(entry.getKey(), effect);
             } catch (IOException | JsonParseException e) {
                 Frostiful.LOGGER.error("An error occurred while loading temperature effect {}: {}", entry.getKey(), e);
             }
         }
 
         this.effects.clear();
-        this.effects.addAll(newEffects);
+        this.effects.putAll(newEffects);
 
         int numEffects = this.effects.size();
         Frostiful.LOGGER.info("Loaded {} survival effect{}", numEffects, numEffects == 1 ? "" : "s");
