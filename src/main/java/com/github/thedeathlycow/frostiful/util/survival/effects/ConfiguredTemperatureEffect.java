@@ -2,9 +2,19 @@ package com.github.thedeathlycow.frostiful.util.survival.effects;
 
 import com.google.gson.*;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.predicate.entity.EntityPredicate;
+import net.minecraft.loot.LootGsons;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.LootTable;
+import net.minecraft.loot.condition.LootCondition;
+import net.minecraft.loot.condition.LootConditionManager;
+import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.JsonHelper;
+import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 
@@ -14,9 +24,10 @@ public class ConfiguredTemperatureEffect<C> {
 
     private final C config;
 
-    private final EntityPredicate predicate;
+    @Nullable
+    private final LootCondition predicate;
 
-    public ConfiguredTemperatureEffect(TemperatureEffect<C> type, C config, EntityPredicate predicate) {
+    public ConfiguredTemperatureEffect(TemperatureEffect<C> type, C config, @Nullable LootCondition predicate) {
         this.type = type;
         this.config = config;
         this.predicate = predicate;
@@ -25,24 +36,40 @@ public class ConfiguredTemperatureEffect<C> {
     public static <C> ConfiguredTemperatureEffect<C> fromJson(
             TemperatureEffect<C> type,
             JsonElement configJson,
-            EntityPredicate predicate
+            @Nullable LootCondition predicate
     ) throws JsonParseException {
         return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson), predicate);
     }
 
     public void applyIfPossible(LivingEntity victim) {
 
+        World world = victim.getWorld();
+
+        if (world.isClient) {
+            return;
+        }
+
         boolean shouldApply = this.type.shouldApply(victim, this.config)
-                && this.predicate.test((ServerWorld) victim.getWorld(), victim.getPos(), victim);
+                && this.testPredicate(victim, (ServerWorld) world);
 
         if (shouldApply) {
             this.type.apply(victim, this.config);
         }
     }
 
+    private boolean testPredicate(LivingEntity victim, ServerWorld world) {
+        return this.predicate == null
+                || this.predicate.test(
+                new LootContext.Builder(world)
+                        .parameter(LootContextParameters.THIS_ENTITY, victim)
+                        .parameter(LootContextParameters.ORIGIN, victim.getPos())
+                        .build(LootContextTypes.COMMAND)
+        );
+    }
+
     public static class Serializer implements JsonDeserializer<ConfiguredTemperatureEffect<?>> {
 
-        public static final Gson GSON = new GsonBuilder()
+        public static final Gson GSON = LootGsons.getConditionGsonBuilder()
                 .registerTypeAdapter(ConfiguredTemperatureEffect.class, new Serializer())
                 .create();
 
@@ -60,10 +87,7 @@ public class ConfiguredTemperatureEffect<C> {
             TemperatureEffect<?> effectType = TemperatureEffects.VALUES.get(typeID);
 
             // set optional values
-            EntityPredicate predicate = EntityPredicate.ANY;
-            if (json.has("entity")) {
-                predicate = EntityPredicate.fromJson(json.get("entity"));
-            }
+            LootCondition predicate = JsonHelper.deserialize(json, "entity", null, jsonDeserializationContext, LootCondition.class);
 
             return ConfiguredTemperatureEffect.fromJson(effectType, json.get("config"), predicate);
         }
