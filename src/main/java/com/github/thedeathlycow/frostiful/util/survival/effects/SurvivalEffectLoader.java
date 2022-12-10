@@ -20,6 +20,7 @@ public class SurvivalEffectLoader implements SimpleSynchronousResourceReloadList
             new Identifier(Frostiful.MODID, "temperature_effects")
     );
 
+    protected static final Logger LOGGER = LoggerFactory.getLogger(SurvivalEffectLoader.class);
     private final List<SurvivalEffectInstance<?>> effects = new ArrayList<>();
     private final Identifier identifier;
 
@@ -38,6 +39,7 @@ public class SurvivalEffectLoader implements SimpleSynchronousResourceReloadList
 
     @Override
     public void reload(ResourceManager manager) {
+
         List<SurvivalEffectInstance<?>> newEffects = new ArrayList<>();
 
         for (var entry : manager.findResources("frostiful/temperature_effects", id -> id.getPath().endsWith(".json")).entrySet()) {
@@ -50,7 +52,7 @@ public class SurvivalEffectLoader implements SimpleSynchronousResourceReloadList
 
                 newEffects.add(effect);
             } catch (IOException | JsonParseException e) {
-                Frostiful.LOGGER.error("An error occurred while loading survival effect {}: {}", entry.getKey(), e);
+                LOGGER.error("An error occurred while loading survival effect {}: {}", entry.getKey(), e);
             }
         }
 
@@ -58,7 +60,7 @@ public class SurvivalEffectLoader implements SimpleSynchronousResourceReloadList
         this.effects.addAll(newEffects);
 
         int numEffects = this.effects.size();
-        Frostiful.LOGGER.info("Loaded {} survival effect{}", numEffects, numEffects == 1 ? "" : "s");
+        LOGGER.info("Loaded {} survival effect{}", numEffects, numEffects == 1 ? "" : "s");
 
     }
 }
