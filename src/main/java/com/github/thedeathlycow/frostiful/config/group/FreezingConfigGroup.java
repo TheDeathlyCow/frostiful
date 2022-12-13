@@ -31,6 +31,8 @@ public class FreezingConfigGroup implements ConfigData {
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
 
+    int ultrawarmThawRate = 15;
+
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
     }
@@ -119,4 +121,7 @@ public class FreezingConfigGroup implements ConfigData {
         return campfireWarmthTime;
     }
 
+    public int getUltrawarmThawRate() {
+        return ultrawarmThawRate;
+    }
 }

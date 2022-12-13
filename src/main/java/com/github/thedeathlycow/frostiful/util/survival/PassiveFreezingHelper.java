@@ -72,6 +72,9 @@ public class PassiveFreezingHelper {
             Biome biome = biomeEntry.value();
             float temperature = biome.getTemperature();
             return getPerTickFreezing(world, temperature);
+        } else if (world.getDimension().ultrawarm()) {
+            FrostifulConfig config = Frostiful.getConfig();
+            return -config.freezingConfig.getUltrawarmThawRate();
         }
         return 0;
     }
