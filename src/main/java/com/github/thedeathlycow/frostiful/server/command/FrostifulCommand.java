@@ -51,7 +51,7 @@ public class FrostifulCommand {
     private static int getTemperature(ServerCommandSource source, BlockPos pos, World world) {
         Biome biome = world.getBiome(pos).value();
         float temperature = biome.getTemperature();
-        int freezeRate = PassiveFreezingHelper.getPerTickFreezing(temperature);
+        int freezeRate = PassiveFreezingHelper.getPerTickFreezing(world, temperature);
 
         float wetModifier = 0;
         if (source.isExecutedByPlayer()) {

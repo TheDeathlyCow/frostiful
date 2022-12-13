@@ -40,9 +40,7 @@ public class PassiveFreezingHelper {
         FrostifulConfig config = Frostiful.getConfig();
 
         int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
-        int minLightLevel = world.isDay() ?
-                config.freezingConfig.getMinLightForWarmthDay() :
-                config.freezingConfig.getMinLightForWarmthNight();
+        int minLightLevel = config.freezingConfig.getMinLightForWarmth();
 
         if (lightLevel >= minLightLevel) {
             warmth += config.freezingConfig.getWarmthPerLightLevel() * (lightLevel - minLightLevel);
@@ -73,17 +71,22 @@ public class PassiveFreezingHelper {
             RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
             Biome biome = biomeEntry.value();
             float temperature = biome.getTemperature();
-            return getPerTickFreezing(temperature);
+            return getPerTickFreezing(world, temperature);
         }
         return 0;
     }
 
-    public static int getPerTickFreezing(float temperature) {
+    public static int getPerTickFreezing(World world, float temperature) {
         FrostifulConfig config = Frostiful.getConfig();
         double mul = config.freezingConfig.getBiomeTemperatureMultiplier();
         double cutoff = config.freezingConfig.getPassiveFreezingStartTemp();
 
-        return MathHelper.floor(-mul * (temperature - cutoff) + 1);
+        double tempShift = 0.0;
+        if (world.isNight()) {
+            tempShift = config.freezingConfig.getNightTimeTemperatureDecrease();
+        }
+
+        return MathHelper.floor(-mul * (temperature - cutoff - tempShift) + 1);
     }
 
 
