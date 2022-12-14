@@ -1,6 +1,8 @@
-package com.github.thedeathlycow.frostiful.client.render;
+package com.github.thedeathlycow.frostiful.client.model;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
@@ -11,14 +13,15 @@ import net.minecraft.util.Identifier;
 /**
  * Made with Block Bench
  */
-public class FrostWandModel extends Model {
+@Environment(EnvType.CLIENT)
+public class FrostWandItemModel extends Model {
     public static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/frost_wand.png");
     public static final EntityModelLayer FROST_WAND_LAYER = new EntityModelLayer(new Identifier(Frostiful.MODID, "frost_wand"), "main");
 
     private final ModelPart root;
 
 
-    public FrostWandModel(ModelPart root) {
+    public FrostWandItemModel(ModelPart root) {
         super(RenderLayer::getEntitySolid);
         this.root = root;
     }

@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.entity.EntityData;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -12,19 +13,23 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.loot.function.LootFunction;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -38,6 +43,10 @@ import org.jetbrains.annotations.Nullable;
  * DISAPPEAR = DESTROY_HEAT_SOURCES
  */
 public class FrostologerEntity extends SpellcastingIllagerEntity implements RangedAttackMob {
+
+    private static final TrackedData<Boolean> IS_USING_FROST_WAND = DataTracker.registerData(
+            FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
+    );
 
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
@@ -83,7 +92,35 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 3,
                 new ActiveTargetGoal<>(this, IronGolemEntity.class, false)
         );
+    }
 
+    @Override
+    public void attack(LivingEntity target, float pullProgress) {
+        if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
+            this.getLookControl().lookAt(target);
+            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
+            this.stopUsingItem();
+            this.stopUsingFrostWand();
+        }
+    }
+
+    public boolean isUsingFrostWand() {
+        return this.dataTracker.get(IS_USING_FROST_WAND);
+    }
+
+    private void startUsingFrostWand() {
+        Vec3d pos = this.getPos();
+        this.world.playSound(null,
+                pos.x, pos.y, pos.z,
+                FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
+                SoundCategory.HOSTILE,
+                1.0f, 1.0f
+        );
+        this.dataTracker.set(IS_USING_FROST_WAND, true);
+    }
+
+    private void stopUsingFrostWand() {
+        this.dataTracker.set(IS_USING_FROST_WAND, false);
     }
 
     @Override
@@ -107,6 +144,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.enchantMainHandItem(random, difficulty.getClampedLocalDifficulty());
     }
 
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(IS_USING_FROST_WAND, false);
+    }
+
     @Override
     public void addBonusForWave(int wave, boolean unused) {
 
@@ -122,13 +164,16 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL;
     }
 
-    @Override
-    public void attack(LivingEntity target, float pullProgress) {
-        if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
-            this.getLookControl().lookAt(target);
-            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
-        }
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        nbt.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
     }
+
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
+    }
+
 
     protected class FrostWandAttackGoal extends ProjectileAttackGoal {
 
@@ -145,6 +190,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             super.start();
             FrostologerEntity.this.setAttacking(true);
             FrostologerEntity.this.setCurrentHand(Hand.MAIN_HAND);
+            FrostologerEntity.this.startUsingFrostWand();
         }
 
         public void stop() {
