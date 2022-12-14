@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
@@ -30,6 +31,8 @@ public class FItems {
     public static final Item FROST_WAND = new FrostWandItem(new FabricItemSettings().group(ItemGroup.COMBAT).maxCount(1).maxDamage(250));
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings().group(ItemGroup.COMBAT));
 
+    public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.FROSTOLOGER, 0x3432A8, 0xF0F0FF, new FabricItemSettings().group(ItemGroup.MISC));
+
     public static void registerItems() {
         register("fur_helmet", FUR_HELMET);
         register("fur_chestplate", FUR_CHESTPLATE);
@@ -50,6 +53,7 @@ public class FItems {
         register("hot_sun_lichen", HOT_SUN_LICHEN);
         register("frost_wand", FROST_WAND);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
+        register("frostologer_spawn_egg", FROSTOLOGER_SPAWN_EGG);
     }
 
     private static void register(String id, Item item) {

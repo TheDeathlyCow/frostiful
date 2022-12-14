@@ -54,36 +54,37 @@ public class FrostWandItem extends Item implements Vanishable {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
-        if (useTime > 10) {
-            if (!world.isClient) {
+        if (useTime > 10 && !world.isClient) {
+            fireFrostSpell(stack, world, user);
+        }
+    }
 
-                FrostifulConfig config = Frostiful.getConfig();
+    public static void fireFrostSpell(ItemStack stack, World world, LivingEntity user) {
+        FrostifulConfig config = Frostiful.getConfig();
 
-                FrostSpellEntity spell = new FrostSpellEntity(
-                        world,
-                        user,
-                        0.0, 0.0, 0.0,
-                        config.combatConfig.getMaxFrostSpellDistance()
-                );
-                spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
-                spell.setPosition(user.getEyePos());
-                world.spawnEntity(spell);
-                Vec3d soundPos = user.getEyePos();
-                world.playSound(
-                        null,
-                        soundPos.getX(), soundPos.getY(), soundPos.getZ(),
-                        FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
-                        1.0f, 1.0f
-                );
+        FrostSpellEntity spell = new FrostSpellEntity(
+                world,
+                user,
+                0.0, 0.0, 0.0,
+                config.combatConfig.getMaxFrostSpellDistance()
+        );
+        spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
+        spell.setPosition(user.getEyePos());
+        world.spawnEntity(spell);
+        Vec3d soundPos = user.getEyePos();
+        world.playSound(
+                null,
+                soundPos.getX(), soundPos.getY(), soundPos.getZ(),
+                FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
+                1.0f, 1.0f
+        );
 
-                if (user instanceof PlayerEntity player) {
-                    stack.damage(2, player, (p) -> {
-                        p.sendToolBreakStatus(p.getActiveHand());
-                    });
-                    player.incrementStat(Stats.USED.getOrCreateStat(this));
-                    player.getItemCooldownManager().set(this, config.combatConfig.getFrostWandCooldown());
-                }
-            }
+        if (user instanceof PlayerEntity player) {
+            stack.damage(2, player, (p) -> {
+                p.sendToolBreakStatus(p.getActiveHand());
+            });
+            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
+            player.getItemCooldownManager().set(stack.getItem(), config.combatConfig.getFrostWandCooldown());
         }
     }
 

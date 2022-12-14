@@ -1,8 +1,13 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -12,10 +17,14 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.random.Random;
+import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -25,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
  * SUMMON_VEX = SUMMON_MINIONS
  * DISAPPEAR = DESTROY_HEAT_SOURCES
  */
-public class FrostologerEntity extends SpellcastingIllagerEntity {
+public class FrostologerEntity extends SpellcastingIllagerEntity implements RangedAttackMob {
 
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
@@ -45,6 +54,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new SpellcastingIllagerEntity.LookAtTargetGoal());
+        this.goalSelector.add(2, new FrostWandAttackGoal(this, 1.0, 40, 10f));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 0.6, 1.0));
         this.goalSelector.add(4, new SummonMinionsGoal());
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
@@ -82,6 +92,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity {
         }
     }
 
+    protected void initEquipment(Random random, LocalDifficulty localDifficulty) {
+        super.initEquipment(random, localDifficulty);
+        this.equipStack(EquipmentSlot.MAINHAND, new ItemStack(FItems.FROST_WAND));
+    }
+
     @Override
     public void addBonusForWave(int wave, boolean unused) {
 
@@ -95,6 +110,37 @@ public class FrostologerEntity extends SpellcastingIllagerEntity {
     @Override
     protected SoundEvent getCastSpellSound() {
         return SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL;
+    }
+
+    @Override
+    public void attack(LivingEntity target, float pullProgress) {
+        if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
+            this.getLookControl().lookAt(target);
+            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
+        }
+    }
+
+    protected class FrostWandAttackGoal extends ProjectileAttackGoal {
+
+        public FrostWandAttackGoal(RangedAttackMob mob, double mobSpeed, int intervalTicks, float maxShootRange) {
+            super(mob, mobSpeed, intervalTicks, maxShootRange);
+        }
+
+        public boolean canStart() {
+            return super.canStart()
+                    && FrostologerEntity.this.getMainHandStack().isOf(FItems.FROST_WAND);
+        }
+
+        public void start() {
+            super.start();
+            FrostologerEntity.this.setAttacking(true);
+            FrostologerEntity.this.setCurrentHand(Hand.MAIN_HAND);
+        }
+
+        public void stop() {
+            super.stop();
+            FrostologerEntity.this.setAttacking(false);
+        }
     }
 
     protected class SummonMinionsGoal extends SpellcastingIllagerEntity.CastSpellGoal {
