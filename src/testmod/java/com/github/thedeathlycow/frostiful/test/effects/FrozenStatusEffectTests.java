@@ -17,7 +17,7 @@ public class FrozenStatusEffectTests {
 
         MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);
         RootedEntity rootedEntity = (RootedEntity) entity;
-        rootedEntity.frostiful$root();
+        rootedEntity.frostiful$root(null);
 
         context.startMovingTowards(entity, end, 1.0f);
         context.expectEntityAtEnd(EntityType.VILLAGER, start);

@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
@@ -21,6 +22,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -59,8 +61,17 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     }
 
     @Override
-    public boolean frostiful$canRoot() {
+    public boolean frostiful$canRoot(@Nullable Entity attacker) {
         final LivingEntity instance = (LivingEntity) (Object) this;
+
+        if (instance.getType() == FEntityTypes.FROSTOLOGER) {
+            return false;
+        }
+
+        if (attacker != null && this.isTeammate(attacker)) {
+            return false;
+        }
+
         return ((FreezableEntity) instance).frostiful$canFreeze();
     }
 

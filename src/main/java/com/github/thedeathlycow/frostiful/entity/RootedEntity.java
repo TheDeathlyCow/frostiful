@@ -3,8 +3,11 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.FNbtHelper;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
+import org.jetbrains.annotations.Nullable;
 
 public interface RootedEntity {
 
@@ -14,10 +17,10 @@ public interface RootedEntity {
 
     void frostiful$setRootedTicks(int amount);
 
-    boolean frostiful$canRoot();
+    boolean frostiful$canRoot(@Nullable Entity attacker);
 
-    default boolean frostiful$root() {
-        if (this.frostiful$canRoot()) {
+    default boolean frostiful$root(@Nullable Entity attacker) {
+        if (this.frostiful$canRoot(attacker)) {
             FrostifulConfig config = Frostiful.getConfig();
             this.frostiful$setRootedTicks(config.combatConfig.getFrostWandRootTime());
             return true;

@@ -4,10 +4,7 @@ import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import net.minecraft.entity.EntityData;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SpawnReason;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
@@ -155,6 +152,23 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
+    public boolean isTeammate(@Nullable Entity other) {
+        if (other == null) {
+            return false;
+        } else if (other == this) {
+            return true;
+        } else if (super.isTeammate(other)) {
+            return true;
+        } else if (other instanceof VexEntity) {
+            return this.isTeammate(((VexEntity)other).getOwner());
+        } else if (other instanceof LivingEntity && ((LivingEntity)other).getGroup() == EntityGroup.ILLAGER) {
+            return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
+        } else {
+            return false;
+        }
+    }
+
+    @Override
     public SoundEvent getCelebratingSound() {
         return SoundEvents.ENTITY_PILLAGER_CELEBRATE;
     }
@@ -196,6 +210,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         public void stop() {
             super.stop();
             FrostologerEntity.this.setAttacking(false);
+            FrostologerEntity.this.stopUsingFrostWand();
         }
     }
 

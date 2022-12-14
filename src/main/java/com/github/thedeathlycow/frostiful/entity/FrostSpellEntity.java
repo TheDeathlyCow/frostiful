@@ -68,7 +68,7 @@ public class FrostSpellEntity extends SpellEntity {
     @Override
     protected void applySingleTargetEffect(Entity target) {
         if (!target.world.isClient && target instanceof RootedEntity rootedEntity) {
-            if (rootedEntity.frostiful$root()) {
+            if (rootedEntity.frostiful$root(this.getOwner())) {
                 target.world.playSound(
                         null,
                         target.getX(), target.getY(), target.getZ(),
