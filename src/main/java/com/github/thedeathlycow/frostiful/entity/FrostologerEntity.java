@@ -44,6 +44,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity {
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
+        this.goalSelector.add(1, new SpellcastingIllagerEntity.LookAtTargetGoal());
         this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 0.6, 1.0));
         this.goalSelector.add(4, new SummonMinionsGoal());
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
@@ -70,6 +71,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity {
                 new ActiveTargetGoal<>(this, IronGolemEntity.class, false)
         );
 
+    }
+
+    @Override
+    public IllagerEntity.State getState() {
+        if (this.isSpellcasting()) {
+            return State.SPELLCASTING;
+        } else {
+            return this.isCelebrating() ? State.CELEBRATING : State.NEUTRAL;
+        }
     }
 
     @Override
