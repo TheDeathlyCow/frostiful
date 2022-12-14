@@ -6,10 +6,12 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -18,6 +20,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PlayerEntity.class)
 public abstract class SoakableEntityMixin extends LivingEntity implements SoakableEntity {
 
+    @Shadow protected boolean isSubmergedInWater;
     private static final TrackedData<Integer> WET_TICKS = DataTracker.registerData(SoakableEntityMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
     protected SoakableEntityMixin(EntityType<? extends LivingEntity> entityType, World world) {
@@ -36,6 +39,16 @@ public abstract class SoakableEntityMixin extends LivingEntity implements Soakab
     @Unique
     public int frostiful$getWetTicks() {
         return this.dataTracker.get(WET_TICKS);
+    }
+
+    @Override
+    public boolean frostiful$ignoresFrigidWater() {
+
+        boolean canBreatheInWater = this.canBreatheInWater()
+                || this.hasStatusEffect(StatusEffects.WATER_BREATHING)
+                || this.hasStatusEffect(StatusEffects.CONDUIT_POWER);
+
+        return canBreatheInWater && this.isSubmergedInWater;
     }
 
     @Override

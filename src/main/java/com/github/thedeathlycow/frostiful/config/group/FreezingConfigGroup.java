@@ -11,6 +11,7 @@ public class FreezingConfigGroup implements ConfigData {
     boolean doPassiveFreezing = true;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
+    double nightTimeTemperatureDecrease = 0.25;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     int rainWetnessIncrease = 1;
     int touchingWaterWetnessIncrease = 5;
@@ -21,8 +22,7 @@ public class FreezingConfigGroup implements ConfigData {
     int onFireThawRate = 50;
     int conduitPowerWarmthPerTick = 12;
     int warmthPerLightLevel = 4;
-    int minLightForWarmthDay = 7;
-    int minLightForWarmthNight = 9;
+    int minLightForWarmth = 5;
     int freezeDamageRate = 20;
     int freezeDamageAmount = 2;
     int freezeDamageExtraAmount = 5;
@@ -30,6 +30,8 @@ public class FreezingConfigGroup implements ConfigData {
     int sunLichenHeatPerLevel = 100;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
+
+    int ultrawarmThawRate = 15;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -41,6 +43,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public double getPassiveFreezingStartTemp() {
         return passiveFreezingStartTemp;
+    }
+
+    public double getNightTimeTemperatureDecrease() {
+        return nightTimeTemperatureDecrease;
     }
 
     public float getPassiveFreezingWetnessScaleMultiplier() {
@@ -83,12 +89,8 @@ public class FreezingConfigGroup implements ConfigData {
         return warmthPerLightLevel;
     }
 
-    public int getMinLightForWarmthDay() {
-        return minLightForWarmthDay;
-    }
-
-    public int getMinLightForWarmthNight() {
-        return minLightForWarmthNight;
+    public int getMinLightForWarmth() {
+        return minLightForWarmth;
     }
 
     public int getFreezeDamageRate() {
@@ -119,4 +121,7 @@ public class FreezingConfigGroup implements ConfigData {
         return campfireWarmthTime;
     }
 
+    public int getUltrawarmThawRate() {
+        return ultrawarmThawRate;
+    }
 }
