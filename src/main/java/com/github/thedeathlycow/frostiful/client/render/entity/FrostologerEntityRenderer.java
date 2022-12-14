@@ -18,6 +18,7 @@ public class FrostologerEntityRenderer extends IllagerEntityRenderer<Frostologer
 
     public FrostologerEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new IllagerEntityModel<>(context.getPart(EntityModelLayers.PILLAGER)), 0.5F);
+
         this.addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
     }
 
