@@ -18,14 +18,15 @@ public class FEntityTypes {
                             FrostologerEntity::new
                     )
                     .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
-                    .trackRangeBlocks(8)
+                    .trackRangeChunks(8)
                     .build();
 
     public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW =
             FabricEntityTypeBuilder.create(
-                    SpawnGroup.CREATURE,
-                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
-            ).dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
+                            SpawnGroup.CREATURE,
+                            (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
+                    )
+                    .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
 
     public static final EntityType<FrostSpellEntity> FROST_SPELL =
             FabricEntityTypeBuilder.create(
@@ -33,7 +34,7 @@ public class FEntityTypes {
                             (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
                     )
                     .dimensions(EntityDimensions.fixed(3f / 8f, 3f / 8f))
-                    .trackRangeChunks(4)
+                    .trackRangeChunks(8)
                     .trackedUpdateRate(10)
                     .build();
 
