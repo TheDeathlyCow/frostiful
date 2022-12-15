@@ -89,7 +89,7 @@ public class FrostCommand {
                                                     return runAdjust(
                                                             context.getSource(),
                                                             EntityArgumentType.getEntity(context, "target"),
-                                                            -IntegerArgumentType.getInteger(context, "amount"),
+                                                            IntegerArgumentType.getInteger(context, "amount"),
                                                             false,
                                                             true
                                                     );
