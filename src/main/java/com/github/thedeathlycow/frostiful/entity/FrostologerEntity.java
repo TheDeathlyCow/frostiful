@@ -10,6 +10,7 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -57,6 +58,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0)
                 .add(FEntityAttributes.MAX_FROST, 45.0)
                 .add(FEntityAttributes.FROST_RESISTANCE, -5.0);
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource damageSource) {
+        return damageSource == DamageSource.FREEZE || super.isInvulnerableTo(damageSource);
     }
 
     protected void initGoals() {
