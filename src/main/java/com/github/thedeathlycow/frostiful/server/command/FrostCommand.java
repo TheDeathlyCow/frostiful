@@ -165,7 +165,11 @@ public class FrostCommand {
 
     private static int runAdjust(ServerCommandSource source, Entity target, int amount, boolean applyFrostResistance, boolean isRemoving) throws CommandSyntaxException {
         if (target instanceof LivingEntity livingEntity) {
-            FrostHelper.addLivingFrost(livingEntity, amount, applyFrostResistance);
+            if (!isRemoving) {
+                FrostHelper.addLivingFrost(livingEntity, amount, applyFrostResistance);
+            } else {
+                FrostHelper.removeLivingFrost(livingEntity, amount);
+            }
         } else {
             throw NOT_LIVING_ENTITY.create();
         }
@@ -177,6 +181,7 @@ public class FrostCommand {
     }
 
     private static int runSet(ServerCommandSource source, Entity target, int amount) throws CommandSyntaxException {
+
         if (target instanceof LivingEntity livingEntity) {
             FrostHelper.setFrost(livingEntity, amount);
         } else {
