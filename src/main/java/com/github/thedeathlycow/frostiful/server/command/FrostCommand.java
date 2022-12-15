@@ -22,18 +22,6 @@ public class FrostCommand {
 
     public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
 
-        var applyFrostResistanceArg =
-                argument("apply frost resistance", BoolArgumentType.bool())
-                        .executes(context -> {
-                            return runAdjust(
-                                    context.getSource(),
-                                    EntityArgumentType.getEntity(context, "target"),
-                                    IntegerArgumentType.getInteger(context, "amount"),
-                                    BoolArgumentType.getBool(context, "apply frost resistance"),
-                                    false
-                            );
-                        });
-
         var getSubCommand = literal("get")
                 .then(
                         argument("target", EntityArgumentType.entity())
@@ -112,7 +100,16 @@ public class FrostCommand {
                                                     );
                                                 })
                                                 .then(
-                                                        applyFrostResistanceArg
+                                                        argument("apply frost resistance", BoolArgumentType.bool())
+                                                                .executes(context -> {
+                                                                    return runAdjust(
+                                                                            context.getSource(),
+                                                                            EntityArgumentType.getEntity(context, "target"),
+                                                                            IntegerArgumentType.getInteger(context, "amount"),
+                                                                            BoolArgumentType.getBool(context, "apply frost resistance"),
+                                                                            false
+                                                                    );
+                                                                })
                                                 )
                                 )
                 );
