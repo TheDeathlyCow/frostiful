@@ -164,7 +164,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                         1.0f, 0.75f
                 );
 
-                if (source.getAttacker() != null && source.getAttacker() instanceof LivingEntity attacker) {
+                if (source.getAttacker() instanceof LivingEntity attacker) {
                     damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
 
                     attacker.addStatusEffect(new StatusEffectInstance(

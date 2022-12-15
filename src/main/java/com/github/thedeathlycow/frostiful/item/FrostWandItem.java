@@ -70,6 +70,7 @@ public class FrostWandItem extends Item implements Vanishable {
         );
         spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
         spell.setPosition(user.getEyePos());
+        spell.setOwner(user);
         world.spawnEntity(spell);
         Vec3d soundPos = user.getEyePos();
         world.playSound(

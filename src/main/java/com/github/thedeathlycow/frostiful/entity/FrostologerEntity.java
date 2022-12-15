@@ -58,9 +58,17 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.9f;
     private static final int NUM_POWER_PARTICLES = 3;
 
+    /**
+     * Records the last target that the Frostologer tried to
+     * the Frost Wand at.
+     */
+    @Nullable
+    private RootedEntity lastTargetShotAt;
+
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 20;
+        this.lastTargetShotAt = null;
     }
 
     public static DefaultAttributeContainer.Builder createFrostologerAttributes() {
@@ -86,8 +94,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new SpellcastingIllagerEntity.LookAtTargetGoal());
-        this.goalSelector.add(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
-        this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 0.6, 1.0));
+        this.goalSelector.add(2, new FrostWandAttackGoal());
+        this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
+        this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
+        this.goalSelector.add(3, new FrostWandCastGoal(this, 1.0, 40, 10f));
         this.goalSelector.add(4, new SummonMinionsGoal());
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
         this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 3.0F, 1.0F));
@@ -176,6 +186,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
             this.stopUsingItem();
             this.stopUsingFrostWand();
+            this.lastTargetShotAt = (RootedEntity) target;
         }
     }
 
@@ -211,7 +222,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             return true;
         } else if (super.isTeammate(other)) {
             return true;
-        } else if (other instanceof VexEntity) {
+        } else if (other.getType() == EntityType.VEX) {
             return this.isTeammate(((VexEntity) other).getOwner());
         } else if (other instanceof LivingEntity && ((LivingEntity) other).getGroup() == EntityGroup.ILLAGER) {
             return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
@@ -232,12 +243,12 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        nbt.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
+        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
     }
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
+        nbt.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
     }
 
     protected class FrostWandAttackGoal extends AttackGoal {
@@ -247,7 +258,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         public boolean canStart() {
-            return super.canStart();
+            return FrostologerEntity.this.lastTargetShotAt != null
+                    && FrostologerEntity.this.lastTargetShotAt.frostiful$isRooted()
+                    && super.canStart();
+        }
+
+        @Override
+        public void stop() {
+            super.stop();
+            FrostologerEntity.this.lastTargetShotAt = null;
         }
     }
 
@@ -259,6 +278,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         public boolean canStart() {
             return super.canStart()
+                    && (FrostologerEntity.this.lastTargetShotAt == null || !FrostologerEntity.this.lastTargetShotAt.frostiful$isRooted())
                     && FrostologerEntity.this.getMainHandStack().isOf(FItems.FROST_WAND);
         }
 
