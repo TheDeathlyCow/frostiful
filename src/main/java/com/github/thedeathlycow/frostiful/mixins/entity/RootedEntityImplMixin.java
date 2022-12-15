@@ -14,6 +14,8 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
@@ -162,8 +164,12 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                         1.0f, 0.75f
                 );
 
-                if (source.getAttacker() instanceof LivingEntity attacker) {
+                if (source.getAttacker() != null && source.getAttacker() instanceof LivingEntity attacker) {
                     damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
+
+                    attacker.addStatusEffect(new StatusEffectInstance(
+                            StatusEffects.SPEED, 30, 2
+                    ));
                 }
 
                 cir.setReturnValue(damage);

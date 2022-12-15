@@ -1,11 +1,13 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -70,6 +72,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .add(FEntityAttributes.FROST_RESISTANCE, -5.0);
     }
 
+    public static boolean isHeatSource(BlockState state) {
+        int minLightForWarmth = Frostiful.getConfig().freezingConfig.getMinLightForWarmth();
+        return state.getLuminance() >= minLightForWarmth;
+    }
+
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
         return damageSource == DamageSource.FREEZE || super.isInvulnerableTo(damageSource);
@@ -79,7 +86,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new SpellcastingIllagerEntity.LookAtTargetGoal());
-        this.goalSelector.add(2, new FrostWandAttackGoal(this, 1.0, 40, 10f));
+        this.goalSelector.add(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 0.6, 1.0));
         this.goalSelector.add(4, new SummonMinionsGoal());
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
@@ -205,8 +212,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         } else if (super.isTeammate(other)) {
             return true;
         } else if (other instanceof VexEntity) {
-            return this.isTeammate(((VexEntity)other).getOwner());
-        } else if (other instanceof LivingEntity && ((LivingEntity)other).getGroup() == EntityGroup.ILLAGER) {
+            return this.isTeammate(((VexEntity) other).getOwner());
+        } else if (other instanceof LivingEntity && ((LivingEntity) other).getGroup() == EntityGroup.ILLAGER) {
             return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
         } else {
             return false;
@@ -233,10 +240,20 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
     }
 
+    protected class FrostWandAttackGoal extends AttackGoal {
+        public FrostWandAttackGoal() {
+            super(FrostologerEntity.this);
+        }
 
-    protected class FrostWandAttackGoal extends ProjectileAttackGoal {
+        @Override
+        public boolean canStart() {
+            return super.canStart();
+        }
+    }
 
-        public FrostWandAttackGoal(RangedAttackMob mob, double mobSpeed, int intervalTicks, float maxShootRange) {
+    protected class FrostWandCastGoal extends ProjectileAttackGoal {
+
+        public FrostWandCastGoal(RangedAttackMob mob, double mobSpeed, int intervalTicks, float maxShootRange) {
             super(mob, mobSpeed, intervalTicks, maxShootRange);
         }
 
