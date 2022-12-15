@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
@@ -39,14 +38,46 @@ public class FrostCommand {
                 .then(
                         argument("target", EntityArgumentType.entity())
                                 .executes(context -> {
-                                    return runGet(context.getSource(),
-                                            EntityArgumentType.getEntity(context, "target"));
+                                    return runGetCurrent(
+                                            context.getSource(),
+                                            EntityArgumentType.getEntity(context, "target")
+                                    );
                                 })
+                                .then(literal("current")
+                                        .executes(context -> {
+                                            return runGetCurrent(
+                                                    context.getSource(),
+                                                    EntityArgumentType.getEntity(context, "target")
+                                            );
+                                        })
+                                )
                                 .then(literal("max")
                                         .executes(context -> {
-                                            return runGetMax(context.getSource(),
-                                                    EntityArgumentType.getEntity(context, "target"));
-                                        }))
+                                            return runGetMax(
+                                                    context.getSource(),
+                                                    EntityArgumentType.getEntity(context, "target")
+                                            );
+                                        })
+                                )
+                                .then(literal("progress")
+                                        .executes(context -> {
+                                            return runGetProgress(
+                                                    context.getSource(),
+                                                    EntityArgumentType.getEntity(context, "target"),
+                                                    100
+                                            );
+                                        })
+                                        .then(argument("scale", IntegerArgumentType.integer(1))
+                                                .executes(context -> {
+                                                    return runGetProgress(
+                                                            context.getSource(),
+                                                            EntityArgumentType.getEntity(context, "target"),
+                                                            IntegerArgumentType.getInteger(context, "scale")
+                                                    );
+                                                })
+                                        )
+                                )
+
                 );
 
         var removeSubCommand = literal("remove")
@@ -108,26 +139,28 @@ public class FrostCommand {
         );
     }
 
-    private static int runGetMax(ServerCommandSource source, Entity target) throws CommandSyntaxException {
-        if (target instanceof LivingEntity livingEntity) {
-            int amount = livingEntity.getMinFreezeDamageTicks();;
-            Text msg = Text.translatable("commands.frostiful.frost.get.max.success", target.getDisplayName(), amount);
-            source.sendFeedback(msg, true);
-            return amount;
-        } else {
-            throw NOT_LIVING_ENTITY.create();
-        }
+    private static int runGetProgress(ServerCommandSource source, Entity target, int scale) throws CommandSyntaxException {
+        float progress = target.getFreezingScale();
+        int result = MathHelper.floor(progress * scale);
+
+        Text msg = Text.translatable("commands.frostiful.get.progress.success", target.getDisplayName(), result);
+        source.sendFeedback(msg, false);
+
+        return result;
     }
 
-    private static int runGet(ServerCommandSource source, Entity target) throws CommandSyntaxException {
-        if (target instanceof LivingEntity livingEntity) {
-            int amount = livingEntity.getFrozenTicks();
-            Text msg = Text.translatable("commands.frostiful.frost.get.current.success", target.getDisplayName(), amount);
-            source.sendFeedback(msg, true);
-            return amount;
-        } else {
-            throw NOT_LIVING_ENTITY.create();
-        }
+    private static int runGetMax(ServerCommandSource source, Entity target) throws CommandSyntaxException {
+        int amount = target.getMinFreezeDamageTicks();
+        Text msg = Text.translatable("commands.frostiful.frost.get.max.success", target.getDisplayName(), amount);
+        source.sendFeedback(msg, false);
+        return amount;
+    }
+
+    private static int runGetCurrent(ServerCommandSource source, Entity target) throws CommandSyntaxException {
+        int amount = target.getFrozenTicks();
+        Text msg = Text.translatable("commands.frostiful.frost.get.current.success", target.getDisplayName(), amount);
+        source.sendFeedback(msg, false);
+        return amount;
     }
 
     private static int runAdjust(ServerCommandSource source, Entity target, int amount, boolean applyFrostResistance, boolean isRemoving) throws CommandSyntaxException {
