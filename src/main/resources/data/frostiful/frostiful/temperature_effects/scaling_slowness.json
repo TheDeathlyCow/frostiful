@@ -1,5 +1,9 @@
 {
 	"type": "frostiful:scaling_attribute_modifier",
+	"entity": {
+        "condition": "minecraft:reference",
+        "name": "frostiful:does_not_benefit_from_cold"
+    },
 	"config": {
 		"scale": -0.05,
 		"modifier_uuid": "ea305030-b7fa-4782-9682-9d55a0319236",
