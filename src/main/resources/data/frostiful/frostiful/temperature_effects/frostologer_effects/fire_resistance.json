@@ -1,0 +1,13 @@
+{
+	"type": "frostiful:status_effect",
+	"entity": {
+        "condition": "minecraft:reference",
+        "name": "frostiful:benefits_from_cold"
+    },
+	"config": {
+		"progress_threshold": 0.4,
+		"amplifier": 0,
+		"duration": 100,
+		"effect": "minecraft:fire_resistance"
+	}
+}

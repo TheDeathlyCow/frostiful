@@ -1,0 +1,14 @@
+{
+	"type": "frostiful:scaling_attribute_modifier",
+	"entity": {
+        "condition": "minecraft:reference",
+        "name": "frostiful:benefits_from_cold"
+    },
+	"config": {
+		"scale": 0.1,
+		"modifier_uuid": "ea305030-b7fa-4782-9682-9d55a0319237",
+		"name": "Frostologer Attack Damage",
+		"attribute_type": "minecraft:generic.attack_damage",
+		"operation": "ADDITION"
+	}
+}
