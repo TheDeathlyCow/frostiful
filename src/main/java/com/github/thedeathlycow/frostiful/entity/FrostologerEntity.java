@@ -4,6 +4,8 @@ import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -21,18 +23,23 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * By remapping {@link SpellcastingIllagerEntity.Spell}s, the Frostologer has the following spells:
@@ -45,6 +52,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     private static final TrackedData<Boolean> IS_USING_FROST_WAND = DataTracker.registerData(
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
+
+    private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.9f;
+    private static final int NUM_POWER_PARTICLES = 3;
 
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
@@ -98,6 +108,61 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
+    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+        this.initEquipment(world.getRandom(), difficulty);
+        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+    }
+
+    @Override
+    protected void initEquipment(Random random, LocalDifficulty difficulty) {
+        this.setStackInHand(Hand.MAIN_HAND, new ItemStack(FItems.FROST_WAND));
+        this.enchantMainHandItem(random, difficulty.getClampedLocalDifficulty());
+    }
+
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(IS_USING_FROST_WAND, false);
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (this.world.isClient && this.getFreezingScale() >= POWER_PARTICLES_FREEZING_SCALE_START) {
+            this.spawnPowerParticles();
+        }
+    }
+
+    @Environment(EnvType.CLIENT)
+    private void spawnPowerParticles() {
+
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        Box box = this.getBoundingBox();
+
+        for (int i = 0; i < NUM_POWER_PARTICLES; i++) {
+            // pick random pos in bounding box
+            double x = box.getMin(Direction.Axis.X) + random.nextDouble(box.getXLength());
+            double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getYLength());
+            double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getZLength());
+
+            world.addParticle(
+                    ParticleTypes.SNOWFLAKE,
+                    x, y, z,
+                    0, 0.06f, 0
+            );
+        }
+    }
+
+    @Override
+    public IllagerEntity.State getState() {
+        if (this.isSpellcasting()) {
+            return State.SPELLCASTING;
+        } else {
+            return this.isCelebrating() ? State.CELEBRATING : State.NEUTRAL;
+        }
+    }
+
+    @Override
     public void attack(LivingEntity target, float pullProgress) {
         if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
             this.getLookControl().lookAt(target);
@@ -124,32 +189,6 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     private void stopUsingFrostWand() {
         this.dataTracker.set(IS_USING_FROST_WAND, false);
-    }
-
-    @Override
-    public IllagerEntity.State getState() {
-        if (this.isSpellcasting()) {
-            return State.SPELLCASTING;
-        } else {
-            return this.isCelebrating() ? State.CELEBRATING : State.NEUTRAL;
-        }
-    }
-
-    @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
-        this.initEquipment(world.getRandom(), difficulty);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
-    }
-
-    @Override
-    protected void initEquipment(Random random, LocalDifficulty difficulty) {
-        this.setStackInHand(Hand.MAIN_HAND, new ItemStack(FItems.FROST_WAND));
-        this.enchantMainHandItem(random, difficulty.getClampedLocalDifficulty());
-    }
-
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(IS_USING_FROST_WAND, false);
     }
 
     @Override

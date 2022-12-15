@@ -7,7 +7,7 @@
 	"config": {
 		"progress_threshold": 0.90,
 		"amplifier": 4,
-		"duration": 100,
+		"duration": 20,
 		"effect": "minecraft:resistance"
 	}
 }

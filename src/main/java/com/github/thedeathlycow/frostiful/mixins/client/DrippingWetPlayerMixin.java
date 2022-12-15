@@ -1,18 +1,15 @@
 package com.github.thedeathlycow.frostiful.mixins.client;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.particle.BlockLeakParticle;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -74,7 +71,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
 
             ThreadLocalRandom random = ThreadLocalRandom.current();
 
-            // Spawn drip with probability equal to wetness scale
+            // Spawn drip with probability proportional to wetness scale
             if (SLOW_DRIP_MULTIPLIER * random.nextFloat() < soakableEntity.frostiful$getWetnessScale()) {
 
                 World world = this.getWorld();
