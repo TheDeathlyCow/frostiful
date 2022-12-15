@@ -23,7 +23,7 @@ public class RootCommand {
         var rootTarget =
                 argument("targets", EntityArgumentType.entities())
                         .then(
-                                argument("duration", IntegerArgumentType.integer())
+                                argument("duration", IntegerArgumentType.integer(0))
                                         .executes(
                                                 (context) -> {
                                                     return runRoot(context.getSource(),
@@ -47,7 +47,7 @@ public class RootCommand {
         int sum = 0;
         for (Entity entity : targets) {
             if (entity instanceof RootedEntity rootedEntity) {
-                ((RootedEntity) entity).frostiful$setRootedTicks(duration);
+                rootedEntity.frostiful$setRootedTicks(duration);
                 sum += duration;
             }
         }
