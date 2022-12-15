@@ -68,7 +68,7 @@ public class FrostWandItem extends Item implements Vanishable {
                 0.0, 0.0, 0.0,
                 config.combatConfig.getMaxFrostSpellDistance()
         );
-        spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
+        spell.setVelocity(user, user.getPitch(), user.getHeadYaw(), 0.0f, 2.5f, 1.0f);
         spell.setPosition(user.getEyePos());
         spell.setOwner(user);
         world.spawnEntity(spell);

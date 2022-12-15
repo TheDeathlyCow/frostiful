@@ -3,11 +3,11 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
-import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -31,10 +31,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.LocalDifficulty;
 import net.minecraft.world.ServerWorldAccess;
@@ -58,17 +55,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.9f;
     private static final int NUM_POWER_PARTICLES = 3;
 
-    /**
-     * Records the last target that the Frostologer tried to
-     * the Frost Wand at.
-     */
-    @Nullable
-    private RootedEntity lastTargetShotAt;
 
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 20;
-        this.lastTargetShotAt = null;
     }
 
     public static DefaultAttributeContainer.Builder createFrostologerAttributes() {
@@ -94,11 +84,17 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
         this.goalSelector.add(1, new SpellcastingIllagerEntity.LookAtTargetGoal());
-        this.goalSelector.add(2, new FrostWandAttackGoal());
+
+        this.goalSelector.add(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
+
         this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
-        this.goalSelector.add(3, new FrostWandCastGoal(this, 1.0, 40, 10f));
+
+        this.goalSelector.add(3, new DestroyHeatSourcesGoal());
+
         this.goalSelector.add(4, new SummonMinionsGoal());
+        this.goalSelector.add(4, new FrostWandAttackGoal());
+
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
         this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 3.0F, 1.0F));
         this.goalSelector.add(10, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
@@ -183,11 +179,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public void attack(LivingEntity target, float pullProgress) {
         if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
             this.getLookControl().lookAt(target);
-            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
+            //FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
             this.stopUsingItem();
             this.stopUsingFrostWand();
-            this.lastTargetShotAt = (RootedEntity) target;
         }
+    }
+
+    public boolean isTargetRooted() {
+        LivingEntity target = this.getTarget();
+        return target != null && ((RootedEntity) target).frostiful$isRooted();
     }
 
     public boolean isUsingFrostWand() {
@@ -258,16 +258,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         public boolean canStart() {
-            return FrostologerEntity.this.lastTargetShotAt != null
-                    && FrostologerEntity.this.lastTargetShotAt.frostiful$isRooted()
+            return FrostologerEntity.this.isTargetRooted()
                     && super.canStart();
         }
 
-        @Override
-        public void stop() {
-            super.stop();
-            FrostologerEntity.this.lastTargetShotAt = null;
-        }
     }
 
     protected class FrostWandCastGoal extends ProjectileAttackGoal {
@@ -278,7 +272,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         public boolean canStart() {
             return super.canStart()
-                    && (FrostologerEntity.this.lastTargetShotAt == null || !FrostologerEntity.this.lastTargetShotAt.frostiful$isRooted())
+                    && !FrostologerEntity.this.isTargetRooted()
                     && FrostologerEntity.this.getMainHandStack().isOf(FItems.FROST_WAND);
         }
 
@@ -296,6 +290,51 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
     }
 
+    protected class DestroyHeatSourcesGoal extends SpellcastingIllagerEntity.CastSpellGoal {
+        @Override
+        protected void castSpell() {
+
+            BlockPos origin = FrostologerEntity.this.getBlockPos();
+            Vec3i distance = new Vec3i(10, 10, 10);
+            for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
+                BlockState state = FrostologerEntity.this.world.getBlockState(pos);
+                if (FrostologerEntity.isHeatSource(state)) {
+                    FrostologerEntity.this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
+                    FrostologerEntity.this.world.playSound(
+                            null,
+                            pos,
+                            SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                            SoundCategory.HOSTILE,
+                            0, 0
+                    );
+                }
+            }
+
+        }
+
+        @Override
+        protected int getSpellTicks() {
+            return 20;
+        }
+
+        @Override
+        protected int startTimeDelay() {
+            return 0;
+        }
+
+        @Nullable
+        @Override
+        protected SoundEvent getSoundPrepare() {
+            return FSoundEvents.ENTITY_FROST_SPELL_FREEZE;
+        }
+
+        @Override
+        protected Spell getSpell() {
+            return Spell.DISAPPEAR;
+        }
+
+    }
+
     protected class SummonMinionsGoal extends SpellcastingIllagerEntity.CastSpellGoal {
         private final TargetPredicate closeMinionPredicate = TargetPredicate.createNonAttackable()
                 .setBaseMaxDistance(16.0)
@@ -304,6 +343,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         public boolean canStart() {
             if (!super.canStart()) {
+                return false;
+            } else if (!FrostologerEntity.this.isTargetRooted()) {
                 return false;
             } else {
                 int numNearbyMinions = FrostologerEntity.this.world.getTargets(
@@ -359,7 +400,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected int startTimeDelay() {
-            return 340;
+            return 0;
         }
 
         @Nullable
