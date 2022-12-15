@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.util.survival.effects;
 
+import com.github.thedeathlycow.frostiful.registry.FRegistries;
 import com.google.gson.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.loot.LootGsons;
@@ -80,11 +81,11 @@ public class ConfiguredTemperatureEffect<C> {
             // set required values
             Identifier typeID = new Identifier(json.get("type").getAsString());
 
-            if (!TemperatureEffects.VALUES.containsKey(typeID)) {
+            if (!FRegistries.TEMPERATURE_EFFECT_REGISTRY.containsId(typeID)) {
                 throw new JsonParseException("Unknown survival effect type: " + typeID);
             }
 
-            TemperatureEffect<?> effectType = TemperatureEffects.VALUES.get(typeID);
+            TemperatureEffect<?> effectType = FRegistries.TEMPERATURE_EFFECT_REGISTRY.get(typeID);
 
             // set optional values
             LootCondition predicate = JsonHelper.deserialize(json, "entity", null, jsonDeserializationContext, LootCondition.class);

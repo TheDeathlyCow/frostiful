@@ -47,7 +47,7 @@ public class Frostiful implements ModInitializer {
         );
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-        TemperatureEffects.createEffectTypes();
+        TemperatureEffects.registerAll();
         ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(TemperatureEffectLoader.INSTANCE);
 
         FEntityAttributes.registerAttributes();
