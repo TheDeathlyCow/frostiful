@@ -23,7 +23,7 @@ public class RootCommand {
         var rootTarget =
                 argument("targets", EntityArgumentType.entities())
                         .then(
-                                argument("duration", IntegerArgumentType.integer())
+                                argument("duration", IntegerArgumentType.integer(0))
                                         .executes(
                                                 (context) -> {
                                                     return runRoot(context.getSource(),
