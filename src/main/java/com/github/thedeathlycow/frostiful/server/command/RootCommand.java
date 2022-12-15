@@ -47,7 +47,7 @@ public class RootCommand {
         int sum = 0;
         for (Entity entity : targets) {
             if (entity instanceof RootedEntity rootedEntity) {
-                ((RootedEntity) entity).frostiful$setRootedTicks(duration);
+                rootedEntity.frostiful$setRootedTicks(duration);
                 sum += duration;
             }
         }
