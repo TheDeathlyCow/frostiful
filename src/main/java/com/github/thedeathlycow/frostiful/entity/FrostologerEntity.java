@@ -349,7 +349,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .ignoreDistanceScalingFactor();
 
         public boolean canStart() {
-            if (!super.canStart()) {
+            if (FrostologerEntity.this.random.nextInt(2) == 0) {
+                return false;
+            } else if (!super.canStart()) {
                 return false;
             } else if (!FrostologerEntity.this.isTargetRooted()) {
                 return false;
