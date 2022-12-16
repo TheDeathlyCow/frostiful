@@ -5,6 +5,7 @@
 		"minecraft:wither",
 		"minecraft:ender_dragon",
 		"minecraft:warden",
-		"#c:bosses"
+		"#c:bosses",
+		"minecraft:armor_stand"
 	]
 }
