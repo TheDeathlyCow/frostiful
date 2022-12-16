@@ -18,11 +18,12 @@ public class FrostWandItemModel extends Model {
     public static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/frost_wand.png");
     public static final EntityModelLayer FROST_WAND_LAYER = new EntityModelLayer(new Identifier(Frostiful.MODID, "frost_wand"), "main");
 
+    private static final int FULL_BRIGHTNESS = (15 << 4) | (15 << 20); // packed lightmap coordinates are (block << 4) | (sky << 20)
+
     private final ModelPart root;
 
-
     public FrostWandItemModel(ModelPart root) {
-        super(RenderLayer::getEntitySolid);
+        super(RenderLayer::getEntityTranslucent);
         this.root = root;
     }
 
@@ -68,6 +69,6 @@ public class FrostWandItemModel extends Model {
 
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        this.root.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+        this.root.render(matrices, vertices, FULL_BRIGHTNESS, overlay, red, green, blue, alpha);
     }
 }
