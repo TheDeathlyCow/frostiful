@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -90,7 +91,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
 
-        this.goalSelector.add(3, new DestroyHeatSourcesGoal());
+        // this.goalSelector.add(3, new DestroyHeatSourcesGoal());
 
         this.goalSelector.add(4, new SummonMinionsGoal());
         this.goalSelector.add(4, new FrostWandAttackGoal());
@@ -179,15 +180,19 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public void attack(LivingEntity target, float pullProgress) {
         if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
             this.getLookControl().lookAt(target);
-            //FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
-            this.stopUsingItem();
-            this.stopUsingFrostWand();
+            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
         }
+    }
+
+    public boolean hasTarget() {
+        LivingEntity target = this.getTarget();
+        return target != null && target.isAlive();
     }
 
     public boolean isTargetRooted() {
         LivingEntity target = this.getTarget();
-        return target != null && ((RootedEntity) target).frostiful$isRooted();
+        return target != null
+                && ((RootedEntity) target).frostiful$isRooted();
     }
 
     public boolean isUsingFrostWand() {
@@ -272,6 +277,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         public boolean canStart() {
             return super.canStart()
+                    && FrostologerEntity.this.hasTarget()
                     && !FrostologerEntity.this.isTargetRooted()
                     && FrostologerEntity.this.getMainHandStack().isOf(FItems.FROST_WAND);
         }
@@ -286,6 +292,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         public void stop() {
             super.stop();
             FrostologerEntity.this.setAttacking(false);
+            FrostologerEntity.this.clearActiveItem();
             FrostologerEntity.this.stopUsingFrostWand();
         }
     }

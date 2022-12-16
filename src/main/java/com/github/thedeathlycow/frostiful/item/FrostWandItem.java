@@ -23,6 +23,7 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 public class FrostWandItem extends Item implements Vanishable {
@@ -69,13 +70,13 @@ public class FrostWandItem extends Item implements Vanishable {
                 config.combatConfig.getMaxFrostSpellDistance()
         );
         spell.setVelocity(user, user.getPitch(), user.getHeadYaw(), 0.0f, 2.5f, 1.0f);
-        spell.setPosition(user.getEyePos());
+        Vec3d firingPos = user.getEyePos();
+        spell.setPosition(firingPos);
         spell.setOwner(user);
         world.spawnEntity(spell);
-        Vec3d soundPos = user.getEyePos();
         world.playSound(
                 null,
-                soundPos.getX(), soundPos.getY(), soundPos.getZ(),
+                firingPos.getX(), firingPos.getY(), firingPos.getZ(),
                 FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
                 1.0f, 1.0f
         );
