@@ -11,11 +11,7 @@
       "conditions": {
         "items": [
           {
-            "item": [
-              {
-                "item": "frostiful:icicle"
-              }
-            ]
+            "tag": "frostiful:icicles"
           }
         ]
       }

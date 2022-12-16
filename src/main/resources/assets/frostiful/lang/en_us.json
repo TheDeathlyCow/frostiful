@@ -96,10 +96,11 @@
   "text.autoconfig.frostiful.option.freezingConfig.ultrawarmThawRate": "Ultrawarm dimension thaw rate",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
+  "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",
   "text.autoconfig.frostiful.option.icicleConfig.becomeUnstableChance": "Become unstable chance",
   "text.autoconfig.frostiful.option.icicleConfig.growChance": "Grow chance",
   "text.autoconfig.frostiful.option.icicleConfig.growChanceDuringRain": "Grow chance during rain",
-  "text.autoconfig.frostiful.option.icicleConfig.growChanceDuringThunder": "Grow chance during thunder",
+  "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeathergrowChanceDuringThunder": "Grow chance during thunder",
   "text.autoconfig.frostiful.option.icicleConfig.frostArrowFreezeAmount": "Frost arrow freeze amount",
   "text.autoconfig.frostiful.option.icicleConfig.icicleCollisionFreezeAmount": "Icicle collision freeze amount"
 }

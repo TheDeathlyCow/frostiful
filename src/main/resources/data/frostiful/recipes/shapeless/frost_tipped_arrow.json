@@ -5,7 +5,7 @@
             "item": "minecraft:arrow"
         },
         {
-            "item": "frostiful:icicle"
+            "tag": "frostiful:icicles"
         }
     ],
     "result": {

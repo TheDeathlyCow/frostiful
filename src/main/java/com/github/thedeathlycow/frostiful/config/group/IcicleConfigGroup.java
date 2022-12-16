@@ -7,12 +7,17 @@ import me.shedaniel.autoconfig.annotation.Config;
 @Config(name = Frostiful.MODID + ".icicle_config")
 public class IcicleConfigGroup implements ConfigData {
 
+    boolean iciclesFormInWeather = true;
     double becomeUnstableChance = 0.05;
     double growChance = 0.02;
     double growChanceDuringRain = 0.09;
     double growChanceDuringThunder = 0.15;
     int frostArrowFreezeAmount = 1000;
     int icicleCollisionFreezeAmount = 3000;
+
+    public boolean iciclesFormInWeather() {
+        return iciclesFormInWeather;
+    }
 
     public double getBecomeUnstableChance() {
         return becomeUnstableChance;

@@ -1,0 +1,10 @@
+{
+	"replace": false,
+	"values": [
+		"frostiful:icicle",
+		{
+			"required": false,
+			"id": "immersive_weathering:icicle"
+		}
+	]
+}
