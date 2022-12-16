@@ -44,6 +44,10 @@ public abstract class IcicleGrowthMixin {
         final ServerWorld instance = (ServerWorld) (Object) this;
         final Random random = instance.random;
 
+        if (!Frostiful.getConfig().icicleConfig.iciclesFormInWeather()) {
+            return;
+        }
+
         if (!instance.isRaining()) {
             return;
         }
