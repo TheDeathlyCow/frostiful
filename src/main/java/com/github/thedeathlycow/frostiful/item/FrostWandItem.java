@@ -60,7 +60,7 @@ public class FrostWandItem extends Item implements Vanishable {
         }
     }
 
-    public static void fireFrostSpell(ItemStack stack, World world, LivingEntity user) {
+    public static void fireFrostSpell(ItemStack frostWandStack, World world, LivingEntity user) {
         FrostifulConfig config = Frostiful.getConfig();
 
         FrostSpellEntity spell = new FrostSpellEntity(
@@ -82,11 +82,11 @@ public class FrostWandItem extends Item implements Vanishable {
         );
 
         if (user instanceof PlayerEntity player) {
-            stack.damage(2, player, (p) -> {
+            frostWandStack.damage(2, player, (p) -> {
                 p.sendToolBreakStatus(p.getActiveHand());
             });
-            player.incrementStat(Stats.USED.getOrCreateStat(stack.getItem()));
-            player.getItemCooldownManager().set(stack.getItem(), config.combatConfig.getFrostWandCooldown());
+            player.incrementStat(Stats.USED.getOrCreateStat(frostWandStack.getItem()));
+            player.getItemCooldownManager().set(frostWandStack.getItem(), config.combatConfig.getFrostWandCooldown());
         }
     }
 

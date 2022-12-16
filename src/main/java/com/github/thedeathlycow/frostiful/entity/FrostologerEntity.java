@@ -407,7 +407,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected int startTimeDelay() {
-            return 0;
+            return 20;
         }
 
         @Nullable
