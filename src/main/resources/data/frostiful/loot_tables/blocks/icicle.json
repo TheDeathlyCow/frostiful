@@ -2,8 +2,8 @@
     "type": "minecraft:block",
     "pools": [
         {
-            "rolls": 1.0,
-            "bonus_rolls": 0.0,
+            "rolls": 1,
+            "bonus_rolls": 0,
             "entries": [
                 {
                     "type": "minecraft:item",
@@ -11,6 +11,19 @@
                 }
             ],
             "conditions": [
+                {
+                    "condition": "minecraft:match_tool",
+                    "predicate": {
+                        "enchantments": [
+                            {
+                                "enchantment": "minecraft:silk_touch",
+                                "levels": {
+                                    "min": 1
+                                }
+                            }
+                        ]
+                    }
+                },
                 {
                     "condition": "minecraft:survives_explosion"
                 }
