@@ -1,10 +1,14 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
+import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.util.FMathHelper;
+import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
@@ -26,6 +30,7 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -34,11 +39,10 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
+import net.minecraft.world.*;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -76,6 +80,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return state.getLuminance() >= minLightForWarmth;
     }
 
+    public boolean isInHeatedArea() {
+        int minLightForWarmth = Frostiful.getConfig().freezingConfig.getMinLightForWarmth();
+        return this.world.getLightLevel(LightType.BLOCK, this.getBlockPos()) > minLightForWarmth;
+    }
+
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
         return damageSource == DamageSource.FREEZE || super.isInvulnerableTo(damageSource);
@@ -91,10 +100,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
 
-        // this.goalSelector.add(3, new DestroyHeatSourcesGoal());
-
-        this.goalSelector.add(4, new SummonMinionsGoal());
         this.goalSelector.add(4, new FrostWandAttackGoal());
+        this.goalSelector.add(4, new SummonMinionsGoal());
+
+        this.goalSelector.add(6, new DestroyHeatSourcesGoal(10));
 
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
         this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 3.0F, 1.0F));
@@ -200,11 +209,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     private void startUsingFrostWand() {
-        Vec3d pos = this.getPos();
-        this.world.playSound(null,
-                pos.x, pos.y, pos.z,
+        this.playSound(
                 FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
-                SoundCategory.HOSTILE,
                 1.0f, 1.0f
         );
         this.dataTracker.set(IS_USING_FROST_WAND, true);
@@ -298,11 +304,60 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     protected class DestroyHeatSourcesGoal extends SpellcastingIllagerEntity.CastSpellGoal {
+
+        private final int range;
+
+        protected DestroyHeatSourcesGoal(int range) {
+            super();
+            this.range = range;
+        }
+
+        public boolean canStart() {
+            // no super call as that requires a target to be selected
+            if (FrostologerEntity.this.isSpellcasting()) {
+                return false;
+            } else if (FrostologerEntity.this.age < this.startTime) {
+                return false;
+            } else if (!FrostologerEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                return false;
+            } else {
+                return FrostologerEntity.this.isInHeatedArea();
+            }
+        }
+
+        @Override
+        public boolean shouldContinue() {
+            return this.spellCooldown > 0;
+        }
+
+        public void tick() {
+
+            Box box = FrostologerEntity.this.getBoundingBox().expand(this.range);
+
+            @Nullable
+            ServerWorld serverWorld = null;
+            if (!world.isClient) {
+                serverWorld = (ServerWorld) world;
+            }
+
+
+            for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
+                FrostHelper.addLivingFrost(victim, 35);
+
+                if (serverWorld != null) {
+                    EnervationEnchantment.addHeatDrainParticles(
+                            serverWorld, FrostologerEntity.this, victim, 5
+                    );
+                }
+            }
+
+            super.tick();
+        }
+
         @Override
         protected void castSpell() {
-
             BlockPos origin = FrostologerEntity.this.getBlockPos();
-            Vec3i distance = new Vec3i(10, 10, 10);
+            Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
                 BlockState state = FrostologerEntity.this.world.getBlockState(pos);
                 if (FrostologerEntity.isHeatSource(state)) {
@@ -316,23 +371,22 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     );
                 }
             }
-
         }
 
         @Override
         protected int getSpellTicks() {
-            return 20;
+            return 60;
         }
 
         @Override
         protected int startTimeDelay() {
-            return 0;
+            return 140;
         }
 
         @Nullable
         @Override
         protected SoundEvent getSoundPrepare() {
-            return FSoundEvents.ENTITY_FROST_SPELL_FREEZE;
+            return SoundEvents.ITEM_ELYTRA_FLYING;
         }
 
         @Override

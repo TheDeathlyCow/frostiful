@@ -73,14 +73,18 @@ public sealed class EnervationEnchantment extends Enchantment permits FrozenTouc
     public static void addHeatDrainParticles(Entity destination, Entity source, int level) {
         World world = destination.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) {
-            Vec3d from = FMathHelper.getMidPoint(source.getEyePos(), source.getPos());
-            final int numParticles = (level << 1) + 5;
-
-            double fromX = from.getX();
-            double fromY = from.getY();
-            double fromZ = from.getZ();
-            HeatDrainParticleEffect effect = new HeatDrainParticleEffect(destination.getEyePos());
-            serverWorld.spawnParticles(effect, fromX, fromY, fromZ, numParticles, 0.5, 0.5, 0.5, 0.3);
+            addHeatDrainParticles(serverWorld, destination, source, level);
         }
+    }
+
+    public static void addHeatDrainParticles(ServerWorld serverWorld, Entity destination, Entity source, int level) {
+        Vec3d from = FMathHelper.getMidPoint(source.getEyePos(), source.getPos());
+        final int numParticles = (level << 1) + 5;
+
+        double fromX = from.getX();
+        double fromY = from.getY();
+        double fromZ = from.getZ();
+        HeatDrainParticleEffect effect = new HeatDrainParticleEffect(destination.getEyePos());
+        serverWorld.spawnParticles(effect, fromX, fromY, fromZ, numParticles, 0.5, 0.5, 0.5, 0.3);
     }
 }
