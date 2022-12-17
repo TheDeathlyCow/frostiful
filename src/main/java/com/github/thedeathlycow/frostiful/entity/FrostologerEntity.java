@@ -103,7 +103,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.goalSelector.add(4, new FrostWandAttackGoal());
         this.goalSelector.add(4, new SummonMinionsGoal());
 
-        this.goalSelector.add(6, new DestroyHeatSourcesGoal(10));
+        this.goalSelector.add(6, new DestroyHeatSourcesGoal(15));
 
         this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
         this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 3.0F, 1.0F));
@@ -360,17 +360,32 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
                 BlockState state = FrostologerEntity.this.world.getBlockState(pos);
-                if (FrostologerEntity.isHeatSource(state)) {
-                    FrostologerEntity.this.world.setBlockState(pos, Blocks.AIR.getDefaultState());
-                    FrostologerEntity.this.world.playSound(
-                            null,
-                            pos,
-                            SoundEvents.BLOCK_FIRE_EXTINGUISH,
-                            SoundCategory.HOSTILE,
-                            0, 0
-                    );
+                if (FrostologerEntity.isHeatSource(state) && world instanceof ServerWorld serverWorld) {
+                    this.destroyHeatSource(serverWorld, pos);
                 }
             }
+        }
+
+        private void destroyHeatSource(ServerWorld serverWorld, BlockPos pos) {
+            serverWorld.setBlockState(pos, Blocks.AIR.getDefaultState());
+
+            serverWorld.playSound(
+                    null,
+                    pos,
+                    SoundEvents.BLOCK_FIRE_EXTINGUISH,
+                    SoundCategory.HOSTILE,
+                    1.0f, 1.0f
+            );
+
+            Vec3d centeredPos = Vec3d.ofCenter(pos);
+
+            serverWorld.spawnParticles(
+                    ParticleTypes.SMOKE,
+                    centeredPos.x, centeredPos.y, centeredPos.z,
+                    12,
+                    0.1, 1, 0.1,
+                    0.1
+            );
         }
 
         @Override
