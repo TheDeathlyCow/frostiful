@@ -5,9 +5,7 @@ import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
-import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.util.FMathHelper;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -28,18 +26,15 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.entity.mob.*;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.passive.SnowGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
@@ -47,7 +42,6 @@ import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -75,7 +69,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 12.0)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 24.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0)
                 .add(FEntityAttributes.MAX_FROST, 45.0)
                 .add(FEntityAttributes.FROST_RESISTANCE, -5.0);
     }
