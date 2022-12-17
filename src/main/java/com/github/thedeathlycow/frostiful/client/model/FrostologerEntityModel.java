@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
+import net.minecraft.client.render.entity.EntityRenderers;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
 
 @Environment(EnvType.CLIENT)
@@ -11,6 +12,9 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
 
     public FrostologerEntityModel(ModelPart root) {
         super(root);
+        ModelPart hat = this.getHead().getChild("hat");
+        hat.visible = true;
+        EntityRenderers
     }
 
     @Override
