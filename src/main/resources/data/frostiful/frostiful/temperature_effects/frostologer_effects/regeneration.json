@@ -5,7 +5,7 @@
         "name": "frostiful:benefits_from_cold"
     },
 	"config": {
-		"progress_threshold": 0.90,
+		"progress_threshold": 0.95,
 		"amplifier": 2,
 		"duration": 20,
 		"effect": "minecraft:regeneration"

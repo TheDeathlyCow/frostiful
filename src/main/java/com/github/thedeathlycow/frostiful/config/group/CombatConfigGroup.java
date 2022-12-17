@@ -8,6 +8,7 @@ import me.shedaniel.autoconfig.annotation.Config;
 public class CombatConfigGroup implements ConfigData {
 
     int heatDrainPerLevel = 210;
+
     double heatDrainEfficiency = 0.5;
 
     float iceBreakerDamagePerLevel = 1.0f;
@@ -19,6 +20,8 @@ public class CombatConfigGroup implements ConfigData {
     int frostWandCooldown = 120;
 
     int frostWandRootTime = 100;
+
+    int frostologerHeatDrainPerTick = 50;
 
     public int getHeatDrainPerLevel() {
         return heatDrainPerLevel;
@@ -46,5 +49,10 @@ public class CombatConfigGroup implements ConfigData {
 
     public int getFrostWandRootTime() {
         return frostWandRootTime;
+    }
+
+    public int getFrostologerHeatDrainPerTick() {
+        // multiply by 2 as goals only twice at half the rate of normal
+        return 2 * frostologerHeatDrainPerTick;
     }
 }

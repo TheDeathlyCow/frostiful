@@ -9,10 +9,7 @@ import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.TorchBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -56,7 +53,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
 
-    private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.9f;
+    private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.95f;
     private static final int NUM_POWER_PARTICLES = 3;
 
 
@@ -69,7 +66,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 12.0)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 75.0)
                 .add(FEntityAttributes.MAX_FROST, 45.0)
                 .add(FEntityAttributes.FROST_RESISTANCE, -5.0);
     }
@@ -93,6 +90,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         } else if (heatedBlock instanceof TorchBlock) {
             // TODO: add frozen torch block
             frozenState = Blocks.AIR.getDefaultState();
+        } else if (heatedBlock instanceof CandleBlock) {
+            frozenState = state.with(CandleBlock.LIT, false);
         } else {
             frozenState = Blocks.AIR.getDefaultState();
         }
@@ -387,10 +386,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 return false;
             } else if (FrostologerEntity.this.age < this.startTime) {
                 return false;
-            } else if (!FrostologerEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
-                return false;
             } else {
-                return FrostologerEntity.this.isInHeatedArea();
+                return FrostologerEntity.this.hasTarget() || FrostologerEntity.this.isInHeatedArea();
             }
         }
 
@@ -410,12 +407,13 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             }
 
 
+            int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
-                FrostHelper.addLivingFrost(victim, 35);
+                FrostHelper.addLivingFrost(victim, heatDrain);
 
                 if (serverWorld != null) {
                     EnervationEnchantment.addHeatDrainParticles(
-                            serverWorld, FrostologerEntity.this, victim, 5
+                            serverWorld, FrostologerEntity.this, victim, 5, 0.08
                     );
                 }
             }
@@ -425,6 +423,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected void castSpell() {
+
+            if (!FrostologerEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                return;
+            }
+
             BlockPos origin = FrostologerEntity.this.getBlockPos();
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
@@ -433,6 +436,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }
+        }
+
+        @Override
+        protected int getInitialCooldown() {
+            return 60;
         }
 
         @Override
