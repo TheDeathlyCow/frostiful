@@ -380,6 +380,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             this.range = range;
         }
 
+        public void start() {
+            super.start();
+            if (FrostologerEntity.this.isOnFire()) {
+                FrostologerEntity.this.extinguish();
+                FrostologerEntity.this.playExtinguishSound();
+            }
+        }
+
         public boolean canStart() {
             // no super call as that requires a target to be selected
             if (FrostologerEntity.this.isSpellcasting()) {
@@ -471,6 +479,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .setBaseMaxDistance(16.0)
                 .ignoreVisibility()
                 .ignoreDistanceScalingFactor();
+
+        public void start() {
+            super.start();
+            if (FrostologerEntity.this.isOnFire()) {
+                FrostologerEntity.this.extinguish();
+                FrostologerEntity.this.playExtinguishSound();
+            }
+        }
 
         public boolean canStart() {
             if (FrostologerEntity.this.random.nextInt(2) == 0) {
