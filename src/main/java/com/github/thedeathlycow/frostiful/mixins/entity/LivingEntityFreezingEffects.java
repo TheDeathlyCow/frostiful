@@ -69,14 +69,12 @@ public abstract class LivingEntityFreezingEffects extends Entity {
 
     @Inject(
             method = "createLivingAttributes",
-            at = @At("TAIL"),
-            cancellable = true
+            at = @At("TAIL")
     )
     private static void addAttributes(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
         attributeBuilder.add(FEntityAttributes.FROST_RESISTANCE);
         attributeBuilder.add(FEntityAttributes.MAX_FROST);
-        cir.setReturnValue(attributeBuilder);
     }
 
     @Inject(
