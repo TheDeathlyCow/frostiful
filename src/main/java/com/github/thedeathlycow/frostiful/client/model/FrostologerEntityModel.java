@@ -5,14 +5,23 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
+import net.minecraft.client.render.entity.model.PlayerEntityModel;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerEntityModel<F extends FrostologerEntity> extends IllagerEntityModel<F> {
+
+
+    protected final ModelPart head;
+    protected final ModelPart rightArm;
+    protected final ModelPart leftArm;
 
     public FrostologerEntityModel(ModelPart root) {
         super(root);
         ModelPart hat = this.getHead().getChild("hat");
         hat.visible = true;
+        this.head = this.getHead();
+        this.rightArm = this.getPart().getChild("right_arm");
+        this.leftArm = this.getPart().getChild("left_arm");
     }
 
     @Override
@@ -27,11 +36,13 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
         super.setAngles(frostologer, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
 
         if (frostologer.isUsingFrostWand()) {
-            ModelPart rightArm = this.getPart().getChild("right_arm");
-            ModelPart head = this.getHead();
-
-            rightArm.yaw = -0.1f + head.yaw;
-            rightArm.pitch = -1.57f + head.pitch;
+            if (frostologer.isLeftHanded()) {
+                this.leftArm.yaw = 0.1f + this.head.yaw;
+                this.leftArm.pitch = -1.57f + this.head.pitch;
+            } else {
+                this.rightArm.yaw = -0.1f + this.head.yaw;
+                this.rightArm.pitch = -1.57f + this.head.pitch;
+            }
         }
     }
 }
