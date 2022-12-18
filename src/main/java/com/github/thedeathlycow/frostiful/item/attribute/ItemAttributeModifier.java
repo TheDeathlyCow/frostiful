@@ -22,7 +22,6 @@ public class ItemAttributeModifier {
     private final EquipmentSlot slot;
     private final List<AttributeHolder> attributeModifiers;
 
-    private boolean isEnabled = true;
 
     public ItemAttributeModifier(
             Item item,
@@ -32,20 +31,14 @@ public class ItemAttributeModifier {
         this.item = item;
         this.slot = slot;
         this.attributeModifiers = attributeModifiers;
-
-        ModifyItemAttributeModifiersCallback.EVENT.register(this::apply);
     }
 
     public void apply(ItemStack stack, EquipmentSlot slot, Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers) {
-        if (this.isEnabled && stack.isOf(this.item) && slot == this.slot) {
+        if (stack.isOf(this.item) && slot == this.slot) {
             for (AttributeHolder holder : this.attributeModifiers) {
                 attributeModifiers.put(holder.attribute(), holder.modifier());
             }
         }
-    }
-
-    public void disable() {
-        this.isEnabled = false;
     }
 
     public static class Serializer implements JsonDeserializer<ItemAttributeModifier> {

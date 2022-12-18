@@ -1,18 +1,23 @@
 package com.github.thedeathlycow.frostiful.item.attribute;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.google.common.collect.Multimap;
 import com.google.gson.JsonParseException;
+import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.item.ItemStack;
 import net.minecraft.resource.ResourceManager;
 import net.minecraft.util.Identifier;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListener {
+public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListener, ModifyItemAttributeModifiersCallback {
 
     public static final ItemAttributeLoader INSTANCE = new ItemAttributeLoader(Frostiful.id("item_attribute_modifiers"));
 
@@ -22,6 +27,8 @@ public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListe
 
     public ItemAttributeLoader(Identifier identifier) {
         this.identifier = identifier;
+
+        ModifyItemAttributeModifiersCallback.EVENT.register(this);
     }
 
     @Override
@@ -47,7 +54,7 @@ public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListe
             }
         }
 
-        this.clearValues();
+        this.values.clear();
         this.values.putAll(newValues);
 
         int numModifiers = this.values.size();
@@ -55,15 +62,10 @@ public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListe
 
     }
 
-    private void clearValues() {
-
-        this.values.values().forEach(ItemAttributeModifier::disable);
-
-        this.values.clear();
-    }
-
-    @Nullable
-    public ItemAttributeModifier get(Identifier id) {
-        return this.values.getOrDefault(id, null);
+    @Override
+    public void modifyAttributeModifiers(ItemStack stack, EquipmentSlot slot, Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers) {
+        for (var value : this.values.values()) {
+            value.apply(stack, slot, attributeModifiers);
+        }
     }
 }
