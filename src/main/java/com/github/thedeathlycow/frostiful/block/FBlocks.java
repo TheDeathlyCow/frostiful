@@ -23,12 +23,39 @@ public class FBlocks {
     public static final Block WARM_SUN_LICHEN = new SunLichenBlock(2, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 4));
     public static final Block HOT_SUN_LICHEN = new SunLichenBlock(3, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 6));
 
+    public static final Block PACKED_SNOW_BLOCK = new Block(FabricBlockSettings.of(Material.SNOW_BLOCK)
+            .requiresTool()
+            .strength(1.5f, 6.0f)
+            .sounds(BlockSoundGroup.SNOW)
+    );
+
+    public static final Block PACKED_SNOW_BRICKS = new Block(FabricBlockSettings.of(Material.SNOW_BLOCK)
+            .requiresTool()
+            .strength(1.5f, 6.0f)
+            .sounds(BlockSoundGroup.SNOW)
+    );
+
+    public static final Block PACKED_SNOW_BRICK_STAIRS = new StairsBlock(
+            PACKED_SNOW_BRICKS.getDefaultState(),
+            FabricBlockSettings.copyOf(PACKED_SNOW_BRICKS)
+    );
+
+    public static final Block PACKED_SNOW_BRICK_SLAB = new SlabBlock(FabricBlockSettings.copyOf(PACKED_SNOW_BRICKS));
+
+    public static final Block PACKED_SNOW_BRICK_WALL = new WallBlock(FabricBlockSettings.copyOf(PACKED_SNOW_BRICKS));
+
     public static void registerBlocks() {
         register("icicle", ICICLE);
         register("cold_sun_lichen", COLD_SUN_LICHEN);
         register("cool_sun_lichen", COOL_SUN_LICHEN);
         register("warm_sun_lichen", WARM_SUN_LICHEN);
         register("hot_sun_lichen", HOT_SUN_LICHEN);
+
+        register("packed_snow_block", PACKED_SNOW_BLOCK);
+        register("packed_snow_bricks", PACKED_SNOW_BRICKS);
+        register("packed_snow_brick_stairs", PACKED_SNOW_BRICK_STAIRS);
+        register("packed_snow_brick_slab", PACKED_SNOW_BRICK_SLAB);
+        register("packed_snow_brick_wall", PACKED_SNOW_BRICK_WALL);
 
         DispenserBlock.registerBehavior(FItems.FROST_TIPPED_ARROW, new ProjectileDispenserBehavior() {
                     protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
