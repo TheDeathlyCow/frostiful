@@ -1,0 +1,22 @@
+{
+	"item": "frostiful:fur_boots",
+	"slot": "feet",
+	"attribute_modifiers": [
+		{
+			"attribute": "minecraft:generic.armor",
+			"modifier": {
+				"uuid": "845DB27C-C624-495F-8C9F-6020A9A58B6B",
+				"value": 1.0,
+				"operation": "addition"
+			}
+		},
+		{
+			"attribute": "frostiful:generic.frost_resistance",
+			"modifier": {
+				"uuid": "43ce6852-f0e9-48b5-a451-f6d458f835a2",
+				"value": 0.5,
+				"operation": "addition"
+			}
+		}
+	]
+}

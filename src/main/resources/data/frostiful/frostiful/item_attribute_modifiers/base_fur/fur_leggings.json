@@ -1,0 +1,22 @@
+{
+	"item": "frostiful:fur_leggings",
+	"slot": "legs",
+	"attribute_modifiers": [
+		{
+			"attribute": "minecraft:generic.armor",
+			"modifier": {
+				"uuid": "D8499B04-0E66-4726-AB29-64469D734E0D",
+				"value": 2.0,
+				"operation": "addition"
+			}
+		},
+		{
+			"attribute": "frostiful:generic.frost_resistance",
+			"modifier": {
+				"uuid": "015a4e56-3db0-45e7-a14c-82ebc3af86b5",
+				"value": 1.0,
+				"operation": "addition"
+			}
+		}
+	]
+}
