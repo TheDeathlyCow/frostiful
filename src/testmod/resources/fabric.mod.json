@@ -11,7 +11,8 @@
       "com.github.thedeathlycow.frostiful.test.icicle.FrostTippedArrowTests",
       "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenCollisionTests",
       "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenPathfindingTests",
-      "com.github.thedeathlycow.frostiful.test.effects.FrozenStatusEffectTests"
+      "com.github.thedeathlycow.frostiful.test.effects.RootedTests",
+      "com.github.thedeathlycow.frostiful.test.frostologer.FrostologerDestroyHeatSourcesTests"
     ]
   }
 }

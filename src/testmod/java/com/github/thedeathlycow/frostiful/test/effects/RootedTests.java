@@ -8,7 +8,7 @@ import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
-public class FrozenStatusEffectTests {
+public class RootedTests {
 
     @GameTest(templateName = "frostiful-test:effects.platform")
     public void stopsWalkingWhenRooted(TestContext context) {

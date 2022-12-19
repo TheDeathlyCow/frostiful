@@ -85,7 +85,20 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return this.world.getLightLevel(LightType.BLOCK, this.getBlockPos()) > minLightForWarmth;
     }
 
-    protected void destroyHeatSource(ServerWorld world, BlockState state, BlockPos blockPos) {
+    /**
+     * 'Destroys' the heat source at the given `blockPos` by transforming `state` into another block according to the following rules:
+     *
+     * full cubes -> ice
+     * lava (level 8) -> obsidian
+     * torches -> frozen torch
+     * waterlogged blocks -> ice
+     * everything else -> air
+     *
+     * @param world The server world
+     * @param state The state to transform
+     * @param blockPos The position of `state` in `world`.
+     */
+    public void destroyHeatSource(ServerWorld world, BlockState state, BlockPos blockPos) {
 
         BlockState frozenState;
         Block heatedBlock = state.getBlock();
