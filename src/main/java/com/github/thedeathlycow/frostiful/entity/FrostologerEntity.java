@@ -7,6 +7,7 @@ import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -36,6 +37,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
@@ -87,15 +89,17 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     /**
      * 'Destroys' the heat source at the given `blockPos` by transforming `state` into another block according to the following rules:
+     * <ul>
+     * <li> protected block -> do nothing </li>
+     * <li> full cubes -> ice </li>
+     * <li> lava (level 8) -> obsidian </li>
+     * <li> torches -> frozen torch </li>
+     * <li> waterlogged blocks -> ice </li>
+     * <li> everything else -> air </li>
+     * </ul>
      *
-     * full cubes -> ice
-     * lava (level 8) -> obsidian
-     * torches -> frozen torch
-     * waterlogged blocks -> ice
-     * everything else -> air
-     *
-     * @param world The server world
-     * @param state The state to transform
+     * @param world    The server world
+     * @param state    The state to transform
      * @param blockPos The position of `state` in `world`.
      */
     public void destroyHeatSource(ServerWorld world, BlockState state, BlockPos blockPos) {
@@ -103,12 +107,21 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         BlockState frozenState;
         Block heatedBlock = state.getBlock();
         FluidState fluidState = state.getFluidState();
-        if (state.isFullCube(world, blockPos)) {
+
+        if (state.isIn(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
+            frozenState = state;
+        } else if (state.isFullCube(world, blockPos)) {
             frozenState = Blocks.ICE.getDefaultState();
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
             frozenState = Blocks.OBSIDIAN.getDefaultState();
         } else if (heatedBlock instanceof TorchBlock) {
-            if (heatedBlock instanceof WallTorchBlock) {
+            // Some wall torches (like redstone wall torch) don't extend WallTorchBlock, and so the only way to determine
+            // if they are a wall torch is to check if they don't have the wall post override tag. It's not nice, but it's
+            // the only way to generally determine if a block is a wall torch.
+            boolean isWallTorch = heatedBlock instanceof WallTorchBlock
+                    || !state.isIn(BlockTags.WALL_POST_OVERRIDE);
+
+            if (isWallTorch) {
                 frozenState = FBlocks.FROZEN_WALL_TORCH.getStateWithProperties(state);
             } else {
                 frozenState = FBlocks.FROZEN_TORCH.getStateWithProperties(state);
