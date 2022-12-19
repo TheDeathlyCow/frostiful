@@ -9,6 +9,7 @@ import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
 import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
@@ -43,12 +44,15 @@ public class Frostiful implements ModInitializer {
                     FrostifulCommand.register(dispatcher);
                     FrostCommand.register(dispatcher);
                     RootCommand.register(dispatcher);
-                }
-        );
+                });
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
         TemperatureEffects.registerAll();
-        ResourceManagerHelper.get(ResourceType.SERVER_DATA).registerReloadListener(TemperatureEffectLoader.INSTANCE);
+
+        ResourceManagerHelper serverManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
+
+        serverManager.registerReloadListener(TemperatureEffectLoader.INSTANCE);
+        serverManager.registerReloadListener(ItemAttributeLoader.INSTANCE);
 
         FEntityAttributes.registerAttributes();
         FDamageSource.registerDamageSources();
@@ -71,6 +75,7 @@ public class Frostiful implements ModInitializer {
 
     /**
      * Creates a new {@link Identifier} in the namespace {@value MODID}.
+     * 
      * @param path The path of the uuid
      * @return Returns a new {@link Identifier}
      */
