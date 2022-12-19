@@ -23,6 +23,15 @@ public class FBlocks {
     public static final Block WARM_SUN_LICHEN = new SunLichenBlock(2, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 4));
     public static final Block HOT_SUN_LICHEN = new SunLichenBlock(3, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 6));
 
+    public static final Block PACKED_SNOW = new PackedSnowBlock(FabricBlockSettings.of(Material.SNOW_LAYER)
+            .strength(1.2f, 3.0f)
+            .requiresTool()
+            .sounds(BlockSoundGroup.SNOW)
+            .blockVision((state, world, pos) -> {
+                return state.get(PackedSnowBlock.LAYERS) >= PackedSnowBlock.MAX_LAYERS;
+            })
+    );
+
     public static final Block PACKED_SNOW_BLOCK = new Block(FabricBlockSettings.of(Material.SNOW_BLOCK)
             .requiresTool()
             .strength(1.5f, 6.0f)
