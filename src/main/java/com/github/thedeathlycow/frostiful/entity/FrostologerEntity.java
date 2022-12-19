@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
@@ -94,8 +95,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
             frozenState = Blocks.OBSIDIAN.getDefaultState();
         } else if (heatedBlock instanceof TorchBlock) {
-            // TODO: add frozen torch block
-            frozenState = Blocks.AIR.getDefaultState();
+            if (heatedBlock instanceof WallTorchBlock) {
+                frozenState = FBlocks.FROZEN_WALL_TORCH.getStateWithProperties(state);
+            } else {
+                frozenState = FBlocks.FROZEN_TORCH.getStateWithProperties(state);
+            }
         } else if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
             frozenState = Blocks.ICE.getDefaultState();
         } else {

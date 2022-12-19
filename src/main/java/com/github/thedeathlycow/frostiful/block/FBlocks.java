@@ -23,25 +23,42 @@ public class FBlocks {
     public static final Block WARM_SUN_LICHEN = new SunLichenBlock(2, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 4));
     public static final Block HOT_SUN_LICHEN = new SunLichenBlock(3, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 6));
 
-    public static final Block PACKED_SNOW = new PackedSnowBlock(FabricBlockSettings.of(Material.SNOW_LAYER)
-            .strength(1.2f, 3.0f)
-            .requiresTool()
-            .sounds(BlockSoundGroup.SNOW)
-            .blockVision((state, world, pos) -> {
-                return state.get(PackedSnowBlock.LAYERS) >= PackedSnowBlock.MAX_LAYERS;
-            })
+    // Registered early due to way dropsLike works
+    public static final Block FROZEN_TORCH = register("frozen_torch", new FrozenTorchBlock(
+            FabricBlockSettings.of(Material.DECORATION)
+                    .noCollision()
+                    .breakInstantly()
+                    .sounds(BlockSoundGroup.WOOD)
+    ));
+
+    public static final Block FROZEN_WALL_TORCH = new FrozenWallTorchBlock(
+            FabricBlockSettings.copyOf(FROZEN_TORCH)
+                    .dropsLike(FROZEN_TORCH)
     );
 
-    public static final Block PACKED_SNOW_BLOCK = new Block(FabricBlockSettings.of(Material.SNOW_BLOCK)
-            .requiresTool()
-            .strength(1.5f, 6.0f)
-            .sounds(BlockSoundGroup.SNOW)
+
+    public static final Block PACKED_SNOW = new PackedSnowBlock(
+            FabricBlockSettings.of(Material.SNOW_LAYER)
+                    .strength(1.2f, 3.0f)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.SNOW)
+                    .blockVision((state, world, pos) -> {
+                        return state.get(PackedSnowBlock.LAYERS) >= PackedSnowBlock.MAX_LAYERS;
+                    })
     );
 
-    public static final Block PACKED_SNOW_BRICKS = new Block(FabricBlockSettings.of(Material.SNOW_BLOCK)
-            .requiresTool()
-            .strength(1.5f, 6.0f)
-            .sounds(BlockSoundGroup.SNOW)
+    public static final Block PACKED_SNOW_BLOCK = new Block(
+            FabricBlockSettings.of(Material.SNOW_BLOCK)
+                    .requiresTool()
+                    .strength(1.5f, 6.0f)
+                    .sounds(BlockSoundGroup.SNOW)
+    );
+
+    public static final Block PACKED_SNOW_BRICKS = new Block(
+            FabricBlockSettings.of(Material.SNOW_BLOCK)
+                    .requiresTool()
+                    .strength(1.5f, 6.0f)
+                    .sounds(BlockSoundGroup.SNOW)
     );
 
     public static final Block PACKED_SNOW_BRICK_STAIRS = new StairsBlock(
@@ -60,6 +77,8 @@ public class FBlocks {
         register("warm_sun_lichen", WARM_SUN_LICHEN);
         register("hot_sun_lichen", HOT_SUN_LICHEN);
 
+        register("frozen_wall_torch", FROZEN_WALL_TORCH);
+
         register("packed_snow", PACKED_SNOW);
         register("packed_snow_block", PACKED_SNOW_BLOCK);
         register("packed_snow_bricks", PACKED_SNOW_BRICKS);
@@ -77,7 +96,7 @@ public class FBlocks {
         );
     }
 
-    private static void register(String id, Block block) {
-        Registry.register(Registry.BLOCK, new Identifier(Frostiful.MODID, id), block);
+    private static Block register(String id, Block block) {
+        return Registry.register(Registry.BLOCK, new Identifier(Frostiful.MODID, id), block);
     }
 }

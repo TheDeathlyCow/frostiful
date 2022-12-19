@@ -11,7 +11,8 @@ public class FCutouts {
         BlockRenderLayerMap.INSTANCE.putBlock(FBlocks.COOL_SUN_LICHEN, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(FBlocks.WARM_SUN_LICHEN, RenderLayer.getCutout());
         BlockRenderLayerMap.INSTANCE.putBlock(FBlocks.HOT_SUN_LICHEN, RenderLayer.getCutout());
-
+        BlockRenderLayerMap.INSTANCE.putBlock(FBlocks.FROZEN_TORCH, RenderLayer.getCutout());
+        BlockRenderLayerMap.INSTANCE.putBlock(FBlocks.FROZEN_WALL_TORCH, RenderLayer.getCutout());
     }
 
 }

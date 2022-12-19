@@ -1,0 +1,6 @@
+{
+    "parent": "minecraft:block/template_torch_wall",
+    "textures": {
+        "torch": "frostiful:block/frozen_torch"
+    }
+}

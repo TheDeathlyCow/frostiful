@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -33,6 +34,14 @@ public class FItems {
 
     public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.FROSTOLOGER, 0x3432A8, 0xA2CCFC, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
+
+    public static final Item FROZEN_TORCH = new WallStandingBlockItem(
+            FBlocks.FROZEN_TORCH,
+            FBlocks.FROZEN_WALL_TORCH,
+            new FabricItemSettings().group(FItemGroups.FROSTIFUL)
+    );
+
+
     public static final Item PACKED_SNOW = new BlockItem(FBlocks.PACKED_SNOW, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BLOCK = new BlockItem(FBlocks.PACKED_SNOW_BLOCK, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BRICKS = new BlockItem(FBlocks.PACKED_SNOW_BRICKS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
@@ -61,6 +70,8 @@ public class FItems {
         register("frost_wand", FROST_WAND);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frostologer_spawn_egg", FROSTOLOGER_SPAWN_EGG);
+
+        register("frozen_torch", FROZEN_TORCH);
 
         register("packed_snow", PACKED_SNOW);
         register("packed_snow_block", PACKED_SNOW_BLOCK);
