@@ -25,6 +25,8 @@ import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
+import net.minecraft.fluid.FluidState;
+import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
@@ -32,6 +34,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.Properties;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
@@ -85,13 +88,16 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         BlockState frozenState;
         Block heatedBlock = state.getBlock();
+        FluidState fluidState = state.getFluidState();
         if (state.isFullCube(world, blockPos)) {
             frozenState = Blocks.ICE.getDefaultState();
+        } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
+            frozenState = Blocks.OBSIDIAN.getDefaultState();
         } else if (heatedBlock instanceof TorchBlock) {
             // TODO: add frozen torch block
             frozenState = Blocks.AIR.getDefaultState();
-        } else if (heatedBlock instanceof CandleBlock) {
-            frozenState = state.with(CandleBlock.LIT, false);
+        } else if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
+            frozenState = Blocks.ICE.getDefaultState();
         } else {
             frozenState = Blocks.AIR.getDefaultState();
         }
