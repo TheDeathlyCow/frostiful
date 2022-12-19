@@ -33,6 +33,7 @@ public class FItems {
 
     public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.FROSTOLOGER, 0x3432A8, 0xA2CCFC, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
+    public static final Item PACKED_SNOW = new BlockItem(FBlocks.PACKED_SNOW, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BLOCK = new BlockItem(FBlocks.PACKED_SNOW_BLOCK, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BRICKS = new BlockItem(FBlocks.PACKED_SNOW_BRICKS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BRICK_STAIRS = new BlockItem(FBlocks.PACKED_SNOW_BRICK_STAIRS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
@@ -61,6 +62,7 @@ public class FItems {
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frostologer_spawn_egg", FROSTOLOGER_SPAWN_EGG);
 
+        register("packed_snow", PACKED_SNOW);
         register("packed_snow_block", PACKED_SNOW_BLOCK);
         register("packed_snow_bricks", PACKED_SNOW_BRICKS);
         register("packed_snow_brick_stairs", PACKED_SNOW_BRICK_STAIRS);

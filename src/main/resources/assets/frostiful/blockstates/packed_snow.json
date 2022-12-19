@@ -1,0 +1,52 @@
+{
+    "variants": {
+        "layers=1": {
+            "model": "frostiful:block/packed_snow/layer1"
+        },
+        "layers=2": {
+            "model": "frostiful:block/packed_snow/layer2"
+        },
+        "layers=3": {
+            "model": "frostiful:block/packed_snow/layer3"
+        },
+        "layers=4": {
+            "model": "frostiful:block/packed_snow/layer4"
+        },
+        "layers=5": {
+            "model": "frostiful:block/packed_snow/layer5"
+        },
+        "layers=6": {
+            "model": "frostiful:block/packed_snow/layer6"
+        },
+        "layers=7": {
+            "model": "frostiful:block/packed_snow/layer7"
+        },
+        "layers=8": {
+            "model": "frostiful:block/packed_snow/layer8"
+        },
+        "layers=9": {
+            "model": "frostiful:block/packed_snow/layer9"
+        },
+        "layers=10": {
+            "model": "frostiful:block/packed_snow/layer10"
+        },
+        "layers=11": {
+            "model": "frostiful:block/packed_snow/layer11"
+        },
+        "layers=12": {
+            "model": "frostiful:block/packed_snow/layer12"
+        },
+        "layers=13": {
+            "model": "frostiful:block/packed_snow/layer13"
+        },
+        "layers=14": {
+            "model": "frostiful:block/packed_snow/layer14"
+        },
+        "layers=15": {
+            "model": "frostiful:block/packed_snow/layer15"
+        },
+        "layers=16": {
+            "model": "frostiful:block/packed_snow_block"
+        }
+    }
+}

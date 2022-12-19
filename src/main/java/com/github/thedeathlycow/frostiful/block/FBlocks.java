@@ -60,6 +60,7 @@ public class FBlocks {
         register("warm_sun_lichen", WARM_SUN_LICHEN);
         register("hot_sun_lichen", HOT_SUN_LICHEN);
 
+        register("packed_snow", PACKED_SNOW);
         register("packed_snow_block", PACKED_SNOW_BLOCK);
         register("packed_snow_bricks", PACKED_SNOW_BRICKS);
         register("packed_snow_brick_stairs", PACKED_SNOW_BRICK_STAIRS);
