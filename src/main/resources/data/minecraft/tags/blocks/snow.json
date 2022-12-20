@@ -1,0 +1,11 @@
+{
+	"replace": false,
+	"values": [
+		"frostiful:packed_snow",
+		"frostiful:packed_snow_block",
+		"frostiful:packed_snow_bricks",
+		"frostiful:packed_snow_brick_stairs",
+		"frostiful:packed_snow_brick_slab",
+		"frostiful:packed_snow_brick_wall"
+	]
+}

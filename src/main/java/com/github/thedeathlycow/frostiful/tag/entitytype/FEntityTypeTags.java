@@ -10,6 +10,7 @@ public class FEntityTypeTags {
 
     public static final TagKey<EntityType<?>> FREEZE_IMMUNE = register("freeze_immune");
     public static final TagKey<EntityType<?>> BENEFITS_FROM_COLD = register("benefits_from_cold");
+    public static final TagKey<EntityType<?>> HEAVY_ENTITY_TYPES = register("heavy_entity_types");
 
     private static TagKey<EntityType<?>> register(String id) {
         return TagKey.of(Registry.ENTITY_TYPE_KEY, new Identifier(Frostiful.MODID, id));

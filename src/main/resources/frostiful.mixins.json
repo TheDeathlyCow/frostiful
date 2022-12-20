@@ -6,6 +6,7 @@
 	"mixins": [
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
+		"block.SnowPackingMixin",
 		"entity.EntityFreezeMixin",
 		"entity.EntityInvoker",
 		"entity.FallingIcicleMixin",
