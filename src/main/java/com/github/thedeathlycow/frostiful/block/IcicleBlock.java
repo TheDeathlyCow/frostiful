@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.block.*;
@@ -337,7 +338,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
 
         BlockPos anchorPos = pos.up();
         BlockState anchor = world.getBlockState(anchorPos);
-        if (isGrowableBlock(world, anchorPos, anchor)) {
+        if (canGrowIcicleOnAnchor(world, anchorPos, anchor)) {
             BlockPos tipPos = getTipPos(state, world, pos, 7, false);
             if (tipPos != null) {
                 BlockState tipState = world.getBlockState(tipPos);
@@ -367,7 +368,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
                 return;
             }
 
-            if (canPlaceAtWithDirection(world, mutable, Direction.UP) && !world.isWater(mutable.down())) {
+            if (canPlaceAtWithDirection(world, mutable, Direction.UP)) {
                 tryGrow(world, mutable.down(), Direction.UP);
                 return;
             }
@@ -375,12 +376,12 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static void tryGrow(ServerWorld world, BlockPos pos, Direction direction) {
-        BlockPos blockPos = pos.offset(direction);
-        BlockState blockState = world.getBlockState(blockPos);
-        if (isTip(blockState, direction.getOpposite())) {
-            growMerged(blockState, world, blockPos);
-        } else if (blockState.isAir() || blockState.isOf(Blocks.WATER)) {
-            place(world, blockPos, direction, Thickness.TIP);
+        BlockPos posGrowingInto = pos.offset(direction);
+        BlockState stateGrowingInto = world.getBlockState(posGrowingInto);
+        if (isTip(stateGrowingInto, direction.getOpposite())) {
+            growMerged(stateGrowingInto, world, posGrowingInto);
+        } else if (stateGrowingInto.isAir() || stateGrowingInto.isOf(Blocks.WATER)) {
+            place(world, posGrowingInto, direction, Thickness.TIP);
         }
     }
 
@@ -435,7 +436,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    private static boolean isGrowableBlock(ServerWorld world, BlockPos anchorPos, BlockState anchorState) {
+    private static boolean canGrowIcicleOnAnchor(ServerWorld world, BlockPos anchorPos, BlockState anchorState) {
 
         if (world.isRaining()) {
             Biome biome = world.getBiome(anchorPos).value();
@@ -538,10 +539,11 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
 
         for (BlockState blockState = state; isPointingDown(blockState); blockState = world.getBlockState(current)) {
             FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, current, blockState);
+            fallingBlockEntity.dropItem = false;
+            ((FallingBlockEntityAccessor) fallingBlockEntity).frostiful$setDestroyOnLanding(true);
             if (isTip(blockState, true)) {
                 float fallHurtAmount = Math.max(1 + pos.getY() - current.getY(), 6);
                 fallingBlockEntity.setHurtEntities(fallHurtAmount, 40);
-                break;
             }
 
             current.move(Direction.DOWN);

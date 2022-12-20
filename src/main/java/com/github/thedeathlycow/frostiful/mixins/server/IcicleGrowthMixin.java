@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.server;
 
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
+import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
@@ -12,6 +13,8 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.Heightmap;
+import net.minecraft.world.LightType;
+import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -44,7 +47,8 @@ public abstract class IcicleGrowthMixin {
         final ServerWorld instance = (ServerWorld) (Object) this;
         final Random random = instance.random;
 
-        if (!Frostiful.getConfig().icicleConfig.iciclesFormInWeather()) {
+        IcicleConfigGroup icicleConfig = Frostiful.getConfig().icicleConfig;
+        if (!icicleConfig.iciclesFormInWeather()) {
             return;
         }
 
@@ -74,10 +78,13 @@ public abstract class IcicleGrowthMixin {
         final BlockState downwardIcicle = FBlocks.ICICLE.getDefaultState()
                 .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
 
+        World world = chunk.getWorld();
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState at = instance.getBlockState(testPos);
 
-            return at.isAir() && downwardIcicle.canPlaceAt(instance, testPos);
+            return at.isAir()
+                    && world.getLightLevel(LightType.BLOCK, testPos) < icicleConfig.getMaxLightLevelToForm()
+                    && downwardIcicle.canPlaceAt(instance, testPos);
         };
 
         BlockPos.Mutable placePos = startPos.mutableCopy();
