@@ -13,6 +13,7 @@ public class TemperatureEffects {
     public static void createEffectTypes() {
         create("status_effect", new StatusEffectTemperatureEffect());
         create("scaling_attribute_modifier", new ScalingAttributeModifierTemperatureEffect());
+        create("empty", new EmptyTemperatureEffect());
     }
 
     public static TemperatureEffect<?> create(Identifier id, TemperatureEffect<?> type) {
