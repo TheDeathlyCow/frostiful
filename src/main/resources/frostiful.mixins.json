@@ -8,6 +8,7 @@
 		"block.CampfireWarmthMixin",
 		"entity.EntityFreezeMixin",
 		"entity.EntityInvoker",
+		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",
 		"entity.FreezableEntityImplMixin",
 		"entity.LivingEntityFreezeDamageConfigMixin",

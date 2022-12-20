@@ -47,7 +47,8 @@ public abstract class IcicleGrowthMixin {
         final ServerWorld instance = (ServerWorld) (Object) this;
         final Random random = instance.random;
 
-        if (!Frostiful.getConfig().icicleConfig.iciclesFormInWeather()) {
+        IcicleConfigGroup icicleConfig = Frostiful.getConfig().icicleConfig;
+        if (!icicleConfig.iciclesFormInWeather()) {
             return;
         }
 
@@ -78,7 +79,6 @@ public abstract class IcicleGrowthMixin {
                 .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
 
         World world = chunk.getWorld();
-        IcicleConfigGroup icicleConfig = Frostiful.getConfig().icicleConfig;
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState at = instance.getBlockState(testPos);
 
