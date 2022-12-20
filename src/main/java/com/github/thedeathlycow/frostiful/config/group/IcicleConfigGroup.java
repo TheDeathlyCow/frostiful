@@ -14,6 +14,7 @@ public class IcicleConfigGroup implements ConfigData {
     double growChanceDuringThunder = 0.15;
     int frostArrowFreezeAmount = 1000;
     int icicleCollisionFreezeAmount = 3000;
+    int maxLightLevelToForm = 10;
 
     public boolean iciclesFormInWeather() {
         return iciclesFormInWeather;
@@ -41,5 +42,9 @@ public class IcicleConfigGroup implements ConfigData {
 
     public int getIcicleCollisionFreezeAmount() {
         return icicleCollisionFreezeAmount;
+    }
+
+    public int getMaxLightLevelToForm() {
+        return maxLightLevelToForm;
     }
 }
