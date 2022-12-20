@@ -376,12 +376,12 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static void tryGrow(ServerWorld world, BlockPos pos, Direction direction) {
-        BlockPos blockPos = pos.offset(direction);
-        BlockState blockState = world.getBlockState(blockPos);
-        if (isTip(blockState, direction.getOpposite())) {
-            growMerged(blockState, world, blockPos);
-        } else if (blockState.isAir() || blockState.isOf(Blocks.WATER)) {
-            place(world, blockPos, direction, Thickness.TIP);
+        BlockPos posGrowingInto = pos.offset(direction);
+        BlockState stateGrowingInto = world.getBlockState(posGrowingInto);
+        if (isTip(stateGrowingInto, direction.getOpposite())) {
+            growMerged(stateGrowingInto, world, posGrowingInto);
+        } else if (stateGrowingInto.isAir() || stateGrowingInto.isOf(Blocks.WATER)) {
+            place(world, posGrowingInto, direction, Thickness.TIP);
         }
     }
 
