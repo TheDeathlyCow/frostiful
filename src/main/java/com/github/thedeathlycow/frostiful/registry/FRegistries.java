@@ -8,10 +8,10 @@ import net.minecraft.util.registry.Registry;
 
 public class FRegistries {
 
-    public static final Registry<TemperatureEffect<?>> TEMPERATURE_EFFECT_REGISTRY =
+    public static final Registry<TemperatureEffect<?>> TEMPERATURE_EFFECTS =
             FabricRegistryBuilder.createSimple(
                     FRegistries.<TemperatureEffect<?>>castClass(TemperatureEffect.class),
-                    new Identifier(Frostiful.MODID, "temperature_effects")
+                    Frostiful.id("temperature_effects")
             ).buildAndRegister();
 
 

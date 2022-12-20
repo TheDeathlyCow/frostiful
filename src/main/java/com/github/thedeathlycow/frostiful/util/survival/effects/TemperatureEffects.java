@@ -19,8 +19,8 @@ public class TemperatureEffects {
 
     private static void register(String name, TemperatureEffect<?> temperatureEffect) {
         Registry.register(
-                FRegistries.TEMPERATURE_EFFECT_REGISTRY,
-                new Identifier(Frostiful.MODID, name),
+                FRegistries.TEMPERATURE_EFFECTS,
+                Frostiful.id(name),
                 temperatureEffect);
     }
 }
