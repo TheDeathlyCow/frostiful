@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.sound;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
@@ -13,6 +14,7 @@ public class FSoundEvents {
     public static final SoundEvent ITEM_FROST_WAND_PREPARE_CAST = FSoundEvents.of("item.frostiful.frost_wand.prepare_cast");
     public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FSoundEvents.of("entity.frostiful.frost_spell.freeze");
 
+    public static final SoundEvent BLOCK_PACKED_SNOW_BREAK = FSoundEvents.of("block.frostiful.packed_snow.break");
 
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
@@ -20,6 +22,9 @@ public class FSoundEvents {
         register(ITEM_FROST_WAND_CAST_SPELL);
         register(ITEM_FROST_WAND_PREPARE_CAST);
         register(ENTITY_FROST_SPELL_FREEZE);
+
+        register(BLOCK_PACKED_SNOW_BREAK);
+
     }
 
     private static SoundEvent of(String name) {

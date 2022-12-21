@@ -4,7 +4,7 @@
             "model": "frostiful:block/packed_snow_brick_slab/bottom"
         },
         "type=double": {
-            "model": "frostiful:block/packed_snow_brick"
+            "model": "frostiful:block/packed_snow_bricks"
         },
         "type=top": {
             "model": "frostiful:block/packed_snow_brick_slab/top"

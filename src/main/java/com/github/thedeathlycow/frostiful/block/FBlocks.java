@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.entity.FrostTippedArrowEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.sound.FBlockSoundGroups;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
@@ -41,7 +42,7 @@ public class FBlocks {
             FabricBlockSettings.of(Material.SNOW_LAYER)
                     .strength(1.2f, 3.0f)
                     .requiresTool()
-                    .sounds(BlockSoundGroup.SNOW)
+                    .sounds(FBlockSoundGroups.PACKED_SNOW)
                     .blockVision((state, world, pos) -> {
                         return state.get(PackedSnowBlock.LAYERS) >= PackedSnowBlock.MAX_LAYERS;
                     })
@@ -51,14 +52,14 @@ public class FBlocks {
             FabricBlockSettings.of(Material.SNOW_BLOCK)
                     .requiresTool()
                     .strength(1.5f, 6.0f)
-                    .sounds(BlockSoundGroup.SNOW)
+                    .sounds(FBlockSoundGroups.PACKED_SNOW)
     );
 
     public static final Block PACKED_SNOW_BRICKS = new Block(
             FabricBlockSettings.of(Material.SNOW_BLOCK)
                     .requiresTool()
                     .strength(1.5f, 6.0f)
-                    .sounds(BlockSoundGroup.SNOW)
+                    .sounds(FBlockSoundGroups.PACKED_SNOW)
     );
 
     public static final Block PACKED_SNOW_BRICK_STAIRS = new StairsBlock(

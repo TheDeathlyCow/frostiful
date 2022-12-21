@@ -11,6 +11,15 @@
 		],
 		"subtitle": "subtitles.frostiful.block.campfire.hiss"
 	},
+	"block.frostiful.packed_snow.break": {
+		"sounds": [
+			"frostiful:block/packed_snow/break1",
+			"frostiful:block/packed_snow/break2",
+			"frostiful:block/packed_snow/break3",
+			"frostiful:block/packed_snow/break4"
+		],
+		"subtitle": "subtitles.block.generic.break"
+	},
 	"item.frostiful.frost_wand.cast_spell": {
 		"sounds": [
 			"mob/evocation_illager/cast1",
