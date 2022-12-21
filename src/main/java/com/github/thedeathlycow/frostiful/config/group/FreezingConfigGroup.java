@@ -27,7 +27,7 @@ public class FreezingConfigGroup implements ConfigData {
     int freezeDamageAmount = 2;
     int freezeDamageExtraAmount = 5;
     int powderSnowFreezeRate = 30;
-    int sunLichenHeatPerLevel = 100;
+    int sunLichenHeatPerLevel = 500;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
 
