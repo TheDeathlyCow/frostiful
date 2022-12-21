@@ -20,6 +20,41 @@
 		],
 		"subtitle": "subtitles.block.generic.break"
 	},
+	"block.frostiful.packed_snow.fall": {
+		"sounds": [
+			"frostiful:block/packed_snow/step1",
+			"frostiful:block/packed_snow/step2",
+			"frostiful:block/packed_snow/step3",
+			"frostiful:block/packed_snow/step4"
+		]
+	},
+	"block.frostiful.packed_snow.hit": {
+		"sounds": [
+			"frostiful:block/packed_snow/step1",
+			"frostiful:block/packed_snow/step2",
+			"frostiful:block/packed_snow/step3",
+			"frostiful:block/packed_snow/step4"
+		],
+		"subtitle": "subtitles.block.generic.hit"
+	},
+	"block.frostiful.packed_snow.place": {
+		"sounds": [
+			"frostiful:block/packed_snow/break1",
+			"frostiful:block/packed_snow/break2",
+			"frostiful:block/packed_snow/break3",
+			"frostiful:block/packed_snow/break4"
+		],
+		"subtitle": "subtitles.block.generic.place"
+	},
+	"block.frostiful.packed_snow.step": {
+		"sounds": [
+			"frostiful:block/packed_snow/step1",
+			"frostiful:block/packed_snow/step2",
+			"frostiful:block/packed_snow/step3",
+			"frostiful:block/packed_snow/step4"
+		],
+		"subtitle": "subtitles.block.generic.footsteps"
+	},
 	"item.frostiful.frost_wand.cast_spell": {
 		"sounds": [
 			"mob/evocation_illager/cast1",

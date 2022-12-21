@@ -15,6 +15,10 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FSoundEvents.of("entity.frostiful.frost_spell.freeze");
 
     public static final SoundEvent BLOCK_PACKED_SNOW_BREAK = FSoundEvents.of("block.frostiful.packed_snow.break");
+    public static final SoundEvent BLOCK_PACKED_SNOW_FALL = FSoundEvents.of("block.frostiful.packed_snow.fall");
+    public static final SoundEvent BLOCK_PACKED_SNOW_HIT = FSoundEvents.of("block.frostiful.packed_snow.hit");
+    public static final SoundEvent BLOCK_PACKED_SNOW_PLACE = FSoundEvents.of("block.frostiful.packed_snow.place");
+    public static final SoundEvent BLOCK_PACKED_SNOW_STEP = FSoundEvents.of("block.frostiful.packed_snow.step");
 
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
@@ -24,7 +28,10 @@ public class FSoundEvents {
         register(ENTITY_FROST_SPELL_FREEZE);
 
         register(BLOCK_PACKED_SNOW_BREAK);
-
+        register(BLOCK_PACKED_SNOW_FALL);
+        register(BLOCK_PACKED_SNOW_HIT);
+        register(BLOCK_PACKED_SNOW_PLACE);
+        register(BLOCK_PACKED_SNOW_STEP);
     }
 
     private static SoundEvent of(String name) {
