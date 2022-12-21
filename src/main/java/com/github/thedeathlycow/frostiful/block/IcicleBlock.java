@@ -343,11 +343,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
             if (tipPos != null) {
                 BlockState tipState = world.getBlockState(tipPos);
                 if (!isUnstable(tipState) && isTipDown(tipState) && canGrow(tipState, world, tipPos)) {
-                    if (random.nextBoolean()) {
-                        tryGrow(world, tipPos, Direction.DOWN);
-                    } else {
-                        tryGrowGroundIcicle(world, tipPos);
-                    }
+                    tryGrow(world, tipPos, Direction.DOWN);
                 }
             }
         }
