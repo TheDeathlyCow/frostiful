@@ -70,13 +70,11 @@ public abstract class PlayerEntityMixin {
 
     @Inject(
             method = "createPlayerAttributes",
-            at = @At("TAIL"),
-            cancellable = true
+            at = @At("TAIL")
     )
     private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
         attributeBuilder.add(FEntityAttributes.FROST_RESISTANCE);
         attributeBuilder.add(FEntityAttributes.MAX_FROST, 45.0d);
-        cir.setReturnValue(attributeBuilder);
     }
 }
