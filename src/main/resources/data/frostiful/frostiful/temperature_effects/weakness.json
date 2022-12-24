@@ -5,7 +5,9 @@
         "name": "frostiful:does_not_benefit_from_cold"
     },
 	"config": {
-		"progress_threshold": 0.99,
+		"progress_threshold": {
+			"min": 0.99
+		},
 		"amplifier": 1,
 		"duration": 100,
 		"effect": "minecraft:weakness"

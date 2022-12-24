@@ -5,7 +5,9 @@
         "name": "frostiful:benefits_from_cold"
     },
 	"config": {
-		"progress_threshold": 0.95,
+		"progress_threshold": {
+			"min": 0.95
+		},
 		"amplifier": 1,
 		"duration": 20,
 		"effect": "minecraft:strength"

@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.predicate.NumberRange;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -19,7 +20,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
     @Override
     public boolean shouldApply(LivingEntity victim, Config config) {
 
-        if (victim.getFreezingScale() >= config.progressThreshold()) {
+        if (config.progressThreshold.test(victim.getFreezingScale())) {
             StatusEffectInstance currentEffectInstance = victim.getStatusEffect(config.effect());
 
             if (currentEffectInstance == null) {
@@ -50,7 +51,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
     }
 
     public record Config(
-            float progressThreshold,
+            NumberRange.FloatRange progressThreshold,
             StatusEffect effect,
             int duration,
             int amplifier
@@ -59,7 +60,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
             JsonObject object = json.getAsJsonObject();
 
             // get numbers
-            float progressThreshold = object.get("progress_threshold").getAsFloat();
+            NumberRange.FloatRange progressThreshold = NumberRange.FloatRange.fromJson(object.get("progress_threshold"));
             int amplifier = object.get("amplifier").getAsInt();
 
             // duration defaults to 100

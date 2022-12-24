@@ -13,7 +13,6 @@
       "com.github.thedeathlycow.frostiful.test.sun_lichen.SunLichenPathfindingTests",
       "com.github.thedeathlycow.frostiful.test.effects.RootedTests",
       "com.github.thedeathlycow.frostiful.test.frostologer.FrostologerDestroyHeatSourcesTests",
-      "com.github.thedeathlycow.frostiful.test.effects.FrozenStatusEffectTests",
       "com.github.thedeathlycow.frostiful.test.powder_snow_walkable.EntityPowderSnowTests"
     ]
   }

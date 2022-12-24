@@ -5,7 +5,9 @@
         "name": "frostiful:does_not_benefit_from_cold"
     },
 	"config": {
-		"progress_threshold": 0.75,
+		"progress_threshold": {
+			"min": 0.75
+		},
 		"amplifier": 0,
 		"duration": 100,
 		"effect": "minecraft:mining_fatigue"
