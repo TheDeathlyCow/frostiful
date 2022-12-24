@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
@@ -14,8 +15,6 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
@@ -27,16 +26,15 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(LivingEntity.class)
 public abstract class RootedEntityImplMixin extends Entity implements RootedEntity {
 
-    @Shadow public abstract boolean damage(DamageSource source, float amount);
+    @Shadow
+    public abstract boolean damage(DamageSource source, float amount);
 
     private static final TrackedData<Integer> FROZEN_TICKS = DataTracker.registerData(RootedEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
@@ -136,45 +134,55 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
         RootedEntity.frostiful$setRootedTicksFromNbt(this, nbt);
     }
 
-    @Inject(
-            method = "modifyAppliedDamage",
-            at = @At("TAIL"),
-            cancellable = true
+    /**
+     * Modifies the damage taken by the entity when their ice is broken. Bypasses armour, but does not bypass
+     * protection.
+     *
+     * @param args A tuple containing a {@link DamageSource} and a {@link Float}
+     */
+    @ModifyArgs(
+            method = "applyDamage",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
+            )
     )
-    private void breakRootOnAttack(DamageSource source, float amount, CallbackInfoReturnable<Float> cir) {
-        if (this.frostiful$isRooted()) {
-            if (this.world instanceof ServerWorld serverWorld) {
-                FrostifulConfig config = Frostiful.getConfig();
-                float damage = config.combatConfig.getIceBreakerBaseDamage() + cir.getReturnValue();
-                this.frostiful$breakRoot();
+    private void breakRootOnAttack(Args args) {
+        if (this.frostiful$isRooted() && this.world instanceof ServerWorld serverWorld) {
+            final DamageSource source = args.get(0);
+            final float amount = args.get(1);
 
-                ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
-                serverWorld.spawnParticles(
-                        shatteredIce,
-                        this.getX(), this.getY(), this.getZ(),
-                        500,
-                        0.5, 1.0, 0.5,
-                        1.0
-                );
-                this.world.playSound(
-                        null,
-                        this.getBlockPos(),
-                        SoundEvents.BLOCK_GLASS_BREAK,
-                        SoundCategory.AMBIENT,
-                        1.0f, 0.75f
-                );
+            FrostifulConfig config = Frostiful.getConfig();
+            float damage = config.combatConfig.getIceBreakerBaseDamage() + amount;
+            this.frostiful$breakRoot();
 
-                if (source.getAttacker() instanceof LivingEntity attacker) {
-                    damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
+            this.playIceBreakEffects(serverWorld);
 
-                    attacker.addStatusEffect(new StatusEffectInstance(
-                            StatusEffects.SPEED, 30, 2
-                    ));
-                }
-
-                cir.setReturnValue(damage);
+            if (source.getAttacker() instanceof LivingEntity attacker) {
+                damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
+                IceBreakerEnchantment.onUsedIceBreaker(attacker);
             }
+
+            args.set(1, damage);
         }
+    }
+
+    private void playIceBreakEffects(ServerWorld serverWorld) {
+        ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
+        serverWorld.spawnParticles(
+                shatteredIce,
+                this.getX(), this.getY(), this.getZ(),
+                500,
+                0.5, 1.0, 0.5,
+                1.0
+        );
+        this.world.playSound(
+                null,
+                this.getBlockPos(),
+                SoundEvents.BLOCK_GLASS_BREAK,
+                SoundCategory.AMBIENT,
+                1.0f, 0.75f
+        );
     }
 }
 
