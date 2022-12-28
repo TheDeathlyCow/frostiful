@@ -44,7 +44,7 @@ public abstract class ColdHeartOverlay {
                 -1;
         int xPos = this.client.getWindow().getScaledWidth() / 2 - 91;
         int yPos = this.client.getWindow().getScaledHeight() - 39;
-        int maxIndex = Math.max(hearts.size(), FrozenHeartsOverlay.MAX_COLD_HEARTS);
+        int maxIndex = Math.min(hearts.size(), FrozenHeartsOverlay.MAX_COLD_HEARTS);
         for (int index = 0; index < maxIndex; index++) {
             int regenOffset = index < 10 && index == regenerationIndex ? -2 : 0;
             int absorptionOffset = index > 9 ? -10 : 0;

@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,6 +29,12 @@ public class FrozenHeartsOverlay {
 
         // number of half cold hearts
         int frozenHealthPoints = (int) (freezingProgress * player.getMaxHealth());
+
+        // match the number of cold hearts to the display if HealthOverlay is loaded
+        if (FabricLoader.getInstance().isModLoaded("healthoverlay") && player.getHealth() > MAX_COLD_HEARTS) {
+            float f = player.getMaxHealth() / 20;
+            frozenHealthPoints = Math.round(frozenHealthPoints / f);
+        }
 
         // number of whole hearts
         int frozenHealthHearts = MathHelper.ceil(frozenHealthPoints / 2.0f);
