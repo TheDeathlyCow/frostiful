@@ -86,7 +86,7 @@ public class PassiveFreezingHelper {
 
         double tempShift = 0.0;
         if (world.isNight()) {
-            if (isDryBiome) {
+            if (isDryBiome && config.freezingConfig.doDryBiomeNightFreezing()) {
                 temperature = Math.min(temperature, config.freezingConfig.getDryBiomeNightTemperature());
             } else {
                 tempShift = config.freezingConfig.getNightTimeTemperatureDecrease();
