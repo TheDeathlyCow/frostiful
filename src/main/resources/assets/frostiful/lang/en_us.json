@@ -93,6 +93,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.sunLichenHeatPerLevel": "Sun Lichen heat per level",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time (ticks)",
+  "text.autoconfig.frostiful.option.freezingConfig.dryBiomeNightTemperature": "Dry biome night temperature",
   "text.autoconfig.frostiful.option.freezingConfig.ultrawarmThawRate": "Ultrawarm dimension thaw rate",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",

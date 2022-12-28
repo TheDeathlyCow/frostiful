@@ -32,6 +32,8 @@ public class FreezingConfigGroup implements ConfigData {
     int campfireWarmthTime = 1200;
 
     int ultrawarmThawRate = 15;
+    float dryBiomeNightTemperature = 0.0f;
+    boolean doDryBiomeNightFreezing = true;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -123,5 +125,13 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getUltrawarmThawRate() {
         return ultrawarmThawRate;
+    }
+
+    public float getDryBiomeNightTemperature() {
+        return dryBiomeNightTemperature;
+    }
+
+    public boolean doDryBiomeNightFreezing() {
+        return doDryBiomeNightFreezing;
     }
 }
