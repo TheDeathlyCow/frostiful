@@ -20,5 +20,5 @@ Known compatibility issues and potential workarounds/fixes will be listed here a
 | Origins              | Merling Origin freezes to death very quickly in water | Frostiful 0.1.0-0.2.1 | Frostiful 0.2.2+ now natively works with the Merling Origin appropriately                                                              |
 | EnvironmentZ         | Both mods add a temperatue bar                        | All                   | The mods don't seem to immediately crash when used together, however you should turn off passive freezing for Frostiful in the config. |
 | Immersive Weathering | Freezing Water is applied twice                       | All                   | In Immersive Weathering's Common Config, set `water_increment` to 0.                                                                   |
-| Health Overlay       | Cold hearts not rendering                             | Frostiful 0.1.0-0.2.6 | Frostiful 0.2.7+ how has native compatibility with Health Overlay                                                                      | 
+| Health Overlay       | Cold hearts not rendering                             | Frostiful 0.1.0-0.2.6 | Frostiful 0.2.7+ now has native compatibility with Health Overlay                                                                      | 
 
