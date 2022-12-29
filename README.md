@@ -22,3 +22,6 @@ Known compatibility issues and potential workarounds/fixes will be listed here a
 | Immersive Weathering | Freezing Water is applied twice                       | All                   | In Immersive Weathering's Common Config, set `water_increment` to 0.                                                                   |
 | Health Overlay       | Cold hearts not rendering                             | Frostiful 0.1.0-0.2.6 | Frostiful 0.2.7+ now has native compatibility with Health Overlay                                                                      | 
 
+# Additional Credits
+
+[NerjalNosk](https://github.com/NerjalNosk) - Health Overlay compatibility.
