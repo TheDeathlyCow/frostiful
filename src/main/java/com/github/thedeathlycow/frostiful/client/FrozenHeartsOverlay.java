@@ -4,6 +4,8 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.mojang.blaze3d.systems.RenderSystem;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.DrawableHelper;
 import net.minecraft.client.util.math.MatrixStack;
@@ -11,13 +13,18 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
 
+@Environment(EnvType.CLIENT)
 public class FrozenHeartsOverlay {
 
     private static final Identifier HEART_OVERLAY_TEXTURE = new Identifier(Frostiful.MODID, "textures/gui/cold_heart_overlay.png");
     public static final int MAX_COLD_HEARTS = 20;
 
-    public static void drawHeartOverlayBar(MatrixStack matrices, PlayerEntity player, int[] heartXPositions,
-                                           int[] heartYPositions) {
+    public static void drawHeartOverlayBar(
+            MatrixStack matrices,
+            PlayerEntity player,
+            int[] heartXPositions,
+            int[] heartYPositions
+    ) {
 
         FrostifulConfig config = Frostiful.getConfig();
         if (!config.clientConfig.doColdHeartOverlay()) {

@@ -26,17 +26,30 @@ public abstract class ColdHeartOverlay {
     }
 
     @Inject(method = "renderPlayerHearts",
-        at = @At(
-            value = "INVOKE",
-            target = "Lterrails/healthoverlay/heart/Heart;draw(Lnet/minecraft/client/util/math/MatrixStack;IIZLterrails/healthoverlay/heart/HeartType;)V",
-            remap = true
-        ),
-        locals = LocalCapture.CAPTURE_FAILEXCEPTION
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lterrails/healthoverlay/heart/Heart;draw(Lnet/minecraft/client/util/math/MatrixStack;IIZLterrails/healthoverlay/heart/HeartType;)V",
+                    remap = true
+            ),
+            locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
-    private void injectionTest(MatrixStack poseStack, PlayerEntity player, CallbackInfo ci, int currentHealth,
-                               long tickCount, boolean blinking, long currentTime, int xPos, int yPos, int maxHealth,
-                               int absorption, int regenerationIndex, HeartType heartType, int index, Heart heart,
-                               int regenOffset, int absorptionOffset, int yPosition, int xPosition) {
+    private void injectionTest(
+            MatrixStack poseStack,
+            PlayerEntity player,
+            CallbackInfo ci,
+            int currentHealth,
+            long tickCount,
+            boolean blinking,
+            long currentTime,
+            int xPos, int yPos,
+            int maxHealth, int absorption,
+            int regenerationIndex,
+            HeartType heartType,
+            int index,
+            Heart heart,
+            int regenOffset, int absorptionOffset,
+            int yPosition, int xPosition
+    ) {
         if (index < FrozenHeartsOverlay.MAX_COLD_HEARTS) {
             heartXPositions[index] = xPosition;
             heartYPositions[index] = yPosition;

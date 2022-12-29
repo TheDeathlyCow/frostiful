@@ -26,11 +26,22 @@ abstract class ColdHeartOverlay {
             ),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
-    private void captureHeartPositions(MatrixStack matrices, PlayerEntity player, int x, int y, int lines,
-                                       int regeneratingHeartIndex, float maxHealth, int lastHealth, int health,
-                                       int absorption, boolean blinking, CallbackInfo ci,
-                                       InGameHud.HeartType heartType, int i, int j, int k, int l, int m,
-                                       int n, int o, int p, int q) {
+    private void captureHeartPositions(
+            MatrixStack matrices,
+            PlayerEntity player,
+            int x, int y,
+            int lines,
+            int regeneratingHeartIndex,
+            float maxHealth, int lastHealth, int health,
+            int absorption,
+            boolean blinking,
+            CallbackInfo ci,
+            InGameHud.HeartType heartType,
+            int i, int j, int k, int l,
+            int m,
+            int n, int o,
+            int p, int q
+    ) {
         if (m < FrozenHeartsOverlay.MAX_COLD_HEARTS) {
             heartYPositions[m] = q;
             heartXPositions[m] = p;
@@ -43,9 +54,17 @@ abstract class ColdHeartOverlay {
                     value = "TAIL"
             )
     )
-    private void drawColdHeartOverlayBar(MatrixStack matrices, PlayerEntity player, int x, int y, int lines,
-                                         int regeneratingHeartIndex, float maxHealth, int lastHealth, int health,
-                                         int absorption, boolean blinking, CallbackInfo ci) {
+    private void drawColdHeartOverlayBar(
+            MatrixStack matrices,
+            PlayerEntity player,
+            int x, int y,
+            int lines,
+            int regeneratingHeartIndex,
+            float maxHealth, int lastHealth, int health,
+            int absorption,
+            boolean blinking,
+            CallbackInfo ci
+    ) {
         FrozenHeartsOverlay.drawHeartOverlayBar(matrices, player, heartXPositions, heartYPositions);
     }
 
