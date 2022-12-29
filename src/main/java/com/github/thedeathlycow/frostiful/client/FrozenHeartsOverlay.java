@@ -33,14 +33,16 @@ public class FrozenHeartsOverlay {
 
         final FreezableEntity freezable = (FreezableEntity) player;
         float freezingProgress = freezable.frostiful$getFrostProgress();
+        final float playerMaxHealth = player.getMaxHealth();
 
         // number of half cold hearts
-        int frozenHealthPoints = (int) (freezingProgress * player.getMaxHealth());
+        // max cold hearts is multiplied by 2 to covert to points
+        int frozenHealthPoints = (int) (freezingProgress * Math.min(MAX_COLD_HEARTS * 2.0f, playerMaxHealth));
 
         // match the number of cold hearts to the display if HealthOverlay is loaded
-        if (FabricLoader.getInstance().isModLoaded("healthoverlay") && player.getHealth() > MAX_COLD_HEARTS) {
-            float f = player.getMaxHealth() / 20;
-            frozenHealthPoints = Math.round(frozenHealthPoints / f);
+        if (FabricLoader.getInstance().isModLoaded("healthoverlay")) {
+            // 20 is the maximum number of health points that healthoverlay will display
+            frozenHealthPoints = (int) (freezingProgress * Math.min(20f, playerMaxHealth));
         }
 
         // number of whole hearts
