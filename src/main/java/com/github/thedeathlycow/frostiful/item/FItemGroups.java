@@ -28,6 +28,7 @@ public class FItemGroups {
 
                 stacks.add(new ItemStack(FItems.FROST_WAND));
                 stacks.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
+                stacks.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
                 stacks.add(new ItemStack(FItems.ICICLE));
                 stacks.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
 

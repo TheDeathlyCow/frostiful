@@ -7,7 +7,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class FEntityTypes {
@@ -16,6 +15,15 @@ public class FEntityTypes {
             FabricEntityTypeBuilder.create(
                             SpawnGroup.MONSTER,
                             FrostologerEntity::new
+                    )
+                    .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
+                    .trackRangeChunks(8)
+                    .build();
+
+    public static final EntityType<ChillagerEntity> CHILLAGER =
+            FabricEntityTypeBuilder.create(
+                            SpawnGroup.MONSTER,
+                            ChillagerEntity::new
                     )
                     .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
                     .trackRangeChunks(8)
@@ -40,13 +48,16 @@ public class FEntityTypes {
 
     public static void registerEntities() {
         register("frostologer", FROSTOLOGER);
+        register("chillager", CHILLAGER);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frost_spell", FROST_SPELL);
 
         FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
+        FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());
+
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {
-        Registry.register(Registry.ENTITY_TYPE, new Identifier(Frostiful.MODID, id), type);
+        Registry.register(Registry.ENTITY_TYPE, Frostiful.id(id), type);
     }
 }
