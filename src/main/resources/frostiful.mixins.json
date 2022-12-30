@@ -1,42 +1,42 @@
 {
-  "required": true,
-  "minVersion": "0.8",
-  "package": "com.github.thedeathlycow.frostiful.mixins",
-  "compatibilityLevel": "JAVA_17",
-  "plugin": "com.github.thedeathlycow.frostiful.mixins.compat.Plugin",
-  "mixins": [
-    "asm.EnchantmentTargetMixin",
-    "block.CampfireWarmthMixin",
-    "block.PowderSnowWalkableMixin",
-    "entity.EntityFreezeMixin",
-    "entity.EntityInvoker",
-    "entity.FallingBlockEntityAccessor",
-    "entity.FallingIcicleMixin",
-    "entity.FreezableEntityImplMixin",
-    "entity.LivingEntityFreezeDamageConfigMixin",
-    "entity.LivingEntityFreezingEffects",
-    "entity.LivingEntityPowderSnowMixin",
-    "entity.PlayerEntityMixin",
-    "entity.RootedEntityImplMixin",
-    "entity.mob.PiglinBrainMixin",
-    "entity.mob.PolarBearMixin",
-    "entity.mob.StrayCarriesFrostArrowMixin",
-    "entity.mob.WolfMixin",
-    "entity.soaking.SoakableEntityMixin",
-    "entity.soaking.WaterPotionSoakingMixin",
-    "item.ArmorItemMixin",
-    "server.IcicleGrowthMixin"
-  ],
-  "client": [
-    "client.DrippingWetPlayerMixin",
-    "client.entity_renderer.RootedEffectRenderer",
-    "client.entity_renderer.ShakingRendererMixin",
-    "client.gui.FrostVinetteOverlay",
-    "client.gui.RootedEffectOverlay",
-    "compat.healthoverlay.absent.ColdHeartOverlay",
-    "compat.healthoverlay.present.ColdHeartOverlay"
-  ],
-  "injectors": {
-    "defaultRequire": 1
+	"required": true,
+	"minVersion": "0.8",
+	"package": "com.github.thedeathlycow.frostiful.mixins",
+	"compatibilityLevel": "JAVA_17",
+	"plugin": "com.github.thedeathlycow.frostiful.mixins.compat.Plugin",
+	"mixins": [
+		"asm.EnchantmentTargetMixin",
+		"block.CampfireWarmthMixin",
+		"block.PowderSnowWalkableMixin",
+		"entity.EntityFreezeMixin",
+		"entity.EntityInvoker",
+		"entity.FallingBlockEntityAccessor",
+		"entity.FallingIcicleMixin",
+		"entity.FreezableEntityImplMixin",
+		"entity.LivingEntityFreezeDamageConfigMixin",
+		"entity.LivingEntityFreezingEffects",
+		"entity.LivingEntityPowderSnowMixin",
+		"entity.PlayerEntityMixin",
+		"entity.RootedEntityImplMixin",
+		"entity.mob.PiglinBrainMixin",
+		"entity.mob.PolarBearMixin",
+		"entity.mob.StrayCarriesFrostArrowMixin",
+		"entity.mob.WolfMixin",
+		"entity.soaking.SoakableEntityMixin",
+		"entity.soaking.WaterPotionSoakingMixin",
+		"item.ArmorItemMixin",
+		"server.IcicleGrowthMixin"
+	],
+	"client": [
+		"client.DrippingWetPlayerMixin",
+		"client.entity_renderer.RootedEffectRenderer",
+		"client.entity_renderer.ShakingRendererMixin",
+		"client.gui.FrostVinetteOverlay",
+		"client.gui.RootedEffectOverlay",
+		"compat.healthoverlay.absent.ColdHeartOverlay",
+		"compat.healthoverlay.present.ColdHeartOverlay"
+	],
+	"injectors": {
+		"defaultRequire": 1
 	}
 }
