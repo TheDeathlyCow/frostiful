@@ -73,5 +73,78 @@
 			"frostiful:entity/frost_spell/freeze"
 		],
 		"subtitle": "subtitles.entity.frostiful.frost_spell.freeze"
+	},
+	"entity.frostiful.frostologer.ambient": {
+		"sounds": [
+			"mob/illusion_illager/idle1",
+			"mob/illusion_illager/idle2",
+			"mob/illusion_illager/idle3",
+			"mob/illusion_illager/idle4"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.ambient"
+	},
+	"entity.frostiful.frostologer.celebrate": {
+		"sounds": [
+			"mob/evocation_illager/celebrate",
+			"mob/evocation_illager/idle1",
+			"mob/evocation_illager/idle2"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.celebrate"
+	},
+	"entity.frostiful.frostologer.cast_spell": {
+		"sounds": [
+			"mob/evocation_illager/cast1",
+			"mob/evocation_illager/cast2"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.cast_spell"
+	},
+	"entity.frostiful.frostologer.death": {
+		"sounds": [
+			"mob/illusion_illager/death1",
+			"mob/illusion_illager/death2"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.death"
+	},
+	"entity.frostiful.frostologer.hurt": {
+		"sounds": [
+			"mob/illusion_illager/hurt1",
+			"mob/illusion_illager/hurt2",
+			"mob/illusion_illager/hurt3"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.hurt"
+	},
+	"entity.frostiful.chillager.ambient": {
+		"sounds": [
+			"mob/pillager/idle1",
+			"mob/pillager/idle2",
+			"mob/pillager/idle3",
+			"mob/pillager/idle4"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.ambient"
+	},
+	"entity.frostiful.chillager.celebrate": {
+		"sounds": [
+			"mob/pillager/celebrate1",
+			"mob/pillager/celebrate2",
+			"mob/pillager/celebrate3",
+			"mob/pillager/celebrate4",
+			"mob/pillager/horn_celebrate"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.celebrate"
+	},
+	"entity.frostiful.chillager.death": {
+		"sounds": [
+			"mob/pillager/death1",
+			"mob/pillager/death2"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.death"
+	},
+	"entity.frostiful.chillager.hurt": {
+		"sounds": [
+			"mob/pillager/hurt1",
+			"mob/pillager/hurt2",
+			"mob/pillager/hurt3"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.hurt"
 	}
 }

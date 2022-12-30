@@ -348,27 +348,27 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_PILLAGER_AMBIENT;
+        return FSoundEvents.ENTITY_FROSTOLOGER_AMBIENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_PILLAGER_DEATH;
+        return FSoundEvents.ENTITY_FROSTOLOGER_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_PILLAGER_HURT;
+        return FSoundEvents.ENTITY_FROSTOLOGER_HURT;
     }
 
     @Override
     public SoundEvent getCelebratingSound() {
-        return SoundEvents.ENTITY_PILLAGER_CELEBRATE;
+        return FSoundEvents.ENTITY_CHILLAGER_CELEBRATE;
     }
 
     @Override
     protected SoundEvent getCastSpellSound() {
-        return SoundEvents.ENTITY_ILLUSIONER_CAST_SPELL;
+        return FSoundEvents.ENTITY_FROSTOLOGER_CAST_SPELL;
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {

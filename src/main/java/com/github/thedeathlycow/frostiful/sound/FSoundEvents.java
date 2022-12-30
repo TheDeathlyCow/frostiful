@@ -20,6 +20,18 @@ public class FSoundEvents {
     public static final SoundEvent BLOCK_PACKED_SNOW_PLACE = FSoundEvents.of("block.frostiful.packed_snow.place");
     public static final SoundEvent BLOCK_PACKED_SNOW_STEP = FSoundEvents.of("block.frostiful.packed_snow.step");
 
+
+    public static final SoundEvent ENTITY_FROSTOLOGER_CAST_SPELL = FSoundEvents.of("entity.frostiful.frostologer.cast_spell");
+    public static final SoundEvent ENTITY_FROSTOLOGER_AMBIENT = FSoundEvents.of("entity.frostiful.frostologer.ambient");
+    public static final SoundEvent ENTITY_FROSTOLOGER_CELEBRATE = FSoundEvents.of("entity.frostiful.frostologer.celebrate");
+    public static final SoundEvent ENTITY_FROSTOLOGER_DEATH = FSoundEvents.of("entity.frostiful.frostologer.death");
+    public static final SoundEvent ENTITY_FROSTOLOGER_HURT = FSoundEvents.of("entity.frostiful.frostologer.hurt");
+
+    public static final SoundEvent ENTITY_CHILLAGER_AMBIENT = FSoundEvents.of("entity.frostiful.chillager.ambient");
+    public static final SoundEvent ENTITY_CHILLAGER_CELEBRATE = FSoundEvents.of("entity.frostiful.chillager.celebrate");
+    public static final SoundEvent ENTITY_CHILLAGER_DEATH = FSoundEvents.of("entity.frostiful.chillager.death");
+    public static final SoundEvent ENTITY_CHILLAGER_HURT = FSoundEvents.of("entity.frostiful.chillager.hurt");
+
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
         register(CAMPFIRE_HISS);
@@ -32,6 +44,17 @@ public class FSoundEvents {
         register(BLOCK_PACKED_SNOW_HIT);
         register(BLOCK_PACKED_SNOW_PLACE);
         register(BLOCK_PACKED_SNOW_STEP);
+
+        register(ENTITY_FROSTOLOGER_CAST_SPELL);
+        register(ENTITY_FROSTOLOGER_AMBIENT);
+        register(ENTITY_FROSTOLOGER_CELEBRATE);
+        register(ENTITY_FROSTOLOGER_DEATH);
+        register(ENTITY_FROSTOLOGER_HURT);
+
+        register(ENTITY_CHILLAGER_AMBIENT);
+        register(ENTITY_CHILLAGER_CELEBRATE);
+        register(ENTITY_CHILLAGER_DEATH);
+        register(ENTITY_CHILLAGER_HURT);
     }
 
     private static SoundEvent of(String name) {

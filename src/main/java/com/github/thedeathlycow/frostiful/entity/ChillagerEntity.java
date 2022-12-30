@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
@@ -9,7 +10,6 @@ import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 
 public class ChillagerEntity extends PillagerEntity {
@@ -39,22 +39,22 @@ public class ChillagerEntity extends PillagerEntity {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_PILLAGER_AMBIENT;
+        return FSoundEvents.ENTITY_CHILLAGER_AMBIENT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_PILLAGER_DEATH;
+        return FSoundEvents.ENTITY_CHILLAGER_DEATH;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_PILLAGER_HURT;
+        return FSoundEvents.ENTITY_CHILLAGER_HURT;
     }
 
     @Override
     public SoundEvent getCelebratingSound() {
-        return SoundEvents.ENTITY_PILLAGER_CELEBRATE;
+        return FSoundEvents.ENTITY_CHILLAGER_CELEBRATE;
     }
 
 }
