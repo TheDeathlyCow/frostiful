@@ -20,6 +20,10 @@ repositories {
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://jitpack.io/" }
+    maven {
+        name = "Curse"
+        url = 'https://cfa2.cursemaven.com'
+    }
 }
 
 dependencies {
@@ -39,6 +43,9 @@ dependencies {
     modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
+
+    //https://github.com/Terrails/HealthOverlay
+    modCompileOnly ("curse.maven:health-overlay-fabric-313219:${project.health_overlay_version}") {transitive = false}
 
     afterEvaluate {
         subprojects.each {
