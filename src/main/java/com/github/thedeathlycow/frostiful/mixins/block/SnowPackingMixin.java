@@ -32,7 +32,7 @@ public abstract class SnowPackingMixin {
 
             int layers = state.get(SnowBlock.LAYERS);
 
-            if (layers <= 1) {
+            if (layers < 1) {
                 return;
             }
 
