@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.entity.FrostTippedArrowEntity;
+import com.github.thedeathlycow.frostiful.entity.PackedSnowballEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.sound.FBlockSoundGroups;
@@ -103,6 +104,13 @@ public class FBlocks {
                         FrostTippedArrowEntity arrowEntity = new FrostTippedArrowEntity(world, position.getX(), position.getY(), position.getZ());
                         arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
                         return arrowEntity;
+                    }
+                }
+        );
+
+        DispenserBlock.registerBehavior(FItems.PACKED_SNOWBALL, new ProjectileDispenserBehavior() {
+                    protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
+                        return new PackedSnowballEntity(world, position.getX(), position.getY(), position.getZ());
                     }
                 }
         );

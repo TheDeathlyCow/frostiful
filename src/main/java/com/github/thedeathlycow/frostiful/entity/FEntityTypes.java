@@ -46,11 +46,22 @@ public class FEntityTypes {
                     .trackedUpdateRate(10)
                     .build();
 
+    public static final EntityType<PackedSnowballEntity> PACKED_SNOWBALL =
+            FabricEntityTypeBuilder.create(
+                            SpawnGroup.MISC,
+                            (EntityType.EntityFactory<PackedSnowballEntity>) PackedSnowballEntity::new
+                    )
+                    .dimensions(EntityDimensions.fixed(3f / 8f, 3f / 8f))
+                    .trackRangeChunks(8)
+                    .trackedUpdateRate(10)
+                    .build();
+
     public static void registerEntities() {
         register("frostologer", FROSTOLOGER);
         register("chillager", CHILLAGER);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frost_spell", FROST_SPELL);
+        register("packed_snowball", PACKED_SNOWBALL);
 
         FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
         FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());

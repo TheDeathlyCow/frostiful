@@ -14,14 +14,14 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(AbstractBlock.class)
+@Mixin(Block.class)
 public abstract class SnowPackingMixin {
 
     @Inject(
-            method = "onEntityCollision",
+            method = "onSteppedOn",
             at = @At("TAIL")
     )
-    private void smushSnowWhenSteppedOnByHeavyEntity(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
+    private void smushSnowWhenSteppedOnByHeavyEntity(World world, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
 
         boolean maySmushSnow = state.getBlock() == Blocks.SNOW
                 && entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES)

@@ -35,6 +35,7 @@ public class FItemGroups {
                 stacks.add(new ItemStack(FItems.FROZEN_TORCH));
 
                 stacks.add(new ItemStack(FItems.PACKED_SNOW));
+                stacks.add(new ItemStack(FItems.PACKED_SNOWBALL));
                 stacks.add(new ItemStack(FItems.PACKED_SNOW_BLOCK));
                 stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICKS));
                 stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_STAIRS));

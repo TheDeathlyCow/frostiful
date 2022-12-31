@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -44,6 +43,7 @@ public class FItems {
 
 
     public static final Item PACKED_SNOW = new BlockItem(FBlocks.PACKED_SNOW, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item PACKED_SNOWBALL = new PackedSnowBallItem(new FabricItemSettings().maxCount(16).group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BLOCK = new BlockItem(FBlocks.PACKED_SNOW_BLOCK, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BRICKS = new BlockItem(FBlocks.PACKED_SNOW_BRICKS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BRICK_STAIRS = new BlockItem(FBlocks.PACKED_SNOW_BRICK_STAIRS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
@@ -51,6 +51,7 @@ public class FItems {
     public static final Item PACKED_SNOW_BRICK_WALL = new BlockItem(FBlocks.PACKED_SNOW_BRICK_WALL, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
     public static final Item ICE_PANE = new BlockItem(FBlocks.ICE_PANE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+
 
     public static void registerItems() {
         register("fur_helmet", FUR_HELMET);
@@ -78,6 +79,7 @@ public class FItems {
         register("frozen_torch", FROZEN_TORCH);
 
         register("packed_snow", PACKED_SNOW);
+        register("packed_snowball", PACKED_SNOWBALL);
         register("packed_snow_block", PACKED_SNOW_BLOCK);
         register("packed_snow_bricks", PACKED_SNOW_BRICKS);
         register("packed_snow_brick_stairs", PACKED_SNOW_BRICK_STAIRS);
