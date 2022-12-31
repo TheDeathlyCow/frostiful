@@ -29,7 +29,8 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
         super(type, world);
     }
 
-    @Shadow public abstract AttributeContainer getAttributes();
+    @Shadow
+    public abstract AttributeContainer getAttributes();
 
     @Override
     public float frostiful$getFrostProgress() {
@@ -60,16 +61,16 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Unique
     public boolean frostiful$canFreeze() {
         final LivingEntity instance = (LivingEntity) (Object) this;
-        if (instance.getType().isIn(FEntityTypeTags.FREEZE_IMMUNE)) {
-            return false;
-        }
+        EntityType<?> type = instance.getType();
         if (instance.isSpectator()) {
             return false;
+        } else if (instance.isPlayer()) {
+            return !((PlayerEntity) instance).isCreative();
+        } else if (type.isIn(FEntityTypeTags.BENEFITS_FROM_COLD)) {
+            return true;
+        } else {
+            return !type.isIn(FEntityTypeTags.FREEZE_IMMUNE);
         }
-        if (instance instanceof PlayerEntity player) {
-            return !player.isCreative();
-        }
-        return true;
     }
 
     private static int getTicksFromMaxFrost(double maxFrost) {
