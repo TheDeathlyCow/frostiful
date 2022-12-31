@@ -50,6 +50,8 @@ public class FItems {
     public static final Item PACKED_SNOW_BRICK_SLAB = new BlockItem(FBlocks.PACKED_SNOW_BRICK_SLAB, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOW_BRICK_WALL = new BlockItem(FBlocks.PACKED_SNOW_BRICK_WALL, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
+    public static final Item ICE_PANE = new BlockItem(FBlocks.ICE_PANE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+
     public static void registerItems() {
         register("fur_helmet", FUR_HELMET);
         register("fur_chestplate", FUR_CHESTPLATE);
@@ -81,6 +83,8 @@ public class FItems {
         register("packed_snow_brick_stairs", PACKED_SNOW_BRICK_STAIRS);
         register("packed_snow_brick_slab", PACKED_SNOW_BRICK_SLAB);
         register("packed_snow_brick_wall", PACKED_SNOW_BRICK_WALL);
+
+        register("ice_pane", ICE_PANE);
     }
 
     private static void register(String id, Item item) {

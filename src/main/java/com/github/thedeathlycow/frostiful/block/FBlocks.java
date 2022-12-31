@@ -71,6 +71,15 @@ public class FBlocks {
 
     public static final Block PACKED_SNOW_BRICK_WALL = new WallBlock(FabricBlockSettings.copyOf(PACKED_SNOW_BRICKS));
 
+    public static final Block ICE_PANE = new IcePaneBlock(
+            FabricBlockSettings.of(Material.ICE)
+                    .strength(0.5f)
+                    .ticksRandomly()
+                    .slipperiness(0.98f)
+                    .sounds(BlockSoundGroup.GLASS)
+                    .nonOpaque()
+    );
+
     public static void registerBlocks() {
         register("icicle", ICICLE);
         register("cold_sun_lichen", COLD_SUN_LICHEN);
@@ -86,6 +95,8 @@ public class FBlocks {
         register("packed_snow_brick_stairs", PACKED_SNOW_BRICK_STAIRS);
         register("packed_snow_brick_slab", PACKED_SNOW_BRICK_SLAB);
         register("packed_snow_brick_wall", PACKED_SNOW_BRICK_WALL);
+
+        register("ice_pane", ICE_PANE);
 
         DispenserBlock.registerBehavior(FItems.FROST_TIPPED_ARROW, new ProjectileDispenserBehavior() {
                     protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {

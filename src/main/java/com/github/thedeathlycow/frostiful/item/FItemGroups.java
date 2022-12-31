@@ -40,6 +40,8 @@ public class FItemGroups {
                 stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_STAIRS));
                 stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_SLAB));
                 stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_WALL));
+
+                stacks.add(new ItemStack(FItems.ICE_PANE));
             }).build();
 
 }
