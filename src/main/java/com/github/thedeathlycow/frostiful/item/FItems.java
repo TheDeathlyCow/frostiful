@@ -51,6 +51,10 @@ public class FItems {
     public static final Item PACKED_SNOW_BRICK_WALL = new BlockItem(FBlocks.PACKED_SNOW_BRICK_WALL, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
     public static final Item ICE_PANE = new BlockItem(FBlocks.ICE_PANE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item CUT_PACKED_ICE = new BlockItem(FBlocks.CUT_PACKED_ICE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item CUT_PACKED_ICE_STAIRS = new BlockItem(FBlocks.CUT_PACKED_ICE_STAIRS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item CUT_PACKED_ICE_SLAB = new BlockItem(FBlocks.CUT_PACKED_ICE_SLAB, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item CUT_PACKED_ICE_WALL = new BlockItem(FBlocks.CUT_PACKED_ICE_WALL, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
 
     public static void registerItems() {
@@ -87,6 +91,10 @@ public class FItems {
         register("packed_snow_brick_wall", PACKED_SNOW_BRICK_WALL);
 
         register("ice_pane", ICE_PANE);
+        register("cut_packed_ice", CUT_PACKED_ICE);
+        register("cut_packed_ice_stairs", CUT_PACKED_ICE_STAIRS);
+        register("cut_packed_ice_slab", CUT_PACKED_ICE_SLAB);
+        register("cut_packed_ice_wall", CUT_PACKED_ICE_WALL);
     }
 
     private static void register(String id, Item item) {

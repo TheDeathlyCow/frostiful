@@ -7,6 +7,10 @@
         "frostiful:packed_snow_bricks",
         "frostiful:packed_snow_brick_stairs",
         "frostiful:packed_snow_brick_slab",
-        "frostiful:packed_snow_brick_wall"
+        "frostiful:packed_snow_brick_wall",
+        "frostiful:cut_packed_ice",
+        "frostiful:cut_packed_ice_stairs",
+        "frostiful:cut_packed_ice_slab",
+        "frostiful:cut_packed_ice_wall"
     ]
 }

@@ -43,6 +43,10 @@ public class FItemGroups {
                 stacks.add(new ItemStack(FItems.PACKED_SNOWBALL));
 
                 stacks.add(new ItemStack(FItems.ICE_PANE));
+                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE));
+                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE_STAIRS));
+                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE_SLAB));
+                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE_WALL));
             }).build();
 
 }

@@ -81,6 +81,22 @@ public class FBlocks {
                     .nonOpaque()
     );
 
+    public static final Block CUT_PACKED_ICE = new Block(FabricBlockSettings.of(Material.DENSE_ICE)
+            .slipperiness(0.98f)
+            .strength(0.75f)
+            .requiresTool()
+            .sounds(BlockSoundGroup.GLASS)
+    );
+
+    public static final Block CUT_PACKED_ICE_STAIRS = new StairsBlock(
+            CUT_PACKED_ICE.getDefaultState(),
+            FabricBlockSettings.copyOf(CUT_PACKED_ICE)
+    );
+
+    public static final Block CUT_PACKED_ICE_SLAB = new SlabBlock(FabricBlockSettings.copyOf(CUT_PACKED_ICE));
+
+    public static final Block CUT_PACKED_ICE_WALL = new WallBlock(FabricBlockSettings.copyOf(CUT_PACKED_ICE));
+
     public static void registerBlocks() {
         register("icicle", ICICLE);
         register("cold_sun_lichen", COLD_SUN_LICHEN);
@@ -98,6 +114,10 @@ public class FBlocks {
         register("packed_snow_brick_wall", PACKED_SNOW_BRICK_WALL);
 
         register("ice_pane", ICE_PANE);
+        register("cut_packed_ice", CUT_PACKED_ICE);
+        register("cut_packed_ice_stairs", CUT_PACKED_ICE_STAIRS);
+        register("cut_packed_ice_slab", CUT_PACKED_ICE_SLAB);
+        register("cut_packed_ice_wall", CUT_PACKED_ICE_WALL);
 
         DispenserBlock.registerBehavior(FItems.FROST_TIPPED_ARROW, new ProjectileDispenserBehavior() {
                     protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {

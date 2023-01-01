@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"frostiful:packed_snow_brick_wall"
+		"frostiful:packed_snow_brick_wall",
+		"frostiful:cut_packed_ice_wall"
 	]
 }

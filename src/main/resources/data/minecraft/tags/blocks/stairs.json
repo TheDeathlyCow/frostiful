@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"frostiful:packed_snow_brick_stairs"
+		"frostiful:packed_snow_brick_stairs",
+		"frostiful:cut_packed_ice_stairs"
 	]
 }
