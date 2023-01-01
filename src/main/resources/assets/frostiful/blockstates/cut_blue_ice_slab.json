@@ -1,0 +1,13 @@
+{
+    "variants": {
+        "type=bottom": {
+            "model": "frostiful:block/cut_blue_ice_slab/bottom"
+        },
+        "type=double": {
+            "model": "frostiful:block/cut_blue_ice"
+        },
+        "type=top": {
+            "model": "frostiful:block/cut_blue_ice_slab/top"
+        }
+    }
+}

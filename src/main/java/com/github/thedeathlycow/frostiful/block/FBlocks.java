@@ -97,6 +97,22 @@ public class FBlocks {
 
     public static final Block CUT_PACKED_ICE_WALL = new WallBlock(FabricBlockSettings.copyOf(CUT_PACKED_ICE));
 
+    public static final Block CUT_BLUE_ICE = new Block(FabricBlockSettings.of(Material.DENSE_ICE)
+            .slipperiness(0.989f)
+            .strength(2.8f)
+            .requiresTool()
+            .sounds(BlockSoundGroup.GLASS)
+    );
+
+    public static final Block CUT_BLUE_ICE_STAIRS = new StairsBlock(
+            CUT_BLUE_ICE.getDefaultState(),
+            FabricBlockSettings.copyOf(CUT_BLUE_ICE)
+    );
+
+    public static final Block CUT_BLUE_ICE_SLAB = new SlabBlock(FabricBlockSettings.copyOf(CUT_BLUE_ICE));
+
+    public static final Block CUT_BLUE_ICE_WALL = new WallBlock(FabricBlockSettings.copyOf(CUT_BLUE_ICE));
+
     public static void registerBlocks() {
         register("icicle", ICICLE);
         register("cold_sun_lichen", COLD_SUN_LICHEN);
@@ -118,6 +134,10 @@ public class FBlocks {
         register("cut_packed_ice_stairs", CUT_PACKED_ICE_STAIRS);
         register("cut_packed_ice_slab", CUT_PACKED_ICE_SLAB);
         register("cut_packed_ice_wall", CUT_PACKED_ICE_WALL);
+        register("cut_blue_ice", CUT_BLUE_ICE);
+        register("cut_blue_ice_stairs", CUT_BLUE_ICE_STAIRS);
+        register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
+        register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
 
         DispenserBlock.registerBehavior(FItems.FROST_TIPPED_ARROW, new ProjectileDispenserBehavior() {
                     protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
