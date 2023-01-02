@@ -35,9 +35,12 @@ public class Frostiful implements ModInitializer {
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
+    public static final int CONFIG_VERSION = 0;
+
     @Override
     public void onInitialize() {
         AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
+        FrostifulConfig.updateConfig(AutoConfig.getConfigHolder(FrostifulConfig.class));
 
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {

@@ -94,6 +94,13 @@
   "text.autoconfig.frostiful.option.clientConfig.shakingStartPercent": "Shaking start percent (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.renderDripParticles": "Render water drip particles when wet",
   
+  "text.autoconfig.frostiful.option.updateConfig": "Update Config",
+  "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Current config version",
+  "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Enable config auto updates",
+  "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[0]": "When enabled, automatically update the config whenever",
+  "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[1]": "the mod makes changes to the default values.",
+  "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[2]": "It is recommended that modpacks turn this OFF",
+  
   "text.autoconfig.frostiful.option.combatConfig": "Combat Config",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Heat drain per level of Enervation",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainEfficiency": "Enervation heat drain efficiency",
