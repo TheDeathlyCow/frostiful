@@ -1,6 +1,6 @@
 {
     "name": "frostisful:frostologer_castle/streets",
-    "fallback": "frostiful:frostologer_castle/terminators",
+    "fallback": "frostiful:frostologer_castle/houses",
     "elements": [
         {
             "weight": 1,
@@ -30,7 +30,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -39,7 +39,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -48,7 +48,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 4,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -57,7 +57,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -66,7 +66,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -75,7 +75,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 3,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -84,7 +84,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 3,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -93,7 +93,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -102,7 +102,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -111,7 +111,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -120,7 +120,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 3,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",
@@ -129,7 +129,7 @@
             }
         },
         {
-            "weight": 1,
+            "weight": 2,
             "element": {
                 "element_type": "minecraft:single_pool_element",
                 "projection": "terrain_matching",

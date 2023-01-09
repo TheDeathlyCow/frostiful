@@ -50,8 +50,25 @@
             "bonus_rolls": 0,
             "entries": [
                 {
+                    "type": "minecraft:tag",
+                    "weight": 20,
+                    "name": "c:icicles",
+                    "expand": true,
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": {
+                                "type": "minecraft:uniform",
+                                "min": 2,
+                                "max": 6
+                            },
+                            "add": false
+                        }
+                    ]
+                },
+                {
                     "type": "minecraft:item",
-                    "name": "frostiful:icicle",
+                    "name": "frostiful:frozen_torch",
                     "functions": [
                         {
                             "function": "minecraft:set_count",
@@ -198,6 +215,12 @@
                 {
                     "function": "minecraft:set_instrument",
                     "options": "#minecraft:regular_goat_horns"
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:random_chance",
+                    "chance": 0.2
                 }
             ]
         }
