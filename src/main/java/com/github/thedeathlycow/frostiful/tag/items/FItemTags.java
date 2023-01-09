@@ -9,6 +9,8 @@ import net.minecraft.util.registry.Registry;
 
 public final class FItemTags {
 
+    public static final TagKey<Item> FUR = register("fur");
+
     public static final TagKey<Item> POWDER_SNOW_WALKABLE = register("powder_snow_walkable");
 
     private static TagKey<Item> register(String id) {

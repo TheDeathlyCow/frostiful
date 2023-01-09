@@ -19,7 +19,6 @@
 		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
 		"entity.RootedEntityImplMixin",
-		"entity.mob.PiglinBrainMixin",
 		"entity.mob.PolarBearMixin",
 		"entity.mob.StrayCarriesFrostArrowMixin",
 		"entity.mob.WolfMixin",
