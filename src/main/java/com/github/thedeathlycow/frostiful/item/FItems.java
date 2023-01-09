@@ -21,6 +21,13 @@ public class FItems {
     public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.LEGS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
+    public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(new FabricItemSettings()
+            .equipmentSlot((stack) -> EquipmentSlot.CHEST)
+            .maxCount(1)
+            .maxDamage(432)
+            .group(FItemGroups.FROSTIFUL)
+    );
+
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item WOLF_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item ICICLE = new BlockItem(FBlocks.ICICLE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
@@ -71,6 +78,8 @@ public class FItems {
         register("fur_padded_chainmail_chestplate", FUR_PADDED_CHAINMAIL_CHESTPLATE);
         register("fur_padded_chainmail_leggings", FUR_PADDED_CHAINMAIL_LEGGINGS);
         register("fur_padded_chainmail_boots", FUR_PADDED_CHAINMAIL_BOOTS);
+
+        register("frostology_cloak", FROSTOLOGY_CLOAK);
 
         register("polar_bear_fur_tuft", POLAR_BEAR_FUR_TUFT);
         register("wolf_fur_tuft", WOLF_FUR_TUFT);

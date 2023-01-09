@@ -7,8 +7,8 @@
 	"mixins": [
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
-		"block.SnowPackingMixin",
 		"block.PowderSnowWalkableMixin",
+		"block.SnowPackingMixin",
 		"entity.EntityFreezeMixin",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",

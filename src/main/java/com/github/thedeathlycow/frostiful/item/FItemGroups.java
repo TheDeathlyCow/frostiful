@@ -19,6 +19,8 @@ public class FItemGroups {
                 stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE));
                 stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS));
                 stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_BOOTS));
+                stacks.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
+
                 stacks.add(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
                 stacks.add(new ItemStack(FItems.WOLF_FUR_TUFT));
 

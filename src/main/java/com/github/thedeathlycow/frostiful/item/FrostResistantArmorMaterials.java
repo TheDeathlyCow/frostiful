@@ -33,18 +33,8 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
             0,
             () -> Ingredient.ofItems(Items.IRON_INGOT),
             new double[]{0.5D, 1.0D, 2.0D, 1.5D}
-    ),
-    FROST(
-            "frost",
-            15,
-            new int[]{0, 0, 0, 1},
-            25,
-            SoundEvents.ITEM_ARMOR_EQUIP_LEATHER,
-            0,
-            0,
-            () -> Ingredient.ofItems(Items.BLUE_ICE),
-            new double[]{-3.0d, -3.0d, -3.0d, -3.0d}
     );
+
     private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
     private final String name;
     private final int durabilityMultiplier;
