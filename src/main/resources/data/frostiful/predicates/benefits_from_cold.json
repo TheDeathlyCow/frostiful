@@ -1,7 +1,25 @@
 {
-    "condition": "minecraft:entity_properties",
-    "entity": "this",
-    "predicate": {
-        "type": "#frostiful:benefits_from_cold"
-    }
+    "condition": "minecraft:alternative",
+    "terms": [
+        {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+                "type": "#frostiful:benefits_from_cold"
+            }
+        },
+        {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+                "equipment": {
+                    "chest": {
+                        "items": [
+                            "frostiful:frostology_cloak"
+                        ]
+                    }
+                }
+            }
+        }
+    ]
 }
