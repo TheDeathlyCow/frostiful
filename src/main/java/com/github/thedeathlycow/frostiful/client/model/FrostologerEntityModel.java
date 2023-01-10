@@ -4,8 +4,9 @@ import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
+import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
+import net.minecraft.client.util.math.MatrixStack;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerEntityModel<F extends FrostologerEntity> extends IllagerEntityModel<F> {
@@ -15,7 +16,7 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
     protected final ModelPart rightArm;
     protected final ModelPart leftArm;
 
-    //private final ModelPart cloak;
+    private final ModelPart cloak;
 
     public FrostologerEntityModel(ModelPart root) {
         super(root);
@@ -25,7 +26,14 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
         this.rightArm = this.getPart().getChild("right_arm");
         this.leftArm = this.getPart().getChild("left_arm");
 
-        //this.cloak = root.getChild("cloak");
+        this.cloak = root.getChild("cloak");
+        this.cloak.visible = false;
+    }
+
+    public void forceRenderCloak(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
+        this.cloak.visible = true;
+        this.cloak.render(matrices, vertices, light, overlay);
+        this.cloak.visible = false;
     }
 
     public static TexturedModelData getTexturedModelData() {
@@ -46,7 +54,7 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
         root.addChild("right_arm", ModelPartBuilder.create().uv(40, 46).cuboid(-3.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F), ModelTransform.pivot(-5.0F, 2.0F, 0.0F));
         root.addChild("left_arm", ModelPartBuilder.create().uv(40, 46).mirrored().cuboid(-1.0F, -2.0F, -2.0F, 4.0F, 12.0F, 4.0F), ModelTransform.pivot(5.0F, 2.0F, 0.0F));
 
-        //root.addChild("cloak", ModelPartBuilder.create().uv(0, 0).cuboid(-5.0F, 0.0F, -1.0F, 10.0F, 16.0F, 1.0F, dilation, 1.0F, 0.5F), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        root.addChild("cloak", ModelPartBuilder.create().uv(0, 0).cuboid(-5.0F, 0.0F, -1.0F, 10.0F, 16.0F, 1.0F, Dilation.NONE, 1.0F, 0.5F), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
         return TexturedModelData.of(modelData, 64, 64);
     }

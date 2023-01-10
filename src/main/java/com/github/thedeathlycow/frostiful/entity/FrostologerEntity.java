@@ -63,6 +63,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     private static final int NUM_POWER_PARTICLES = 3;
 
 
+    public float prevStrideDistance;
+    public float strideDistance;
+    public double prevCapeX;
+    public double prevCapeY;
+    public double prevCapeZ;
+    public double capeX;
+    public double capeY;
+    public double capeZ;
+
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 20;
@@ -223,14 +232,35 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     @Override
     public void tick() {
         super.tick();
+
+        this.updateCapeAngles();
+
         if (this.world.isClient && this.getFreezingScale() >= POWER_PARTICLES_FREEZING_SCALE_START) {
             this.spawnPowerParticles();
         }
     }
 
     @Override
+    public void tickRiding() {
+        super.tickRiding();
+        this.prevStrideDistance = this.strideDistance;
+        this.strideDistance = 0.0F;
+    }
+
+    @Override
     public void tickMovement() {
         super.tickMovement();
+
+        this.prevStrideDistance = this.strideDistance;
+
+        float walkSpeed;
+        if (this.onGround && !this.isDead() && !this.isSwimming()) {
+            walkSpeed = Math.min(0.1F, (float)this.getVelocity().horizontalLength());
+        } else {
+            walkSpeed = 0.0F;
+        }
+        this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
+
         if (this.world.isClient) {
             return;
         }
@@ -240,10 +270,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             return;
         }
 
+
         ServerWorld serverWorld = (ServerWorld) this.world; // covered by isClient check above
 
         BlockPos frostologerPos = this.getBlockPos();
-
         BlockState snow = Blocks.SNOW.getDefaultState();
 
         for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
@@ -332,6 +362,49 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     @Override
     public void addBonusForWave(int wave, boolean unused) {
 
+    }
+
+    private void updateCapeAngles() {
+        this.prevCapeX = this.capeX;
+        this.prevCapeY = this.capeY;
+        this.prevCapeZ = this.capeZ;
+        double dx = this.getX() - this.capeX;
+        double dy = this.getY() - this.capeY;
+        double dz = this.getZ() - this.capeZ;
+        double threshold = 10.0;
+        if (dx > threshold) {
+            this.capeX = this.getX();
+            this.prevCapeX = this.capeX;
+        }
+
+        if (dz > threshold) {
+            this.capeZ = this.getZ();
+            this.prevCapeZ = this.capeZ;
+        }
+
+        if (dy > threshold) {
+            this.capeY = this.getY();
+            this.prevCapeY = this.capeY;
+        }
+
+        if (dx < -threshold) {
+            this.capeX = this.getX();
+            this.prevCapeX = this.capeX;
+        }
+
+        if (dz < -threshold) {
+            this.capeZ = this.getZ();
+            this.prevCapeZ = this.capeZ;
+        }
+
+        if (dy < -threshold) {
+            this.capeY = this.getY();
+            this.prevCapeY = this.capeY;
+        }
+
+        this.capeX += dx / 4;
+        this.capeZ += dz / 4;
+        this.capeY += dy / 4;
     }
 
     @Override
