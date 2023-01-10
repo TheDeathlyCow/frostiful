@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -51,8 +52,15 @@ public abstract class LivingEntityFreezeDamageConfigMixin extends Entity {
             index = 1
     )
     private float configFreezeDamageAmount(float amount) {
+
+        EntityType<?> type = this.getType();
+
+        if (type.isIn(FEntityTypeTags.BENEFITS_FROM_COLD)) {
+            return 0f;
+        }
+
         FrostifulConfig config = Frostiful.getConfig();
-        return this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
+        return type.isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
                 config.freezingConfig.getFreezeDamageExtraAmount() :
                 config.freezingConfig.getFreezeDamageAmount();
     }
