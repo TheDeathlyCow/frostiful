@@ -1,0 +1,14 @@
+{
+	"item": "minecraft:netherite_chestplate",
+	"slot": "chest",
+	"attribute_modifiers": [
+		{
+			"attribute": "frostiful:generic.frost_resistance",
+			"modifier": {
+				"uuid": "315a4e56-3db0-45e7-a14c-82ebc3af86b5",
+				"value": 0.25,
+				"operation": "addition"
+			}
+		}
+	]
+}
