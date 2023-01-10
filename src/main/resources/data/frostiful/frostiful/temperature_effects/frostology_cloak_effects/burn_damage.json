@@ -1,0 +1,15 @@
+{
+	"type": "frostiful:burn_damage",
+	"entity": {
+		"condition": "minecraft:reference",
+		"name": "frostiful:wearing_frostology_cloak"
+	},
+	"config": {
+		"progress_threshold": {
+			"max": 0.01
+		},
+		"amount": 1,
+		"extra_damage_amount": 5,
+		"damage_period": 20
+	}
+}

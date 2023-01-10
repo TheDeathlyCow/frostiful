@@ -1,0 +1,15 @@
+{
+	"type": "frostiful:freeze_damage",
+	"entity": {
+		"condition": "minecraft:reference",
+		"name": "frostiful:can_freeze"
+	},
+	"config": {
+		"progress_threshold": {
+			"min": 0.99
+		},
+		"amount": 1,
+		"extra_damage_amount": 5,
+		"damage_period": 20
+	}
+}

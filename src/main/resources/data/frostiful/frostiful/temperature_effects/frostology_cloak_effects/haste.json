@@ -2,14 +2,14 @@
 	"type": "frostiful:status_effect",
 	"entity": {
         "condition": "minecraft:reference",
-        "name": "frostiful:is_frostologer"
+        "name": "frostiful:wearing_frostology_cloak"
     },
 	"config": {
 		"progress_threshold": {
-			"min": 0.95
+			"min": 0.5
 		},
-		"amplifier": 1,
+		"amplifier": 0,
 		"duration": 20,
-		"effect": "minecraft:strength"
+		"effect": "minecraft:haste"
 	}
 }

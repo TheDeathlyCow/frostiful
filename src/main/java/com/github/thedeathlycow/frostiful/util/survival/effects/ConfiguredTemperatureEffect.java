@@ -34,9 +34,10 @@ public class ConfiguredTemperatureEffect<C> {
     public static <C> ConfiguredTemperatureEffect<C> fromJson(
             TemperatureEffect<C> type,
             JsonElement configJson,
+            JsonDeserializationContext context,
             @Nullable LootCondition predicate
     ) throws JsonParseException {
-        return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson), predicate);
+        return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson, context), predicate);
     }
 
     public void applyIfPossible(LivingEntity victim) {
@@ -47,11 +48,12 @@ public class ConfiguredTemperatureEffect<C> {
             return;
         }
 
+        ServerWorld serverWorld = (ServerWorld) world;
         boolean shouldApply = this.type.shouldApply(victim, this.config)
-                && this.testPredicate(victim, (ServerWorld) world);
+                && this.testPredicate(victim, serverWorld);
 
         if (shouldApply) {
-            this.type.apply(victim, this.config);
+            this.type.apply(victim, serverWorld, this.config);
         }
     }
 
@@ -87,7 +89,7 @@ public class ConfiguredTemperatureEffect<C> {
             // set optional values
             LootCondition predicate = JsonHelper.deserialize(json, "entity", null, jsonDeserializationContext, LootCondition.class);
 
-            return ConfiguredTemperatureEffect.fromJson(effectType, json.get("config"), predicate);
+            return ConfiguredTemperatureEffect.fromJson(effectType, json.get("config"), jsonDeserializationContext, predicate);
         }
     }
 

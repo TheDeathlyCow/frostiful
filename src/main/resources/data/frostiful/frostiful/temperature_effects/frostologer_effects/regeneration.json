@@ -2,7 +2,7 @@
 	"type": "frostiful:status_effect",
 	"entity": {
         "condition": "minecraft:reference",
-        "name": "frostiful:benefits_from_cold"
+        "name": "frostiful:is_frostologer"
     },
 	"config": {
 		"progress_threshold": {

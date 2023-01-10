@@ -18,24 +18,6 @@ public abstract class LivingEntityFreezeDamageConfigMixin extends Entity {
         super(type, world);
     }
 
-    @ModifyConstant(
-            method = "tickMovement",
-            slice = @Slice(
-                    from = @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/entity/LivingEntity;addPowderSnowSlowIfNeeded()V"
-                    )
-            ),
-            constant = @Constant(
-                    intValue = 40,
-                    ordinal = 0
-            )
-    )
-    private int configFreezeDamageRate(int constant) {
-        FrostifulConfig config = Frostiful.getConfig();
-        return config.freezingConfig.getFreezeDamageRate();
-    }
-
     @ModifyArg(
             method = "tickMovement",
             slice = @Slice(
@@ -51,17 +33,7 @@ public abstract class LivingEntityFreezeDamageConfigMixin extends Entity {
             ),
             index = 1
     )
-    private float configFreezeDamageAmount(float amount) {
-
-        EntityType<?> type = this.getType();
-
-        if (type.isIn(FEntityTypeTags.BENEFITS_FROM_COLD)) {
-            return 0f;
-        }
-
-        FrostifulConfig config = Frostiful.getConfig();
-        return type.isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                config.freezingConfig.getFreezeDamageExtraAmount() :
-                config.freezingConfig.getFreezeDamageAmount();
+    private float blockFreezeDamage(float amount) {
+        return 0f;
     }
 }

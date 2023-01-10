@@ -2,13 +2,13 @@
 	"type": "frostiful:status_effect",
 	"entity": {
         "condition": "minecraft:reference",
-        "name": "frostiful:does_not_benefit_from_cold"
+        "name": "frostiful:can_freeze"
     },
 	"config": {
 		"progress_threshold": {
-			"min": 0.75
+			"min": 0.99
 		},
-		"amplifier": 0,
+		"amplifier": 1,
 		"duration": 100,
 		"effect": "minecraft:mining_fatigue"
 	}

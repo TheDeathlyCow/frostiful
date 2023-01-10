@@ -2,14 +2,14 @@
 	"type": "frostiful:status_effect",
 	"entity": {
         "condition": "minecraft:reference",
-        "name": "frostiful:is_frostologer"
+        "name": "frostiful:can_freeze"
     },
 	"config": {
 		"progress_threshold": {
-			"min": 0.95
+			"min": 0.99
 		},
 		"amplifier": 1,
-		"duration": 20,
-		"effect": "minecraft:strength"
+		"duration": 100,
+		"effect": "minecraft:weakness"
 	}
 }
