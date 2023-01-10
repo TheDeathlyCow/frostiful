@@ -8,8 +8,8 @@ public class WolfPlayfightGoal extends PlayFightGoal<WolfEntity> {
 
     private static final Identifier PLAYFIGHT_LOOT_TABLE = new Identifier(Frostiful.MODID, "gameplay/wolf_playfight");
 
-    public WolfPlayfightGoal(WolfEntity mob, float adultChance, float babyChance) {
-        super(mob, WolfEntity.class, adultChance, babyChance, PLAYFIGHT_LOOT_TABLE);
+    public WolfPlayfightGoal(WolfEntity wolf, float adultChance, float babyChance) {
+        super(wolf, WolfEntity.class, adultChance, babyChance, PLAYFIGHT_LOOT_TABLE);
     }
 
     @Override

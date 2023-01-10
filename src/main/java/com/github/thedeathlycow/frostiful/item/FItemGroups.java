@@ -23,6 +23,7 @@ public class FItemGroups {
 
                 stacks.add(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
                 stacks.add(new ItemStack(FItems.WOLF_FUR_TUFT));
+                stacks.add(new ItemStack(FItems.OCELOT_FUR_TUFT));
 
                 stacks.add(new ItemStack(FItems.COLD_SUN_LICHEN));
                 stacks.add(new ItemStack(FItems.COOL_SUN_LICHEN));

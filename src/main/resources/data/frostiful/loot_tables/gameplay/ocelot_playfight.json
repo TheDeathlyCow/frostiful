@@ -6,7 +6,7 @@
 			"entries": [
 				{
 					"type": "minecraft:item",
-					"name": "frostiful:wolf_fur_tuft",
+					"name": "frostiful:ocelot_fur_tuft",
 					"functions": [
 						{
 							"function": "minecraft:set_count",

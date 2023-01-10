@@ -30,6 +30,7 @@ public class FItems {
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item WOLF_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item OCELOT_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item ICICLE = new BlockItem(FBlocks.ICICLE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item COLD_SUN_LICHEN = new BlockItem(FBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item COOL_SUN_LICHEN = new BlockItem(FBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
@@ -83,6 +84,8 @@ public class FItems {
 
         register("polar_bear_fur_tuft", POLAR_BEAR_FUR_TUFT);
         register("wolf_fur_tuft", WOLF_FUR_TUFT);
+        register("ocelot_fur_tuft", OCELOT_FUR_TUFT);
+
         register("icicle", ICICLE);
         register("cold_sun_lichen", COLD_SUN_LICHEN);
         register("cool_sun_lichen", COOL_SUN_LICHEN);
