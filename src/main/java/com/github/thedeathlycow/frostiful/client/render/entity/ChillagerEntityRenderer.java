@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
+import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
@@ -18,7 +19,7 @@ public class ChillagerEntityRenderer extends IllagerEntityRenderer<ChillagerEnti
 
 
     protected ChillagerEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new IllagerEntityModel<>(context.getPart(EntityModelLayers.PILLAGER)), 0.5F);
+        super(context, new IllagerEntityModel<>(context.getPart(FEntityModelLayers.CHILLAGER)), 0.5F);
         this.addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
 
         this.model.getHat().visible = true;

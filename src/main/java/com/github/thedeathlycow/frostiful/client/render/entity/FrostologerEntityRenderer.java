@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
+import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
@@ -18,7 +19,7 @@ public class FrostologerEntityRenderer extends IllagerEntityRenderer<Frostologer
     private static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/illager/frostologer.png");
 
     public FrostologerEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new FrostologerEntityModel<>(context.getPart(EntityModelLayers.PILLAGER)), 0.5F);
+        super(context, new FrostologerEntityModel<>(context.getPart(FEntityModelLayers.FROSTOLOGER)), 0.5F);
 
         this.addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
     }

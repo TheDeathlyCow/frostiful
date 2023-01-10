@@ -209,6 +209,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.setStackInHand(Hand.MAIN_HAND, new ItemStack(FItems.FROST_WAND));
         this.equipStack(EquipmentSlot.CHEST, new ItemStack(FItems.FROSTOLOGY_CLOAK));
         this.enchantMainHandItem(random, difficulty.getClampedLocalDifficulty());
+
+        // equipment drops handled with loot table
         this.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
         this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0f);
     }
