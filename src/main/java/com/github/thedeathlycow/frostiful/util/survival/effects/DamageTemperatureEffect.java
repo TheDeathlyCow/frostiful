@@ -27,14 +27,7 @@ public class DamageTemperatureEffect extends TemperatureEffect<DamageTemperature
     @Override
     public void apply(LivingEntity victim, ServerWorld serverWorld, Config config) {
         if (!victim.world.isClient) {
-
-            float amount = config.amount;
-
-            if (this.testPredicate(victim, serverWorld, config.damageExtraPredicate)) {
-                amount = config.extraDamageAmount;
-            }
-
-            victim.damage(this.damageSource, amount);
+            victim.damage(this.damageSource, config.amount);
         }
     }
 
@@ -48,22 +41,9 @@ public class DamageTemperatureEffect extends TemperatureEffect<DamageTemperature
         return Config.fromJson(json, context);
     }
 
-    private boolean testPredicate(LivingEntity victim, ServerWorld world, @Nullable LootCondition predicate) {
-        return predicate != null
-                && predicate.test(
-                new LootContext.Builder(world)
-                        .parameter(LootContextParameters.THIS_ENTITY, victim)
-                        .parameter(LootContextParameters.ORIGIN, victim.getPos())
-                        .build(LootContextTypes.COMMAND)
-        );
-    }
-
     public record Config(
             NumberRange.FloatRange progressThreshold,
-            @Nullable
-            LootCondition damageExtraPredicate,
             float amount,
-            float extraDamageAmount,
             int damagePeriod
     ) {
 
@@ -73,21 +53,11 @@ public class DamageTemperatureEffect extends TemperatureEffect<DamageTemperature
             // get progress range
             NumberRange.FloatRange progressThreshold = NumberRange.FloatRange.fromJson(object.get("progress_threshold"));
 
-            LootCondition extraDamagePredicate = JsonHelper.deserialize(
-                    object,
-                    "should_damage_extra",
-                    null,
-                    context,
-                    LootCondition.class
-            );
-
             float amount = object.get("amount").getAsFloat();
-
-            float extraDamageAmount = object.get("extra_damage_amount").getAsFloat();
 
             int damagePeriod = object.get("damage_period").getAsInt();
 
-            return new Config(progressThreshold, extraDamagePredicate, amount, extraDamageAmount, damagePeriod);
+            return new Config(progressThreshold, amount, damagePeriod);
         }
     }
 

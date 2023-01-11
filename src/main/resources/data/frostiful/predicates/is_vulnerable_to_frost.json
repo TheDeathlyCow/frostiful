@@ -1,0 +1,13 @@
+[
+    {
+        "condition": "minecraft:reference",
+        "name": "frostiful:can_freeze"
+    },
+    {
+        "condition": "minecraft:entity_properties",
+        "entity": "this",
+        "predicate": {
+            "type": "#minecraft:freeze_hurts_extra_types"
+        }
+    }
+]
