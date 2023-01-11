@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import terrails.healthoverlay.heart.Heart;
 import terrails.healthoverlay.heart.HeartType;
 import terrails.healthoverlay.render.HeartRenderer;
+import terrails.healthoverlay.utilities.Vec2i;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = HeartRenderer.class, remap = false)
@@ -29,26 +30,18 @@ public abstract class ColdHeartOverlay {
             at = @At(
                     value = "INVOKE",
                     target = "Lterrails/healthoverlay/heart/Heart;draw(Lnet/minecraft/client/util/math/MatrixStack;IIZLterrails/healthoverlay/heart/HeartType;)V",
-                    remap = true
+                    remap = true,
+                    shift = At.Shift.AFTER
             ),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
     private void injectionTest(
-            MatrixStack poseStack,
-            PlayerEntity player,
-            CallbackInfo ci,
-            int currentHealth,
-            long tickCount,
-            boolean blinking,
-            long currentTime,
-            int xPos, int yPos,
-            int maxHealth, int absorption,
-            int regenerationIndex,
-            HeartType heartType,
-            int index,
-            Heart heart,
-            int regenOffset, int absorptionOffset,
-            int yPosition, int xPosition
+            MatrixStack poseStack, PlayerEntity player, CallbackInfo ci,
+            int currentHealth, long tickCount, boolean blinking,
+            long currentTime, int maxHealth, int absorption,
+            int regenerationIndex, Vec2i healthCoords, Vec2i absorptionCoords,
+            int xPos, int yPos, HeartType heartType, int index, Heart heart,
+            int regenOffset, int yPosition, int xPosition
     ) {
         if (index < FrozenHeartsOverlay.MAX_COLD_HEARTS) {
             heartXPositions[index] = xPosition;
