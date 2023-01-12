@@ -1,7 +1,0 @@
-{
-    "condition": "minecraft:entity_properties",
-    "entity": "this",
-    "predicate": {
-        "nbt": "{cardinal_components:{\"trinkets:trinkets\":{chest:{cape:{Items:[{id:\"frostiful:frostology_cloak\"}]}}}}}"
-    }
-}

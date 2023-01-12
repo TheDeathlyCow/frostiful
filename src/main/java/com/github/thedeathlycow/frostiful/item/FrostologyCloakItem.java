@@ -65,22 +65,21 @@ public class FrostologyCloakItem extends Item implements Wearable {
     }
 
     public static boolean isWornBy(PlayerEntity player) {
+
+        boolean isWearingInTrinketSlot = false;
+
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
-            return TrinketsApi.getTrinketComponent(player)
+            isWearingInTrinketSlot = TrinketsApi.getTrinketComponent(player)
                     .map(trinketComponent -> trinketComponent.isEquipped(FItems.FROSTOLOGY_CLOAK))
                     .orElse(false);
         }
 
-        return player.getInventory()
+        return isWearingInTrinketSlot || player.getInventory()
                 .getArmorStack(EquipmentSlot.CHEST.getEntitySlotId())
                 .isOf(FItems.FROSTOLOGY_CLOAK);
     }
 
     public static EquipmentSlot getPreferredEquipmentSlot(ItemStack stack) {
-        if (!FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
-            return EquipmentSlot.CHEST;
-        } else {
-            return EquipmentSlot.MAINHAND;
-        }
+        return EquipmentSlot.CHEST;
     }
 }
