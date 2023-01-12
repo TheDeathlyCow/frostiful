@@ -1,8 +1,10 @@
 package com.github.thedeathlycow.frostiful.item;
 
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
+import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
@@ -60,5 +62,25 @@ public class FrostologyCloakItem extends Item implements Wearable {
                 Text.translatable("item.frostiful.frostology_cloak.tooltip")
                         .setStyle(TextStyles.FROSTOLOGY_CLOAK_TOOLTIP)
         );
+    }
+
+    public static boolean isWornBy(PlayerEntity player) {
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
+            return TrinketsApi.getTrinketComponent(player)
+                    .map(trinketComponent -> trinketComponent.isEquipped(FItems.FROSTOLOGY_CLOAK))
+                    .orElse(false);
+        }
+
+        return player.getInventory()
+                .getArmorStack(EquipmentSlot.CHEST.getEntitySlotId())
+                .isOf(FItems.FROSTOLOGY_CLOAK);
+    }
+
+    public static EquipmentSlot getPreferredEquipmentSlot(ItemStack stack) {
+        if (!FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
+            return EquipmentSlot.CHEST;
+        } else {
+            return EquipmentSlot.MAINHAND;
+        }
     }
 }

@@ -1,14 +1,23 @@
 {
-    "condition": "minecraft:entity_properties",
-    "entity": "this",
-    "predicate": {
-        "type": "minecraft:player",
-        "equipment": {
-            "chest": {
-                "items": [
-                    "frostiful:frostology_cloak"
-                ]
+    "condition": "minecraft:alternative",
+    "terms": [
+        {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+                "type": "minecraft:player",
+                "equipment": {
+                    "chest": {
+                        "items": [
+                            "frostiful:frostology_cloak"
+                        ]
+                    }
+                }
             }
+        },
+        {
+            "condition": "minecraft:reference",
+            "name": "frostiful:integration/trinkets/wearing_frostology_cloak"
         }
-    }
+    ]
 }

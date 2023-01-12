@@ -24,9 +24,16 @@ repositories {
         name = "Curse"
         url = 'https://cfa2.cursemaven.com'
     }
+    maven {
+        name = "Ladysnake Libs"
+        url = "https://ladysnake.jfrog.io/artifactory/mods"
+    }
 }
 
 dependencies {
+
+    //// Required Dependencies ////
+
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
@@ -44,8 +51,17 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    //https://github.com/Terrails/HealthOverlay
-    modCompileOnly ("curse.maven:health-overlay-fabric-313219:${project.health_overlay_version}") {transitive = false}
+    //// Optional Dependencies ////
+
+    // HealthOverlay https://github.com/Terrails/HealthOverlay
+    modCompileOnly("curse.maven:health-overlay-fabric-313219:${project.health_overlay_version}") { transitive = false }
+    // Trinkets https://github.com/emilyploszaj/trinkets
+    modCompileOnly("dev.emi:trinkets:${project.trinkets_version}") {
+        exclude(group: "net.fabricmc.fabric-api")
+    }
+
+
+    //// Bring depends into testmod ////
 
     afterEvaluate {
         subprojects.each {

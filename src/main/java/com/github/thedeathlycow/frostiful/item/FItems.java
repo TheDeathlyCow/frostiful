@@ -3,7 +3,9 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import dev.emi.trinkets.TrinketSlot;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
 import net.minecraft.util.Identifier;
@@ -22,7 +24,7 @@ public class FItems {
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(new FabricItemSettings()
-            .equipmentSlot((stack) -> EquipmentSlot.CHEST)
+            .equipmentSlot(FrostologyCloakItem::getPreferredEquipmentSlot)
             .maxCount(1)
             .maxDamage(432)
             .group(FItemGroups.FROSTIFUL)

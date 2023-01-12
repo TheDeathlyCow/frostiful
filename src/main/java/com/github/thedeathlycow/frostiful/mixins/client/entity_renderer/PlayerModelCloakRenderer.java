@@ -1,12 +1,10 @@
 package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer;
 
-import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
 import com.mojang.authlib.GameProfile;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.encryption.PlayerPublicKey;
 import net.minecraft.util.Identifier;
@@ -33,14 +31,8 @@ public abstract class PlayerModelCloakRenderer extends PlayerEntity {
             cancellable = true
     )
     private void getFrostologyCloakTexture(CallbackInfoReturnable<Identifier> cir) {
-        if (this.isWearingFrostologyCloak()) {
+        if (FrostologyCloakItem.isWornBy(this)) {
             cir.setReturnValue(FrostologyCloakItem.TEXTURE_ID);
         }
-    }
-
-    private boolean isWearingFrostologyCloak() {
-        return this.getInventory()
-                .getArmorStack(EquipmentSlot.CHEST.getEntitySlotId())
-                .isOf(FItems.FROSTOLOGY_CLOAK);
     }
 }
