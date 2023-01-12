@@ -46,7 +46,7 @@ public class PassiveFreezingHelper {
             warmth += config.freezingConfig.getWarmthPerLightLevel() * (lightLevel - minLightLevel);
         }
 
-        if (livingEntity.isOnFire()) {
+        if (livingEntity.isOnFire() && !livingEntity.isFireImmune()) {
             warmth += config.freezingConfig.getOnFireThawRate();
         }
 
