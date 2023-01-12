@@ -29,6 +29,8 @@ public class CombatConfigGroup implements ConfigData {
 
     float packedSnowballVulnerableTypesDamage = 5.0f;
 
+    float polarBearShearingDamage = 1.0f;
+
     public int getHeatDrainPerLevel() {
         return heatDrainPerLevel;
     }
@@ -72,5 +74,9 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getPackedSnowballVulnerableTypesDamage() {
         return packedSnowballVulnerableTypesDamage;
+    }
+
+    public float getPolarBearShearingDamage() {
+        return polarBearShearingDamage;
     }
 }

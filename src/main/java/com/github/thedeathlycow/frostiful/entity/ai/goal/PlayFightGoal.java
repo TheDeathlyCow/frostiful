@@ -1,24 +1,16 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import net.minecraft.entity.ItemEntity;
+import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
-import java.util.Objects;
 
 public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
 
@@ -112,18 +104,7 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
             return;
         }
 
-        World world = this.target.getWorld();
-        LootTable lootTable = Objects.requireNonNull(world.getServer())
-                .getLootManager().getTable(this.furLootTable);
-        LootContext.Builder builder = new LootContext.Builder((ServerWorld) world)
-                .parameter(LootContextParameters.THIS_ENTITY, this.mob)
-                .parameter(LootContextParameters.ORIGIN, this.mob.getPos())
-                .random(this.target.getRandom());
-        List<ItemStack> generatedItems = lootTable.generateLoot(builder.build(LootContextTypes.SELECTOR));
-        Vec3d pos = this.target.getPos();
-        for (ItemStack stack : generatedItems) {
-            world.spawnEntity(new ItemEntity(world, pos.x, pos.y, pos.z, stack));
-        }
+        FLootHelper.dropLootFromEntity(this.mob, this.furLootTable);
         this.droppedFur = true;
     }
 
