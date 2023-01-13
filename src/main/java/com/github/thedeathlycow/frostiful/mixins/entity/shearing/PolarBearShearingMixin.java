@@ -71,7 +71,7 @@ public abstract class PolarBearShearingMixin extends AnimalEntity implements FSh
 
         int lastShearedAge = -1;
 
-        if (nbt.contains(FROSTIFUL$KEY, NbtElement.STRING_TYPE)) {
+        if (nbt.contains(FROSTIFUL$KEY, NbtElement.COMPOUND_TYPE)) {
             NbtCompound frostiful = nbt.getCompound(FROSTIFUL$KEY);
 
             if (frostiful.contains(FROSTIFUL$LAST_SHEARED_AGE_KEY, NbtElement.INT_TYPE)) {
