@@ -9,6 +9,8 @@ import net.minecraft.util.math.MathHelper;
 public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
+
+    float maxPassiveFreezingPercent = 1.0f;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
     double nightTimeTemperatureDecrease = 0.25;
@@ -34,6 +36,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
+    }
+
+    public float getMaxPassiveFreezingPercent() {
+        return maxPassiveFreezingPercent;
     }
 
     public double getBiomeTemperatureMultiplier() {

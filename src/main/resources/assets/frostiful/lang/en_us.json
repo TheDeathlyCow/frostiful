@@ -124,6 +124,7 @@
   
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
+  "text.autoconfig.frostiful.option.freezingConfig.maxPassiveFreezingPercent": "Max passive freezing percent (0-1)",
   "text.autoconfig.frostiful.option.freezingConfig.biomeTemperatureMultiplier": "Biome temperature multiplier",
   "text.autoconfig.frostiful.option.freezingConfig.passiveFreezingStartTemp": "Passive freezing start temp",
   "text.autoconfig.frostiful.option.freezingConfig.nightTimeTemperatureDecrease": "Night time temperature decrease",

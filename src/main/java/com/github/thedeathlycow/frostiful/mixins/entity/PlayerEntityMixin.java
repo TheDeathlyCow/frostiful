@@ -41,8 +41,10 @@ public abstract class PlayerEntityMixin {
         Profiler profiler = world.getProfiler();
         profiler.push("frostiful.passiveFreezingTick");
 
-        final boolean doPassiveFreezing = Frostiful.getConfig().freezingConfig.doPassiveFreezing()
-                && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
+        var config = Frostiful.getConfig().freezingConfig;
+        final boolean doPassiveFreezing = config.doPassiveFreezing()
+                && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING)
+                && playerEntity.getFreezingScale() < config.getMaxPassiveFreezingPercent();
 
         //* tick passive freezing
         if (doPassiveFreezing) {

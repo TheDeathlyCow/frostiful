@@ -241,7 +241,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         FrostifulConfig config = Frostiful.getConfig();
-        if (this.getFreezingScale() <= config.combatConfig.getFrostologerMaxPassiveFreezing()) {
+        if (this.getFreezingScale() < config.combatConfig.getFrostologerMaxPassiveFreezing()) {
             FrostHelper.addLivingFrost(this, config.combatConfig.getFrostologerPassiveFreezingPerTick());
         }
     }
