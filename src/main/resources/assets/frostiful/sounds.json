@@ -158,5 +158,11 @@
 			"block/powder_snow/break7"
 		],
 		"subtitle": "subtitles.entity.frostiful.thrown_icicle.hit"
+	},
+	"entity.frostiful.thrown_icicle.throw": {
+		"sounds": [
+			"random/bow"
+		],
+		"subtitle": "subtitles.entity.frostiful.thrown_icicle.throw"
 	}
 }

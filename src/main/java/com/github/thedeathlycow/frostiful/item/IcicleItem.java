@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItem;
@@ -28,7 +29,7 @@ public class IcicleItem extends BlockItem {
         world.playSound(
                 null,
                 user.getX(), user.getY(), user.getZ(),
-                SoundEvents.ENTITY_SNOWBALL_THROW, SoundCategory.NEUTRAL,
+                FSoundEvents.ENTITY_THROWN_ICICLE_THROW, SoundCategory.NEUTRAL,
                 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         );
 
