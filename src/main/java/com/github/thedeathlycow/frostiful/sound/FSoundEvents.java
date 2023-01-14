@@ -13,13 +13,13 @@ public class FSoundEvents {
     public static final SoundEvent ITEM_FROST_WAND_CAST_SPELL = FSoundEvents.of("item.frostiful.frost_wand.cast_spell");
     public static final SoundEvent ITEM_FROST_WAND_PREPARE_CAST = FSoundEvents.of("item.frostiful.frost_wand.prepare_cast");
     public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FSoundEvents.of("entity.frostiful.frost_spell.freeze");
+    public static final SoundEvent ENTITY_THROWN_ICICLE_HIT = FSoundEvents.of("entity.frostiful.thrown_icicle.hit");
 
     public static final SoundEvent BLOCK_PACKED_SNOW_BREAK = FSoundEvents.of("block.frostiful.packed_snow.break");
     public static final SoundEvent BLOCK_PACKED_SNOW_FALL = FSoundEvents.of("block.frostiful.packed_snow.fall");
     public static final SoundEvent BLOCK_PACKED_SNOW_HIT = FSoundEvents.of("block.frostiful.packed_snow.hit");
     public static final SoundEvent BLOCK_PACKED_SNOW_PLACE = FSoundEvents.of("block.frostiful.packed_snow.place");
     public static final SoundEvent BLOCK_PACKED_SNOW_STEP = FSoundEvents.of("block.frostiful.packed_snow.step");
-
 
     public static final SoundEvent ENTITY_FROSTOLOGER_CAST_SPELL = FSoundEvents.of("entity.frostiful.frostologer.cast_spell");
     public static final SoundEvent ENTITY_FROSTOLOGER_AMBIENT = FSoundEvents.of("entity.frostiful.frostologer.ambient");
@@ -55,6 +55,7 @@ public class FSoundEvents {
         register(ENTITY_CHILLAGER_CELEBRATE);
         register(ENTITY_CHILLAGER_DEATH);
         register(ENTITY_CHILLAGER_HURT);
+        register(ENTITY_THROWN_ICICLE_HIT);
     }
 
     private static SoundEvent of(String name) {

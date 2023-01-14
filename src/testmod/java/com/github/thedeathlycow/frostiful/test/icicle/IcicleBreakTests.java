@@ -51,6 +51,11 @@ public final class IcicleBreakTests implements FabricGameTest {
         strikeIcicleWithProjectile(context, EntityType.SMALL_FIREBALL);
     }
 
+    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_thrown_icicle(TestContext context) {
+        strikeIcicleWithProjectile(context, FEntityTypes.THROWN_ICICLE);
+    }
+
     private static void strikeIcicleWithProjectile(TestContext context, EntityType<?> type) {
         Entity entity = context.spawnEntity(type, 0, 7, 0);
         entity.addVelocity(0.0, 0.0, 5.0);

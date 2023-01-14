@@ -13,15 +13,24 @@ import net.minecraft.util.registry.Registry;
 
 public class FItems {
 
-    public static final Item FUR_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.HEAD, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item FUR_CHESTPLATE = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.CHEST, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item FUR_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.LEGS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item FUR_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.FEET, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.HEAD,
+            new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_CHESTPLATE = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.CHEST,
+            new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.LEGS,
+            new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_ARMOR, EquipmentSlot.FEET,
+            new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
-    public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.HEAD, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item FUR_PADDED_CHAINMAIL_CHESTPLATE = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.CHEST, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.LEGS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.FEET, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            EquipmentSlot.HEAD, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_PADDED_CHAINMAIL_CHESTPLATE = new ArmorItem(
+            FrostResistantArmorMaterials.FUR_LINED_CHAIN, EquipmentSlot.CHEST,
+            new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            EquipmentSlot.LEGS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            EquipmentSlot.FEET, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(new FabricItemSettings()
             .equipmentSlot(FrostologyCloakItem::getPreferredEquipmentSlot)
@@ -33,7 +42,7 @@ public class FItems {
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item WOLF_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item OCELOT_FUR_TUFT = new Item(new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-    public static final Item ICICLE = new BlockItem(FBlocks.ICICLE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item ICICLE = new IcicleItem(FBlocks.ICICLE, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item COLD_SUN_LICHEN = new BlockItem(FBlocks.COLD_SUN_LICHEN, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item COOL_SUN_LICHEN = new BlockItem(FBlocks.COOL_SUN_LICHEN, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item WARM_SUN_LICHEN = new BlockItem(FBlocks.WARM_SUN_LICHEN, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
@@ -44,13 +53,11 @@ public class FItems {
     public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.FROSTOLOGER, 0x473882, 0xBEB2EB, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item CHILLAGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.CHILLAGER, 0x3432A8, 0xA2CCFC, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
-
     public static final Item FROZEN_TORCH = new WallStandingBlockItem(
             FBlocks.FROZEN_TORCH,
             FBlocks.FROZEN_WALL_TORCH,
             new FabricItemSettings().group(FItemGroups.FROSTIFUL)
     );
-
 
     public static final Item PACKED_SNOW = new BlockItem(FBlocks.PACKED_SNOW, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item PACKED_SNOWBALL = new PackedSnowBallItem(new FabricItemSettings().maxCount(16).group(FItemGroups.FROSTIFUL));
@@ -69,7 +76,6 @@ public class FItems {
     public static final Item CUT_BLUE_ICE_STAIRS = new BlockItem(FBlocks.CUT_BLUE_ICE_STAIRS, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item CUT_BLUE_ICE_SLAB = new BlockItem(FBlocks.CUT_BLUE_ICE_SLAB, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item CUT_BLUE_ICE_WALL = new BlockItem(FBlocks.CUT_BLUE_ICE_WALL, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
-
 
     public static void registerItems() {
         register("fur_helmet", FUR_HELMET);

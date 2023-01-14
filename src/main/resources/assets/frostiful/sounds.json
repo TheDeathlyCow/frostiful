@@ -146,5 +146,17 @@
 			"mob/pillager/hurt3"
 		],
 		"subtitle": "subtitles.entity.frostiful.chillager.hurt"
+	},
+	"entity.frostiful.thrown_icicle.hit": {
+		"sounds": [
+			"block/powder_snow/break1",
+			"block/powder_snow/break2",
+			"block/powder_snow/break3",
+			"block/powder_snow/break4",
+			"block/powder_snow/break5",
+			"block/powder_snow/break6",
+			"block/powder_snow/break7"
+		],
+		"subtitle": "subtitles.entity.frostiful.thrown_icicle.hit"
 	}
 }
