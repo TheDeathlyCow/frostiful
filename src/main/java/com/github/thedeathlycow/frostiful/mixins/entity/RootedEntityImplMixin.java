@@ -147,16 +147,13 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                     target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
             )
     )
-    private void breakRootOnAttack(Args args) {
-        if (this.frostiful$isRooted() && this.world instanceof ServerWorld serverWorld) {
+    private void applyIceBreakDamage(Args args) {
+        if (this.frostiful$isRooted() && !this.world.isClient) {
             final DamageSource source = args.get(0);
             final float amount = args.get(1);
 
             FrostifulConfig config = Frostiful.getConfig();
             float damage = config.combatConfig.getIceBreakerBaseDamage() + amount;
-            this.frostiful$breakRoot();
-
-            this.playIceBreakEffects(serverWorld);
 
             if (source.getAttacker() instanceof LivingEntity attacker) {
                 damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
@@ -165,24 +162,6 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
 
             args.set(1, damage);
         }
-    }
-
-    private void playIceBreakEffects(ServerWorld serverWorld) {
-        ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
-        serverWorld.spawnParticles(
-                shatteredIce,
-                this.getX(), this.getY(), this.getZ(),
-                500,
-                0.5, 1.0, 0.5,
-                1.0
-        );
-        this.world.playSound(
-                null,
-                this.getBlockPos(),
-                SoundEvents.BLOCK_GLASS_BREAK,
-                SoundCategory.AMBIENT,
-                1.0f, 0.75f
-        );
     }
 }
 
