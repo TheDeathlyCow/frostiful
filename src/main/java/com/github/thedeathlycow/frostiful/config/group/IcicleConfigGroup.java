@@ -13,10 +13,13 @@ public class IcicleConfigGroup implements ConfigData {
     double growChanceDuringRain = 0.09;
     double growChanceDuringThunder = 0.15;
     int frostArrowFreezeAmount = 1000;
+    int thrownIcicleFreezeAmount = 1500;
     int icicleCollisionFreezeAmount = 3000;
     int maxLightLevelToForm = 10;
-    float thrownIcicleDamage = 2.0f;
-    float thrownIcicleExtraDamage = 6.0f;
+    float thrownIcicleDamage = 1.0f;
+    float thrownIcicleExtraDamage = 3.0f;
+
+    int thrownIcicleCooldown = 10;
 
     public boolean iciclesFormInWeather() {
         return iciclesFormInWeather;
@@ -42,6 +45,10 @@ public class IcicleConfigGroup implements ConfigData {
         return frostArrowFreezeAmount;
     }
 
+    public int getThrownIcicleFreezeAmount() {
+        return thrownIcicleFreezeAmount;
+    }
+
     public int getIcicleCollisionFreezeAmount() {
         return icicleCollisionFreezeAmount;
     }
@@ -56,5 +63,9 @@ public class IcicleConfigGroup implements ConfigData {
 
     public float getThrownIcicleExtraDamage() {
         return thrownIcicleExtraDamage;
+    }
+
+    public int getThrownIcicleCooldown() {
+        return thrownIcicleCooldown;
     }
 }
