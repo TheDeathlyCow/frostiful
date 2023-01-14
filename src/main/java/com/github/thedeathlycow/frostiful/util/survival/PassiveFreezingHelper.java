@@ -71,7 +71,7 @@ public class PassiveFreezingHelper {
             RegistryEntry<Biome> biomeEntry = world.getBiome(pos);
             Biome biome = biomeEntry.value();
             float temperature = biome.getTemperature();
-            return getPerTickFreezing(world, temperature);
+            return getPerTickFreezing(world, temperature, biome.getPrecipitation() == Biome.Precipitation.NONE);
         } else if (world.getDimension().ultrawarm()) {
             FrostifulConfig config = Frostiful.getConfig();
             return -config.freezingConfig.getUltrawarmThawRate();
@@ -79,14 +79,18 @@ public class PassiveFreezingHelper {
         return 0;
     }
 
-    public static int getPerTickFreezing(World world, float temperature) {
+    public static int getPerTickFreezing(World world, float temperature, boolean isDryBiome) {
         FrostifulConfig config = Frostiful.getConfig();
         double mul = config.freezingConfig.getBiomeTemperatureMultiplier();
         double cutoff = config.freezingConfig.getPassiveFreezingStartTemp();
 
         double tempShift = 0.0;
         if (world.isNight()) {
-            tempShift = config.freezingConfig.getNightTimeTemperatureDecrease();
+            if (isDryBiome && config.freezingConfig.doDryBiomeNightFreezing()) {
+                temperature = Math.min(temperature, config.freezingConfig.getDryBiomeNightTemperature());
+            } else {
+                tempShift = config.freezingConfig.getNightTimeTemperatureDecrease();
+            }
         }
 
         return MathHelper.floor(-mul * (temperature - cutoff - tempShift) + 1);
