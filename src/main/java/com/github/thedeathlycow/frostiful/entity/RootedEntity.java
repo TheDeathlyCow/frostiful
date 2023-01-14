@@ -1,11 +1,14 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.util.FNbtHelper;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.BlockStateParticleEffect;
@@ -50,6 +53,19 @@ public interface RootedEntity {
             rootedEntity.frostiful$breakRoot();
             playIceBreakEffects(victim, (ServerWorld) victim.world);
         }
+    }
+
+    static float getIceBreakerDamage(@Nullable Entity attacker) {
+        FrostifulConfig config = Frostiful.getConfig();
+
+        float damage = config.combatConfig.getIceBreakerBaseDamage();
+
+        if (attacker instanceof LivingEntity livingAttacker) {
+            damage += FEnchantmentHelper.getIceBreakerBonusDamage(livingAttacker);
+            IceBreakerEnchantment.onUsedIceBreaker(livingAttacker);
+        }
+
+        return damage;
     }
 
     static void frostiful$addRootedTicksToNbt(RootedEntity entity, NbtCompound nbt) {

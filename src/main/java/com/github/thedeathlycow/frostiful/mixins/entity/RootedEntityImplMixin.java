@@ -1,13 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
-import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -16,12 +11,8 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -152,15 +143,9 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             final DamageSource source = args.get(0);
             final float amount = args.get(1);
 
-            FrostifulConfig config = Frostiful.getConfig();
-            float damage = config.combatConfig.getIceBreakerBaseDamage() + amount;
+            float damage = RootedEntity.getIceBreakerDamage(source.getAttacker());
 
-            if (source.getAttacker() instanceof LivingEntity attacker) {
-                damage += FEnchantmentHelper.getIceBreakerBonusDamage(attacker);
-                IceBreakerEnchantment.onUsedIceBreaker(attacker);
-            }
-
-            args.set(1, damage);
+            args.set(1, amount + damage);
         }
     }
 }

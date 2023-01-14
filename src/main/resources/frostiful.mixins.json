@@ -19,6 +19,7 @@
 		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
 		"entity.RootedEntityImplMixin",
+		"entity.RootedPlayerIceBreakMixin",
 		"entity.RootShatterMixin",
 		"entity.mob.OcelotPlayFightMixin",
 		"entity.mob.PolarBearPlayFightMixin",
