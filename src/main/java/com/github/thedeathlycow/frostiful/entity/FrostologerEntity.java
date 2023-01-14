@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
@@ -237,6 +238,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         if (this.world.isClient && this.getFreezingScale() >= POWER_PARTICLES_FREEZING_SCALE_START) {
             this.spawnPowerParticles();
+        }
+
+        FrostifulConfig config = Frostiful.getConfig();
+        if (this.getFreezingScale() <= config.combatConfig.getFrostologerMaxPassiveFreezing()) {
+            FrostHelper.addLivingFrost(this, config.combatConfig.getFrostologerPassiveFreezingPerTick());
         }
     }
 

@@ -14,7 +14,7 @@ public class UpdateConfigGroup implements ConfigData {
     @ConfigEntry.Gui.Tooltip(count = 3)
     boolean enableConfigUpdates = true;
 
-    public boolean configUpdatesEnabled() {
+    public boolean isConfigUpdatesEnabled() {
         return enableConfigUpdates;
     }
 }

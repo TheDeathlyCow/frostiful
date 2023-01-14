@@ -21,7 +21,7 @@ public class CombatConfigGroup implements ConfigData {
 
     int frostWandRootTime = 100;
 
-    int frostologerHeatDrainPerTick = 50;
+    int frostologerHeatDrainPerTick = 30;
 
     int packedSnowballFreezeAmount = 500;
 
@@ -30,6 +30,10 @@ public class CombatConfigGroup implements ConfigData {
     float packedSnowballVulnerableTypesDamage = 5.0f;
 
     float polarBearShearingDamage = 1.0f;
+
+    int frostologerPassiveFreezingPerTick = 2;
+
+    float frostologerMaxPassiveFreezing = 0.5f;
 
     public int getHeatDrainPerLevel() {
         return heatDrainPerLevel;
@@ -78,5 +82,13 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getPolarBearShearingDamage() {
         return polarBearShearingDamage;
+    }
+
+    public int getFrostologerPassiveFreezingPerTick() {
+        return frostologerPassiveFreezingPerTick;
+    }
+
+    public float getFrostologerMaxPassiveFreezing() {
+        return frostologerMaxPassiveFreezing;
     }
 }
