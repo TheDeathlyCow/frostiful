@@ -12,6 +12,7 @@ public class FSoundEvents {
     public static final SoundEvent ITEM_FROST_WAND_CAST_SPELL = FSoundEvents.of("item.frostiful.frost_wand.cast_spell");
     public static final SoundEvent ITEM_FROST_WAND_PREPARE_CAST = FSoundEvents.of("item.frostiful.frost_wand.prepare_cast");
     public static final SoundEvent ENTITY_FROST_SPELL_FREEZE = FSoundEvents.of("entity.frostiful.frost_spell.freeze");
+    public static final SoundEvent ENTITY_THROWN_ICICLE_HIT = FSoundEvents.of("entity.frostiful.thrown_icicle.hit");
 
 
     public static void registerSoundEvents() {
@@ -20,6 +21,7 @@ public class FSoundEvents {
         register(ITEM_FROST_WAND_CAST_SPELL);
         register(ITEM_FROST_WAND_PREPARE_CAST);
         register(ENTITY_FROST_SPELL_FREEZE);
+        register(ENTITY_THROWN_ICICLE_HIT);
     }
 
     private static SoundEvent of(String name) {

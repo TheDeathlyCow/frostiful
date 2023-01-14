@@ -20,6 +20,7 @@
   "block.frostiful.hot_sun_lichen": "Hot Sun Lichen",
   "entity.frostiful.frost_spell": "Frost Spell",
   "entity.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
+  "entity.frostiful.thrown_icicle": "Thrown Icicle",
   "frostiful.commands.frost.exception.not_living_entity": "Target is not a living entity!",
   "commands.frostiful.get.progress.success": "The freezing scale of %s is %d",
   "commands.frostiful.frost.add.success": "Added %d frost to %s (now %d)",
@@ -47,6 +48,7 @@
   "subtitles.item.frostiful.frost_wand.cast_spell": "Frost wand fires spell",
   "subtitles.item.frostiful.frost_wand.prepare_cast": "Frost wand charges spell",
   "subtitles.entity.frostiful.frost_spell.freeze": "Entity freezes",
+  "subtitles.entity.frostiful.thrown_icicle.hit": "Icicle hits",
   "effect.frostiful.frozen": "Frozen",
   "effect.frostiful.warmth": "Warmth",
   "enchantment.frostiful.enervation": "Enervation",
@@ -112,6 +114,11 @@
   "text.autoconfig.frostiful.option.icicleConfig.growChanceDuringRain": "Grow chance during rain",
   "text.autoconfig.frostiful.option.icicleConfig.growChanceDuringThunder": "Grow chance during thunder",
   "text.autoconfig.frostiful.option.icicleConfig.frostArrowFreezeAmount": "Frost arrow freeze amount",
+  "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleFreezeAmount": "Thrown icicle freeze amount",
   "text.autoconfig.frostiful.option.icicleConfig.icicleCollisionFreezeAmount": "Icicle collision freeze amount",
-  "text.autoconfig.frostiful.option.icicleConfig.maxLightLevelToForm": "Maximum light level to form (exclusive)"
+  "text.autoconfig.frostiful.option.icicleConfig.maxLightLevelToForm": "Maximum light level to form (exclusive)",
+  "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleDamage": "Thrown icicle damage",
+  "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleExtraDamage": "Thrown icicle hurts extra damage",
+  "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleCooldown": "Thrown icicle cooldown"
+
 }
