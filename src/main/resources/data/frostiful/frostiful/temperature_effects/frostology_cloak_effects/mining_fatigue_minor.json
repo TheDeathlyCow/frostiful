@@ -9,7 +9,7 @@
 			"max": 0.25
 		},
 		"amplifier": 0,
-		"duration": 100,
+		"duration": 20,
 		"effect": "minecraft:mining_fatigue"
 	}
 }

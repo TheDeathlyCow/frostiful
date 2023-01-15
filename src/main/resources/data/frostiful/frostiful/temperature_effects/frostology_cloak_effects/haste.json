@@ -6,7 +6,7 @@
     },
 	"config": {
 		"progress_threshold": {
-			"min": 0.5
+			"min": 0.99
 		},
 		"amplifier": 0,
 		"duration": 20,

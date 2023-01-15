@@ -9,7 +9,7 @@
 			"min": 0.5
 		},
 		"amplifier": 0,
-		"duration": 100,
+		"duration": 20,
 		"effect": "minecraft:weakness"
 	}
 }

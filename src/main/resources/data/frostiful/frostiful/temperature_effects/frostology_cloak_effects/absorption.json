@@ -6,10 +6,10 @@
     },
 	"config": {
 		"progress_threshold": {
-			"max": 0.33
+			"min": 0.99
 		},
 		"amplifier": 0,
-		"duration": 20,
-		"effect": "minecraft:weakness"
+		"duration": 100,
+		"effect": "minecraft:absorption"
 	}
 }

@@ -6,7 +6,7 @@
 			"attribute": "frostiful:generic.frost_resistance",
 			"modifier": {
 				"uuid": "6b330e71-f106-43f4-a568-9042ae560c65",
-				"value": -1,
+				"value": -3,
 				"operation": "addition"
 			}
 		}

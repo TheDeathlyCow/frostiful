@@ -9,7 +9,6 @@
 			"max": 0.01
 		},
 		"amount": 1,
-		"extra_damage_amount": 5,
-		"damage_period": 20
+		"damage_period": 40
 	}
 }
