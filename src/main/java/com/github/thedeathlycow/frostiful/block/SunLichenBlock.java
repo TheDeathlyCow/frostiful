@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
+import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.block.BlockState;
@@ -13,6 +14,8 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.PathNodeType;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -70,6 +73,20 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             Optional<BlockState> previousState = Heatable.getPreviousState(state);
             previousState.ifPresent(blockState -> world.setBlockState(pos, blockState));
         }
+    }
+
+    @Override
+    public boolean canReplace(BlockState state, ItemPlacementContext context) {
+
+        ItemStack toPlace = context.getStack();
+
+        boolean isDifferentSunLichen = toPlace.isIn(FItemTags.SUN_LICHENS) && !toPlace.isOf(this.asItem());
+
+        if (isDifferentSunLichen) {
+            return false;
+        }
+
+        return super.canReplace(state, context);
     }
 
     @Override
