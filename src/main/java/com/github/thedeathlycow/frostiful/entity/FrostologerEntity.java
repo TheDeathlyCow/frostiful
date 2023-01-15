@@ -41,6 +41,8 @@ import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
+import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.*;
 import net.minecraft.world.event.GameEvent;
@@ -180,6 +182,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.goalSelector.add(4, new FrostWandAttackGoal());
         this.goalSelector.add(4, new SummonMinionsGoal());
+        this.goalSelector.add(4, new IcicleAttackGoal(UniformIntProvider.create(7, 12)));
 
         this.goalSelector.add(6, new DestroyHeatSourcesGoal(15));
 
@@ -680,6 +683,87 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         @Override
         protected int getSpellTicks() {
             return 100;
+        }
+
+        @Override
+        protected int startTimeDelay() {
+            return 20;
+        }
+
+        @Nullable
+        @Override
+        protected SoundEvent getSoundPrepare() {
+            return SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON;
+        }
+
+        @Override
+        protected Spell getSpell() {
+            return Spell.SUMMON_VEX;
+        }
+    }
+
+    protected class IcicleAttackGoal extends SpellcastingIllagerEntity.CastSpellGoal {
+
+        private final IntProvider numIciclesProvider;
+
+        public IcicleAttackGoal(IntProvider numIciclesProvider) {
+            this.numIciclesProvider = numIciclesProvider;
+        }
+
+        public void start() {
+            super.start();
+            if (FrostologerEntity.this.isOnFire()) {
+                FrostologerEntity.this.extinguish();
+                FrostologerEntity.this.playExtinguishSound();
+            }
+        }
+
+        public boolean canStart() {
+            if (FrostologerEntity.this.random.nextInt(2) == 0) {
+                return false;
+            } else if (!super.canStart()) {
+                return false;
+            } else {
+                return FrostologerEntity.this.isTargetRooted();
+            }
+        }
+
+        @Override
+        protected void castSpell() {
+            ServerWorld serverWorld = (ServerWorld) FrostologerEntity.this.world;
+
+            int numIcicles = this.numIciclesProvider.get(random);
+            for (int i = 0; i < numIcicles; ++i) {
+                BlockPos blockPos = FrostologerEntity.this.getBlockPos()
+                        .add(
+                                -2 + FrostologerEntity.this.random.nextInt(5),
+                                2,
+                                -2 + FrostologerEntity.this.random.nextInt(5)
+                        );
+
+                ThrownIcicleEntity icicle = FEntityTypes.THROWN_ICICLE.create(FrostologerEntity.this.world);
+
+                if (icicle == null) {
+                    return;
+                }
+
+                icicle.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+                icicle.setOwner(FrostologerEntity.this);
+
+                icicle.setVelocity(
+                        FrostologerEntity.this,
+                        FrostologerEntity.this.getPitch() + FrostologerEntity.this.random.nextFloat(),
+                        FrostologerEntity.this.getHeadYaw() + FrostologerEntity.this.random.nextFloat(),
+                        0.0f, 3.0f, 1.0f
+                );
+
+                serverWorld.spawnEntityAndPassengers(icicle);
+            }
+        }
+
+        @Override
+        protected int getSpellTicks() {
+            return 20;
         }
 
         @Override
