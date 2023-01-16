@@ -14,10 +14,12 @@ public class FEntityModelLayers {
     public static final EntityModelLayer FROSTOLOGER = new EntityModelLayer(Frostiful.id("frostologer"), "main");
     public static final EntityModelLayer CHILLAGER = new EntityModelLayer(Frostiful.id("chillager"), "main");
 
+    public static final EntityModelLayer FROST_WRAITH = new EntityModelLayer(Frostiful.id("chillager"), "main");
 
     public static void register() {
         EntityModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(FROST_WRAITH, FrostWraithEntityModel::getTexturedModelData);
     }
 }
