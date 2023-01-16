@@ -7,5 +7,8 @@ import net.minecraft.client.render.entity.model.BipedEntityModel;
 public class FrostWraithEntityModel extends BipedEntityModel<FrostWraithEntity> {
     public FrostWraithEntityModel(ModelPart root) {
         super(root);
+        this.leftLeg.visible = false;
+        this.rightLeg.visible = false;
+        this.hat.visible = true;
     }
 }
