@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.frostiful.client.model;
 
-import com.github.thedeathlycow.frostiful.entity.FrostWraithEntity;
+import com.github.thedeathlycow.frostiful.entity.FrostWyrmEntity;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 
-public class FrostWraithEntityModel extends BipedEntityModel<FrostWraithEntity> {
-    public FrostWraithEntityModel(ModelPart root) {
+public class FrostWyrmEntityModel extends BipedEntityModel<FrostWyrmEntity> {
+    public FrostWyrmEntityModel(ModelPart root) {
         super(root);
         this.leftLeg.visible = false;
         this.rightLeg.visible = false;

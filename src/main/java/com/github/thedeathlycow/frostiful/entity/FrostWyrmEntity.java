@@ -18,14 +18,14 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class FrostWraithEntity extends HostileEntity {
+public class FrostWyrmEntity extends HostileEntity {
 
     @Nullable
     MobEntity owner;
 
     private boolean isCharging;
 
-    protected FrostWraithEntity(EntityType<? extends FrostWraithEntity> entityType, World world) {
+    protected FrostWyrmEntity(EntityType<? extends FrostWyrmEntity> entityType, World world) {
         super(entityType, world);
     }
 
@@ -42,7 +42,7 @@ public class FrostWraithEntity extends HostileEntity {
     }
 
 
-    public static DefaultAttributeContainer.Builder createFrostWraithAttributes() {
+    public static DefaultAttributeContainer.Builder createFrostWyrmAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
@@ -83,40 +83,40 @@ public class FrostWraithEntity extends HostileEntity {
         }
 
         public boolean canStart() {
-            LivingEntity target = FrostWraithEntity.this.getTarget();
+            LivingEntity target = FrostWyrmEntity.this.getTarget();
 
             boolean hasTarget = target != null
                     && target.isAlive()
-                    && !FrostWraithEntity.this.getMoveControl().isMoving()
-                    && FrostWraithEntity.this.random.nextInt(Goal.toGoalTicks(7)) == 0;
+                    && !FrostWyrmEntity.this.getMoveControl().isMoving()
+                    && FrostWyrmEntity.this.random.nextInt(Goal.toGoalTicks(7)) == 0;
 
             if (hasTarget) {
-                return FrostWraithEntity.this.squaredDistanceTo(target) > 4.0;
+                return FrostWyrmEntity.this.squaredDistanceTo(target) > 4.0;
             } else {
                 return false;
             }
         }
 
         public boolean shouldContinue() {
-            return FrostWraithEntity.this.getMoveControl().isMoving()
-                    && FrostWraithEntity.this.isCharging()
-                    && FrostWraithEntity.this.getTarget() != null
-                    && FrostWraithEntity.this.getTarget().isAlive();
+            return FrostWyrmEntity.this.getMoveControl().isMoving()
+                    && FrostWyrmEntity.this.isCharging()
+                    && FrostWyrmEntity.this.getTarget() != null
+                    && FrostWyrmEntity.this.getTarget().isAlive();
         }
 
         public void start() {
-            LivingEntity target = FrostWraithEntity.this.getTarget();
+            LivingEntity target = FrostWyrmEntity.this.getTarget();
             if (target != null) {
                 Vec3d targetPos = target.getEyePos();
-                FrostWraithEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
+                FrostWyrmEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
             }
 
-            FrostWraithEntity.this.setCharging(true);
-            FrostWraithEntity.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0f, 1.0f);
+            FrostWyrmEntity.this.setCharging(true);
+            FrostWyrmEntity.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0f, 1.0f);
         }
 
         public void stop() {
-            FrostWraithEntity.this.setCharging(false);
+            FrostWyrmEntity.this.setCharging(false);
         }
 
         public boolean shouldRunEveryTick() {
@@ -124,16 +124,16 @@ public class FrostWraithEntity extends HostileEntity {
         }
 
         public void tick() {
-            LivingEntity target = FrostWraithEntity.this.getTarget();
+            LivingEntity target = FrostWyrmEntity.this.getTarget();
             if (target != null) {
-                if (FrostWraithEntity.this.getBoundingBox().intersects(target.getBoundingBox())) {
-                    FrostWraithEntity.this.tryAttack(target);
-                    FrostWraithEntity.this.setCharging(false);
+                if (FrostWyrmEntity.this.getBoundingBox().intersects(target.getBoundingBox())) {
+                    FrostWyrmEntity.this.tryAttack(target);
+                    FrostWyrmEntity.this.setCharging(false);
                 } else {
-                    double distanceToTarget = FrostWraithEntity.this.squaredDistanceTo(target);
+                    double distanceToTarget = FrostWyrmEntity.this.squaredDistanceTo(target);
                     if (distanceToTarget < 9.0) {
                         Vec3d targetPos = target.getEyePos();
-                        FrostWraithEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
+                        FrostWyrmEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
                     }
                 }
             }
@@ -144,18 +144,18 @@ public class FrostWraithEntity extends HostileEntity {
         private final TargetPredicate targetPredicate = TargetPredicate.createNonAttackable().ignoreVisibility().ignoreDistanceScalingFactor();
 
         public TrackOwnerTargetGoal() {
-            super(FrostWraithEntity.this, false);
+            super(FrostWyrmEntity.this, false);
         }
 
         public boolean canStart() {
-            return FrostWraithEntity.this.owner != null
-                    && FrostWraithEntity.this.owner.getTarget() != null
-                    && this.canTrack(FrostWraithEntity.this.owner.getTarget(), this.targetPredicate);
+            return FrostWyrmEntity.this.owner != null
+                    && FrostWyrmEntity.this.owner.getTarget() != null
+                    && this.canTrack(FrostWyrmEntity.this.owner.getTarget(), this.targetPredicate);
         }
 
         public void start() {
-            if (FrostWraithEntity.this.owner != null) {
-                FrostWraithEntity.this.setTarget(FrostWraithEntity.this.owner.getTarget());
+            if (FrostWyrmEntity.this.owner != null) {
+                FrostWyrmEntity.this.setTarget(FrostWyrmEntity.this.owner.getTarget());
             }
             super.start();
         }
