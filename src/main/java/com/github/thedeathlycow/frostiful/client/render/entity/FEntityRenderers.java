@@ -14,7 +14,7 @@ public class FEntityRenderers {
                 EntityRendererRegistry.register(FEntityTypes.FROST_SPELL, FrostSpellEntityRenderer::new);
                 EntityRendererRegistry.register(FEntityTypes.FROSTOLOGER, FrostologerEntityRenderer::new);
                 EntityRendererRegistry.register(FEntityTypes.CHILLAGER, ChillagerEntityRenderer::new);
-                EntityRendererRegistry.register(FEntityTypes.ICE_GOLEM, IceGolemEntityRenderer::new);
+                EntityRendererRegistry.register(FEntityTypes.BITER, BiterEntityRenderer::new);
                 EntityRendererRegistry.register(FEntityTypes.PACKED_SNOWBALL, FlyingItemEntityRenderer::new);
                 EntityRendererRegistry.register(FEntityTypes.THROWN_ICICLE, ThrownIcicleEntityRenderer::new);
         }

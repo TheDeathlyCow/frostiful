@@ -18,9 +18,9 @@ public class FEntityTypes {
             .trackRangeChunks(8)
             .build();
 
-    public static final EntityType<IceGolemEntity> ICE_GOLEM = FabricEntityTypeBuilder.create(
+    public static final EntityType<BiterEntity> BITER = FabricEntityTypeBuilder.create(
                     SpawnGroup.MONSTER,
-                    IceGolemEntity::new)
+                    BiterEntity::new)
             .dimensions(EntityDimensions.fixed(0.5f, 1.0f))
             .trackRangeChunks(8)
             .build();
@@ -64,7 +64,7 @@ public class FEntityTypes {
     public static void registerEntities() {
         register("frostologer", FROSTOLOGER);
         register("chillager", CHILLAGER);
-        register("ice_golem", ICE_GOLEM);
+        register("biter", BITER);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frost_spell", FROST_SPELL);
         register("packed_snowball", PACKED_SNOWBALL);
@@ -72,7 +72,7 @@ public class FEntityTypes {
 
         FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
         FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());
-        FabricDefaultAttributeRegistry.register(ICE_GOLEM, IceGolemEntity.createIceGolemAttributes());
+        FabricDefaultAttributeRegistry.register(BITER, BiterEntity.createBiterAttributes());
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {

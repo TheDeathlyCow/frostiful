@@ -21,24 +21,29 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class IceGolemEntity extends HostileEntity {
+public class BiterEntity extends HostileEntity {
 
-    private static final TrackedData<Byte> ICE_GOLEM_FLAGS = DataTracker.registerData(IceGolemEntity.class, TrackedDataHandlerRegistry.BYTE);
+    private static final TrackedData<Byte> ICE_GOLEM_FLAGS = DataTracker.registerData(BiterEntity.class, TrackedDataHandlerRegistry.BYTE);
 
     private static final int IS_CHARGING_FLAG_MASK = 0x1;
 
     @Nullable
     MobEntity owner;
 
-    protected IceGolemEntity(EntityType<? extends IceGolemEntity> entityType, World world) {
+    protected BiterEntity(EntityType<? extends BiterEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder createIceGolemAttributes() {
+    public static DefaultAttributeContainer.Builder createBiterAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(FEntityAttributes.MAX_FROST, 45.0);
+    }
+
+    protected void initDataTracker() {
+        super.initDataTracker();
+        this.dataTracker.startTracking(ICE_GOLEM_FLAGS, (byte)0);
     }
 
     protected void initGoals() {
@@ -92,40 +97,40 @@ public class IceGolemEntity extends HostileEntity {
         }
 
         public boolean canStart() {
-            LivingEntity target = IceGolemEntity.this.getTarget();
+            LivingEntity target = BiterEntity.this.getTarget();
 
             boolean hasTarget = target != null
                     && target.isAlive()
-                    && !IceGolemEntity.this.getMoveControl().isMoving()
-                    && IceGolemEntity.this.random.nextInt(Goal.toGoalTicks(7)) == 0;
+                    && !BiterEntity.this.getMoveControl().isMoving()
+                    && BiterEntity.this.random.nextInt(Goal.toGoalTicks(7)) == 0;
 
             if (hasTarget) {
-                return IceGolemEntity.this.squaredDistanceTo(target) > 4.0;
+                return BiterEntity.this.squaredDistanceTo(target) > 4.0;
             } else {
                 return false;
             }
         }
 
         public boolean shouldContinue() {
-            return IceGolemEntity.this.getMoveControl().isMoving()
-                    && IceGolemEntity.this.isCharging()
-                    && IceGolemEntity.this.getTarget() != null
-                    && IceGolemEntity.this.getTarget().isAlive();
+            return BiterEntity.this.getMoveControl().isMoving()
+                    && BiterEntity.this.isCharging()
+                    && BiterEntity.this.getTarget() != null
+                    && BiterEntity.this.getTarget().isAlive();
         }
 
         public void start() {
-            LivingEntity target = IceGolemEntity.this.getTarget();
+            LivingEntity target = BiterEntity.this.getTarget();
             if (target != null) {
                 Vec3d targetPos = target.getEyePos();
-                IceGolemEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
+                BiterEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
             }
 
-            IceGolemEntity.this.setCharging(true);
-            IceGolemEntity.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0f, 1.0f);
+            BiterEntity.this.setCharging(true);
+            BiterEntity.this.playSound(SoundEvents.ENTITY_VEX_CHARGE, 1.0f, 1.0f);
         }
 
         public void stop() {
-            IceGolemEntity.this.setCharging(false);
+            BiterEntity.this.setCharging(false);
         }
 
         public boolean shouldRunEveryTick() {
@@ -133,16 +138,16 @@ public class IceGolemEntity extends HostileEntity {
         }
 
         public void tick() {
-            LivingEntity target = IceGolemEntity.this.getTarget();
+            LivingEntity target = BiterEntity.this.getTarget();
             if (target != null) {
-                if (IceGolemEntity.this.getBoundingBox().intersects(target.getBoundingBox())) {
-                    IceGolemEntity.this.tryAttack(target);
-                    IceGolemEntity.this.setCharging(false);
+                if (BiterEntity.this.getBoundingBox().intersects(target.getBoundingBox())) {
+                    BiterEntity.this.tryAttack(target);
+                    BiterEntity.this.setCharging(false);
                 } else {
-                    double distanceToTarget = IceGolemEntity.this.squaredDistanceTo(target);
+                    double distanceToTarget = BiterEntity.this.squaredDistanceTo(target);
                     if (distanceToTarget < 9.0) {
                         Vec3d targetPos = target.getEyePos();
-                        IceGolemEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
+                        BiterEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
                     }
                 }
             }
@@ -153,18 +158,18 @@ public class IceGolemEntity extends HostileEntity {
         private final TargetPredicate targetPredicate = TargetPredicate.createNonAttackable().ignoreVisibility().ignoreDistanceScalingFactor();
 
         public TrackOwnerTargetGoal() {
-            super(IceGolemEntity.this, false);
+            super(BiterEntity.this, false);
         }
 
         public boolean canStart() {
-            return IceGolemEntity.this.owner != null
-                    && IceGolemEntity.this.owner.getTarget() != null
-                    && this.canTrack(IceGolemEntity.this.owner.getTarget(), this.targetPredicate);
+            return BiterEntity.this.owner != null
+                    && BiterEntity.this.owner.getTarget() != null
+                    && this.canTrack(BiterEntity.this.owner.getTarget(), this.targetPredicate);
         }
 
         public void start() {
-            if (IceGolemEntity.this.owner != null) {
-                IceGolemEntity.this.setTarget(IceGolemEntity.this.owner.getTarget());
+            if (BiterEntity.this.owner != null) {
+                BiterEntity.this.setTarget(BiterEntity.this.owner.getTarget());
             }
             super.start();
         }
