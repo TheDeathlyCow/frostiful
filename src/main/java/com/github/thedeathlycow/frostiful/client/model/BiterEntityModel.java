@@ -34,20 +34,20 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
         ModelPartData mouth = head.addChild("mouth", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
-        ModelPartData bottom = mouth.addChild("bottom", ModelPartBuilder.create().uv(54, 40).cuboid(-6.0F, 0.0F, 0.0F, 12.0F, 6.0F, 0.0F, new Dilation(0.0F))
-                .uv(54, 28).cuboid(-6.0F, 0.0F, -12.0F, 12.0F, 6.0F, 0.0F, new Dilation(0.0F))
-                .uv(0, 44).cuboid(6.0F, 0.0F, -12.0F, 0.0F, 6.0F, 12.0F, new Dilation(0.0F))
-                .uv(0, 38).cuboid(-6.0F, 0.0F, -12.0F, 0.0F, 6.0F, 12.0F, new Dilation(0.0F))
-                .uv(0, 12).cuboid(-6.0F, 6.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -20.0F, 6.0F));
+        ModelPartData bottom = mouth.addChild("bottom", ModelPartBuilder.create().uv(54, 28).cuboid(-6.0F, 0.0F, 0.0F, 12.0F, 4.0F, 0.0F, new Dilation(0.0F))
+                .uv(50, 0).cuboid(-6.0F, 0.0F, -12.0F, 12.0F, 4.0F, 0.0F, new Dilation(0.0F))
+                .uv(40, 20).cuboid(6.0F, 0.0F, -12.0F, 0.0F, 4.0F, 12.0F, new Dilation(0.0F))
+                .uv(30, 16).cuboid(-6.0F, 0.0F, -12.0F, 0.0F, 4.0F, 12.0F, new Dilation(0.0F))
+                .uv(0, 12).cuboid(-6.0F, 4.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -18.0F, 6.0F));
 
-        ModelPartData top = mouth.addChild("top", ModelPartBuilder.create().uv(50, 0).cuboid(-6.0F, -6.0F, 0.0F, 12.0F, 6.0F, 0.0F, new Dilation(0.0F))
-                .uv(48, 34).cuboid(-6.0F, -6.0F, -12.0F, 12.0F, 6.0F, 0.0F, new Dilation(0.0F))
-                .uv(0, 32).cuboid(6.0F, -6.0F, -12.0F, 0.0F, 6.0F, 12.0F, new Dilation(0.0F))
-                .uv(30, 16).cuboid(-6.0F, -6.0F, -12.0F, 0.0F, 6.0F, 12.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(-6.0F, -6.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -20.0F, 6.0F));
+        ModelPartData top = mouth.addChild("top", ModelPartBuilder.create().uv(54, 44).cuboid(-6.0F, -8.0F, 0.0F, 12.0F, 8.0F, 0.0F, new Dilation(0.0F))
+                .uv(48, 36).cuboid(-6.0F, -8.0F, -12.0F, 12.0F, 8.0F, 0.0F, new Dilation(0.0F))
+                .uv(0, 40).cuboid(6.0F, -8.0F, -12.0F, 0.0F, 8.0F, 12.0F, new Dilation(0.0F))
+                .uv(0, 32).cuboid(-6.0F, -8.0F, -12.0F, 0.0F, 8.0F, 12.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-6.0F, -8.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -18.0F, 6.0F));
 
-        ModelPartData nose = top.addChild("nose", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -22.0F, -8.0F, 2.0F, 4.0F, 2.0F, new Dilation(0.0F))
-                .uv(0, 6).cuboid(-1.0F, -18.0F, -8.0F, 2.0F, 2.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 20.0F, -6.0F));
+        ModelPartData nose = top.addChild("nose", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -22.0F, -8.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F))
+                .uv(0, 8).cuboid(-1.0F, -18.0F, -8.0F, 2.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 18.0F, -6.0F));
 
         ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 24).cuboid(-5.0F, -14.0F, -5.0F, 10.0F, 10.0F, 10.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 21.0F, 0.0F));
 
