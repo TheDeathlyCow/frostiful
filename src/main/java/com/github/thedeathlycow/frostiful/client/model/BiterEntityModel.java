@@ -22,8 +22,8 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
         this.mouthTop = mouth.getChild("top");
         this.mouthBottom = mouth.getChild("bottom");
 
-        this.leftArm = root.getChild("left_arm");
-        this.rightArm = root.getChild("right_arm");
+        this.leftArm = root.getChild("leftArm");
+        this.rightArm = root.getChild("rightArm");
 
     }
 
@@ -47,7 +47,7 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
                 .uv(0, 0).cuboid(-6.0F, -8.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -18.0F, 6.0F));
 
         ModelPartData nose = top.addChild("nose", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -22.0F, -8.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F))
-                .uv(0, 8).cuboid(-1.0F, -18.0F, -8.0F, 2.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 18.0F, -6.0F));
+                .uv(0, 8).cuboid(-1.0F, -16.0F, -8.0F, 2.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 18.0F, -6.0F));
 
         ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 24).cuboid(-5.0F, -14.0F, -5.0F, 10.0F, 10.0F, 10.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 21.0F, 0.0F));
 
