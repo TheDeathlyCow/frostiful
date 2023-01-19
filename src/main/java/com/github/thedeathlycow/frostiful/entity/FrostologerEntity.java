@@ -424,8 +424,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             return true;
         } else if (super.isTeammate(other)) {
             return true;
-        } else if (other.getType() == FEntityTypes.FROST_WYRM) {
-            return this.isTeammate(((FrostWyrmEntity) other).getOwner());
+        } else if (other.getType() == FEntityTypes.FROST_WRAITH) {
+            return this.isTeammate(((FrostWraithEntity) other).getOwner());
         } else if (other instanceof LivingEntity && ((LivingEntity) other).getGroup() == EntityGroup.ILLAGER) {
             return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
         } else {
@@ -635,7 +635,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 return false;
             } else {
                 int numNearbyMinions = FrostologerEntity.this.world.getTargets(
-                        FrostWyrmEntity.class,
+                        FrostWraithEntity.class,
                         this.closeMinionPredicate,
                         FrostologerEntity.this,
                         FrostologerEntity.this.getBoundingBox().expand(16.0)
@@ -658,7 +658,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                         );
 
                 // use vex entity as placeholder for custom minions
-                FrostWyrmEntity minionEntity = FEntityTypes.FROST_WYRM.create(FrostologerEntity.this.world);
+                FrostWraithEntity minionEntity = FEntityTypes.FROST_WRAITH.create(FrostologerEntity.this.world);
 
                 if (minionEntity == null) {
                     return;

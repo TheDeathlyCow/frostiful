@@ -7,6 +7,9 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
+import net.minecraft.entity.mob.VexEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
+import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class FEntityTypes {
@@ -18,9 +21,9 @@ public class FEntityTypes {
             .trackRangeChunks(8)
             .build();
 
-    public static final EntityType<FrostWyrmEntity> FROST_WYRM = FabricEntityTypeBuilder.create(
+    public static final EntityType<FrostWraithEntity> FROST_WRAITH = FabricEntityTypeBuilder.create(
                     SpawnGroup.MONSTER,
-                    FrostWyrmEntity::new)
+                    FrostWraithEntity::new)
             .dimensions(EntityDimensions.fixed(0.5f, 1.0f))
             .trackRangeChunks(8)
             .build();
@@ -64,7 +67,7 @@ public class FEntityTypes {
     public static void registerEntities() {
         register("frostologer", FROSTOLOGER);
         register("chillager", CHILLAGER);
-        register("frost_wyrm", FROST_WYRM);
+        register("frost_wraith", FROST_WRAITH);
         register("frost_tipped_arrow", FROST_TIPPED_ARROW);
         register("frost_spell", FROST_SPELL);
         register("packed_snowball", PACKED_SNOWBALL);
@@ -72,7 +75,7 @@ public class FEntityTypes {
 
         FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
         FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());
-        FabricDefaultAttributeRegistry.register(FROST_WYRM, FrostWyrmEntity.createFrostWyrmAttributes());
+        FabricDefaultAttributeRegistry.register(FROST_WRAITH, FrostWraithEntity.createFrostWraithAttributes());
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {
