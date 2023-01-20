@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -12,6 +13,7 @@ import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
+import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -64,6 +66,11 @@ public class BiterEntity extends HostileEntity {
         this.attackTicks = ATTACK_TIME;
         this.world.sendEntityStatus(this, EntityStatuses.PLAY_ATTACK_SOUND);
         this.playAttackSound();
+        if (target instanceof LivingEntity livingTarget) {
+
+            livingTarget.addStatusEffect(new StatusEffectInstance(FStatusEffects.FROST_BITE, 20 * 15), this);
+
+        }
         return super.tryAttack(target);
     }
 
@@ -75,7 +82,7 @@ public class BiterEntity extends HostileEntity {
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(4, new ChargeTargetGoal());
+        this.goalSelector.add(4, new MeleeAttackGoal(this, 1.0, true));
         this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 3.0F, 1.0F));
         this.goalSelector.add(10, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
 
@@ -196,15 +203,14 @@ public class BiterEntity extends HostileEntity {
         public void tick() {
             LivingEntity target = BiterEntity.this.getTarget();
             if (target != null) {
-                if (BiterEntity.this.getBoundingBox().intersects(target.getBoundingBox())) {
+
+                double distanceToTarget = BiterEntity.this.squaredDistanceTo(target);
+                if (distanceToTarget < 1.5) {
                     BiterEntity.this.tryAttack(target);
                     BiterEntity.this.setCharging(false);
-                } else {
-                    double distanceToTarget = BiterEntity.this.squaredDistanceTo(target);
-                    if (distanceToTarget < 9.0) {
-                        Vec3d targetPos = target.getEyePos();
-                        BiterEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
-                    }
+                } else if (distanceToTarget < 9.0) {
+                    Vec3d targetPos = target.getEyePos();
+                    BiterEntity.this.moveControl.moveTo(targetPos.x, targetPos.y, targetPos.z, 1.0);
                 }
             }
         }
