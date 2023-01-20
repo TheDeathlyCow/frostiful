@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -14,6 +16,8 @@ import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.raid.RaiderEntity;
+import net.minecraft.nbt.NbtCompound;
+import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -27,8 +31,12 @@ public class BiterEntity extends HostileEntity {
 
     private static final int IS_CHARGING_FLAG_MASK = 0x1;
 
+    private static final int ATTACK_TIME = 10;
+
     @Nullable
     MobEntity owner;
+
+    private int attackTicks = 0;
 
     protected BiterEntity(EntityType<? extends BiterEntity> entityType, World world) {
         super(entityType, world);
@@ -39,6 +47,24 @@ public class BiterEntity extends HostileEntity {
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
                 .add(FEntityAttributes.MAX_FROST, 45.0);
+    }
+
+    @Override
+    public void tickMovement() {
+        super.tickMovement();
+
+        if (this.isAlive()) {
+            if (this.attackTicks > 0) {
+                this.attackTicks--;
+            }
+        }
+    }
+
+    public boolean tryAttack(Entity target) {
+        this.attackTicks = ATTACK_TIME;
+        this.world.sendEntityStatus(this, EntityStatuses.PLAY_ATTACK_SOUND);
+        this.playAttackSound();
+        return super.tryAttack(target);
     }
 
     protected void initDataTracker() {
@@ -75,6 +101,32 @@ public class BiterEntity extends HostileEntity {
         this.setIceGolemFlag(IS_CHARGING_FLAG_MASK, charging);
     }
 
+    public int getAttackTicks() {
+        return attackTicks;
+    }
+
+    @Override
+    public void handleStatus(byte status) {
+        if (status == EntityStatuses.PLAY_ATTACK_SOUND) {
+            this.attackTicks = ATTACK_TIME;
+            this.playAttackSound();
+        }
+
+        super.handleStatus(status);
+    }
+
+    @Override
+    public void writeCustomDataToNbt(NbtCompound nbt) {
+        super.writeCustomDataToNbt(nbt);
+        nbt.putInt("AttackTicks", this.attackTicks);
+    }
+
+    @Override
+    public void readCustomDataFromNbt(NbtCompound nbt) {
+        super.readCustomDataFromNbt(nbt);
+        this.attackTicks = nbt.getInt("AttackTicks");
+    }
+
     private boolean checkFlag(int mask) {
         int i = this.dataTracker.get(ICE_GOLEM_FLAGS);
         return (i & mask) != 0;
@@ -89,6 +141,10 @@ public class BiterEntity extends HostileEntity {
         }
 
         this.dataTracker.set(ICE_GOLEM_FLAGS, (byte)(flags & 0xff));
+    }
+
+    public void playAttackSound() {
+        this.playSound(SoundEvents.ENTITY_PANDA_BITE, 1.0F, 1.0F);
     }
 
     private class ChargeTargetGoal extends Goal {

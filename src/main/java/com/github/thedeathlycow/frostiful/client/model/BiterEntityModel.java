@@ -9,6 +9,8 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
 
     private final ModelPart root;
+
+    private final ModelPart head;
     private final ModelPart mouthTop;
     private final ModelPart mouthBottom;
     private final ModelPart leftArm;
@@ -17,7 +19,8 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
     public BiterEntityModel(ModelPart root) {
         this.root = root;
 
-        ModelPart mouth = root.getChild("head").getChild("mouth");
+        this.head = root.getChild("head");
+        ModelPart mouth = this.head.getChild("mouth");
 
         this.mouthTop = mouth.getChild("top");
         this.mouthBottom = mouth.getChild("bottom");
@@ -68,5 +71,15 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
         this.leftArm.pitch = 1.5F * MathHelper.wrap(limbAngle, 13.0F) * limbDistance;
         this.rightArm.yaw = 0.0F;
         this.leftArm.yaw = 0.0F;
+    }
+
+    public void animateModel(BiterEntity entity, float limbAngle, float limbDistance, float tickDelta) {
+
+        int attackTicks = entity.getAttackTicks();
+
+        if (attackTicks > 0) {
+            // TODO: make bite anim lol
+        }
+
     }
 }
