@@ -34,7 +34,7 @@ public class BiterEntity extends HostileEntity {
 
     private static final int IS_CHARGING_FLAG_MASK = 0x1;
 
-    private static final int ATTACK_TIME = 10;
+    public static final int ATTACK_TIME = 10;
 
     @Nullable
     MobEntity owner;
@@ -69,7 +69,9 @@ public class BiterEntity extends HostileEntity {
         this.playAttackSound();
         if (target instanceof LivingEntity livingTarget) {
 
-            livingTarget.addStatusEffect(new StatusEffectInstance(FStatusEffects.FROST_BITE, 20 * 15), this);
+            livingTarget.addStatusEffect(
+                    new StatusEffectInstance(FStatusEffects.FROST_BITE, 20 * 15, this.random.nextInt(3)), this
+            );
 
         }
         return super.tryAttack(target);

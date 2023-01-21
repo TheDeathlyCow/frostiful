@@ -53,7 +53,7 @@ public class FItems {
     public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.FROSTOLOGER, 0x473882, 0xBEB2EB, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
     public static final Item CHILLAGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.CHILLAGER, 0x3432A8, 0xA2CCFC, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
-    public static final Item BITER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.BITER, 0xEBFEFF, 0xA2CCFC, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
+    public static final Item BITER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.BITER, 0xEBFEFF, 0x2E64C3, new FabricItemSettings().group(FItemGroups.FROSTIFUL));
 
     public static final Item FROZEN_TORCH = new WallStandingBlockItem(
             FBlocks.FROZEN_TORCH,

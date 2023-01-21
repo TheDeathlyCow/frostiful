@@ -1,10 +1,13 @@
 package com.github.thedeathlycow.frostiful.client.model;
 
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
+import net.fabricmc.api.EnvType;
+import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.util.math.MathHelper;
 
+@Environment(EnvType.CLIENT)
 public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
 
@@ -67,8 +70,8 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
     @Override
     public void setAngles(BiterEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
-        this.rightArm.pitch = -1.5F * MathHelper.wrap(limbAngle, 13.0F) * limbDistance;
-        this.leftArm.pitch = 1.5F * MathHelper.wrap(limbAngle, 13.0F) * limbDistance;
+        this.rightArm.pitch = -1.5F * MathHelper.wrap(limbAngle, 10.0F) * limbDistance;
+        this.leftArm.pitch = 1.5F * MathHelper.wrap(limbAngle, 10.0F) * limbDistance;
         this.rightArm.yaw = 0.0F;
         this.leftArm.yaw = 0.0F;
     }
@@ -78,7 +81,17 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
         int attackTicks = entity.getAttackTicks();
 
         if (attackTicks > 0) {
-            // TODO: make bite anim lol
+
+            // set attack pitch
+            float pitch;
+            if (attackTicks > BiterEntity.ATTACK_TIME / 2) {
+                pitch = MathHelper.sin( (attackTicks - tickDelta) / 4.0f) * MathHelper.PI * 0.4f;
+            } else {
+                pitch = (MathHelper.PI / 20) * MathHelper.sin(MathHelper.PI * (attackTicks - tickDelta) / 10.0f);
+            }
+
+            this.mouthTop.pitch = -(pitch / 2);
+            this.mouthBottom.pitch = pitch;
         }
 
     }
