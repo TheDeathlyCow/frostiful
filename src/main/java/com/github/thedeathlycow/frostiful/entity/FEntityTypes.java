@@ -21,7 +21,7 @@ public class FEntityTypes {
     public static final EntityType<BiterEntity> BITER = FabricEntityTypeBuilder.create(
                     SpawnGroup.MONSTER,
                     BiterEntity::new)
-            .dimensions(EntityDimensions.fixed(0.5f, 1.0f))
+            .dimensions(EntityDimensions.fixed(1.0f, 2.0f))
             .trackRangeChunks(8)
             .build();
 

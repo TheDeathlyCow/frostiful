@@ -56,7 +56,7 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
         ModelPartData leftArm = root.addChild("leftArm", ModelPartBuilder.create().uv(36, 0).cuboid(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(8.0F, -1.0F, 0.0F));
 
-        ModelPartData rightArm = root.addChild("rightArm", ModelPartBuilder.create().uv(34, 38).cuboid(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(-8.0F, -1.0F, 0.0F));
+        ModelPartData rightArm = root.addChild("rightArm", ModelPartBuilder.create().uv(36, 0).mirrored().cuboid(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(-8.0F, -1.0F, 0.0F));
         return TexturedModelData.of(modelData, 128, 128);
     }
 
