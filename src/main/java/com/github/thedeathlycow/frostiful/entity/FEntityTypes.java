@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
@@ -73,6 +75,14 @@ public class FEntityTypes {
         FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
         FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());
         FabricDefaultAttributeRegistry.register(BITER, BiterEntity.createBiterAttributes());
+
+        ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(
+                ((world, entity, killedEntity) -> {
+                    if (entity.getType() == BITER) {
+                        entity.playSound(FSoundEvents.ENTITY_BITER_BURP, 1.0f, 1.0f);
+                    }
+                })
+        );
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {

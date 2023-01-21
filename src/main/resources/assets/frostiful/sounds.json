@@ -178,10 +178,90 @@
 		],
 		"subtitle": "subtitles.entity.frostiful.thrown_icicle.throw"
 	},
+	"entity.frostiful.biter.ambient": {
+		"sounds": [
+			{
+				"name": "mob/strider/idle1",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle2",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle3",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle4",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle5",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle6",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.idle"
+	},
+	"entity.frostiful.biter.death": {
+		"sounds": [
+			{
+				"name": "mob/strider/death1",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/death2",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/death3",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/death4",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.death"
+	},
+	"entity.frostiful.biter.hurt": {
+		"sounds": [
+			{
+				"name": "mob/strider/hurt1",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/hurt2",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/hurt3",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/hurt4",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.hurt"
+	},
 	"entity.frostiful.biter.bite": {
 		"sounds": [
 			"frostiful:mob/biter/bite"
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.bite"
+	},
+	"entity.frostiful.biter.burp": {
+		"sounds": [
+			{
+				"name": "random/burp",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.burp"
 	}
 }

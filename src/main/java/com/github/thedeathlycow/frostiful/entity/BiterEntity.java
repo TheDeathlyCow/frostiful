@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -135,6 +136,21 @@ public class BiterEntity extends HostileEntity {
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.attackTicks = nbt.getInt("AttackTicks");
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return FSoundEvents.ENTITY_BITER_AMBIENT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return FSoundEvents.ENTITY_BITER_DEATH;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return FSoundEvents.ENTITY_BITER_HURT;
     }
 
     private boolean checkFlag(int mask) {
