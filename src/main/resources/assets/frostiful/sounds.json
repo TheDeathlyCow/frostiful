@@ -85,9 +85,10 @@
 	},
 	"entity.frostiful.frostologer.celebrate": {
 		"sounds": [
-			"mob/evocation_illager/celebrate",
-			"mob/evocation_illager/idle1",
-			"mob/evocation_illager/idle2"
+			{
+				"name": "mob/evocation_illager/celebrate",
+				"pitch": 0.75
+			}
 		],
 		"subtitle": "subtitles.entity.frostiful.frostologer.celebrate"
 	},
@@ -115,10 +116,22 @@
 	},
 	"entity.frostiful.chillager.ambient": {
 		"sounds": [
-			"mob/pillager/idle1",
-			"mob/pillager/idle2",
-			"mob/pillager/idle3",
-			"mob/pillager/idle4"
+			{
+				"name": "mob/evocation_illager/idle1",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle1",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle1",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/ceidle1lebrate",
+				"pitch": 0.1
+			}
 		],
 		"subtitle": "subtitles.entity.frostiful.chillager.ambient"
 	},
@@ -164,5 +177,11 @@
 			"random/bow"
 		],
 		"subtitle": "subtitles.entity.frostiful.thrown_icicle.throw"
+	},
+	"entity.frostiful.biter.bite": {
+		"sounds": [
+			"frostiful:mob/biter/bite"
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.bite"
 	}
 }

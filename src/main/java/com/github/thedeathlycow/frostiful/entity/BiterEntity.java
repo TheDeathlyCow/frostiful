@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -151,7 +152,7 @@ public class BiterEntity extends HostileEntity {
     }
 
     public void playAttackSound() {
-        this.playSound(SoundEvents.ENTITY_PANDA_BITE, 1.0F, 1.0F);
+        this.playSound(FSoundEvents.ENTITY_BITER_BITE, 1.0F, 1.0F);
     }
 
     private class ChargeTargetGoal extends Goal {

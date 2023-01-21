@@ -50,6 +50,7 @@ public class FItemGroups {
 
                 stacks.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
                 stacks.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
+                stacks.add(new ItemStack(FItems.BITER_SPAWN_EGG));
                 stacks.add(new ItemStack(FItems.ICICLE));
                 stacks.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
                 stacks.add(new ItemStack(FItems.FROZEN_TORCH));

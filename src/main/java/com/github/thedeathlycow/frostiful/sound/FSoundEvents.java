@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.sound;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -33,6 +34,7 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_CHILLAGER_DEATH = FSoundEvents.of("entity.frostiful.chillager.death");
     public static final SoundEvent ENTITY_CHILLAGER_HURT = FSoundEvents.of("entity.frostiful.chillager.hurt");
 
+    public static final SoundEvent ENTITY_BITER_BITE = FSoundEvents.of("entity.frostiful.biter.bite");
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
         register(CAMPFIRE_HISS);
@@ -59,6 +61,8 @@ public class FSoundEvents {
 
         register(ENTITY_THROWN_ICICLE_HIT);
         register(ENTITY_THROWN_ICICLE_THROW);
+
+        register(ENTITY_BITER_BITE);
     }
 
     private static SoundEvent of(String name) {
