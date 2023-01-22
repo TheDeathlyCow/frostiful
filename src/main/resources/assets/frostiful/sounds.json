@@ -205,7 +205,7 @@
 				"pitch": 0.4
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.biter.idle"
+		"subtitle": "subtitles.entity.frostiful.biter.ambient"
 	},
 	"entity.frostiful.biter.death": {
 		"sounds": [
