@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FEnchantments;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
+import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FItems;
@@ -68,6 +69,7 @@ public class Frostiful implements ModInitializer {
         FStatusEffects.registerStatusEffects();
         FEnchantments.registerEnchantments();
         FParticleTypes.registerParticleTypes();
+        FPotions.register();
 
         LOGGER.info("Initialized Frostiful!");
     }

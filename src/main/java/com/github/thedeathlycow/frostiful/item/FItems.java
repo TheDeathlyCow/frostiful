@@ -2,12 +2,13 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import dev.emi.trinkets.TrinketSlot;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
+import net.minecraft.potion.Potions;
+import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -125,8 +126,7 @@ public class FItems {
         register("cut_blue_ice", CUT_BLUE_ICE);
         register("cut_blue_ice_stairs", CUT_BLUE_ICE_STAIRS);
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
-        register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
-    }
+        register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);}
 
     private static void register(String id, Item item) {
         Registry.register(Registry.ITEM, new Identifier(Frostiful.MODID, id), item);
