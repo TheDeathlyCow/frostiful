@@ -30,6 +30,9 @@
   "item.minecraft.lingering_potion.effect.frostiful.freezing": "Lingering Potion of Freezing",
   "item.minecraft.lingering_potion.effect.frostiful.freezing_long": "Lingering Potion of Freezing",
   "item.minecraft.lingering_potion.effect.frostiful.freezing_strong": "Lingering Potion of Freezing",
+  "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Arrow of Freezing",
+  "item.minecraft.tipped_arrow.effect.frostiful.freezing_long": "Arrow of Freezing",
+  "item.minecraft.tipped_arrow.effect.frostiful.freezing_strong": "Arrow of Freezing",
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
@@ -126,6 +129,7 @@
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[2]": "It is recommended that modpacks turn this OFF",
   
   "text.autoconfig.frostiful.option.combatConfig": "Combat Config",
+  "text.autoconfig.frostiful.option.combatConfig.doChillagerPatrols": "Do chillager patrols",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Heat drain per level of Enervation",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainEfficiency": "Enervation heat drain efficiency",
   "text.autoconfig.frostiful.option.combatConfig.iceBreakerDamagePerLevel": "Ice Breaker damage per level",

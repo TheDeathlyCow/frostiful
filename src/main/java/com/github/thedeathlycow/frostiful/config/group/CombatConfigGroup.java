@@ -7,6 +7,8 @@ import me.shedaniel.autoconfig.annotation.Config;
 @Config(name = Frostiful.MODID + ".combat_config")
 public class CombatConfigGroup implements ConfigData {
 
+
+    boolean doChillagerPatrols = true;
     int heatDrainPerLevel = 210;
 
     double heatDrainEfficiency = 0.5;
@@ -34,6 +36,10 @@ public class CombatConfigGroup implements ConfigData {
     int frostologerPassiveFreezingPerTick = 2;
 
     float frostologerMaxPassiveFreezing = 0.5f;
+
+    public boolean doChillagerPatrols() {
+        return doChillagerPatrols;
+    }
 
     public int getHeatDrainPerLevel() {
         return heatDrainPerLevel;
