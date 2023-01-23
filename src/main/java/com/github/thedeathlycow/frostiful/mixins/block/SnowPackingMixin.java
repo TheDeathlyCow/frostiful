@@ -32,10 +32,6 @@ public abstract class SnowPackingMixin {
 
             int layers = state.get(SnowBlock.LAYERS);
 
-            if (layers < 1) {
-                return;
-            }
-
             BlockState packedSnow = FBlocks.PACKED_SNOW.getDefaultState()
                     .with(PackedSnowBlock.LAYERS, layers);
 
