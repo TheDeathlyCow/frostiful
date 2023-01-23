@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
+import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -55,7 +56,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     public boolean frostiful$canRoot(@Nullable Entity attacker) {
         final LivingEntity instance = (LivingEntity) (Object) this;
 
-        if (instance.getType() == FEntityTypes.FROSTOLOGER) {
+        if (instance.getType().isIn(FEntityTypeTags.ROOT_IMMUNE)) {
             return false;
         }
 

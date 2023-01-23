@@ -14,19 +14,20 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(Block.class)
+@Mixin(AbstractBlock.class)
 public abstract class SnowPackingMixin {
 
     @Inject(
-            method = "onSteppedOn",
+            method = "onEntityCollision",
             at = @At("TAIL")
     )
-    private void smushSnowWhenSteppedOnByHeavyEntity(World world, BlockPos pos, BlockState state, Entity entity, CallbackInfo ci) {
+    private void smushSnowWhenSteppedOnByHeavyEntity(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
 
         boolean maySmushSnow = state.getBlock() == Blocks.SNOW
                 && entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES)
                 && !world.isClient
-                && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING);
+                && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)
+                && isEntityWalkingOn(pos, entity);
 
         if (maySmushSnow) {
 
@@ -38,6 +39,10 @@ public abstract class SnowPackingMixin {
             world.setBlockState(pos, packedSnow);
             entity.playSound(SoundEvents.BLOCK_SNOW_PLACE, 1.0f, 1.0f);
         }
+    }
+
+    private static boolean isEntityWalkingOn(BlockPos pos, Entity entity) {
+        return entity.isOnGround() && entity.getBlockPos().equals(pos);
     }
 
 }
