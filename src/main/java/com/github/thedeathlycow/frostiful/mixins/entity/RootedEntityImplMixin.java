@@ -83,7 +83,13 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     )
     private void tickRoot(CallbackInfo ci) {
         this.world.getProfiler().push("frostiful.rooted_tick");
-        if (!this.isSpectator() && this.frostiful$isRooted()) {
+
+        if (this.isSpectator()) {
+            this.frostiful$setRootedTicks(0);
+            return;
+        }
+
+        if (this.frostiful$isRooted()) {
             final LivingEntity instance = (LivingEntity) (Object) this;
             instance.setJumping(false);
             instance.sidewaysSpeed = 0.0F;
