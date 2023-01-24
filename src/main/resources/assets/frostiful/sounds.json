@@ -76,10 +76,22 @@
 	},
 	"entity.frostiful.frostologer.ambient": {
 		"sounds": [
-			"mob/illusion_illager/idle1",
-			"mob/illusion_illager/idle2",
-			"mob/illusion_illager/idle3",
-			"mob/illusion_illager/idle4"
+			{
+				"name": "mob/evocation_illager/idle1",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle2",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle3",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle4",
+				"pitch": 0.1
+			}
 		],
 		"subtitle": "subtitles.entity.frostiful.frostologer.ambient"
 	},
@@ -116,22 +128,10 @@
 	},
 	"entity.frostiful.chillager.ambient": {
 		"sounds": [
-			{
-				"name": "mob/evocation_illager/idle1",
-				"pitch": 0.1
-			},
-			{
-				"name": "mob/evocation_illager/idle1",
-				"pitch": 0.1
-			},
-			{
-				"name": "mob/evocation_illager/idle1",
-				"pitch": 0.1
-			},
-			{
-				"name": "mob/evocation_illager/ceidle1lebrate",
-				"pitch": 0.1
-			}
+			"mob/pillager/idle1",
+			"mob/pillager/idle2",
+			"mob/pillager/idle3",
+			"mob/pillager/idle4"
 		],
 		"subtitle": "subtitles.entity.frostiful.chillager.ambient"
 	},
