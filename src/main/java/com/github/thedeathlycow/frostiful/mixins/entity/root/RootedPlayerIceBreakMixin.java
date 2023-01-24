@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.mixins.entity;
+package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import net.minecraft.entity.EntityType;

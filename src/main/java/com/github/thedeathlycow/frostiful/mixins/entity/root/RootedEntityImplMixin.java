@@ -1,6 +1,5 @@
-package com.github.thedeathlycow.frostiful.mixins.entity;
+package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
@@ -18,9 +17,11 @@ import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArgs;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
 
 @Mixin(LivingEntity.class)
@@ -66,17 +67,6 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
         }
 
         return ((FreezableEntity) instance).frostiful$canFreeze();
-    }
-
-    @Inject(
-            method = "isImmobile",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    private void rootedEntitiesAreImmobile(CallbackInfoReturnable<Boolean> cir) {
-        if (this.frostiful$isRooted()) {
-            cir.setReturnValue(true);
-        }
     }
 
     @Inject(
