@@ -1,5 +1,9 @@
 {
     "values": [
-        "minecraft:snowy_plains"
+        "minecraft:snowy_plains",
+        {
+            "id": "#c:snowy_plains",
+            "required": false
+        }
     ]
 }
