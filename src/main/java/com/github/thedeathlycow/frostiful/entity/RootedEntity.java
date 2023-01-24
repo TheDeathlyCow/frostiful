@@ -56,7 +56,7 @@ public interface RootedEntity {
         }
 
         return switch (type) {
-            case SELF, PLAYER -> Vec3d.ZERO.add(0, movement.y < 0 ? movement.y : 0, 0);
+            case SELF, PLAYER -> Vec3d.ZERO.add(0, movement.y < 0 && !entity.hasNoGravity() ? movement.y : 0, 0);
             default -> null;
         };
     }
