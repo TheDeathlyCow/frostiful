@@ -20,11 +20,9 @@ public class EntityMovementBlockMixin {
     private void blockMovementForRootedEntities(Vec3d movement, MovementType type, CallbackInfoReturnable<Vec3d> cir) {
         Entity instance = (Entity) (Object) this;
 
-        if (instance instanceof RootedEntity rootedEntity && rootedEntity.frostiful$isRooted()) {
-            switch (type) {
-                case SELF, PLAYER -> cir.setReturnValue(Vec3d.ZERO);
-                default -> {}
-            }
+        Vec3d adjustedMovement = RootedEntity.getMovementWhenRooted(type, movement, instance);
+        if (adjustedMovement != null) {
+            cir.setReturnValue(adjustedMovement);
         }
     }
 
