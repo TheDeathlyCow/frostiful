@@ -1,0 +1,45 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "has_cut_packed_snow_bricks": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "frostiful:packed_snow_bricks"
+                        ]
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:shaped/packed_snow_brick_wall"
+            }
+        },
+        "has_the_stonecutting_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:stonecutting/packed_snow_brick_wall"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_cut_packed_snow_bricks",
+            "has_the_recipe"
+        ],
+        [
+            "has_cut_packed_snow_bricks",
+            "has_the_stonecutting_recipe"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "frostiful:shaped/packed_snow_brick_wall",
+            "frostiful:stonecutting/packed_snow_brick_wall"
+        ]
+    }
+}
