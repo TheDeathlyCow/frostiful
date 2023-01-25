@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.render;
 
+import com.github.thedeathlycow.frostiful.client.model.FrostWandItemModel;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -25,7 +26,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
     public static final ModelIdentifier INVENTORY_MODEL_ID = new ModelIdentifier(new Identifier(Frostiful.MODID, "frost_wand_in_inventory"), "inventory");
 
     private final EntityModelLayer modelLayer;
-    private FrostWandModel model;
+    private FrostWandItemModel model;
     private ItemRenderer itemRenderer;
     private BakedModel inventoryModel;
 
@@ -59,7 +60,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
             matrices.push();
             matrices.scale(1.0F, -1.0F, -1.0F);
             VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(
-                    vertexConsumers, this.model.getLayer(FrostWandModel.TEXTURE), false, stack.hasGlint()
+                    vertexConsumers, this.model.getLayer(FrostWandItemModel.TEXTURE), false, stack.hasGlint()
             );
             this.model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
             matrices.pop();
@@ -74,7 +75,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
     @Override
     public void reload(ResourceManager manager) {
         MinecraftClient client = MinecraftClient.getInstance();
-        this.model = new FrostWandModel(client.getEntityModelLoader().getModelPart(this.modelLayer));
+        this.model = new FrostWandItemModel(client.getEntityModelLoader().getModelPart(this.modelLayer));
         this.itemRenderer = client.getItemRenderer();
         this.inventoryModel = client.getBakedModelManager().getModel(INVENTORY_MODEL_ID);
     }

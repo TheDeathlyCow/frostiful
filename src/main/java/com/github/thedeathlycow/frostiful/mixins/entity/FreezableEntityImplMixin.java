@@ -60,16 +60,18 @@ public abstract class FreezableEntityImplMixin extends Entity implements Freezab
     @Unique
     public boolean frostiful$canFreeze() {
         final LivingEntity instance = (LivingEntity) (Object) this;
-        if (instance.getType().isIn(FEntityTypeTags.FREEZE_IMMUNE)) {
-            return false;
-        }
+        EntityType<?> type = instance.getType();
         if (instance.isSpectator()) {
             return false;
+        } else if (type.isIn(FEntityTypeTags.BENEFITS_FROM_COLD)) {
+            return true;
+        } else if (type.isIn(FEntityTypeTags.FREEZE_IMMUNE)) {
+            return false;
+        } else if (instance.isPlayer()) {
+            return !((PlayerEntity)instance).isCreative();
+        } else {
+            return true;
         }
-        if (instance instanceof PlayerEntity player) {
-            return !player.isCreative();
-        }
-        return true;
     }
 
     private static int getTicksFromMaxFrost(double maxFrost) {

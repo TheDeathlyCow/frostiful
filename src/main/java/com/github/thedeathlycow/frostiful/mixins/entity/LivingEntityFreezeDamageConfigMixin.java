@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -15,24 +16,6 @@ public abstract class LivingEntityFreezeDamageConfigMixin extends Entity {
 
     public LivingEntityFreezeDamageConfigMixin(EntityType<?> type, World world) {
         super(type, world);
-    }
-
-    @ModifyConstant(
-            method = "tickMovement",
-            slice = @Slice(
-                    from = @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/entity/LivingEntity;addPowderSnowSlowIfNeeded()V"
-                    )
-            ),
-            constant = @Constant(
-                    intValue = 40,
-                    ordinal = 0
-            )
-    )
-    private int configFreezeDamageRate(int constant) {
-        FrostifulConfig config = Frostiful.getConfig();
-        return config.freezingConfig.getFreezeDamageRate();
     }
 
     @ModifyArg(
@@ -50,10 +33,7 @@ public abstract class LivingEntityFreezeDamageConfigMixin extends Entity {
             ),
             index = 1
     )
-    private float configFreezeDamageAmount(float amount) {
-        FrostifulConfig config = Frostiful.getConfig();
-        return this.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES) ?
-                config.freezingConfig.getFreezeDamageExtraAmount() :
-                config.freezingConfig.getFreezeDamageAmount();
+    private float blockFreezeDamage(float amount) {
+        return 0f;
     }
 }

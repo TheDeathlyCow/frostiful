@@ -9,6 +9,8 @@ import net.minecraft.util.math.MathHelper;
 public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
+
+    float maxPassiveFreezingPercent = 1.0f;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
     double nightTimeTemperatureDecrease = 0.25;
@@ -23,9 +25,6 @@ public class FreezingConfigGroup implements ConfigData {
     int conduitPowerWarmthPerTick = 12;
     int warmthPerLightLevel = 2;
     int minLightForWarmth = 5;
-    int freezeDamageRate = 20;
-    int freezeDamageAmount = 2;
-    int freezeDamageExtraAmount = 5;
     int powderSnowFreezeRate = 30;
     int sunLichenHeatPerLevel = 500;
     double campfireWarmthSearchRadius = 10;
@@ -37,6 +36,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
+    }
+
+    public float getMaxPassiveFreezingPercent() {
+        return maxPassiveFreezingPercent;
     }
 
     public double getBiomeTemperatureMultiplier() {
@@ -93,18 +96,6 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getMinLightForWarmth() {
         return minLightForWarmth;
-    }
-
-    public int getFreezeDamageRate() {
-        return freezeDamageRate;
-    }
-
-    public int getFreezeDamageAmount() {
-        return freezeDamageAmount;
-    }
-
-    public int getFreezeDamageExtraAmount() {
-        return freezeDamageExtraAmount;
     }
 
     public int getPowderSnowFreezeRate() {

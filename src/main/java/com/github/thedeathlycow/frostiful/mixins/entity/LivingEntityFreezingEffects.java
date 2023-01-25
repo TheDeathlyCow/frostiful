@@ -76,19 +76,4 @@ public abstract class LivingEntityFreezingEffects extends Entity {
         attributeBuilder.add(FEntityAttributes.FROST_RESISTANCE);
         attributeBuilder.add(FEntityAttributes.MAX_FROST);
     }
-
-    @Inject(
-            method = "damage",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/World;sendEntityStatus(Lnet/minecraft/entity/Entity;B)V",
-                    ordinal = 2
-            )
-    )
-    private void syncFrozenAttackSourceAsFrozenSource(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
-        if (FDamageSource.FROZEN_ATTACK_NAME.equals(source.name)) {
-            LivingEntity instance = (LivingEntity) (Object) this;
-            this.world.sendEntityStatus(instance, EntityStatuses.DAMAGE_FROM_FREEZING);
-        }
-    }
 }

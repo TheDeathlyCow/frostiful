@@ -41,14 +41,17 @@ public abstract class PlayerEntityMixin {
         Profiler profiler = world.getProfiler();
         profiler.push("frostiful.passiveFreezingTick");
 
-        final boolean doPassiveFreezing = Frostiful.getConfig().freezingConfig.doPassiveFreezing()
+        var config = Frostiful.getConfig().freezingConfig;
+        final boolean doPassiveFreezing = config.doPassiveFreezing()
                 && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
         //* tick passive freezing
         if (doPassiveFreezing) {
             int passiveFreezing = PassiveFreezingHelper.getPassiveFreezing(playerEntity);
             if (passiveFreezing > 0) {
-                FrostHelper.addLivingFrost(playerEntity, passiveFreezing);
+                if (playerEntity.getFreezingScale() < config.getMaxPassiveFreezingPercent()) {
+                    FrostHelper.addLivingFrost(playerEntity, passiveFreezing);
+                }
             } else {
                 FrostHelper.removeLivingFrost(playerEntity, -passiveFreezing);
             }

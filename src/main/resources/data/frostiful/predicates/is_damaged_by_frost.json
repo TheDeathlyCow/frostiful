@@ -1,0 +1,13 @@
+[
+    {
+        "condition": "minecraft:reference",
+        "name": "frostiful:can_freeze"
+    },
+    {
+        "condition": "minecraft:inverted",
+        "term": {
+            "condition": "minecraft:reference",
+            "name": "frostiful:is_vulnerable_to_frost"
+        }
+    }
+]

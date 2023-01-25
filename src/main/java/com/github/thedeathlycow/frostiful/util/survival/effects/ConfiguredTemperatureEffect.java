@@ -1,12 +1,10 @@
 package com.github.thedeathlycow.frostiful.util.survival.effects;
 
+import com.github.thedeathlycow.frostiful.registry.FRegistries;
 import com.google.gson.*;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.loot.LootGsons;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
 import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.condition.LootConditionManager;
 import net.minecraft.loot.context.LootContext;
 import net.minecraft.loot.context.LootContextParameters;
 import net.minecraft.loot.context.LootContextTypes;
@@ -36,9 +34,10 @@ public class ConfiguredTemperatureEffect<C> {
     public static <C> ConfiguredTemperatureEffect<C> fromJson(
             TemperatureEffect<C> type,
             JsonElement configJson,
+            JsonDeserializationContext context,
             @Nullable LootCondition predicate
     ) throws JsonParseException {
-        return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson), predicate);
+        return new ConfiguredTemperatureEffect<>(type, type.configFromJson(configJson, context), predicate);
     }
 
     public void applyIfPossible(LivingEntity victim) {
@@ -49,11 +48,12 @@ public class ConfiguredTemperatureEffect<C> {
             return;
         }
 
+        ServerWorld serverWorld = (ServerWorld) world;
         boolean shouldApply = this.type.shouldApply(victim, this.config)
-                && this.testPredicate(victim, (ServerWorld) world);
+                && this.testPredicate(victim, serverWorld);
 
         if (shouldApply) {
-            this.type.apply(victim, this.config);
+            this.type.apply(victim, serverWorld, this.config);
         }
     }
 
@@ -80,16 +80,16 @@ public class ConfiguredTemperatureEffect<C> {
             // set required values
             Identifier typeID = new Identifier(json.get("type").getAsString());
 
-            if (!TemperatureEffects.VALUES.containsKey(typeID)) {
+            if (!FRegistries.TEMPERATURE_EFFECTS.containsId(typeID)) {
                 throw new JsonParseException("Unknown survival effect type: " + typeID);
             }
 
-            TemperatureEffect<?> effectType = TemperatureEffects.VALUES.get(typeID);
+            TemperatureEffect<?> effectType = FRegistries.TEMPERATURE_EFFECTS.get(typeID);
 
             // set optional values
             LootCondition predicate = JsonHelper.deserialize(json, "entity", null, jsonDeserializationContext, LootCondition.class);
 
-            return ConfiguredTemperatureEffect.fromJson(effectType, json.get("config"), predicate);
+            return ConfiguredTemperatureEffect.fromJson(effectType, json.get("config"), jsonDeserializationContext, predicate);
         }
     }
 

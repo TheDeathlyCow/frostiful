@@ -1,8 +1,9 @@
 package com.github.thedeathlycow.frostiful.init;
 
 import com.github.thedeathlycow.frostiful.block.FCutouts;
+import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.FrostWandItemRenderer;
-import com.github.thedeathlycow.frostiful.client.render.FrostWandModel;
+import com.github.thedeathlycow.frostiful.client.model.FrostWandItemModel;
 import com.github.thedeathlycow.frostiful.client.render.entity.FEntityRenderers;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.particle.client.FParticleFactoryRegistry;
@@ -23,9 +24,9 @@ public class FrostifulClient implements ClientModInitializer {
         FEntityRenderers.registerEntityRenderers();
         FParticleFactoryRegistry.registerFactories();
 
-        EntityModelLayerRegistry.registerModelLayer(FrostWandModel.FROST_WAND_LAYER, FrostWandModel::getTexturedModelData);
+        FEntityModelLayers.register();
 
-        FrostWandItemRenderer frostWandRenderer = new FrostWandItemRenderer(FrostWandModel.FROST_WAND_LAYER);
+        FrostWandItemRenderer frostWandRenderer = new FrostWandItemRenderer(FEntityModelLayers.FROST_WAND);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(frostWandRenderer);
         BuiltinItemRendererRegistry.INSTANCE.register(
                 () -> FItems.FROST_WAND,

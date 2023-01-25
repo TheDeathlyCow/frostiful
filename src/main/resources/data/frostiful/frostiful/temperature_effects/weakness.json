@@ -1,9 +1,0 @@
-{
-	"type": "frostiful:status_effect",
-	"config": {
-		"progress_threshold": 0.99,
-		"amplifier": 1,
-		"duration": 100,
-		"effect": "minecraft:weakness"
-	}
-}

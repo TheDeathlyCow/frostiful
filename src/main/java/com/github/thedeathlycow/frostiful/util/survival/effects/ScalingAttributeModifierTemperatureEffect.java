@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.util.survival.effects;
 
+import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
@@ -7,6 +8,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
@@ -15,7 +17,7 @@ import java.util.UUID;
 public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect<ScalingAttributeModifierTemperatureEffect.Config> {
 
     @Override
-    public void apply(LivingEntity victim, Config config) {
+    public void apply(LivingEntity victim, ServerWorld serverWorld, Config config) {
         this.removeModifier(victim, config);
         this.addModifierIfNeeded(victim, config);
     }
@@ -26,7 +28,7 @@ public class ScalingAttributeModifierTemperatureEffect extends TemperatureEffect
     }
 
     @Override
-    public Config configFromJson(JsonElement json) throws JsonParseException {
+    public Config configFromJson(JsonElement json, JsonDeserializationContext context) throws JsonParseException {
         return Config.fromJson(json);
     }
 

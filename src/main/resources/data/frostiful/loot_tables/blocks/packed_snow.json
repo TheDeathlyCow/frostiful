@@ -1,0 +1,635 @@
+{
+    "type": "minecraft:block",
+    "pools": [
+        {
+            "rolls": 1,
+            "bonus_rolls": 0,
+            "entries": [
+                {
+                    "type": "minecraft:alternatives",
+                    "children": [
+                        {
+                            "type": "minecraft:alternatives",
+                            "children": [
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 1,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "2"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "3"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 2,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "4"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "5"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 3,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "6"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "7"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 4,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "8"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "9"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 5,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "10"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "11"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 6,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "12"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "13"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 7,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "14"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "15"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snowball",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 8,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:alternative",
+                                            "terms": [
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "16"
+                                                    }
+                                                },
+                                                {
+                                                    "condition": "minecraft:block_state_property",
+                                                    "block": "frostiful:packed_snow",
+                                                    "properties": {
+                                                        "layers": "17"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:inverted",
+                                    "term": {
+                                        "condition": "minecraft:match_tool",
+                                        "predicate": {
+                                            "enchantments": [
+                                                {
+                                                    "enchantment": "minecraft:silk_touch",
+                                                    "levels": {
+                                                        "min": 1
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                }
+                            ]
+                        },
+                        {
+                            "type": "minecraft:alternatives",
+                            "children": [
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 1,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "1"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 2,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "2"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 3,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "3"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 4,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "4"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 5,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "5"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 6,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "6"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 7,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "7"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 8,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "8"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 9,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "9"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 10,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "10"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 11,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "11"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 12,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "12"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 13,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "13"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 14,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "14"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow",
+                                    "functions": [
+                                        {
+                                            "function": "minecraft:set_count",
+                                            "count": 15,
+                                            "add": false
+                                        }
+                                    ],
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "15"
+                                            }
+                                        }
+                                    ]
+                                },
+                                {
+                                    "type": "minecraft:item",
+                                    "name": "frostiful:packed_snow_block",
+                                    "conditions": [
+                                        {
+                                            "condition": "minecraft:block_state_property",
+                                            "block": "frostiful:packed_snow",
+                                            "properties": {
+                                                "layers": "16"
+                                            }
+                                        }
+                                    ]
+                                }
+                            ],
+                            "conditions": [
+                                {
+                                    "condition": "minecraft:match_tool",
+                                    "predicate": {
+                                        "enchantments": [
+                                            {
+                                                "enchantment": "minecraft:silk_touch",
+                                                "levels": {
+                                                    "min": 1
+                                                }
+                                            }
+                                        ]
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "conditions": [
+                {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {}
+                }
+            ]
+        }
+    ]
+}

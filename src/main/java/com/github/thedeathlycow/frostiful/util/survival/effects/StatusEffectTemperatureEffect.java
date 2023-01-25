@@ -1,25 +1,28 @@
 package com.github.thedeathlycow.frostiful.util.survival.effects;
 
+import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectInstance;
+import net.minecraft.predicate.NumberRange;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffectTemperatureEffect.Config> {
 
     @Override
-    public void apply(LivingEntity victim, Config config) {
+    public void apply(LivingEntity victim, ServerWorld serverWorld, Config config) {
         victim.addStatusEffect(createEffectInstance(config), null);
     }
 
     @Override
     public boolean shouldApply(LivingEntity victim, Config config) {
 
-        if (victim.getFreezingScale() >= config.progressThreshold()) {
+        if (config.progressThreshold.test(victim.getFreezingScale())) {
             StatusEffectInstance currentEffectInstance = victim.getStatusEffect(config.effect());
 
             if (currentEffectInstance == null) {
@@ -37,7 +40,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
     }
 
     @Override
-    public Config configFromJson(JsonElement json) throws JsonParseException {
+    public Config configFromJson(JsonElement json, JsonDeserializationContext context) throws JsonParseException {
         return Config.fromJson(json);
     }
 
@@ -50,7 +53,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
     }
 
     public record Config(
-            float progressThreshold,
+            NumberRange.FloatRange progressThreshold,
             StatusEffect effect,
             int duration,
             int amplifier
@@ -59,7 +62,7 @@ public class StatusEffectTemperatureEffect extends TemperatureEffect<StatusEffec
             JsonObject object = json.getAsJsonObject();
 
             // get numbers
-            float progressThreshold = object.get("progress_threshold").getAsFloat();
+            NumberRange.FloatRange progressThreshold = NumberRange.FloatRange.fromJson(object.get("progress_threshold"));
             int amplifier = object.get("amplifier").getAsInt();
 
             // duration defaults to 100

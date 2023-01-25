@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FEnchantments;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
+import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FItems;
@@ -35,7 +36,7 @@ public class Frostiful implements ModInitializer {
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    public static final int CONFIG_VERSION = 0;
+    public static final int CONFIG_VERSION = 1;
 
     @Override
     public void onInitialize() {
@@ -47,11 +48,10 @@ public class Frostiful implements ModInitializer {
                     FrostifulCommand.register(dispatcher);
                     FrostCommand.register(dispatcher);
                     RootCommand.register(dispatcher);
-                }
-        );
+                });
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-        TemperatureEffects.createEffectTypes();
+        TemperatureEffects.registerAll();
 
         ResourceManagerHelper serverManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
 
@@ -69,6 +69,7 @@ public class Frostiful implements ModInitializer {
         FStatusEffects.registerStatusEffects();
         FEnchantments.registerEnchantments();
         FParticleTypes.registerParticleTypes();
+        FPotions.register();
 
         LOGGER.info("Initialized Frostiful!");
     }
@@ -79,6 +80,7 @@ public class Frostiful implements ModInitializer {
 
     /**
      * Creates a new {@link Identifier} in the namespace {@value MODID}.
+     * 
      * @param path The path of the uuid
      * @return Returns a new {@link Identifier}
      */

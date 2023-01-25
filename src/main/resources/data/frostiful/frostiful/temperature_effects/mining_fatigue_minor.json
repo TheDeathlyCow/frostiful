@@ -1,9 +1,0 @@
-{
-	"type": "frostiful:status_effect",
-	"config": {
-		"progress_threshold": 0.75,
-		"amplifier": 0,
-		"duration": 100,
-		"effect": "minecraft:mining_fatigue"
-	}
-}

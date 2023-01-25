@@ -1,0 +1,45 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "has_cut_blue_ice": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "frostiful:cut_blue_ice"
+                        ]
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:shaped/cut_blue_ice_stairs"
+            }
+        },
+        "has_the_stonecutting_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:stonecutting/cut_blue_ice_stairs"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_cut_blue_ice",
+            "has_the_recipe"
+        ],
+        [
+            "has_cut_blue_ice",
+            "has_the_stonecutting_recipe"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "frostiful:shaped/cut_blue_ice_stairs",
+            "frostiful:stonecutting/cut_blue_ice_stairs"
+        ]
+    }
+}

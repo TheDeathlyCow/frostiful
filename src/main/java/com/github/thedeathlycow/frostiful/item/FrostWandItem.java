@@ -2,11 +2,13 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
@@ -16,13 +18,19 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Vanishable;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
 import net.minecraft.util.UseAction;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 
 public class FrostWandItem extends Item implements Vanishable {
@@ -54,36 +62,40 @@ public class FrostWandItem extends Item implements Vanishable {
     @Override
     public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         int useTime = this.getMaxUseTime(stack) - remainingUseTicks;
-        if (useTime > 10) {
-            if (!world.isClient) {
+        if (useTime > 10 && !world.isClient) {
+            fireFrostSpell(stack, world, user);
+        }
+    }
 
-                FrostifulConfig config = Frostiful.getConfig();
 
-                FrostSpellEntity spell = new FrostSpellEntity(
-                        world,
-                        user,
-                        0.0, 0.0, 0.0,
-                        config.combatConfig.getMaxFrostSpellDistance()
-                );
-                spell.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 2.5f, 1.0f);
-                spell.setPosition(user.getEyePos());
-                world.spawnEntity(spell);
-                Vec3d soundPos = user.getEyePos();
-                world.playSound(
-                        null,
-                        soundPos.getX(), soundPos.getY(), soundPos.getZ(),
-                        FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
-                        1.0f, 1.0f
-                );
 
-                if (user instanceof PlayerEntity player) {
-                    stack.damage(2, player, (p) -> {
-                        p.sendToolBreakStatus(p.getActiveHand());
-                    });
-                    player.incrementStat(Stats.USED.getOrCreateStat(this));
-                    player.getItemCooldownManager().set(this, config.combatConfig.getFrostWandCooldown());
-                }
-            }
+    public static void fireFrostSpell(ItemStack frostWandStack, World world, LivingEntity user) {
+        FrostifulConfig config = Frostiful.getConfig();
+
+        FrostSpellEntity spell = new FrostSpellEntity(
+                world,
+                user,
+                0.0, 0.0, 0.0,
+                config.combatConfig.getMaxFrostSpellDistance()
+        );
+        spell.setVelocity(user, user.getPitch(), user.getHeadYaw(), 0.0f, 2.5f, 1.0f);
+        Vec3d firingPos = user.getEyePos();
+        spell.setPosition(firingPos);
+        spell.setOwner(user);
+        world.spawnEntity(spell);
+        world.playSound(
+                null,
+                firingPos.getX(), firingPos.getY(), firingPos.getZ(),
+                FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, SoundCategory.AMBIENT,
+                1.0f, 1.0f
+        );
+
+        if (user instanceof PlayerEntity player) {
+            frostWandStack.damage(2, player, (p) -> {
+                p.sendToolBreakStatus(p.getActiveHand());
+            });
+            player.incrementStat(Stats.USED.getOrCreateStat(frostWandStack.getItem()));
+            player.getItemCooldownManager().set(frostWandStack.getItem(), config.combatConfig.getFrostWandCooldown());
         }
     }
 
@@ -129,4 +141,6 @@ public class FrostWandItem extends Item implements Vanishable {
     public int getEnchantability() {
         return 15;
     }
+
+
 }

@@ -1,0 +1,14 @@
+{
+    "condition": "minecraft:entity_properties",
+    "entity": "this",
+    "predicate": {
+        "type": "minecraft:player",
+        "equipment": {
+            "chest": {
+                "items": [
+                    "frostiful:frostology_cloak"
+                ]
+            }
+        }
+    }
+}

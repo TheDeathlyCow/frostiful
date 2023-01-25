@@ -48,6 +48,13 @@ public class PassiveFreezingHelper {
 
         if (livingEntity.isOnFire()) {
             warmth += config.freezingConfig.getOnFireThawRate();
+
+            boolean isImmuneToFire = livingEntity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)
+                    || livingEntity.isFireImmune();
+
+            if (isImmuneToFire && livingEntity.getFrozenTicks() > 0) {
+                livingEntity.extinguish();
+            }
         }
 
         if (!freezable.frostiful$canFreeze()) {

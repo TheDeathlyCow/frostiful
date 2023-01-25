@@ -1,6 +1,20 @@
 {
     "replace": false,
     "values": [
-        "frostiful:icicle"
+        "frostiful:icicle",
+        "frostiful:packed_snow",
+        "frostiful:packed_snow_block",
+        "frostiful:packed_snow_bricks",
+        "frostiful:packed_snow_brick_stairs",
+        "frostiful:packed_snow_brick_slab",
+        "frostiful:packed_snow_brick_wall",
+        "frostiful:cut_packed_ice",
+        "frostiful:cut_packed_ice_stairs",
+        "frostiful:cut_packed_ice_slab",
+        "frostiful:cut_packed_ice_wall",
+        "frostiful:cut_blue_ice",
+        "frostiful:cut_blue_ice_stairs",
+        "frostiful:cut_blue_ice_slab",
+        "frostiful:cut_blue_ice_wall"
     ]
 }

@@ -1,0 +1,14 @@
+{
+	"type": "frostiful:freeze_damage",
+	"entity": {
+		"condition": "minecraft:reference",
+		"name": "frostiful:is_damaged_by_frost"
+	},
+	"config": {
+		"progress_threshold": {
+			"min": 1.0
+		},
+		"amount": 1,
+		"damage_period": 20
+	}
+}

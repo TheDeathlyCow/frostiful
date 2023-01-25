@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
 import com.github.thedeathlycow.frostiful.entity.SpellEntity;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -18,7 +19,7 @@ import net.minecraft.util.math.Vec3f;
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
 
-    private static final Identifier TEXTURE = new Identifier("textures/entity/enderdragon/dragon_fireball.png");//new Identifier(Frostiful.MODID, "textures/entity/frost_spell.png");
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
     private static final RenderLayer LAYER;
 
     protected FrostSpellEntityRenderer(EntityRendererFactory.Context ctx) {

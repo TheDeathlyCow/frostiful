@@ -11,6 +11,50 @@
 		],
 		"subtitle": "subtitles.frostiful.block.campfire.hiss"
 	},
+	"block.frostiful.packed_snow.break": {
+		"sounds": [
+			"frostiful:block/packed_snow/break1",
+			"frostiful:block/packed_snow/break2",
+			"frostiful:block/packed_snow/break3",
+			"frostiful:block/packed_snow/break4"
+		],
+		"subtitle": "subtitles.block.generic.break"
+	},
+	"block.frostiful.packed_snow.fall": {
+		"sounds": [
+			"frostiful:block/packed_snow/step1",
+			"frostiful:block/packed_snow/step2",
+			"frostiful:block/packed_snow/step3",
+			"frostiful:block/packed_snow/step4"
+		]
+	},
+	"block.frostiful.packed_snow.hit": {
+		"sounds": [
+			"frostiful:block/packed_snow/step1",
+			"frostiful:block/packed_snow/step2",
+			"frostiful:block/packed_snow/step3",
+			"frostiful:block/packed_snow/step4"
+		],
+		"subtitle": "subtitles.block.generic.hit"
+	},
+	"block.frostiful.packed_snow.place": {
+		"sounds": [
+			"frostiful:block/packed_snow/break1",
+			"frostiful:block/packed_snow/break2",
+			"frostiful:block/packed_snow/break3",
+			"frostiful:block/packed_snow/break4"
+		],
+		"subtitle": "subtitles.block.generic.place"
+	},
+	"block.frostiful.packed_snow.step": {
+		"sounds": [
+			"frostiful:block/packed_snow/step1",
+			"frostiful:block/packed_snow/step2",
+			"frostiful:block/packed_snow/step3",
+			"frostiful:block/packed_snow/step4"
+		],
+		"subtitle": "subtitles.block.generic.footsteps"
+	},
 	"item.frostiful.frost_wand.cast_spell": {
 		"sounds": [
 			"mob/evocation_illager/cast1",
@@ -30,6 +74,92 @@
 		],
 		"subtitle": "subtitles.entity.frostiful.frost_spell.freeze"
 	},
+	"entity.frostiful.frostologer.ambient": {
+		"sounds": [
+			{
+				"name": "mob/evocation_illager/idle1",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle2",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle3",
+				"pitch": 0.1
+			},
+			{
+				"name": "mob/evocation_illager/idle4",
+				"pitch": 0.1
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.ambient"
+	},
+	"entity.frostiful.frostologer.celebrate": {
+		"sounds": [
+			{
+				"name": "mob/evocation_illager/celebrate",
+				"pitch": 0.75
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.celebrate"
+	},
+	"entity.frostiful.frostologer.cast_spell": {
+		"sounds": [
+			"mob/evocation_illager/cast1",
+			"mob/evocation_illager/cast2"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.cast_spell"
+	},
+	"entity.frostiful.frostologer.death": {
+		"sounds": [
+			"mob/illusion_illager/death1",
+			"mob/illusion_illager/death2"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.death"
+	},
+	"entity.frostiful.frostologer.hurt": {
+		"sounds": [
+			"mob/illusion_illager/hurt1",
+			"mob/illusion_illager/hurt2",
+			"mob/illusion_illager/hurt3"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.hurt"
+	},
+	"entity.frostiful.chillager.ambient": {
+		"sounds": [
+			"mob/pillager/idle1",
+			"mob/pillager/idle2",
+			"mob/pillager/idle3",
+			"mob/pillager/idle4"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.ambient"
+	},
+	"entity.frostiful.chillager.celebrate": {
+		"sounds": [
+			"mob/pillager/celebrate1",
+			"mob/pillager/celebrate2",
+			"mob/pillager/celebrate3",
+			"mob/pillager/celebrate4",
+			"mob/pillager/horn_celebrate"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.celebrate"
+	},
+	"entity.frostiful.chillager.death": {
+		"sounds": [
+			"mob/pillager/death1",
+			"mob/pillager/death2"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.death"
+	},
+	"entity.frostiful.chillager.hurt": {
+		"sounds": [
+			"mob/pillager/hurt1",
+			"mob/pillager/hurt2",
+			"mob/pillager/hurt3"
+		],
+		"subtitle": "subtitles.entity.frostiful.chillager.hurt"
+	},
 	"entity.frostiful.thrown_icicle.hit": {
 		"sounds": [
 			"block/powder_snow/break1",
@@ -41,5 +171,97 @@
 			"block/powder_snow/break7"
 		],
 		"subtitle": "subtitles.entity.frostiful.thrown_icicle.hit"
+	},
+	"entity.frostiful.thrown_icicle.throw": {
+		"sounds": [
+			"random/bow"
+		],
+		"subtitle": "subtitles.entity.frostiful.thrown_icicle.throw"
+	},
+	"entity.frostiful.biter.ambient": {
+		"sounds": [
+			{
+				"name": "mob/strider/idle1",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle2",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle3",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle4",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle5",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/idle6",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.ambient"
+	},
+	"entity.frostiful.biter.death": {
+		"sounds": [
+			{
+				"name": "mob/strider/death1",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/death2",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/death3",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/death4",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.death"
+	},
+	"entity.frostiful.biter.hurt": {
+		"sounds": [
+			{
+				"name": "mob/strider/hurt1",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/hurt2",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/hurt3",
+				"pitch": 0.4
+			},
+			{
+				"name": "mob/strider/hurt4",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.hurt"
+	},
+	"entity.frostiful.biter.bite": {
+		"sounds": [
+			"frostiful:mob/biter/bite"
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.bite"
+	},
+	"entity.frostiful.biter.burp": {
+		"sounds": [
+			{
+				"name": "random/burp",
+				"pitch": 0.4
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.biter.burp"
 	}
 }
