@@ -144,7 +144,8 @@
   "text.autoconfig.frostiful.option.combatConfig.polarBearShearingDamage": "Polar bear shearing damage",
   "text.autoconfig.frostiful.option.combatConfig.frostologerPassiveFreezingPerTick": "Frostologer passive freezing per tick",
   "text.autoconfig.frostiful.option.combatConfig.frostologerMaxPassiveFreezing": "Frostologer max passive freezing percent (0-1)",
-  
+  "text.autoconfig.frostiful.option.combatConfig.biterFrostBiteMaxAmplifier": "Max Frost Bite Max Amplifier (inclusive)",
+
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
   "text.autoconfig.frostiful.option.freezingConfig.maxPassiveFreezingPercent": "Max passive freezing percent (0-1)",

@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
@@ -68,12 +69,13 @@ public class BiterEntity extends HostileEntity {
         this.attackTicks = ATTACK_TIME;
         this.world.sendEntityStatus(this, EntityStatuses.PLAY_ATTACK_SOUND);
         this.playAttackSound();
-        if (target instanceof LivingEntity livingTarget) {
+        if (target instanceof LivingEntity livingTarget && ((RootedEntity) livingTarget).frostiful$isRooted()) {
+
+            int maxAmplifier = Frostiful.getConfig().combatConfig.getBiterFrostBiteMaxAmplifier() + 1;
 
             livingTarget.addStatusEffect(
-                    new StatusEffectInstance(FStatusEffects.FROST_BITE, 20 * 15, this.random.nextInt(3)), this
+                    new StatusEffectInstance(FStatusEffects.FROST_BITE, 20 * 15, this.random.nextInt(maxAmplifier)), this
             );
-
         }
         return super.tryAttack(target);
     }

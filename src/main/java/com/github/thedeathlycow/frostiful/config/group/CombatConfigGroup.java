@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".combat_config")
 public class CombatConfigGroup implements ConfigData {
@@ -36,6 +37,8 @@ public class CombatConfigGroup implements ConfigData {
     int frostologerPassiveFreezingPerTick = 2;
 
     float frostologerMaxPassiveFreezing = 0.5f;
+
+    int biterFrostBiteMaxAmplifier = 2;
 
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
@@ -96,5 +99,9 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getFrostologerMaxPassiveFreezing() {
         return frostologerMaxPassiveFreezing;
+    }
+
+    public int getBiterFrostBiteMaxAmplifier() {
+        return Math.max(0, this.biterFrostBiteMaxAmplifier);
     }
 }
