@@ -15,33 +15,38 @@ public class FEntityTypes {
 
     public static final EntityType<FrostologerEntity> FROSTOLOGER = FabricEntityTypeBuilder.create(
                     SpawnGroup.MONSTER,
-                    FrostologerEntity::new)
+                    FrostologerEntity::new
+            )
             .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
             .trackRangeChunks(8)
             .build();
 
     public static final EntityType<BiterEntity> BITER = FabricEntityTypeBuilder.create(
                     SpawnGroup.MONSTER,
-                    BiterEntity::new)
+                    BiterEntity::new
+            )
             .dimensions(EntityDimensions.fixed(1.0f, 2.0f))
             .trackRangeChunks(8)
             .build();
 
     public static final EntityType<ChillagerEntity> CHILLAGER = FabricEntityTypeBuilder.create(
                     SpawnGroup.MONSTER,
-                    ChillagerEntity::new)
+                    ChillagerEntity::new
+            )
             .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
             .trackRangeChunks(8)
             .build();
 
     public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW = FabricEntityTypeBuilder.create(
                     SpawnGroup.CREATURE,
-                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new)
+                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
+            )
             .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
 
     public static final EntityType<FrostSpellEntity> FROST_SPELL = FabricEntityTypeBuilder.create(
                     SpawnGroup.MISC,
-                    (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new)
+                    (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
+            )
             .dimensions(EntityDimensions.fixed(3f / 8f, 3f / 8f))
             .trackRangeChunks(8)
             .trackedUpdateRate(10)
@@ -57,8 +62,18 @@ public class FEntityTypes {
 
     public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = FabricEntityTypeBuilder.create(
                     SpawnGroup.MISC,
-                    (EntityType.EntityFactory<ThrownIcicleEntity>) ThrownIcicleEntity::new)
+                    (EntityType.EntityFactory<ThrownIcicleEntity>) ThrownIcicleEntity::new
+            )
             .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
+            .trackRangeChunks(8)
+            .trackedUpdateRate(10)
+            .build();
+
+    public static final EntityType<FreezingWindEntity> FREEZING_WIND = FabricEntityTypeBuilder.create(
+                    SpawnGroup.MISC,
+                    FreezingWindEntity::new
+            )
+            .dimensions(EntityDimensions.fixed(1.0f, 1.0f))
             .trackRangeChunks(8)
             .trackedUpdateRate(10)
             .build();
@@ -71,6 +86,7 @@ public class FEntityTypes {
         register("frost_spell", FROST_SPELL);
         register("packed_snowball", PACKED_SNOWBALL);
         register("thrown_icicle", THROWN_ICICLE);
+        register("freezing_wind", FREEZING_WIND);
 
         FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
         FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());

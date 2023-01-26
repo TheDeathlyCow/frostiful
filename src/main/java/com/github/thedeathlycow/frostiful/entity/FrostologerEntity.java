@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
@@ -127,17 +128,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
             frozenState = Blocks.OBSIDIAN.getDefaultState();
         } else if (heatedBlock instanceof TorchBlock) {
-            // Some wall torches (like redstone wall torch) don't extend WallTorchBlock, and so the only way to determine
-            // if they are a wall torch is to check if they don't have the wall post override tag. It's not nice, but it's
-            // the only way to generally determine if a block is a wall torch.
-            boolean isWallTorch = heatedBlock instanceof WallTorchBlock
-                    || !state.isIn(BlockTags.WALL_POST_OVERRIDE);
-
-            if (isWallTorch) {
-                frozenState = FBlocks.FROZEN_WALL_TORCH.getStateWithProperties(state);
-            } else {
-                frozenState = FBlocks.FROZEN_TORCH.getStateWithProperties(state);
-            }
+            frozenState = FrozenTorchBlock.freezeTorch(state);
         } else if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
             frozenState = Blocks.ICE.getDefaultState();
         } else {
