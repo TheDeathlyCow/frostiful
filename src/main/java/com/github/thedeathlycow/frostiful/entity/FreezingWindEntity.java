@@ -9,18 +9,22 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.intprovider.IntProvider;
+import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.world.World;
 
 public class FreezingWindEntity extends Entity {
 
+    private static final IntProvider LIFE_TICKS = UniformIntProvider.create(80, 140);
+
     private float windSpeed = 0.2f;
 
-    private int lifeTicks = 100;
+    private int lifeTicks;
 
     public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
-        this.setRotation(90f, 0f);
+        this.setLifeTicks(LIFE_TICKS.get(this.random));
     }
 
     public float getWindSpeed() {
@@ -47,17 +51,20 @@ public class FreezingWindEntity extends Entity {
             return;
         }
 
-        this.move(MovementType.SELF, Vec3d.ZERO.add(-this.windSpeed, 0, 0));
+        Vec3d velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
 
         float pathAroundSpeed = this.windSpeed / 3;
         if (this.horizontalCollision) {
-            this.move(MovementType.SELF, Vec3d.ZERO.add(0, pathAroundSpeed, 0));
+            velocity = Vec3d.ZERO.add(0, pathAroundSpeed, 0);
         }
         if (this.verticalCollision) {
-            this.move(MovementType.SELF, Vec3d.ZERO.add(0, 0, pathAroundSpeed));
+            velocity = Vec3d.ZERO.add(0, 0, pathAroundSpeed);
         }
 
-        if (this.age % 5 == 0) {
+        this.setVelocity(velocity);
+        this.move(MovementType.SELF, velocity);
+
+        if (!this.world.isClient && this.age % 5 == 0) {
             this.checkCollidingEntities();
         }
 

@@ -22,7 +22,7 @@ public abstract class TorchFreezingMixin {
             at = @At("HEAD")
     )
     private void onCollideWithFreezingTorch(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
-        if (entity.getType() == FEntityTypes.FREEZING_WIND) {
+        if (!world.isClient && entity.getType() == FEntityTypes.FREEZING_WIND) {
             BlockState frozenTorch = FrozenTorchBlock.freezeTorch(state);
 
             if (!frozenTorch.isAir()) {
