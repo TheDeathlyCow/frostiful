@@ -61,6 +61,7 @@
   "entity.frostiful.chillager": "Chillager",
   "entity.frostiful.thrown_icicle": "Thrown Icicle",
   "entity.frostiful.biter": "Biter",
+  "entity.frostiful.freezing_wind": "Freezing Wind",
   "frostiful.commands.frost.exception.not_living_entity": "Target is not a living entity!",
   "commands.frostiful.get.progress.success": "The freezing scale of %s is %d",
   "commands.frostiful.frost.add.success": "Added %d frost to %s (now %d)",

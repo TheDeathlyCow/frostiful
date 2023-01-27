@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -8,6 +9,9 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.sound.BlockSoundGroup;
+import net.minecraft.tag.BlockTags;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -43,8 +47,15 @@ public class FreezingWindEntity extends Entity {
         super.tick();
         this.move(MovementType.SELF, Vec3d.ZERO.add(0, 0, this.windSpeed));
 
+
+
+        float pathAroundSpeed = this.windSpeed / 3;
+        if (this.horizontalCollision) {
+            this.move(MovementType.SELF, Vec3d.ZERO.add(0, pathAroundSpeed, 0));
+        }
+
         if (this.verticalCollision) {
-            this.move(MovementType.SELF, Vec3d.ZERO.add(0, this.windSpeed, 0));
+            this.move(MovementType.SELF, Vec3d.ZERO.add(pathAroundSpeed, 0, 0));
         }
 
         if (this.age % 5 == 0) {
@@ -62,6 +73,10 @@ public class FreezingWindEntity extends Entity {
     @Override
     protected void initDataTracker() {
 
+    }
+
+    protected MoveEffect getMoveEffect() {
+        return MoveEffect.NONE;
     }
 
     @Override
