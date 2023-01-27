@@ -3,8 +3,6 @@ package com.github.thedeathlycow.frostiful.particle.client;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.TorchBlock;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.math.Vec3d;

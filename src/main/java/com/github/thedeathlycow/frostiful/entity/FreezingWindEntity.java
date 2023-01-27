@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -66,6 +67,20 @@ public class FreezingWindEntity extends Entity {
 
         if (!this.world.isClient && this.age % 5 == 0) {
             this.checkCollidingEntities();
+        }
+
+        if (this.world.isClient) {
+            for(int i = 0; i < 2; ++i) {
+                WindParticleEffect particle = new WindParticleEffect();
+
+                this.world.addParticle(
+                        particle,
+                        this.getParticleX(0.5),
+                        this.getRandomBodyY(),
+                        this.getParticleZ(0.5),
+                        0.0, 0.0, 0.0
+                );
+            }
         }
 
         this.lifeTicks--;
