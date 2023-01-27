@@ -171,6 +171,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.ultrawarmThawRate": "Ultrawarm dimension thaw rate",
   "text.autoconfig.frostiful.option.freezingConfig.dryBiomeNightTemperature": "Dry biome night temperature",
   "text.autoconfig.frostiful.option.freezingConfig.doDryBiomeNightFreezing": "Do dry biome night freezing",
+  "text.autoconfig.frostiful.option.freezingConfig.freezingWindFrost": "Freezing wind frost (per 5 ticks)",
 
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",

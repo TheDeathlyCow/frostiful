@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
-import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -9,9 +8,6 @@ import net.minecraft.entity.MovementType;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.tag.BlockTags;
-import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -19,55 +15,56 @@ public class FreezingWindEntity extends Entity {
 
     private float windSpeed = 0.2f;
 
-    private int timeToLive = 100;
+    private int lifeTicks = 100;
 
     public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
+        this.setRotation(90f, 0f);
     }
 
-    public float getSpeed() {
+    public float getWindSpeed() {
         return windSpeed;
     }
 
-    public void setSpeed(float speed) {
+    public void setWindSpeed(float speed) {
         this.windSpeed = speed;
     }
 
-    public int getTimeToLive() {
-        return timeToLive;
+    public int getLifeTicks() {
+        return this.lifeTicks;
     }
 
-    public void setTimeToLive(int timeToLive) {
-        this.timeToLive = timeToLive;
+    public void setLifeTicks(int lifeTicks) {
+        this.lifeTicks = lifeTicks;
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.move(MovementType.SELF, Vec3d.ZERO.add(0, 0, this.windSpeed));
 
+        if (this.isRemoved()) {
+            return;
+        }
 
+        this.move(MovementType.SELF, Vec3d.ZERO.add(-this.windSpeed, 0, 0));
 
         float pathAroundSpeed = this.windSpeed / 3;
         if (this.horizontalCollision) {
             this.move(MovementType.SELF, Vec3d.ZERO.add(0, pathAroundSpeed, 0));
         }
-
         if (this.verticalCollision) {
-            this.move(MovementType.SELF, Vec3d.ZERO.add(pathAroundSpeed, 0, 0));
+            this.move(MovementType.SELF, Vec3d.ZERO.add(0, 0, pathAroundSpeed));
         }
 
         if (this.age % 5 == 0) {
             this.checkCollidingEntities();
         }
 
-        this.timeToLive--;
-
-        if (this.timeToLive <= 0) {
+        this.lifeTicks--;
+        if (this.lifeTicks <= 0) {
             this.discard();
         }
-
     }
 
     @Override
@@ -81,14 +78,22 @@ public class FreezingWindEntity extends Entity {
 
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
-        nbt.putFloat("WindSpeed", this.windSpeed);
-        nbt.putInt("TimeToLive", this.timeToLive);
+        if (nbt.contains("WindSpeed")) {
+            this.setWindSpeed(nbt.getFloat("WindSpeed"));
+        }
+
+        if (nbt.contains("LifeTicks")) {
+            this.setLifeTicks(nbt.getInt("LifeTicks"));
+        }
     }
 
     @Override
     protected void writeCustomDataToNbt(NbtCompound nbt) {
-        this.windSpeed = nbt.getFloat("WindSpeed");
-        this.timeToLive = nbt.getInt("TimeToLive");
+        nbt.putFloat("WindSpeed", this.getWindSpeed());
+
+        if (this.isAlive()) {
+            nbt.putInt("LifeTicks", this.getLifeTicks());
+        }
     }
 
     private void checkCollidingEntities() {
