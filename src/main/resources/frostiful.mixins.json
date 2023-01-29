@@ -9,7 +9,7 @@
 		"block.CampfireWarmthMixin",
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
-		"block.TorchFreezingMixin",
+		"block.WindBlowoutMixin",
 		"entity.EntityFreezeMixin",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",

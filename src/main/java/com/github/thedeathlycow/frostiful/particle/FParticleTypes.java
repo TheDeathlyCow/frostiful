@@ -11,10 +11,12 @@ public class FParticleTypes {
 
     public static final ParticleType<HeatDrainParticleEffect> HEAT_DRAIN = FabricParticleTypes.complex(HeatDrainParticleEffect.FACTORY);
     public static final ParticleType<WindParticleEffect> WIND = FabricParticleTypes.complex(WindParticleEffect.FACTORY);
+    public static final ParticleType<WindParticleEffect> WIND_FLIPPED = FabricParticleTypes.complex(WindParticleEffect.FACTORY);
 
     public static void registerParticleTypes() {
         register("heat_drain", HEAT_DRAIN);
         register("wind", WIND);
+        register("wind_flipped", WIND_FLIPPED);
     }
 
     private static void register(String name, ParticleType<?> particle) {

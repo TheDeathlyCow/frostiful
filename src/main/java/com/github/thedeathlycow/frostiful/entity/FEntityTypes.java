@@ -73,7 +73,7 @@ public class FEntityTypes {
                     SpawnGroup.MISC,
                     FreezingWindEntity::new
             )
-            .dimensions(EntityDimensions.fixed(1.0f, 1.0f))
+            .dimensions(EntityDimensions.fixed(2.0f, 2.0f))
             .trackRangeChunks(8)
             .trackedUpdateRate(10)
             .build();

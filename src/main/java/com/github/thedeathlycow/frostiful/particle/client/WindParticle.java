@@ -28,7 +28,7 @@ public class WindParticle extends SpriteBillboardParticle {
         super(clientWorld, x, y, z);
         this.spriteProvider = spriteProvider;
         this.velocityX *= 2;
-        this.scale *= 2;
+        this.scale *= 3;
         this.setSpriteForAge(spriteProvider);
     }
 
@@ -40,10 +40,10 @@ public class WindParticle extends SpriteBillboardParticle {
 
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
-        this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> {
+        this.buildGeometry(vertexConsumer, camera, tickDelta, true, (quaternion) -> {
             quaternion.hamiltonProduct(Vec3f.POSITIVE_Y.getRadialQuaternion(0));
         });
-        this.buildGeometry(vertexConsumer, camera, tickDelta, (quaternion) -> {
+        this.buildGeometry(vertexConsumer, camera, tickDelta, false, (quaternion) -> {
             quaternion.hamiltonProduct(Vec3f.POSITIVE_Y.getRadialQuaternion(-MathHelper.PI));
         });
     }
@@ -52,6 +52,7 @@ public class WindParticle extends SpriteBillboardParticle {
             VertexConsumer vertexConsumer,
             Camera camera,
             float tickDelta,
+            boolean flip,
             Consumer<Quaternion> rotator
     ) {
         Vec3d cameraPos = camera.getPos();
@@ -68,7 +69,7 @@ public class WindParticle extends SpriteBillboardParticle {
                 new Vec3f(1.0F, -1.0F, 0.0F)
         };
 
-        float size = this.getSize(tickDelta);
+        float size = this.getSize(tickDelta) * (flip ? -1 : 1);
 
         for (int i = 0; i < 4; ++i) {
             Vec3f point = points[i];

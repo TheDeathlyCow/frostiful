@@ -17,6 +17,7 @@ public class FParticleFactoryRegistry {
     public static void registerFactories() {
         registerFactory(FParticleTypes.HEAT_DRAIN, HeatDrainParticle.Factory::new);
         registerFactory(FParticleTypes.WIND, WindParticle.Factory::new);
+        registerFactory(FParticleTypes.WIND_FLIPPED, WindParticle.Factory::new);
     }
 
     private static <T extends ParticleEffect> void registerFactory(ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {

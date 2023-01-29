@@ -13,9 +13,15 @@ public class WindParticleEffect implements ParticleEffect {
 
     public static final Factory FACTORY = new Factory();
 
+    private final boolean flipped;
+
+    public WindParticleEffect(boolean flipped) {
+        this.flipped = flipped;
+    }
+
     @Override
     public ParticleType<?> getType() {
-        return FParticleTypes.WIND;
+        return this.flipped ? FParticleTypes.WIND_FLIPPED : FParticleTypes.WIND;
     }
 
     @Override
@@ -35,12 +41,12 @@ public class WindParticleEffect implements ParticleEffect {
 
         @Override
         public WindParticleEffect read(ParticleType<WindParticleEffect> type, StringReader reader) {
-            return new WindParticleEffect();
+            return new WindParticleEffect(type == FParticleTypes.WIND_FLIPPED);
         }
 
         @Override
         public WindParticleEffect read(ParticleType<WindParticleEffect> type, PacketByteBuf buf) {
-            return new WindParticleEffect();
+            return new WindParticleEffect(type == FParticleTypes.WIND_FLIPPED);
         }
     }
 }
