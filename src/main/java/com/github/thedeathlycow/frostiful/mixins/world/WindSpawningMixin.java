@@ -1,17 +1,11 @@
 package com.github.thedeathlycow.frostiful.mixins.world;
 
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.util.registry.RegistryEntry;
 import net.minecraft.util.registry.RegistryKey;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
@@ -43,37 +37,10 @@ public abstract class WindSpawningMixin extends World {
             )
     )
     private void tickWindSpawn(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
-
-        if (!Frostiful.getConfig().freezingConfig.doWindSpawning()) {
-            return;
-        }
-
-        if (this.random.nextInt(this.isThundering() ? 50 : 100) != 0) {
-            return;
-        }
-
-        ChunkPos chunkPos = chunk.getPos();
-        BlockPos spawnPos = this.getTopPosition(
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-                this.getRandomPosInChunk(chunkPos.getStartX(), 0, chunkPos.getStartZ(), 15)
-        );
-
-        boolean spawnInAir = this.random.nextBoolean();
-        int y = spawnPos.getY();
-        if (spawnInAir) {
-            int diff = this.getTopY() - spawnPos.getY();
-            y += (int)this.random.nextTriangular(diff, diff);
-        }
-
-        boolean canSpawnOnGround = this.isRaining()
-                || this.getBiome(spawnPos).isIn(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
-
-        if (canSpawnOnGround || spawnInAir) {
-            FreezingWindEntity wind = FEntityTypes.FREEZING_WIND.create(this);
-            wind.setPosition(spawnPos.getX(), y, spawnPos.getZ());
-            this.spawnEntity(wind);
-        }
-
+        Profiler profiler = this.getProfiler();
+        profiler.push("frostiful_freezingWindTick");
+        FreezingWindEntity.trySpawnFreezingWind(this, chunk);
+        profiler.pop();
     }
 
 }
