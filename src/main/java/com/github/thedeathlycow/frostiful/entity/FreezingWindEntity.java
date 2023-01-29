@@ -8,6 +8,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -51,10 +52,10 @@ public class FreezingWindEntity extends Entity {
         );
 
         boolean spawnInAir = world.random.nextBoolean();
+        int y = spawnPos.getY();
         if (spawnInAir) {
             int diff = world.getTopY() - spawnPos.getY();
-            int yoffset = (int)world.random.nextTriangular(diff, diff);
-            spawnPos.up(yoffset);
+            y += (int)world.random.nextTriangular(diff, diff);
         }
 
         var biome = world.getBiome(spawnPos);
@@ -64,7 +65,7 @@ public class FreezingWindEntity extends Entity {
         if (canSpawnOnGround || spawnInAir) {
             FreezingWindEntity wind = FEntityTypes.FREEZING_WIND.create(world);
             if (wind != null) {
-                wind.setPosition(spawnPos.getX(), spawnPos.getY(), spawnPos.getZ());
+                wind.setPosition(spawnPos.getX(), y, spawnPos.getZ());
                 world.spawnEntity(wind);
             }
         }
@@ -181,7 +182,7 @@ public class FreezingWindEntity extends Entity {
 
     private void checkCollidingEntities() {
         int frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
-        for (var victim : this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
+        for (var victim : this.world.getNonSpectatingEntities(PlayerEntity.class, this.getBoundingBox())) {
             FrostHelper.addLivingFrost(victim, frost);
         }
     }
