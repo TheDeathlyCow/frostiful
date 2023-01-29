@@ -70,7 +70,7 @@ public class FEntityTypes {
             .build();
 
     public static final EntityType<FreezingWindEntity> FREEZING_WIND = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MISC,
+                    SpawnGroup.AMBIENT,
                     FreezingWindEntity::new
             )
             .dimensions(EntityDimensions.fixed(2.0f, 2.0f))

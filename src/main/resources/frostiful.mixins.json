@@ -34,7 +34,8 @@
 		"entity.soaking.WaterPotionSoakingMixin",
 		"item.ArmorItemMixin",
 		"server.IcicleGrowthMixin",
-		"world.spawner.PatrolSpawnerMixin"
+		"world.spawner.PatrolSpawnerMixin",
+		"world.spawner.WindSpawningMixin"
 	],
 	"client": [
 		"client.DrippingWetPlayerMixin",

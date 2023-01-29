@@ -8,6 +8,8 @@ import net.minecraft.world.biome.Biome;
 
 public class FBiomeTags {
 
+    public static final TagKey<Biome> FREEZING_WIND_ALWAYS_SPAWNS = FBiomeTags.register("freezing_wind_always_spawns");
+
     public static TagKey<Biome> register(String id) {
         return TagKey.of(Registry.BIOME_KEY, new Identifier(Frostiful.MODID, id));
     }

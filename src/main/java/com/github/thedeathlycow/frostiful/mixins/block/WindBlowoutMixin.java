@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -22,9 +23,12 @@ public abstract class WindBlowoutMixin {
     private void onCollideWithFreezingTorch(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!world.isClient && entity.getType() == FEntityTypes.FREEZING_WIND) {
 
+            @Nullable
             BlockState blownOutState;
 
-            if (state.isIn(BlockTags.CANDLES)) {
+            if (state.isIn(BlockTags.FIRE)) {
+                blownOutState = Blocks.AIR.getDefaultState();
+            } else if (state.isIn(BlockTags.CANDLES)) {
                 blownOutState = state.with(CandleBlock.LIT, false);
             } else if (state.isIn(BlockTags.CANDLE_CAKES)) {
                 blownOutState = state.with(CandleCakeBlock.LIT, false);
@@ -32,8 +36,7 @@ public abstract class WindBlowoutMixin {
                 blownOutState = FrozenTorchBlock.freezeTorch(state);
             }
 
-
-            if (!blownOutState.isAir()) {
+            if (blownOutState != null) {
                 world.setBlockState(pos, blownOutState);
             }
         }

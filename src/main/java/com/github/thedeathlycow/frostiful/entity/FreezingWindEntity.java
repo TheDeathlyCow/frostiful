@@ -6,11 +6,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
-import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.server.command.WeatherCommand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -28,6 +28,10 @@ public class FreezingWindEntity extends Entity {
         super(type, world);
         this.setNoGravity(true);
         this.setLifeTicks(LIFE_TICKS.get(this.random));
+    }
+
+    public boolean isFireImmune() {
+        return true;
     }
 
     public float getWindSpeed() {
@@ -54,14 +58,17 @@ public class FreezingWindEntity extends Entity {
             return;
         }
 
-        Vec3d velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+        if (this.isOnFire()) {
+            this.extinguish();
+        }
 
-        float pathAroundSpeed = this.windSpeed / 3;
+        Vec3d velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+        
         if (this.horizontalCollision) {
-            velocity = Vec3d.ZERO.add(0, pathAroundSpeed, 0);
+            velocity = Vec3d.ZERO.add(0, this.windSpeed, 0);
         }
         if (this.verticalCollision) {
-            velocity = Vec3d.ZERO.add(0, 0, pathAroundSpeed);
+            velocity = Vec3d.ZERO.add(0, 0, this.windSpeed);
         }
 
         this.setVelocity(velocity);

@@ -6,6 +6,7 @@ import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class FrozenTorchBlock extends TorchBlock {
     public FrozenTorchBlock(Settings settings) {
@@ -17,6 +18,7 @@ public class FrozenTorchBlock extends TorchBlock {
         // frozen torches have no flame
     }
 
+    @Nullable
     public static BlockState freezeTorch(BlockState state) {
         Block block = state.getBlock();
         if (block instanceof TorchBlock) {
@@ -34,7 +36,7 @@ public class FrozenTorchBlock extends TorchBlock {
                 return FBlocks.FROZEN_TORCH.getStateWithProperties(state);
             }
         } else {
-            return Blocks.AIR.getDefaultState();
+            return null;
         }
     }
 }

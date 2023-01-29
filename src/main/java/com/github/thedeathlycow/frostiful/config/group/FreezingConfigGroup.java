@@ -12,7 +12,7 @@ import net.minecraft.util.math.random.Random;
 public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
-
+    boolean doWindSpawning = true;
     float maxPassiveFreezingPercent = 1.0f;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
@@ -41,6 +41,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
+    }
+
+    public boolean doWindSpawning() {
+        return doWindSpawning;
     }
 
     public float getMaxPassiveFreezingPercent() {
