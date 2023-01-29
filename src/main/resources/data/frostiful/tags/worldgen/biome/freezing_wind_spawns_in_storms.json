@@ -7,6 +7,10 @@
             "required": false
         },
         {
+            "id": "#c:snowy",
+            "required": false
+        },
+        {
             "id": "#c:climate_cold",
             "required": false
         },
