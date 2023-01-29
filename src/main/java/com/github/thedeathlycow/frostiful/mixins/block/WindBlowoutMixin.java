@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.block;
 
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.tag.BlockTags;
@@ -22,6 +23,10 @@ public abstract class WindBlowoutMixin {
     )
     private void onCollideWithFreezingTorch(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
         if (!world.isClient && entity.getType() == FEntityTypes.FREEZING_WIND) {
+
+            if (!Frostiful.getConfig().freezingConfig.isWindDestroysTorches()) {
+                return;
+            }
 
             @Nullable
             BlockState blownOutState;

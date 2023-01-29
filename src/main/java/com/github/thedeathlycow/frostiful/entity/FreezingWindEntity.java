@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.entity.Entity;
@@ -10,7 +11,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.command.WeatherCommand;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -63,7 +63,7 @@ public class FreezingWindEntity extends Entity {
         }
 
         Vec3d velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
-        
+
         if (this.horizontalCollision) {
             velocity = Vec3d.ZERO.add(0, this.windSpeed, 0);
         }
@@ -139,8 +139,9 @@ public class FreezingWindEntity extends Entity {
     }
 
     private void checkCollidingEntities() {
+        int frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
         for (var victim : this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
-            FrostHelper.addLivingFrost(victim, 100);
+            FrostHelper.addLivingFrost(victim, frost);
         }
     }
 

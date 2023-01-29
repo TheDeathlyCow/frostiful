@@ -1,8 +1,5 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.util.FNbtHelper;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.MathHelper;
 
 public interface FreezableEntity {

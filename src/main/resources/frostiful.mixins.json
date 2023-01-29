@@ -35,7 +35,7 @@
 		"item.ArmorItemMixin",
 		"server.IcicleGrowthMixin",
 		"world.spawner.PatrolSpawnerMixin",
-		"world.spawner.WindSpawningMixin"
+		"world.WindSpawningMixin"
 	],
 	"client": [
 		"client.DrippingWetPlayerMixin",

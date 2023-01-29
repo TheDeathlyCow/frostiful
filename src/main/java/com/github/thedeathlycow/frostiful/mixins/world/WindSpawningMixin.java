@@ -1,7 +1,8 @@
-package com.github.thedeathlycow.frostiful.mixins.world.spawner;
+package com.github.thedeathlycow.frostiful.mixins.world;
 
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.world.ServerWorld;
@@ -42,6 +43,10 @@ public abstract class WindSpawningMixin extends World {
             )
     )
     private void tickWindSpawn(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
+
+        if (!Frostiful.getConfig().freezingConfig.doWindSpawning()) {
+            return;
+        }
 
         if (this.random.nextInt(this.isThundering() ? 50 : 100) != 0) {
             return;

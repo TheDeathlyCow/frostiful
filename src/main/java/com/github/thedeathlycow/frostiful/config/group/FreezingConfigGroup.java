@@ -13,6 +13,7 @@ public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
     boolean doWindSpawning = true;
+    boolean windDestroysTorches = true;
     float maxPassiveFreezingPercent = 1.0f;
     double biomeTemperatureMultiplier = 4.0;
     double passiveFreezingStartTemp = 0.25;
@@ -45,6 +46,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doWindSpawning() {
         return doWindSpawning;
+    }
+
+    public boolean isWindDestroysTorches() {
+        return windDestroysTorches;
     }
 
     public float getMaxPassiveFreezingPercent() {
