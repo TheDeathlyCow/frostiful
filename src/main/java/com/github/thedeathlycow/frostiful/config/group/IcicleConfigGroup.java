@@ -15,7 +15,7 @@ public class IcicleConfigGroup implements ConfigData {
     int frostArrowFreezeAmount = 1000;
     int thrownIcicleFreezeAmount = 1500;
     int icicleCollisionFreezeAmount = 3000;
-    int maxLightLevelToForm = 10;
+    int maxLightLevelToForm = 8;
     float thrownIcicleDamage = 1.0f;
     float thrownIcicleExtraDamage = 3.0f;
 

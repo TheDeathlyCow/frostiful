@@ -36,7 +36,7 @@ public class Frostiful implements ModInitializer {
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    public static final int CONFIG_VERSION = 1;
+    public static final int CONFIG_VERSION = 2;
 
     @Override
     public void onInitialize() {
