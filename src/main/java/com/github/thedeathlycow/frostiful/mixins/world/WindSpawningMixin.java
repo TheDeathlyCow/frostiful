@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.world;
 
-import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
+import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
 import net.minecraft.entity.Entity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
@@ -39,7 +39,7 @@ public abstract class WindSpawningMixin extends World {
     private void tickWindSpawn(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
         Profiler profiler = this.getProfiler();
         profiler.push("frostiful_freezingWindTick");
-        FreezingWindEntity.trySpawnFreezingWind(this, chunk);
+        WindSpawner.trySpawnFreezingWind(this, chunk);
         profiler.pop();
     }
 
