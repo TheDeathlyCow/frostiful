@@ -28,7 +28,7 @@ public class WindEntity extends Entity {
 
     private static final IntProvider LIFE_TICKS = UniformIntProvider.create(80, 140);
     private static final Vec3d REGULAR_PUSH = new Vec3d(-0.16, 0, 0);
-    private static final Vec3d ELYTRA_PUSH = new Vec3d(-1.5, 0, 0);
+    private static final Vec3d ELYTRA_PUSH = new Vec3d(-1.75, 0, 0);
 
     private static final Predicate<Entity> CAN_BE_BLOWN = EntityPredicates.EXCEPT_SPECTATOR
             .and(EntityPredicates.VALID_ENTITY)

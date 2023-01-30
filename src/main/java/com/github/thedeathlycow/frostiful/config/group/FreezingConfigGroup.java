@@ -38,7 +38,7 @@ public class FreezingConfigGroup implements ConfigData {
     float dryBiomeNightTemperature = 0.0f;
     boolean doDryBiomeNightFreezing = true;
 
-    int freezingWindFrost = 80;
+    int freezingWindFrost = 160;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
