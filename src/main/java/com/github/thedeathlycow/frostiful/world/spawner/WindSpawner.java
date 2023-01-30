@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.entity.WindEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
@@ -26,9 +27,10 @@ public class WindSpawner {
             return null;
         }
 
-        if (world.random.nextInt(world.isThundering() ? 50 : 200) != 0) {
+        if (world.random.nextInt(world.isThundering() ? 100 : 400) != 0) {
             return null;
         }
+
 
         ChunkPos chunkPos = chunk.getPos();
         BlockPos spawnPos = world.getTopPosition(
@@ -50,15 +52,11 @@ public class WindSpawner {
         if (canSpawnOnGround || spawnInAir) {
             W wind = type.create(world);
             if (wind != null) {
-
                 if (spawnInAir) {
                     wind.setLifeTicks(wind.getLifeTicks() * 3);
                 }
-
                 wind.setPosition(spawnPos.getX(), y, spawnPos.getZ());
-                world.spawnEntity(wind);
-
-                return wind;
+                return world.spawnEntity(wind) ? wind : null;
             }
         }
 

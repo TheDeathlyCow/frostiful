@@ -21,8 +21,6 @@ import java.util.function.Supplier;
 @Mixin(ServerWorld.class)
 public abstract class WindSpawningMixin extends World {
 
-    @Shadow public abstract boolean spawnEntity(Entity entity);
-
     protected WindSpawningMixin(MutableWorldProperties properties, RegistryKey<World> registryRef, RegistryEntry<DimensionType> dimension, Supplier<Profiler> profiler, boolean isClient, boolean debugWorld, long seed, int maxChainedNeighborUpdates) {
         super(properties, registryRef, dimension, profiler, isClient, debugWorld, seed, maxChainedNeighborUpdates);
     }
@@ -38,7 +36,7 @@ public abstract class WindSpawningMixin extends World {
     )
     private void tickWindSpawn(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
         Profiler profiler = this.getProfiler();
-        profiler.push("frostiful_freezingWindTick");
+        profiler.push("frostiful.freezingWindTick");
         WindSpawner.trySpawnFreezingWind(this, chunk);
         profiler.pop();
     }

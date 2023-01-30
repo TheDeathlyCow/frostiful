@@ -1,8 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
-import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,22 +13,18 @@ import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
-import net.minecraft.world.chunk.WorldChunk;
 
 import java.util.function.Predicate;
 
 public class WindEntity extends Entity {
 
     private static final IntProvider LIFE_TICKS = UniformIntProvider.create(80, 140);
-    private static final Vec3d REGULAR_PUSH = new Vec3d(-0.1, 0, 0);
-    private static final Vec3d ELYTRA_PUSH = new Vec3d(-1, 0, 0);
+    private static final Vec3d REGULAR_PUSH = new Vec3d(-0.16, 0, 0);
+    private static final Vec3d ELYTRA_PUSH = new Vec3d(-1.5, 0, 0);
 
     private static final Predicate<Entity> CAN_BE_BLOWN = EntityPredicates.EXCEPT_SPECTATOR
             .and(EntityPredicates.VALID_ENTITY)
@@ -55,6 +49,9 @@ public class WindEntity extends Entity {
             return;
         }
 
+        var profiler = this.world.getProfiler();
+        profiler.push("windTick");
+
         if (this.isOnFire()) {
             this.extinguish();
         }
@@ -72,8 +69,10 @@ public class WindEntity extends Entity {
         this.scheduleVelocityUpdate();
         this.move(MovementType.SELF, this.getVelocity());
 
-        if (!this.world.isClient && this.age % 2 == 0) {
+        if (!this.world.isClient && this.age % 5 == 0) {
+            profiler.push("windCollision");
             this.checkCollidingEntities();
+            profiler.pop();
         }
 
         if (this.world.isClient) {
@@ -107,6 +106,8 @@ public class WindEntity extends Entity {
         if (this.lifeTicks <= 0) {
             this.discard();
         }
+
+        profiler.pop();
     }
 
     public boolean isFireImmune() {
