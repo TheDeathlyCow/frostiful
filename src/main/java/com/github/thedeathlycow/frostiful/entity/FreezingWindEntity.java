@@ -8,7 +8,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
@@ -25,6 +24,8 @@ import net.minecraft.world.chunk.WorldChunk;
 public class FreezingWindEntity extends Entity {
 
     private static final IntProvider LIFE_TICKS = UniformIntProvider.create(80, 140);
+    private static final Vec3d REGULAR_PUSH = new Vec3d(-0.1, 0, 0);
+    private static final Vec3d ELYTRA_PUSH = new Vec3d(-1, 0, 0);
 
     private float windSpeed = 0.2f;
 
@@ -55,7 +56,7 @@ public class FreezingWindEntity extends Entity {
         int y = spawnPos.getY();
         if (spawnInAir) {
             int diff = world.getTopY() - spawnPos.getY();
-            y += (int)world.random.nextTriangular(diff, diff);
+            y += (int) world.random.nextTriangular(diff, diff);
         }
 
         var biome = world.getBiome(spawnPos);
@@ -114,6 +115,7 @@ public class FreezingWindEntity extends Entity {
         }
 
         this.setVelocity(velocity);
+        this.scheduleVelocityUpdate();
         this.move(MovementType.SELF, this.getVelocity());
 
         if (!this.world.isClient && this.age % 5 == 0) {
@@ -182,8 +184,14 @@ public class FreezingWindEntity extends Entity {
 
     private void checkCollidingEntities() {
         int frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
-        for (var victim : this.world.getNonSpectatingEntities(PlayerEntity.class, this.getBoundingBox())) {
-            FrostHelper.addLivingFrost(victim, frost);
+        for (var victim : this.world.getNonSpectatingEntities(LivingEntity.class, this.getBoundingBox())) {
+            if (victim.isPlayer()) {
+                FrostHelper.addLivingFrost(victim, frost);
+            }
+
+            Vec3d push = victim.isFallFlying() ? ELYTRA_PUSH : REGULAR_PUSH;
+            victim.addVelocity(push.x, push.y, push.z);
+            victim.velocityModified = true;
         }
     }
 
