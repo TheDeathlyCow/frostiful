@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -10,9 +11,12 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -139,6 +143,17 @@ public class WindEntity extends Entity {
         Vec3d push = entity.isFallFlying() ? ELYTRA_PUSH : REGULAR_PUSH;
         entity.addVelocity(push.x, push.y, push.z);
         entity.velocityModified = true;
+
+        if (!this.world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {
+            serverPlayer.networkHandler
+                    .sendPacket(new PlaySoundIdS2CPacket(
+                            FSoundEvents.ENTITY_WIND_HOWL.getId(),
+                            SoundCategory.WEATHER,
+                            this.getPos(),
+                            1.0f, 1.0f,
+                            this.world.getRandom().nextLong()
+                    ));
+        }
     }
 
     protected ParticleEffect getDustParticle() {

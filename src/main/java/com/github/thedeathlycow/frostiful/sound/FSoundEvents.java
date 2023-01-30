@@ -38,6 +38,10 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_BITER_BITE = FSoundEvents.of("entity.frostiful.biter.bite");
     public static final SoundEvent ENTITY_BITER_BURP = FSoundEvents.of("entity.frostiful.biter.burp");
 
+    public static final SoundEvent ENTITY_WIND_BLOW = FSoundEvents.of("entity.frostiful.wind.generic.blow");
+    public static final SoundEvent ENTITY_WIND_HOWL = FSoundEvents.of("entity.frostiful.wind.generic.howl");
+
+
 
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
@@ -71,6 +75,9 @@ public class FSoundEvents {
         register(ENTITY_BITER_HURT);
         register(ENTITY_BITER_BITE);
         register(ENTITY_BITER_BURP);
+
+        register(ENTITY_WIND_BLOW);
+        register(ENTITY_WIND_HOWL);
     }
 
     private static SoundEvent of(String name) {

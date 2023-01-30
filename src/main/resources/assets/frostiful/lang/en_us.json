@@ -107,6 +107,8 @@
   "subtitles.entity.frostiful.biter.hurt": "Biter hurts",
   "subtitles.entity.frostiful.biter.bite": "Biter chomps",
   "subtitles.entity.frostiful.biter.burp": "Biter burps",
+  "subtitles.entity.frostiful.wind.generic.blow": "Wind rustles",
+  "subtitles.entity.frostiful.wind.generic.howl": "Wind howls",
   "effect.frostiful.frost_bite": "Frost Bite",
   "effect.frostiful.warmth": "Warmth",
   "enchantment.frostiful.enervation": "Enervation",

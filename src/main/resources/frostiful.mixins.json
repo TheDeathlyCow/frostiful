@@ -34,8 +34,8 @@
 		"entity.soaking.WaterPotionSoakingMixin",
 		"item.ArmorItemMixin",
 		"server.IcicleGrowthMixin",
-		"world.spawner.PatrolSpawnerMixin",
-		"world.WindSpawningMixin"
+		"world.WindSpawningMixin",
+		"world.spawner.PatrolSpawnerMixin"
 	],
 	"client": [
 		"client.DrippingWetPlayerMixin",
@@ -45,6 +45,7 @@
 		"client.entity_renderer.ShakingRendererMixin",
 		"client.gui.FrostVinetteOverlay",
 		"client.gui.RootedEffectOverlay",
+		"client.sound.SpawnSoundMixin",
 		"compat.healthoverlay.absent.ColdHeartOverlay",
 		"compat.healthoverlay.present.ColdHeartOverlay"
 	],

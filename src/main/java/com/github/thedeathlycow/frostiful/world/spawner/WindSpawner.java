@@ -6,7 +6,6 @@ import com.github.thedeathlycow.frostiful.entity.WindEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.SpawnGroup;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;

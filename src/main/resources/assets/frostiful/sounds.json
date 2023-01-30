@@ -263,5 +263,28 @@
 			}
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.burp"
+	},
+	"entity.frostiful.wind.generic.blow": {
+		"sounds": [
+			"frostiful:entity/wind/blow1",
+			"frostiful:entity/wind/blow2",
+			"frostiful:entity/wind/blow3",
+			"frostiful:entity/wind/blow4",
+			"frostiful:entity/wind/blow5",
+			"frostiful:entity/wind/blow6"
+		],
+		"subtitle": "subtitles.entity.frostiful.wind.generic.blow"
+	},
+	"entity.frostiful.wind.generic.howl": {
+		"sounds": [
+			"frostiful:entity/wind/howl1",
+			"frostiful:entity/wind/howl2",
+			"frostiful:entity/wind/howl3",
+			"frostiful:entity/wind/howl4",
+			"frostiful:entity/wind/howl5",
+			"frostiful:entity/wind/howl6",
+			"frostiful:entity/wind/howl7"
+		],
+		"subtitle": "subtitles.entity.frostiful.wind.generic.howl"
 	}
 }
