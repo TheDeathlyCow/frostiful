@@ -9,8 +9,10 @@ import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.state.property.Properties;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -32,6 +34,10 @@ public abstract class WindBlowoutMixin {
                 return;
             }
 
+            if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+                return;
+            }
+
             if (state.isIn(FBlockTags.FROZEN_TORCHES)) {
                 return; // dont need to freeze frozen torches
             }
@@ -41,10 +47,12 @@ public abstract class WindBlowoutMixin {
 
             if (state.isIn(BlockTags.FIRE)) {
                 blownOutState = Blocks.AIR.getDefaultState();
-            } else if (state.isIn(BlockTags.CANDLES)) {
-                blownOutState = state.with(CandleBlock.LIT, false);
-            } else if (state.isIn(BlockTags.CANDLE_CAKES)) {
-                blownOutState = state.with(CandleCakeBlock.LIT, false);
+            } else if (
+                    state.isIn(FBlockTags.HAS_OPEN_FLAME)
+                            && state.contains(Properties.LIT)
+                            && state.get(Properties.LIT)
+            ) {
+                blownOutState = state.with(Properties.LIT, false);
             } else {
                 blownOutState = FrozenTorchBlock.freezeTorch(state);
             }
