@@ -272,12 +272,35 @@
 	},
 	"entity.frostiful.wind.generic.blow": {
 		"sounds": [
-			"frostiful:entity/wind/blow1",
-			"frostiful:entity/wind/blow2",
-			"frostiful:entity/wind/blow3",
-			"frostiful:entity/wind/blow4",
-			"frostiful:entity/wind/blow5",
-			"frostiful:entity/wind/blow6"
+			"frostiful:entity/wind/whistle",
+			{
+				"name": "frostiful:entity/wind/howl1",
+				"volume": 0.5
+			},
+			{
+				"name": "frostiful:entity/wind/howl2",
+				"volume": 0.5
+			},
+			{
+				"name": "frostiful:entity/wind/howl3",
+				"volume": 0.5
+			},
+			{
+				"name": "frostiful:entity/wind/howl4",
+				"volume": 0.5
+			},
+			{
+				"name": "frostiful:entity/wind/howl5",
+				"volume": 0.5
+			},
+			{
+				"name": "frostiful:entity/wind/howl6",
+				"volume": 0.5
+			},
+			{
+				"name": "frostiful:entity/wind/howl7",
+				"volume": 0.5
+			}
 		],
 		"subtitle": "subtitles.entity.frostiful.wind.generic.blow"
 	},
@@ -292,5 +315,14 @@
 			"frostiful:entity/wind/howl7"
 		],
 		"subtitle": "subtitles.entity.frostiful.wind.generic.howl"
+	},
+	"entity.frostiful.freezing_wind.blowout": {
+		"sounds": [
+			{
+				"name": "minecraft:random/fizz",
+				"volume": 0.1
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.freezing_wind.blowout"
 	}
 }

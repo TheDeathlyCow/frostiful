@@ -19,11 +19,13 @@ public class SpawnSoundMixin {
 
     @Inject(
             method = "playSpawnSound",
-            at = @At("HEAD")
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void onPlaySpawnSound(Entity entity, CallbackInfo ci) {
         if (entity instanceof WindEntity windEntity) {
-            this.client.getSoundManager().play(new WindSoundInstance(windEntity));
+            this.client.getSoundManager().playNextTick(new WindSoundInstance(windEntity));
+            ci.cancel();
         }
     }
 

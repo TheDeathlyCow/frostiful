@@ -13,6 +13,7 @@ public class FBlockTags {
     public static final TagKey<Block> COVERED_ROCK_COVERING_REPLACEABLE = register("covered_rock_covering_replaceable");
     public static final TagKey<Block> SUN_LICHENS = register("sun_lichens");
     public static final TagKey<Block> FROSTOLOGER_CANNOT_FREEZE = register("frostologer_cannot_freeze");
+    public static final TagKey<Block> FROZEN_TORCHES = register("frozen_torches");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registry.BLOCK_KEY, Frostiful.id(id));

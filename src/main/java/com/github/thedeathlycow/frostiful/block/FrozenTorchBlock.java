@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.block;
 
+import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.tag.BlockTags;
@@ -21,7 +22,7 @@ public class FrozenTorchBlock extends TorchBlock {
     @Nullable
     public static BlockState freezeTorch(BlockState state) {
         Block block = state.getBlock();
-        if (block instanceof TorchBlock) {
+        if (block instanceof TorchBlock && !state.isIn(FBlockTags.FROZEN_TORCHES)) {
 
             // Some wall torches (like redstone wall torch) don't extend WallTorchBlock, and so the only way to determine
             // if they are a wall torch is to check if they don't have the wall post override tag. It's not nice, but it's

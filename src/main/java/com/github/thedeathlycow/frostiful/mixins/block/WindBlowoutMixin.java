@@ -3,8 +3,12 @@ package com.github.thedeathlycow.frostiful.mixins.block;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import net.minecraft.block.*;
 import net.minecraft.entity.Entity;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.tag.BlockTags;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -28,6 +32,10 @@ public abstract class WindBlowoutMixin {
                 return;
             }
 
+            if (state.isIn(FBlockTags.FROZEN_TORCHES)) {
+                return; // dont need to freeze frozen torches
+            }
+
             @Nullable
             BlockState blownOutState;
 
@@ -43,6 +51,9 @@ public abstract class WindBlowoutMixin {
 
             if (blownOutState != null) {
                 world.setBlockState(pos, blownOutState);
+
+                entity.playSound(FSoundEvents.ENTITY_FREEZING_WIND_BLOWOUT, 1.0f, 1.0f);
+
             }
         }
     }

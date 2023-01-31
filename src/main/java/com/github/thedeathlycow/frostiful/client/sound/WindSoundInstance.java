@@ -15,18 +15,34 @@ public class WindSoundInstance extends MovingSoundInstance {
 
     public WindSoundInstance(WindEntity wind) {
         super(FSoundEvents.ENTITY_WIND_BLOW, SoundCategory.WEATHER, SoundInstance.createRandom());
-
         this.wind = wind;
+
+        this.x = wind.getX();
+        this.y = wind.getY();
+        this.z = wind.getZ();
+        this.repeat = true;
+        this.repeatDelay = 0;
+    }
+
+    @Override
+    public boolean canPlay() {
+        return !this.wind.isSilent();
     }
 
     @Override
     public void tick() {
         if (wind.isRemoved()) {
+            this.setDone();
             return;
         }
 
         this.x = this.wind.getX();
         this.y = this.wind.getY();
         this.z = this.wind.getZ();
+    }
+
+    @Override
+    public boolean shouldAlwaysPlay() {
+        return true;
     }
 }
