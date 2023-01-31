@@ -22,6 +22,7 @@ public class FSoundEvents {
     public static final SoundEvent BLOCK_PACKED_SNOW_STEP = FSoundEvents.of("block.frostiful.packed_snow.step");
 
     public static final SoundEvent ENTITY_FROSTOLOGER_CAST_SPELL = FSoundEvents.of("entity.frostiful.frostologer.cast_spell");
+    public static final SoundEvent ENTITY_FROSTOLOGER_PREPARE_CAST_BLIZZARD = FSoundEvents.of("entity.frostiful.frostologer.prepare_cast.blizzard");
     public static final SoundEvent ENTITY_FROSTOLOGER_AMBIENT = FSoundEvents.of("entity.frostiful.frostologer.ambient");
     public static final SoundEvent ENTITY_FROSTOLOGER_CELEBRATE = FSoundEvents.of("entity.frostiful.frostologer.celebrate");
     public static final SoundEvent ENTITY_FROSTOLOGER_DEATH = FSoundEvents.of("entity.frostiful.frostologer.death");
@@ -57,6 +58,7 @@ public class FSoundEvents {
         register(BLOCK_PACKED_SNOW_STEP);
 
         register(ENTITY_FROSTOLOGER_CAST_SPELL);
+        register(ENTITY_FROSTOLOGER_PREPARE_CAST_BLIZZARD);
         register(ENTITY_FROSTOLOGER_AMBIENT);
         register(ENTITY_FROSTOLOGER_CELEBRATE);
         register(ENTITY_FROSTOLOGER_DEATH);

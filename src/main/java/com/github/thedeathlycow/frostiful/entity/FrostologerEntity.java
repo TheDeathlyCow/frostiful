@@ -594,7 +594,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         @Nullable
         @Override
         protected SoundEvent getSoundPrepare() {
-            return SoundEvents.ITEM_ELYTRA_FLYING;
+            return FSoundEvents.ENTITY_FROSTOLOGER_PREPARE_CAST_BLIZZARD;
         }
 
         @Override

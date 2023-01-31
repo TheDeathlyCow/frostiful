@@ -111,6 +111,12 @@
 		],
 		"subtitle": "subtitles.entity.frostiful.frostologer.cast_spell"
 	},
+	"entity.frostiful.frostologer.prepare_cast.blizzard": {
+		"sounds": [
+			"frostiful:mob/frostologer/blow"
+		],
+		"subtitle": "subtitles.entity.frostiful.frostologer.prepare_cast.blizzard"
+	},
 	"entity.frostiful.frostologer.death": {
 		"sounds": [
 			"mob/illusion_illager/death1",
