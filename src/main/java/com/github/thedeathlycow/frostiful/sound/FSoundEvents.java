@@ -41,6 +41,7 @@ public class FSoundEvents {
 
     public static final SoundEvent ENTITY_WIND_BLOW = FSoundEvents.of("entity.frostiful.wind.generic.blow");
     public static final SoundEvent ENTITY_WIND_HOWL = FSoundEvents.of("entity.frostiful.wind.generic.howl");
+    public static final SoundEvent ENTITY_WIND_WOOSH = FSoundEvents.of("entity.frostiful.wind.generic.woosh");
     public static final SoundEvent ENTITY_FREEZING_WIND_BLOWOUT = FSoundEvents.of("entity.frostiful.freezing_wind.blowout");
 
 
@@ -81,6 +82,7 @@ public class FSoundEvents {
 
         register(ENTITY_WIND_BLOW);
         register(ENTITY_WIND_HOWL);
+        register(ENTITY_WIND_WOOSH);
         register(ENTITY_FREEZING_WIND_BLOWOUT);
     }
 

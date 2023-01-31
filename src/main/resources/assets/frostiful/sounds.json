@@ -272,7 +272,6 @@
 	},
 	"entity.frostiful.wind.generic.blow": {
 		"sounds": [
-			"frostiful:entity/wind/whistle",
 			{
 				"name": "frostiful:entity/wind/howl1",
 				"volume": 0.5
@@ -316,11 +315,16 @@
 		],
 		"subtitle": "subtitles.entity.frostiful.wind.generic.howl"
 	},
+	"entity.frostiful.wind.generic.woosh": {
+		"sounds": [
+			"frostiful:entity/wind/woosh"
+		]
+	},
 	"entity.frostiful.freezing_wind.blowout": {
 		"sounds": [
-			{
-				"name": "minecraft:random/fizz",
-				"volume": 0.1
+			{	
+				"name": "random/fizz",
+				"volume": 0.5
 			}
 		],
 		"subtitle": "subtitles.entity.frostiful.freezing_wind.blowout"

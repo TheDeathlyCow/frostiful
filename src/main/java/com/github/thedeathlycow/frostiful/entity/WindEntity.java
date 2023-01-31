@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.Packet;
@@ -26,9 +27,10 @@ import java.util.function.Predicate;
 
 public class WindEntity extends Entity {
 
-    private static final IntProvider LIFE_TICKS = UniformIntProvider.create(80, 140);
+    private static final IntProvider LIFE_TICKS_PROVIDER = UniformIntProvider.create(80, 140);
     private static final Vec3d REGULAR_PUSH = new Vec3d(-0.16, 0, 0);
     private static final Vec3d ELYTRA_PUSH = new Vec3d(-1.75, 0, 0);
+
 
     private static final Predicate<Entity> CAN_BE_BLOWN = EntityPredicates.EXCEPT_SPECTATOR
             .and(EntityPredicates.VALID_ENTITY)
@@ -41,7 +43,7 @@ public class WindEntity extends Entity {
     public WindEntity(EntityType<? extends WindEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
-        this.setLifeTicks(LIFE_TICKS.get(this.random));
+        this.setLifeTicks(LIFE_TICKS_PROVIDER.get(this.random));
     }
 
 
@@ -108,7 +110,7 @@ public class WindEntity extends Entity {
 
         this.lifeTicks--;
         if (this.lifeTicks <= 0) {
-            this.discard();
+            this.dissipate();
         }
 
         profiler.pop();
@@ -132,6 +134,24 @@ public class WindEntity extends Entity {
 
     public void setLifeTicks(int lifeTicks) {
         this.lifeTicks = lifeTicks;
+    }
+
+    protected void dissipate() {
+        this.playSound(FSoundEvents.ENTITY_WIND_WOOSH, 1.0f, 1.0f);
+        if (this.world.isClient) {
+            ParticleEffect particle = this.getDustParticle();
+            for (int i = 0; i < 20; ++i) {
+                double vx = this.random.nextGaussian() * 0.02;
+                double vy = this.random.nextGaussian() * 0.02;
+                double vz = this.random.nextGaussian() * 0.02;
+                this.world.addParticle(
+                        particle,
+                        this.getParticleX(1.0), this.getRandomBodyY(), this.getParticleZ(1.0),
+                        vx, vy, vz
+                );
+            }
+        }
+        this.discard();
     }
 
     @Override

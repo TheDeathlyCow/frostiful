@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.sound.MovingSoundInstance;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class WindSoundInstance extends MovingSoundInstance {
@@ -22,6 +23,7 @@ public class WindSoundInstance extends MovingSoundInstance {
         this.z = wind.getZ();
         this.repeat = true;
         this.repeatDelay = 0;
+        this.volume = 0.0f;
     }
 
     @Override
@@ -39,6 +41,13 @@ public class WindSoundInstance extends MovingSoundInstance {
         this.x = this.wind.getX();
         this.y = this.wind.getY();
         this.z = this.wind.getZ();
+
+        float speed = (float)this.wind.getVelocity().horizontalLength();
+        if (speed >= 0.01f) {
+            this.volume = MathHelper.lerp(1 / speed, 0.0f, 1.2f);
+        } else {
+            this.volume = 0.0f;
+        }
     }
 
     @Override
