@@ -10,6 +10,7 @@ public class CombatConfigGroup implements ConfigData {
 
 
     boolean doChillagerPatrols = true;
+    boolean straysCarryFrostArrows = true;
     int heatDrainPerLevel = 210;
 
     double heatDrainEfficiency = 0.5;
@@ -42,6 +43,10 @@ public class CombatConfigGroup implements ConfigData {
 
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
+    }
+
+    public boolean straysCarryFrostArrows() {
+        return straysCarryFrostArrows;
     }
 
     public int getHeatDrainPerLevel() {

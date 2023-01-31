@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.HostileEntity;
@@ -27,6 +28,11 @@ public abstract class StrayCarriesFrostArrowMixin extends PathAwareEntity {
             cancellable = true
     )
     private void straysHaveFrostArrows(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+
+        if (!Frostiful.getConfig().combatConfig.straysCarryFrostArrows()) {
+            return;
+        }
+
         if (this.getType() == EntityType.STRAY && stack.getItem() instanceof RangedWeaponItem rangedWeaponItem) {
             Predicate<ItemStack> isItemAmmoTest = rangedWeaponItem.getHeldProjectiles();
             ItemStack heldStack = RangedWeaponItem.getHeldProjectile(this, isItemAmmoTest);

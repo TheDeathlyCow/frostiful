@@ -135,6 +135,7 @@
   
   "text.autoconfig.frostiful.option.combatConfig": "Combat Config",
   "text.autoconfig.frostiful.option.combatConfig.doChillagerPatrols": "Do chillager patrols",
+  "text.autoconfig.frostiful.option.combatConfig.straysCarryFrostArrows": "Strays carry frost arrows",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Heat drain per level of Enervation",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainEfficiency": "Enervation heat drain efficiency",
   "text.autoconfig.frostiful.option.combatConfig.iceBreakerDamagePerLevel": "Ice Breaker damage per level",
