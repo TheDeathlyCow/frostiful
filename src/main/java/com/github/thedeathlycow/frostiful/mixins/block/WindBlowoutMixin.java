@@ -46,7 +46,7 @@ public abstract class WindBlowoutMixin {
             BlockState blownOutState;
 
             if (state.isIn(FBlockTags.IS_OPEN_FLAME)) {
-                blownOutState = Blocks.AIR.getDefaultState();
+                blownOutState = state.getFluidState().getBlockState();
             } else if (
                     state.isIn(FBlockTags.HAS_OPEN_FLAME)
                             && state.contains(Properties.LIT)
