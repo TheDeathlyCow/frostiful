@@ -45,7 +45,7 @@ public abstract class WindBlowoutMixin {
             @Nullable
             BlockState blownOutState;
 
-            if (state.isIn(BlockTags.FIRE)) {
+            if (state.isIn(FBlockTags.IS_OPEN_FLAME)) {
                 blownOutState = Blocks.AIR.getDefaultState();
             } else if (
                     state.isIn(FBlockTags.HAS_OPEN_FLAME)

@@ -85,7 +85,7 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
             // set attack pitch
             float pitch;
             if (attackTicks > BiterEntity.ATTACK_TIME / 2) {
-                pitch = MathHelper.sin( (attackTicks - tickDelta) / 4.0f) * MathHelper.PI * 0.4f;
+                pitch = MathHelper.sin((attackTicks - tickDelta) / 4.0f) * MathHelper.PI * 0.4f;
             } else {
                 pitch = (MathHelper.PI / 20) * MathHelper.sin(MathHelper.PI * (attackTicks - tickDelta) / 10.0f);
             }

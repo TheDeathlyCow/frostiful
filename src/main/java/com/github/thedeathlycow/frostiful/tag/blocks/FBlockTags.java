@@ -15,6 +15,7 @@ public class FBlockTags {
     public static final TagKey<Block> FROSTOLOGER_CANNOT_FREEZE = register("frostologer_cannot_freeze");
     public static final TagKey<Block> FROZEN_TORCHES = register("frozen_torches");
     public static final TagKey<Block> HAS_OPEN_FLAME = register("has_open_flame");
+    public static final TagKey<Block> IS_OPEN_FLAME = register("is_open_flame");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(Registry.BLOCK_KEY, Frostiful.id(id));
