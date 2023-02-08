@@ -1,6 +1,8 @@
 {
   "attribute.frostiful.generic.frost_resistance": "Frost Resistance",
   "attribute.frostiful.generic.max_frost": "Max Frost",
+
+
   "itemGroup.frostiful.frostiful": "Frostiful",
   "item.frostiful.frost_wand": "Frost Wand",
   "item.frostiful.fur_helmet": "Fur Hood",
@@ -21,6 +23,7 @@
   "item.frostiful.packed_snowball": "Packed Snowball",
   "item.frostiful.frostology_cloak": "Cloak of Frostology",
   "item.frostiful.frostology_cloak.tooltip": "Become Ice-like",
+
   "item.minecraft.potion.effect.frostiful.freezing": "Potion of Freezing",
   "item.minecraft.potion.effect.frostiful.freezing_long": "Potion of Freezing",
   "item.minecraft.potion.effect.frostiful.freezing_strong": "Potion of Freezing",
@@ -33,6 +36,8 @@
   "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Arrow of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing_long": "Arrow of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing_strong": "Arrow of Freezing",
+
+
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
@@ -54,6 +59,8 @@
   "block.frostiful.cut_blue_ice_stairs": "Cut Blue Ice Stairs",
   "block.frostiful.cut_blue_ice_slab": "Cut Blue Ice Slab",
   "block.frostiful.cut_blue_ice_wall": "Cut Blue Ice Wall",
+
+
   "entity.frostiful.frost_spell": "Frost Spell",
   "entity.frostiful.packed_snowball": "Packed Snowball",
   "entity.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
@@ -62,6 +69,8 @@
   "entity.frostiful.thrown_icicle": "Thrown Icicle",
   "entity.frostiful.biter": "Biter",
   "entity.frostiful.freezing_wind": "Freezing Wind",
+
+
   "frostiful.commands.frost.exception.not_living_entity": "Target is not a living entity!",
   "commands.frostiful.get.progress.success": "The freezing scale of %s is %d",
   "commands.frostiful.frost.add.success": "Added %d frost to %s (now %d)",
@@ -71,21 +80,29 @@
   "commands.frostiful.frost.get.max.success": "%s can have a maximum of %d frost",
   "commands.frostiful.root.set.success.single": "Rooted %s for %s ticks",
   "commands.frostiful.root.set.success.multiple": "Rooted %s targets for %s ticks",
+  
+
   "gamerule.frostiful.doPassiveFreezing": "Do passive freezing",
   "gamerule.maxSnowAccumulation": "Max snow accumulation",
   "gamerule.category.frostiful": "Frostiful",
+
+
   "advancements.frostiful.adventure.fur_armor.title": "A Fur Suit",
   "advancements.frostiful.adventure.fur_armor.description": "Obtain a full suit of Fur Armor",
   "advancements.frostiful.adventure.chain_fur_armor.title": "Chained Up",
   "advancements.frostiful.adventure.chain_fur_armor.description": "Obtain a full suit of Fur Padded Chainmail Armor",
   "advancements.frostiful.add_log_to_fire.title": "Timber on the Hearth",
   "advancements.frostiful.add_log_to_fire.desc": "Add a log to a campfire",
+
+
   "death.attack.frostiful.icicle": "%1$s was impaled on an icicle",
   "death.attack.frostiful.icicle.player": "%1$s was impaled on an icicle whilst fighting %2$s",
   "death.attack.frostiful.fallingIcicle": "%1$s was skewered by a falling icicle",
   "death.attack.frostiful.fallingIcicle.player": "%1$s was skewered by a falling icicle whilst fighting %2$s",
   "death.attack.frostiful.melt": "%1$s melted",
   "death.attack.frostiful.melt.player": "%1$s was turned into a puddle by %2$s",
+
+
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "subtitles.frostiful.block.campfire.hiss": "Campfire hisses",
   "subtitles.item.frostiful.frost_wand.cast_spell": "Frost wand fires spell",
@@ -111,11 +128,16 @@
   "subtitles.entity.frostiful.wind.generic.blow": "Wind rustles",
   "subtitles.entity.frostiful.wind.generic.howl": "Wind howls",
   "subtitles.entity.frostiful.freezing_wind.blowout": "Fire blows out",
+
+
   "effect.frostiful.frost_bite": "Frost Bite",
   "effect.frostiful.warmth": "Warmth",
+
+  
   "enchantment.frostiful.enervation": "Enervation",
   "enchantment.frostiful.ice_breaker": "Ice Breaker",
   "enchantment.frostiful.frozen_touch_curse": "Curse of Frozen Touch",
+  
   
   "frostiful.tip.freezing_wind_extinguishes_fire": "Freezing Wind will blow out open flames",
   "frostiful.tip.stay_warm_near_light": "Keep by staying near artificial light (torches, glowstone)",
