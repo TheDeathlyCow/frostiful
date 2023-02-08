@@ -6,10 +6,12 @@ import com.github.thedeathlycow.frostiful.entity.WindEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.EntityType;
+import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
 import org.jetbrains.annotations.Nullable;
 
@@ -17,12 +19,28 @@ public class WindSpawner {
 
     @Nullable
     public static FreezingWindEntity trySpawnFreezingWind(World world, WorldChunk chunk) {
-        return trySpawn(world, chunk, FEntityTypes.FREEZING_WIND);
+        return trySpawn(
+                world,
+                chunk,
+                FEntityTypes.FREEZING_WIND,
+                FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS,
+                FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS
+        );
     }
 
     @Nullable
-    public static <W extends WindEntity> W trySpawn(World world, WorldChunk chunk, EntityType<W> type) {
+    public static <W extends WindEntity> W trySpawn(
+            World world,
+            WorldChunk chunk,
+            EntityType<W> type,
+            TagKey<Biome> alwaysSpawnBiomes,
+            TagKey<Biome> spawnInStormsBiomes
+    ) {
         if (!Frostiful.getConfig().freezingConfig.doWindSpawning()) {
+            return null;
+        }
+
+        if (!world.getDimension().natural()) {
             return null;
         }
 
@@ -45,8 +63,8 @@ public class WindSpawner {
         }
 
         var biome = world.getBiome(spawnPos);
-        boolean canSpawnOnGround = (world.isRaining() && biome.isIn(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
-                || biome.isIn(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
+        boolean canSpawnOnGround = (world.isRaining() && biome.isIn(spawnInStormsBiomes))
+                || biome.isIn(alwaysSpawnBiomes);
 
         if (canSpawnOnGround || spawnInAir) {
             W wind = type.create(world);

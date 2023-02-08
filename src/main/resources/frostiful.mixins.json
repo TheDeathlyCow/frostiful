@@ -45,7 +45,6 @@
 		"client.entity_renderer.ShakingRendererMixin",
 		"client.gui.FrostVinetteOverlay",
 		"client.gui.RootedEffectOverlay",
-		"client.sound.SpawnSoundMixin",
 		"compat.healthoverlay.absent.ColdHeartOverlay",
 		"compat.healthoverlay.present.ColdHeartOverlay"
 	],

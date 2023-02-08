@@ -8,6 +8,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.vehicle.BoatEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.Packet;
@@ -72,13 +73,17 @@ public class WindEntity extends Entity {
         }
 
         this.setVelocity(velocity);
-        this.scheduleVelocityUpdate();
         this.move(MovementType.SELF, this.getVelocity());
+        if (!this.world.isClient) {
+            if (this.age % 30 == 0) {
+                this.playSound(FSoundEvents.ENTITY_WIND_BLOW, 0.75f, 0.9f + this.random.nextFloat() / 3);
+            }
 
-        if (!this.world.isClient && this.age % 5 == 0) {
-            profiler.push("windCollision");
-            this.checkCollidingEntities();
-            profiler.pop();
+            if (this.age % 5 == 0) {
+                profiler.push("windCollision");
+                this.checkCollidingEntities();
+                profiler.pop();
+            }
         }
 
         if (this.world.isClient) {
