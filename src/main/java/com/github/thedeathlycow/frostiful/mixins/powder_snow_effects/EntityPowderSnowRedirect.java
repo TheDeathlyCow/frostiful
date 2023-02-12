@@ -9,6 +9,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/**
+ * Exists for compatibility reasons with other mods that may want to change the TicksFrozen of an entity.
+ * The change is assumed to be an active change, and is scaled up by the min temperature of the entity before
+ * being applied to their temperature.
+ */
 @Mixin(Entity.class)
 public abstract class EntityPowderSnowRedirect {
 
