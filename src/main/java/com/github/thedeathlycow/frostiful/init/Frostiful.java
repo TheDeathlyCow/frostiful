@@ -12,14 +12,16 @@ import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
-import com.github.thedeathlycow.frostiful.server.command.FrostCommand;
 import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffectLoader;
-import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffects;
+import com.github.thedeathlycow.frostiful.survival.FTemperatureEffects;
+import com.github.thedeathlycow.frostiful.survival.LivingEntityThermooEventListeners;
+import com.github.thedeathlycow.frostiful.survival.PlayerEventThermooListeners;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
+import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntityEnvironmentEvents;
+import com.github.thedeathlycow.thermoo.api.temperature.event.PlayerEnvironmentEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
@@ -46,19 +48,17 @@ public class Frostiful implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {
                     FrostifulCommand.register(dispatcher);
-                    FrostCommand.register(dispatcher);
+                    // FrostCommand.register(dispatcher);
                     RootCommand.register(dispatcher);
                 });
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-        TemperatureEffects.registerAll();
+        FTemperatureEffects.registerAll();
 
         ResourceManagerHelper serverManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
 
-        serverManager.registerReloadListener(TemperatureEffectLoader.INSTANCE);
         serverManager.registerReloadListener(ItemAttributeLoader.INSTANCE);
 
-        FEntityAttributes.registerAttributes();
         FDamageSource.registerDamageSources();
         FBlocks.registerBlocks();
         FItems.registerItems();
@@ -71,7 +71,22 @@ public class Frostiful implements ModInitializer {
         FParticleTypes.registerParticleTypes();
         FPotions.register();
 
+        this.registerThermooEventListeners();
+
         LOGGER.info("Initialized Frostiful!");
+    }
+
+    private void registerThermooEventListeners() {
+        PlayerEventThermooListeners player = new PlayerEventThermooListeners();
+
+        PlayerEnvironmentEvents.TICK_COLD_BIOME_TEMPERATURE_CHANGE.register(player::applyPassiveFreezing);
+
+        LivingEntityThermooEventListeners entity = new LivingEntityThermooEventListeners();
+
+        LivingEntityEnvironmentEvents.TICK_IN_HEATED_LOCATION.register(entity::tickHeatSources);
+        LivingEntityEnvironmentEvents.TICK_HEAT_EFFECT_TEMPERATURE_CHANGE.register(entity::tickHeatEffects);
+        LivingEntityEnvironmentEvents.TICK_IN_WET_LOCATION.register(entity::tickWetChange);
+
     }
 
     public static FrostifulConfig getConfig() {

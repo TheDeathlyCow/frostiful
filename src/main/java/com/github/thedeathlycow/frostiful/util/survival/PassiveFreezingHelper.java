@@ -14,6 +14,7 @@ import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 
+@Deprecated
 public class PassiveFreezingHelper {
 
     public static int getPassiveFreezing(PlayerEntity player) {

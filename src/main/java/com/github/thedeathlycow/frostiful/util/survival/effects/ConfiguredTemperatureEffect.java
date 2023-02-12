@@ -16,6 +16,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 
+@Deprecated
 public class ConfiguredTemperatureEffect<C> {
 
     private final TemperatureEffect<C> type;

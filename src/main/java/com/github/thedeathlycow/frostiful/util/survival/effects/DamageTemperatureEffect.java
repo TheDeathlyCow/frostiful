@@ -9,6 +9,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.server.world.ServerWorld;
 
+@Deprecated
 public class DamageTemperatureEffect extends TemperatureEffect<DamageTemperatureEffect.Config> {
 
 

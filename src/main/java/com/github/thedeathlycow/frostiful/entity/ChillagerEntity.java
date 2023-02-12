@@ -1,21 +1,17 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import net.minecraft.entity.EntityData;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PillagerEntity;
-import net.minecraft.entity.mob.WitchEntity;
-import net.minecraft.entity.passive.VillagerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.Difficulty;
@@ -28,8 +24,8 @@ public class ChillagerEntity extends PillagerEntity {
 
     public static DefaultAttributeContainer.Builder createChillagerAttributes() {
         return PillagerEntity.createPillagerAttributes()
-                .add(FEntityAttributes.MAX_FROST, 45.0)
-                .add(FEntityAttributes.FROST_RESISTANCE, 10.0);
+                .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
+                .add(ThermooAttributes.FROST_RESISTANCE, 10.0);
     }
 
     @Override

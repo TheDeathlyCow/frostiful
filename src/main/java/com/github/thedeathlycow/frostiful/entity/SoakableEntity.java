@@ -5,6 +5,7 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.util.math.MathHelper;
 
+@Deprecated
 public interface SoakableEntity {
 
     String WET_KEY = "TicksWet";

@@ -6,6 +6,7 @@ import com.google.gson.JsonParseException;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.world.ServerWorld;
 
+@Deprecated
 public abstract class TemperatureEffect<C> {
 
     public TemperatureEffect() {

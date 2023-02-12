@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity.effect;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
@@ -14,10 +15,10 @@ public class FStatusEffects {
     public static final String FROST_BITE_MODIFIER_ID = "bd9f5aa5-584a-4700-a9ea-e1063dbd45cb";
 
     public static final StatusEffect WARMTH = new SimpleStatusEffect(StatusEffectCategory.BENEFICIAL, 0xE3963E)
-            .addAttributeModifier(FEntityAttributes.FROST_RESISTANCE, WARMTH_MODIFIER_ID, 1.0, EntityAttributeModifier.Operation.ADDITION);
+            .addAttributeModifier(ThermooAttributes.FROST_RESISTANCE, WARMTH_MODIFIER_ID, 1.0, EntityAttributeModifier.Operation.ADDITION);
 
     public static final StatusEffect FROST_BITE = new SimpleStatusEffect(StatusEffectCategory.HARMFUL, 0x4287F5)
-            .addAttributeModifier(FEntityAttributes.FROST_RESISTANCE, FROST_BITE_MODIFIER_ID, -1.0, EntityAttributeModifier.Operation.ADDITION);
+            .addAttributeModifier(ThermooAttributes.FROST_RESISTANCE, FROST_BITE_MODIFIER_ID, -1.0, EntityAttributeModifier.Operation.ADDITION);
 
 
     public static void registerStatusEffects() {

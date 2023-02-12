@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.item;
 
 import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FrostResistantArmorMaterial;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
 import net.minecraft.entity.EquipmentSlot;
@@ -44,7 +45,7 @@ public class ArmorItemMixin {
             this.attributeModifiers.forEach(builder::put);
 
             builder.put(
-                    FEntityAttributes.FROST_RESISTANCE,
+                    ThermooAttributes.FROST_RESISTANCE,
                     new EntityAttributeModifier(
                             uUID,
                             "Armor frost resistance",

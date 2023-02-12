@@ -1,12 +1,13 @@
 package com.github.thedeathlycow.frostiful.util.survival;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.util.survival.effects.ConfiguredTemperatureEffect;
 import com.github.thedeathlycow.frostiful.util.survival.effects.TemperatureEffectLoader;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.MathHelper;
 
+@Deprecated
 public class FrostHelper {
 
     public static int addLivingFrost(LivingEntity entity, int amount) {
@@ -17,7 +18,7 @@ public class FrostHelper {
         double frostModifier = 0.0D;
 
         if (applyFrostResistance) {
-            double frostResistance = entity.getAttributeValue(FEntityAttributes.FROST_RESISTANCE);
+            double frostResistance = entity.getAttributeValue(ThermooAttributes.FROST_RESISTANCE);
             frostModifier = frostResistance * 10.0;
             frostModifier /= 100.0D;
         }

@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import net.minecraft.util.math.MathHelper;
 
+@Deprecated
 public interface FreezableEntity {
 
     String FROSTIFUL_KEY = "Frostiful";

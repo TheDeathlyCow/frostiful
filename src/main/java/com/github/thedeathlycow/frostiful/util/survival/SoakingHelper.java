@@ -9,6 +9,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.LightType;
 
+@Deprecated
 public class SoakingHelper {
 
     public static int getWetnessChange(PlayerEntity player) {

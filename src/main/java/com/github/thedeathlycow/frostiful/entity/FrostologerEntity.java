@@ -1,7 +1,5 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
-import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
@@ -11,9 +9,13 @@ import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -24,7 +26,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.IllagerEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.SpellcastingIllagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,7 +44,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -86,8 +90,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 12.0)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 75.0)
-                .add(FEntityAttributes.MAX_FROST, 45.0)
-                .add(FEntityAttributes.FROST_RESISTANCE, -5.0);
+                .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
+                .add(ThermooAttributes.FROST_RESISTANCE, -5.0);
     }
 
     public static boolean isHeatSource(BlockState state) {

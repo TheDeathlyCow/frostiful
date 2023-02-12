@@ -10,6 +10,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.*;
 
+@Deprecated
 public final class TemperatureEffectLoader implements SimpleSynchronousResourceReloadListener {
 
     public static final TemperatureEffectLoader INSTANCE = new TemperatureEffectLoader(

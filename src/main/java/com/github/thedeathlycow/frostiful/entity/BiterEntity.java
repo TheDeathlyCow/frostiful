@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -51,7 +51,7 @@ public class BiterEntity extends HostileEntity {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 14.0)
                 .add(EntityAttributes.GENERIC_ATTACK_DAMAGE, 4.0)
-                .add(FEntityAttributes.MAX_FROST, 45.0);
+                .add(ThermooAttributes.MIN_TEMPERATURE, 45.0);
     }
 
     @Override
