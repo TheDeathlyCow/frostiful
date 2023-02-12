@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.item;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.item.FrostResistantArmorMaterial;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.google.common.collect.ImmutableMultimap;

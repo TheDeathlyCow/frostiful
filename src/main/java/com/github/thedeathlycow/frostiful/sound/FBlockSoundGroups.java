@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.sound;
 
 import net.minecraft.sound.BlockSoundGroup;
-import net.minecraft.sound.SoundEvents;
 
 public final class FBlockSoundGroups {
 

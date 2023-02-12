@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.tag.items;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;

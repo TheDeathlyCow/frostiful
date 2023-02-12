@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.init;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.FEnchantments;

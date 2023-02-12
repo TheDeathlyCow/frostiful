@@ -8,7 +8,9 @@ import net.minecraft.util.Identifier;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 @Deprecated
 public final class TemperatureEffectLoader implements SimpleSynchronousResourceReloadListener {

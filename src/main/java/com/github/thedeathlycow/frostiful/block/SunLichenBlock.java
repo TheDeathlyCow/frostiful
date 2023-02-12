@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;

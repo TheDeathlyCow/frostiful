@@ -11,7 +11,7 @@ import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.util.FeatureContext;
 
-import java.util.*;
+import java.util.Optional;
 
 
 public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {

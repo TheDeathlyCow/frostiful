@@ -4,8 +4,6 @@ import com.github.thedeathlycow.frostiful.util.survival.PassiveFreezingHelper;
 import com.github.thedeathlycow.frostiful.util.survival.SoakingHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.entity.Entity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;

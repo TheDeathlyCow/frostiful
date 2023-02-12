@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.entity.effect;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.attribute.EntityAttributeModifier;

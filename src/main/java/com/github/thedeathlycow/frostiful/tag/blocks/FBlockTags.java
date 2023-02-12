@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.tag.blocks;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.block.Block;
 import net.minecraft.tag.TagKey;
-import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class FBlockTags {

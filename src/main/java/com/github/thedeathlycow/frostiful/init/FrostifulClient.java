@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.init;
 import com.github.thedeathlycow.frostiful.block.FCutouts;
 import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.FrostWandItemRenderer;
-import com.github.thedeathlycow.frostiful.client.model.FrostWandItemModel;
 import com.github.thedeathlycow.frostiful.client.render.entity.FEntityRenderers;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.particle.client.FParticleFactoryRegistry;
@@ -12,7 +11,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 
