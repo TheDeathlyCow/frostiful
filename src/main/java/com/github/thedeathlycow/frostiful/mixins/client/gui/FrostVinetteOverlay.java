@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
@@ -66,8 +65,13 @@ public abstract class FrostVinetteOverlay {
     )
     private void renderPowderSnowOverlayAtThreshold(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         assert this.client.player != null;
-        final FreezableEntity entity = (FreezableEntity) this.client.player;
-        float freezeScale = entity.frostiful$getFrostProgress();
+        float freezeScale = this.client.player.thermoo$getTemperatureScale();
+        if (freezeScale > 0) {
+            return;
+        }
+        freezeScale = -freezeScale;
+
+
         FrostifulConfig config = Frostiful.getConfig();
         float renderThreshold = config.clientConfig.getFrostOverlayStart();
 

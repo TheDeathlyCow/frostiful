@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.soaking;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
@@ -36,10 +35,9 @@ public abstract class WaterPotionSoakingMixin extends ThrownItemEntity {
         float soakPercent = config.freezingConfig.getSoakPercentFromWaterPotion();
 
         for (var player : players) {
-            SoakableEntity soakable = (SoakableEntity) player;
-            int soakAmount = (int) (soakable.frostiful$getMaxWetTicks() * soakPercent);
-            soakAmount += soakable.frostiful$getWetTicks();
-            soakable.frostiful$setWetTicks(soakAmount);
+            int soakAmount = (int) (player.thermoo$getMaxWetTicks() * soakPercent);
+            soakAmount += player.thermoo$getWetTicks();
+            player.thermoo$setWetTicks(soakAmount);
         }
     }
 

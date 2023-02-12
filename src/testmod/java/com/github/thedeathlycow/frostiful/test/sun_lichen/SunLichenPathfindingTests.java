@@ -1,8 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.sun_lichen;
 
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -66,17 +65,13 @@ public final class SunLichenPathfindingTests {
         context.setTime(1000);
         final BlockPos start = new BlockPos(1, 2, 1);
         final BlockPos end = new BlockPos(10, 2, 7);
-        final int freezeAmount = 1000;
+        final int freezeAmount = -1000;
 
         final MobEntity entity = context.spawnMob(toSpawn, start);
-        entity.thermoo$addTemperature(-freezeAmount, HeatingModes.ABSOLUTE);
-        context.expectEntityWithData(start, EntityType.VILLAGER, (e) -> {
-            return ((FreezableEntity) e).frostiful$getCurrentFrost();
-        }, freezeAmount);
+        entity.thermoo$addTemperature(freezeAmount, HeatingModes.ABSOLUTE);
+        context.expectEntityWithData(start, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, freezeAmount);
         context.startMovingTowards(entity, end, 0.7f);
 
-        context.expectEntityWithDataEnd(end, EntityType.VILLAGER, (e) -> {
-            return ((FreezableEntity) e).frostiful$getCurrentFrost();
-        }, freezeAmount);
+        context.expectEntityWithDataEnd(end, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, freezeAmount);
     }
 }

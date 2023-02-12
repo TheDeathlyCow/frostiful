@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.test.sun_lichen;
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
@@ -70,21 +70,17 @@ public final class SunLichenCollisionTests implements FabricGameTest {
 
     private static void doWarmVillagerTest(TestContext context, Block block) {
         final BlockPos pos = new BlockPos(1, 2, 1);
-        final int freezeAmount = 1000;
+        final int freezeAmount = -1000;
         final int level = ((SunLichenBlock) block).getHeatLevel();
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        final FreezableEntity freezable = (FreezableEntity) entity;
-        final Function<VillagerEntity, Integer> frostGetter = (e) -> {
-            final FreezableEntity f = (FreezableEntity) e;
-            return f.frostiful$getCurrentFrost();
-        };
+        final Function<VillagerEntity, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
 
-        freezable.frostiful$setFrost(freezeAmount);
+        entity.thermoo$setTemperature(freezeAmount);
         context.expectEntityWithData(pos, EntityType.VILLAGER, frostGetter, freezeAmount);
 
         context.setBlockState(pos, block.getDefaultState());
         FrostifulConfig config = Frostiful.getConfig();
-        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, frostGetter, freezeAmount - level * config.freezingConfig.getSunLichenHeatPerLevel());
+        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, frostGetter, freezeAmount + level * config.freezingConfig.getSunLichenHeatPerLevel());
     }
 }

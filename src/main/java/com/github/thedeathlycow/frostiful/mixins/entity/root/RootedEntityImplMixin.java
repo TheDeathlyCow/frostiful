@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
@@ -66,7 +65,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             return false;
         }
 
-        return ((FreezableEntity) instance).frostiful$canFreeze();
+        return instance.thermoo$canFreeze();
     }
 
     @Inject(
