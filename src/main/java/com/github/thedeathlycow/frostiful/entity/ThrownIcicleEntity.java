@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
@@ -54,7 +54,8 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
         super.onHit(target);
         IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
         int freezeAmount = config.getFrostArrowFreezeAmount();
-        FrostHelper.addLivingFrost(target, freezeAmount);
+
+        target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
     }
 
     @Override

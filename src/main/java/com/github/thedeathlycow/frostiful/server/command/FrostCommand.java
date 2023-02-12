@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -163,9 +162,9 @@ public class FrostCommand {
     private static int runAdjust(ServerCommandSource source, Entity target, int amount, boolean applyFrostResistance, boolean isRemoving) throws CommandSyntaxException {
         if (target instanceof LivingEntity livingEntity) {
             if (!isRemoving) {
-                FrostHelper.addLivingFrost(livingEntity, amount, applyFrostResistance);
+//                FrostHelper.addLivingFrost(livingEntity, amount, applyFrostResistance);
             } else {
-                FrostHelper.removeLivingFrost(livingEntity, amount);
+//                FrostHelper.removeLivingFrost(livingEntity, amount);
             }
         } else {
             throw NOT_LIVING_ENTITY.create();
@@ -180,7 +179,7 @@ public class FrostCommand {
     private static int runSet(ServerCommandSource source, Entity target, int amount) throws CommandSyntaxException {
 
         if (target instanceof LivingEntity livingEntity) {
-            FrostHelper.setFrost(livingEntity, amount);
+//            FrostHelper.setFrost(livingEntity, amount);
         } else {
             throw NOT_LIVING_ENTITY.create();
         }

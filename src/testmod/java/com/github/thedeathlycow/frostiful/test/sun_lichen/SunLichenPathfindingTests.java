@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.test.sun_lichen;
 
 import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
@@ -68,7 +69,7 @@ public final class SunLichenPathfindingTests {
         final int freezeAmount = 1000;
 
         final MobEntity entity = context.spawnMob(toSpawn, start);
-        FrostHelper.addLivingFrost(entity, freezeAmount, false);
+        entity.thermoo$addTemperature(-freezeAmount, HeatingModes.ABSOLUTE);
         context.expectEntityWithData(start, EntityType.VILLAGER, (e) -> {
             return ((FreezableEntity) e).frostiful$getCurrentFrost();
         }, freezeAmount);

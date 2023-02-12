@@ -8,8 +8,8 @@ import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -241,7 +241,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         FrostifulConfig config = Frostiful.getConfig();
         if (this.getFreezingScale() < config.combatConfig.getFrostologerMaxPassiveFreezing()) {
-            FrostHelper.addLivingFrost(this, config.combatConfig.getFrostologerPassiveFreezingPerTick());
+            this.thermoo$addTemperature(
+                    -config.combatConfig.getFrostologerPassiveFreezingPerTick(),
+                    HeatingModes.PASSIVE
+            );
         }
     }
 
@@ -551,7 +554,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
-                FrostHelper.addLivingFrost(victim, heatDrain);
+
+                victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
 
                 if (serverWorld != null) {
                     EnervationEnchantment.addHeatDrainParticles(

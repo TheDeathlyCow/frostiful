@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.nbt.NbtCompound;
@@ -22,7 +22,7 @@ public class FreezingWindEntity extends WindEntity {
     public void onEntityCollision(LivingEntity entity) {
         super.onEntityCollision(entity);
         if (entity.isPlayer()) {
-            FrostHelper.addLivingFrost(entity, this.frost);
+            entity.thermoo$addTemperature(-this.frost, HeatingModes.ACTIVE);
         }
     }
 

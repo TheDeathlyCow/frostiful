@@ -22,6 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 public interface RootedEntity {
 
+    String FROSTIFUL_KEY = "Frostiful";
     String ROOTED_KEY = "RootedTicks";
 
     int frostiful$getRootedTicks();
@@ -85,7 +86,7 @@ public interface RootedEntity {
     static void frostiful$addRootedTicksToNbt(RootedEntity entity, NbtCompound nbt) {
         NbtCompound frostifulNbt = FNbtHelper.getOrDefault(
                 nbt,
-                FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
+                FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
                 NbtCompound::getCompound,
                 FNbtHelper.NEW_COMPOUND_FALLBACK
         );
@@ -93,13 +94,13 @@ public interface RootedEntity {
         if (entity.frostiful$isRooted()) {
             frostifulNbt.putInt(ROOTED_KEY, entity.frostiful$getRootedTicks());
         }
-        nbt.put(FreezableEntity.FROSTIFUL_KEY, frostifulNbt);
+        nbt.put(FROSTIFUL_KEY, frostifulNbt);
     }
 
     static void frostiful$setRootedTicksFromNbt(RootedEntity entity, NbtCompound nbt) {
         int amount = 0;
-        if (nbt.contains(FreezableEntity.FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE)) {
-            NbtCompound frostifulNbt = nbt.getCompound(FreezableEntity.FROSTIFUL_KEY);
+        if (nbt.contains(FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE)) {
+            NbtCompound frostifulNbt = nbt.getCompound(FROSTIFUL_KEY);
             if (frostifulNbt.contains(ROOTED_KEY, NbtElement.INT_TYPE)) {
                 amount = frostifulNbt.getInt(ROOTED_KEY);
             }

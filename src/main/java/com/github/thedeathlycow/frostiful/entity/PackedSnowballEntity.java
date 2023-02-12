@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
@@ -64,7 +64,10 @@ public class PackedSnowballEntity extends ThrownItemEntity {
         target.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
 
         if (target instanceof LivingEntity livingTarget) {
-            FrostHelper.addLivingFrost(livingTarget, config.getPackedSnowballFreezeAmount());
+            livingTarget.thermoo$addTemperature(
+                    -config.getPackedSnowballFreezeAmount(),
+                    HeatingModes.ACTIVE
+            );
         }
     }
 
