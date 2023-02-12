@@ -15,7 +15,6 @@
 		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",
 		"entity.LivingEntityFreezeDamageConfigMixin",
-		"entity.LivingEntityPowderSnowMixin",
 		"entity.PlayerEntityMixin",
 		"entity.mob.OcelotPlayFightMixin",
 		"entity.mob.PolarBearPlayFightMixin",
@@ -30,6 +29,8 @@
 		"entity.shearing.PolarBearShearingMixin",
 		"entity.soaking.WaterPotionSoakingMixin",
 		"item.ArmorItemMixin",
+		"powder_snow_effects.EntityPowderSnowRedirect",
+		"powder_snow_effects.LivingEntityPowderSnowDisabler",
 		"server.IcicleGrowthMixin",
 		"world.WindSpawningMixin",
 		"world.spawner.PatrolSpawnerMixin"

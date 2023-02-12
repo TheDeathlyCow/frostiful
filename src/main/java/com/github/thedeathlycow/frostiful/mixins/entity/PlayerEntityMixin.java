@@ -15,7 +15,7 @@ public abstract class PlayerEntityMixin {
             method = "createPlayerAttributes",
             at = @At("TAIL")
     )
-    private static void addFrostResistanceAttribute(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
+    private static void overrideDefaultMinimumTemperatureValue(CallbackInfoReturnable<DefaultAttributeContainer.Builder> cir) {
         DefaultAttributeContainer.Builder attributeBuilder = cir.getReturnValue();
         attributeBuilder.add(ThermooAttributes.MIN_TEMPERATURE, 45.0d);
     }
