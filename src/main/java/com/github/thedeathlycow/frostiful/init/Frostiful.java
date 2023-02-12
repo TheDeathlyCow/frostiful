@@ -47,7 +47,6 @@ public class Frostiful implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {
                     FrostifulCommand.register(dispatcher);
-                    // FrostCommand.register(dispatcher);
                     RootCommand.register(dispatcher);
                 });
 

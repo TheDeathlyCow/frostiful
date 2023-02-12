@@ -3,7 +3,7 @@
 	"slot": "chest",
 	"attribute_modifiers": [
 		{
-			"attribute": "frostiful:generic.frost_resistance",
+			"attribute": "thermoo:generic.frost_resistance",
 			"modifier": {
 				"uuid": "6b330e71-f106-43f4-a568-9042ae560c65",
 				"value": -3,

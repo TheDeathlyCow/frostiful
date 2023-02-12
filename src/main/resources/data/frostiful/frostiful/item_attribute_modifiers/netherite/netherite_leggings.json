@@ -3,7 +3,7 @@
 	"slot": "legs",
 	"attribute_modifiers": [
 		{
-			"attribute": "frostiful:generic.frost_resistance",
+			"attribute": "thermoo:generic.frost_resistance",
 			"modifier": {
 				"uuid": "215a4e56-3db0-45e7-a14c-82ebc3af86b5",
 				"value": 0.25,
