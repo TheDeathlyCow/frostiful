@@ -1,5 +1,5 @@
 {
-	"type": "thermoo:legacy_freeze_damage",
+	"type": "thermoo:freeze_damage_legacy",
 	"entity": {
 		"condition": "minecraft:reference",
 		"name": "frostiful:is_damaged_by_frost"

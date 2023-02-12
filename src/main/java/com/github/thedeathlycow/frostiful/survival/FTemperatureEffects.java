@@ -12,7 +12,7 @@ public class FTemperatureEffects {
     public static final TemperatureEffect<?> LEGACY_MELT_DAMAGE = new LegacyDamageTemperatureEffect(FDamageSource.MELT);
 
     public static void registerAll() {
-        register("legacy_melt_damage", LEGACY_MELT_DAMAGE);
+        register("melt_damage_legacy", LEGACY_MELT_DAMAGE);
     }
 
     private static void register(String name, TemperatureEffect<?> temperatureEffect) {
