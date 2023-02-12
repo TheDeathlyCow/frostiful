@@ -5,8 +5,8 @@
         "name": "frostiful:is_frostologer"
     },
 	"config": {
-		"progress_threshold": {
-			"min": 0.4
+		"temperature_scale_range": {
+			"max": -0.4
 		},
 		"amplifier": 0,
 		"duration": 20,

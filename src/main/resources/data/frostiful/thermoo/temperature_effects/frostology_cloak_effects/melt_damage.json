@@ -6,9 +6,9 @@
 	},
 	"config": {
 		"progress_threshold": {
-			"max": 0.01
+			"min": 0
 		},
 		"amount": 1,
-		"damage_period": 40
+		"damage_interval": 40
 	}
 }

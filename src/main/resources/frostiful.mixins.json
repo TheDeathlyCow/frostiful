@@ -10,6 +10,7 @@
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
+		"compat.healthoverlay.present.FreezingHearts",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",
@@ -42,6 +43,7 @@
 		"client.gui.FrostVinetteOverlay",
 		"client.gui.RootedEffectOverlay",
 		"compat.healthoverlay.absent.ColdHeartOverlay",
+		"compat.healthoverlay.absent.FreezingHearts",
 		"compat.healthoverlay.present.ColdHeartOverlay"
 	],
 	"injectors": {

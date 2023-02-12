@@ -5,8 +5,8 @@
         "name": "frostiful:can_freeze"
     },
 	"config": {
-		"progress_threshold": {
-			"min": 0.99
+		"temperature_scale_range": {
+			"max": -0.99
 		},
 		"amplifier": 1,
 		"duration": 20,
