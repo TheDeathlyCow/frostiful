@@ -103,6 +103,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         } else if (entity.isFireImmune()) {
             return false;
         } else {
+            // maybe when warmth mod is a thing, sun lichen can also warm if its loaded?
             return entity.thermoo$isCold();
         }
     }

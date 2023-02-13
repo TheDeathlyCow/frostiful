@@ -30,7 +30,8 @@ public final class PlayerEventThermooListeners {
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
         final boolean doPassiveFreezing = config.doPassiveFreezing()
                 && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING)
-                && player.thermoo$canFreeze();
+                && player.thermoo$canFreeze()
+                && player.thermoo$getTemperatureScale() > -config.getMaxPassiveFreezingPercent();
 
         if (doPassiveFreezing) {
             float modifier = getWetnessFreezeModifier(player);
