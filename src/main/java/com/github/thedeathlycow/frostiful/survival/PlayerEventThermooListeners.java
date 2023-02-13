@@ -7,6 +7,7 @@ import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.Soakable;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentChangeResult;
+import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -39,6 +40,13 @@ public final class PlayerEventThermooListeners {
 
             player.thermoo$addTemperature(temperatureChange, HeatingModes.PASSIVE);
             result.setAppliedChange();
+        }
+
+        boolean applyConduitPowerWarmth = player.thermoo$isCold()
+                && player.isSubmergedInWater()
+                && player.hasStatusEffect(StatusEffects.CONDUIT_POWER);
+        if (applyConduitPowerWarmth) {
+            player.thermoo$addTemperature(config.getConduitWarmthPerTick(), HeatingModes.PASSIVE);
         }
     }
 

@@ -19,8 +19,9 @@ public class FreezingConfigGroup implements ConfigData {
     int sunLichenHeatPerLevel = 500;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
-
     int freezingWindFrost = 160;
+    int conduitPowerWarmthPerTick = 12;
+
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -68,6 +69,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getFreezingWindFrost() {
         return freezingWindFrost;
+    }
+
+    public int getConduitWarmthPerTick() {
+        return conduitPowerWarmthPerTick;
     }
 
 }
