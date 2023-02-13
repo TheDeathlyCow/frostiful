@@ -9,7 +9,10 @@ import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.impl.Thermoo;
+import com.github.thedeathlycow.thermoo.impl.config.ThermooConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -95,12 +98,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     public static boolean isHeatSource(BlockState state) {
-        int minLightForWarmth = Frostiful.getConfig().freezingConfig.getMinLightForWarmth();
+        // FIXME: unsanctioned use of thermoo internals, find a better alternative
+        int minLightForWarmth = Thermoo.getConfig().environmentConfig.getMinLightForWarmth();
         return state.getLuminance() >= minLightForWarmth;
     }
 
     public boolean isInHeatedArea() {
-        int minLightForWarmth = Frostiful.getConfig().freezingConfig.getMinLightForWarmth();
+        // FIXME: unsanctioned use of thermoo internals, find a better alternative
+        int minLightForWarmth = Thermoo.getConfig().environmentConfig.getMinLightForWarmth();
         return this.world.getLightLevel(LightType.BLOCK, this.getBlockPos()) > minLightForWarmth;
     }
 

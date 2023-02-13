@@ -47,10 +47,6 @@ public class FreezingConfigGroup implements ConfigData {
         return MathHelper.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
     }
 
-    public int getMinLightForWarmth() {
-        return minLightForWarmth;
-    }
-
     public int getPowderSnowFreezeRate() {
         return powderSnowFreezeRate;
     }
