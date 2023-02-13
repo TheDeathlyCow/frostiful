@@ -100,8 +100,11 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     private boolean canBurn(LivingEntity entity) {
         if (entity.isSpectator() || (entity instanceof PlayerEntity player && player.isCreative())) {
             return false;
+        } else if (entity.isFireImmune()) {
+            return false;
+        } else {
+            return entity.thermoo$isCold();
         }
-        return !entity.isFireImmune();
     }
 
     private void playSound(World world, BlockPos pos) {
