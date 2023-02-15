@@ -9,20 +9,24 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
+import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class ItemAttributeModifier {
+
+    @Nullable
     private final Item item;
     private final EquipmentSlot slot;
     private final List<AttributeHolder> attributeModifiers;
 
 
     public ItemAttributeModifier(
-            Item item,
+            @Nullable Item item,
             EquipmentSlot slot,
             List<AttributeHolder> attributeModifiers
     ) {
@@ -32,11 +36,15 @@ public class ItemAttributeModifier {
     }
 
     public void apply(ItemStack stack, EquipmentSlot slot, Multimap<EntityAttribute, EntityAttributeModifier> attributeModifiers) {
-        if (stack.isOf(this.item) && slot == this.slot) {
+        if (this.item != null && stack.isOf(this.item) && slot == this.slot) {
             for (AttributeHolder holder : this.attributeModifiers) {
                 attributeModifiers.put(holder.attribute(), holder.modifier());
             }
         }
+    }
+
+    public boolean isItemPresent() {
+        return this.item != null;
     }
 
     public static class Serializer implements JsonDeserializer<ItemAttributeModifier> {
@@ -50,11 +58,7 @@ public class ItemAttributeModifier {
             JsonObject json = jsonElement.getAsJsonObject();
 
             // parse item
-            Identifier itemID = new Identifier(json.get("item").getAsString());
-            if (!Registry.ITEM.containsId(itemID)) {
-                throw new JsonSyntaxException("Unknown item '" + itemID + "'");
-            }
-            Item item = Registry.ITEM.get(itemID);
+            Item item = this.getItem(json.get("item"));
 
             // parse slot
 
@@ -82,6 +86,32 @@ public class ItemAttributeModifier {
             }
 
             return new ItemAttributeModifier(item, slot, attributeModifiers);
+        }
+
+        @Nullable
+        private Item getItem(JsonElement jsonElement) throws JsonSyntaxException {
+
+            String id;
+            boolean required = true;
+
+            if (jsonElement.isJsonPrimitive()) {
+                id = jsonElement.getAsString();
+            } else if (jsonElement.isJsonObject()) {
+                JsonObject json = jsonElement.getAsJsonObject();
+                id = json.get("item").getAsString();
+                required = json.get("required").getAsBoolean();
+            } else {
+                throw new JsonSyntaxException("Invalid JSON: " + jsonElement);
+            }
+
+            Identifier itemID = new Identifier(id);
+            Optional<Item> item = Registry.ITEM.getOrEmpty(itemID);
+
+            if (item.isEmpty() && required) {
+                throw new JsonSyntaxException("Unknown item '" + itemID + "'");
+            }
+
+            return item.orElse(null);
         }
     }
 }
