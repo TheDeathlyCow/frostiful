@@ -1,0 +1,19 @@
+{
+	"type": "thermoo:status_effect",
+	"entity": {
+		"condition": "minecraft:reference",
+		"name": "frostiful:can_freeze"
+	},
+	"temperature_scale_range": {
+		"max": -0.75
+	},
+	"config": {
+		"effects": [
+			{
+				"amplifier": 0,
+				"duration": 20,
+				"effect": "minecraft:mining_fatigue"
+			}
+		]
+	}
+}

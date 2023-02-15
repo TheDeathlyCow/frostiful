@@ -4,6 +4,9 @@
         "condition": "minecraft:reference",
         "name": "frostiful:is_frostologer"
     },
+	"temperature_scale_range": {
+		"max": 0
+	},
 	"config": {
 		"scale": -0.1,
 		"modifier_uuid": "ea305030-b7fa-4782-9682-9d55a0319237",

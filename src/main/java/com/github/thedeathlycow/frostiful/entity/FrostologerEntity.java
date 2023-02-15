@@ -97,16 +97,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .add(ThermooAttributes.FROST_RESISTANCE, -5.0);
     }
 
-    public static boolean isHeatSource(BlockState state) {
-        // FIXME: unsanctioned use of thermoo internals, find a better alternative
-        int minLightForWarmth = Thermoo.getConfig().environmentConfig.getMinLightForWarmth();
-        return state.getLuminance() >= minLightForWarmth;
-    }
-
     public boolean isInHeatedArea() {
-        // FIXME: unsanctioned use of thermoo internals, find a better alternative
-        int minLightForWarmth = Thermoo.getConfig().environmentConfig.getMinLightForWarmth();
-        return this.world.getLightLevel(LightType.BLOCK, this.getBlockPos()) > minLightForWarmth;
+        return EnvironmentController.INSTANCE.isAreaHeated(this.world, this.getBlockPos());
     }
 
     /**
@@ -292,7 +284,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
 
             BlockState blockState = this.world.getBlockState(blockPos);
-            if (isHeatSource(blockState)) {
+            if (EnvironmentController.INSTANCE.isHeatSource(blockState)) {
                 this.destroyHeatSource(serverWorld, blockState, blockPos);
             }
 
@@ -583,7 +575,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
                 BlockState state = FrostologerEntity.this.world.getBlockState(pos);
-                if (FrostologerEntity.isHeatSource(state) && world instanceof ServerWorld serverWorld) {
+                if (EnvironmentController.INSTANCE.isHeatSource(state) && world instanceof ServerWorld serverWorld) {
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }

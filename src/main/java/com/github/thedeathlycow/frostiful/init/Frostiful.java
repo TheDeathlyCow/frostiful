@@ -11,7 +11,6 @@ import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
-import com.github.thedeathlycow.frostiful.server.command.FrostifulCommand;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.FTemperatureEffects;
@@ -46,7 +45,6 @@ public class Frostiful implements ModInitializer {
 
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {
-                    FrostifulCommand.register(dispatcher);
                     RootCommand.register(dispatcher);
                 });
 
@@ -82,7 +80,7 @@ public class Frostiful implements ModInitializer {
         LivingEntityThermooEventListeners entity = new LivingEntityThermooEventListeners();
 
         LivingEntityEnvironmentEvents.TICK_IN_HEATED_LOCATION.register(entity::tickHeatSources);
-        LivingEntityEnvironmentEvents.TICK_HEAT_EFFECT_TEMPERATURE_CHANGE.register(entity::tickHeatEffects);
+        LivingEntityEnvironmentEvents.TICK_HEAT_EFFECTS.register(entity::tickHeatEffects);
         LivingEntityEnvironmentEvents.TICK_IN_WET_LOCATION.register(entity::tickWetChange);
 
     }

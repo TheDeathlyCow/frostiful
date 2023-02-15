@@ -1,0 +1,24 @@
+{
+    "type": "thermoo:status_effect",
+    "entity": {
+        "condition": "minecraft:reference",
+        "name": "frostiful:is_frostologer"
+    },
+    "temperature_scale_range": {
+        "max": -0.5
+    },
+    "config": {
+        "effects": [
+            {
+                "amplifier": 0,
+                "duration": 20,
+                "effect": "minecraft:fire_resistance"
+            },
+            {
+                "amplifier": 0,
+                "duration": 20,
+                "effect": "minecraft:strength"
+            }
+        ]
+    }
+}

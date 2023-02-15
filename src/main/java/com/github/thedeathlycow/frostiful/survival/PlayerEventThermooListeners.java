@@ -19,11 +19,10 @@ public final class PlayerEventThermooListeners {
             EnvironmentController controller,
             PlayerEntity player,
             Biome biome,
-            int temperatureChange,
             EnvironmentChangeResult result
     ) {
 
-        if (result.isAppliedChange()) {
+        if (result.isInitialChangeApplied()) {
             return;
         }
 
@@ -36,17 +35,10 @@ public final class PlayerEventThermooListeners {
 
         if (doPassiveFreezing) {
             float modifier = getWetnessFreezeModifier(player);
-            temperatureChange = MathHelper.ceil(temperatureChange * (1 + modifier));
+            int temperatureChange = MathHelper.ceil(result.getInitialTemperatureChange() * (1 + modifier));
 
             player.thermoo$addTemperature(temperatureChange, HeatingModes.PASSIVE);
-            result.setAppliedChange();
-        }
-
-        boolean applyConduitPowerWarmth = player.thermoo$isCold()
-                && player.isSubmergedInWater()
-                && player.hasStatusEffect(StatusEffects.CONDUIT_POWER);
-        if (applyConduitPowerWarmth) {
-            player.thermoo$addTemperature(config.getConduitWarmthPerTick(), HeatingModes.PASSIVE);
+            result.setAppliedInitialChange();
         }
     }
 

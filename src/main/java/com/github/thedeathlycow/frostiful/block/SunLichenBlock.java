@@ -46,9 +46,15 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
             if (this.heatLevel > 0 && this.canBurn(livingEntity)) {
-                FrostifulConfig config = Frostiful.getConfig();
-                int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
-                livingEntity.thermoo$addTemperature(heat, HeatingModes.ACTIVE);
+
+                // only add heat if cold, but always burn
+                // maybe when warmth mod is a thing, this can still apply heat if it is loaded?
+                if (livingEntity.thermoo$isCold()) {
+                    FrostifulConfig config = Frostiful.getConfig();
+                    int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
+                    livingEntity.thermoo$addTemperature(heat, HeatingModes.ACTIVE);
+                }
+
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
 
@@ -103,8 +109,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         } else if (entity.isFireImmune()) {
             return false;
         } else {
-            // maybe when warmth mod is a thing, sun lichen can also warm if its loaded?
-            return entity.thermoo$isCold();
+            return true;
         }
     }
 

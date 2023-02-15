@@ -1,5 +1,7 @@
 package com.github.thedeathlycow.frostiful.survival;
 
+import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentChangeResult;
@@ -11,17 +13,16 @@ public final class LivingEntityThermooEventListeners {
     public void tickHeatSources(
             EnvironmentController controller,
             LivingEntity entity,
-            int temperatureChange,
             EnvironmentChangeResult result
     ) {
 
-        if (result.isAppliedChange()) {
+        if (result.isInitialChangeApplied()) {
             return;
         }
 
         if (entity.thermoo$isCold()) {
-            entity.thermoo$addTemperature(temperatureChange, HeatingModes.PASSIVE);
-            result.setAppliedChange();
+            entity.thermoo$addTemperature(result.getInitialTemperatureChange(), HeatingModes.PASSIVE);
+            result.setAppliedInitialChange();
         }
 
     }
@@ -29,40 +30,51 @@ public final class LivingEntityThermooEventListeners {
     public void tickHeatEffects(
             EnvironmentController controller,
             LivingEntity entity,
-            int temperatureChange,
             EnvironmentChangeResult result
     ) {
-        if (result.isAppliedChange()) {
-            return;
+        // applied initial change
+        if (!result.isInitialChangeApplied()) {
+            // consider fire to be active
+            entity.thermoo$addTemperature(result.getInitialTemperatureChange(), HeatingModes.ACTIVE);
+            result.setAppliedInitialChange();
         }
 
-        entity.thermoo$addTemperature(temperatureChange, HeatingModes.PASSIVE);
-        result.setAppliedChange();
-
-        if (entity.isOnFire()) {
-
+        // stop using fire resistance to get free warmth
+        if (entity.isOnFire() && entity.thermoo$isCold()) {
             boolean isImmuneToFire = entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)
                     || entity.isFireImmune();
 
-            if (isImmuneToFire && entity.thermoo$isCold()) {
+            if (isImmuneToFire) {
                 entity.extinguish();
             }
+        }
 
+        // apply conduit power warmth
+        FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
+
+        boolean applyConduitPowerWarmth = entity.thermoo$isCold()
+                && entity.isSubmergedInWater()
+                && entity.hasStatusEffect(StatusEffects.CONDUIT_POWER);
+        if (applyConduitPowerWarmth) {
+            int warmth = config.getConduitWarmthPerTick();
+            entity.thermoo$addTemperature(warmth, HeatingModes.PASSIVE);
+
+            result.addAdditionalChange(warmth);
         }
     }
 
     public void tickWetChange(
             EnvironmentController controller,
             LivingEntity entity,
-            int soakChange,
             EnvironmentChangeResult result
     ) {
-        if (result.isAppliedChange()) {
+        // applies initial change
+        if (result.isInitialChangeApplied()) {
             return;
         }
 
         int wetTicks = entity.thermoo$getWetTicks();
-        entity.thermoo$setWetTicks(wetTicks + soakChange);
-        result.setAppliedChange();
+        entity.thermoo$setWetTicks(wetTicks + result.getInitialTemperatureChange());
+        result.setAppliedInitialChange();
     }
 }
