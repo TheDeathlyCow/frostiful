@@ -68,7 +68,7 @@ public final class SunLichenPathfindingTests {
         final int freezeAmount = -1000;
 
         final MobEntity entity = context.spawnMob(toSpawn, start);
-        entity.thermoo$addTemperature(freezeAmount, HeatingModes.ABSOLUTE);
+        entity.thermoo$setTemperature(freezeAmount);
         context.expectEntityWithData(start, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, freezeAmount);
         context.startMovingTowards(entity, end, 0.7f);
 
