@@ -152,6 +152,7 @@
   "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Do cold heart overlay",
   "text.autoconfig.frostiful.option.clientConfig.shakingStartPercent": "Shaking start percent (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.renderDripParticles": "Render water drip particles when wet",
+  "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Disable frost overlay when wearing Cloak of Frostology",
   
   "text.autoconfig.frostiful.option.updateConfig": "Update Config",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Current config version",
