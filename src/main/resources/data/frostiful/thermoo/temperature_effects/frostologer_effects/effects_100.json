@@ -15,7 +15,7 @@
                 "effect": "minecraft:regeneration"
             },
             {
-                "amplifier": 4,
+                "amplifier": 0,
                 "duration": 20,
                 "effect": "minecraft:resistance"
             },
