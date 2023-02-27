@@ -11,8 +11,6 @@ import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import com.github.thedeathlycow.thermoo.impl.Thermoo;
-import com.github.thedeathlycow.thermoo.impl.config.ThermooConfig;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.block.Block;
@@ -52,7 +50,10 @@ import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.*;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -70,7 +71,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
 
-    private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.95f;
+    private static final float POWER_PARTICLES_FREEZING_SCALE_START = -0.95f;
     private static final int NUM_POWER_PARTICLES = 3;
 
 
@@ -232,7 +233,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        if (this.world.isClient && this.getFreezingScale() >= POWER_PARTICLES_FREEZING_SCALE_START) {
+        if (this.world.isClient && this.thermoo$getTemperatureScale() <= POWER_PARTICLES_FREEZING_SCALE_START) {
             this.spawnPowerParticles();
         }
 
@@ -260,13 +261,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         float walkSpeed;
         if (this.onGround && !this.isDead() && !this.isSwimming()) {
-            walkSpeed = Math.min(0.1F, (float)this.getVelocity().horizontalLength());
+            walkSpeed = Math.min(0.1F, (float) this.getVelocity().horizontalLength());
         } else {
             walkSpeed = 0.0F;
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        if (this.world.isClient) {
+        if (this.world.isClient || this.thermoo$getTemperatureScale() > -0.8f) {
+            // dont place snow if client or too warm
             return;
         }
 
@@ -315,7 +317,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             world.addParticle(
                     ParticleTypes.SNOWFLAKE,
                     x, y, z,
-                    0, 0.06f, 0
+                    0, 0, 0
             );
         }
     }
