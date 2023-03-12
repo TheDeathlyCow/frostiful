@@ -135,10 +135,13 @@
 
   
   "enchantment.frostiful.enervation": "Enervation",
+  "enchantment.frostiful.enervation.desc": "Steals heat from your enemies when attacking",
   "enchantment.frostiful.ice_breaker": "Ice Breaker",
+  "enchantment.frostiful.ice_breaker.desc": "Increases the damage from attacking enemies from in Ice",
   "enchantment.frostiful.frozen_touch_curse": "Curse of Frozen Touch",
+  "enchantment.frostiful.frozen_touch_curse.desc": "Transfers heat from you to your enemies when attacking",
   
-
+  
   "frostiful.tip.freezing_wind_extinguishes_fire": "Freezing Wind will blow out open flames",
   "frostiful.tip.stay_warm_near_light": "Keep warm by staying near artificial light (torches, glowstone)",
   "frostiful.tip.frostologer_benefits_from_being_cold": "The Frostologer is powered by the Cold, warm him up!",
