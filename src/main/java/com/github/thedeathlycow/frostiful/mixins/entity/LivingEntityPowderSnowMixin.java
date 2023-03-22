@@ -4,13 +4,17 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityPowderSnowMixin extends Entity {
@@ -64,6 +68,17 @@ public abstract class LivingEntityPowderSnowMixin extends Entity {
     )
     private void dontNeedToRemovePowderSnowSlow(CallbackInfo ci) {
         ci.cancel();
+    }
+
+    @Inject(
+            method = "canFreeze",
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private void overrideLeatherArmourFreezeImmunity(CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(super.canFreeze());
     }
 
 }
