@@ -2,11 +2,11 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
+import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,6 +18,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityPowderSnowMixin extends Entity {
+
+    @Shadow
+    public abstract double getAttributeValue(EntityAttribute attribute);
 
     public LivingEntityPowderSnowMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -33,7 +36,12 @@ public abstract class LivingEntityPowderSnowMixin extends Entity {
     )
     private int tickFreezingInPowderSnow(int par1) {
         FrostifulConfig config = Frostiful.getConfig();
-        return this.getFrozenTicks() + config.freezingConfig.getPowderSnowFreezeRate();
+
+        FrostHelper.addLivingFrost((LivingEntity) (Object) this, config.freezingConfig.getPowderSnowFreezeRate());
+
+        // returns the current frozen ticks as the mixin applies to a setFrozenTicks argument
+        // so the result is no change
+        return this.getFrozenTicks();
     }
 
     @ModifyArg(
@@ -45,6 +53,8 @@ public abstract class LivingEntityPowderSnowMixin extends Entity {
             )
     )
     private int doNotThawNormally(int par1) {
+        // returns the current frozen ticks as the mixin applies to a setFrozenTicks argument
+        // so the result is no change
         return this.getFrozenTicks();
     }
 
