@@ -6,7 +6,7 @@ import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.Soakable;
-import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentChangeResult;
+import com.github.thedeathlycow.thermoo.api.temperature.event.InitialTemperatureChangeResult;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -18,10 +18,10 @@ public final class PlayerEventThermooListeners {
             EnvironmentController controller,
             PlayerEntity player,
             Biome biome,
-            EnvironmentChangeResult result
+            InitialTemperatureChangeResult result
     ) {
 
-        if (result.getInitialTemperatureChange() > 0 || result.isInitialChangeApplied()) {
+        if (result.getInitialChange() > 0 || result.isInitialChangeApplied()) {
             return;
         }
 
@@ -34,10 +34,10 @@ public final class PlayerEventThermooListeners {
 
         if (doPassiveFreezing) {
             float modifier = getWetnessFreezeModifier(player);
-            int temperatureChange = MathHelper.ceil(result.getInitialTemperatureChange() * (1 + modifier));
+            int temperatureChange = MathHelper.ceil(result.getInitialChange() * (1 + modifier));
 
             player.thermoo$addTemperature(temperatureChange, HeatingModes.PASSIVE);
-            result.setAppliedInitialChange();
+            result.applyInitialChange(player);
         }
     }
 
