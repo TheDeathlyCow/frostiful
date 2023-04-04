@@ -75,7 +75,7 @@ public class Frostiful implements ModInitializer {
     private void registerThermooEventListeners() {
         PlayerEventThermooListeners player = new PlayerEventThermooListeners();
 
-        PlayerEnvironmentEvents.TICK_COLD_BIOME_TEMPERATURE_CHANGE.register(player::applyPassiveFreezing);
+        PlayerEnvironmentEvents.TICK_BIOME_TEMPERATURE_CHANGE.register(player::applyPassiveFreezing);
 
         LivingEntityThermooEventListeners entity = new LivingEntityThermooEventListeners();
 

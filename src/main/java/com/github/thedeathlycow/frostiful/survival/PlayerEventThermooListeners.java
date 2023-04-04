@@ -7,7 +7,6 @@ import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.Soakable;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentChangeResult;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
@@ -22,7 +21,7 @@ public final class PlayerEventThermooListeners {
             EnvironmentChangeResult result
     ) {
 
-        if (result.isInitialChangeApplied()) {
+        if (result.getInitialTemperatureChange() > 0 || result.isInitialChangeApplied()) {
             return;
         }
 
