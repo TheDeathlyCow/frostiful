@@ -14,7 +14,6 @@ public class FreezingConfigGroup implements ConfigData {
     float maxPassiveFreezingPercent = 1.0f;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     float soakPercentFromWaterPotion = 0.5f;
-    int minLightForWarmth = 5;
     int powderSnowFreezeRate = 30;
     int sunLichenHeatPerLevel = 500;
     double campfireWarmthSearchRadius = 10;

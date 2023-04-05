@@ -53,7 +53,7 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
     protected void onHit(LivingEntity target) {
         super.onHit(target);
         IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
-        int freezeAmount = config.getFrostArrowFreezeAmount();
+        int freezeAmount = config.getThrownIcicleFreezeAmount();
 
         target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
     }
