@@ -3,16 +3,24 @@ package com.github.thedeathlycow.frostiful.mixins.powder_snow_effects;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityPowderSnowDisabler implements TemperatureAware {
+public abstract class LivingEntityPowderSnowDisabler extends Entity implements TemperatureAware {
+
+    public LivingEntityPowderSnowDisabler(EntityType<?> type, World world) {
+        super(type, world);
+    }
 
     @Inject(
             method = "tickMovement",
@@ -26,6 +34,17 @@ public abstract class LivingEntityPowderSnowDisabler implements TemperatureAware
         // applies own config version of powder snow temperature change
         int freezing = Frostiful.getConfig().freezingConfig.getPowderSnowFreezeRate();
         this.thermoo$addTemperature(-freezing, HeatingModes.ACTIVE);
+    }
+
+    @Inject(
+            method = "canFreeze",
+            at = @At(
+                    value = "TAIL"
+            ),
+            cancellable = true
+    )
+    private void overrideLeatherArmourFreezeImmunity(CallbackInfoReturnable<Boolean> cir) {
+        cir.setReturnValue(super.canFreeze());
     }
 
     @ModifyArg(

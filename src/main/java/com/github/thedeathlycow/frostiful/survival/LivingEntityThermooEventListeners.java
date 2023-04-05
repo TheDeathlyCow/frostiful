@@ -26,11 +26,17 @@ public final class LivingEntityThermooEventListeners {
             LivingEntity entity,
             InitialTemperatureChangeResult result
     ) {
+
+        // Frostiful only deals with cold - don't apply changes to non-cold entities
+        if (!entity.thermoo$isCold()) {
+            return;
+        }
+
         // applied initial change
         result.applyInitialChange();
 
         // stop using fire resistance to get free warmth
-        if (entity.isOnFire() && entity.thermoo$isCold()) {
+        if (entity.isOnFire()) {
             boolean isImmuneToFire = entity.hasStatusEffect(StatusEffects.FIRE_RESISTANCE)
                     || entity.isFireImmune();
 
@@ -42,8 +48,7 @@ public final class LivingEntityThermooEventListeners {
         // apply conduit power warmth
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
 
-        boolean applyConduitPowerWarmth = entity.thermoo$isCold()
-                && entity.isSubmergedInWater()
+        boolean applyConduitPowerWarmth = entity.isSubmergedInWater()
                 && entity.hasStatusEffect(StatusEffects.CONDUIT_POWER);
         if (applyConduitPowerWarmth) {
             int warmth = config.getConduitWarmthPerTick();
