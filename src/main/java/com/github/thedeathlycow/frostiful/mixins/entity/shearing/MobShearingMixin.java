@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.shearing;
 
 import com.github.thedeathlycow.frostiful.entity.FShearable;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;

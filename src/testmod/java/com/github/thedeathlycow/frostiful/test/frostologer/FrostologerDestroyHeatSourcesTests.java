@@ -309,7 +309,7 @@ public class FrostologerDestroyHeatSourcesTests {
 
         FrostologerEntity frostologer = context.spawnEntity(FEntityTypes.FROSTOLOGER, pos.add(1, 0, 1));
         frostologer.setInvulnerable(true);
-
+        frostologer.setAiDisabled(true);
         frostologer.destroyHeatSource(serverWorld, toPlace, context.getAbsolutePos(pos));
 
         context.expectBlockAtEnd(blockAtEnd, pos);

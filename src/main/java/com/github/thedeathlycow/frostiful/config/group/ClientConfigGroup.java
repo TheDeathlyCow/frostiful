@@ -12,6 +12,7 @@ public class ClientConfigGroup implements ConfigData {
     boolean doColdHeartOverlay = true;
     float shakingStartPercent = 0.75f;
     boolean renderDripParticles = true;
+    boolean disableFrostOverlayWhenWearingFrostologyCloak = true;
 
     public float getFrostOverlayStart() {
         return frostOverlayStart;
@@ -27,5 +28,9 @@ public class ClientConfigGroup implements ConfigData {
 
     public boolean renderDripParticles() {
         return renderDripParticles;
+    }
+
+    public boolean isDisableFrostOverlayWhenWearingFrostologyCloak() {
+        return disableFrostOverlayWhenWearingFrostologyCloak;
     }
 }

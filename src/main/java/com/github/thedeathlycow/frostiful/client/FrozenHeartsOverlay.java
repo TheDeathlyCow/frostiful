@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.client;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
@@ -31,8 +30,12 @@ public class FrozenHeartsOverlay {
             return;
         }
 
-        final FreezableEntity freezable = (FreezableEntity) player;
-        float freezingProgress = freezable.frostiful$getFrostProgress();
+        float freezingProgress = player.thermoo$getTemperatureScale();
+        if (freezingProgress > 0) {
+            return;
+        }
+        freezingProgress = -freezingProgress;
+
         final float playerMaxHealth = player.getMaxHealth();
 
         // number of half cold hearts

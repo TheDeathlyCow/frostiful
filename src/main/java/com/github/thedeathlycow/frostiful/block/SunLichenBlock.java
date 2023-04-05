@@ -3,9 +3,8 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.GlowLichenBlock;
@@ -47,9 +46,15 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
             if (this.heatLevel > 0 && this.canBurn(livingEntity)) {
-                FrostifulConfig config = Frostiful.getConfig();
-                int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
-                FrostHelper.removeLivingFrost(livingEntity, heat);
+
+                // only add heat if cold, but always burn
+                // maybe when warmth mod is a thing, this can still apply heat if it is loaded?
+                if (livingEntity.thermoo$isCold()) {
+                    FrostifulConfig config = Frostiful.getConfig();
+                    int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
+                    livingEntity.thermoo$addTemperature(heat, HeatingModes.ACTIVE);
+                }
+
                 entity.damage(DamageSource.HOT_FLOOR, 1);
                 this.createFireParticles(world, pos);
 
@@ -101,8 +106,11 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     private boolean canBurn(LivingEntity entity) {
         if (entity.isSpectator() || (entity instanceof PlayerEntity player && player.isCreative())) {
             return false;
+        } else if (entity.isFireImmune()) {
+            return false;
+        } else {
+            return true;
         }
-        return !entity.isFireImmune();
     }
 
     private void playSound(World world, BlockPos pos) {

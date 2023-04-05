@@ -1,0 +1,14 @@
+{
+	"type": "thermoo:freeze_damage_legacy",
+	"entity": {
+		"condition": "minecraft:reference",
+		"name": "frostiful:is_damaged_by_frost"
+	},
+	"temperature_scale_range": {
+		"max": -0.99
+	},
+	"config": {
+		"amount": 1,
+		"damage_interval": 20
+	}
+}

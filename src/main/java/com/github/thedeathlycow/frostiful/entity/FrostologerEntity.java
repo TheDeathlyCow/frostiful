@@ -1,7 +1,5 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.attributes.FEntityAttributes;
-import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
@@ -10,10 +8,16 @@ import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -24,7 +28,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.IllagerEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.SpellcastingIllagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -39,13 +46,15 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.BlockTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.world.*;
+import net.minecraft.world.GameRules;
+import net.minecraft.world.LocalDifficulty;
+import net.minecraft.world.ServerWorldAccess;
+import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,7 +72,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
 
-    private static final float POWER_PARTICLES_FREEZING_SCALE_START = 0.95f;
+    private static final float POWER_PARTICLES_FREEZING_SCALE_START = -0.95f;
     private static final int NUM_POWER_PARTICLES = 3;
 
 
@@ -86,18 +95,12 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
                 .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 12.0)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 75.0)
-                .add(FEntityAttributes.MAX_FROST, 45.0)
-                .add(FEntityAttributes.FROST_RESISTANCE, -5.0);
-    }
-
-    public static boolean isHeatSource(BlockState state) {
-        int minLightForWarmth = Frostiful.getConfig().freezingConfig.getMinLightForWarmth();
-        return state.getLuminance() >= minLightForWarmth;
+                .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
+                .add(ThermooAttributes.FROST_RESISTANCE, -5.0);
     }
 
     public boolean isInHeatedArea() {
-        int minLightForWarmth = Frostiful.getConfig().freezingConfig.getMinLightForWarmth();
-        return this.world.getLightLevel(LightType.BLOCK, this.getBlockPos()) > minLightForWarmth;
+        return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.world, this.getBlockPos());
     }
 
     /**
@@ -231,13 +234,16 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        if (this.world.isClient && this.getFreezingScale() >= POWER_PARTICLES_FREEZING_SCALE_START) {
+        if (this.world.isClient && this.thermoo$getTemperatureScale() <= POWER_PARTICLES_FREEZING_SCALE_START) {
             this.spawnPowerParticles();
         }
 
         FrostifulConfig config = Frostiful.getConfig();
         if (this.getFreezingScale() < config.combatConfig.getFrostologerMaxPassiveFreezing()) {
-            FrostHelper.addLivingFrost(this, config.combatConfig.getFrostologerPassiveFreezingPerTick());
+            this.thermoo$addTemperature(
+                    -config.combatConfig.getFrostologerPassiveFreezingPerTick(),
+                    HeatingModes.PASSIVE
+            );
         }
     }
 
@@ -256,13 +262,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         float walkSpeed;
         if (this.onGround && !this.isDead() && !this.isSwimming()) {
-            walkSpeed = Math.min(0.1F, (float)this.getVelocity().horizontalLength());
+            walkSpeed = Math.min(0.1F, (float) this.getVelocity().horizontalLength());
         } else {
             walkSpeed = 0.0F;
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        if (this.world.isClient) {
+        if (this.world.isClient || this.thermoo$getTemperatureScale() > -0.8f) {
+            // dont place snow if client or too warm
             return;
         }
 
@@ -280,7 +287,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
 
             BlockState blockState = this.world.getBlockState(blockPos);
-            if (isHeatSource(blockState)) {
+            if (EnvironmentManager.INSTANCE.getController().isHeatSource(blockState)) {
                 this.destroyHeatSource(serverWorld, blockState, blockPos);
             }
 
@@ -311,7 +318,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             world.addParticle(
                     ParticleTypes.SNOWFLAKE,
                     x, y, z,
-                    0, 0.06f, 0
+                    0, 0, 0
             );
         }
     }
@@ -547,7 +554,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
-                FrostHelper.addLivingFrost(victim, heatDrain);
+
+                victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
 
                 if (serverWorld != null) {
                     EnervationEnchantment.addHeatDrainParticles(
@@ -570,7 +578,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
                 BlockState state = FrostologerEntity.this.world.getBlockState(pos);
-                if (FrostologerEntity.isHeatSource(state) && world instanceof ServerWorld serverWorld) {
+                if (EnvironmentManager.INSTANCE.getController().isHeatSource(state) && world instanceof ServerWorld serverWorld) {
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }

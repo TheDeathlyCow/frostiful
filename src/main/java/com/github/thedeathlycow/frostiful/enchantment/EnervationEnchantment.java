@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargets
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.FMathHelper;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
@@ -59,11 +59,15 @@ public sealed class EnervationEnchantment extends Enchantment permits FrozenTouc
         FrostifulConfig config = Frostiful.getConfig();
 
         if (target instanceof LivingEntity livingTarget) {
-            heatDrained = FrostHelper.addLivingFrost(livingTarget, config.combatConfig.getHeatDrainPerLevel() * level);
+
+            heatDrained = config.combatConfig.getHeatDrainPerLevel() * level;
+
+            livingTarget.thermoo$addTemperature(heatDrained, HeatingModes.ACTIVE);
         }
 
         int frostRemoved = MathHelper.floor(heatDrained * config.combatConfig.getHeatDrainEfficiency());
-        FrostHelper.removeLivingFrost(user, frostRemoved);
+
+        user.thermoo$addTemperature(-frostRemoved, HeatingModes.ACTIVE);
 
         if (heatDrained > 0) {
             addHeatDrainParticles(user, target, level);

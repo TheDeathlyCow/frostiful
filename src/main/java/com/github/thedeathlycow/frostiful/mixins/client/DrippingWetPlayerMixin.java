@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.client;
 
-import com.github.thedeathlycow.frostiful.entity.SoakableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -61,18 +60,17 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             if (this.isSubmergedInWater || this.isWet()) {
                 return;
             }
-            SoakableEntity soakableEntity = (SoakableEntity) this;
 
             // Ensure that only players with non-zero wetness have particles
             // (I mostly just don't trust floats lol)
-            if (!soakableEntity.frostiful$isWet()) {
+            if (!this.thermoo$isWet()) {
                 return;
             }
 
             ThreadLocalRandom random = ThreadLocalRandom.current();
 
             // Spawn drip with probability proportional to wetness scale
-            if (SLOW_DRIP_MULTIPLIER * random.nextFloat() < soakableEntity.frostiful$getWetnessScale()) {
+            if (SLOW_DRIP_MULTIPLIER * random.nextFloat() < this.thermoo$getSoakedScale()) {
 
                 World world = this.getWorld();
                 Box boundingBox = this.getBoundingBox();

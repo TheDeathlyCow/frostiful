@@ -2,13 +2,10 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
-import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.*;
-import net.minecraft.potion.Potions;
-import net.minecraft.recipe.BrewingRecipeRegistry;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 

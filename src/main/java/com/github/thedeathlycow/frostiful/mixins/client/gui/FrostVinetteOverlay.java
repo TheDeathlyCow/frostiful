@@ -1,17 +1,25 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
+import com.github.thedeathlycow.frostiful.client.gui.FrostOverlayRenderer;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.item.FItems;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.function.Consumer;
 
 @Mixin(InGameHud.class)
 public abstract class FrostVinetteOverlay {
@@ -26,6 +34,9 @@ public abstract class FrostVinetteOverlay {
 
     @Shadow
     protected abstract void renderOverlay(Identifier texture, float opacity);
+
+    @Unique
+    private final Consumer<Float> frostiful$renderOverlayCallback = (opacity) -> this.renderOverlay(POWDER_SNOW_OUTLINE, opacity);
 
     @ModifyArg(
             method = "render",
@@ -62,17 +73,8 @@ public abstract class FrostVinetteOverlay {
             )
     )
     private void renderPowderSnowOverlayAtThreshold(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        assert this.client.player != null;
-        final FreezableEntity entity = (FreezableEntity) this.client.player;
-        float freezeScale = entity.frostiful$getFrostProgress();
-        FrostifulConfig config = Frostiful.getConfig();
-        float renderThreshold = config.clientConfig.getFrostOverlayStart();
-
-        if (freezeScale >= renderThreshold) {
-            float opacity = renderThreshold == 1.0f ? 0.0f : (freezeScale - renderThreshold) / (1.0f - renderThreshold);
-            this.renderOverlay(POWDER_SNOW_OUTLINE, opacity);
+        if (this.client.player != null) {
+            FrostOverlayRenderer.renderFrostOverlay(this.client.player, this.frostiful$renderOverlayCallback);
         }
-
-
     }
 }

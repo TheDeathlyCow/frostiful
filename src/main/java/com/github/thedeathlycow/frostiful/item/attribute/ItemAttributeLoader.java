@@ -48,7 +48,11 @@ public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListe
                         ItemAttributeModifier.class
                 );
 
-                newValues.put(entry.getKey(), modifier);
+                if (modifier.isItemPresent()) {
+                    newValues.put(entry.getKey(), modifier);
+                } else {
+                    Frostiful.LOGGER.trace("Skipping item attribute modifier {}, as item is not present", entry.getKey());
+                }
             } catch (IOException | JsonParseException e) {
                 Frostiful.LOGGER.error("An error occurred while loading item attribute modifier {}: {}", entry.getKey(), e);
             }

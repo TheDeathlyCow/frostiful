@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
-import com.github.thedeathlycow.frostiful.util.survival.FrostHelper;
+import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
 import net.minecraft.block.piston.PistonBehavior;
@@ -137,7 +137,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
             boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FDamageSource.ICICLE);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
-                FrostHelper.addLivingFrost(livingEntity, config.icicleConfig.getIcicleCollisionFreezeAmount());
+                livingEntity.thermoo$addTemperature(
+                        -config.icicleConfig.getIcicleCollisionFreezeAmount(),
+                        HeatingModes.ACTIVE
+                );
             }
         } else {
             super.onLandedUpon(world, state, pos, entity, fallDistance);

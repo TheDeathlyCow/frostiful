@@ -9,8 +9,6 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
-import java.util.UUID;
-
 public record AttributeHolder(
         EntityAttribute attribute,
         EntityAttributeModifier modifier

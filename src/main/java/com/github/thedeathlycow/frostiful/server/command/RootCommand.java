@@ -1,13 +1,11 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
-import com.github.thedeathlycow.frostiful.entity.FreezableEntity;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.command.argument.EntityArgumentType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.server.command.ServerCommandSource;
 import net.minecraft.text.Text;
 

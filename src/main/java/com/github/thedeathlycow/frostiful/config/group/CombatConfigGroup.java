@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".combat_config")
 public class CombatConfigGroup implements ConfigData {
