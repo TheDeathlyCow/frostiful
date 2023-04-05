@@ -16,6 +16,11 @@ public final class FrozenTouchCurse extends EnervationEnchantment {
         return true;
     }
 
+    @Override
+    public boolean isTreasure() {
+        return true;
+    }
+
     public boolean canAccept(Enchantment other) {
         return super.canAccept(other) && other != FEnchantments.ENERVATION;
     }

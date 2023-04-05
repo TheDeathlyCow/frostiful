@@ -123,7 +123,8 @@ public class FItems {
         register("cut_blue_ice", CUT_BLUE_ICE);
         register("cut_blue_ice_stairs", CUT_BLUE_ICE_STAIRS);
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
-        register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);}
+        register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
+    }
 
     private static void register(String id, Item item) {
         Registry.register(Registry.ITEM, new Identifier(Frostiful.MODID, id), item);
