@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.Soakable;
 import com.github.thedeathlycow.thermoo.api.temperature.event.InitialTemperatureChangeResult;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,7 +20,7 @@ public final class PlayerEventThermooListeners {
             InitialTemperatureChangeResult result
     ) {
 
-        if (result.getInitialChange() > 0 || result.isInitialChangeApplied()) {
+        if (result.getInitialChange() > 0) {
             return;
         }
 
@@ -36,8 +35,8 @@ public final class PlayerEventThermooListeners {
             float modifier = getWetnessFreezeModifier(player);
             int temperatureChange = MathHelper.ceil(result.getInitialChange() * (1 + modifier));
 
-            player.thermoo$addTemperature(temperatureChange, HeatingModes.PASSIVE);
-            result.applyInitialChange(player);
+            result.setInitialChange(temperatureChange);
+            result.applyInitialChange();
         }
     }
 

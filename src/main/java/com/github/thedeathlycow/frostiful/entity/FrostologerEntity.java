@@ -10,6 +10,7 @@ import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -99,7 +100,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     public boolean isInHeatedArea() {
-        return EnvironmentController.INSTANCE.isAreaHeated(this.world, this.getBlockPos());
+        return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.world, this.getBlockPos());
     }
 
     /**
@@ -286,7 +287,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
 
             BlockState blockState = this.world.getBlockState(blockPos);
-            if (EnvironmentController.INSTANCE.isHeatSource(blockState)) {
+            if (EnvironmentManager.INSTANCE.getController().isHeatSource(blockState)) {
                 this.destroyHeatSource(serverWorld, blockState, blockPos);
             }
 
@@ -577,7 +578,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
                 BlockState state = FrostologerEntity.this.world.getBlockState(pos);
-                if (EnvironmentController.INSTANCE.isHeatSource(state) && world instanceof ServerWorld serverWorld) {
+                if (EnvironmentManager.INSTANCE.getController().isHeatSource(state) && world instanceof ServerWorld serverWorld) {
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }

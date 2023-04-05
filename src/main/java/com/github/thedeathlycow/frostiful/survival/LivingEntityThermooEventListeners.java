@@ -17,7 +17,7 @@ public final class LivingEntityThermooEventListeners {
             InitialTemperatureChangeResult result
     ) {
         if (entity.thermoo$isCold()) {
-            result.applyInitialChange(entity);
+            result.applyInitialChange();
         }
     }
 
@@ -27,7 +27,7 @@ public final class LivingEntityThermooEventListeners {
             InitialTemperatureChangeResult result
     ) {
         // applied initial change
-        result.applyInitialChange(entity);
+        result.applyInitialChange();
 
         // stop using fire resistance to get free warmth
         if (entity.isOnFire() && entity.thermoo$isCold()) {
@@ -57,6 +57,6 @@ public final class LivingEntityThermooEventListeners {
             InitialSoakChangeResult result
     ) {
         // applies initial change
-        result.applyInitialChange(entity);
+        result.applyInitialChange();
     }
 }
