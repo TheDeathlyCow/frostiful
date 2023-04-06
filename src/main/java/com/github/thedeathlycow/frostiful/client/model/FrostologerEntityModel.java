@@ -32,18 +32,19 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
         this.cloak.visible = false;
     }
 
-    @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 
-        // weird hack: store a boolean in the LSB of the light arg to disable blue overlay for the glowing stuff
-        if (this.rgColourMul < 1 && (light & 1) == 0) {
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha, boolean applyColdOverlay) {
+        if (this.rgColourMul < 1 && applyColdOverlay) {
             red *= this.rgColourMul;
             green *= this.rgColourMul;
-        } else if ((light & 1) == 1) {
-            light--;
         }
 
         super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+        this.render(matrices, vertices, light, overlay, red, green, blue, alpha, true);
     }
 
     public void forceRenderCloak(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {

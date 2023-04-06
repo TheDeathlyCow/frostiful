@@ -34,9 +34,10 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntity, M exten
                     .render(
                             matrices,
                             vertexConsumer,
-                            0x00F000F1, // putting a 1 on the end to tell renderer not to blue overlay this model
+                            0x00F000F0,
                             OverlayTexture.DEFAULT_UV,
-                            1.0f, 1.0f, 1.0f, 1.0f
+                            1.0f, 1.0f, 1.0f, 1.0f,
+                            false
                     );
         }
     }
