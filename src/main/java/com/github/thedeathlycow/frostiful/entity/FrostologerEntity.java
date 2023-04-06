@@ -74,6 +74,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     private static final float POWER_PARTICLES_FREEZING_SCALE_START = -0.95f;
     private static final int NUM_POWER_PARTICLES = 3;
+    private static final float MIN_TEMP_TO_DESTROY_HEAT = -0.5f;
 
 
     public float prevStrideDistance;
@@ -528,6 +529,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         public boolean canStart() {
             // no super call as that requires a target to be selected
             if (FrostologerEntity.this.isSpellcasting()) {
+                return false;
+            } else if (FrostologerEntity.this.thermoo$getTemperatureScale() < MIN_TEMP_TO_DESTROY_HEAT) {
                 return false;
             } else if (FrostologerEntity.this.age < this.startTime) {
                 return false;
