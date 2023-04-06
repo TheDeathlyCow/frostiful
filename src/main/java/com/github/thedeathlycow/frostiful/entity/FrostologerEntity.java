@@ -73,7 +73,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     );
 
     private static final float POWER_PARTICLES_FREEZING_SCALE_START = -0.95f;
-    private static final int NUM_POWER_PARTICLES = 3;
+    private static final int NUM_POWER_PARTICLES = 2;
     private static final float MIN_TEMP_TO_DESTROY_HEAT = -0.5f;
 
 
