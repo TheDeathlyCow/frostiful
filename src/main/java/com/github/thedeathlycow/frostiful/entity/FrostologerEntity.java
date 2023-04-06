@@ -9,7 +9,6 @@ import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
@@ -72,9 +71,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
 
-    private static final float POWER_PARTICLES_FREEZING_SCALE_START = -0.95f;
+    public static final float VISUAL_POWER_TEMPERATURE_START = -0.95f;
     private static final int NUM_POWER_PARTICLES = 2;
     private static final float MIN_TEMP_TO_DESTROY_HEAT = -0.5f;
+    private static final float START_PLACING_SNOW_TEMP = -0.8f;
 
 
     public float prevStrideDistance;
@@ -235,7 +235,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        if (this.world.isClient && this.thermoo$getTemperatureScale() <= POWER_PARTICLES_FREEZING_SCALE_START) {
+        if (this.world.isClient && this.thermoo$getTemperatureScale() <= VISUAL_POWER_TEMPERATURE_START) {
             this.spawnPowerParticles();
         }
 
@@ -285,6 +285,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         BlockPos frostologerPos = this.getBlockPos();
         BlockState snow = Blocks.SNOW.getDefaultState();
 
+        boolean canPlaceSnow;
         for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
 
             BlockState blockState = this.world.getBlockState(blockPos);
@@ -292,7 +293,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 this.destroyHeatSource(serverWorld, blockState, blockPos);
             }
 
-            if (blockState.isAir() && snow.canPlaceAt(this.world, blockPos)) {
+            canPlaceSnow = blockState.isAir()
+                    && this.thermoo$getTemperatureScale() <= START_PLACING_SNOW_TEMP
+                    && snow.canPlaceAt(this.world, blockPos);
+            if (canPlaceSnow) {
                 this.world.setBlockState(blockPos, snow);
                 this.world.emitGameEvent(
                         GameEvent.BLOCK_PLACE,

@@ -35,9 +35,12 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
 
-        if (this.rgColourMul < 1) {
+        // weird hack: store a boolean in the LSB of the light arg to disable blue overlay for the glowing stuff
+        if (this.rgColourMul < 1 && (light & 1) == 0) {
             red *= this.rgColourMul;
             green *= this.rgColourMul;
+        } else if ((light & 1) == 1) {
+            light--;
         }
 
         super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
