@@ -8,7 +8,7 @@
 		"min": 0
 	},
 	"config": {
-		"amount": 1,
+		"amount": 4,
 		"damage_interval": 20
 	}
 }

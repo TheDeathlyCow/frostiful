@@ -253,7 +253,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         FrostifulConfig config = Frostiful.getConfig();
-        if (this.thermoo$getTemperatureScale() > -config.combatConfig.getFrostologerMaxPassiveFreezing()) {
+        if (this.isTargetPlayer() && this.thermoo$getTemperatureScale() > -config.combatConfig.getFrostologerMaxPassiveFreezing()) {
             this.thermoo$addTemperature(
                     -config.combatConfig.getFrostologerPassiveFreezingPerTick(),
                     HeatingModes.PASSIVE
@@ -363,6 +363,13 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public boolean hasTarget() {
         LivingEntity target = this.getTarget();
         return target != null && target.isAlive();
+    }
+
+    public boolean isTargetPlayer() {
+
+        LivingEntity target = this.getTarget();
+        return target != null && target.isAlive() && target.isPlayer();
+
     }
 
     public boolean isTargetRooted() {
@@ -548,8 +555,6 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         public boolean canStart() {
             // no super call as that requires a target to be selected
             if (FrostologerEntity.this.isSpellcasting()) {
-                return false;
-            } else if (FrostologerEntity.this.thermoo$getTemperatureScale() < MIN_TEMP_TO_DESTROY_HEAT) {
                 return false;
             } else if (FrostologerEntity.this.age < this.startTime) {
                 return false;
