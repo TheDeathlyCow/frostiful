@@ -207,7 +207,8 @@
   "text.autoconfig.frostiful.option.icicleConfig.frostArrowFreezeAmount": "Frost arrow freeze amount",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleFreezeAmount": "Thrown icicle freeze amount",
   "text.autoconfig.frostiful.option.icicleConfig.icicleCollisionFreezeAmount": "Icicle collision freeze amount",
-  "text.autoconfig.frostiful.option.icicleConfig.maxLightLevelToForm": "Maximum light level to form (exclusive)",
+  "text.autoconfig.frostiful.option.icicleConfig.maxLightLevelToForm": "Maximum block light level to form (exclusive)",
+  "text.autoconfig.frostiful.option.icicleConfig.minSkylightLevelToForm": "Minimum sky light level to form (inclusive)",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleDamage": "Thrown icicle damage",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleExtraDamage": "Thrown icicle hurts extra damage",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleCooldown": "Thrown icicle cooldown"
