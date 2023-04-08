@@ -82,15 +82,23 @@ public abstract class IcicleGrowthMixin {
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState at = instance.getBlockState(testPos);
 
+            // testing for sky light helps increase the chance that icicles will only ever form outside
             return at.isAir()
-                    && world.getLightLevel(LightType.BLOCK, testPos) < icicleConfig.getMaxLightLevelToForm()
+                    && world.getLightLevel(LightType.SKY, testPos) >= icicleConfig.getMinSkylightLevelToForm()
                     && downwardIcicle.canPlaceAt(instance, testPos);
         };
 
         BlockPos.Mutable placePos = startPos.mutableCopy();
         for (int i = 0; i < 5; i++) {
+
             if (validCondition.test(placePos)) {
-                instance.setBlockState(placePos, downwardIcicle, Block.NOTIFY_ALL);
+                // only place if can place and light is not blocking it
+                if (world.getLightLevel(LightType.BLOCK, placePos) < icicleConfig.getMaxLightLevelToForm()) {
+                    instance.setBlockState(placePos, downwardIcicle, Block.NOTIFY_ALL);
+                }
+
+                // if can place but there is light blocking - stop looking
+                profiler.pop();
                 return;
             }
             placePos.move(Direction.DOWN);
