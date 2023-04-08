@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
@@ -45,6 +46,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -85,6 +87,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public double capeX;
     public double capeY;
     public double capeZ;
+
+    private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
@@ -127,6 +131,12 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         if (state.isIn(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
             frozenState = state;
+        } else if (blockPos.equals(this.getBlockPos())) {
+            if (fluidState.isIn(FluidTags.WATER)) {
+                frozenState = Blocks.WATER.getDefaultState();
+            } else {
+                frozenState = Blocks.AIR.getDefaultState();
+            }
         } else if (state.isFullCube(world, blockPos)) {
             frozenState = Blocks.ICE.getDefaultState();
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
@@ -163,7 +173,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return damageSource == DamageSource.FREEZE || super.isInvulnerableTo(damageSource);
+        return damageSource == DamageSource.FREEZE
+                || damageSource == FDamageSource.ICICLE
+                || damageSource == FDamageSource.FALLING_ICICLE
+                || super.isInvulnerableTo(damageSource);
     }
 
     protected void initGoals() {
@@ -240,7 +253,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         FrostifulConfig config = Frostiful.getConfig();
-        if (this.getFreezingScale() > -config.combatConfig.getFrostologerMaxPassiveFreezing()) {
+        if (this.thermoo$getTemperatureScale() > -config.combatConfig.getFrostologerMaxPassiveFreezing()) {
             this.thermoo$addTemperature(
                     -config.combatConfig.getFrostologerPassiveFreezingPerTick(),
                     HeatingModes.PASSIVE
@@ -269,8 +282,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        if (this.world.isClient || this.thermoo$getTemperatureScale() > -0.8f) {
-            // dont place snow if client or too warm
+        if (this.world.isClient) {
+            // dont place snow if client
             return;
         }
 
@@ -286,7 +299,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         BlockState snow = Blocks.SNOW.getDefaultState();
 
         boolean canPlaceSnow;
-        for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
+        stepPositionsPool[0] = frostologerPos;
+        stepPositionsPool[1] = frostologerPos.down();
+        for (BlockPos blockPos : stepPositionsPool) {
 
             BlockState blockState = this.world.getBlockState(blockPos);
             if (EnvironmentManager.INSTANCE.getController().isHeatSource(blockState)) {
