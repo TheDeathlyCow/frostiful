@@ -559,7 +559,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             } else if (FrostologerEntity.this.age < this.startTime) {
                 return false;
             } else {
-                return FrostologerEntity.this.hasTarget() || FrostologerEntity.this.isInHeatedArea();
+                return FrostologerEntity.this.isOnFire()
+                        || FrostologerEntity.this.hasTarget()
+                        || FrostologerEntity.this.isInHeatedArea();
             }
         }
 
@@ -578,6 +580,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 serverWorld = (ServerWorld) world;
             }
 
+            if (FrostologerEntity.this.isOnFire()) {
+                FrostologerEntity.this.extinguish();
+                FrostologerEntity.this.playExtinguishSound();
+            }
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
