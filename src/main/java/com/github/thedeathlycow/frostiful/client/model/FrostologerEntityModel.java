@@ -16,6 +16,8 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
     protected final ModelPart rightArm;
     protected final ModelPart leftArm;
 
+    private float rgColourMul = 0f;
+
     private final ModelPart cloak;
 
     public FrostologerEntityModel(ModelPart root) {
@@ -28,6 +30,21 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
 
         this.cloak = root.getChild("cloak");
         this.cloak.visible = false;
+    }
+
+
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha, boolean applyColdOverlay) {
+        if (this.rgColourMul < 1 && applyColdOverlay) {
+            red *= this.rgColourMul;
+            green *= this.rgColourMul;
+        }
+
+        super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+    }
+
+    @Override
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
+        this.render(matrices, vertices, light, overlay, red, green, blue, alpha, true);
     }
 
     public void forceRenderCloak(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
@@ -69,6 +86,8 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
             float headPitch
     ) {
         super.setAngles(frostologer, limbAngle, limbDistance, animationProgress, headYaw, headPitch);
+
+        this.rgColourMul = (0.625f * (frostologer.thermoo$getTemperatureScale() + 1f)) + 0.5f;
 
         if (frostologer.isUsingFrostWand()) {
             if (frostologer.isLeftHanded()) {

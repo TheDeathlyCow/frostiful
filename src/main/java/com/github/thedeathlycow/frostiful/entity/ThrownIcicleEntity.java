@@ -39,6 +39,11 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
 
     @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
+
+        if (entityHitResult.getEntity().getType() == FEntityTypes.FROSTOLOGER) {
+            return;
+        }
+
         IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
 
         float damage = entityHitResult.getEntity().getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)

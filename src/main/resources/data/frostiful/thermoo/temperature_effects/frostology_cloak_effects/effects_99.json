@@ -11,11 +11,6 @@
         "effects": [
             {
                 "amplifier": 0,
-                "duration": 100,
-                "effect": "minecraft:absorption"
-            },
-            {
-                "amplifier": 0,
                 "duration": 20,
                 "effect": "minecraft:haste"
             }
