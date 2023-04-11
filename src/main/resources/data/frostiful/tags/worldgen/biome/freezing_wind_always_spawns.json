@@ -9,6 +9,10 @@
             "id": "#c:extreme_hills",
             "required": false
         },
+        {
+            "id": "#c:windswept",
+            "required": false
+        },
         "#minecraft:is_mountain",
         "minecraft:windswept_forest",
         "minecraft:windswept_gravelly_hills",
