@@ -1,0 +1,17 @@
+name: Game Test
+
+on: [ pull_request, push ]
+
+jobs:
+  gametest:
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Java
+        uses: actions/setup-java@v1
+        with:
+          java-version: '17'
+
+      - name: Build and run game tests
+        run: ./gradlew runGameTest
+
