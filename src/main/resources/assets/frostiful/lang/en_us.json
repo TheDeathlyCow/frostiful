@@ -201,7 +201,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time (ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.freezingWindFrost": "Freezing wind frost (per 5 ticks)",
-
+  "text.autoconfig.frostiful.option.freezingConfig.heatFromHotFloor": "Heat from hot floor (magma block, campfire)",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",

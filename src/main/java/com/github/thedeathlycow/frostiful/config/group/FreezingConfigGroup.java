@@ -19,6 +19,7 @@ public class FreezingConfigGroup implements ConfigData {
     int campfireWarmthTime = 1200;
     int freezingWindFrost = 160;
     int conduitPowerWarmthPerTick = 12;
+    int heatFromHotFloor = 315;
 
 
     public boolean doPassiveFreezing() {
@@ -65,4 +66,7 @@ public class FreezingConfigGroup implements ConfigData {
         return conduitPowerWarmthPerTick;
     }
 
+    public int getHeatFromHotFloor() {
+        return heatFromHotFloor;
+    }
 }

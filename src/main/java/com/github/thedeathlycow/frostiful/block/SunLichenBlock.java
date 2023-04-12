@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
@@ -55,7 +56,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                     livingEntity.thermoo$addTemperature(heat, HeatingModes.ACTIVE);
                 }
 
-                entity.damage(DamageSource.HOT_FLOOR, 1);
+                entity.damage(FDamageSource.SUN_LICHEN, 1);
                 this.createFireParticles(world, pos);
 
                 BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
