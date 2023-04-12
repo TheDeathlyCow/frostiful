@@ -42,13 +42,7 @@ public final class SunLichenCollisionTests implements FabricGameTest {
         context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
     }
 
-    /**
-     * This test will probably fail because hot sun lichen is *just* hot enough to provide a bit of passive warmth,
-     * will be fixed later.
-     *
-     * @param context
-     */
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform", required = false)
+    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
     public void hot_lichen_warms_appropriate_amount(TestContext context) {
         doWarmVillagerTest(context, FBlocks.HOT_SUN_LICHEN);
     }
