@@ -14,7 +14,6 @@ public class FreezingConfigGroup implements ConfigData {
     float maxPassiveFreezingPercent = 1.0f;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     float soakPercentFromWaterPotion = 0.5f;
-    int powderSnowFreezeRate = 30;
     int sunLichenHeatPerLevel = 500;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
@@ -44,10 +43,6 @@ public class FreezingConfigGroup implements ConfigData {
 
     public float getSoakPercentFromWaterPotion() {
         return MathHelper.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
-    }
-
-    public int getPowderSnowFreezeRate() {
-        return powderSnowFreezeRate;
     }
 
     public int getSunLichenHeatPerLevel() {

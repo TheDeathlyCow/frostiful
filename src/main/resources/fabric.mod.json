@@ -39,6 +39,7 @@
 		"fabricloader": ">=0.14.9",
 		"fabric": "*",
 		"minecraft": "1.19.2",
+		"thermoo": "1.4",
 		"mm": ">=2.3",
 		"java": ">=17"
 	},

@@ -1,7 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.powder_snow_effects;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -23,20 +21,6 @@ public abstract class LivingEntityPowderSnowDisabler extends Entity implements T
     }
 
     @Inject(
-            method = "tickMovement",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V",
-                    ordinal = 0
-            )
-    )
-    private void tickPowderSnowFreezing(CallbackInfo ci) {
-        // applies own config version of powder snow temperature change
-        int freezing = Frostiful.getConfig().freezingConfig.getPowderSnowFreezeRate();
-        this.thermoo$addTemperature(-freezing, HeatingModes.ACTIVE);
-    }
-
-    @Inject(
             method = "canFreeze",
             at = @At(
                     value = "TAIL"
@@ -51,23 +35,10 @@ public abstract class LivingEntityPowderSnowDisabler extends Entity implements T
             method = "tickMovement",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V",
-                    ordinal = 0
+                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
             )
     )
     private int disableTicksFreezingIncreaseInPowderSnow(int par1) {
-        return 0;
-    }
-
-    @ModifyArg(
-            method = "tickMovement",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V",
-                    ordinal = 1
-            )
-    )
-    private int disablePowderSnowThawing(int par1) {
         return 0;
     }
 
