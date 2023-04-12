@@ -6,7 +6,7 @@
 			"attribute": "minecraft:generic.armor",
 			"modifier": {
 				"uuid": "845DB27C-C624-495F-8C9F-6020A9A58B6B",
-				"value": 1.0,
+				"value": 2.0,
 				"operation": "addition"
 			}
 		},
