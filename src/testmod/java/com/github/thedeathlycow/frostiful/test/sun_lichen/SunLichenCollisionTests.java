@@ -4,23 +4,52 @@ import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
+import com.github.thedeathlycow.thermoo.impl.EnvironmentControllerImpl;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.test.AfterBatch;
+import net.minecraft.test.BeforeBatch;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public final class SunLichenCollisionTests implements FabricGameTest {
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
+    @BeforeBatch(batchId = "sunLichenCollision")
+    public void mockController(ServerWorld serverWorld) {
+        EnvironmentManager.INSTANCE.setController(
+                new EnvironmentControllerImpl() {
+                    @Override
+                    public int getLocalTemperatureChange(World world, BlockPos pos) {
+                        return 0;
+                    }
+
+                    @Override
+                    public int getHeatAtLocation(World world, BlockPos pos) {
+                        return 0;
+                    }
+                }
+        );
+    }
+
+    @AfterBatch(batchId = "sunLichenCollision")
+    public void resetController(ServerWorld serverWorld) {
+        EnvironmentManager.INSTANCE.setController(new EnvironmentControllerImpl());
+    }
+
+
+    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void cool_lichen_does_not_damage(TestContext context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
@@ -31,7 +60,7 @@ public final class SunLichenCollisionTests implements FabricGameTest {
         context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void hot_lichen_damages(TestContext context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
@@ -42,22 +71,22 @@ public final class SunLichenCollisionTests implements FabricGameTest {
         context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void hot_lichen_warms_appropriate_amount(TestContext context) {
         doWarmVillagerTest(context, FBlocks.HOT_SUN_LICHEN);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void warm_lichen_warms_appropriate_amount(TestContext context) {
         doWarmVillagerTest(context, FBlocks.WARM_SUN_LICHEN);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void cool_lichen_warms_appropriate_amount(TestContext context) {
         doWarmVillagerTest(context, FBlocks.COOL_SUN_LICHEN);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void cold_lichen_does_not_warm(TestContext context) {
         doWarmVillagerTest(context, FBlocks.COLD_SUN_LICHEN);
     }

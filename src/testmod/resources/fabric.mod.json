@@ -6,9 +6,6 @@
 	"environment": "*",
 	"license": "Apache-2.0",
 	"entrypoints": {
-		"main": [
-			"com.github.thedeathlycow.frostiful.test.FrostifulTestMod"
-		],
 		"fabric-gametest": [
 			"com.github.thedeathlycow.frostiful.test.icicle.IcicleBreakTests",
 			"com.github.thedeathlycow.frostiful.test.icicle.FrostTippedArrowTests",

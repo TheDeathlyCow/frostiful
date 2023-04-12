@@ -20,13 +20,14 @@ public abstract class BurnDamageMixin {
     private void applyHeatFromBurnDamage(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
 
 
-        if (!cir.getReturnValue() || source != DamageSource.HOT_FLOOR) {
+        if (!cir.getReturnValue() || (source != DamageSource.HOT_FLOOR && source != DamageSource.IN_FIRE)) {
             return;
         }
 
         LivingEntity instance = (LivingEntity) (Object) this;
 
-        if (instance.thermoo$isWarm() || EnchantmentHelper.hasFrostWalker(instance)) {
+        // dont apply heat if on fire or warm
+        if (instance.isOnFire() || instance.thermoo$isWarm()) {
             return;
         }
 
