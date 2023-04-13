@@ -15,7 +15,7 @@ public enum FrostLayers {
     NONE(0.0f, null),
     LOW(-0.5f, Frostiful.id("textures/entity/illager/frostologer/low_frost.png")),
     MEDIUM(-0.75f, Frostiful.id("textures/entity/illager/frostologer/medium_frost.png")),
-    HIGH(FrostologerEntity.VISUAL_POWER_TEMPERATURE_START, Frostiful.id("textures/entity/illager/frostologer/high_frost.png"));
+    HIGH(FrostologerEntity.MAX_POWER_SCALE_START, Frostiful.id("textures/entity/illager/frostologer/high_frost.png"));
 
     public static final FrostLayers[] LAYERS_WITHOUT_NONE = Stream.of(FrostLayers.values())
             .filter(layer -> layer != NONE)

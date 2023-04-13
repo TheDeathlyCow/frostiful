@@ -4,15 +4,12 @@ import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.Model;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.feature.EyesFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.IllagerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -28,7 +25,7 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntity, M exten
 
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
-        if (entity.thermoo$getTemperatureScale() <= FrostologerEntity.VISUAL_POWER_TEMPERATURE_START) {
+        if (entity.isAtMaxPower()) {
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.skin);
             this.getContextModel()
                     .render(

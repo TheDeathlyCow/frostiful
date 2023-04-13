@@ -12,10 +12,12 @@ import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import com.google.common.collect.ImmutableMap;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
+import net.minecraft.block.TorchBlock;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -26,7 +28,10 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.*;
+import net.minecraft.entity.mob.HostileEntity;
+import net.minecraft.entity.mob.IllagerEntity;
+import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.SpellcastingIllagerEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.passive.MerchantEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -54,11 +59,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.event.GameEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
-import java.util.function.Function;
 
 /**
  * By remapping {@link SpellcastingIllagerEntity.Spell}s, the Frostologer has the following spells:
@@ -72,7 +73,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
 
-    public static final float VISUAL_POWER_TEMPERATURE_START = -0.95f;
+    public static final float MAX_POWER_SCALE_START = -0.95f;
     private static final int NUM_POWER_PARTICLES = 2;
     private static final float START_PLACING_SNOW_TEMP = -0.8f;
 
@@ -85,6 +86,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public double capeX;
     public double capeY;
     public double capeZ;
+    private boolean isChanneling;
 
     private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
@@ -104,6 +106,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     public boolean isInHeatedArea() {
         return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.world, this.getBlockPos());
+    }
+
+    public boolean isAtMaxPower() {
+        return this.thermoo$getTemperatureScale() <= MAX_POWER_SCALE_START;
     }
 
     /**
@@ -171,6 +177,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
+        if (damageSource.isProjectile() && (this.isChanneling() || this.isAtMaxPower())) {
+            return true;
+        }
+
         return damageSource == DamageSource.FREEZE
                 || damageSource == FDamageSource.ICICLE
                 || damageSource == FDamageSource.FALLING_ICICLE
@@ -246,7 +256,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        if (this.world.isClient && this.thermoo$getTemperatureScale() <= VISUAL_POWER_TEMPERATURE_START) {
+        if (this.world.isClient && this.isAtMaxPower()) {
             this.spawnPowerParticles();
         }
 
@@ -482,6 +492,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return FSoundEvents.ENTITY_FROSTOLOGER_CAST_SPELL;
     }
 
+    public boolean isChanneling() {
+        return isChanneling;
+    }
+
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
@@ -548,6 +562,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 FrostologerEntity.this.extinguish();
                 FrostologerEntity.this.playExtinguishSound();
             }
+            FrostologerEntity.this.isChanneling = true;
         }
 
         public boolean canStart() {
@@ -613,6 +628,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }
+
+            FrostologerEntity.this.isChanneling = false;
         }
 
         @Override
