@@ -10,6 +10,7 @@ import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PillagerEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
 import net.minecraft.server.world.ServerWorld;
@@ -29,11 +30,21 @@ public class ChillagerEntity extends PillagerEntity {
     }
 
     @Override
+    public boolean damage(DamageSource source, float amount) {
+
+        if (source.isFire()) {
+            amount *= 2;
+        }
+
+        return super.damage(source, amount);
+    }
+
+    @Override
     public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
         if (world.getDifficulty() != Difficulty.PEACEFUL) {
             Frostiful.LOGGER.info("Chillager {} was struck by lightning {}.", this, lightning);
             FrostologerEntity frostologer = FEntityTypes.FROSTOLOGER.create(world);
-
+            ArrowEntity
             if (frostologer == null) {
                 return;
             }

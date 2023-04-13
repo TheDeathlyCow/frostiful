@@ -96,7 +96,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public static DefaultAttributeContainer.Builder createFrostologerAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 12.0)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0)
                 .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0)
                 .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
                 .add(ThermooAttributes.FROST_RESISTANCE, -5.0);
@@ -189,7 +189,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.goalSelector.add(4, new FrostWandAttackGoal());
         this.goalSelector.add(4, new SummonMinionsGoal());
-        this.goalSelector.add(4, new IcicleAttackGoal(UniformIntProvider.create(7, 12)));
+        this.goalSelector.add(4, new IcicleAttackGoal(UniformIntProvider.create(20, 30)));
 
         this.goalSelector.add(6, new DestroyHeatSourcesGoal(15));
 
