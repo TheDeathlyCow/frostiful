@@ -69,7 +69,7 @@ public sealed class EnervationEnchantment extends Enchantment permits FrozenTouc
 
         user.thermoo$addTemperature(heatAddedToUser, HeatingModes.ACTIVE);
 
-        if (heatDrainedFromTarget > 0) {
+        if (heatDrainedFromTarget != 0) {
             addHeatDrainParticles(user, target, level);
         }
     }
