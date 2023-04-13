@@ -683,12 +683,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             ServerWorld serverWorld = (ServerWorld) FrostologerEntity.this.world;
 
             for (int i = 0; i < 3; ++i) {
-                BlockPos blockPos = FrostologerEntity.this.getBlockPos()
-                        .add(
-                                -2 + FrostologerEntity.this.random.nextInt(5),
-                                1,
-                                -2 + FrostologerEntity.this.random.nextInt(5)
-                        );
+                BlockPos blockPos = FrostologerEntity.this.getBlockPos();
 
                 // use vex entity as placeholder for custom minions
                 BiterEntity minionEntity = FEntityTypes.BITER.create(FrostologerEntity.this.world);
