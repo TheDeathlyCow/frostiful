@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
@@ -32,7 +33,8 @@ public class ChillagerEntity extends PillagerEntity {
     public boolean damage(DamageSource source, float amount) {
 
         if (source.isFire()) {
-            amount *= 2;
+            FrostifulConfig config = Frostiful.getConfig();
+            amount *= config.combatConfig.getChillagerFireDamageMultiplier();
         }
 
         return super.damage(source, amount);

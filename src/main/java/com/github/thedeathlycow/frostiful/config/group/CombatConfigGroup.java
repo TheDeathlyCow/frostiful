@@ -40,6 +40,8 @@ public class CombatConfigGroup implements ConfigData {
 
     int biterFrostBiteMaxAmplifier = 2;
 
+    float chillagerFireDamageMultiplier = 1.5f;
+
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
     }
@@ -107,5 +109,9 @@ public class CombatConfigGroup implements ConfigData {
 
     public int getBiterFrostBiteMaxAmplifier() {
         return Math.max(0, this.biterFrostBiteMaxAmplifier);
+    }
+
+    public float getChillagerFireDamageMultiplier() {
+        return chillagerFireDamageMultiplier;
     }
 }
