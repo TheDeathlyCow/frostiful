@@ -56,35 +56,6 @@ public class HotFloorTests {
         expectVillagerIsHeated(context, Blocks.MAGMA_BLOCK.getDefaultState(), config.freezingConfig.getHeatFromHotFloor());
     }
 
-    @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void when_villager_standing_in_fire_then_villager_is_not_heated_further(TestContext context) {
-        expectVillagerIsHeated(context, Blocks.FIRE.getDefaultState(), 0);
-    }
-
-    @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void when_villager_standing_on_campfire_then_villager_is_heated(TestContext context) {
-        var config = Frostiful.getConfig();
-        expectVillagerIsHeated(context, Blocks.CAMPFIRE.getDefaultState().with(CampfireBlock.LIT, true), config.freezingConfig.getHeatFromHotFloor());
-    }
-
-    @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void when_villager_standing_on_soul_campfire_then_villager_is_heated(TestContext context) {
-        var config = Frostiful.getConfig();
-        expectVillagerIsHeated(context, Blocks.SOUL_CAMPFIRE.getDefaultState().with(CampfireBlock.LIT, true), config.freezingConfig.getHeatFromHotFloor());
-    }
-
-    @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void when_villager_standing_on_unlit_campfire_then_villager_is_heated(TestContext context) {
-        var config = Frostiful.getConfig();
-        expectVillagerIsHeated(context, Blocks.CAMPFIRE.getDefaultState().with(CampfireBlock.LIT, false), 0);
-    }
-
-    @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void when_villager_standing_on_unlit_soul_campfire_then_villager_is_heated(TestContext context) {
-        var config = Frostiful.getConfig();
-        expectVillagerIsHeated(context, Blocks.SOUL_CAMPFIRE.getDefaultState().with(CampfireBlock.LIT, false), 0);
-    }
-
     private static void expectVillagerIsHeated(TestContext context, BlockState state, int temperatureChange) {
         final BlockPos pos = new BlockPos(1, 3, 1);
         final int temperature = -1000;
@@ -100,7 +71,7 @@ public class HotFloorTests {
                 entity,
                 temperatureGetter,
                 "temperature",
-                temperature + temperatureChange
+                temperature + (temperatureChange * ((int) context.getTick() - 1))
         )));
 
 
