@@ -20,7 +20,7 @@ public final class PlayerEventThermooListeners {
             InitialTemperatureChangeResult result
     ) {
 
-        if (result.getInitialChange() > 0) {
+        if (player.thermoo$isWarm()) {
             return;
         }
 
