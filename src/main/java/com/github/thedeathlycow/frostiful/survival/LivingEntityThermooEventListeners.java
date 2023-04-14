@@ -27,8 +27,9 @@ public final class LivingEntityThermooEventListeners {
             InitialTemperatureChangeResult result
     ) {
 
-        // Frostiful only deals with cold - don't apply changes to warm entities
-        if (entity.thermoo$isWarm()) {
+        // dont heat (much) beyond 0, but still allow heating if cold,
+        // and always allow passive cooling
+        if (result.getInitialChange() > 0 && entity.thermoo$isWarm()) {
             return;
         }
 
