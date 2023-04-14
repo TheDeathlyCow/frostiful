@@ -54,6 +54,12 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                     FrostifulConfig config = Frostiful.getConfig();
                     int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
                     livingEntity.thermoo$addTemperature(heat, HeatingModes.ACTIVE);
+
+                    // reset temperature if overheated
+                    if (livingEntity.thermoo$isWarm()) {
+                        livingEntity.thermoo$setTemperature(0);
+                        livingEntity.setFireTicks(config.freezingConfig.getSunLichenBurnTime());
+                    }
                 }
 
                 entity.damage(FDamageSource.SUN_LICHEN, 1);

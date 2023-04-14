@@ -15,6 +15,7 @@ public class FreezingConfigGroup implements ConfigData {
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     float soakPercentFromWaterPotion = 0.5f;
     int sunLichenHeatPerLevel = 500;
+    int sunLichenBurnTime = 5 * 20;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
     int freezingWindFrost = 160;
@@ -48,6 +49,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getSunLichenHeatPerLevel() {
         return sunLichenHeatPerLevel;
+    }
+
+    public int getSunLichenBurnTime() {
+        return sunLichenBurnTime;
     }
 
     public double getCampfireWarmthSearchRadius() {

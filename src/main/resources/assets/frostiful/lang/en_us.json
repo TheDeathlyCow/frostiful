@@ -198,6 +198,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.soakPercentFromWaterPotion": "Soak percent from splash water bottle (0-1)",
   "text.autoconfig.frostiful.option.freezingConfig.conduitPowerWarmthPerTick": "Conduit Power warmth per tick",
   "text.autoconfig.frostiful.option.freezingConfig.sunLichenHeatPerLevel": "Sun Lichen heat per level",
+  "text.autoconfig.frostiful.option.freezingConfig.sunLichenBurnTime": "Sun Lichen burn time (ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time (ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.freezingWindFrost": "Freezing wind frost (per 5 ticks)",
