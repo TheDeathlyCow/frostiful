@@ -10,12 +10,12 @@
     "config": {
         "effects": [
             {
-                "amplifier": 1,
+                "amplifier": 2,
                 "duration": 20,
                 "effect": "minecraft:regeneration"
             },
             {
-                "amplifier": 0,
+                "amplifier": 2,
                 "duration": 20,
                 "effect": "minecraft:resistance"
             },

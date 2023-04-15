@@ -86,7 +86,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public double capeX;
     public double capeY;
     public double capeZ;
-    private boolean isChanneling;
+    private boolean isChanneling = false;
 
     private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
@@ -177,7 +177,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource.isProjectile() && (this.isChanneling() || this.isAtMaxPower())) {
+        if (damageSource.isProjectile() && this.isChanneling()) {
             return true;
         }
 
@@ -266,6 +266,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     -config.combatConfig.getFrostologerPassiveFreezingPerTick(),
                     HeatingModes.PASSIVE
             );
+        }
+
+        if (this.isOnFire()) {
+            int heatFromFire = EnvironmentManager.INSTANCE.getController().getOnFireWarmthRate(this);
+            this.thermoo$addTemperature(-(heatFromFire / 2), HeatingModes.ACTIVE);
         }
     }
 
@@ -723,7 +728,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected int getSpellTicks() {
-            return 100;
+            return 20;
         }
 
         @Override
