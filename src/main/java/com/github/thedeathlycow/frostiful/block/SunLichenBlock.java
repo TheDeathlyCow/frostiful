@@ -72,7 +72,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                 }
 
                 entity.damage(FDamageSource.SUN_LICHEN, 1);
-                this.createFireParticles(world, pos);
+                createFireParticles(world, pos);
 
                 BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
                 world.setBlockState(pos, coldSunLichenState);
@@ -138,7 +138,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         world.playSound(null, pos, FSoundEvents.FIRE_LICHEN_DISCHARGE, SoundCategory.BLOCKS, 0.7F, pitch);
     }
 
-    private void createFireParticles(World world, BlockPos pos) {
+    public static void createFireParticles(World world, BlockPos pos) {
         final double maxHorizontalOffset = 0.5;
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
