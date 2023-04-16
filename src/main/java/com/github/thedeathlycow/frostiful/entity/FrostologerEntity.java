@@ -141,6 +141,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             } else {
                 frozenState = Blocks.AIR.getDefaultState();
             }
+        } else if (state.isIn(FBlockTags.HOT_FLOOR)) {
+            frozenState = Blocks.COBBLESTONE.getDefaultState();
         } else if (state.isFullCube(world, blockPos)) {
             frozenState = Blocks.ICE.getDefaultState();
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
