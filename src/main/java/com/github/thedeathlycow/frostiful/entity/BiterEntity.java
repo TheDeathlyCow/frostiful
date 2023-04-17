@@ -4,10 +4,7 @@ import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
@@ -42,6 +39,8 @@ public class BiterEntity extends HostileEntity {
     MobEntity owner;
 
     private int attackTicks = 0;
+
+    public final AnimationState bitingAnimation = new AnimationState();
 
     protected BiterEntity(EntityType<? extends BiterEntity> entityType, World world) {
         super(entityType, world);
@@ -123,9 +122,10 @@ public class BiterEntity extends HostileEntity {
         if (status == EntityStatuses.PLAY_ATTACK_SOUND) {
             this.attackTicks = ATTACK_TIME;
             this.playAttackSound();
+            this.bitingAnimation.start(this.age);
+        } else {
+            super.handleStatus(status);
         }
-
-        super.handleStatus(status);
     }
 
     @Override
