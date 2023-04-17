@@ -10,9 +10,9 @@
     "config": {
         "effects": [
             {
-                "amplifier": 2,
+                "amplifier": 1,
                 "duration": 20,
-                "effect": "minecraft:regeneration"
+                "effect": "minecraft:speed"
             },
             {
                 "amplifier": 2,

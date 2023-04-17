@@ -578,9 +578,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 return false;
             } else if (FrostologerEntity.this.age < this.startTime) {
                 return false;
+            } else if (!FrostologerEntity.this.hasTarget()) {
+                return false;
             } else {
                 return FrostologerEntity.this.isOnFire()
-                        || FrostologerEntity.this.hasTarget()
                         || FrostologerEntity.this.isInHeatedArea();
             }
         }
