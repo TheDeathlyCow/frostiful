@@ -7,6 +7,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.Identifier;
 
 /**
@@ -30,43 +31,41 @@ public class FrostWandItemModel extends Model {
         ModelPartData modelPartData = modelData.getRoot();
         ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 24.0F, 0.0F));
 
-        ModelPartData pole_topper = root.addChild("pole_topper", ModelPartBuilder.create().uv(4, 0).cuboid(-1.0F, -25.0F, -2.0F, 3.0F, 2.0F, 3.0F, new Dilation(0.0F))
-                .uv(13, 5).cuboid(-1.0F, -25.0F, 1.0F, 3.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(9, 10).cuboid(2.0F, -25.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F))
-                .uv(13, 0).cuboid(-1.0F, -25.0F, -3.0F, 3.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(4, 9).cuboid(-2.0F, -25.0F, -2.0F, 1.0F, 1.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        ModelPartData rod = root.addChild("rod", ModelPartBuilder.create().uv(32, 9).cuboid(-1.0F, -1.0F, -1.0F, 2.0F, 1.0F, 2.0F, new Dilation(0.0F))
+                .uv(20, 8).cuboid(-2.0F, -5.0F, -2.0F, 4.0F, 4.0F, 4.0F, new Dilation(0.0F))
+                .uv(0, 0).cuboid(-1.0F, -33.0F, -1.0F, 2.0F, 28.0F, 2.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
-        ModelPartData icicles = root.addChild("icicles", ModelPartBuilder.create().uv(16, 16).cuboid(3.0F, -24.0F, 0.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
-                .uv(9, 8).cuboid(-1.0F, -24.0F, 1.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
-                .uv(4, 8).cuboid(-2.0F, -24.0F, 0.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
-                .uv(9, 10).cuboid(-2.0F, -24.0F, -1.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(4, 4).cuboid(-2.0F, -24.0F, -2.0F, 0.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(4, 10).cuboid(2.0F, -24.0F, -3.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(4, 0).cuboid(-1.0F, -24.0F, -3.0F, 0.0F, 2.0F, 1.0F, new Dilation(0.0F))
-                .uv(11, 8).cuboid(3.0F, -24.0F, -2.0F, 0.0F, 1.0F, 1.0F, new Dilation(0.0F))
-                .uv(10, 18).cuboid(2.0F, -24.0F, -2.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F))
-                .uv(5, 0).cuboid(2.0F, -24.0F, 1.0F, 1.0F, 1.0F, 0.0F, new Dilation(0.0F))
-                .uv(8, 18).cuboid(1.0F, -24.0F, 2.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F))
-                .uv(17, 7).cuboid(0.0F, -24.0F, -3.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F))
-                .uv(16, 2).cuboid(-1.0F, -24.0F, 2.0F, 1.0F, 3.0F, 0.0F, new Dilation(0.0F))
-                .uv(3, 0).cuboid(0.0F, -24.0F, 2.0F, 1.0F, 1.0F, 0.0F, new Dilation(0.0F))
-                .uv(13, 2).cuboid(-1.0F, -24.0F, -3.0F, 1.0F, 1.0F, 0.0F, new Dilation(0.0F))
-                .uv(18, 2).cuboid(1.0F, -24.0F, -3.0F, 1.0F, 2.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        ModelPartData top = root.addChild("top", ModelPartBuilder.create().uv(8, 0).cuboid(-3.0F, -1.0F, -3.0F, 6.0F, 2.0F, 6.0F, new Dilation(0.0F))
+                .uv(0, 32).cuboid(-2.0F, 1.0F, -2.0F, 4.0F, 3.0F, 4.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -37.0F, 0.0F));
 
-        ModelPartData spell = root.addChild("spell", ModelPartBuilder.create().uv(4, 13).cuboid(0.0F, -33.0F, -1.0F, 1.0F, 7.0F, 1.0F, new Dilation(0.0F))
-                .uv(14, 9).cuboid(0.0F, -31.0F, 1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(8, 14).cuboid(-2.0F, -31.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(16, 13).cuboid(0.0F, -31.0F, -3.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F))
-                .uv(12, 14).cuboid(2.0F, -31.0F, -1.0F, 1.0F, 3.0F, 1.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        ModelPartData icicles = top.addChild("icicles", ModelPartBuilder.create().uv(20, 25).cuboid(-3.0F, 1.0F, -3.0F, 0.0F, 5.0F, 6.0F, new Dilation(0.0F))
+                .uv(20, 20).cuboid(3.0F, 1.0F, -3.0F, 0.0F, 5.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
-        ModelPartData pole = root.addChild("pole", ModelPartBuilder.create().uv(0, 0).cuboid(0.0F, -23.0F, -1.0F, 1.0F, 23.0F, 1.0F, new Dilation(0.0F))
-                .uv(4, 5).cuboid(-1.0F, -2.0F, -2.0F, 3.0F, 1.0F, 3.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        ModelPartData south_r1 = icicles.addChild("south_r1", ModelPartBuilder.create().uv(20, 10).cuboid(-3.0F, 1.0F, -3.0F, 0.0F, 5.0F, 6.0F, new Dilation(0.0F))
+                .uv(20, 15).cuboid(3.0F, 1.0F, -3.0F, 0.0F, 5.0F, 6.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 0.0F, 0.0F, 0.0F, 1.5708F, 0.0F));
 
-        return TexturedModelData.of(modelData, 32, 32);
+        ModelPartData icicle = root.addChild("icicle", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -26.0F, 0.0F));
+
+        ModelPartData main = icicle.addChild("main", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, -6.0F, 0.0F));
+
+        ModelPartData cube_r1 = main.addChild("cube_r1", ModelPartBuilder.create().uv(8, 8).cuboid(-3.0F, -26.0F, 0.0F, 6.0F, 17.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 2.0F, 0.0F, 0.0F, -0.7854F, 0.0F));
+
+        ModelPartData cube_r2 = main.addChild("cube_r2", ModelPartBuilder.create().uv(8, 8).cuboid(-3.0F, -26.0F, 0.0F, 6.0F, 17.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 2.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
+
+        ModelPartData sides = icicle.addChild("sides", ModelPartBuilder.create()    , ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+
+        ModelPartData west_r1 = sides.addChild("west_r1", ModelPartBuilder.create().uv(32, 16).cuboid(-3.0F, -6.0F, 0.0F, 6.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(4.0F, -16.0F, 0.0F, -0.1745F, 1.5708F, 0.0F));
+
+        ModelPartData east_r1 = sides.addChild("east_r1", ModelPartBuilder.create().uv(32, 16).cuboid(-3.0F, -6.0F, 0.0F, 6.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(-4.0F, -16.0F, 0.0F, -0.1745F, -1.5708F, 0.0F));
+
+        ModelPartData south_r2 = sides.addChild("south_r2", ModelPartBuilder.create().uv(32, 16).cuboid(-3.0F, -6.0F, 0.0F, 6.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -16.0F, 4.0F, -0.1745F, 0.0F, 0.0F));
+
+        ModelPartData north_r1 = sides.addChild("north_r1", ModelPartBuilder.create().uv(32, 16).cuboid(-3.0F, -6.0F, 0.0F, 6.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, -16.0F, -4.0F, 0.1745F, 0.0F, 0.0F));
+        return TexturedModelData.of(modelData, 64, 64);
     }
 
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        this.root.render(matrices, vertices, FULL_BRIGHTNESS, overlay, red, green, blue, alpha);
+        this.root.render(matrices, vertices, FULL_BRIGHTNESS, overlay, 1.0f, 1.0f, 1.0f, alpha);
     }
 }
