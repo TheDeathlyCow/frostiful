@@ -22,18 +22,20 @@ public final class PlayerEventThermooListeners {
 
         // dont passively heat (much) beyond 0, but still allow heating if cold,
         // and always allow passive cooling
-        if (result.getInitialChange() > 0 && player.thermoo$isWarm()) {
+        final int changeAmount = result.getInitialChange();
+        if (changeAmount > 0 && player.thermoo$isWarm()) {
             return;
         }
 
         World world = player.world;
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
         final boolean doPassiveFreezing = config.doPassiveFreezing()
-                && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING)
-                && player.thermoo$canFreeze()
-                && player.thermoo$getTemperatureScale() > -config.getMaxPassiveFreezingPercent();
+                && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
-        if (doPassiveFreezing) {
+        final boolean canApplyChange = (changeAmount > 0 && player.thermoo$canOverheat())
+                || (changeAmount < 0 && player.canFreeze() && player.thermoo$getTemperatureScale() >= -config.getMaxPassiveFreezingPercent());
+
+        if (doPassiveFreezing && canApplyChange) {
             float modifier = 0f;
             if (result.getInitialChange() < 0) {
                 modifier = getWetnessFreezeModifier(player);
