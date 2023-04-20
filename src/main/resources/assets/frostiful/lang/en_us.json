@@ -193,6 +193,8 @@
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
   "text.autoconfig.frostiful.option.freezingConfig.doWindSpawning": "Do wind spawning",
+  "text.autoconfig.frostiful.option.freezingConfig.spawnWindInAir": "Do wind spawning in air",
+  "text.autoconfig.frostiful.option.freezingConfig.windSpawnCap": "Wind spawn cap",
   "text.autoconfig.frostiful.option.freezingConfig.windDestroysTorches": "Wind destroys torches",
   "text.autoconfig.frostiful.option.freezingConfig.maxPassiveFreezingPercent": "Max passive freezing percent (0-1)",
   "text.autoconfig.frostiful.option.freezingConfig.passiveFreezingWetnessScaleMultiplier": "Passive freezing wetness scale multiplier",

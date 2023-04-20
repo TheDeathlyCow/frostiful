@@ -19,6 +19,7 @@ public class FreezingWindEntity extends WindEntity {
         this.frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
     }
 
+    @Override
     public void onEntityCollision(LivingEntity entity) {
         super.onEntityCollision(entity);
         if (entity.isPlayer()) {

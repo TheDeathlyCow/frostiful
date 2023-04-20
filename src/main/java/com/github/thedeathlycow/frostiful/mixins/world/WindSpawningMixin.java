@@ -35,7 +35,7 @@ public abstract class WindSpawningMixin extends World {
     private void tickWindSpawn(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
         Profiler profiler = this.getProfiler();
         profiler.push("frostiful.freezingWindTick");
-        WindSpawner.trySpawnFreezingWind(this, chunk);
+        WindSpawner.INSTANCE.trySpawnFreezingWind(this, chunk);
         profiler.pop();
     }
 
