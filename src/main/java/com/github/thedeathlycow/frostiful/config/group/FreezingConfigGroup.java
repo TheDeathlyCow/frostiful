@@ -10,6 +10,8 @@ public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
     boolean doWindSpawning = true;
+
+    boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
     float maxPassiveFreezingPercent = 1.0f;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
@@ -29,6 +31,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doWindSpawning() {
         return doWindSpawning;
+    }
+
+    public boolean spawnWindInAir() {
+        return spawnWindInAir;
     }
 
     public boolean isWindDestroysTorches() {

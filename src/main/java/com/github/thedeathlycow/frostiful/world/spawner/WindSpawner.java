@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.world.spawner;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
 import com.github.thedeathlycow.frostiful.entity.WindEntity;
@@ -36,7 +37,8 @@ public class WindSpawner {
             TagKey<Biome> alwaysSpawnBiomes,
             TagKey<Biome> spawnInStormsBiomes
     ) {
-        if (!Frostiful.getConfig().freezingConfig.doWindSpawning()) {
+        FrostifulConfig config = Frostiful.getConfig();
+        if (!config.freezingConfig.doWindSpawning()) {
             return null;
         }
 
@@ -66,7 +68,7 @@ public class WindSpawner {
         boolean canSpawnOnGround = (world.isRaining() && biome.isIn(spawnInStormsBiomes))
                 || biome.isIn(alwaysSpawnBiomes);
 
-        if (canSpawnOnGround || spawnInAir) {
+        if (canSpawnOnGround || (spawnInAir && config.freezingConfig.spawnWindInAir())) {
             W wind = type.create(world);
             if (wind != null) {
                 if (spawnInAir) {
