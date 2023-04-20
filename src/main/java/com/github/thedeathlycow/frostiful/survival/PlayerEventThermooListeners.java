@@ -20,7 +20,9 @@ public final class PlayerEventThermooListeners {
             InitialTemperatureChangeResult result
     ) {
 
-        if (result.getInitialChange() > 0) {
+        // dont passively heat (much) beyond 0, but still allow heating if cold,
+        // and always allow passive cooling
+        if (result.getInitialChange() > 0 && player.thermoo$isWarm()) {
             return;
         }
 
@@ -32,7 +34,11 @@ public final class PlayerEventThermooListeners {
                 && player.thermoo$getTemperatureScale() > -config.getMaxPassiveFreezingPercent();
 
         if (doPassiveFreezing) {
-            float modifier = getWetnessFreezeModifier(player);
+            float modifier = 0f;
+            if (result.getInitialChange() < 0) {
+                modifier = getWetnessFreezeModifier(player);
+            }
+
             int temperatureChange = MathHelper.ceil(result.getInitialChange() * (1 + modifier));
 
             result.setInitialChange(temperatureChange);

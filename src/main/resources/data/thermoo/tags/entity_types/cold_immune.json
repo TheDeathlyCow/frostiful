@@ -7,6 +7,7 @@
 		"minecraft:warden",
 		"#c:bosses",
 		"minecraft:armor_stand",
-		"frostiful:chillager"
+		"frostiful:chillager",
+		"frostiful:biter"
 	]
 }

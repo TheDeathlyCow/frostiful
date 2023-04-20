@@ -27,8 +27,9 @@ public final class LivingEntityThermooEventListeners {
             InitialTemperatureChangeResult result
     ) {
 
-        // Frostiful only deals with cold - don't apply changes to non-cold entities
-        if (!entity.thermoo$isCold()) {
+        // dont heat (much) beyond 0, but still allow heating if cold,
+        // and always allow passive cooling
+        if (result.getInitialChange() > 0 && entity.thermoo$isWarm()) {
             return;
         }
 
@@ -46,11 +47,10 @@ public final class LivingEntityThermooEventListeners {
         }
 
         // apply conduit power warmth
-        FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
-
         boolean applyConduitPowerWarmth = entity.isSubmergedInWater()
                 && entity.hasStatusEffect(StatusEffects.CONDUIT_POWER);
         if (applyConduitPowerWarmth) {
+            FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
             int warmth = config.getConduitWarmthPerTick();
             entity.thermoo$addTemperature(warmth, HeatingModes.PASSIVE);
         }

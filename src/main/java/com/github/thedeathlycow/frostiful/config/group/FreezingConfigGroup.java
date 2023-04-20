@@ -14,12 +14,13 @@ public class FreezingConfigGroup implements ConfigData {
     float maxPassiveFreezingPercent = 1.0f;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     float soakPercentFromWaterPotion = 0.5f;
-    int powderSnowFreezeRate = 30;
     int sunLichenHeatPerLevel = 500;
+    int sunLichenBurnTime = 3 * 20;
     double campfireWarmthSearchRadius = 10;
     int campfireWarmthTime = 1200;
     int freezingWindFrost = 160;
     int conduitPowerWarmthPerTick = 12;
+    int heatFromHotFloor = 12;
 
 
     public boolean doPassiveFreezing() {
@@ -46,12 +47,12 @@ public class FreezingConfigGroup implements ConfigData {
         return MathHelper.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
     }
 
-    public int getPowderSnowFreezeRate() {
-        return powderSnowFreezeRate;
-    }
-
     public int getSunLichenHeatPerLevel() {
         return sunLichenHeatPerLevel;
+    }
+
+    public int getSunLichenBurnTime() {
+        return sunLichenBurnTime;
     }
 
     public double getCampfireWarmthSearchRadius() {
@@ -70,4 +71,7 @@ public class FreezingConfigGroup implements ConfigData {
         return conduitPowerWarmthPerTick;
     }
 
+    public int getHeatFromHotFloor() {
+        return heatFromHotFloor;
+    }
 }

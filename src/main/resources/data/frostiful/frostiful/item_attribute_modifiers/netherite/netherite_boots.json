@@ -9,6 +9,14 @@
 				"value": 0.25,
 				"operation": "addition"
 			}
+		},
+		{
+			"attribute": "thermoo:generic.heat_resistance",
+			"modifier": {
+				"uuid": "c8d89839-aec3-464a-9e79-4bb3f841c3d8",
+				"value": 0.25,
+				"operation": "addition"
+			}
 		}
 	]
 }

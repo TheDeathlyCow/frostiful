@@ -26,7 +26,7 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     FUR_LINED_CHAIN(
             "fur_lined_chainmail",
             15,
-            new int[]{1, 4, 5, 2},
+            new int[]{2, 5, 6, 2},
             12,
             SoundEvents.ITEM_ARMOR_EQUIP_CHAIN,
             0,

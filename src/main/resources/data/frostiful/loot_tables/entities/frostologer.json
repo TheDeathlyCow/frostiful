@@ -20,15 +20,12 @@
 							"condition": "minecraft:killed_by_player"
 						},
 						{
-							"condition": "minecraft:damage_source_properties",
+							"condition": "minecraft:entity_properties",
+							"entity": "this",
 							"predicate": {
-								"source_entity": {
-									"equipment": {
-										"mainhand": {
-											"items": [
-												"frostiful:frost_wand"
-											]
-										}
+								"thermoo.temperature": {
+									"scale": {
+										"min": -0.15
 									}
 								}
 							}

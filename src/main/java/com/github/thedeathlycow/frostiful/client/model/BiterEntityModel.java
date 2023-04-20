@@ -1,17 +1,19 @@
 package com.github.thedeathlycow.frostiful.client.model;
 
+import com.github.thedeathlycow.frostiful.client.anim.BiterAnimations;
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.SinglePartEntityModel;
+import net.minecraft.client.render.entity.model.StriderEntityModel;
 import net.minecraft.util.math.MathHelper;
 
 @Environment(EnvType.CLIENT)
 public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
 
-    private final ModelPart root;
+    private final ModelPart modelPart;
 
     private final ModelPart head;
     private final ModelPart mouthTop;
@@ -19,8 +21,10 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
     private final ModelPart leftArm;
     private final ModelPart rightArm;
 
-    public BiterEntityModel(ModelPart root) {
-        this.root = root;
+    public BiterEntityModel(ModelPart modelPart) {
+        this.modelPart = modelPart;
+
+        ModelPart root = modelPart.getChild("root");
 
         this.head = root.getChild("head");
         ModelPart mouth = this.head.getChild("mouth");
@@ -35,7 +39,8 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();
-        ModelPartData root = modelData.getRoot();
+        ModelPartData modelPartData = modelData.getRoot();
+        ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
         ModelPartData head = root.addChild("head", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 21.0F, 0.0F));
 
         ModelPartData mouth = head.addChild("mouth", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
@@ -65,34 +70,24 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
     @Override
     public ModelPart getPart() {
-        return this.root;
+        return this.modelPart;
     }
 
     @Override
-    public void setAngles(BiterEntity entity, float limbAngle, float limbDistance, float animationProgress, float headYaw, float headPitch) {
+    public void setAngles(
+            BiterEntity entity,
+            float limbAngle,
+            float limbDistance,
+            float animationProgress,
+            float headYaw,
+            float headPitch
+    ) {
+        this.getPart().traverse().forEach(ModelPart::resetTransform);
         this.rightArm.pitch = -1.5F * MathHelper.wrap(limbAngle, 10.0F) * limbDistance;
         this.leftArm.pitch = 1.5F * MathHelper.wrap(limbAngle, 10.0F) * limbDistance;
         this.rightArm.yaw = 0.0F;
         this.leftArm.yaw = 0.0F;
-    }
 
-    public void animateModel(BiterEntity entity, float limbAngle, float limbDistance, float tickDelta) {
-
-        int attackTicks = entity.getAttackTicks();
-
-        if (attackTicks > 0) {
-
-            // set attack pitch
-            float pitch;
-            if (attackTicks > BiterEntity.ATTACK_TIME / 2) {
-                pitch = MathHelper.sin((attackTicks - tickDelta) / 4.0f) * MathHelper.PI * 0.4f;
-            } else {
-                pitch = (MathHelper.PI / 20) * MathHelper.sin(MathHelper.PI * (attackTicks - tickDelta) / 10.0f);
-            }
-
-            this.mouthTop.pitch = -(pitch / 2);
-            this.mouthBottom.pitch = pitch;
-        }
-
+        this.updateAnimation(entity.bitingAnimation, BiterAnimations.BITE, animationProgress);
     }
 }

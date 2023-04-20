@@ -3,13 +3,13 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
@@ -46,6 +46,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
+import net.minecraft.tag.FluidTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -72,8 +73,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
     );
 
-    private static final float POWER_PARTICLES_FREEZING_SCALE_START = -0.95f;
-    private static final int NUM_POWER_PARTICLES = 3;
+    public static final float MAX_POWER_SCALE_START = -0.95f;
+    private static final int NUM_POWER_PARTICLES = 2;
+    private static final float START_PLACING_SNOW_TEMP = -0.8f;
 
 
     public float prevStrideDistance;
@@ -84,6 +86,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public double capeX;
     public double capeY;
     public double capeZ;
+    private boolean isChanneling = false;
+
+    private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
     protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
@@ -93,14 +98,18 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public static DefaultAttributeContainer.Builder createFrostologerAttributes() {
         return HostileEntity.createHostileAttributes()
                 .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 12.0)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 75.0)
+                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0)
+                .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0)
                 .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
                 .add(ThermooAttributes.FROST_RESISTANCE, -5.0);
     }
 
     public boolean isInHeatedArea() {
         return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.world, this.getBlockPos());
+    }
+
+    public boolean isAtMaxPower() {
+        return this.thermoo$getTemperatureScale() <= MAX_POWER_SCALE_START;
     }
 
     /**
@@ -126,6 +135,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         if (state.isIn(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
             frozenState = state;
+        } else if (blockPos.equals(this.getBlockPos())) {
+            if (fluidState.isIn(FluidTags.WATER)) {
+                frozenState = Blocks.WATER.getDefaultState();
+            } else {
+                frozenState = Blocks.AIR.getDefaultState();
+            }
+        } else if (state.isIn(FBlockTags.HOT_FLOOR)) {
+            frozenState = Blocks.COBBLESTONE.getDefaultState();
         } else if (state.isFullCube(world, blockPos)) {
             frozenState = Blocks.ICE.getDefaultState();
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
@@ -162,7 +179,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        return damageSource == DamageSource.FREEZE || super.isInvulnerableTo(damageSource);
+        if (damageSource.isProjectile() && this.isChanneling()) {
+            return true;
+        }
+
+        return damageSource == DamageSource.FREEZE
+                || damageSource == FDamageSource.ICICLE
+                || damageSource == FDamageSource.FALLING_ICICLE
+                || super.isInvulnerableTo(damageSource);
     }
 
     protected void initGoals() {
@@ -172,12 +196,12 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.goalSelector.add(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
 
-        this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
+        //this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
 
         this.goalSelector.add(4, new FrostWandAttackGoal());
         this.goalSelector.add(4, new SummonMinionsGoal());
-        this.goalSelector.add(4, new IcicleAttackGoal(UniformIntProvider.create(7, 12)));
+        this.goalSelector.add(4, new IcicleAttackGoal(UniformIntProvider.create(20, 30)));
 
         this.goalSelector.add(6, new DestroyHeatSourcesGoal(15));
 
@@ -234,16 +258,21 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        if (this.world.isClient && this.thermoo$getTemperatureScale() <= POWER_PARTICLES_FREEZING_SCALE_START) {
+        if (this.world.isClient && this.isAtMaxPower()) {
             this.spawnPowerParticles();
         }
 
         FrostifulConfig config = Frostiful.getConfig();
-        if (this.getFreezingScale() < config.combatConfig.getFrostologerMaxPassiveFreezing()) {
+        if (this.isTargetPlayer() && this.thermoo$getTemperatureScale() > -config.combatConfig.getFrostologerMaxPassiveFreezing()) {
             this.thermoo$addTemperature(
                     -config.combatConfig.getFrostologerPassiveFreezingPerTick(),
                     HeatingModes.PASSIVE
             );
+        }
+
+        if (this.isOnFire()) {
+            int heatFromFire = EnvironmentManager.INSTANCE.getController().getOnFireWarmthRate(this);
+            this.thermoo$addTemperature(-(heatFromFire / 2), HeatingModes.ACTIVE);
         }
     }
 
@@ -268,8 +297,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        if (this.world.isClient || this.thermoo$getTemperatureScale() > -0.8f) {
-            // dont place snow if client or too warm
+        if (this.world.isClient) {
+            // dont place snow if client
             return;
         }
 
@@ -284,14 +313,20 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         BlockPos frostologerPos = this.getBlockPos();
         BlockState snow = Blocks.SNOW.getDefaultState();
 
-        for (BlockPos blockPos : new BlockPos[]{frostologerPos, frostologerPos.down()}) {
+        boolean canPlaceSnow;
+        stepPositionsPool[0] = frostologerPos;
+        stepPositionsPool[1] = frostologerPos.down();
+        for (BlockPos blockPos : stepPositionsPool) {
 
             BlockState blockState = this.world.getBlockState(blockPos);
             if (EnvironmentManager.INSTANCE.getController().isHeatSource(blockState)) {
                 this.destroyHeatSource(serverWorld, blockState, blockPos);
             }
 
-            if (blockState.isAir() && snow.canPlaceAt(this.world, blockPos)) {
+            canPlaceSnow = blockState.isAir()
+                    && this.thermoo$getTemperatureScale() <= START_PLACING_SNOW_TEMP
+                    && snow.canPlaceAt(this.world, blockPos);
+            if (canPlaceSnow) {
                 this.world.setBlockState(blockPos, snow);
                 this.world.emitGameEvent(
                         GameEvent.BLOCK_PLACE,
@@ -343,6 +378,13 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public boolean hasTarget() {
         LivingEntity target = this.getTarget();
         return target != null && target.isAlive();
+    }
+
+    public boolean isTargetPlayer() {
+
+        LivingEntity target = this.getTarget();
+        return target != null && target.isAlive() && target.isPlayer();
+
     }
 
     public boolean isTargetRooted() {
@@ -457,6 +499,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return FSoundEvents.ENTITY_FROSTOLOGER_CAST_SPELL;
     }
 
+    public boolean isChanneling() {
+        return isChanneling;
+    }
+
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
@@ -523,6 +569,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 FrostologerEntity.this.extinguish();
                 FrostologerEntity.this.playExtinguishSound();
             }
+            FrostologerEntity.this.isChanneling = true;
         }
 
         public boolean canStart() {
@@ -531,8 +578,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 return false;
             } else if (FrostologerEntity.this.age < this.startTime) {
                 return false;
+            } else if (!FrostologerEntity.this.hasTarget()) {
+                return false;
             } else {
-                return FrostologerEntity.this.hasTarget() || FrostologerEntity.this.isInHeatedArea();
+                return FrostologerEntity.this.isOnFire()
+                        || FrostologerEntity.this.isInHeatedArea();
             }
         }
 
@@ -551,6 +601,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 serverWorld = (ServerWorld) world;
             }
 
+            if (FrostologerEntity.this.isOnFire()) {
+                FrostologerEntity.this.extinguish();
+                FrostologerEntity.this.playExtinguishSound();
+            }
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
@@ -582,6 +636,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }
+
+            FrostologerEntity.this.isChanneling = false;
         }
 
         @Override
@@ -650,12 +706,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             ServerWorld serverWorld = (ServerWorld) FrostologerEntity.this.world;
 
             for (int i = 0; i < 3; ++i) {
-                BlockPos blockPos = FrostologerEntity.this.getBlockPos()
-                        .add(
-                                -2 + FrostologerEntity.this.random.nextInt(5),
-                                1,
-                                -2 + FrostologerEntity.this.random.nextInt(5)
-                        );
+                BlockPos blockPos = FrostologerEntity.this.getBlockPos();
 
                 // use vex entity as placeholder for custom minions
                 BiterEntity minionEntity = FEntityTypes.BITER.create(FrostologerEntity.this.world);
@@ -680,7 +731,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected int getSpellTicks() {
-            return 100;
+            return 20;
         }
 
         @Override

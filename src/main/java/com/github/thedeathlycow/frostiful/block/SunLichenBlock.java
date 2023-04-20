@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
@@ -11,7 +12,6 @@ import net.minecraft.block.GlowLichenBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.item.ItemStack;
@@ -29,6 +29,12 @@ import java.util.concurrent.ThreadLocalRandom;
 @SuppressWarnings("deprecation")
 public class SunLichenBlock extends GlowLichenBlock implements Heatable {
 
+    public static final int COLD_LEVEL = 0;
+    public static final int COOL_LEVEL = 1;
+    public static final int WARM_LEVEL = 2;
+    public static final int HOT_LEVEL = 3;
+
+
     private static final float BASE_GROW_CHANCE = 0.017f;
     private static final float RANDOM_DISCHARGE_CHANCE = 0.13f;
 
@@ -37,7 +43,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     public SunLichenBlock(int heatLevel, Settings settings) {
         super(settings);
         this.heatLevel = heatLevel;
-        if (heatLevel > 0){
+        if (heatLevel > COLD_LEVEL){
             LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DANGER_OTHER);
         }
     }
@@ -45,18 +51,28 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     @Override
     public void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            if (this.heatLevel > 0 && this.canBurn(livingEntity)) {
+            if (this.heatLevel > COLD_LEVEL && this.canBurnEntity(livingEntity)) {
 
-                // only add heat if cold, but always burn
-                // maybe when warmth mod is a thing, this can still apply heat if it is loaded?
+                FrostifulConfig config = Frostiful.getConfig();
+
+                // only add heat if cold, but always damage
                 if (livingEntity.thermoo$isCold()) {
-                    FrostifulConfig config = Frostiful.getConfig();
                     int heat = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
                     livingEntity.thermoo$addTemperature(heat, HeatingModes.ACTIVE);
+
+                    // reset temperature if temp change overheated
+                    if (livingEntity.thermoo$isWarm()) {
+                        livingEntity.thermoo$setTemperature(0);
+                    }
                 }
 
-                entity.damage(DamageSource.HOT_FLOOR, 1);
-                this.createFireParticles(world, pos);
+                // burn if hot sun lichen and target is warm
+                if (livingEntity.thermoo$isWarm() && this.heatLevel == HOT_LEVEL) {
+                    livingEntity.setFireTicks(config.freezingConfig.getSunLichenBurnTime());
+                }
+
+                entity.damage(FDamageSource.SUN_LICHEN, 1);
+                createFireParticles(world, pos);
 
                 BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
                 world.setBlockState(pos, coldSunLichenState);
@@ -103,7 +119,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         return BASE_GROW_CHANCE * skyLight;
     }
 
-    private boolean canBurn(LivingEntity entity) {
+    private boolean canBurnEntity(LivingEntity entity) {
         if (entity.isSpectator() || (entity instanceof PlayerEntity player && player.isCreative())) {
             return false;
         } else if (entity.isFireImmune()) {
@@ -122,7 +138,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         world.playSound(null, pos, FSoundEvents.FIRE_LICHEN_DISCHARGE, SoundCategory.BLOCKS, 0.7F, pitch);
     }
 
-    private void createFireParticles(World world, BlockPos pos) {
+    public static void createFireParticles(World world, BlockPos pos) {
         final double maxHorizontalOffset = 0.5;
 
         ThreadLocalRandom random = ThreadLocalRandom.current();

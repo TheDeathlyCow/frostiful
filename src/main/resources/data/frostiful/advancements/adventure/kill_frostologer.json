@@ -1,0 +1,38 @@
+{
+    "display": {
+        "icon": {
+            "item": "frostiful:frost_wand",
+            "nbt": "{Damage:0}"
+        },
+        "title": {
+            "translate": "advancements.frostiful.adventure.kill_frostologer.title"
+        },
+        "description": {
+            "translate": "advancements.frostiful.adventure.kill_frostologer.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "parent": "frostiful:adventure/find_frostologer_castle",
+    "criteria": {
+        "frostologer": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": [{
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                        "type": "frostiful:frostologer"
+                    }
+                }]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "frostologer"
+        ]
+    ]
+}

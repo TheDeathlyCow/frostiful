@@ -51,25 +51,29 @@ public sealed class EnervationEnchantment extends Enchantment permits FrozenTouc
     @Override
     public void onTargetDamaged(LivingEntity user, Entity target, int level) {
 
-        if (!target.canFreeze()) {
-            return;
-        }
-
-        int heatDrained = 0;
+        int heatDrainedFromTarget = 0;
         FrostifulConfig config = Frostiful.getConfig();
 
         if (target instanceof LivingEntity livingTarget) {
 
-            heatDrained = config.combatConfig.getHeatDrainPerLevel() * level;
+            if (!livingTarget.thermoo$canFreeze()) {
+                return;
+            }
 
-            livingTarget.thermoo$addTemperature(heatDrained, HeatingModes.ACTIVE);
+            heatDrainedFromTarget = config.combatConfig.getHeatDrainPerLevel() * level;
+
+            livingTarget.thermoo$addTemperature(-heatDrainedFromTarget, HeatingModes.ACTIVE);
         }
 
-        int frostRemoved = MathHelper.floor(heatDrained * config.combatConfig.getHeatDrainEfficiency());
+        int heatAddedToUser = MathHelper.floor(heatDrainedFromTarget * config.combatConfig.getHeatDrainEfficiency());
 
-        user.thermoo$addTemperature(-frostRemoved, HeatingModes.ACTIVE);
+        user.thermoo$addTemperature(heatAddedToUser, HeatingModes.ACTIVE);
 
-        if (heatDrained > 0) {
+        if (user.thermoo$isWarm()) {
+            user.thermoo$setTemperature(0);
+        }
+
+        if (heatDrainedFromTarget != 0) {
             addHeatDrainParticles(user, target, level);
         }
     }

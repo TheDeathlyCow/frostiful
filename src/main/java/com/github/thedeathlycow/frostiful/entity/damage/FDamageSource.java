@@ -9,6 +9,11 @@ public class FDamageSource extends DamageSource { // extend DamageSource to acce
     public static final DamageSource FALLING_ICICLE = new FDamageSource(Frostiful.MODID + ".fallingIcicle").setFallingBlock();
     public static final DamageSource ICICLE = new FDamageSource(Frostiful.MODID + ".icicle").setFromFalling();
 
+    /**
+     * A copy of {@link DamageSource#HOT_FLOOR} with the same name (for translation purposes), but a technically different
+     * instance so that heat from hot floor is not applied by sun lichen
+     */
+    public static final DamageSource SUN_LICHEN = new FDamageSource("hotFloor").setFire();
     public static void registerDamageSources() {
         // damage sources already registered - just ensure this class is loaded
     }

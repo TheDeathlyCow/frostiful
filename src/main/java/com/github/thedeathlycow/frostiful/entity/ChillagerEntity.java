@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
@@ -29,11 +30,21 @@ public class ChillagerEntity extends PillagerEntity {
     }
 
     @Override
+    public boolean damage(DamageSource source, float amount) {
+
+        if (source.isFire()) {
+            FrostifulConfig config = Frostiful.getConfig();
+            amount *= config.combatConfig.getChillagerFireDamageMultiplier();
+        }
+
+        return super.damage(source, amount);
+    }
+
+    @Override
     public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
         if (world.getDifficulty() != Difficulty.PEACEFUL) {
             Frostiful.LOGGER.info("Chillager {} was struck by lightning {}.", this, lightning);
             FrostologerEntity frostologer = FEntityTypes.FROSTOLOGER.create(world);
-
             if (frostologer == null) {
                 return;
             }

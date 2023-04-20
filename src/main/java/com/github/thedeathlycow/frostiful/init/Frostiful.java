@@ -24,6 +24,7 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -54,6 +55,7 @@ public class Frostiful implements ModInitializer {
         ResourceManagerHelper serverManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
 
         serverManager.registerReloadListener(ItemAttributeLoader.INSTANCE);
+        ModifyItemAttributeModifiersCallback.EVENT.register(ItemAttributeLoader.INSTANCE);
 
         FDamageSource.registerDamageSources();
         FBlocks.registerBlocks();

@@ -11,6 +11,7 @@
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
 		"compat.healthoverlay.present.FreezingHearts",
+		"block.HotFloorMixin",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",

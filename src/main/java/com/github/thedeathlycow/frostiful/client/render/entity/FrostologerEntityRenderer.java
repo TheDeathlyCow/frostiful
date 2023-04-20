@@ -3,6 +3,8 @@ package com.github.thedeathlycow.frostiful.client.render.entity;
 import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerCloakFeatureRenderer;
+import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerEyesFeatureRenderer;
+import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerFrostFeatureRenderer;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
@@ -26,6 +28,13 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
         this.addFeature(new HeadFeatureRenderer<>(this, context.getModelLoader(), context.getHeldItemRenderer()));
         this.addFeature(new HeldItemFeatureRenderer<>(this, context.getHeldItemRenderer()));
         this.addFeature(new FrostologerCloakFeatureRenderer(this));
+        this.addFeature(
+                new FrostologerEyesFeatureRenderer<>(
+                        this,
+                        Frostiful.id("textures/entity/illager/frostologer/glow.png")
+                )
+        );
+        this.addFeature(new FrostologerFrostFeatureRenderer(this));
     }
 
     @Override

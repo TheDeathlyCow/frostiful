@@ -27,8 +27,6 @@ public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListe
 
     public ItemAttributeLoader(Identifier identifier) {
         this.identifier = identifier;
-
-        ModifyItemAttributeModifiersCallback.EVENT.register(this);
     }
 
     @Override

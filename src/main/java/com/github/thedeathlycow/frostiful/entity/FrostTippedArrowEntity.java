@@ -28,12 +28,18 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
+    public boolean isFireImmune() {
+        return true;
+    }
+
+    @Override
     protected ItemStack asItemStack() {
         return new ItemStack(FItems.FROST_TIPPED_ARROW);
     }
 
     public void tick() {
         super.tick();
+
         if (this.world.isClient && !this.inGround) {
             this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
         }

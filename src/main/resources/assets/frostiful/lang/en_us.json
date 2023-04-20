@@ -87,6 +87,12 @@
   "gamerule.category.frostiful": "Frostiful",
 
 
+  "advancements.frostiful.adventure.obtain_frostology_cloak.title": "I'm the Frostologer Now!",
+  "advancements.frostiful.adventure.obtain_frostology_cloak.description": "Obtain the Cloak of Frostology",
+  "advancements.frostiful.adventure.find_frostologer_castle.title": "Packed In",
+  "advancements.frostiful.adventure.find_frostologer_castle.description": "Find the Frostologer's Castle",
+  "advancements.frostiful.adventure.kill_frostologer.title": "Just Getting Warmed Up",
+  "advancements.frostiful.adventure.kill_frostologer.description": "Defeat the Frostologer",
   "advancements.frostiful.adventure.fur_armor.title": "A Fur Suit",
   "advancements.frostiful.adventure.fur_armor.description": "Obtain a full suit of Fur Armor",
   "advancements.frostiful.adventure.chain_fur_armor.title": "Chained Up",
@@ -182,7 +188,8 @@
   "text.autoconfig.frostiful.option.combatConfig.frostologerPassiveFreezingPerTick": "Frostologer passive freezing per tick",
   "text.autoconfig.frostiful.option.combatConfig.frostologerMaxPassiveFreezing": "Frostologer max passive freezing percent (0-1)",
   "text.autoconfig.frostiful.option.combatConfig.biterFrostBiteMaxAmplifier": "Max Frost Bite Max Amplifier (inclusive)",
-
+  "text.autoconfig.frostiful.option.combatConfig.chillagerFireDamageMultiplier": "Chillager fire damage multiplier",
+  
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
   "text.autoconfig.frostiful.option.freezingConfig.doWindSpawning": "Do wind spawning",
@@ -191,12 +198,12 @@
   "text.autoconfig.frostiful.option.freezingConfig.passiveFreezingWetnessScaleMultiplier": "Passive freezing wetness scale multiplier",
   "text.autoconfig.frostiful.option.freezingConfig.soakPercentFromWaterPotion": "Soak percent from splash water bottle (0-1)",
   "text.autoconfig.frostiful.option.freezingConfig.conduitPowerWarmthPerTick": "Conduit Power warmth per tick",
-  "text.autoconfig.frostiful.option.freezingConfig.powderSnowFreezeRate": "Powder Snow freeze rate",
   "text.autoconfig.frostiful.option.freezingConfig.sunLichenHeatPerLevel": "Sun Lichen heat per level",
+  "text.autoconfig.frostiful.option.freezingConfig.sunLichenBurnTime": "Sun Lichen burn time (ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthSearchRadius": "Campfire warmth search size",
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time (ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.freezingWindFrost": "Freezing wind frost (per 5 ticks)",
-
+  "text.autoconfig.frostiful.option.freezingConfig.heatFromHotFloor": "Heat from hot floor (magma block, campfire)",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",
@@ -207,7 +214,8 @@
   "text.autoconfig.frostiful.option.icicleConfig.frostArrowFreezeAmount": "Frost arrow freeze amount",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleFreezeAmount": "Thrown icicle freeze amount",
   "text.autoconfig.frostiful.option.icicleConfig.icicleCollisionFreezeAmount": "Icicle collision freeze amount",
-  "text.autoconfig.frostiful.option.icicleConfig.maxLightLevelToForm": "Maximum light level to form (exclusive)",
+  "text.autoconfig.frostiful.option.icicleConfig.maxLightLevelToForm": "Maximum block light level to form (exclusive)",
+  "text.autoconfig.frostiful.option.icicleConfig.minSkylightLevelToForm": "Minimum sky light level to form (inclusive)",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleDamage": "Thrown icicle damage",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleExtraDamage": "Thrown icicle hurts extra damage",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleCooldown": "Thrown icicle cooldown"
