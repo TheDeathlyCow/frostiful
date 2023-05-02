@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredR
 import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredRockSizeConfig;
 import net.minecraft.block.Blocks;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.registry.RegistryEntry;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.stateprovider.SimpleBlockStateProvider;
 

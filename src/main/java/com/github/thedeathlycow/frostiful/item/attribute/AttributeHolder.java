@@ -6,8 +6,9 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public record AttributeHolder(
         EntityAttribute attribute,
@@ -19,11 +20,11 @@ public record AttributeHolder(
 
         Identifier attributeID = new Identifier(json.get("attribute").getAsString());
 
-        if (!Registry.ATTRIBUTE.containsId(attributeID)) {
+        if (!Registries.ATTRIBUTE.containsId(attributeID)) {
             throw new JsonSyntaxException("Unknown entity attribute: '" + attributeID + "'");
         }
 
-        EntityAttribute attribute = Registry.ATTRIBUTE.get(attributeID);
+        EntityAttribute attribute = Registries.ATTRIBUTE.get(attributeID);
 
         EntityAttributeModifier modifier = FJsonHelper.parseAttributeModifier(json.get("modifier"));
 

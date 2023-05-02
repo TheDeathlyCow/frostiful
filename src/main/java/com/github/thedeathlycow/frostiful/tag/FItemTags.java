@@ -1,10 +1,11 @@
-package com.github.thedeathlycow.frostiful.tag.items;
+package com.github.thedeathlycow.frostiful.tag;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.item.Item;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public final class FItemTags {
 

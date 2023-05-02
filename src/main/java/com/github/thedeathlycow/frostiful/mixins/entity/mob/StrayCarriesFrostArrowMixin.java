@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.HostileEntity;
 import net.minecraft.entity.mob.PathAwareEntity;

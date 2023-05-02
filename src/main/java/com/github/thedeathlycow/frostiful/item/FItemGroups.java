@@ -1,59 +1,60 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import net.fabricmc.fabric.api.client.itemgroup.FabricItemGroupBuilder;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FItems;
+import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class FItemGroups {
 
-    public static final ItemGroup FROSTIFUL = FabricItemGroupBuilder.create(Frostiful.id("frostiful"))
+    public static final ItemGroup FROSTIFUL = FabricItemGroup.builder(Frostiful.id("frostiful"))
             .icon(() -> new ItemStack(FItems.FROST_WAND))
-            .appendItems(stacks -> {
-                stacks.add(new ItemStack(FItems.FROST_WAND));
-                stacks.add(new ItemStack(FItems.FUR_HELMET));
-                stacks.add(new ItemStack(FItems.FUR_CHESTPLATE));
-                stacks.add(new ItemStack(FItems.FUR_LEGGINGS));
-                stacks.add(new ItemStack(FItems.FUR_BOOTS));
-                stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_HELMET));
-                stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE));
-                stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS));
-                stacks.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_BOOTS));
-                stacks.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
+            .entries((context, entries) -> {
+                entries.add(new ItemStack(FItems.FROST_WAND));
+                entries.add(new ItemStack(FItems.FUR_HELMET));
+                entries.add(new ItemStack(FItems.FUR_CHESTPLATE));
+                entries.add(new ItemStack(FItems.FUR_LEGGINGS));
+                entries.add(new ItemStack(FItems.FUR_BOOTS));
+                entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_HELMET));
+                entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE));
+                entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS));
+                entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_BOOTS));
+                entries.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
 
-                stacks.add(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
-                stacks.add(new ItemStack(FItems.WOLF_FUR_TUFT));
-                stacks.add(new ItemStack(FItems.OCELOT_FUR_TUFT));
+                entries.add(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
+                entries.add(new ItemStack(FItems.WOLF_FUR_TUFT));
+                entries.add(new ItemStack(FItems.OCELOT_FUR_TUFT));
 
-                stacks.add(new ItemStack(FItems.COLD_SUN_LICHEN));
-                stacks.add(new ItemStack(FItems.COOL_SUN_LICHEN));
-                stacks.add(new ItemStack(FItems.WARM_SUN_LICHEN));
-                stacks.add(new ItemStack(FItems.HOT_SUN_LICHEN));
+                entries.add(new ItemStack(FItems.COLD_SUN_LICHEN));
+                entries.add(new ItemStack(FItems.COOL_SUN_LICHEN));
+                entries.add(new ItemStack(FItems.WARM_SUN_LICHEN));
+                entries.add(new ItemStack(FItems.HOT_SUN_LICHEN));
 
-                stacks.add(new ItemStack(FItems.PACKED_SNOW));
-                stacks.add(new ItemStack(FItems.PACKED_SNOW_BLOCK));
-                stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICKS));
-                stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_STAIRS));
-                stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_SLAB));
-                stacks.add(new ItemStack(FItems.PACKED_SNOW_BRICK_WALL));
-                stacks.add(new ItemStack(FItems.PACKED_SNOWBALL));
+                entries.add(new ItemStack(FItems.PACKED_SNOW));
+                entries.add(new ItemStack(FItems.PACKED_SNOW_BLOCK));
+                entries.add(new ItemStack(FItems.PACKED_SNOW_BRICKS));
+                entries.add(new ItemStack(FItems.PACKED_SNOW_BRICK_STAIRS));
+                entries.add(new ItemStack(FItems.PACKED_SNOW_BRICK_SLAB));
+                entries.add(new ItemStack(FItems.PACKED_SNOW_BRICK_WALL));
+                entries.add(new ItemStack(FItems.PACKED_SNOWBALL));
 
-                stacks.add(new ItemStack(FItems.ICE_PANE));
-                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE));
-                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE_STAIRS));
-                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE_SLAB));
-                stacks.add(new ItemStack(FItems.CUT_PACKED_ICE_WALL));
-                stacks.add(new ItemStack(FItems.CUT_BLUE_ICE));
-                stacks.add(new ItemStack(FItems.CUT_BLUE_ICE_STAIRS));
-                stacks.add(new ItemStack(FItems.CUT_BLUE_ICE_SLAB));
-                stacks.add(new ItemStack(FItems.CUT_BLUE_ICE_WALL));
+                entries.add(new ItemStack(FItems.ICE_PANE));
+                entries.add(new ItemStack(FItems.CUT_PACKED_ICE));
+                entries.add(new ItemStack(FItems.CUT_PACKED_ICE_STAIRS));
+                entries.add(new ItemStack(FItems.CUT_PACKED_ICE_SLAB));
+                entries.add(new ItemStack(FItems.CUT_PACKED_ICE_WALL));
+                entries.add(new ItemStack(FItems.CUT_BLUE_ICE));
+                entries.add(new ItemStack(FItems.CUT_BLUE_ICE_STAIRS));
+                entries.add(new ItemStack(FItems.CUT_BLUE_ICE_SLAB));
+                entries.add(new ItemStack(FItems.CUT_BLUE_ICE_WALL));
 
-                stacks.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
-                stacks.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
-                stacks.add(new ItemStack(FItems.BITER_SPAWN_EGG));
-                stacks.add(new ItemStack(FItems.ICICLE));
-                stacks.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
-                stacks.add(new ItemStack(FItems.FROZEN_TORCH));
+                entries.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
+                entries.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
+                entries.add(new ItemStack(FItems.BITER_SPAWN_EGG));
+                entries.add(new ItemStack(FItems.ICICLE));
+                entries.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
+                entries.add(new ItemStack(FItems.FROZEN_TORCH));
             }).build();
 
 }

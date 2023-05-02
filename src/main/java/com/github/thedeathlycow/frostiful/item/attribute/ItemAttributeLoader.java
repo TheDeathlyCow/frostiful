@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.item.attribute;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.google.common.collect.Multimap;
 import com.google.gson.JsonParseException;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;

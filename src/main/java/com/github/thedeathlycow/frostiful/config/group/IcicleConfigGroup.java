@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.config.group;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 

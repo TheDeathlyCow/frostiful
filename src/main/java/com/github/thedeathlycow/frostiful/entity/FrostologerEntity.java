@@ -1,14 +1,15 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
+import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
@@ -41,12 +42,13 @@ import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.state.property.Properties;
-import net.minecraft.tag.FluidTags;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -90,7 +92,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
-    protected FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
+    public FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 20;
     }
@@ -179,11 +181,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource.isProjectile() && this.isChanneling()) {
+        if (damageSource.isIn(DamageTypeTags.IS_PROJECTILE) && this.isChanneling()) {
             return true;
         }
 
-        return damageSource == DamageSource.FREEZE
+        return damageSource.isIn(DamageTypeTags.IS_FREEZING)
                 || damageSource == FDamageSource.ICICLE
                 || damageSource == FDamageSource.FALLING_ICICLE
                 || super.isInvulnerableTo(damageSource);

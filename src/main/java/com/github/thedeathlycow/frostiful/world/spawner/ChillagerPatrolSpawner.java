@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.world.spawner;
 
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.mob.PatrolEntity;

@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.init;
+package com.github.thedeathlycow.frostiful;
 
 import net.fabricmc.api.DedicatedServerModInitializer;
 import net.fabricmc.api.EnvType;

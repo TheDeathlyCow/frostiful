@@ -17,16 +17,16 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.github.thedeathlycow.frostiful.init.Frostiful"
+			"com.github.thedeathlycow.frostiful.Frostiful"
 		],
 		"server": [
-			"com.github.thedeathlycow.frostiful.init.FrostifulServer"
+			"com.github.thedeathlycow.frostiful.FrostifulServer"
 		],
 		"client": [
-			"com.github.thedeathlycow.frostiful.init.FrostifulClient"
+			"com.github.thedeathlycow.frostiful.FrostifulClient"
 		],
 		"modmenu": [
-			"com.github.thedeathlycow.frostiful.init.FrostifulModMenu"
+			"com.github.thedeathlycow.frostiful.FrostifulModMenu"
 		],
 		"mm:early_risers": [
 			"com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"

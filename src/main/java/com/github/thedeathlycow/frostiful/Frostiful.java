@@ -1,19 +1,19 @@
-package com.github.thedeathlycow.frostiful.init;
+package com.github.thedeathlycow.frostiful;
 
-import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.FEnchantments;
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FEnchantments;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.survival.FTemperatureEffects;
+import com.github.thedeathlycow.frostiful.registry.FTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.LivingEntityThermooEventListeners;
 import com.github.thedeathlycow.frostiful.survival.PlayerEventThermooListeners;
 import com.github.thedeathlycow.frostiful.world.FGameRules;

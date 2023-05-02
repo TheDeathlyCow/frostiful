@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;

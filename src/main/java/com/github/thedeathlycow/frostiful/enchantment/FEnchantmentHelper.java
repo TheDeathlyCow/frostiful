@@ -1,7 +1,8 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 

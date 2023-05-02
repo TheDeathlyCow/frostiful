@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.frostiful.world.spawner;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
 import com.github.thedeathlycow.frostiful.entity.WindEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.tag.FBiomeTags;
 import net.minecraft.entity.EntityType;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;

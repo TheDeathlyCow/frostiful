@@ -1,10 +1,10 @@
-package com.github.thedeathlycow.frostiful.init;
+package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.block.FCutouts;
 import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.client.render.entity.FEntityRenderers;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.particle.client.FParticleFactoryRegistry;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;

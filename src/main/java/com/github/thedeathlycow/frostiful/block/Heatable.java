@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.block;
 
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.google.common.collect.ImmutableBiMap;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

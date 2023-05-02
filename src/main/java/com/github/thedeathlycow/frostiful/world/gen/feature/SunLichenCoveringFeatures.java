@@ -1,12 +1,12 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature;
 
-import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.MultifaceGrowthBlock;
-import net.minecraft.util.registry.RegistryEntry;
-import net.minecraft.util.registry.RegistryEntryList;
+import net.minecraft.registry.RegistryEntry;
+import net.minecraft.registry.RegistryEntryList;
 import net.minecraft.world.gen.feature.ConfiguredFeature;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.MultifaceGrowthFeatureConfig;

@@ -1,9 +1,9 @@
-package com.github.thedeathlycow.frostiful.tag.blocks;
+package com.github.thedeathlycow.frostiful.tag;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.block.Block;
-import net.minecraft.tag.TagKey;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.registry.Registry;
 
 public class FBlockTags {
 

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity.loot;
 
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.loot.v2.LootTableSource;
 import net.minecraft.entity.EntityType;
 import net.minecraft.loot.LootManager;

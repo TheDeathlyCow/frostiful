@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.SpellEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -12,9 +12,9 @@ import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.Matrix3f;
-import net.minecraft.util.math.Matrix4f;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
+import org.joml.Matrix3f;
+import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
@@ -30,7 +30,7 @@ public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
     public void render(SpellEntity spellEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
         matrixStack.push();
         matrixStack.multiply(this.dispatcher.getRotation());
-        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F));
+        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrixStack.peek();
         Matrix4f matrix4f = entry.getPositionMatrix();
         Matrix3f matrix3f = entry.getNormalMatrix();

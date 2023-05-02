@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;

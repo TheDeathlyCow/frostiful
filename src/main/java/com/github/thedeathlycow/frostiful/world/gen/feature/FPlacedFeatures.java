@@ -1,12 +1,12 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.biome.FHasFeatureTags;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.tag.FHasFeatureTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.BuiltinRegistries;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.registry.RegistryEntry;
 import net.minecraft.world.gen.GenerationStep;
 import net.minecraft.world.gen.feature.PlacedFeature;
 

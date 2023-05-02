@@ -1,8 +1,9 @@
 package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.block.DispenserBlock;
@@ -11,9 +12,10 @@ import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.Equipment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Wearable;
+import net.minecraft.item.Equipment;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;
@@ -23,7 +25,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class FrostologyCloakItem extends Item implements Wearable {
+public class FrostologyCloakItem extends Item implements Equipment {
 
     public static final Identifier TEXTURE_ID = Frostiful.id("textures/entity/frostology_cloak.png");
 
@@ -80,6 +82,11 @@ public class FrostologyCloakItem extends Item implements Wearable {
     }
 
     public static EquipmentSlot getPreferredEquipmentSlot(ItemStack stack) {
+        return EquipmentSlot.CHEST;
+    }
+
+    @Override
+    public EquipmentSlot getSlotType() {
         return EquipmentSlot.CHEST;
     }
 }

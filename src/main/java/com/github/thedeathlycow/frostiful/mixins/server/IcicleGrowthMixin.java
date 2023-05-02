@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.server;
 
-import com.github.thedeathlycow.frostiful.block.FBlocks;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.server.world.ServerWorld;

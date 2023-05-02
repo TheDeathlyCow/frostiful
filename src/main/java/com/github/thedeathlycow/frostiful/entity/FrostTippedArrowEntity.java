@@ -1,7 +1,8 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

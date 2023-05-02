@@ -1,9 +1,9 @@
-package com.github.thedeathlycow.frostiful.block;
+package com.github.thedeathlycow.frostiful.registry;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.block.*;
 import com.github.thedeathlycow.frostiful.entity.FrostTippedArrowEntity;
 import com.github.thedeathlycow.frostiful.entity.PackedSnowballEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.sound.FBlockSoundGroups;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
@@ -11,15 +11,16 @@ import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Position;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
 public class FBlocks {
 
-    public static final Block ICICLE = new IcicleBlock(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds().offsetType(AbstractBlock.OffsetType.XZ).requiresTool());
+    public static final Block ICICLE = new IcicleBlock(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds().offset(AbstractBlock.OffsetType.XZ).requiresTool());
     public static final Block COLD_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.COLD_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 0));
     public static final Block COOL_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.COOL_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 2));
     public static final Block WARM_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.WARM_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 4));
@@ -157,6 +158,6 @@ public class FBlocks {
     }
 
     private static Block register(String id, Block block) {
-        return Registry.register(Registry.BLOCK, new Identifier(Frostiful.MODID, id), block);
+        return Registry.register(Registries.BLOCK, new Identifier(Frostiful.MODID, id), block);
     }
 }

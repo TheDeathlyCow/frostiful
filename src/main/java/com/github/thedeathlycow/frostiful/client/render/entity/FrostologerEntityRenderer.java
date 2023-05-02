@@ -6,7 +6,7 @@ import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerCloak
 import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerEyesFeatureRenderer;
 import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerFrostFeatureRenderer;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.EntityRendererFactory;

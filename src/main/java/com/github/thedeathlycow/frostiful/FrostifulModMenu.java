@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.init;
+package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;

@@ -1,6 +1,7 @@
-package com.github.thedeathlycow.frostiful.entity;
+package com.github.thedeathlycow.frostiful.registry;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.*;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
@@ -9,8 +10,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
-import net.minecraft.util.registry.Registry;
-import net.minecraft.world.World;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class FEntityTypes {
 
@@ -103,6 +104,6 @@ public class FEntityTypes {
     }
 
     private static <T extends Entity> void register(String id, EntityType<T> type) {
-        Registry.register(Registry.ENTITY_TYPE, Frostiful.id(id), type);
+        Registry.register(Registries.ENTITY_TYPE, Frostiful.id(id), type);
     }
 }

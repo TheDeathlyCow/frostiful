@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity.damage;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.entity.damage.DamageSource;
 
 public class FDamageSource extends DamageSource { // extend DamageSource to access its constructor
@@ -10,7 +10,7 @@ public class FDamageSource extends DamageSource { // extend DamageSource to acce
     public static final DamageSource ICICLE = new FDamageSource(Frostiful.MODID + ".icicle").setFromFalling();
 
     /**
-     * A copy of {@link DamageSource#HOT_FLOOR} with the same name (for translation purposes), but a technically different
+     * A copy of {@link net.minecraft.entity.damage.DamageSources#hotFloor()} with the same name (for translation purposes), but a technically different
      * instance so that heat from hot floor is not applied by sun lichen
      */
     public static final DamageSource SUN_LICHEN = new FDamageSource("hotFloor").setFire();

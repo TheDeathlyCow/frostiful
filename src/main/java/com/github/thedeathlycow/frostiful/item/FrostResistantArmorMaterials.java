@@ -1,9 +1,10 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
+import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
@@ -74,12 +75,12 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     }
 
     @Override
-    public int getDurability(EquipmentSlot slot) {
+    public int getDurability(ArmorItem.Type slot) {
         return BASE_DURABILITY[slot.getEntitySlotId()] * durabilityMultiplier;
     }
 
     @Override
-    public int getProtectionAmount(EquipmentSlot slot) {
+    public int getProtection(ArmorItem.Type slot) {
         return this.protectionAmounts[slot.getEntitySlotId()];
     }
 

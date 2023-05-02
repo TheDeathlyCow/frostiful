@@ -1,10 +1,14 @@
-package com.github.thedeathlycow.frostiful.enchantment;
+package com.github.thedeathlycow.frostiful.registry;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
+import com.github.thedeathlycow.frostiful.enchantment.FrozenTouchCurse;
+import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registry;
 
 public class FEnchantments {
 
@@ -19,7 +23,7 @@ public class FEnchantments {
     }
 
     private static void register(String name, Enchantment enchantment) {
-        Registry.register(Registry.ENCHANTMENT, new Identifier(Frostiful.MODID, name), enchantment);
+        Registry.register(Registries.ENCHANTMENT, new Identifier(Frostiful.MODID, name), enchantment);
     }
 
 }

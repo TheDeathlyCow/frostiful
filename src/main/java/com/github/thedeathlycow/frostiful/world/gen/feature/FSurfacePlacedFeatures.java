@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature;
 
 import com.google.common.collect.ImmutableList;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.registry.RegistryEntry;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.placementmodifier.BiomePlacementModifier;

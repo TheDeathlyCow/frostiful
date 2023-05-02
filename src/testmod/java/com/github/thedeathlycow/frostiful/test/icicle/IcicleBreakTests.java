@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.icicle;
 
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;

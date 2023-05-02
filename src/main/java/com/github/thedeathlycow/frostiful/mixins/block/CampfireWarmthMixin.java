@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;

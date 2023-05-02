@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
-import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
+import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import net.minecraft.block.PowderSnowBlock;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;

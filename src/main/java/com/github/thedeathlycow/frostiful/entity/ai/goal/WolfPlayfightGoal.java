@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.entity.passive.WolfEntity;
 import net.minecraft.util.Identifier;
 
