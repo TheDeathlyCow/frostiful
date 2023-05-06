@@ -39,7 +39,7 @@ public abstract class LivingEntityPowderSnowDisabler extends Entity implements T
             )
     )
     private int disableTicksFreezingIncreaseInPowderSnow(int par1) {
-        return 0;
+        return this.getFrozenTicks();
     }
 
     @Inject(
