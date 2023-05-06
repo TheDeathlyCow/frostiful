@@ -43,12 +43,15 @@ public abstract class EntityPowderSnowRedirect {
                 return;
             }
 
-            Frostiful.LOGGER.info("frozen ticks change {}", frozenTicksChange);
-            frozenTicksChange *= temperatureAware.thermoo$getMinTemperature();
-            frozenTicksChange /= instance.getMinFreezeDamageTicks();
-            Frostiful.LOGGER.info("temp change {}", frozenTicksChange);
+            int convertedTemperatureChange = (frozenTicksChange * temperatureAware.thermoo$getMinTemperature()) / instance.getMinFreezeDamageTicks();
 
-            temperatureAware.thermoo$addTemperature(frozenTicksChange, HeatingModes.ACTIVE);
+            Frostiful.LOGGER.debug(
+                    "Original frozen ticks change of {} converted to a Thermoo active temperature change of {} by Frostiful",
+                    frozenTicksChange,
+                    convertedTemperatureChange
+            );
+
+            temperatureAware.thermoo$addTemperature(convertedTemperatureChange, HeatingModes.ACTIVE);
 
             ci.cancel();
         }
