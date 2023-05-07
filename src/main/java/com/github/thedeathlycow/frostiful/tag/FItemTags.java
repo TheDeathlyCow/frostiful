@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.item.Item;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
@@ -17,7 +18,7 @@ public final class FItemTags {
 
 
     private static TagKey<Item> register(String id) {
-        return TagKey.of(Registry.ITEM_KEY, new Identifier(Frostiful.MODID, id));
+        return TagKey.of(RegistryKeys.ITEM, new Identifier(Frostiful.MODID, id));
     }
 
 }

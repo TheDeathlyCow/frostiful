@@ -1,5 +1,5 @@
 {
-	"type": "thermoo:freeze_damage_legacy",
+	"type": "thermoo:damage",
 	"entity": {
 		"condition": "minecraft:reference",
 		"name": "frostiful:is_damaged_by_frost"
@@ -9,6 +9,7 @@
 	},
 	"config": {
 		"amount": 1,
-		"damage_interval": 20
+		"damage_interval": 20,
+		"damage_type": "minecraft:freeze"
 	}
 }

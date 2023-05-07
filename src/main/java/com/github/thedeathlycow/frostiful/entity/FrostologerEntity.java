@@ -10,6 +10,7 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.tag.FDamageTypeTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
@@ -186,8 +187,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         return damageSource.isIn(DamageTypeTags.IS_FREEZING)
-                || damageSource == FDamageSource.ICICLE
-                || damageSource == FDamageSource.FALLING_ICICLE
+                || damageSource.isIn(FDamageTypeTags.IS_ICICLE)
                 || super.isInvulnerableTo(damageSource);
     }
 

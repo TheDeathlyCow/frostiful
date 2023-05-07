@@ -51,14 +51,12 @@ public class Frostiful implements ModInitializer {
                 });
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-        FTemperatureEffects.registerAll();
 
         ResourceManagerHelper serverManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
 
         serverManager.registerReloadListener(ItemAttributeLoader.INSTANCE);
         ModifyItemAttributeModifiersCallback.EVENT.register(ItemAttributeLoader.INSTANCE);
 
-        FDamageSource.registerDamageSources();
         FBlocks.registerBlocks();
         FItems.registerItems();
         FEntityTypes.registerEntities();

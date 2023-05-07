@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.block.Block;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.registry.Registry;
 
@@ -18,6 +19,6 @@ public class FBlockTags {
     public static final TagKey<Block> HOT_FLOOR = register("hot_floor");
 
     private static TagKey<Block> register(String id) {
-        return TagKey.of(Registry.BLOCK_KEY, Frostiful.id(id));
+        return TagKey.of(RegistryKeys.BLOCK, Frostiful.id(id));
     }
 }

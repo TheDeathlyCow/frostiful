@@ -72,7 +72,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                     livingEntity.setFireTicks(config.freezingConfig.getSunLichenBurnTime());
                 }
 
-                entity.damage(FDamageSource.SUN_LICHEN, 1);
+                entity.damage(world.getDamageSources().hotFloor(), 1);
                 createFireParticles(world, pos);
 
                 BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
