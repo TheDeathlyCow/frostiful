@@ -23,7 +23,7 @@ public abstract class StrayCarriesFrostArrowMixin extends PathAwareEntity {
     }
 
     @Inject(
-            method = "getArrowType",
+            method = "getProjectileType",
             at = @At("HEAD"),
             cancellable = true
     )

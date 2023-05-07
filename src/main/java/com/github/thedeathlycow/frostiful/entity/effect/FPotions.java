@@ -7,6 +7,7 @@ import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.BrewingRecipeRegistry;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 
 public class FPotions {
@@ -30,7 +31,7 @@ public class FPotions {
     }
 
     private static void register(String name, Potion potion) {
-        Registry.register(Registry.POTION, Frostiful.id(name), potion);
+        Registry.register(Registries.POTION, Frostiful.id(name), potion);
     }
 
 }

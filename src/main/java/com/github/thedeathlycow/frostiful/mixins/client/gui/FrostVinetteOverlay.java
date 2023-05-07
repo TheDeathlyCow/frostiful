@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 @Mixin(InGameHud.class)
 public abstract class FrostVinetteOverlay {
@@ -29,10 +29,12 @@ public abstract class FrostVinetteOverlay {
     private static Identifier POWDER_SNOW_OUTLINE;
 
     @Shadow
-    protected abstract void renderOverlay(Identifier texture, float opacity);
+    protected abstract void renderOverlay(MatrixStack matrices, Identifier texture, float opacity);
 
     @Unique
-    private final Consumer<Float> frostiful$renderOverlayCallback = (opacity) -> this.renderOverlay(POWDER_SNOW_OUTLINE, opacity);
+    private final BiConsumer<MatrixStack, Float> frostiful$renderOverlayCallback = (matrices, opacity) -> {
+        this.renderOverlay(matrices, POWDER_SNOW_OUTLINE, opacity);
+    };
 
     @ModifyArg(
             method = "render",
@@ -44,10 +46,10 @@ public abstract class FrostVinetteOverlay {
             ),
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/hud/InGameHud;renderOverlay(Lnet/minecraft/util/Identifier;F)V",
+                    target = "Lnet/minecraft/client/gui/hud/InGameHud;renderOverlay(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Identifier;F)V",
                     ordinal = 0
             ),
-            index = 1
+            index = 2
     )
     private float setOpacityForDefaultOverlayToAlways0(float opacity) {
         return 0.0f;
@@ -70,7 +72,7 @@ public abstract class FrostVinetteOverlay {
     )
     private void renderPowderSnowOverlayAtThreshold(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         if (this.client.player != null) {
-            FrostOverlayRenderer.renderFrostOverlay(this.client.player, this.frostiful$renderOverlayCallback);
+            FrostOverlayRenderer.renderFrostOverlay(matrices, this.client.player, this.frostiful$renderOverlayCallback);
         }
     }
 }

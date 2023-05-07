@@ -1,9 +1,11 @@
 package com.github.thedeathlycow.frostiful.sound;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Identifier;
 
 public class FSoundEvents {
 
@@ -87,10 +89,10 @@ public class FSoundEvents {
     }
 
     private static SoundEvent of(String name) {
-        return new SoundEvent(new Identifier(Frostiful.MODID, name));
+        return SoundEvent.of(Frostiful.id(name));
     }
 
     private static void register(SoundEvent event) {
-        Registry.register(Registry.SOUND_EVENT, event.getId(), event);
+        Registry.register(Registries.SOUND_EVENT, event.getId(), event);
     }
 }
