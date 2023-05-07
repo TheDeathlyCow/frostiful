@@ -29,6 +29,7 @@ import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
+import org.jetbrains.annotations.Contract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -97,6 +98,7 @@ public class Frostiful implements ModInitializer {
      * @param path The path of the uuid
      * @return Returns a new {@link Identifier}
      */
+    @Contract("_->new")
     public static Identifier id(String path) {
         return new Identifier(Frostiful.MODID, path);
     }

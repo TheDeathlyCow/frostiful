@@ -51,7 +51,7 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
         for (BlockPos pos : BlockPos.iterate(from, to)) {
             BlockState current = world.getBlockState(pos);
             if (pos.getSquaredDistance(origin) < maxSquareDistance && !current.isIn(FBlockTags.COVERED_ROCKS_CANNOT_REPLACE)) {
-                BlockState baseState = config.base().getBlockState(random, pos);
+                BlockState baseState = config.base().get(random, pos);
                 world.setBlockState(pos, baseState, Block.NOTIFY_ALL);
             }
         }
