@@ -68,7 +68,8 @@ dependencies {
     // HealthOverlay https://github.com/Terrails/HealthOverlay
     modCompileOnly("curse.maven:health-overlay-fabric-313219:${project.health_overlay_version}") { transitive = false }
     // Trinkets https://github.com/emilyploszaj/trinkets
-    modCompileOnly("dev.emi:trinkets:${project.trinkets_version}") {
+    modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
+    modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 

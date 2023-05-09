@@ -3,12 +3,14 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
-import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.util.Util;
+
+import java.util.EnumMap;
 
 
 public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial {
@@ -16,47 +18,69 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     FUR_ARMOR(
             "fur",
             5,
-            new int[]{1, 2, 3, 1},
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 1);
+                map.put(ArmorItem.Type.LEGGINGS, 2);
+                map.put(ArmorItem.Type.CHESTPLATE, 3);
+                map.put(ArmorItem.Type.HELMET, 1);
+            }),
             15,
             SoundEvents.ITEM_ARMOR_EQUIP_LEATHER,
             0,
             0,
             () -> Ingredient.fromTag(FItemTags.FUR),
-            new double[]{0.5D, 1.0D, 2.0D, 1.5D}
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 0.5);
+                map.put(ArmorItem.Type.LEGGINGS, 1.0);
+                map.put(ArmorItem.Type.CHESTPLATE, 2.0);
+                map.put(ArmorItem.Type.HELMET, 1.5);
+            })
     ),
     FUR_LINED_CHAIN(
             "fur_lined_chainmail",
             15,
-            new int[]{2, 5, 6, 2},
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 2);
+                map.put(ArmorItem.Type.LEGGINGS, 5);
+                map.put(ArmorItem.Type.CHESTPLATE, 6);
+                map.put(ArmorItem.Type.HELMET, 2);
+            }),
             12,
             SoundEvents.ITEM_ARMOR_EQUIP_CHAIN,
             0,
             0,
             () -> Ingredient.ofItems(Items.IRON_INGOT),
-            new double[]{0.5D, 1.0D, 2.0D, 1.5D}
+            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+                map.put(ArmorItem.Type.BOOTS, 0.5);
+                map.put(ArmorItem.Type.LEGGINGS, 1.0);
+                map.put(ArmorItem.Type.CHESTPLATE, 2.0);
+                map.put(ArmorItem.Type.HELMET, 1.5);
+            })
     );
 
-    private static final int[] BASE_DURABILITY = new int[]{13, 15, 16, 11};
+    private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY;
+
     private final String name;
     private final int durabilityMultiplier;
-    private final int[] protectionAmounts;
+    private final EnumMap<ArmorItem.Type, Integer> protectionAmounts;
     private final int enchantability;
     private final SoundEvent equipSound;
     private final float toughness;
     private final float knockbackResistance;
     private final Supplier<Ingredient> repairIngredientSupplier;
-    private final double[] frostResistanceAmounts;
+    private final EnumMap<ArmorItem.Type, Double> frostResistanceAmounts;
+
 
     FrostResistantArmorMaterials(
             String name,
             int durabilityMultiplier,
-            int[] protectionAmounts,
+            EnumMap<ArmorItem.Type, Integer> protectionAmounts,
             int enchantability,
             SoundEvent equipSound,
             float toughness,
             float knockbackResistance,
             Supplier<Ingredient> repairIngredientSupplier,
-            double[] frostResistanceAmounts
+            EnumMap<ArmorItem.Type, Double> frostResistanceAmounts
     ) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
@@ -70,18 +94,18 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     }
 
     @Override
-    public double getFrostResistance(EquipmentSlot slot) {
-        return this.frostResistanceAmounts[slot.getEntitySlotId()];
+    public double getFrostResistance(ArmorItem.Type type) {
+        return this.frostResistanceAmounts.get(type);
     }
 
     @Override
     public int getDurability(ArmorItem.Type slot) {
-        return BASE_DURABILITY[slot.getEntitySlotId()] * durabilityMultiplier;
+        return BASE_DURABILITY.get(slot) * durabilityMultiplier;
     }
 
     @Override
     public int getProtection(ArmorItem.Type slot) {
-        return this.protectionAmounts[slot.getEntitySlotId()];
+        return this.protectionAmounts.get(slot);
     }
 
     @Override
@@ -112,5 +136,14 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     @Override
     public float getKnockbackResistance() {
         return this.knockbackResistance;
+    }
+
+    static {
+        BASE_DURABILITY = Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+            map.put(ArmorItem.Type.BOOTS, 13);
+            map.put(ArmorItem.Type.LEGGINGS, 15);
+            map.put(ArmorItem.Type.CHESTPLATE, 16);
+            map.put(ArmorItem.Type.HELMET, 11);
+        });
     }
 }
