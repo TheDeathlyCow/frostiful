@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.block.Block;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.TagKey;
-import net.minecraft.registry.Registry;
 
 public class FBlockTags {
 

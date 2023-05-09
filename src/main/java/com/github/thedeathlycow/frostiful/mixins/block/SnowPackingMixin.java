@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
-import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.block.PackedSnowBlock;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;

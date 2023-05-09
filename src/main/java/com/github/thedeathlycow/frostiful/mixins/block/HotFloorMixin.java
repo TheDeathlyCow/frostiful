@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
-import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.Block;

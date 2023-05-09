@@ -7,11 +7,12 @@
 	"mixins": [
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
+		"block.HotFloorMixin",
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
 		"compat.healthoverlay.present.FreezingHearts",
-		"block.HotFloorMixin",
+		"entity.DamageSourcesMixin",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",

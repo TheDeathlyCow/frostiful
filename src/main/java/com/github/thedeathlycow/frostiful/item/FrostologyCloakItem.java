@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
@@ -15,7 +15,6 @@ import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Equipment;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Equipment;
 import net.minecraft.stat.Stats;
 import net.minecraft.text.Text;
 import net.minecraft.util.Hand;

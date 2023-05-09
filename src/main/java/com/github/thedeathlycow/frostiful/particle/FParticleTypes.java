@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.particle;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.ParticleType;
-import net.minecraft.util.Identifier;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class FParticleTypes {
 

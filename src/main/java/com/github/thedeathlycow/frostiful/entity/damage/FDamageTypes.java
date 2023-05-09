@@ -7,6 +7,7 @@ import net.minecraft.registry.RegistryKeys;
 
 public class FDamageTypes {
 
-    public static final RegistryKey<DamageType> MELT = RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("melt"));
+    public static final RegistryKey<DamageType> FALLING_ICICLE =  RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("falling_icicle"));
+    public static final RegistryKey<DamageType> ICICLE =  RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("icicle"));
 
 }

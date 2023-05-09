@@ -7,8 +7,8 @@ import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.registry.Registries;
-import net.minecraft.util.Identifier;
 import net.minecraft.registry.Registry;
+import net.minecraft.util.Identifier;
 
 public class FEnchantments {
 

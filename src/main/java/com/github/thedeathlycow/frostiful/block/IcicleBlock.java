@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
@@ -135,7 +135,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
-            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FDamageSource.ICICLE);
+            DamageSource damageSource = FDamageSources.getDamageSources(world).frostiful$icicle();
+            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
                 livingEntity.thermoo$addTemperature(
@@ -261,10 +262,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         return PistonBehavior.DESTROY;
     }
 
-//    @Override
-//    public DamageSource getDamageSource() {
-//        return FDamageSource.FALLING_ICICLE;
-//    }
+    @Override
+    public DamageSource getDamageSource(Entity attacker) {
+        return FDamageSources.getDamageSources(attacker.world).frostiful$fallingIcicle(attacker);
+    }
 
     @Override
     public FluidState getFluidState(BlockState state) {

@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargets;
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.FMathHelper;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;

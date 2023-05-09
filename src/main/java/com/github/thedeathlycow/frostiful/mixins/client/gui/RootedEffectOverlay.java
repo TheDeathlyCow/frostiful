@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
-import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;

@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.entity.ai.goal;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;

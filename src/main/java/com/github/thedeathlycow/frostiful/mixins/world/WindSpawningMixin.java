@@ -2,10 +2,10 @@ package com.github.thedeathlycow.frostiful.mixins.world;
 
 import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
 import net.minecraft.registry.DynamicRegistryManager;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.profiler.Profiler;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.world.MutableWorldProperties;
 import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;

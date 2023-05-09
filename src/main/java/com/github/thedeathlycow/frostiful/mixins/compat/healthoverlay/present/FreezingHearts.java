@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.compat.healthoverlay.present;
 
-import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.gui;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -10,7 +10,6 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 
 import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
 public final class FrostOverlayRenderer {

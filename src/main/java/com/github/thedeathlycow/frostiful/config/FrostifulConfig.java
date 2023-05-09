@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.config;
 
-import com.github.thedeathlycow.frostiful.config.group.*;
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.group.*;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;

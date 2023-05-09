@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer;
 
-import com.github.thedeathlycow.frostiful.entity.FShearable;
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.FShearable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.PolarBearEntityRenderer;

@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import net.minecraft.block.AbstractBlock;
