@@ -49,7 +49,7 @@ public class RootedEffectRenderer<T extends LivingEntity, M extends EntityModel<
             matrixStack.push();
             float blockSize = 1.75f;
             Box boundingBox = livingEntity.getBoundingBox();
-            BlockPos blockPos = new BlockPos(livingEntity.getX(), boundingBox.minY, livingEntity.getZ());
+            BlockPos blockPos = BlockPos.ofFloored(livingEntity.getX(), boundingBox.minY, livingEntity.getZ());
             matrixStack.scale(blockSize * (float)boundingBox.getXLength(), blockSize * (float)boundingBox.getYLength(), blockSize * (float)boundingBox.getZLength());
             matrixStack.translate(-0.5, -0.3, -0.5);
             this.frostiful$renderBlock(livingEntity, matrixStack, vertexConsumerProvider, blockPos);

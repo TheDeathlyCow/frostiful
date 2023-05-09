@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.particle;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
 
@@ -19,6 +20,6 @@ public class FParticleTypes {
     }
 
     private static void register(String name, ParticleType<?> particle) {
-        Registry.register(Registry.PARTICLE_TYPE, new Identifier(Frostiful.MODID, name), particle);
+        Registry.register(Registries.PARTICLE_TYPE, new Identifier(Frostiful.MODID, name), particle);
     }
 }
