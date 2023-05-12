@@ -148,6 +148,9 @@ public class FItems {
         register("cut_blue_ice_stairs", CUT_BLUE_ICE_STAIRS);
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
         register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
+
+        // force the class to be loaded
+        var loadTheClass = FItemGroups.FROSTIFUL;
     }
 
     private static void register(String id, Item item) {

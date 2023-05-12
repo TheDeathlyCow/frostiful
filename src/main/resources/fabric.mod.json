@@ -3,12 +3,15 @@
 	"id": "frostiful",
 	"version": "${version}",
 	"name": "Frostiful",
-	"description": "A Vanilla+ Snow & Frost Update Survival Experience",
+	"description": "A Frosty Vanilla+ Survival Experience",
 	"authors": [
 		"TheDeathlyCow"
 	],
+	"contributors": [
+		"NerjalNosk (Health Overlay compatibility)"
+	],
 	"contact": {
-		"homepage": "https://github.com/TheDeathlyCow/wiki",
+		"homepage": "https://github.com/TheDeathlyCow/frostiful/wiki",
 		"sources": "https://github.com/TheDeathlyCow/frostiful",
 		"issues": "https://github.com/TheDeathlyCow/frostiful/issues"
 	},
