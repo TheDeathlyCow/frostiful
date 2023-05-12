@@ -15,6 +15,7 @@ import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.LivingEntityThermooEventListeners;
 import com.github.thedeathlycow.frostiful.survival.PlayerEventThermooListeners;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
+import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntityEnvironmentEvents;
 import com.github.thedeathlycow.thermoo.api.temperature.event.PlayerEnvironmentEvents;
@@ -60,11 +61,13 @@ public class Frostiful implements ModInitializer {
         FEntityTypes.registerEntities();
         FGameRules.registerGamerules();
         FSoundEvents.registerSoundEvents();
-        FPlacedFeatures.placeFeatures();
         FStatusEffects.registerStatusEffects();
         FEnchantments.registerEnchantments();
         FParticleTypes.registerParticleTypes();
         FPotions.register();
+
+        FFeatures.registerAll();
+        FPlacedFeatures.placeFeatures();
 
         this.registerThermooEventListeners();
 

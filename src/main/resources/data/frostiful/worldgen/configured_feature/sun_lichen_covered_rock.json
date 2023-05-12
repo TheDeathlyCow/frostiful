@@ -55,6 +55,6 @@
 			},
 			"placement": []
 		},
-		"place_covering_change": 0.3
+		"place_covering_chance": 0.3
 	}
 }

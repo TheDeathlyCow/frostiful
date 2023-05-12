@@ -11,9 +11,13 @@ import net.minecraft.world.gen.feature.FeatureConfig;
 
 public class FFeatures {
 
-    public static final Feature<CoveredRockFeatureConfig> COVERED_ROCK = register("covered_rock", new CoveredRockFeature(CoveredRockFeatureConfig.CODEC));
+    public static final Feature<CoveredRockFeatureConfig> COVERED_ROCK = new CoveredRockFeature(CoveredRockFeatureConfig.CODEC);
 
-    private static <C extends FeatureConfig, F extends Feature<C>> F register(String name, F feature) {
-        return Registry.register(Registries.FEATURE, new Identifier(Frostiful.MODID, name), feature);
+    private static void register(String name, Feature<?> feature) {
+        Registry.register(Registries.FEATURE, Frostiful.id(name), feature);
+    }
+
+    public static void registerAll() {
+        register("covered_rock", COVERED_ROCK);
     }
 }
