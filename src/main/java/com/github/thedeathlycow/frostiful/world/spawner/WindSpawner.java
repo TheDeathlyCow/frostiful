@@ -20,7 +20,7 @@ public final class WindSpawner {
 
     public static final WindSpawner INSTANCE = new WindSpawner();
 
-    private int windSpawnCount = 0;
+    private volatile int windSpawnCount = 0;
 
     private WindSpawner() {
 
@@ -30,11 +30,15 @@ public final class WindSpawner {
         return windSpawnCount;
     }
 
-    public void updateWindSpawnCount(int amount) {
+    public synchronized void updateWindSpawnCount(int amount) {
         this.windSpawnCount += amount;
         if (this.windSpawnCount < 0) {
             this.windSpawnCount = 0;
         }
+    }
+
+    public synchronized void setWindSpawnCount(int value) {
+        this.windSpawnCount = value;
     }
 
     @Nullable

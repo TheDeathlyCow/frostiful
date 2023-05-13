@@ -37,6 +37,7 @@ public abstract class WindSpawningMixin extends World {
         profiler.push("frostiful.freezingWindTick");
         WindSpawner.INSTANCE.trySpawnFreezingWind(this, chunk);
         profiler.pop();
+
     }
 
 }
