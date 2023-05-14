@@ -15,7 +15,7 @@ public class FreezingConfigGroup implements ConfigData {
     boolean windDestroysTorches = true;
     int windSpawnCapPerSecond = 15;
     int windSpawnRarity = 750;
-    int windSpawnRarityThunder = 250;
+    int windSpawnRarityThunder = 500;
     float maxPassiveFreezingPercent = 1.0f;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     float soakPercentFromWaterPotion = 0.5f;

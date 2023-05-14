@@ -26,7 +26,7 @@ public final class WindSpawner {
     private int windSpawnCount = 0;
 
     private WindSpawner() {
-        
+
     }
 
     public void resetWindSpawnCount() {
