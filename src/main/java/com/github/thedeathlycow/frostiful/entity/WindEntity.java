@@ -4,10 +4,7 @@ import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.Packet;
@@ -21,6 +18,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -57,8 +55,23 @@ public class WindEntity extends Entity {
     }
 
     @Override
+    public void baseTick() {
+        Profiler profiler = this.world.getProfiler();
+        profiler.push("entityBaseTick");
+
+        this.attemptTickInVoid();
+
+        this.prevHorizontalSpeed = this.horizontalSpeed;
+        this.prevPitch = this.getPitch();
+        this.prevYaw = this.getYaw();
+
+        this.firstUpdate = false;
+        profiler.pop();
+    }
+
+    @Override
     public void tick() {
-        super.tick();
+        this.baseTick();
 
         if (this.isRemoved()) {
             return;
@@ -92,9 +105,7 @@ public class WindEntity extends Entity {
                 this.checkCollidingEntities();
                 profiler.pop();
             }
-        }
-
-        if (this.world.isClient) {
+        } else {
 
             WindParticleEffect particle = this.random.nextBoolean()
                     ? new WindParticleEffect(true)
@@ -127,6 +138,10 @@ public class WindEntity extends Entity {
         }
 
         profiler.pop();
+    }
+
+    public boolean startRiding(Entity entity, boolean force) {
+        return false;
     }
 
     public boolean isFireImmune() {

@@ -1,19 +1,24 @@
 package com.github.thedeathlycow.frostiful.world.spawner;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
 import com.github.thedeathlycow.frostiful.entity.WindEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.EntityType;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public final class WindSpawner {
@@ -38,11 +43,22 @@ public final class WindSpawner {
     }
 
     public synchronized void setWindSpawnCount(int value) {
-        this.windSpawnCount = value;
+        this.windSpawnCount = Math.max(0, value);
+    }
+
+    @Contract("_,null->false")
+    public boolean isWindCountUnderCap(@NotNull FreezingConfigGroup config, @Nullable MinecraftServer server) {
+        if (server == null) {
+            return false;
+        }
+
+        int cap = server.getCurrentPlayerCount() * config.getWindSpawnCapPerPlayer();
+        cap = Math.min(config.getWindSpawnCap(), cap);
+        return this.windSpawnCount <= cap;
     }
 
     @Nullable
-    public FreezingWindEntity trySpawnFreezingWind(World world, WorldChunk chunk) {
+    public synchronized FreezingWindEntity trySpawnFreezingWind(World world, WorldChunk chunk) {
         return this.trySpawn(
                 world,
                 chunk,
@@ -53,7 +69,7 @@ public final class WindSpawner {
     }
 
     @Nullable
-    public <W extends WindEntity> W trySpawn(
+    public synchronized <W extends WindEntity> W trySpawn(
             World world,
             WorldChunk chunk,
             EntityType<W> type,
@@ -73,7 +89,7 @@ public final class WindSpawner {
             return null;
         }
 
-        if (this.windSpawnCount >= config.freezingConfig.getWindSpawnCap()) {
+        if (this.isWindCountUnderCap(config.freezingConfig, world.getServer())) {
             return null;
         }
 
