@@ -32,7 +32,7 @@
 		"powder_snow_effects.EntityPowderSnowRedirect",
 		"powder_snow_effects.LivingEntityPowderSnowDisabler",
 		"server.IcicleGrowthMixin",
-		"world.LevelPropertiesMixin",
+		"world.ServerChunkManagerMixin",
 		"world.WindSpawningMixin",
 		"world.spawner.PatrolSpawnerMixin"
 	],

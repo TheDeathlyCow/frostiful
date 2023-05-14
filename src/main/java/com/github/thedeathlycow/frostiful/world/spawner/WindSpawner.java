@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.world.spawner;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
@@ -8,57 +7,34 @@ import com.github.thedeathlycow.frostiful.entity.WindEntity;
 import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.biome.FBiomeTags;
 import net.minecraft.entity.EntityType;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.tag.TagKey;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.WorldChunk;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 
 public final class WindSpawner {
 
     public static final WindSpawner INSTANCE = new WindSpawner();
 
-    private volatile int windSpawnCount = 0;
+    private int windSpawnCount = 0;
 
     private WindSpawner() {
-
+        
     }
 
-    public int getWindSpawnCount() {
-        return windSpawnCount;
-    }
-
-    public synchronized void updateWindSpawnCount(int amount) {
-        this.windSpawnCount += amount;
-        if (this.windSpawnCount < 0) {
-            this.windSpawnCount = 0;
-        }
-    }
-
-    public synchronized void setWindSpawnCount(int value) {
-        this.windSpawnCount = Math.max(0, value);
-    }
-
-    @Contract("_,null->false")
-    public boolean isWindCountUnderCap(@NotNull FreezingConfigGroup config, @Nullable MinecraftServer server) {
-        if (server == null) {
-            return false;
-        }
-
-        int cap = server.getCurrentPlayerCount() * config.getWindSpawnCapPerPlayer();
-        cap = Math.min(config.getWindSpawnCap(), cap);
-        return this.windSpawnCount <= cap;
+    public void resetWindSpawnCount() {
+        this.windSpawnCount = 0;
     }
 
     @Nullable
-    public synchronized FreezingWindEntity trySpawnFreezingWind(World world, WorldChunk chunk) {
+    public FreezingWindEntity trySpawnFreezingWind(World world, WorldChunk chunk) {
         return this.trySpawn(
                 world,
                 chunk,
@@ -69,15 +45,15 @@ public final class WindSpawner {
     }
 
     @Nullable
-    public synchronized <W extends WindEntity> W trySpawn(
+    public <W extends WindEntity> W trySpawn(
             World world,
             WorldChunk chunk,
             EntityType<W> type,
             TagKey<Biome> alwaysSpawnBiomes,
             TagKey<Biome> spawnInStormsBiomes
     ) {
-        FrostifulConfig config = Frostiful.getConfig();
-        if (!config.freezingConfig.doWindSpawning()) {
+        FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
+        if (!config.doWindSpawning()) {
             return null;
         }
 
@@ -85,11 +61,15 @@ public final class WindSpawner {
             return null;
         }
 
-        if (world.random.nextInt(world.isThundering() ? 100 : 400) != 0) {
+        int chanceBound = world.isThundering()
+                ? config.getWindSpawnRarityThunder()
+                : config.getWindSpawnRarity();
+
+        if (world.random.nextInt(chanceBound) != 0) {
             return null;
         }
 
-        if (this.isWindCountUnderCap(config.freezingConfig, world.getServer())) {
+        if (this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
             return null;
         }
 
@@ -110,7 +90,7 @@ public final class WindSpawner {
         boolean canSpawnOnGround = (world.isRaining() && biome.isIn(spawnInStormsBiomes))
                 || biome.isIn(alwaysSpawnBiomes);
 
-        if (canSpawnOnGround || (spawnInAir && config.freezingConfig.spawnWindInAir())) {
+        if (canSpawnOnGround || (spawnInAir && config.spawnWindInAir())) {
             W wind = type.create(world);
             if (wind != null) {
                 if (spawnInAir) {
@@ -119,7 +99,6 @@ public final class WindSpawner {
                 wind.setPosition(spawnPos.getX(), y, spawnPos.getZ());
 
                 if (world.spawnEntity(wind)) {
-                    wind.setSpawnedPassively(true);
                     this.windSpawnCount++;
                     return wind;
                 }

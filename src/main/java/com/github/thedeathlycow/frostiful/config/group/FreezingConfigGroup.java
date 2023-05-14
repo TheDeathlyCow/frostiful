@@ -13,8 +13,9 @@ public class FreezingConfigGroup implements ConfigData {
 
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
-    int windSpawnCap = 750;
-    int windSpawnCapPerPlayer = 60;
+    int windSpawnCapPerSecond = 15;
+    int windSpawnRarity = 750;
+    int windSpawnRarityThunder = 250;
     float maxPassiveFreezingPercent = 1.0f;
     float passiveFreezingWetnessScaleMultiplier = 2.1f;
     float soakPercentFromWaterPotion = 0.5f;
@@ -43,12 +44,16 @@ public class FreezingConfigGroup implements ConfigData {
         return windDestroysTorches;
     }
 
-    public int getWindSpawnCap() {
-        return windSpawnCap;
+    public int getWindSpawnCapPerSecond() {
+        return windSpawnCapPerSecond;
     }
 
-    public int getWindSpawnCapPerPlayer() {
-        return windSpawnCapPerPlayer;
+    public int getWindSpawnRarity() {
+        return windSpawnRarity;
+    }
+
+    public int getWindSpawnRarityThunder() {
+        return windSpawnRarityThunder;
     }
 
     public float getMaxPassiveFreezingPercent() {

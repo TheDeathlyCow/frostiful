@@ -38,20 +38,10 @@ public class WindEntity extends Entity {
 
     private int lifeTicks;
 
-    private boolean spawnedPassively = false;
-
     public WindEntity(EntityType<? extends WindEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
         this.setLifeTicks(LIFE_TICKS_PROVIDER.get(this.random));
-    }
-
-    @Override
-    public void remove(RemovalReason reason) {
-        if (this.spawnedPassively) {
-            WindSpawner.INSTANCE.updateWindSpawnCount(-1);
-        }
-        super.remove(reason);
     }
 
     @Override
@@ -164,14 +154,6 @@ public class WindEntity extends Entity {
         this.lifeTicks = lifeTicks;
     }
 
-    public boolean isSpawnedPassively() {
-        return spawnedPassively;
-    }
-
-    public void setSpawnedPassively(boolean spawnedPassively) {
-        this.spawnedPassively = spawnedPassively;
-    }
-
     protected void dissipate() {
         this.playSound(FSoundEvents.ENTITY_WIND_WOOSH, 1.0f, 1.0f);
         if (this.world.isClient) {
@@ -243,10 +225,6 @@ public class WindEntity extends Entity {
         if (nbt.contains("LifeTicks", NbtElement.INT_TYPE)) {
             this.setLifeTicks(nbt.getInt("LifeTicks"));
         }
-
-        if (nbt.contains("SpawnedPassively")) {
-            this.spawnedPassively = nbt.getBoolean("SpawnedPassively");
-        }
     }
 
     @Override
@@ -255,7 +233,6 @@ public class WindEntity extends Entity {
 
         if (this.isAlive()) {
             nbt.putInt("LifeTicks", this.getLifeTicks());
-            nbt.putBoolean("SpawnedPassively", this.spawnedPassively);
         }
     }
 }
