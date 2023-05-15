@@ -82,6 +82,10 @@ public final class WindSpawner {
         boolean spawnInAir = world.random.nextBoolean();
         int y = spawnPos.getY();
         if (spawnInAir) {
+            if (!config.spawnWindInAir()) {
+                return null;
+            }
+
             int topY = world.getTopY();
             y += (int) world.random.nextTriangular(topY, topY - spawnPos.getY());
         }
@@ -90,7 +94,7 @@ public final class WindSpawner {
         boolean canSpawnOnGround = (world.isRaining() && biome.isIn(spawnInStormsBiomes))
                 || biome.isIn(alwaysSpawnBiomes);
 
-        if (canSpawnOnGround || (spawnInAir && config.spawnWindInAir())) {
+        if (canSpawnOnGround || spawnInAir) {
             W wind = type.create(world);
             if (wind != null) {
                 if (spawnInAir) {
