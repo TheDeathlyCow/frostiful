@@ -34,14 +34,17 @@ public class WindEntity extends Entity {
             .and(EntityPredicates.VALID_ENTITY)
             .and(entity -> !entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES));
 
-    private float windSpeed = 0.2f;
+    private float windSpeed = 1.0f;
 
     private int lifeTicks;
+
+    private transient final int moveTickOffset;
 
     public WindEntity(EntityType<? extends WindEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
         this.setLifeTicks(LIFE_TICKS_PROVIDER.get(this.random));
+        this.moveTickOffset = world.random.nextBetween(1, 10) - 1;
     }
 
     @Override
@@ -74,17 +77,22 @@ public class WindEntity extends Entity {
             this.extinguish();
         }
 
-        Vec3d velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+        if (this.age % 10 == moveTickOffset) {
 
-        if (this.horizontalCollision) {
-            velocity = Vec3d.ZERO.add(0, this.windSpeed, 0);
-        }
-        if (this.verticalCollision) {
-            velocity = Vec3d.ZERO.add(0, 0, this.windSpeed);
+            Vec3d velocity;
+            if (this.verticalCollision) {
+                velocity = Vec3d.ZERO.add(0, 0, this.windSpeed * 0.5f);
+            } else if (this.horizontalCollision) {
+                velocity = Vec3d.ZERO.add(0, this.windSpeed * 0.5f, 0);
+            } else {
+                velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+            }
+
+            this.setVelocity(velocity);
+            this.move(MovementType.SELF, this.getVelocity());
         }
 
-        this.setVelocity(velocity);
-        this.move(MovementType.SELF, this.getVelocity());
+
         if (!this.world.isClient) {
             if (this.age % 30 == 0) {
                 this.playSound(FSoundEvents.ENTITY_WIND_BLOW, 0.75f, 0.9f + this.random.nextFloat() / 3);
