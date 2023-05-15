@@ -4,10 +4,7 @@ import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
+import net.minecraft.entity.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.Packet;
@@ -21,6 +18,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 
 import java.util.function.Predicate;
@@ -36,29 +34,37 @@ public class WindEntity extends Entity {
             .and(EntityPredicates.VALID_ENTITY)
             .and(entity -> !entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES));
 
-    private float windSpeed = 0.2f;
+    private float windSpeed = 1.0f;
 
     private int lifeTicks;
 
-    private boolean spawnedPassively = false;
+    private transient final int moveTickOffset;
 
     public WindEntity(EntityType<? extends WindEntity> type, World world) {
         super(type, world);
         this.setNoGravity(true);
         this.setLifeTicks(LIFE_TICKS_PROVIDER.get(this.random));
+        this.moveTickOffset = world.random.nextBetween(1, 10) - 1;
     }
 
     @Override
-    public void remove(RemovalReason reason) {
-        if (this.spawnedPassively) {
-            WindSpawner.INSTANCE.updateWindSpawnCount(-1);
-        }
-        super.remove(reason);
+    public void baseTick() {
+        Profiler profiler = this.world.getProfiler();
+        profiler.push("entityBaseTick");
+
+        this.attemptTickInVoid();
+
+        this.prevHorizontalSpeed = this.horizontalSpeed;
+        this.prevPitch = this.getPitch();
+        this.prevYaw = this.getYaw();
+
+        this.firstUpdate = false;
+        profiler.pop();
     }
 
     @Override
     public void tick() {
-        super.tick();
+        this.baseTick();
 
         if (this.isRemoved()) {
             return;
@@ -71,17 +77,22 @@ public class WindEntity extends Entity {
             this.extinguish();
         }
 
-        Vec3d velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+        if (this.age % 10 == moveTickOffset) {
 
-        if (this.horizontalCollision) {
-            velocity = Vec3d.ZERO.add(0, this.windSpeed, 0);
-        }
-        if (this.verticalCollision) {
-            velocity = Vec3d.ZERO.add(0, 0, this.windSpeed);
+            Vec3d velocity;
+            if (this.verticalCollision) {
+                velocity = Vec3d.ZERO.add(0, 0, this.windSpeed * 0.5f);
+            } else if (this.horizontalCollision) {
+                velocity = Vec3d.ZERO.add(0, this.windSpeed * 0.5f, 0);
+            } else {
+                velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+            }
+
+            this.setVelocity(velocity);
+            this.move(MovementType.SELF, this.getVelocity());
         }
 
-        this.setVelocity(velocity);
-        this.move(MovementType.SELF, this.getVelocity());
+
         if (!this.world.isClient) {
             if (this.age % 30 == 0) {
                 this.playSound(FSoundEvents.ENTITY_WIND_BLOW, 0.75f, 0.9f + this.random.nextFloat() / 3);
@@ -92,9 +103,7 @@ public class WindEntity extends Entity {
                 this.checkCollidingEntities();
                 profiler.pop();
             }
-        }
-
-        if (this.world.isClient) {
+        } else {
 
             WindParticleEffect particle = this.random.nextBoolean()
                     ? new WindParticleEffect(true)
@@ -129,6 +138,10 @@ public class WindEntity extends Entity {
         profiler.pop();
     }
 
+    public boolean startRiding(Entity entity, boolean force) {
+        return false;
+    }
+
     public boolean isFireImmune() {
         return true;
     }
@@ -147,14 +160,6 @@ public class WindEntity extends Entity {
 
     public void setLifeTicks(int lifeTicks) {
         this.lifeTicks = lifeTicks;
-    }
-
-    public boolean isSpawnedPassively() {
-        return spawnedPassively;
-    }
-
-    public void setSpawnedPassively(boolean spawnedPassively) {
-        this.spawnedPassively = spawnedPassively;
     }
 
     protected void dissipate() {
@@ -228,10 +233,6 @@ public class WindEntity extends Entity {
         if (nbt.contains("LifeTicks", NbtElement.INT_TYPE)) {
             this.setLifeTicks(nbt.getInt("LifeTicks"));
         }
-
-        if (nbt.contains("SpawnedPassively")) {
-            this.spawnedPassively = nbt.getBoolean("SpawnedPassively");
-        }
     }
 
     @Override
@@ -240,7 +241,6 @@ public class WindEntity extends Entity {
 
         if (this.isAlive()) {
             nbt.putInt("LifeTicks", this.getLifeTicks());
-            nbt.putBoolean("SpawnedPassively", this.spawnedPassively);
         }
     }
 }
