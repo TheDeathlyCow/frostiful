@@ -24,6 +24,9 @@ public class WindParticle extends SpriteBillboardParticle {
 
     private final SpriteProvider spriteProvider;
 
+    private static final Quaternionf FRONT_ROTATION = new Quaternionf().rotationX(-MathHelper.PI);
+    private static final Quaternionf BACK_ROTATION = new Quaternionf().rotationYXZ(-MathHelper.PI, MathHelper.PI, 0.0f);
+
     protected WindParticle(ClientWorld clientWorld, double x, double y, double z, SpriteProvider spriteProvider) {
         super(clientWorld, x, y, z);
         this.spriteProvider = spriteProvider;
@@ -41,10 +44,10 @@ public class WindParticle extends SpriteBillboardParticle {
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         this.buildGeometry(vertexConsumer, camera, tickDelta, true, (quaternion) -> {
-            quaternion.mul(new Quaternionf().rotationX(-MathHelper.PI));
+            quaternion.mul(FRONT_ROTATION);
         });
         this.buildGeometry(vertexConsumer, camera, tickDelta, false, (quaternion) -> {
-            quaternion.mul(new Quaternionf().rotationYXZ(-MathHelper.PI, MathHelper.PI, 0.0f));
+            quaternion.mul(BACK_ROTATION);
         });
     }
 
