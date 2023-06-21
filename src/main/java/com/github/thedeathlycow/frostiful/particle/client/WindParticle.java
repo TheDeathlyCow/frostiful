@@ -41,10 +41,10 @@ public class WindParticle extends SpriteBillboardParticle {
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         this.buildGeometry(vertexConsumer, camera, tickDelta, true, (quaternion) -> {
-            quaternion.mul(new Quaternionf().rotationX(-MathHelper.PI / 3));
+            quaternion.mul(new Quaternionf().rotationX(-MathHelper.PI));
         });
         this.buildGeometry(vertexConsumer, camera, tickDelta, false, (quaternion) -> {
-            quaternion.mul(new Quaternionf().rotationYXZ(MathHelper.PI, MathHelper.PI / 3, 0.0f));
+            quaternion.mul(new Quaternionf().rotationYXZ(-MathHelper.PI, MathHelper.PI, 0.0f));
         });
     }
 
