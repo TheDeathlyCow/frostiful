@@ -4,9 +4,9 @@ import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.block.SunLichenBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
-import com.github.thedeathlycow.thermoo.impl.EnvironmentControllerImpl;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.block.Block;
 import net.minecraft.entity.EntityType;
@@ -28,24 +28,25 @@ public final class SunLichenCollisionTests implements FabricGameTest {
 
     @BeforeBatch(batchId = "sunLichenCollision")
     public void mockController(ServerWorld serverWorld) {
-        EnvironmentManager.INSTANCE.setController(
-                new EnvironmentControllerImpl() {
-                    @Override
-                    public int getLocalTemperatureChange(World world, BlockPos pos) {
-                        return 0;
-                    }
+        EnvironmentManager.INSTANCE.addController(
+                controller ->
+                        new EnvironmentControllerDecorator(controller) {
+                            @Override
+                            public int getLocalTemperatureChange(World world, BlockPos pos) {
+                                return 0;
+                            }
 
-                    @Override
-                    public int getHeatAtLocation(World world, BlockPos pos) {
-                        return 0;
-                    }
-                }
+                            @Override
+                            public int getHeatAtLocation(World world, BlockPos pos) {
+                                return 0;
+                            }
+                        }
         );
     }
 
     @AfterBatch(batchId = "sunLichenCollision")
     public void resetController(ServerWorld serverWorld) {
-        EnvironmentManager.INSTANCE.setController(new EnvironmentControllerImpl());
+        EnvironmentManager.INSTANCE.peelController();
     }
 
 
