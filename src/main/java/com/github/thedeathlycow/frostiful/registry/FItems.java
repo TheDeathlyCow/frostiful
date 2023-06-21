@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -32,6 +33,10 @@ public class FItems {
             new FabricItemSettings()
     );
 
+    public static final Item FUR_PADDING = new Item(new FabricItemSettings().requires(FeatureFlags.UPDATE_1_20));
+
+    public static final Item FUR_UPGRADE_TEMPLATE = FurSmithingUpgradeTemplate.createItem();
+
     public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(
             FrostResistantArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.HELMET,
@@ -57,7 +62,6 @@ public class FItems {
             .equipmentSlot(FrostologyCloakItem::getPreferredEquipmentSlot)
             .maxCount(1)
             .maxDamage(432)
-
     );
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings());
@@ -111,6 +115,9 @@ public class FItems {
         register("fur_padded_chainmail_chestplate", FUR_PADDED_CHAINMAIL_CHESTPLATE);
         register("fur_padded_chainmail_leggings", FUR_PADDED_CHAINMAIL_LEGGINGS);
         register("fur_padded_chainmail_boots", FUR_PADDED_CHAINMAIL_BOOTS);
+
+        register("fur_padding", FUR_PADDING);
+        register("fur_upgrade_template", FUR_UPGRADE_TEMPLATE);
 
         register("frostology_cloak", FROSTOLOGY_CLOAK);
 

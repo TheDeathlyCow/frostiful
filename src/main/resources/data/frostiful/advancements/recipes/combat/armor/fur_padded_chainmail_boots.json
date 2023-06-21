@@ -3,7 +3,8 @@
     "rewards": {
         "recipes": [
             "frostiful:smithing/fur_padded_chainmail_boots",
-            "frostiful:smithing/fur_padded_chainmail_boots_reversed"
+            "frostiful:smithing/fur_padded_chainmail_boots_reversed",
+            "frostiful:smithing/fur_padded_chainmail_boots_upgrade"
         ]
     },
     "criteria": {
