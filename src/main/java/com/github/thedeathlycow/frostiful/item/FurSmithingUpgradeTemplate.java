@@ -1,7 +1,12 @@
 package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.minecraft.entity.ItemEntity;
+import net.minecraft.item.Item;
 import net.minecraft.item.SmithingTemplateItem;
+import net.minecraft.loot.LootPool;
+import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
@@ -42,8 +47,6 @@ public class FurSmithingUpgradeTemplate {
     );
 
     private static final Identifier EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("item/empty/fur_padding");
-
-
 
 
     public static SmithingTemplateItem createItem() {

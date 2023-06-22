@@ -4,6 +4,8 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
+import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
+import com.github.thedeathlycow.frostiful.item.FurSmithingUpgradeTemplate;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
@@ -70,6 +72,7 @@ public class Frostiful implements ModInitializer {
         FPlacedFeatures.placeFeatures();
 
         this.registerThermooEventListeners();
+        FSmithingTemplateItem.addFurUpgradeToLoot();
 
         LOGGER.info("Initialized Frostiful!");
     }
