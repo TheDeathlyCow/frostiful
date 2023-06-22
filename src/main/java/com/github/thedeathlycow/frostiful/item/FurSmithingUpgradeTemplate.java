@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.item.SmithingTemplateItem;
 import net.minecraft.text.Text;
-import net.minecraft.util.Formatting;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Util;
 
@@ -42,6 +41,9 @@ public class FurSmithingUpgradeTemplate {
             )
     );
 
+    private static final Identifier EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("item/empty/fur_padding");
+
+
 
 
     public static SmithingTemplateItem createItem() {
@@ -66,7 +68,7 @@ public class FurSmithingUpgradeTemplate {
     }
 
     private static List<Identifier> getFurUpgradeEmptyAdditionsSlotTextures() {
-        return List.of();
+        return List.of(EMPTY_SLOT_FUR_PADDING_TEXTURE);
     }
 
     private FurSmithingUpgradeTemplate() {
