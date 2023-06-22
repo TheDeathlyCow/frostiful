@@ -1,8 +1,9 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.EntityType;
@@ -13,6 +14,7 @@ import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PillagerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.RangedWeaponItem;
+import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.world.Difficulty;
@@ -32,7 +34,7 @@ public class ChillagerEntity extends PillagerEntity {
     @Override
     public boolean damage(DamageSource source, float amount) {
 
-        if (source.isFire()) {
+        if (source.isIn(DamageTypeTags.IS_FIRE)) {
             FrostifulConfig config = Frostiful.getConfig();
             amount *= config.combatConfig.getChillagerFireDamageMultiplier();
         }
@@ -72,7 +74,7 @@ public class ChillagerEntity extends PillagerEntity {
     }
 
     @Override
-    public ItemStack getArrowType(ItemStack stack) {
+    public ItemStack getProjectileType(ItemStack stack) {
         if (stack.getItem() instanceof RangedWeaponItem rangedWeaponItem) {
             ItemStack itemStack = RangedWeaponItem.getHeldProjectile(
                     this,

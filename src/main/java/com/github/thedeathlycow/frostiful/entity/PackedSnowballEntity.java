@@ -1,20 +1,20 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ItemStackParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
-import net.minecraft.tag.EntityTypeTags;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.world.World;
@@ -61,7 +61,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
                 ? config.getPackedSnowballVulnerableTypesDamage()
                 : config.getPackedSnowballDamage();
 
-        target.damage(DamageSource.thrownProjectile(this, this.getOwner()), damage);
+        target.damage(this.getDamageSources().thrown(this, this.getOwner()), damage);
 
         if (target instanceof LivingEntity livingTarget) {
             livingTarget.thermoo$addTemperature(

@@ -9,20 +9,23 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Util;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Quaternion;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3f;
 import org.jetbrains.annotations.Nullable;
+import org.joml.Quaternionf;
+import org.joml.Vector3f;
 
 import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
 public class WindParticle extends SpriteBillboardParticle {
 
-    private static final Vec3f FROM = Util.make(new Vec3f(0.5F, 0.5F, 0.5F), Vec3f::normalize);
-    private static final Vec3f TO = new Vec3f(-1.0F, -1.0F, 0.0F);
+    private static final Vector3f FROM = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
+    private static final Vector3f TO = new Vector3f(-1.0F, -1.0F, 0.0F);
 
     private final SpriteProvider spriteProvider;
+
+    private static final Quaternionf FRONT_ROTATION = new Quaternionf().rotationX(-MathHelper.PI);
+    private static final Quaternionf BACK_ROTATION = new Quaternionf().rotationYXZ(-MathHelper.PI, MathHelper.PI, 0.0f);
 
     protected WindParticle(ClientWorld clientWorld, double x, double y, double z, SpriteProvider spriteProvider) {
         super(clientWorld, x, y, z);
@@ -41,10 +44,10 @@ public class WindParticle extends SpriteBillboardParticle {
     @Override
     public void buildGeometry(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         this.buildGeometry(vertexConsumer, camera, tickDelta, true, (quaternion) -> {
-            quaternion.hamiltonProduct(Vec3f.POSITIVE_Y.getRadialQuaternion(0));
+            quaternion.mul(FRONT_ROTATION);
         });
         this.buildGeometry(vertexConsumer, camera, tickDelta, false, (quaternion) -> {
-            quaternion.hamiltonProduct(Vec3f.POSITIVE_Y.getRadialQuaternion(-MathHelper.PI));
+            quaternion.mul(BACK_ROTATION);
         });
     }
 
@@ -53,28 +56,28 @@ public class WindParticle extends SpriteBillboardParticle {
             Camera camera,
             float tickDelta,
             boolean flip,
-            Consumer<Quaternion> rotator
+            Consumer<Quaternionf> rotator
     ) {
         Vec3d cameraPos = camera.getPos();
         float dx = (float) (MathHelper.lerp(tickDelta, this.prevPosX, this.x) - cameraPos.getX());
         float dy = (float) (MathHelper.lerp(tickDelta, this.prevPosY, this.y) - cameraPos.getY());
         float dz = (float) (MathHelper.lerp(tickDelta, this.prevPosZ, this.z) - cameraPos.getZ());
-        Quaternion quaternion = new Quaternion(FROM, 0.0F, true);
+        var quaternion = new Quaternionf().setAngleAxis(0.0f, FROM.x(), FROM.y(), FROM.z());
         rotator.accept(quaternion);
         TO.rotate(quaternion);
-        Vec3f[] points = new Vec3f[]{
-                new Vec3f(-1.0F, -1.0F, 0.0F),
-                new Vec3f(-1.0F, 1.0F, 0.0F),
-                new Vec3f(1.0F, 1.0F, 0.0F),
-                new Vec3f(1.0F, -1.0F, 0.0F)
+        var points = new Vector3f[]{
+                new Vector3f(-1.0F, -1.0F, 0.0F),
+                new Vector3f(-1.0F, 1.0F, 0.0F),
+                new Vector3f(1.0F, 1.0F, 0.0F),
+                new Vector3f(1.0F, -1.0F, 0.0F)
         };
 
         float size = this.getSize(tickDelta) * (flip ? -1 : 1);
 
         for (int i = 0; i < 4; ++i) {
-            Vec3f point = points[i];
+            Vector3f point = points[i];
             point.rotate(quaternion);
-            point.scale(size);
+            point.mul(size);
             point.add(dx, dy, dz);
         }
 
@@ -85,8 +88,8 @@ public class WindParticle extends SpriteBillboardParticle {
         this.vertex(vertexConsumer, points[3], this.getMinU(), this.getMaxV(), brightness);
     }
 
-    private void vertex(VertexConsumer vertexConsumer, Vec3f pos, float u, float v, int light) {
-        vertexConsumer.vertex(pos.getX(), pos.getY(), pos.getZ())
+    private void vertex(VertexConsumer vertexConsumer, Vector3f pos, float u, float v, int light) {
+        vertexConsumer.vertex(pos.x(), pos.y(), pos.z())
                 .texture(u, v)
                 .color(this.red, this.green, this.blue, this.alpha)
                 .light(light)

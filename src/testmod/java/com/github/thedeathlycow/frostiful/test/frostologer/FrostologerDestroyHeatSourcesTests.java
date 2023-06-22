@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.frostologer;
 
-import com.github.thedeathlycow.frostiful.block.FBlocks;
-import com.github.thedeathlycow.frostiful.entity.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;

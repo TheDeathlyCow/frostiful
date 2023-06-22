@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.*;
@@ -42,7 +42,7 @@ public class BiterEntity extends HostileEntity {
 
     public final AnimationState bitingAnimation = new AnimationState();
 
-    protected BiterEntity(EntityType<? extends BiterEntity> entityType, World world) {
+    public BiterEntity(EntityType<? extends BiterEntity> entityType, World world) {
         super(entityType, world);
     }
 

@@ -1,12 +1,13 @@
 package com.github.thedeathlycow.frostiful.entity.effect;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.entity.effect.StatusEffectCategory;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 
 public class FStatusEffects {
 
@@ -26,6 +27,6 @@ public class FStatusEffects {
     }
 
     private static void register(String name, StatusEffect entry) {
-        Registry.register(Registry.STATUS_EFFECT, new Identifier(Frostiful.MODID, name), entry);
+        Registry.register(Registries.STATUS_EFFECT, new Identifier(Frostiful.MODID, name), entry);
     }
 }

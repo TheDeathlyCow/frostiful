@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.util.registry.RegistryEntry;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.PlacedFeature;
 import net.minecraft.world.gen.stateprovider.BlockStateProvider;
@@ -20,6 +20,7 @@ public record CoveredRockFeatureConfig(
         RegistryEntry<PlacedFeature> coveringFeature,
         float placeCoveringChance
 ) implements FeatureConfig {
+
     public static final Codec<CoveredRockFeatureConfig> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     BlockStateProvider.TYPE_CODEC.fieldOf("base").forGetter(CoveredRockFeatureConfig::base),

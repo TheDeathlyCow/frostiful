@@ -1,10 +1,11 @@
 package com.github.thedeathlycow.frostiful.block;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
-import com.github.thedeathlycow.frostiful.tag.blocks.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
+import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
@@ -134,7 +135,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
-            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, FDamageSource.ICICLE);
+            DamageSource damageSource = FDamageSources.getDamageSources(world).frostiful$icicle();
+            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
                 livingEntity.thermoo$addTemperature(
@@ -194,7 +196,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     @Override
     public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
         if (state.get(WATERLOGGED)) {
-            world.createAndScheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
         }
 
         if (direction != Direction.UP && direction != Direction.DOWN) {
@@ -205,9 +207,9 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
                 return state;
             } else if (direction == pointingIn.getOpposite() && !this.canPlaceAt(state, world, pos)) {
                 if (pointingIn == Direction.DOWN) {
-                    world.createAndScheduleBlockTick(pos, this, 2);
+                    world.scheduleBlockTick(pos, this, 2);
                 } else {
-                    world.createAndScheduleBlockTick(pos, this, 1);
+                    world.scheduleBlockTick(pos, this, 1);
                 }
 
                 return state;
@@ -261,8 +263,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public DamageSource getDamageSource() {
-        return FDamageSource.FALLING_ICICLE;
+    public DamageSource getDamageSource(Entity attacker) {
+        return FDamageSources.getDamageSources(attacker.world).frostiful$fallingIcicle(attacker);
     }
 
     @Override
@@ -329,7 +331,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         BlockPos tipPos = getTipPos(state, world, pos, 25, false);
         if (tipPos != null) {
             world.setBlockState(pos, state.with(UNSTABLE, true));
-            world.createAndScheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL.get(random));
+            world.scheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL.get(random));
         }
     }
 

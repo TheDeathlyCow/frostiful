@@ -1,10 +1,10 @@
 package com.github.thedeathlycow.frostiful.block;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.damage.FDamageSource;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.items.FItemTags;
+import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.block.BlockState;
@@ -71,7 +71,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
                     livingEntity.setFireTicks(config.freezingConfig.getSunLichenBurnTime());
                 }
 
-                entity.damage(FDamageSource.SUN_LICHEN, 1);
+                entity.damage(world.getDamageSources().hotFloor(), 1);
                 createFireParticles(world, pos);
 
                 BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);

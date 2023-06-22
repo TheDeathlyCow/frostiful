@@ -3,12 +3,15 @@
 	"id": "frostiful",
 	"version": "${version}",
 	"name": "Frostiful",
-	"description": "A Vanilla+ Snow & Frost Update Survival Experience",
+	"description": "A Frosty Vanilla+ Survival Experience",
 	"authors": [
 		"TheDeathlyCow"
 	],
+	"contributors": [
+		"NerjalNosk (Health Overlay compatibility)"
+	],
 	"contact": {
-		"homepage": "https://github.com/TheDeathlyCow/wiki",
+		"homepage": "https://github.com/TheDeathlyCow/frostiful/wiki",
 		"sources": "https://github.com/TheDeathlyCow/frostiful",
 		"issues": "https://github.com/TheDeathlyCow/frostiful/issues"
 	},
@@ -17,16 +20,16 @@
 	"environment": "*",
 	"entrypoints": {
 		"main": [
-			"com.github.thedeathlycow.frostiful.init.Frostiful"
+			"com.github.thedeathlycow.frostiful.Frostiful"
 		],
 		"server": [
-			"com.github.thedeathlycow.frostiful.init.FrostifulServer"
+			"com.github.thedeathlycow.frostiful.FrostifulServer"
 		],
 		"client": [
-			"com.github.thedeathlycow.frostiful.init.FrostifulClient"
+			"com.github.thedeathlycow.frostiful.FrostifulClient"
 		],
 		"modmenu": [
-			"com.github.thedeathlycow.frostiful.init.FrostifulModMenu"
+			"com.github.thedeathlycow.frostiful.FrostifulModMenu"
 		],
 		"mm:early_risers": [
 			"com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
@@ -38,8 +41,8 @@
 	"depends": {
 		"fabricloader": ">=0.14.9",
 		"fabric": "*",
-		"minecraft": "1.19.2",
-		"thermoo": "1.4",
+		"minecraft": "1.19.4",
+		"thermoo": ">=1.5.1",
 		"mm": ">=2.3",
 		"java": ">=17"
 	},

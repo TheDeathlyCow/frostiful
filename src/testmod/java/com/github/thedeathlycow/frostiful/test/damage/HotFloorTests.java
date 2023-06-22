@@ -1,12 +1,9 @@
 package com.github.thedeathlycow.frostiful.test.damage;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
-import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
-import com.github.thedeathlycow.thermoo.impl.EnvironmentControllerImpl;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.thermoo.api.temperature.*;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
-import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.VillagerEntity;
@@ -25,29 +22,30 @@ public class HotFloorTests {
 
     @BeforeBatch(batchId = "hotFloorTests")
     public void mockController(ServerWorld serverWorld) {
-        EnvironmentManager.INSTANCE.setController(
-                new EnvironmentControllerImpl() {
-                    @Override
-                    public int getLocalTemperatureChange(World world, BlockPos pos) {
-                        return 0;
-                    }
+        EnvironmentManager.INSTANCE.addController(
+                controller ->
+                        new EnvironmentControllerDecorator(controller) {
+                            @Override
+                            public int getLocalTemperatureChange(World world, BlockPos pos) {
+                                return 0;
+                            }
 
-                    @Override
-                    public int getHeatAtLocation(World world, BlockPos pos) {
-                        return 0;
-                    }
+                            @Override
+                            public int getHeatAtLocation(World world, BlockPos pos) {
+                                return 0;
+                            }
 
-                    @Override
-                    public int getOnFireWarmthRate(LivingEntity entity) {
-                        return 0;
-                    }
-                }
+                            @Override
+                            public int getOnFireWarmthRate(LivingEntity entity) {
+                                return 0;
+                            }
+                        }
         );
     }
 
     @AfterBatch(batchId = "hotFloorTests")
     public void resetController(ServerWorld serverWorld) {
-        EnvironmentManager.INSTANCE.setController(new EnvironmentControllerImpl());
+        EnvironmentManager.INSTANCE.peelController();
     }
 
     @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")

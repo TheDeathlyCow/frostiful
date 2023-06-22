@@ -2,8 +2,8 @@ package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
-import com.github.thedeathlycow.frostiful.item.FItems;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
@@ -16,7 +16,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3f;
+import net.minecraft.util.math.RotationAxis;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerCloakFeatureRenderer extends FeatureRenderer<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> {
@@ -52,9 +52,9 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
         float yawDelta = frostologer.prevBodyYaw + (frostologer.bodyYaw - frostologer.prevBodyYaw);
         double rotZ = MathHelper.sin(yawDelta * MathHelper.PI / 180);
         double rotX = -MathHelper.cos(yawDelta * MathHelper.PI / 180);
-        float q = MathHelper.clamp((float)capeY * 10.0F, -6.0F, 32.0F);
-        float r = MathHelper.clamp((float)(capeX * rotZ + capeZ * rotX) * 100.0F, 0.0F, 150.0F);
-        float s = MathHelper.clamp((float)(capeX * rotX - capeZ * rotZ) * 100.0F, -20.0F, 20.0F);
+        float q = MathHelper.clamp((float) capeY * 10.0F, -6.0F, 32.0F);
+        float r = MathHelper.clamp((float) (capeX * rotZ + capeZ * rotX) * 100.0F, 0.0F, 150.0F);
+        float s = MathHelper.clamp((float) (capeX * rotX - capeZ * rotZ) * 100.0F, -20.0F, 20.0F);
 
         if (r < 0.0F) {
             r = 0.0F;
@@ -66,9 +66,9 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
             q += 25.0F;
         }
 
-        matrixStack.multiply(Vec3f.POSITIVE_X.getDegreesQuaternion(6.0F + r / 2.0F + q));
-        matrixStack.multiply(Vec3f.POSITIVE_Z.getDegreesQuaternion(s / 2.0F));
-        matrixStack.multiply(Vec3f.POSITIVE_Y.getDegreesQuaternion(180.0F - s / 2.0F));
+        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + r / 2.0F + q));
+        matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
+        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - s / 2.0F));
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(FrostologyCloakItem.TEXTURE_ID));
         this.getContextModel().forceRenderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
         matrixStack.pop();

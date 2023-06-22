@@ -7,8 +7,8 @@ import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.registry.Registry;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
@@ -78,7 +78,7 @@ public class ItemAttributeModifier {
                 attributeModifiers = Collections.singletonList(AttributeHolder.fromJson(attributesJson));
             } else if (attributesJson.isJsonArray()) {
                 attributeModifiers = new ArrayList<>();
-                for (JsonElement attributeModifier :  attributesJson.getAsJsonArray()) {
+                for (JsonElement attributeModifier : attributesJson.getAsJsonArray()) {
                     attributeModifiers.add(AttributeHolder.fromJson(attributeModifier));
                 }
             } else {
@@ -105,7 +105,7 @@ public class ItemAttributeModifier {
             }
 
             Identifier itemID = new Identifier(id);
-            Optional<Item> item = Registry.ITEM.getOrEmpty(itemID);
+            Optional<Item> item = Registries.ITEM.getOrEmpty(itemID);
 
             if (item.isEmpty() && required) {
                 throw new JsonSyntaxException("Unknown item '" + itemID + "'");

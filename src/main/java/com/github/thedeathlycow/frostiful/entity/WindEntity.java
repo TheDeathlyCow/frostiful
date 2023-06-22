@@ -2,17 +2,19 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
+import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
 import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
-import net.minecraft.network.Packet;
+import net.minecraft.network.listener.ClientPlayPacketListener;
+import net.minecraft.network.packet.Packet;
 import net.minecraft.network.packet.s2c.play.EntitySpawnS2CPacket;
-import net.minecraft.network.packet.s2c.play.PlaySoundIdS2CPacket;
+import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -191,11 +193,12 @@ public class WindEntity extends Entity {
         entity.velocityModified = true;
 
         if (!this.world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {
+            var pos = this.getPos();
             serverPlayer.networkHandler
-                    .sendPacket(new PlaySoundIdS2CPacket(
-                            FSoundEvents.ENTITY_WIND_HOWL.getId(),
+                    .sendPacket(new PlaySoundS2CPacket(
+                            RegistryEntry.of(FSoundEvents.ENTITY_WIND_HOWL),
                             SoundCategory.WEATHER,
-                            this.getPos(),
+                            pos.x, pos.y, pos.z,
                             1.0f, 1.0f,
                             this.world.getRandom().nextLong()
                     ));
@@ -220,7 +223,7 @@ public class WindEntity extends Entity {
     }
 
     @Override
-    public Packet<?> createSpawnPacket() {
+    public Packet<ClientPlayPacketListener> createSpawnPacket() {
         return new EntitySpawnS2CPacket(this);
     }
 

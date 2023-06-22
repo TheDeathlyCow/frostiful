@@ -26,7 +26,7 @@ public class FrostSpellEntity extends SpellEntity {
         super(world, owner, velocityX, velocityY, velocityZ, maxDistance);
     }
 
-    protected FrostSpellEntity(EntityType<? extends SpellEntity> entityType, World world) {
+    public FrostSpellEntity(EntityType<? extends SpellEntity> entityType, World world) {
         super(entityType, world);
     }
 

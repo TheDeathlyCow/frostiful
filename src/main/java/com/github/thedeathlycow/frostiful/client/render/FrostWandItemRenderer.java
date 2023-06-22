@@ -1,26 +1,22 @@
 package com.github.thedeathlycow.frostiful.client.render;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.model.FrostWandItemModel;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.option.AoMode;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.block.BlockModelRenderer;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.entity.model.TridentEntityModel;
 import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformation;
+import net.minecraft.client.render.model.json.ModelTransformationMode;
 import net.minecraft.client.util.ModelIdentifier;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemStack;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -50,10 +46,10 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
      * @param overlay         the overlay UV passed to {@link VertexConsumer#overlay(int)}
      */
     @Override
-    public void render(ItemStack stack, ModelTransformation.Mode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        boolean renderAsItem = mode == ModelTransformation.Mode.GUI
-                || mode == ModelTransformation.Mode.GROUND
-                || mode == ModelTransformation.Mode.FIXED;
+    public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
+        boolean renderAsItem = mode == ModelTransformationMode.GUI
+                || mode == ModelTransformationMode.GROUND
+                || mode == ModelTransformationMode.FIXED;
 
         if (renderAsItem) {
             matrices.pop();

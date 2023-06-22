@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.world.spawner;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.world.spawner.ChillagerPatrolSpawner;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;

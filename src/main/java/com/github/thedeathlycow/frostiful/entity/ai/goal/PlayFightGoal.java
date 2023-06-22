@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.entity.ai.goal;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
@@ -90,8 +89,8 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
             this.target.swingHand(Hand.MAIN_HAND);
 
             if (this.timer == this.getTickCount(MAX_FIGHT_TIME)) {
-                this.mob.damage(DamageSource.GENERIC, 0.0f);
-                this.target.damage(DamageSource.GENERIC, 0.0f);
+                this.mob.damage(this.mob.getDamageSources().generic(), 0.0f);
+                this.target.damage(this.target.getDamageSources().generic(), 0.0f);
             }
 
             this.dropFur();

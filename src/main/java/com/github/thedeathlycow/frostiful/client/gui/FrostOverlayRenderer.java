@@ -1,14 +1,15 @@
 package com.github.thedeathlycow.frostiful.client.gui;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
 
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 @Environment(EnvType.CLIENT)
 public final class FrostOverlayRenderer {
@@ -23,8 +24,9 @@ public final class FrostOverlayRenderer {
      * @param renderCallback A callback that renders the frost overlay texture
      */
     public static void renderFrostOverlay(
+            MatrixStack matrices,
             ClientPlayerEntity player,
-            Consumer<Float> renderCallback
+            BiConsumer<MatrixStack, Float> renderCallback
     ) {
         float freezeScale = player.thermoo$getTemperatureScale();
         if (freezeScale > 0) {
@@ -50,7 +52,7 @@ public final class FrostOverlayRenderer {
             float opacity = renderThreshold >= 1.0f
                     ? 0.0f
                     : (freezeScale - renderThreshold) / (1.0f - renderThreshold);
-            renderCallback.accept(opacity);
+            renderCallback.accept(matrices, opacity);
         }
     }
 }

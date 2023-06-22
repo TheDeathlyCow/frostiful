@@ -1,13 +1,14 @@
 package com.github.thedeathlycow.frostiful.entity.effect;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.Items;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.Potions;
 import net.minecraft.recipe.BrewingRecipeRegistry;
-import net.minecraft.util.registry.Registry;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
 
 public class FPotions {
 
@@ -30,7 +31,7 @@ public class FPotions {
     }
 
     private static void register(String name, Potion potion) {
-        Registry.register(Registry.POTION, Frostiful.id(name), potion);
+        Registry.register(Registries.POTION, Frostiful.id(name), potion);
     }
 
 }

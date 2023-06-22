@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.item.tool;
 
-import com.github.thedeathlycow.frostiful.item.FItems;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.item.ToolMaterial;
 import net.minecraft.recipe.Ingredient;
 

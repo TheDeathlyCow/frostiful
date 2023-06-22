@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
+import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;

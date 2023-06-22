@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
-import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
+import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;

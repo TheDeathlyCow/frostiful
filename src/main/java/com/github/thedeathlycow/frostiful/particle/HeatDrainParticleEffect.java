@@ -5,9 +5,9 @@ import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
+import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.registry.Registry;
 
 import java.util.Locale;
 
@@ -35,7 +35,7 @@ public class HeatDrainParticleEffect implements ParticleEffect {
 
     @Override
     public String asString() {
-        Identifier id = Registry.PARTICLE_TYPE.getId(this.getType());
+        Identifier id = Registries.PARTICLE_TYPE.getId(this.getType());
         assert id != null;
         return String.format(Locale.ROOT, "%s %.2f %.2f %.2f", id, destination.x, destination.y, destination.z);
     }

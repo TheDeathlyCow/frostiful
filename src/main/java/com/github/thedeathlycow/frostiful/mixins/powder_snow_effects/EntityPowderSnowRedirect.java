@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.powder_snow_effects;
 
-import com.github.thedeathlycow.frostiful.init.Frostiful;
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.entity.Entity;

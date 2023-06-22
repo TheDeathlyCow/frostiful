@@ -13,6 +13,7 @@
   "item.frostiful.fur_padded_chainmail_chestplate": "Fur Padded Chainmail Chestplate",
   "item.frostiful.fur_padded_chainmail_leggings": "Fur Padded Chainmail Leggings",
   "item.frostiful.fur_padded_chainmail_boots": "Fur Padded Chainmail Boots",
+  "item.frostiful.fur_padding": "Fur Padding",
   "item.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
   "item.frostiful.polar_bear_fur_tuft": "Tuft of Polar Bear Fur",
   "item.frostiful.wolf_fur_tuft": "Tuft of Wolf Fur",
@@ -37,7 +38,12 @@
   "item.minecraft.tipped_arrow.effect.frostiful.freezing_long": "Arrow of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing_strong": "Arrow of Freezing",
 
-
+  "item.frostiful.smithing_template.fur_upgrade.applies_to": "Chainmail Armor",
+  "item.frostiful.smithing_template.fur_upgrade.ingredients": "Fur Padding",
+  "item.frostiful.smithing_template.fur_upgrade.base_slot_description": "Place a piece of Chainmail armor here",
+  "item.frostiful.smithing_template.fur_upgrade.additions_slot_description": "Put some Fur Padding here",
+  "upgrade.frostiful.fur_upgrade": "Fur Padded Chainmail Upgrade",
+  
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
@@ -189,6 +195,7 @@
   "text.autoconfig.frostiful.option.combatConfig.frostologerMaxPassiveFreezing": "Frostologer max passive freezing percent (0-1)",
   "text.autoconfig.frostiful.option.combatConfig.biterFrostBiteMaxAmplifier": "Max Frost Bite Max Amplifier (inclusive)",
   "text.autoconfig.frostiful.option.combatConfig.chillagerFireDamageMultiplier": "Chillager fire damage multiplier",
+  "text.autoconfig.frostiful.option.combatConfig.furUpgradeTemplateGenerateChance": "Fur upgrade generate chance (0-1)",
   
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
