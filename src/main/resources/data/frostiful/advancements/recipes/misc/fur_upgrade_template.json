@@ -1,0 +1,35 @@
+{
+	"parent": "minecraft:recipes/root",
+	"criteria": {
+		"has_fur_upgrade_template": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"items": [
+							"frostiful:fur_upgrade_template"
+						]
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "frostiful:shaped/fur_upgrade_template"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_fur_upgrade_template",
+			"has_the_recipe"
+		]
+	],
+	"rewards": {
+		"recipes": [
+			"frostiful:shaped/fur_upgrade_template"
+		]
+	},
+	"sends_telemetry_event": false
+}

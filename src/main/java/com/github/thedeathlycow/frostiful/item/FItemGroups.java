@@ -25,6 +25,7 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
                 entries.add(new ItemStack(FItems.WOLF_FUR_TUFT));
                 entries.add(new ItemStack(FItems.OCELOT_FUR_TUFT));
+                entries.add(new ItemStack(FItems.FUR_PADDING));
 
                 entries.add(new ItemStack(FItems.COLD_SUN_LICHEN));
                 entries.add(new ItemStack(FItems.COOL_SUN_LICHEN));
@@ -52,6 +53,8 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
                 entries.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
                 entries.add(new ItemStack(FItems.BITER_SPAWN_EGG));
+
+                entries.add(new ItemStack(FItems.FUR_UPGRADE_TEMPLATE));
                 entries.add(new ItemStack(FItems.ICICLE));
                 entries.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
                 entries.add(new ItemStack(FItems.FROZEN_TORCH));
