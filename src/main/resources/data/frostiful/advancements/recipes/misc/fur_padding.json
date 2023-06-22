@@ -1,0 +1,56 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"frostiful:shapless/fur_padding_from_ocelot_fur",
+			"frostiful:shapless/fur_padding_from_wolf_fur",
+			"frostiful:shapless/fur_padding_from_rabbit_hide",
+			"frostiful:shapless/fur_padding_from_polar_bear_fur"
+		]
+	},
+	"criteria": {
+		"has_fur": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"tag": "frostiful:fur_tufts"
+					}
+				]
+			}
+		},
+		"has_the_recipe_polar_bear": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "frostiful:shaped/fur_padding_from_polar_bear_fur"
+			}
+		},
+		"has_the_recipe_wolf": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "frostiful:shaped/fur_padding_from_wolf_fur"
+			}
+		},
+		"has_the_recipe_ocelot": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "frostiful:shaped/fur_padding_from_ocelot_fur"
+			}
+		},
+		"has_the_recipe_rabbit": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "frostiful:shaped/fur_padding_from_rabbit_hide"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_fur",
+			"has_the_recipe_polar_bear",
+			"has_the_recipe_wolf",
+			"has_the_recipe_ocelot",
+			"has_the_recipe_rabbit"
+		]
+	]
+}

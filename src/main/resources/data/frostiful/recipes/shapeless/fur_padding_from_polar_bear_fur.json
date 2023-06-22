@@ -1,0 +1,12 @@
+{
+	"type": "minecraft:crafting_shapeless",
+	"group": "frostiful:fur_padding",
+	"ingredients": [
+		{
+			"item": "frostiful:polar_bear_fur_tuft"
+		}
+	],
+	"result": {
+		"item": "frostiful:fur_padding"
+	}
+}
