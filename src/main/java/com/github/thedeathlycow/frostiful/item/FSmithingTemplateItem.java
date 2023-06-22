@@ -29,6 +29,7 @@ public class FSmithingTemplateItem {
         FrostifulConfig config = Frostiful.getConfig();
         float chance = config.combatConfig.getFurUpgradeTemplateGenerateChance();
         addTemplateToLoot(FItems.FUR_UPGRADE_TEMPLATE, new Identifier("chests/igloo_chest"), chance);
+
     }
 
     public static void addTemplateToLoot(Item template, Identifier lootTableId, float chance) {
