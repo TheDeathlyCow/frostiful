@@ -6,12 +6,14 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 
 public class FItemGroups {
 
 
     public static final ItemGroup FROSTIFUL = FabricItemGroup.builder()
             .icon(() -> new ItemStack(FItems.FROST_WAND))
+            .displayName(Text.translatable("itemGroup.frostiful.frostiful"))
             .entries((context, entries) -> {
                 entries.add(new ItemStack(FItems.FROST_WAND));
                 entries.add(new ItemStack(FItems.FUR_HELMET));
