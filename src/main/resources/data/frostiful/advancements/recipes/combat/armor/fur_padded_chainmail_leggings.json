@@ -2,8 +2,6 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "frostiful:smithing/fur_padded_chainmail_leggings",
-            "frostiful:smithing/fur_padded_chainmail_leggings_reversed",
             "frostiful:smithing/fur_padded_chainmail_leggings_upgrade"
         ]
     },

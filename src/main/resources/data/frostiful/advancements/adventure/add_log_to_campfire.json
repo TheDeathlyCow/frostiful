@@ -1,32 +1,29 @@
 {
-  "display": {
-    "icon": {
-      "item": "minecraft:campfire"
-    },
-    "title": {
-      "translate": "advancements.frostiful.add_log_to_fire.title"
-    },
-    "description": {
-      "translate": "advancements.frostiful.add_log_to_fire.desc"
-    }
-  },
-  "parent": "minecraft:adventure/sleep_in_bed",
-  "criteria": {
-    "requirement": {
-      "trigger": "minecraft:item_used_on_block",
-      "conditions": {
-        "item": {
-          "tag": "minecraft:logs_that_burn"
-        },
-        "location": {
-          "block": {
-            "tag": "minecraft:campfires"
-          }
-        }
-      }
-    }
-  },
-  "rewards": {
-    "experience": 25
-  }
+	"display": {
+		"icon": {
+			"item": "minecraft:campfire"
+		},
+		"title": {
+			"translate": "advancements.frostiful.add_log_to_fire.title"
+		},
+		"description": {
+			"translate": "advancements.frostiful.add_log_to_fire.desc"
+		}
+	},
+	"parent": "minecraft:adventure/sleep_in_bed",
+	"criteria": {
+		"requirement": {
+			"trigger": "minecraft:effects_changed",
+			"conditions": {
+				"effects": {
+					"frostiful:warmth": {
+						"ambient": true
+					}
+				}
+			}
+		}
+	},
+	"rewards": {
+		"experience": 25
+	}
 }
