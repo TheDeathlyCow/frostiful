@@ -51,7 +51,8 @@ public class WindEntity extends Entity {
 
     @Override
     public void baseTick() {
-        Profiler profiler = this.world.getProfiler();
+        World world = getWorld();
+        Profiler profiler = world.getProfiler();
         profiler.push("entityBaseTick");
 
         this.attemptTickInVoid();
@@ -72,7 +73,8 @@ public class WindEntity extends Entity {
             return;
         }
 
-        var profiler = this.world.getProfiler();
+        World world = getWorld();
+        var profiler = world.getProfiler();
         profiler.push("windTick");
 
         if (this.isOnFire()) {
@@ -95,7 +97,7 @@ public class WindEntity extends Entity {
         }
 
 
-        if (!this.world.isClient) {
+        if (!world.isClient) {
             if (this.age % 30 == 0) {
                 this.playSound(FSoundEvents.ENTITY_WIND_BLOW, 0.75f, 0.9f + this.random.nextFloat() / 3);
             }
@@ -114,7 +116,7 @@ public class WindEntity extends Entity {
             ParticleEffect dust = this.getDustParticle();
 
             for (int i = 0; i < 2; ++i) {
-                this.world.addParticle(
+                world.addParticle(
                         particle,
                         this.getParticleX(0.5),
                         this.getRandomBodyY(),
@@ -122,7 +124,7 @@ public class WindEntity extends Entity {
                         -0.5, 0.0, 0.0
                 );
 
-                this.world.addParticle(
+                world.addParticle(
                         dust,
                         this.getParticleX(1.0),
                         this.getRandomBodyY(),
@@ -166,13 +168,14 @@ public class WindEntity extends Entity {
 
     protected void dissipate() {
         this.playSound(FSoundEvents.ENTITY_WIND_WOOSH, 1.0f, 1.0f);
-        if (this.world.isClient) {
+        World world = getWorld();
+        if (world.isClient) {
             ParticleEffect particle = this.getDustParticle();
             for (int i = 0; i < 20; ++i) {
                 double vx = this.random.nextGaussian() * 0.02;
                 double vy = this.random.nextGaussian() * 0.02;
                 double vz = this.random.nextGaussian() * 0.02;
-                this.world.addParticle(
+                world.addParticle(
                         particle,
                         this.getParticleX(1.0), this.getRandomBodyY(), this.getParticleZ(1.0),
                         vx, vy, vz
@@ -191,8 +194,8 @@ public class WindEntity extends Entity {
         Vec3d push = entity.isFallFlying() ? ELYTRA_PUSH : REGULAR_PUSH;
         entity.addVelocity(push.x, push.y, push.z);
         entity.velocityModified = true;
-
-        if (!this.world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {
+        World world = getWorld();
+        if (!world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {
             var pos = this.getPos();
             serverPlayer.networkHandler
                     .sendPacket(new PlaySoundS2CPacket(
@@ -200,7 +203,7 @@ public class WindEntity extends Entity {
                             SoundCategory.WEATHER,
                             pos.x, pos.y, pos.z,
                             1.0f, 1.0f,
-                            this.world.getRandom().nextLong()
+                            world.getRandom().nextLong()
                     ));
         }
     }
@@ -214,7 +217,7 @@ public class WindEntity extends Entity {
     }
 
     private void checkCollidingEntities() {
-        this.world.getEntitiesByClass(
+        this.getWorld().getEntitiesByClass(
                         LivingEntity.class,
                         this.getBoundingBox(),
                         CAN_BE_BLOWN

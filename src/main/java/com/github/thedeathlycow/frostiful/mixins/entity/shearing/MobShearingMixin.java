@@ -42,7 +42,7 @@ public abstract class MobShearingMixin extends LivingEntity {
             if (shearable.frostiful$isShearable()) {
                 shearable.frostiful$shear(player, SoundCategory.PLAYERS);
                 this.emitGameEvent(GameEvent.SHEAR, player);
-                if (!this.world.isClient) {
+                if (!this.getWorld().isClient) {
                     heldItem.damage(1, player, (callback) -> {
                         callback.sendToolBreakStatus(hand);
                     });

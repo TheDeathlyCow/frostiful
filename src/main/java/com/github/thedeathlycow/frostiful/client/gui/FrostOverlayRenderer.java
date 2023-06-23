@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.EquipmentSlot;
@@ -24,9 +25,9 @@ public final class FrostOverlayRenderer {
      * @param renderCallback A callback that renders the frost overlay texture
      */
     public static void renderFrostOverlay(
-            MatrixStack matrices,
+            DrawContext context,
             ClientPlayerEntity player,
-            BiConsumer<MatrixStack, Float> renderCallback
+            BiConsumer<DrawContext, Float> renderCallback
     ) {
         float freezeScale = player.thermoo$getTemperatureScale();
         if (freezeScale > 0) {
@@ -52,7 +53,7 @@ public final class FrostOverlayRenderer {
             float opacity = renderThreshold >= 1.0f
                     ? 0.0f
                     : (freezeScale - renderThreshold) / (1.0f - renderThreshold);
-            renderCallback.accept(matrices, opacity);
+            renderCallback.accept(context, opacity);
         }
     }
 }

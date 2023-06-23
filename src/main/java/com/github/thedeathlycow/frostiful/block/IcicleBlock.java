@@ -258,13 +258,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
-    }
-
-    @Override
     public DamageSource getDamageSource(Entity attacker) {
-        return FDamageSources.getDamageSources(attacker.world).frostiful$fallingIcicle(attacker);
+        return FDamageSources.getDamageSources(attacker.getWorld()).frostiful$fallingIcicle(attacker);
     }
 
     @Override

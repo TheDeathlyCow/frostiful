@@ -44,7 +44,8 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             at = @At("TAIL")
     )
     private void dripParticles(CallbackInfo ci) {
-        if (this.world.isClient) { // only show particles on client to save bandwidth
+        World world = this.getWorld();
+        if (world.isClient) { // only show particles on client to save bandwidth
 
             // spectators should not drip
             if (this.isSpectator()) {
@@ -72,7 +73,6 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             // Spawn drip with probability proportional to wetness scale
             if (SLOW_DRIP_MULTIPLIER * random.nextFloat() < this.thermoo$getSoakedScale()) {
 
-                World world = this.getWorld();
                 Box boundingBox = this.getBoundingBox();
 
                 // pick random pos in player bounding box

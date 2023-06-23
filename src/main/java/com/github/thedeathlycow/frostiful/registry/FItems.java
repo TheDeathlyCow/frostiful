@@ -33,7 +33,7 @@ public class FItems {
             new FabricItemSettings()
     );
 
-    public static final Item FUR_PADDING = new Item(new FabricItemSettings().requires(FeatureFlags.UPDATE_1_20));
+    public static final Item FUR_PADDING = new Item(new FabricItemSettings());
 
     public static final Item FUR_UPGRADE_TEMPLATE = FurSmithingUpgradeTemplate.createItem();
 

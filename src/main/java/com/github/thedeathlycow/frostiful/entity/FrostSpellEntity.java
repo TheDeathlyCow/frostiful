@@ -32,19 +32,20 @@ public class FrostSpellEntity extends SpellEntity {
 
     @Override
     protected void applyEffectCloud() {
-        if (this.isRemoved() || this.world.isClient) {
+        World world = getWorld();
+        if (this.isRemoved() || world.isClient) {
             return;
         }
 
         Box box = this.getBoundingBox().expand(EFFECT_CLOUD_SIZE, EFFECT_CLOUD_SIZE, EFFECT_CLOUD_SIZE);
-        List<LivingEntity> targets = this.world.getNonSpectatingEntities(LivingEntity.class, box);
+        List<LivingEntity> targets = world.getNonSpectatingEntities(LivingEntity.class, box);
         for (var target : targets) {
             Entity owner = this.getOwner();
             if (owner == null || !target.getUuid().equals(owner.getUuid())) {
                 this.applySingleTargetEffect(target);
             }
         }
-        this.world.playSound(
+        world.playSound(
                 null,
                 this.getX(), this.getY(), this.getZ(),
                 SoundEvents.ENTITY_GENERIC_EXPLODE,
@@ -52,7 +53,7 @@ public class FrostSpellEntity extends SpellEntity {
                 2.0f, 1.0f
         );
 
-        ServerWorld serverWorld = (ServerWorld) this.world;
+        ServerWorld serverWorld = (ServerWorld) world;
 
         serverWorld.spawnParticles(
                 ParticleTypes.EXPLOSION,
@@ -67,9 +68,10 @@ public class FrostSpellEntity extends SpellEntity {
 
     @Override
     protected void applySingleTargetEffect(Entity target) {
-        if (!target.world.isClient && target instanceof RootedEntity rootedEntity) {
+        World world = target.getWorld();
+        if (!world.isClient && target instanceof RootedEntity rootedEntity) {
             if (rootedEntity.frostiful$root(this.getOwner())) {
-                target.world.playSound(
+                world.playSound(
                         null,
                         target.getX(), target.getY(), target.getZ(),
                         FSoundEvents.ENTITY_FROST_SPELL_FREEZE, SoundCategory.AMBIENT,

@@ -116,7 +116,7 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
     @Nullable
     private T findTarget() {
 
-        World world = this.mob.world;
+        World world = this.mob.getWorld();
         List<? extends T> candidates = world.getTargets(this.type, VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().expand(8.0));
         double closestEntityDistance = Double.POSITIVE_INFINITY;
 

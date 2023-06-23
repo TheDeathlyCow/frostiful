@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
@@ -23,7 +24,7 @@ public abstract class RootedEffectOverlay {
     private MinecraftClient client;
 
     @Shadow
-    protected abstract void renderOverlay(MatrixStack matrices, Identifier texture, float opacity);
+    protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
 
     private static final Identifier ROOTED_OVERLAY = new Identifier("textures/block/ice.png");
 
@@ -42,14 +43,14 @@ public abstract class RootedEffectOverlay {
                     )
             )
     )
-    private void renderRootedOverlay(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+    private void renderRootedOverlay(DrawContext context, float tickDelta, CallbackInfo ci) {
         assert this.client.player != null;
         final RootedEntity entity = (RootedEntity) this.client.player;
 
         if (entity.frostiful$isRooted()) {
             FrostifulConfig config = Frostiful.getConfig();
             float opacity = ((float)entity.frostiful$getRootedTicks()) / config.combatConfig.getFrostWandRootTime();
-            this.renderOverlay(matrices, ROOTED_OVERLAY, opacity);
+            this.renderOverlay(context, ROOTED_OVERLAY, opacity);
         }
     }
 }

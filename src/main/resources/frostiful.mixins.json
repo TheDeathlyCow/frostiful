@@ -11,7 +11,7 @@
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
-		"compat.healthoverlay.present.FreezingHearts",
+		"compat.colorfulhearts.present.FreezingHearts",
 		"entity.DamageSourcesMixin",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
@@ -45,9 +45,9 @@
 		"client.entity_renderer.ShakingRendererMixin",
 		"client.gui.FrostVinetteOverlay",
 		"client.gui.RootedEffectOverlay",
-		"compat.healthoverlay.absent.ColdHeartOverlay",
-		"compat.healthoverlay.absent.FreezingHearts",
-		"compat.healthoverlay.present.ColdHeartOverlay"
+		"compat.colorfulhearts.absent.ColdHeartOverlay",
+		"compat.colorfulhearts.absent.FreezingHearts",
+		"compat.colorfulhearts.present.ColdHeartOverlay"
 	],
 	"injectors": {
 		"defaultRequire": 1

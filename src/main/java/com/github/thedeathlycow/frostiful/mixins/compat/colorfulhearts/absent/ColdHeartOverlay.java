@@ -1,9 +1,8 @@
-package com.github.thedeathlycow.frostiful.mixins.compat.healthoverlay.absent;
+package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.absent;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -16,6 +15,10 @@ abstract class ColdHeartOverlay {
 
     private final int[] heartYPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
     private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
+
+    private static final FrozenHeartsOverlay.Drawer frostiful$drawer = (ctx, texture, xPos, yPos, u) -> {
+        ctx.drawTexture(texture, xPos, yPos, u, 0, 9, 10, 18, 10);
+    };
 
     @Inject(
             method = "renderHealthBar",
@@ -71,7 +74,13 @@ abstract class ColdHeartOverlay {
             boolean blinking,
             CallbackInfo ci
     ) {
-        FrozenHeartsOverlay.drawHeartOverlayBar(context.getMatrices(), player, heartXPositions, heartYPositions);
+        FrozenHeartsOverlay.drawHeartOverlayBar(
+                frostiful$drawer,
+                context,
+                player,
+                heartXPositions,
+                heartYPositions
+        );
     }
 
 }

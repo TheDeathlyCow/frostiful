@@ -1,18 +1,24 @@
-package com.github.thedeathlycow.frostiful.mixins.compat.healthoverlay.present;
+package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.present;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
+import terrails.colorfulhearts.CColorfulHearts;
 import terrails.colorfulhearts.heart.Heart;
 import terrails.colorfulhearts.heart.HeartType;
 import terrails.colorfulhearts.render.HeartRenderer;
+import terrails.colorfulhearts.render.RenderUtils;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = HeartRenderer.class, remap = false)
@@ -32,7 +38,19 @@ public abstract class ColdHeartOverlay {
             boolean renderHighlight,
             CallbackInfo ci
     ) {
-        FrozenHeartsOverlay.drawHeartOverlayBar(poseStack, player, heartXPositions, heartYPositions);
+        int oldShaderTexture = RenderSystem.getShaderTexture(0);
+        RenderSystem.setShaderTexture(0, FrozenHeartsOverlay.HEART_OVERLAY_TEXTURE);
+        FrozenHeartsOverlay.drawHeartOverlayBar(
+                (ctx, texture, xPos, yPos, u) -> {
+                    RenderUtils.drawTexture(poseStack, xPos, yPos, u, 0);
+                },
+                null,
+                player,
+                heartXPositions,
+                heartYPositions
+        );
+        RenderSystem.setShaderTexture(0, oldShaderTexture);
+
     }
 
     @Inject(method = "renderPlayerHearts",

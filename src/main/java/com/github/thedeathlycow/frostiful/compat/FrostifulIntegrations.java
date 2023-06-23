@@ -4,7 +4,7 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public class FrostifulIntegrations {
 
-    public static final String HEALTH_OVERLAY_ID = "healthoverlay";
+    public static final String COLORFUL_HEARTS_ID = "colorfulhearts";
 
     public static final String TRINKETS_ID = "trinkets";
 

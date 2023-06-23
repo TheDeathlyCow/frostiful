@@ -42,7 +42,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
             ParticleEffect particleEffect = this.getParticleEffect();
             for(int i = 0; i < 8; i++) {
-                this.world.addParticle(
+                this.getWorld().addParticle(
                         particleEffect,
                         this.getX(), this.getY(), this.getZ(),
                         0.0, 0.0, 0.0
@@ -73,8 +73,9 @@ public class PackedSnowballEntity extends ThrownItemEntity {
 
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (!this.world.isClient) {
-            this.world.sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
+        World world = getWorld();
+        if (!world.isClient) {
+            world.sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
             this.discard();
         }
     }
