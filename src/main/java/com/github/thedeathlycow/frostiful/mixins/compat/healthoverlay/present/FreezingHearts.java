@@ -5,7 +5,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
-import terrails.healthoverlay.heart.HeartType;
+import terrails.colorfulhearts.heart.HeartType;
 
 @Mixin(HeartType.class)
 public class FreezingHearts {

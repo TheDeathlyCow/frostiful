@@ -10,10 +10,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
-import terrails.healthoverlay.heart.Heart;
-import terrails.healthoverlay.heart.HeartType;
-import terrails.healthoverlay.render.HeartRenderer;
-import terrails.healthoverlay.utilities.Vec2i;
+import terrails.colorfulhearts.heart.Heart;
+import terrails.colorfulhearts.heart.HeartType;
+import terrails.colorfulhearts.render.HeartRenderer;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = HeartRenderer.class, remap = false)
@@ -22,30 +21,52 @@ public abstract class ColdHeartOverlay {
     private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
 
     @Inject(method = "renderPlayerHearts", at = @At("TAIL"))
-    private void drawColdHeartOverlayBar(MatrixStack poseStack, PlayerEntity player, CallbackInfo ci) {
+    private void drawColdHeartOverlayBar(
+            MatrixStack poseStack,
+            PlayerEntity player,
+            int x, int y,
+            int maxHealth,
+            int currentHealth,
+            int displayHealth,
+            int absorption,
+            boolean renderHighlight,
+            CallbackInfo ci
+    ) {
         FrozenHeartsOverlay.drawHeartOverlayBar(poseStack, player, heartXPositions, heartYPositions);
     }
 
     @Inject(method = "renderPlayerHearts",
             at = @At(
                     value = "INVOKE",
-                    target = "Lterrails/healthoverlay/heart/Heart;draw(Lnet/minecraft/client/util/math/MatrixStack;IIZLterrails/healthoverlay/heart/HeartType;)V",
+                    target = "Lterrails/colorfulhearts/heart/Heart;draw(Lnet/minecraft/client/util/math/MatrixStack;IIZZLterrails/colorfulhearts/heart/HeartType;)V",
                     remap = true,
                     shift = At.Shift.AFTER
             ),
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
-    private void injectionTest(
-            MatrixStack poseStack, PlayerEntity player, CallbackInfo ci,
-            int currentHealth, long tickCount, boolean blinking,
-            long currentTime, int maxHealth, int absorption,
-            int regenerationIndex, Vec2i healthCoords, Vec2i absorptionCoords,
-            int xPos, int yPos, HeartType heartType, int index, Heart heart,
-            int regenOffset, int yPosition, int xPosition
+    private void captureHeartPositions(
+            MatrixStack poseStack,
+            PlayerEntity player,
+            int x, int y,
+            int maxHealth,
+            int currentHealth,
+            int displayHealth,
+            int absorption,
+            boolean renderHighlight,
+            CallbackInfo ci,
+            int healthHearts,
+            int displayHealthHearts,
+            boolean absorptionSameRow,
+            int regenIndex,
+            HeartType heartType,
+            int index,
+            Heart heart,
+            int xPos, int yPos,
+            boolean highlightHeart
     ) {
         if (index < FrozenHeartsOverlay.MAX_COLD_HEARTS) {
-            heartXPositions[index] = xPosition;
-            heartYPositions[index] = yPosition;
+            heartXPositions[index] = xPos;
+            heartYPositions[index] = yPos;
         }
     }
 }
