@@ -8,6 +8,7 @@
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
 		"block.HotFloorMixin",
+		"entity.IceSkateMixin",
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
