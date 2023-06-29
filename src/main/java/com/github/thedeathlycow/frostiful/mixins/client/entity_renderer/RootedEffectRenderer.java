@@ -61,7 +61,7 @@ public class RootedEffectRenderer<T extends LivingEntity, M extends EntityModel<
         this.frostiful$blockRenderManager
                 .getModelRenderer()
                 .render(
-                        livingEntity.world,
+                        livingEntity.getWorld(),
                         this.frostiful$blockRenderManager.getModel(frostiful$BLOCK_STATE),
                         frostiful$BLOCK_STATE,
                         blockPos,

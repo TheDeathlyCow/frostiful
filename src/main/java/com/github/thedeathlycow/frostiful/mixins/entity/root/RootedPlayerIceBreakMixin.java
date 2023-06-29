@@ -32,7 +32,7 @@ public abstract class RootedPlayerIceBreakMixin extends LivingEntity implements 
             )
     )
     private void applyIceBreakDamage(Args args) {
-        if (this.frostiful$isRooted() && !this.world.isClient) {
+        if (this.frostiful$isRooted() && !this.getWorld().isClient) {
             final DamageSource source = args.get(0);
             final float amount = args.get(1);
 

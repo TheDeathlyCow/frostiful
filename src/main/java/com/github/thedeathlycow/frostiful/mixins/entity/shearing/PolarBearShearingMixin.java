@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.FShearable;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.damage.DamageSources;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
@@ -87,11 +86,12 @@ public abstract class PolarBearShearingMixin extends AnimalEntity implements FSh
     @Override
     @Unique
     public void frostiful$shear(PlayerEntity player, SoundCategory shearedSoundCategory) {
-        this.world.playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, shearedSoundCategory, 1.0F, 1.0F);
+        World world = getWorld();
+        world.playSoundFromEntity(null, this, SoundEvents.ENTITY_SHEEP_SHEAR, shearedSoundCategory, 1.0F, 1.0F);
         DamageSources damageSources = player.getWorld().getDamageSources();
         this.damage(damageSources.playerAttack(player), Frostiful.getConfig().combatConfig.getPolarBearShearingDamage());
 
-        if (!this.world.isClient) {
+        if (!world.isClient) {
             FLootHelper.dropLootFromEntity(this, FShearable.POLAR_BEAR_SHEARING_LOOT_TABLE);
         }
 

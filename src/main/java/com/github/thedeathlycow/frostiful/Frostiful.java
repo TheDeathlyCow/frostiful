@@ -5,13 +5,9 @@ import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
-import com.github.thedeathlycow.frostiful.item.FurSmithingUpgradeTemplate;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
-import com.github.thedeathlycow.frostiful.registry.FBlocks;
-import com.github.thedeathlycow.frostiful.registry.FEnchantments;
-import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
-import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.LivingEntityThermooEventListeners;
@@ -67,6 +63,7 @@ public class Frostiful implements ModInitializer {
         FEnchantments.registerEnchantments();
         FParticleTypes.registerParticleTypes();
         FPotions.register();
+        FItemGroups.registerAll();
 
         FFeatures.registerAll();
         FPlacedFeatures.placeFeatures();

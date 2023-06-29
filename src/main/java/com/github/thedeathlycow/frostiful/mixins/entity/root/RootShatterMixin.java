@@ -20,7 +20,7 @@ public class RootShatterMixin {
             method = "onDamage",
             at = @At("HEAD")
     )
-    private void breakIceIfRooted(DamageSource damageSource, float originalHealth, float damage, CallbackInfo ci) {
+    private void breakIceIfRooted(DamageSource damageSource, float damage, CallbackInfo ci) {
         RootedEntity.breakRootOnEntity(this.entity);
     }
 

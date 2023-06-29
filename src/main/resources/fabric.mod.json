@@ -39,10 +39,10 @@
 		"frostiful.mixins.json"
 	],
 	"depends": {
-		"fabricloader": ">=0.14.19",
-		"fabric": "*",
-		"minecraft": "1.19.4",
-		"thermoo": ">=1.5.2",
+		"fabricloader": ">=0.14.21",
+		"fabric-api": "*",
+		"minecraft": ">=1.20",
+		"thermoo": ">=1.6",
 		"mm": ">=2.3",
 		"java": ">=17"
 	},

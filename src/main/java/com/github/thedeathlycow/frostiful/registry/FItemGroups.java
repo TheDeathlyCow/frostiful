@@ -1,15 +1,19 @@
-package com.github.thedeathlycow.frostiful.item;
+package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.Registry;
+import net.minecraft.text.Text;
 
 public class FItemGroups {
 
-    public static final ItemGroup FROSTIFUL = FabricItemGroup.builder(Frostiful.id("frostiful"))
+
+    public static final ItemGroup FROSTIFUL = FabricItemGroup.builder()
             .icon(() -> new ItemStack(FItems.FROST_WAND))
+            .displayName(Text.translatable("itemGroup.frostiful.frostiful"))
             .entries((context, entries) -> {
                 entries.add(new ItemStack(FItems.FROST_WAND));
                 entries.add(new ItemStack(FItems.FUR_HELMET));
@@ -60,4 +64,10 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.FROZEN_TORCH));
             }).build();
 
+    public static void registerAll() {
+        Registry.register(Registries.ITEM_GROUP, Frostiful.id("main"), FROSTIFUL);
+    }
+
+    private FItemGroups() {
+    }
 }

@@ -27,7 +27,7 @@ public final class PlayerEventThermooListeners {
             return;
         }
 
-        World world = player.world;
+        World world = player.getWorld();
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
         final boolean doPassiveFreezing = config.doPassiveFreezing()
                 && world.getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);

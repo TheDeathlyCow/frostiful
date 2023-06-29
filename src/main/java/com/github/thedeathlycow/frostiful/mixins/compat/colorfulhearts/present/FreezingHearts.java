@@ -1,23 +1,23 @@
-package com.github.thedeathlycow.frostiful.mixins.compat.healthoverlay.absent;
+package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.present;
 
-import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import terrails.colorfulhearts.heart.HeartType;
 
-@Mixin(InGameHud.HeartType.class)
+@Mixin(HeartType.class)
 public class FreezingHearts {
 
     @Inject(
-            method = "fromPlayerState",
+            method = "forPlayer",
             at = @At("TAIL"),
             cancellable = true
     )
-    private static void setFreezingHeartsWhenFrozen(PlayerEntity player, CallbackInfoReturnable<InGameHud.HeartType> cir) {
+    private static void setFreezingHeartsWhenFrozen(PlayerEntity player, CallbackInfoReturnable<HeartType> cir) {
         if (player.thermoo$getTemperatureScale() <= -0.99) {
-            cir.setReturnValue(InGameHud.HeartType.FROZEN);
+            cir.setReturnValue(HeartType.FROZEN);
         }
     }
 

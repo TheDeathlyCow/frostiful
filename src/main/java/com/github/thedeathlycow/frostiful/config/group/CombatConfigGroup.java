@@ -45,7 +45,7 @@ public class CombatConfigGroup implements ConfigData {
     float chillagerFireDamageMultiplier = 1.5f;
 
     @ConfigEntry.Gui.RequiresRestart
-    float furUpgradeTemplateGenerateChance = 0.33f;
+    float furUpgradeTemplateGenerateChance = 0.5f;
 
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;

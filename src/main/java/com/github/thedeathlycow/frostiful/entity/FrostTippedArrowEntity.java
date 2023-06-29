@@ -41,8 +41,9 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
     public void tick() {
         super.tick();
 
-        if (this.world.isClient && !this.inGround) {
-            this.world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+        World world = getWorld();
+        if (world.isClient && !this.inGround) {
+            world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
         }
     }
 

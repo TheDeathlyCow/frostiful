@@ -58,7 +58,7 @@ public class RootCommand {
             msg = Text.translatable(key, targets.size(), duration);
         }
 
-        source.sendFeedback(msg, true);
+        source.sendFeedback(() -> msg, true);
 
         return sum;
     }

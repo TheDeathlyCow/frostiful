@@ -8,6 +8,8 @@ import com.github.thedeathlycow.frostiful.sound.FBlockSoundGroups;
 import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.block.dispenser.ProjectileDispenserBehavior;
+import net.minecraft.block.enums.Instrument;
+import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.item.ItemStack;
@@ -15,22 +17,84 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Position;
+import net.minecraft.world.BlockView;
 import net.minecraft.world.World;
 
 public class FBlocks {
 
-    public static final Block ICICLE = new IcicleBlock(FabricBlockSettings.of(Material.ICE, MapColor.CYAN).nonOpaque().sounds(BlockSoundGroup.GLASS).ticksRandomly().strength(0.5F).dynamicBounds().offset(AbstractBlock.OffsetType.XZ).requiresTool());
-    public static final Block COLD_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.COLD_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 0));
-    public static final Block COOL_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.COOL_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 2));
-    public static final Block WARM_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.WARM_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 4));
-    public static final Block HOT_SUN_LICHEN = new SunLichenBlock(SunLichenBlock.HOT_LEVEL, FabricBlockSettings.of(Material.REPLACEABLE_PLANT, MapColor.RED).noCollision().strength(0.2f).sounds(BlockSoundGroup.GLOW_LICHEN).ticksRandomly().nonOpaque().luminance((state) -> 6));
+    public static final Block ICICLE = new IcicleBlock(
+            FabricBlockSettings.create()
+                    .mapColor(MapColor.CYAN)
+                    .nonOpaque()
+                    .sounds(BlockSoundGroup.GLASS)
+                    .ticksRandomly()
+                    .strength(0.5F)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .dynamicBounds()
+                    .offset(AbstractBlock.OffsetType.XZ)
+                    .requiresTool()
+    );
+    public static final Block COLD_SUN_LICHEN = new SunLichenBlock(
+            SunLichenBlock.COLD_LEVEL,
+            FabricBlockSettings.create()
+                    .replaceable()
+                    .mapColor(MapColor.RED)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .noCollision()
+                    .strength(0.2f)
+                    .sounds(BlockSoundGroup.GLOW_LICHEN)
+                    .ticksRandomly()
+                    .nonOpaque()
+                    .luminance((state) -> 0)
+    );
+    public static final Block COOL_SUN_LICHEN = new SunLichenBlock(
+            SunLichenBlock.COOL_LEVEL,
+            FabricBlockSettings.create()
+                    .replaceable()
+                    .mapColor(MapColor.RED)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .noCollision()
+                    .strength(0.2f)
+                    .sounds(BlockSoundGroup.GLOW_LICHEN)
+                    .ticksRandomly()
+                    .nonOpaque()
+                    .luminance((state) -> 2)
+    );
+    public static final Block WARM_SUN_LICHEN = new SunLichenBlock(
+            SunLichenBlock.WARM_LEVEL,
+            FabricBlockSettings.create()
+                    .replaceable()
+                    .mapColor(MapColor.RED)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .noCollision()
+                    .strength(0.2f)
+                    .sounds(BlockSoundGroup.GLOW_LICHEN)
+                    .ticksRandomly()
+                    .nonOpaque()
+                    .luminance((state) -> 4)
+    );
+    public static final Block HOT_SUN_LICHEN = new SunLichenBlock(
+            SunLichenBlock.HOT_LEVEL,
+            FabricBlockSettings.create()
+                    .replaceable()
+                    .mapColor(MapColor.RED)
+                    .pistonBehavior(PistonBehavior.DESTROY)
+                    .noCollision()
+                    .strength(0.2f)
+                    .sounds(BlockSoundGroup.GLOW_LICHEN)
+                    .ticksRandomly()
+                    .nonOpaque()
+                    .luminance((state) -> 6)
+    );
 
     // Registered early due to way dropsLike works
     public static final Block FROZEN_TORCH = register("frozen_torch", new FrozenTorchBlock(
-            FabricBlockSettings.of(Material.DECORATION)
+            FabricBlockSettings.create()
                     .noCollision()
                     .breakInstantly()
+                    .pistonBehavior(PistonBehavior.DESTROY)
                     .sounds(BlockSoundGroup.WOOD)
     ));
 
@@ -41,24 +105,30 @@ public class FBlocks {
 
 
     public static final Block PACKED_SNOW = new PackedSnowBlock(
-            FabricBlockSettings.of(Material.SNOW_LAYER)
+            FabricBlockSettings.create()
+                    .mapColor(MapColor.WHITE)
+                    .replaceable()
+                    .notSolid()
                     .strength(1.2f, 3.0f)
                     .requiresTool()
                     .sounds(FBlockSoundGroups.PACKED_SNOW)
                     .blockVision((state, world, pos) -> {
                         return state.get(PackedSnowBlock.LAYERS) >= PackedSnowBlock.MAX_LAYERS;
                     })
+                    .pistonBehavior(PistonBehavior.DESTROY)
     );
 
     public static final Block PACKED_SNOW_BLOCK = new Block(
-            FabricBlockSettings.of(Material.SNOW_BLOCK)
+            FabricBlockSettings.create()
+                    .mapColor(MapColor.WHITE_GRAY)
                     .requiresTool()
                     .strength(1.5f, 6.0f)
                     .sounds(FBlockSoundGroups.PACKED_SNOW)
     );
 
     public static final Block PACKED_SNOW_BRICKS = new Block(
-            FabricBlockSettings.of(Material.SNOW_BLOCK)
+            FabricBlockSettings.create()
+                    .mapColor(MapColor.WHITE_GRAY)
                     .requiresTool()
                     .strength(1.5f, 6.0f)
                     .sounds(FBlockSoundGroups.PACKED_SNOW)
@@ -74,19 +144,24 @@ public class FBlocks {
     public static final Block PACKED_SNOW_BRICK_WALL = new WallBlock(FabricBlockSettings.copyOf(PACKED_SNOW_BRICKS));
 
     public static final Block ICE_PANE = new IcePaneBlock(
-            FabricBlockSettings.of(Material.ICE)
+            FabricBlockSettings.create()
+                    .mapColor(MapColor.PALE_PURPLE)
                     .strength(0.5f)
                     .ticksRandomly()
                     .slipperiness(0.98f)
                     .sounds(BlockSoundGroup.GLASS)
                     .nonOpaque()
+                    .solidBlock(FBlocks::never)
     );
 
-    public static final Block CUT_PACKED_ICE = new Block(FabricBlockSettings.of(Material.DENSE_ICE)
-            .slipperiness(0.98f)
-            .strength(0.75f)
-            .requiresTool()
-            .sounds(BlockSoundGroup.GLASS)
+    public static final Block CUT_PACKED_ICE = new Block(
+            FabricBlockSettings.create()
+                    .mapColor(MapColor.PALE_PURPLE)
+                    .instrument(Instrument.CHIME)
+                    .slipperiness(0.98f)
+                    .strength(0.75f)
+                    .requiresTool()
+                    .sounds(BlockSoundGroup.GLASS)
     );
 
     public static final Block CUT_PACKED_ICE_STAIRS = new StairsBlock(
@@ -98,7 +173,8 @@ public class FBlocks {
 
     public static final Block CUT_PACKED_ICE_WALL = new WallBlock(FabricBlockSettings.copyOf(CUT_PACKED_ICE));
 
-    public static final Block CUT_BLUE_ICE = new Block(FabricBlockSettings.of(Material.DENSE_ICE)
+    public static final Block CUT_BLUE_ICE = new Block(FabricBlockSettings.create()
+            .mapColor(MapColor.PALE_PURPLE)
             .slipperiness(0.989f)
             .strength(2.8f)
             .requiresTool()
@@ -159,5 +235,13 @@ public class FBlocks {
 
     private static Block register(String id, Block block) {
         return Registry.register(Registries.BLOCK, new Identifier(Frostiful.MODID, id), block);
+    }
+
+    /**
+     * A shortcut to always return {@code false} a context predicate, used as
+     * {@code settings.solidBlock(Blocks::never)}.
+     */
+    private static boolean never(BlockState state, BlockView world, BlockPos pos) {
+        return false;
     }
 }

@@ -107,7 +107,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     public boolean isInHeatedArea() {
-        return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.world, this.getBlockPos());
+        return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.getWorld(), this.getBlockPos());
     }
 
     public boolean isAtMaxPower() {
@@ -259,7 +259,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        if (this.world.isClient && this.isAtMaxPower()) {
+        if (this.getWorld().isClient && this.isAtMaxPower()) {
             this.spawnPowerParticles();
         }
 
@@ -291,25 +291,26 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.prevStrideDistance = this.strideDistance;
 
         float walkSpeed;
-        if (this.onGround && !this.isDead() && !this.isSwimming()) {
+        if (this.isOnGround() && !this.isDead() && !this.isSwimming()) {
             walkSpeed = Math.min(0.1F, (float) this.getVelocity().horizontalLength());
         } else {
             walkSpeed = 0.0F;
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        if (this.world.isClient) {
+        World world = this.getWorld();
+        if (world.isClient) {
             // dont place snow if client
             return;
         }
 
         // do not place snow/destroy heat sources unless mobGriefing is on
-        if (!this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+        if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
             return;
         }
 
 
-        ServerWorld serverWorld = (ServerWorld) this.world; // covered by isClient check above
+        ServerWorld serverWorld = (ServerWorld) world; // covered by isClient check above
 
         BlockPos frostologerPos = this.getBlockPos();
         BlockState snow = Blocks.SNOW.getDefaultState();
@@ -319,17 +320,17 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         stepPositionsPool[1] = frostologerPos.down();
         for (BlockPos blockPos : stepPositionsPool) {
 
-            BlockState blockState = this.world.getBlockState(blockPos);
+            BlockState blockState = world.getBlockState(blockPos);
             if (EnvironmentManager.INSTANCE.getController().isHeatSource(blockState)) {
                 this.destroyHeatSource(serverWorld, blockState, blockPos);
             }
 
             canPlaceSnow = blockState.isAir()
                     && this.thermoo$getTemperatureScale() <= START_PLACING_SNOW_TEMP
-                    && snow.canPlaceAt(this.world, blockPos);
+                    && snow.canPlaceAt(world, blockPos);
             if (canPlaceSnow) {
-                this.world.setBlockState(blockPos, snow);
-                this.world.emitGameEvent(
+                world.setBlockState(blockPos, snow);
+                world.emitGameEvent(
                         GameEvent.BLOCK_PLACE,
                         blockPos,
                         GameEvent.Emitter.of(this, blockState)
@@ -351,7 +352,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getYLength());
             double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getZLength());
 
-            world.addParticle(
+            getWorld().addParticle(
                     ParticleTypes.SNOWFLAKE,
                     x, y, z,
                     0, 0, 0
@@ -372,7 +373,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public void attack(LivingEntity target, float pullProgress) {
         if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
             this.getLookControl().lookAt(target);
-            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.world, this);
+            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.getWorld(), this);
         }
     }
 
@@ -598,6 +599,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
             @Nullable
             ServerWorld serverWorld = null;
+            World world = FrostologerEntity.this.getWorld();
             if (!world.isClient) {
                 serverWorld = (ServerWorld) world;
             }
@@ -625,14 +627,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         @Override
         protected void castSpell() {
 
-            if (!FrostologerEntity.this.world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+            World world = getWorld();
+            if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 return;
             }
 
             BlockPos origin = FrostologerEntity.this.getBlockPos();
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
             for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
-                BlockState state = FrostologerEntity.this.world.getBlockState(pos);
+                BlockState state = world.getBlockState(pos);
                 if (EnvironmentManager.INSTANCE.getController().isHeatSource(state) && world instanceof ServerWorld serverWorld) {
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
@@ -691,7 +694,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             } else if (!FrostologerEntity.this.isTargetRooted()) {
                 return false;
             } else {
-                int numNearbyMinions = FrostologerEntity.this.world.getTargets(
+                int numNearbyMinions = getWorld().getTargets(
                         BiterEntity.class,
                         this.closeMinionPredicate,
                         FrostologerEntity.this,
@@ -704,13 +707,13 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected void castSpell() {
-            ServerWorld serverWorld = (ServerWorld) FrostologerEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) getWorld();
 
             for (int i = 0; i < 3; ++i) {
                 BlockPos blockPos = FrostologerEntity.this.getBlockPos();
 
                 // use vex entity as placeholder for custom minions
-                BiterEntity minionEntity = FEntityTypes.BITER.create(FrostologerEntity.this.world);
+                BiterEntity minionEntity = FEntityTypes.BITER.create(serverWorld);
 
                 if (minionEntity == null) {
                     return;
@@ -720,7 +723,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
                 minionEntity.initialize(
                         serverWorld,
-                        FrostologerEntity.this.world.getLocalDifficulty(blockPos),
+                        serverWorld.getLocalDifficulty(blockPos),
                         SpawnReason.MOB_SUMMONED,
                         null, null
                 );
@@ -780,7 +783,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected void castSpell() {
-            ServerWorld serverWorld = (ServerWorld) FrostologerEntity.this.world;
+            ServerWorld serverWorld = (ServerWorld) getWorld();
 
             int numIcicles = this.numIciclesProvider.get(random);
             for (int i = 0; i < numIcicles; ++i) {
@@ -791,7 +794,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                                 -2 + FrostologerEntity.this.random.nextInt(5)
                         );
 
-                ThrownIcicleEntity icicle = FEntityTypes.THROWN_ICICLE.create(FrostologerEntity.this.world);
+                ThrownIcicleEntity icicle = FEntityTypes.THROWN_ICICLE.create(serverWorld);
 
                 if (icicle == null) {
                     return;

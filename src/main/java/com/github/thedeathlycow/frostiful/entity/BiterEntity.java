@@ -66,7 +66,7 @@ public class BiterEntity extends HostileEntity {
 
     public boolean tryAttack(Entity target) {
         this.attackTicks = ATTACK_TIME;
-        this.world.sendEntityStatus(this, EntityStatuses.PLAY_ATTACK_SOUND);
+        this.getWorld().sendEntityStatus(this, EntityStatuses.PLAY_ATTACK_SOUND);
         this.playAttackSound();
         if (target instanceof LivingEntity livingTarget && ((RootedEntity) livingTarget).frostiful$isRooted()) {
 

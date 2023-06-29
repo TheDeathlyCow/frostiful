@@ -2,8 +2,8 @@ package com.github.thedeathlycow.frostiful.mixins.client.gui;
 
 import com.github.thedeathlycow.frostiful.client.gui.FrostOverlayRenderer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -29,11 +29,11 @@ public abstract class FrostVinetteOverlay {
     private static Identifier POWDER_SNOW_OUTLINE;
 
     @Shadow
-    protected abstract void renderOverlay(MatrixStack matrices, Identifier texture, float opacity);
+    protected abstract void renderOverlay(DrawContext context, Identifier texture, float opacity);
 
     @Unique
-    private final BiConsumer<MatrixStack, Float> frostiful$renderOverlayCallback = (matrices, opacity) -> {
-        this.renderOverlay(matrices, POWDER_SNOW_OUTLINE, opacity);
+    private final BiConsumer<DrawContext, Float> frostiful$renderOverlayCallback = (context, opacity) -> {
+        this.renderOverlay(context, POWDER_SNOW_OUTLINE, opacity);
     };
 
     @ModifyArg(
@@ -46,7 +46,7 @@ public abstract class FrostVinetteOverlay {
             ),
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/hud/InGameHud;renderOverlay(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/util/Identifier;F)V",
+                    target = "Lnet/minecraft/client/gui/hud/InGameHud;renderOverlay(Lnet/minecraft/client/gui/DrawContext;Lnet/minecraft/util/Identifier;F)V",
                     ordinal = 0
             ),
             index = 2
@@ -70,9 +70,9 @@ public abstract class FrostVinetteOverlay {
                     )
             )
     )
-    private void renderPowderSnowOverlayAtThreshold(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
+    private void renderPowderSnowOverlayAtThreshold(DrawContext context, float tickDelta, CallbackInfo ci) {
         if (this.client.player != null) {
-            FrostOverlayRenderer.renderFrostOverlay(matrices, this.client.player, this.frostiful$renderOverlayCallback);
+            FrostOverlayRenderer.renderFrostOverlay(context, this.client.player, this.frostiful$renderOverlayCallback);
         }
     }
 }

@@ -83,7 +83,8 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             )
     )
     private void tickRoot(CallbackInfo ci) {
-        this.world.getProfiler().push("frostiful.rooted_tick");
+        World world = getWorld();
+        world.getProfiler().push("frostiful.rooted_tick");
 
         if (this.isSpectator()) {
             this.frostiful$setRootedTicks(0);
@@ -95,10 +96,10 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             int ticksLeft = this.frostiful$getRootedTicks();
             this.frostiful$setRootedTicks(--ticksLeft);
 
-            if (!this.world.isClient && this.isOnFire()) {
+            if (!world.isClient && this.isOnFire()) {
                 this.frostiful$breakRoot();
                 this.extinguish();
-                ServerWorld serverWorld = (ServerWorld) this.world;
+                ServerWorld serverWorld = (ServerWorld) world;
                 serverWorld.spawnParticles(
                         ParticleTypes.POOF,
                         this.getX(), this.getY(), this.getZ(),
@@ -109,7 +110,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                 this.playExtinguishSound();
             }
         }
-        this.world.getProfiler().pop();
+        world.getProfiler().pop();
     }
 
     @Inject(
@@ -142,7 +143,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             )
     )
     private void applyIceBreakDamage(Args args) {
-        if (this.frostiful$isRooted() && !this.world.isClient) {
+        if (this.frostiful$isRooted() && !this.getWorld().isClient) {
             final DamageSource source = args.get(0);
             final float amount = args.get(1);
 

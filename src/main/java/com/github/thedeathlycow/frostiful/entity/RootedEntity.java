@@ -18,6 +18,7 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 public interface RootedEntity {
@@ -63,10 +64,10 @@ public interface RootedEntity {
 
     static void breakRootOnEntity(LivingEntity victim) {
         RootedEntity rootedEntity = (RootedEntity) victim;
-
-        if (!victim.world.isClient && rootedEntity.frostiful$isRooted()) {
+        World world = victim.getWorld();
+        if (!world.isClient && rootedEntity.frostiful$isRooted()) {
             rootedEntity.frostiful$breakRoot();
-            playIceBreakEffects(victim, (ServerWorld) victim.world);
+            playIceBreakEffects(victim, (ServerWorld) world);
         }
     }
 
@@ -120,7 +121,7 @@ public interface RootedEntity {
                 1.0
         );
 
-        victim.world.playSound(
+        victim.getWorld().playSound(
                 null,
                 victim.getBlockPos(),
                 SoundEvents.BLOCK_GLASS_BREAK,

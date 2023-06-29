@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.Direction;
 
@@ -33,7 +32,7 @@ public class FItems {
             new FabricItemSettings()
     );
 
-    public static final Item FUR_PADDING = new Item(new FabricItemSettings().requires(FeatureFlags.UPDATE_1_20));
+    public static final Item FUR_PADDING = new Item(new FabricItemSettings());
 
     public static final Item FUR_UPGRADE_TEMPLATE = FurSmithingUpgradeTemplate.createItem();
 
@@ -155,9 +154,6 @@ public class FItems {
         register("cut_blue_ice_stairs", CUT_BLUE_ICE_STAIRS);
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
         register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
-
-        // force the class to be loaded
-        var loadTheClass = FItemGroups.FROSTIFUL;
     }
 
     private static void register(String id, Item item) {

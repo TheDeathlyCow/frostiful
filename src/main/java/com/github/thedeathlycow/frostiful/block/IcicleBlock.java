@@ -9,7 +9,6 @@ import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;
-import net.minecraft.block.piston.PistonBehavior;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.FallingBlockEntity;
 import net.minecraft.entity.LivingEntity;
@@ -258,13 +257,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public PistonBehavior getPistonBehavior(BlockState state) {
-        return PistonBehavior.DESTROY;
-    }
-
-    @Override
     public DamageSource getDamageSource(Entity attacker) {
-        return FDamageSources.getDamageSources(attacker.world).frostiful$fallingIcicle(attacker);
+        return FDamageSources.getDamageSources(attacker.getWorld()).frostiful$fallingIcicle(attacker);
     }
 
     @Override

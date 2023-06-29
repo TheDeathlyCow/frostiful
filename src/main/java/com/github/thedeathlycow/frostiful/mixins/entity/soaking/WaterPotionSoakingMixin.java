@@ -30,7 +30,7 @@ public abstract class WaterPotionSoakingMixin extends ThrownItemEntity {
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
     private void soakEntitiesWithWaterbottle(CallbackInfo ci, Box box) {
-        List<PlayerEntity> players = this.world.getNonSpectatingEntities(PlayerEntity.class, box);
+        List<PlayerEntity> players = getWorld().getNonSpectatingEntities(PlayerEntity.class, box);
         FrostifulConfig config = Frostiful.getConfig();
         float soakPercent = config.freezingConfig.getSoakPercentFromWaterPotion();
 
