@@ -48,7 +48,7 @@ public class FItems {
     );
     public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(
             FrostResistantArmorMaterials.FUR_LINED_CHAIN,
-            ArmorItem.Type.LEGGINGS ,
+            ArmorItem.Type.LEGGINGS,
             new FabricItemSettings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(
@@ -61,6 +61,13 @@ public class FItems {
             .equipmentSlot(FrostologyCloakItem::getPreferredEquipmentSlot)
             .maxCount(1)
             .maxDamage(432)
+    );
+
+    public static final Item ICE_SKATES = new ArmorItem(
+            FrostResistantArmorMaterials.FUR_ARMOR,
+            ArmorItem.Type.BOOTS,
+            new FabricItemSettings()
+                    .maxCount(1)
     );
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings());
@@ -119,6 +126,7 @@ public class FItems {
         register("fur_upgrade_template", FUR_UPGRADE_TEMPLATE);
 
         register("frostology_cloak", FROSTOLOGY_CLOAK);
+        register("ice_skates", ICE_SKATES);
 
         register("polar_bear_fur_tuft", POLAR_BEAR_FUR_TUFT);
         register("wolf_fur_tuft", WOLF_FUR_TUFT);
