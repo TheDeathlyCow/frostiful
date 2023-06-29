@@ -14,11 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 abstract class ColdHeartOverlay {
 
     private final int[] heartYPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
-    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
-
-    private static final FrozenHeartsOverlay.Drawer frostiful$drawer = (ctx, texture, xPos, yPos, u) -> {
-        ctx.drawTexture(texture, xPos, yPos, u, 0, 9, 10, 18, 10);
-    };
+    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];;
 
     @Inject(
             method = "renderHealthBar",
@@ -74,8 +70,7 @@ abstract class ColdHeartOverlay {
             boolean blinking,
             CallbackInfo ci
     ) {
-        FrozenHeartsOverlay.drawHeartOverlayBar(
-                frostiful$drawer,
+        FrozenHeartsOverlay.INSTANCE.drawHeartOverlayBar(
                 context,
                 player,
                 heartXPositions,

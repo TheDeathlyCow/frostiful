@@ -38,6 +38,7 @@
 		"world.spawner.PatrolSpawnerMixin"
 	],
 	"client": [
+		"client.DrawContextInvoker",
 		"client.DrippingWetPlayerMixin",
 		"client.entity_renderer.PlayerModelCloakRenderer",
 		"client.entity_renderer.PolarBearShearedTextureMixin",
