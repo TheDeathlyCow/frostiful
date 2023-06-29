@@ -41,7 +41,7 @@
 	"depends": {
 		"fabricloader": ">=0.14.21",
 		"fabric-api": "*",
-		"minecraft": "~1.20.1",
+		"minecraft": ">=1.20",
 		"thermoo": ">=1.6",
 		"mm": ">=2.3",
 		"java": ">=17"
