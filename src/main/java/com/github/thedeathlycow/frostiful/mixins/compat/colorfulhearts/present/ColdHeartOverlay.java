@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.present;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
 import com.github.thedeathlycow.frostiful.mixins.client.DrawContextInvoker;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -17,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 import terrails.colorfulhearts.heart.Heart;
 import terrails.colorfulhearts.heart.HeartType;
 import terrails.colorfulhearts.render.HeartRenderer;
-import terrails.colorfulhearts.render.RenderUtils;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = HeartRenderer.class, remap = false)

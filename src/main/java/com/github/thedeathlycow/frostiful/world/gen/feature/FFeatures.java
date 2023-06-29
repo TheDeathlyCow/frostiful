@@ -5,9 +5,7 @@ import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredR
 import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredRockFeatureConfig;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
 
 public class FFeatures {
 
