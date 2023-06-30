@@ -8,7 +8,6 @@
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
 		"block.HotFloorMixin",
-		"entity.IceSkateMixin",
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
@@ -17,6 +16,7 @@
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",
+		"entity.IceSkateMixin",
 		"entity.PlayerEntityMixin",
 		"entity.mob.OcelotPlayFightMixin",
 		"entity.mob.PolarBearPlayFightMixin",
@@ -41,6 +41,7 @@
 	"client": [
 		"client.DrawContextInvoker",
 		"client.DrippingWetPlayerMixin",
+		"client.ice_skate_fx.GameRendererMixin",
 		"client.entity_renderer.PlayerModelCloakRenderer",
 		"client.entity_renderer.PolarBearShearedTextureMixin",
 		"client.entity_renderer.RootedEffectRenderer",
