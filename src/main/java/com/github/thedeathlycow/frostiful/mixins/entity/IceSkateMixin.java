@@ -1,44 +1,75 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.data.DataTracker;
+import net.minecraft.entity.data.TrackedData;
+import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
 @Debug(export = true)
-public abstract class IceSkateMixin extends Entity {
+public abstract class IceSkateMixin extends Entity implements IceSkater {
 
 
-    @Shadow public abstract ItemStack getEquippedStack(EquipmentSlot var1);
+    @Shadow
+    public abstract ItemStack getEquippedStack(EquipmentSlot var1);
 
-    @Shadow protected abstract float getVelocityMultiplier();
+    @Shadow
+    protected abstract float getVelocityMultiplier();
 
     public IceSkateMixin(EntityType<?> type, World world) {
         super(type, world);
     }
 
-    private boolean frostiful$isIceSkating;
+
+    @Unique
+    private static final TrackedData<Boolean> FROSTIFUL_IS_ICE_SKATING = DataTracker.registerData(
+            IceSkateMixin.class,
+            TrackedDataHandlerRegistry.BOOLEAN
+    );
+
+
+    @Override
+    @Unique
+    public boolean frostiful$isIceSkating() {
+        return this.dataTracker.get(FROSTIFUL_IS_ICE_SKATING);
+    }
+
+    @Inject(
+            method = "initDataTracker",
+            at = @At("TAIL")
+    )
+    private void initIceSkateData(CallbackInfo ci) {
+        this.dataTracker.startTracking(FROSTIFUL_IS_ICE_SKATING, false);
+    }
 
     @Inject(
             method = "tickMovement",
             at = @At("TAIL")
     )
     private void updateIsIceSkating(CallbackInfo ci) {
-        frostiful$isIceSkating = this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
-                && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE);;
+        this.dataTracker.set(
+                FROSTIFUL_IS_ICE_SKATING,
+                this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
+                        && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE)
+        );
     }
 
     @ModifyVariable(
@@ -55,10 +86,16 @@ public abstract class IceSkateMixin extends Entity {
             )
     )
     private float getSlipperinessForIceSkates(float slipperiness) {
-        if (frostiful$isIceSkating) {
-            return !this.isSneaking()
-                    ? Frostiful.getConfig().freezingConfig.getIceSkateSlipperiness()
-                    : Frostiful.getConfig().freezingConfig.getIceSkatBrakeSlipperiness(); // brake speed
+        if (this.frostiful$isIceSkating()) {
+            var config = Frostiful.getConfig().freezingConfig;
+
+            if (this.isSneaking()) {
+                slipperiness = config.getIceSkateBrakeSlipperiness();
+            } else if (this.isSprinting()) {
+                slipperiness = config.getIceSkateSprintSlipperiness();
+            } else {
+                slipperiness = config.getIceSkateSlipperiness();
+            }
         }
         return slipperiness;
     }
