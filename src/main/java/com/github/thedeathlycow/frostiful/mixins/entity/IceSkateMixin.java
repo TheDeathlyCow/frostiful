@@ -12,6 +12,7 @@ import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
@@ -22,6 +23,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 @Debug(export = true)
@@ -40,16 +42,40 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
 
 
     @Unique
-    private static final TrackedData<Boolean> FROSTIFUL_IS_ICE_SKATING = DataTracker.registerData(
+    private static final int FROSTIFUL_IS_SKATING_INDEX = 0;
+
+    @Unique
+    private static final int FROSTIFUL_IS_GLIDING_INDEX = 1;
+
+    @Unique
+    private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
             IceSkateMixin.class,
-            TrackedDataHandlerRegistry.BOOLEAN
+            TrackedDataHandlerRegistry.BYTE
     );
 
+    private boolean frostiful$getSkateFlag(int index) {
+        return (this.dataTracker.get(FROSTIFUL_SKATE_FLAGS) & 1 << index) != 0;
+    }
+
+    private void frostiful$setSkateFlag(int index, boolean value) {
+        byte data = this.dataTracker.get(FROSTIFUL_SKATE_FLAGS);
+        if (value) {
+            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte)(data | 1 << index));
+        } else {
+            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte)(data & ~(1 << index)));
+        }
+    }
 
     @Override
     @Unique
     public boolean frostiful$isIceSkating() {
-        return this.dataTracker.get(FROSTIFUL_IS_ICE_SKATING);
+        return frostiful$getSkateFlag(FROSTIFUL_IS_SKATING_INDEX);
+    }
+
+    @Override
+    @Unique
+    public boolean frostiful$isGliding() {
+        return frostiful$getSkateFlag(FROSTIFUL_IS_GLIDING_INDEX);
     }
 
     @Inject(
@@ -57,7 +83,7 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
             at = @At("TAIL")
     )
     private void initIceSkateData(CallbackInfo ci) {
-        this.dataTracker.startTracking(FROSTIFUL_IS_ICE_SKATING, false);
+        this.dataTracker.startTracking(FROSTIFUL_SKATE_FLAGS, (byte) 0);
     }
 
     @Inject(
@@ -65,8 +91,8 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
             at = @At("TAIL")
     )
     private void updateIsIceSkating(CallbackInfo ci) {
-        this.dataTracker.set(
-                FROSTIFUL_IS_ICE_SKATING,
+        this.frostiful$setSkateFlag(
+                FROSTIFUL_IS_SKATING_INDEX,
                 this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
                         && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE)
         );
@@ -100,55 +126,12 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
         return slipperiness;
     }
 
-//    @ModifyArg(
-//            method = "applyMovementInput",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/minecraft/entity/LivingEntity;updateVelocity(FLnet/minecraft/util/math/Vec3d;)V"
-//            ),
-//            index = 1
-//    )
-//    private Vec3d applyLookMovementIfIceSkating(Vec3d movementInput) {
-//
-//        if (!frostiful$isIceSkating) {
-//            return movementInput;
-//        }
-//
-//        double intermediateResult;
-//
-//        // Apply a limit to the falling speed
-//        this.limitFallDistance();
-//
-//        // Get current entity's velocity and direction (as vector)
-//        Vec3d velocity = movementInput;
-//
-//        if (this.isSneaking()) {
-//            velocity.multiply(0.5);
-//        }
-//
-//        Vec3d direction = this.getRotationVector();
-//
-//        // Calculate pitch in radians, direction's horizontal length, total length and some other parameters
-//        float pitchInRadians = this.getPitch() * ((float)Math.PI / 180);
-//        double directionHorizontalLength = Math.sqrt(direction.x * direction.x + direction.z * direction.z);
-//        double currentSpeed = velocity.horizontalLength();
-//        double directionLength = direction.length();
-//        double pitchCosSquared = Math.cos(pitchInRadians);
-//        pitchCosSquared = pitchCosSquared * pitchCosSquared * Math.min(1.0, directionLength / 0.4);
-//
-//        if (velocity.y < 0.0 && directionHorizontalLength > 0.0) {
-//            intermediateResult = velocity.y * -0.1 * pitchCosSquared;
-//            velocity = velocity.add(direction.x * intermediateResult / directionHorizontalLength, intermediateResult, direction.z * intermediateResult / directionHorizontalLength);
-//        }
-//        if (pitchInRadians < 0.0f && directionHorizontalLength > 0.0) {
-//            intermediateResult = currentSpeed * (double)(-MathHelper.sin(pitchInRadians)) * 0.04;
-//            velocity = velocity.add(-direction.x * intermediateResult / directionHorizontalLength, intermediateResult * 3.2, -direction.z * intermediateResult / directionHorizontalLength);
-//        }
-//        if (directionHorizontalLength > 0.0) {
-//            velocity = velocity.add((direction.x / directionHorizontalLength * currentSpeed - velocity.x) * 0.1, 0.0, (direction.z / directionHorizontalLength * currentSpeed - velocity.z) * 0.1);
-//        }
-//
-//        return velocity;
-//    }
+    @Inject(
+            method = "applyMovementInput",
+            at = @At("HEAD")
+    )
+    private void updateGliding(Vec3d movementInput, float slipperiness, CallbackInfoReturnable<Vec3d> cir) {
+        this.frostiful$setSkateFlag(FROSTIFUL_IS_GLIDING_INDEX, movementInput.horizontalLengthSquared() < 1e-3);
+    }
 
 }

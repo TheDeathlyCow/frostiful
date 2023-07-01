@@ -11,6 +11,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
@@ -26,9 +27,47 @@ public class GameRendererMixin {
             cancellable = true
     )
     private void cancelBobIfSkating(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        if (this.client.getCameraEntity() instanceof IceSkater iceSkater && iceSkater.frostiful$isIceSkating()) {
-            ci.cancel();
+        if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
+            if (iceSkater.frostiful$isIceSkating() && iceSkater.frostiful$isGliding()) {
+                ci.cancel();
+            }
         }
+    }
+
+    @ModifyArg(
+            method = "bobView",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"
+            ),
+            index = 0
+    )
+    private float reduceBobXWhenSkating(float input) {
+        if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
+            if (iceSkater.frostiful$isIceSkating()) {
+                input *= 0.75f;
+            }
+        }
+
+        return input;
+    }
+
+    @ModifyArg(
+            method = "bobView",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"
+            ),
+            index = 1
+    )
+    private float reduceBobYWhenSkating(float input) {
+        if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
+            if (iceSkater.frostiful$isIceSkating()) {
+                input *= 0.75f;
+            }
+        }
+
+        return input;
     }
 
 }

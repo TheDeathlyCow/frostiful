@@ -4,4 +4,8 @@ public interface IceSkater {
 
     boolean frostiful$isIceSkating();
 
+    boolean frostiful$isGliding();
+
+
+
 }
