@@ -44,7 +44,9 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_WIND_WOOSH = FSoundEvents.of("entity.frostiful.wind.generic.woosh");
     public static final SoundEvent ENTITY_FREEZING_WIND_BLOWOUT = FSoundEvents.of("entity.frostiful.freezing_wind.blowout");
 
-
+    public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_SKATE = FSoundEvents.of("entity.generic.ice_skate.skate");
+    public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_GLIDE = FSoundEvents.of("entity.generic.ice_skate.glide");
+    public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_STOP = FSoundEvents.of("entity.generic.ice_skate.stop");
 
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
@@ -84,6 +86,10 @@ public class FSoundEvents {
         register(ENTITY_WIND_HOWL);
         register(ENTITY_WIND_WOOSH);
         register(ENTITY_FREEZING_WIND_BLOWOUT);
+
+        register(ENTITY_GENERIC_ICE_SKATE_SKATE);
+        register(ENTITY_GENERIC_ICE_SKATE_GLIDE);
+        register(ENTITY_GENERIC_ICE_SKATE_STOP);
     }
 
     private static SoundEvent of(String name) {
