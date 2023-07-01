@@ -1,7 +1,8 @@
-package com.github.thedeathlycow.frostiful.mixins.entity;
+package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -27,7 +28,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 @Debug(export = true)
-public abstract class IceSkateMixin extends Entity implements IceSkater {
+public abstract class LivingEntityMovementMixin extends Entity implements IceSkater {
 
 
     @Shadow
@@ -36,7 +37,7 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
     @Shadow
     protected abstract float getVelocityMultiplier();
 
-    public IceSkateMixin(EntityType<?> type, World world) {
+    public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
     }
 
@@ -47,9 +48,11 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
     @Unique
     private static final int FROSTIFUL_IS_GLIDING_INDEX = 1;
 
+    private int frostiful$lastStopSoundTime = 0;
+
     @Unique
     private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
-            IceSkateMixin.class,
+            LivingEntityMovementMixin.class,
             TrackedDataHandlerRegistry.BYTE
     );
 
@@ -96,6 +99,11 @@ public abstract class IceSkateMixin extends Entity implements IceSkater {
                 this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
                         && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE)
         );
+
+        if (this.isSneaking() && this.frostiful$isIceSkating() && this.getVelocity().length() > (0.2f)) {
+            float pitch = this.random.nextFloat() * 0.75f + 0.5f;
+            this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
+        }
     }
 
     @ModifyVariable(

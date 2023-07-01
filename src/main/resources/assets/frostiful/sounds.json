@@ -322,11 +322,50 @@
 	},
 	"entity.frostiful.freezing_wind.blowout": {
 		"sounds": [
-			{	
+			{
 				"name": "random/fizz",
 				"volume": 0.5
 			}
 		],
 		"subtitle": "subtitles.entity.frostiful.freezing_wind.blowout"
+	},
+	"entity.generic.ice_skate.skate": {
+		"sounds": [
+			{
+				"name": "frostiful:entity/ice_skating/skate1"
+			},
+			{
+				"name": "frostiful:entity/ice_skating/skate2"
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.skate"
+	},
+	"entity.generic.ice_skate.glide": {
+		"sounds": [
+			{
+				"name": "frostiful:entity/ice_skating/glide1"
+			},
+			{
+				"name": "frostiful:entity/ice_skating/glide2"
+			},
+			{
+				"name": "frostiful:entity/ice_skating/glide3"
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.glide"
+	},
+	"entity.generic.ice_skate.stop": {
+		"sounds": [
+			{
+				"name": "frostiful:entity/ice_skating/stop1"
+			},
+			{
+				"name": "frostiful:entity/ice_skating/stop2"
+			},
+			{
+				"name": "frostiful:entity/ice_skating/stop3"
+			}
+		],
+		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.stop"
 	}
 }
