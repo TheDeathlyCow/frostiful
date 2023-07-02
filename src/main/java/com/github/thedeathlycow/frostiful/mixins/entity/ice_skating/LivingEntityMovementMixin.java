@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
@@ -12,6 +13,9 @@ import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -94,18 +98,20 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
             at = @At("TAIL")
     )
     private void updateIsIceSkating(CallbackInfo ci) {
+
+        BlockState velocityAffectingBlock = this.getWorld().getBlockState(this.getVelocityAffectingPos());
+
         this.frostiful$setSkateFlag(
                 FROSTIFUL_IS_SKATING_INDEX,
-                this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
-                        && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE)
+                velocityAffectingBlock.isIn(BlockTags.ICE)
+                        && this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
         );
 
-        boolean playStopSound = this.isSneaking()
-                && this.frostiful$isIceSkating()
-                && IceSkater.isMoving(this);
-        if (playStopSound) {
-            float pitch = this.random.nextFloat() * 0.75f + 0.5f;
-            this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
+        if (this.frostiful$isIceSkating() && IceSkater.isMoving(this)) {
+            this.spawnSprintingParticles();
+            if (this.isSneaking()) {
+                this.applyStopEffects(velocityAffectingBlock);
+            }
         }
     }
 
@@ -145,4 +151,30 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
         this.frostiful$setSkateFlag(FROSTIFUL_IS_GLIDING_INDEX, movementInput.horizontalLengthSquared() < 1e-3);
     }
 
+    private void applyStopEffects(BlockState velocityAffectingBlock) {
+        float pitch = this.random.nextFloat() * 0.75f + 0.5f;
+        this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
+
+        World world = this.getWorld();
+
+        if (!world.isClient) {
+            return;
+        }
+        ParticleEffect iceParticles = new BlockStateParticleEffect(ParticleTypes.BLOCK, velocityAffectingBlock);
+
+        Vec3d velocity = this.getVelocity();
+        Vec3d pos = this.getPos();
+
+        for (int i = 0; i < 25; i++) {
+            world.addParticle(
+                    iceParticles,
+                    pos.x + random.nextFloat() - 0.5f,
+                    pos.y + random.nextFloat() - 0.5f,
+                    pos.z + random.nextFloat() - 0.5f,
+                    velocity.x,
+                    velocity.y,
+                    velocity.z
+            );
+        }
+    }
 }
