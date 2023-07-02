@@ -4,9 +4,13 @@ import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
-import org.jetbrains.annotations.Nullable;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.Debug;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(BipedEntityModel.class)
@@ -41,7 +45,7 @@ public class ModelMixin<T extends LivingEntity> {
             at = @At("HEAD")
     )
     private void collectSkaterData(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        if (livingEntity instanceof IceSkater iceSkater) {
+        if (livingEntity instanceof IceSkater iceSkater && IceSkater.isMoving(livingEntity)) {
 
             boolean wasLegsFrozen = frostiful$freezeLegs;
             frostiful$freezeLegs = iceSkater.frostiful$isIceSkating()
@@ -59,7 +63,18 @@ public class ModelMixin<T extends LivingEntity> {
 
     @Inject(
             method = "setAngles(Lnet/minecraft/entity/LivingEntity;FFFFF)V",
-            at = @At("TAIL")
+            at = @At(
+                    value = "FIELD",
+                    target = "Lnet/minecraft/client/model/ModelPart;yaw:F",
+                    ordinal = 0
+            ),
+            slice = @Slice(
+                    from = @At(
+                            value = "INVOKE",
+                            target = "Lnet/minecraft/util/math/MathHelper;cos(F)F",
+                            ordinal = 3
+                    )
+            )
     )
     private void resetLegPitchIfGliding(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (frostiful$freezeLegs) {
