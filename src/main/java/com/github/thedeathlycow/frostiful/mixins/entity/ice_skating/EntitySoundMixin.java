@@ -32,14 +32,29 @@ public abstract class EntitySoundMixin {
 
         final Entity instance = (Entity) (Object) this;
 
-        boolean playGlideSound = instance instanceof IceSkater iceSkater
-                && iceSkater.frostiful$isIceSkating()
-                && IceSkater.isMoving(instance);
+        if (instance instanceof IceSkater iceSkater) {
 
-        if (playGlideSound) {
-            float pitch = random.nextFloat() * 0.75f + 0.5f;
-            instance.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_GLIDE, 1.0f, pitch);
+            boolean playGlideSound = iceSkater.frostiful$isIceSkating()
+                    && IceSkater.isMoving(instance);
+
+            if (playGlideSound) {
+                float pitch = random.nextFloat() * 0.75f + 0.5f;
+                instance.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_GLIDE, 1.0f, pitch);
+            }
+
+
+            boolean playSkateSound = playGlideSound
+                    && instance.isSprinting()
+                    && random.nextFloat() < 0.1f;
+
+            if (playSkateSound) {
+                float pitch = random.nextFloat() * 0.2f + 0.9f;
+                instance.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_SKATE, 1.0f, pitch);
+            }
         }
+
+
+
     }
 
 }
