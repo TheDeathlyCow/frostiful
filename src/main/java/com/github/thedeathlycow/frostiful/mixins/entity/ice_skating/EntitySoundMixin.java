@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,10 +15,12 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
-public class EntitySoundMixin {
+public abstract class EntitySoundMixin {
 
     @Shadow public int age;
     @Shadow @Final protected Random random;
+
+    @Shadow public abstract Vec3d getVelocity();
 
     @Inject(
             method = "playStepSounds",
@@ -28,7 +31,12 @@ public class EntitySoundMixin {
         ci.cancel();
 
         final Entity instance = (Entity) (Object) this;
-        if (instance instanceof IceSkater iceSkater && iceSkater.frostiful$isIceSkating()) {
+
+        boolean playGlideSound = instance instanceof IceSkater iceSkater
+                && iceSkater.frostiful$isIceSkating()
+                && IceSkater.isMoving(instance);
+
+        if (playGlideSound) {
             float pitch = random.nextFloat() * 0.75f + 0.5f;
             instance.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_GLIDE, 1.0f, pitch);
         }

@@ -63,9 +63,9 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     private void frostiful$setSkateFlag(int index, boolean value) {
         byte data = this.dataTracker.get(FROSTIFUL_SKATE_FLAGS);
         if (value) {
-            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte)(data | 1 << index));
+            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte) (data | 1 << index));
         } else {
-            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte)(data & ~(1 << index)));
+            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte) (data & ~(1 << index)));
         }
     }
 
@@ -100,7 +100,10 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
                         && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE)
         );
 
-        if (this.isSneaking() && this.frostiful$isIceSkating() && this.getVelocity().lengthSquared() > (0.2f * 0.2f)) {
+        boolean playStopSound = this.isSneaking()
+                && this.frostiful$isIceSkating()
+                && IceSkater.isMoving(this);
+        if (playStopSound) {
             float pitch = this.random.nextFloat() * 0.75f + 0.5f;
             this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
         }
