@@ -100,7 +100,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
                         && this.getWorld().getBlockState(this.getVelocityAffectingPos()).isIn(BlockTags.ICE)
         );
 
-        if (this.isSneaking() && this.frostiful$isIceSkating() && this.getVelocity().length() > (0.2f)) {
+        if (this.isSneaking() && this.frostiful$isIceSkating() && this.getVelocity().lengthSquared() > (0.2f * 0.2f)) {
             float pitch = this.random.nextFloat() * 0.75f + 0.5f;
             this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
         }
