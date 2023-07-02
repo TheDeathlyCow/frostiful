@@ -45,11 +45,12 @@ public class ModelMixin<T extends LivingEntity> {
             at = @At("HEAD")
     )
     private void collectSkaterData(T livingEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        if (livingEntity instanceof IceSkater iceSkater && IceSkater.isMoving(livingEntity)) {
+        if (livingEntity instanceof IceSkater iceSkater) {
 
             boolean wasLegsFrozen = frostiful$freezeLegs;
             frostiful$freezeLegs = iceSkater.frostiful$isIceSkating()
-                    && iceSkater.frostiful$isGliding();
+                    && iceSkater.frostiful$isGliding()
+                    && IceSkater.isMoving(livingEntity);
 
             if (!wasLegsFrozen && frostiful$freezeLegs) {
                 frostiful$LimbPitches[0] = FROSTIFUL_PITCH_REDUCTION * this.leftLeg.pitch;

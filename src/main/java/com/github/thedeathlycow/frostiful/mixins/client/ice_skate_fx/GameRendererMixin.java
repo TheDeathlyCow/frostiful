@@ -28,46 +28,10 @@ public class GameRendererMixin {
     )
     private void cancelBobIfSkating(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
         if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
-            if (iceSkater.frostiful$isIceSkating() && iceSkater.frostiful$isGliding()) {
+            if (iceSkater.frostiful$isIceSkating()) {
                 ci.cancel();
             }
         }
-    }
-
-    @ModifyArg(
-            method = "bobView",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"
-            ),
-            index = 0
-    )
-    private float reduceBobXWhenSkating(float input) {
-        if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
-            if (iceSkater.frostiful$isIceSkating()) {
-                input *= 0.75f;
-            }
-        }
-
-        return input;
-    }
-
-    @ModifyArg(
-            method = "bobView",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/math/MatrixStack;translate(FFF)V"
-            ),
-            index = 1
-    )
-    private float reduceBobYWhenSkating(float input) {
-        if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
-            if (iceSkater.frostiful$isIceSkating()) {
-                input *= 0.75f;
-            }
-        }
-
-        return input;
     }
 
 }
