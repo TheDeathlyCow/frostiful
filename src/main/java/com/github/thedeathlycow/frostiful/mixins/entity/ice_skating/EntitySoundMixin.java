@@ -28,9 +28,11 @@ public abstract class EntitySoundMixin {
             cancellable = true
     )
     private void playSkateSlideSound(BlockPos pos, BlockState state, CallbackInfo ci) {
-
-
         final Entity instance = (Entity) (Object) this;
+
+        if (ci.isCancelled()) {
+            return;
+        }
 
         if (instance instanceof IceSkater iceSkater) {
 
@@ -38,7 +40,9 @@ public abstract class EntitySoundMixin {
                     && IceSkater.isMoving(instance);
 
             if (playGlideSound) {
+                // don't also play the normal step sounds
                 ci.cancel();
+
                 float pitch = random.nextFloat() * 0.75f + 0.5f;
                 instance.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_GLIDE, 1.0f, pitch);
 
