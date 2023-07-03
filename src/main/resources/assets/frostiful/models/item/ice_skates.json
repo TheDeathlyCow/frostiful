@@ -1,6 +1,6 @@
 {
 	"parent": "minecraft:item/generated",
 	"textures": {
-		"layer0": "frostiful:item/fur_boots"
+		"layer0": "frostiful:item/ice_skates"
 	}
 }
