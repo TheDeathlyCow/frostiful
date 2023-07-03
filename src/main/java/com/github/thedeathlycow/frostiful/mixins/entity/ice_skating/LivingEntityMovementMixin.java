@@ -23,10 +23,7 @@ import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyVariable;
-import org.spongepowered.asm.mixin.injection.Slice;
+import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -40,6 +37,8 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Shadow
     protected abstract float getVelocityMultiplier();
+
+    @Shadow public abstract void setNoDrag(boolean noDrag);
 
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -130,15 +129,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     )
     private float getSlipperinessForIceSkates(float slipperiness) {
         if (this.frostiful$isIceSkating()) {
-            var config = Frostiful.getConfig().freezingConfig;
-
-            if (this.isSneaking()) {
-                slipperiness = config.getIceSkateBrakeSlipperiness();
-            } else if (this.isSprinting()) {
-                slipperiness = config.getIceSkateSprintSlipperiness();
-            } else {
-                slipperiness = config.getIceSkateSlipperiness();
-            }
+            slipperiness = IceSkater.getSlipperinessForEntity(this);
         }
         return slipperiness;
     }

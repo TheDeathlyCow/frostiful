@@ -26,9 +26,6 @@ public class FreezingConfigGroup implements ConfigData {
     int freezingWindFrost = 160;
     int conduitPowerWarmthPerTick = 12;
     int heatFromHotFloor = 12;
-    float iceSkateSlipperiness = 1.075f;
-    float iceSkateSprintSlipperiness = 1.078f;
-    float iceSkateBrakeSlipperiness = 1.0f;
 
 
     public boolean doPassiveFreezing() {
@@ -97,17 +94,5 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getHeatFromHotFloor() {
         return heatFromHotFloor;
-    }
-
-    public float getIceSkateSlipperiness() {
-        return iceSkateSlipperiness;
-    }
-
-    public float getIceSkateSprintSlipperiness() {
-        return iceSkateSprintSlipperiness;
-    }
-
-    public float getIceSkateBrakeSlipperiness() {
-        return iceSkateBrakeSlipperiness;
     }
 }
