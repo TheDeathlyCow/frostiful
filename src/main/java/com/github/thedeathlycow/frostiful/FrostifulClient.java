@@ -39,6 +39,9 @@ public class FrostifulClient implements ClientModInitializer {
         FCutouts.registerCutouts();
         FEntityRenderers.registerEntityRenderers();
         FParticleFactoryRegistry.registerFactories();
+
+
+
         Frostiful.LOGGER.info("Initialized Frostiful client!");
     }
 }
