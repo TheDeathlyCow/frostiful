@@ -1,0 +1,6 @@
+{
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "frostiful:item/ice_skate_upgrade_template"
+	}
+}

@@ -1,0 +1,32 @@
+{
+	"parent": "minecraft:recipes/root",
+	"rewards": {
+		"recipes": [
+			"frostiful:shaped/ice_skates"
+		]
+	},
+	"criteria": {
+		"has_fur_boots": {
+			"trigger": "minecraft:inventory_changed",
+			"conditions": {
+				"items": [
+					{
+						"tag": "frostiful:fur_boots"
+					}
+				]
+			}
+		},
+		"has_the_recipe": {
+			"trigger": "minecraft:recipe_unlocked",
+			"conditions": {
+				"recipe": "frostiful:shaped/fur_boots"
+			}
+		}
+	},
+	"requirements": [
+		[
+			"has_fur_boots",
+			"has_the_recipe"
+		]
+	]
+}

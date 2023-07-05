@@ -45,6 +45,12 @@
   "item.frostiful.smithing_template.fur_upgrade.additions_slot_description": "Put some Fur Padding here",
   "upgrade.frostiful.fur_upgrade": "Fur Padded Chainmail Upgrade",
   
+  "item.frostiful.smithing_template.ice_skate_upgrade.applies_to": "Fur and Fur Padded Boots",
+  "item.frostiful.smithing_template.ice_skate_upgrade.ingredients": "Iron Sword",
+  "item.frostiful.smithing_template.ice_skate_upgrade.base_slot_description": "Place a Fur or Fur Padded boot here",
+  "item.frostiful.smithing_template.ice_skate_upgrade.additions_slot_description": "Put an Iron Sword here",
+  "upgrade.frostiful.ice_skate_upgrade": "Ice Skate Upgrade",
+  
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
