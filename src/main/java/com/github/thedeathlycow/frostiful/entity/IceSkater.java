@@ -1,8 +1,13 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.LivingEntity;
+
+import java.util.EnumSet;
+import java.util.Set;
 
 public interface IceSkater {
 
@@ -10,11 +15,9 @@ public interface IceSkater {
 
     boolean frostiful$isGliding();
 
-    float MIN_SPEED = 0.2f;
-
-    float SKATE_SLIPPERINESS = 1.075f;
-    float SPRINT_SLIPPERINESS = 1.078f;
-    float BRAKE_SLIPPERINESS = 1.0f;
+    static boolean frostiful$isInSkatingPose(Entity entity) {
+        return IceSkaterSettings.VALID_POSES_FOR_SKATING.contains(entity.getPose());
+    }
 
     /**
      * Checks if the given entity is travelling at a fast enough speed to be considered moving, for the purpose
@@ -22,10 +25,10 @@ public interface IceSkater {
      * these effects would be annoying and so should not be applied.
      *
      * @param entity The entity to check
-     * @return Returns true if the speed of the entity is greater than or equal to {@link #MIN_SPEED}
+     * @return Returns true if the speed of the entity is greater than or equal to {@link IceSkaterSettings#MIN_SPEED}
      */
-    static boolean isMoving(Entity entity) {
-        return entity.getVelocity().lengthSquared() >= MIN_SPEED * MIN_SPEED;
+    static boolean frostiful$isMoving(Entity entity) {
+        return entity.getVelocity().lengthSquared() >= IceSkaterSettings.MIN_SPEED * IceSkaterSettings.MIN_SPEED;
     }
 
     /**
@@ -38,17 +41,28 @@ public interface IceSkater {
      * @param entity The entity
      * @return Return the slipperiness value for the ice skating entity.
      */
-    static float getSlipperinessForEntity(Entity entity) {
+    static float frostiful$getSlipperinessForEntity(Entity entity) {
         float slipperiness;
         if (entity.isSneaking()) {
-            slipperiness = BRAKE_SLIPPERINESS;
+            slipperiness = IceSkaterSettings.BRAKE_SLIPPERINESS;
         } else if (entity.isSprinting()) {
-            slipperiness = SPRINT_SLIPPERINESS;
+            slipperiness = IceSkaterSettings.SPRINT_SLIPPERINESS;
         } else {
-            slipperiness = SKATE_SLIPPERINESS;
+            slipperiness = IceSkaterSettings.SKATE_SLIPPERINESS;
         }
 
         return slipperiness;
     }
 
+
+    class IceSkaterSettings {
+        private static final float MIN_SPEED = 0.2f;
+        private static final float SKATE_SLIPPERINESS = 1.075f;
+        private static final float SPRINT_SLIPPERINESS = 1.078f;
+        private static final float BRAKE_SLIPPERINESS = 1.0f;
+
+        private static final Set<EntityPose> VALID_POSES_FOR_SKATING = EnumSet.of(EntityPose.STANDING, EntityPose.CROUCHING);
+
+        private IceSkaterSettings() {}
+    }
 }
