@@ -16,10 +16,13 @@ public class FEntityModelLayers {
 
     public static final EntityModelLayer BITER = new EntityModelLayer(Frostiful.id("biter"), "main");
 
+    public static final EntityModelLayer ICE_SKATES = new EntityModelLayer(Frostiful.id("ice_skates"), "main");
+
     public static void register() {
         EntityModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(BITER, BiterEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ICE_SKATES, IceSkateModel::getTexturedModelData);
     }
 }

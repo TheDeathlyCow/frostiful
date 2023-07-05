@@ -40,7 +40,7 @@ public class FrostologerFrostFeatureRenderer extends FeatureRenderer<Frostologer
         }
 
         Identifier identifier = layer.getTexture();
-        FrostologerFrostFeatureRenderer.renderModel(
+        FeatureRenderer.renderModel(
                 this.getContextModel(),
                 identifier,
                 matrices,
