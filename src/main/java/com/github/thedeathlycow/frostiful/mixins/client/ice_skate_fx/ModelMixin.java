@@ -50,7 +50,7 @@ public class ModelMixin<T extends LivingEntity> {
             boolean wasLegsFrozen = frostiful$freezeLegs;
             frostiful$freezeLegs = iceSkater.frostiful$isIceSkating()
                     && iceSkater.frostiful$isGliding()
-                    && IceSkater.isMoving(livingEntity);
+                    && IceSkater.frostiful$isMoving(livingEntity);
 
             if (!wasLegsFrozen && frostiful$freezeLegs) {
                 frostiful$LimbPitches[0] = FROSTIFUL_PITCH_REDUCTION * this.leftLeg.pitch;

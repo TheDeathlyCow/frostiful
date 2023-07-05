@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
@@ -102,11 +101,12 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
         this.frostiful$setSkateFlag(
                 FROSTIFUL_IS_SKATING_INDEX,
-                velocityAffectingBlock.isIn(BlockTags.ICE)
+                IceSkater.frostiful$isInSkatingPose(this)
+                        && velocityAffectingBlock.isIn(BlockTags.ICE)
                         && this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
         );
 
-        if (this.frostiful$isIceSkating() && IceSkater.isMoving(this)) {
+        if (this.frostiful$isIceSkating() && IceSkater.frostiful$isMoving(this)) {
             this.spawnSprintingParticles();
             if (this.isSneaking()) {
                 this.applyStopEffects(velocityAffectingBlock);
@@ -129,7 +129,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     )
     private float getSlipperinessForIceSkates(float slipperiness) {
         if (this.frostiful$isIceSkating()) {
-            slipperiness = IceSkater.getSlipperinessForEntity(this);
+            slipperiness = IceSkater.frostiful$getSlipperinessForEntity(this);
         }
         return slipperiness;
     }

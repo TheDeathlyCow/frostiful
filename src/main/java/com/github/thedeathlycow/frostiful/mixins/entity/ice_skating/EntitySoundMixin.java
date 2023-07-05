@@ -37,7 +37,7 @@ public abstract class EntitySoundMixin {
         if (instance instanceof IceSkater iceSkater) {
 
             boolean playGlideSound = iceSkater.frostiful$isIceSkating()
-                    && IceSkater.isMoving(instance);
+                    && IceSkater.frostiful$isMoving(instance);
 
             if (playGlideSound) {
                 // don't also play the normal step sounds
