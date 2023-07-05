@@ -19,10 +19,10 @@ public class FrostifulClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         FCutouts.registerCutouts();
-        FEntityRenderers.registerEntityRenderers();
         FParticleFactoryRegistry.registerFactories();
 
         FEntityModelLayers.register();
+        FEntityRenderers.registerEntityRenderers();
 
         FrostWandItemRenderer frostWandRenderer = new FrostWandItemRenderer(FEntityModelLayers.FROST_WAND);
         ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(frostWandRenderer);
@@ -37,7 +37,6 @@ public class FrostifulClient implements ClientModInitializer {
         );
 
         FCutouts.registerCutouts();
-        FEntityRenderers.registerEntityRenderers();
         FParticleFactoryRegistry.registerFactories();
 
 
