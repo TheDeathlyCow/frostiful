@@ -1,0 +1,15 @@
+{
+	"type": "minecraft:smithing_transform",
+	"template": {
+		"item": "frostiful:ice_skate_upgrade_template"
+	},
+	"base": {
+		"item": "frostiful:fur_boots"
+	},
+	"addition": {
+		"item": "minecraft:iron_sword"
+	},
+	"result": {
+		"item": "frostiful:ice_skates"
+	}
+}

@@ -26,6 +26,7 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_BOOTS));
                 entries.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
                 entries.add(new ItemStack(FItems.ICE_SKATES));
+                entries.add(new ItemStack(FItems.ICE_SKATE_UPGRADE_TEMPLATE));
 
                 entries.add(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
                 entries.add(new ItemStack(FItems.WOLF_FUR_TUFT));
