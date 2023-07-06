@@ -23,7 +23,7 @@ public class IceSkateFeatureRenderer<
 
     private final I model;
 
-    private static final Identifier SKATE_TEXTURE = Frostiful.id("textures/entity/skates");
+    private static final Identifier SKATE_TEXTURE = Frostiful.id("textures/entity/skates.png");
 
     public IceSkateFeatureRenderer(
             FeatureRendererContext<T, M> context,
@@ -37,6 +37,7 @@ public class IceSkateFeatureRenderer<
     @Override
     public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
         if (entity.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)) {
+            this.getContextModel().copyBipedStateTo(model);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(SKATE_TEXTURE));
             model.setAngles(entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw);
             this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1.0f);

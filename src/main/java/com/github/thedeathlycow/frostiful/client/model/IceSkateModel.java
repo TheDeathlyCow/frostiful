@@ -16,26 +16,31 @@ public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = BipedEntityModel.getModelData(Dilation.NONE, 0.0f);
         ModelPartData root = modelData.getRoot();
-        root.addChild(EntityModelPartNames.RIGHT_LEG, ModelPartBuilder.create()
-                        .uv(0, 16)
-                        .cuboid(-3.0F, 13.0F, -4.0F, 0.0F, 2.0F, 8.0F, Dilation.NONE),
-                ModelTransform.pivot(0.0F, 24.0F, 0.0F)
+        root.addChild(
+                EntityModelPartNames.RIGHT_LEG,
+                ModelPartBuilder.create()
+                        .uv(0, 0)
+                        .cuboid(-1.0F, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+                        .uv(0, 2)
+                        .cuboid(-1.0F, 11.0F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
+                        .uv(0, 0)
+                        .cuboid(-1.0F, 11.0F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
+                ModelTransform.pivot(0.0F, 26.0F, 0.0F)
         );
 
-        root.addChild(EntityModelPartNames.LEFT_LEG, ModelPartBuilder.create()
-                        .uv(0, 16)
+        root.addChild(
+                EntityModelPartNames.LEFT_LEG,
+                ModelPartBuilder.create()
                         .mirrored()
-                        .cuboid(3.0F, 13.0F, -4.0F, 0.0F, 2.0F, 8.0F, Dilation.NONE),
-                ModelTransform.pivot(0.0F, 24.0F, 0.0F)
+                        .uv(0, 0)
+                        .cuboid(-1.0F, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+                        .uv(0, 2)
+                        .cuboid(-1.0F, 11.0F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
+                        .uv(0, 0)
+                        .cuboid(-1.0F, 11.0F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
+                ModelTransform.pivot(0.0F, 26.0F, 0.0F)
         );
-        return TexturedModelData.of(modelData, 16, 16);
-    }
-
-    @Override
-    public void setAngles(T livingEntity, float f, float g, float h, float i, float j) {
-        this.sneaking = livingEntity.isInSneakingPose();
-        this.riding = livingEntity.hasVehicle();
-        super.setAngles(livingEntity, f, g, h, i, j);
+        return TexturedModelData.of(modelData, 32, 32);
     }
 
     @Override
