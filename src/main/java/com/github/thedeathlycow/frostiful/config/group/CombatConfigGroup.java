@@ -47,6 +47,8 @@ public class CombatConfigGroup implements ConfigData {
     @ConfigEntry.Gui.RequiresRestart
     float furUpgradeTemplateGenerateChance = 0.5f;
 
+    @ConfigEntry.Gui.RequiresRestart
+    float skateUpgradeTemplateGenerateChance = 0.33f;
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
     }
@@ -122,5 +124,9 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getFurUpgradeTemplateGenerateChance() {
         return MathHelper.clamp(furUpgradeTemplateGenerateChance, 0f, 1f);
+    }
+
+    public float getSkateUpgradeTemplateGenerateChance() {
+        return MathHelper.clamp(skateUpgradeTemplateGenerateChance, 0f, 1f);
     }
 }

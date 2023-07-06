@@ -69,7 +69,7 @@ public class Frostiful implements ModInitializer {
         FPlacedFeatures.placeFeatures();
 
         this.registerThermooEventListeners();
-        FSmithingTemplateItem.addFurUpgradeToLoot();
+        FSmithingTemplateItem.addTemplatesToLoot();
 
         LOGGER.info("Initialized Frostiful!");
     }
