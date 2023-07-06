@@ -1,12 +1,15 @@
 {
 	"type": "minecraft:crafting_shaped",
 	"pattern": [
-		"#S#",
+		"DSD",
 		"#C#",
 		"###"
 	],
 	"key": {
 		"#": {
+			"item": "minecraft:iron_ingot"
+		},
+		"D": {
 			"item": "minecraft:diamond"
 		},
 		"C": {

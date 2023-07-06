@@ -23,14 +23,21 @@ public class FSmithingTemplateItem {
     public static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = new Identifier("item/empty_armor_slot_leggings");
     public static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = new Identifier("item/empty_armor_slot_boots");
 
-    public static void addFurUpgradeToLoot() {
+    public static void addTemplatesToLoot() {
         FrostifulConfig config = Frostiful.getConfig();
-        float chance = config.combatConfig.getFurUpgradeTemplateGenerateChance();
-        addTemplateToLoot(FItems.FUR_UPGRADE_TEMPLATE, new Identifier("chests/igloo_chest"), chance);
-
+        addTemplateToLoot(
+                FItems.FUR_UPGRADE_TEMPLATE,
+                new Identifier("chests/igloo_chest"),
+                config.combatConfig.getFurUpgradeTemplateGenerateChance()
+        );
+        addTemplateToLoot(
+                FItems.ICE_SKATE_UPGRADE_TEMPLATE,
+                new Identifier("chests/village/village_snowy_house"),
+                config.combatConfig.getFurUpgradeTemplateGenerateChance()
+        );
     }
 
-    public static void addTemplateToLoot(Item template, Identifier lootTableId, float chance) {
+    private static void addTemplateToLoot(Item template, Identifier lootTableId, float chance) {
         LootTableEvents.MODIFY.register((resourceManager, lootManager, id, tableBuilder, source) -> {
             if (source.isBuiltin() && lootTableId.equals(id)) {
                 LootPool.Builder builder = LootPool.builder()
