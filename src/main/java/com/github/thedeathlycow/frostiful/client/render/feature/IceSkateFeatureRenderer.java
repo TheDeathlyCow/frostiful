@@ -39,7 +39,6 @@ public class IceSkateFeatureRenderer<
         if (entity.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)) {
             this.getContextModel().copyBipedStateTo(model);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(SKATE_TEXTURE));
-            model.setAngles(entity, limbAngle, limbDistance, tickDelta, animationProgress, headYaw);
             this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1.0f);
         }
     }

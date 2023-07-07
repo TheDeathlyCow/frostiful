@@ -11,6 +11,9 @@ public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {
 
     public IceSkateModel(ModelPart root) {
         super(root);
+        this.setVisible(false);
+        this.leftLeg.visible = true;
+        this.rightLeg.visible = true;
     }
 
     public static TexturedModelData getTexturedModelData() {
@@ -20,12 +23,12 @@ public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {
                 EntityModelPartNames.RIGHT_LEG,
                 ModelPartBuilder.create()
                         .uv(0, 0)
-                        .cuboid(-1.0F, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+                        .cuboid(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
                         .uv(0, 2)
-                        .cuboid(-1.0F, 11.0F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
+                        .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
                         .uv(0, 0)
-                        .cuboid(-1.0F, 11.0F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
-                ModelTransform.pivot(0.0F, 26.0F, 0.0F)
+                        .cuboid(-1f, 11F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
+                ModelTransform.pivot(-1.9f, 12.0f, 0.0f)
         );
 
         root.addChild(
@@ -33,19 +36,19 @@ public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {
                 ModelPartBuilder.create()
                         .mirrored()
                         .uv(0, 0)
-                        .cuboid(-1.0F, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+                        .cuboid(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
                         .uv(0, 2)
-                        .cuboid(-1.0F, 11.0F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
+                        .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
                         .uv(0, 0)
-                        .cuboid(-1.0F, 11.0F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
-                ModelTransform.pivot(0.0F, 26.0F, 0.0F)
+                        .cuboid(-1f, 11f, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
+                ModelTransform.pivot(1.9f, 12.0f, 0.0f)
         );
         return TexturedModelData.of(modelData, 32, 32);
     }
 
-    @Override
-    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-        leftLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-        rightLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-    }
+//    @Override
+//    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
+//        leftLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+//        rightLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
+//    }
 }
