@@ -41,11 +41,11 @@ public abstract class EntityPowderSnowRedirect {
             }
 
             Frostiful.LOGGER.debug(
-                    "Original frozen ticks change of {} converted to a Thermoo active temperature change by Frostiful",
+                    "Original frozen ticks change of {} converted to a Thermoo active negative temperature change by Frostiful",
                     frozenTicksChange
             );
 
-            temperatureAware.thermoo$addTemperature(frozenTicksChange, HeatingModes.ACTIVE);
+            temperatureAware.thermoo$addTemperature(-frozenTicksChange, HeatingModes.ACTIVE);
 
             ci.cancel();
         }
