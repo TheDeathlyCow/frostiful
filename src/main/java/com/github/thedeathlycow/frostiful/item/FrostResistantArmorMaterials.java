@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.item;
 
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
@@ -25,7 +26,7 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
                 map.put(ArmorItem.Type.HELMET, 1);
             }),
             15,
-            SoundEvents.ITEM_ARMOR_EQUIP_LEATHER,
+            FSoundEvents.ITEM_ARMOR_EQUIP_FUR,
             0,
             0,
             () -> Ingredient.fromTag(FItemTags.FUR),

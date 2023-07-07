@@ -367,5 +367,16 @@
 			}
 		],
 		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.stop"
+	},
+	"item.armor.equip_fur": {
+		"sounds": [
+			"item/armor/equip_leather1",
+			"item/armor/equip_leather2",
+			"item/armor/equip_leather3",
+			"item/armor/equip_leather4",
+			"item/armor/equip_leather5",
+			"item/armor/equip_leather6"
+		],
+		"subtitle": "subtitles.item.frostiful.armor.equip_leather"
 	}
 }

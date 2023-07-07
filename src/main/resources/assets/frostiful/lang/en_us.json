@@ -150,7 +150,8 @@
   "subtitles.entity.frostiful.generic.ice_skate.skate": "Skates push",
   "subtitles.entity.frostiful.generic.ice_skate.glide": "Skates glide",
   "subtitles.entity.frostiful.generic.ice_skate.stop": "Skates stop",
-
+  "subtitles.item.frostiful.armor.equip_leather": "Fur armor rustles",
+  
   "effect.frostiful.frost_bite": "Frost Bite",
   "effect.frostiful.warmth": "Warmth",
 
