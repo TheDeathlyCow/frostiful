@@ -32,9 +32,6 @@ public abstract class EntityPowderSnowRedirect {
             return;
         }
 
-
-
-
         // scale change by min temp
         Entity instance = (Entity) (Object) this;
         if (instance instanceof TemperatureAware temperatureAware) {
@@ -43,15 +40,12 @@ public abstract class EntityPowderSnowRedirect {
                 return;
             }
 
-            int convertedTemperatureChange = (frozenTicksChange * temperatureAware.thermoo$getMinTemperature()) / instance.getMinFreezeDamageTicks();
-
             Frostiful.LOGGER.debug(
-                    "Original frozen ticks change of {} converted to a Thermoo active temperature change of {} by Frostiful",
-                    frozenTicksChange,
-                    convertedTemperatureChange
+                    "Original frozen ticks change of {} converted to a Thermoo active temperature change by Frostiful",
+                    frozenTicksChange
             );
 
-            temperatureAware.thermoo$addTemperature(convertedTemperatureChange, HeatingModes.ACTIVE);
+            temperatureAware.thermoo$addTemperature(frozenTicksChange, HeatingModes.ACTIVE);
 
             ci.cancel();
         }
