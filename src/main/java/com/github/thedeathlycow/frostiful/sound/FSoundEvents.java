@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.sound.SoundEvents;
 
 public class FSoundEvents {
 
@@ -48,6 +49,7 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_GLIDE = FSoundEvents.of("entity.generic.ice_skate.glide");
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_STOP = FSoundEvents.of("entity.generic.ice_skate.stop");
 
+    public static final SoundEvent ITEM_ARMOR_EQUIP_FUR = FSoundEvents.of("item.armor.equip_fur");
     public static void registerSoundEvents() {
         register(FIRE_LICHEN_DISCHARGE);
         register(CAMPFIRE_HISS);
@@ -90,6 +92,8 @@ public class FSoundEvents {
         register(ENTITY_GENERIC_ICE_SKATE_SKATE);
         register(ENTITY_GENERIC_ICE_SKATE_GLIDE);
         register(ENTITY_GENERIC_ICE_SKATE_STOP);
+
+        register(ITEM_ARMOR_EQUIP_FUR);
     }
 
     private static SoundEvent of(String name) {
