@@ -1,9 +1,11 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 
 import java.util.EnumSet;
@@ -14,6 +16,10 @@ public interface IceSkater {
     boolean frostiful$isIceSkating();
 
     boolean frostiful$isGliding();
+
+    void frostiful$setSkating(boolean value);
+
+    boolean frostiful$isWearingSkates();
 
     static boolean frostiful$isInSkatingPose(Entity entity) {
         return IceSkaterSettings.VALID_POSES_FOR_SKATING.contains(entity.getPose());

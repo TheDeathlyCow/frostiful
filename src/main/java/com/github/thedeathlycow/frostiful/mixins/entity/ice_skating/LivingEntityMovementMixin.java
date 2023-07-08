@@ -8,6 +8,8 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -18,11 +20,15 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.ModifyVariable;
+import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -39,6 +45,8 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Shadow public abstract void setNoDrag(boolean noDrag);
 
+    @Shadow public abstract @Nullable EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
+
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -50,7 +58,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Unique
     private static final int FROSTIFUL_IS_GLIDING_INDEX = 1;
 
-    private int frostiful$lastStopSoundTime = 0;
+    private static final float FROSTIFUL_SKATE_WALK_PENALTY = 0.5f;
 
     @Unique
     private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
@@ -79,6 +87,18 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Override
     @Unique
+    public void frostiful$setSkating(boolean value) {
+        this.frostiful$setSkateFlag(FROSTIFUL_IS_SKATING_INDEX, value);
+    }
+
+    @Override
+    @Unique
+    public boolean frostiful$isWearingSkates() {
+        return this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES);
+    }
+
+    @Override
+    @Unique
     public boolean frostiful$isGliding() {
         return frostiful$getSkateFlag(FROSTIFUL_IS_GLIDING_INDEX);
     }
@@ -99,11 +119,10 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
         BlockState velocityAffectingBlock = this.getWorld().getBlockState(this.getVelocityAffectingPos());
 
-        this.frostiful$setSkateFlag(
-                FROSTIFUL_IS_SKATING_INDEX,
-                IceSkater.frostiful$isInSkatingPose(this)
-                        && velocityAffectingBlock.isIn(BlockTags.ICE)
-                        && this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)
+        this.frostiful$setSkating(
+                velocityAffectingBlock.isIn(BlockTags.ICE)
+                        && IceSkater.frostiful$isInSkatingPose(this)
+                        && this.frostiful$isWearingSkates()
         );
 
         if (this.frostiful$isIceSkating() && IceSkater.frostiful$isMoving(this)) {
@@ -111,6 +130,17 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
             if (this.isSneaking()) {
                 this.applyStopEffects(velocityAffectingBlock);
             }
+        }
+    }
+
+    @Inject(
+            method = "getMovementSpeed(F)F",
+            at = @At("RETURN"),
+            cancellable = true
+    )
+    private void slowWhenWearingSkatesOffIce(float slipperiness, CallbackInfoReturnable<Float> cir) {
+        if (this.isOnGround() && !this.frostiful$isIceSkating() && this.frostiful$isWearingSkates()) {
+            cir.setReturnValue(cir.getReturnValueF() * FROSTIFUL_SKATE_WALK_PENALTY);
         }
     }
 
