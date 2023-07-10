@@ -7,9 +7,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityPose;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeInstance;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.entity.attribute.EntityAttributes;
 
 import java.util.EnumSet;
 import java.util.Set;
+import java.util.UUID;
 
 public interface IceSkater {
 
@@ -23,6 +27,18 @@ public interface IceSkater {
 
     static boolean frostiful$isInSkatingPose(Entity entity) {
         return IceSkaterSettings.VALID_POSES_FOR_SKATING.contains(entity.getPose());
+    }
+
+    static void frostiful$updateSkateWalkPenalityModifier(LivingEntity entity, boolean shouldBeSlowed) {
+        EntityAttributeInstance movementSpeed = entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        if (movementSpeed == null) {
+            return;
+        }
+
+        movementSpeed.removeModifier(IceSkaterSettings.FROSTIFUL_SKATE_WALK_PENALITY_ID);
+        if (shouldBeSlowed) {
+            movementSpeed.addTemporaryModifier(IceSkaterSettings.FROSTIFUL_SKATE_WALK_PENALTY);
+        }
     }
 
     /**
@@ -66,6 +82,15 @@ public interface IceSkater {
         private static final float SKATE_SLIPPERINESS = 1.075f;
         private static final float SPRINT_SLIPPERINESS = 1.078f;
         private static final float BRAKE_SLIPPERINESS = 1.0f;
+
+        private static final UUID FROSTIFUL_SKATE_WALK_PENALITY_ID = UUID.fromString("d73a2825-50b8-423d-aa74-f06ffe1aa5cb");
+
+        private static final EntityAttributeModifier FROSTIFUL_SKATE_WALK_PENALTY = new EntityAttributeModifier(
+                FROSTIFUL_SKATE_WALK_PENALITY_ID,
+                "Frostiful skate walk off ice penality",
+                -0.5,
+                EntityAttributeModifier.Operation.MULTIPLY_TOTAL
+        );
 
         private static final Set<EntityPose> VALID_POSES_FOR_SKATING = EnumSet.of(EntityPose.STANDING, EntityPose.CROUCHING);
 

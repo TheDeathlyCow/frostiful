@@ -1,6 +1,7 @@
 {
 	"replace": false,
 	"values": [
-		"frostiful:ice_skates"
+		"frostiful:ice_skates",
+		"frostiful:armored_ice_skates"
 	]
 }

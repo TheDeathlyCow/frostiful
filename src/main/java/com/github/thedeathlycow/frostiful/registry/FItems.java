@@ -73,6 +73,13 @@ public class FItems {
                     .maxCount(1)
     );
 
+    public static final Item ARMORED_ICE_SKATES = new ArmorItem(
+            FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            ArmorItem.Type.BOOTS,
+            new FabricItemSettings()
+                    .maxCount(1)
+    );
+
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new FabricItemSettings());
     public static final Item WOLF_FUR_TUFT = new Item(new FabricItemSettings());
     public static final Item OCELOT_FUR_TUFT = new Item(new FabricItemSettings());
@@ -131,6 +138,7 @@ public class FItems {
 
         register("frostology_cloak", FROSTOLOGY_CLOAK);
         register("ice_skates", ICE_SKATES);
+        register("armored_ice_skates", ARMORED_ICE_SKATES);
 
         register("polar_bear_fur_tuft", POLAR_BEAR_FUR_TUFT);
         register("wolf_fur_tuft", WOLF_FUR_TUFT);

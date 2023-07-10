@@ -43,9 +43,10 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Shadow
     protected abstract float getVelocityMultiplier();
 
-    @Shadow public abstract void setNoDrag(boolean noDrag);
+    @Shadow
+    public abstract @Nullable EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
 
-    @Shadow public abstract @Nullable EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
+    @Shadow protected abstract void updateGlowing();
 
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -58,7 +59,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Unique
     private static final int FROSTIFUL_IS_GLIDING_INDEX = 1;
 
-    private static final float FROSTIFUL_SKATE_WALK_PENALTY = 0.5f;
+    private boolean frostiful$wasSlowed = false;
 
     @Unique
     private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
@@ -125,6 +126,8 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
                         && this.frostiful$isWearingSkates()
         );
 
+        this.updateSlowness(velocityAffectingBlock);
+
         if (this.frostiful$isIceSkating() && IceSkater.frostiful$isMoving(this)) {
             this.spawnSprintingParticles();
             if (this.isSneaking()) {
@@ -133,16 +136,16 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
         }
     }
 
-    @Inject(
-            method = "getMovementSpeed(F)F",
-            at = @At("RETURN"),
-            cancellable = true
-    )
-    private void slowWhenWearingSkatesOffIce(float slipperiness, CallbackInfoReturnable<Float> cir) {
-        if (this.isOnGround() && !this.frostiful$isIceSkating() && this.frostiful$isWearingSkates()) {
-            cir.setReturnValue(cir.getReturnValueF() * FROSTIFUL_SKATE_WALK_PENALTY);
-        }
-    }
+//    @Inject(
+//            method = "getMovementSpeed(F)F",
+//            at = @At("RETURN"),
+//            cancellable = true
+//    )
+//    private void slowWhenWearingSkatesOffIce(float slipperiness, CallbackInfoReturnable<Float> cir) {
+//        if (this.isOnGround() && !this.frostiful$isIceSkating() && this.frostiful$isWearingSkates()) {
+//            cir.setReturnValue(cir.getReturnValueF() * FROSTIFUL_SKATE_WALK_PENALTY);
+//        }
+//    }
 
     @ModifyVariable(
             method = "travel",
@@ -170,6 +173,18 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     )
     private void updateGliding(Vec3d movementInput, float slipperiness, CallbackInfoReturnable<Vec3d> cir) {
         this.frostiful$setSkateFlag(FROSTIFUL_IS_GLIDING_INDEX, movementInput.horizontalLengthSquared() < 1e-3);
+    }
+
+    private void updateSlowness(BlockState velocityAffectingBlock) {
+
+        boolean shouldBeSlowed = this.frostiful$isWearingSkates()
+                && !velocityAffectingBlock.isIn(BlockTags.ICE);
+
+        if (shouldBeSlowed != frostiful$wasSlowed) {
+            IceSkater.frostiful$updateSkateWalkPenalityModifier((LivingEntity) (Object) this, shouldBeSlowed);
+        }
+
+        frostiful$wasSlowed = shouldBeSlowed;
     }
 
     private void applyStopEffects(BlockState velocityAffectingBlock) {
