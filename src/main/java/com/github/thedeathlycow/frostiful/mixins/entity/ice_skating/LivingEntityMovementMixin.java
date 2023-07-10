@@ -177,7 +177,8 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     private void updateSlowness(BlockState velocityAffectingBlock) {
 
-        boolean shouldBeSlowed = this.frostiful$isWearingSkates()
+        boolean shouldBeSlowed = this.isOnGround()
+                && this.frostiful$isWearingSkates()
                 && !velocityAffectingBlock.isIn(BlockTags.ICE);
 
         if (shouldBeSlowed != frostiful$wasSlowed) {
