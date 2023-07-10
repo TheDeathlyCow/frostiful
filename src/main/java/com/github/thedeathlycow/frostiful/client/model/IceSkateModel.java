@@ -22,10 +22,16 @@ public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {
         root.addChild(
                 EntityModelPartNames.RIGHT_LEG,
                 ModelPartBuilder.create()
+                        // blade base
                         .uv(0, 0)
                         .cuboid(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+                        // blade cross
+                        .uv(8, 0)
+                        .cuboid(0.0F, 13.0F, -4.0F, 0.0F, 1.0F, 8.0F, Dilation.NONE)
+                        // blade back
                         .uv(0, 2)
                         .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
+                        // blade front
                         .uv(0, 0)
                         .cuboid(-1f, 11F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
                 ModelTransform.pivot(-1.9f, 12.0f, 0.0f)
@@ -37,6 +43,10 @@ public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {
                         .mirrored()
                         .uv(0, 0)
                         .cuboid(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+
+                        .uv(8, 0)
+                        .cuboid(0.0F, 13.0F, -4.0F, 0.0F, 1.0F, 8.0F, Dilation.NONE)
+
                         .uv(0, 2)
                         .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
                         .uv(0, 0)
