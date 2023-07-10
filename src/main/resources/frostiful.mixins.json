@@ -11,7 +11,6 @@
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
-		"compat.colorfulhearts.present.FreezingHearts",
 		"entity.DamageSourcesMixin",
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
@@ -26,7 +25,6 @@
 		"entity.root.EntityMovementBlockMixin",
 		"entity.root.PlayerMovementBlockMixin",
 		"entity.root.RootedEntityImplMixin",
-		"entity.root.RootedPlayerIceBreakMixin",
 		"entity.root.RootShatterMixin",
 		"entity.shearing.MobShearingMixin",
 		"entity.shearing.PolarBearShearingMixin",
@@ -52,7 +50,8 @@
 		"client.ice_skate_fx.ModelMixin",
 		"compat.colorfulhearts.absent.ColdHeartOverlay",
 		"compat.colorfulhearts.absent.FreezingHearts",
-		"compat.colorfulhearts.present.ColdHeartOverlay"
+		"compat.colorfulhearts.present.ColdHeartOverlay",
+		"compat.colorfulhearts.present.FreezingHearts"
 	],
 	"injectors": {
 		"defaultRequire": 1
