@@ -29,7 +29,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     @Shadow
     public abstract boolean damage(DamageSource source, float amount);
 
-    private static final TrackedData<Integer> FROZEN_TICKS = DataTracker.registerData(RootedEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);
+    private static final TrackedData<Integer> FROZEN_TICKS = DataTracker.registerData(LivingEntity.class, TrackedDataHandlerRegistry.INTEGER);
 
     public RootedEntityImplMixin(EntityType<?> type, World world) {
         super(type, world);

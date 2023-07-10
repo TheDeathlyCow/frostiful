@@ -18,7 +18,10 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.sound.SoundEvent;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Debug;
@@ -44,9 +47,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     protected abstract float getVelocityMultiplier();
 
     @Shadow
-    public abstract @Nullable EntityAttributeInstance getAttributeInstance(EntityAttribute attribute);
-
-    @Shadow protected abstract void updateGlowing();
+    protected abstract SoundEvent getFallSound(int distance);
 
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -63,7 +64,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Unique
     private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
-            LivingEntityMovementMixin.class,
+            LivingEntity.class,
             TrackedDataHandlerRegistry.BYTE
     );
 
@@ -118,7 +119,11 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     )
     private void updateIsIceSkating(CallbackInfo ci) {
 
-        BlockState velocityAffectingBlock = this.getWorld().getBlockState(this.getVelocityAffectingPos());
+        World world = this.getWorld();
+        Profiler profiler = world.getProfiler();
+        profiler.push("frostiful.ice_skate_tick");
+
+        BlockState velocityAffectingBlock = world.getBlockState(this.getVelocityAffectingPos());
 
         this.frostiful$setSkating(
                 velocityAffectingBlock.isIn(BlockTags.ICE)
@@ -134,18 +139,9 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
                 this.applyStopEffects(velocityAffectingBlock);
             }
         }
-    }
 
-//    @Inject(
-//            method = "getMovementSpeed(F)F",
-//            at = @At("RETURN"),
-//            cancellable = true
-//    )
-//    private void slowWhenWearingSkatesOffIce(float slipperiness, CallbackInfoReturnable<Float> cir) {
-//        if (this.isOnGround() && !this.frostiful$isIceSkating() && this.frostiful$isWearingSkates()) {
-//            cir.setReturnValue(cir.getReturnValueF() * FROSTIFUL_SKATE_WALK_PENALTY);
-//        }
-//    }
+        profiler.pop();
+    }
 
     @ModifyVariable(
             method = "travel",
