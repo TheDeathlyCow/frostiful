@@ -8,16 +8,11 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
-import net.minecraft.client.render.entity.EmptyEntityRenderer;
-import net.minecraft.client.render.entity.FlyingItemEntityRenderer;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
+import net.minecraft.client.render.entity.*;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.EntityModelLayers;
-import net.minecraft.client.render.entity.model.PlayerEntityModel;
-import net.minecraft.entity.EntityType;
+import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.CreeperEntity;
-import net.minecraft.entity.player.PlayerEntity;
+import org.jetbrains.annotations.Nullable;
 
 @Environment(EnvType.CLIENT)
 public class FEntityRenderers {
@@ -33,16 +28,34 @@ public class FEntityRenderers {
         EntityRendererRegistry.register(FEntityTypes.FREEZING_WIND, EmptyEntityRenderer::new);
 
 
-
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
                 (entityType, entityRenderer, registrationHelper, context) -> {
-                    if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
+                    if (entityRenderer instanceof BipedEntityRenderer<?, ?> bipedEntityRenderer) {
+                        registrationHelper.register(
+                                new IceSkateFeatureRenderer<>(
+                                        bipedEntityRenderer,
+                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                )
+                        );
+                    } else if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         playerEntityRenderer,
-                                        new IceSkateModel<>(
-                                                context.getPart(FEntityModelLayers.ICE_SKATES)
-                                        )
+                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                )
+                        );
+                    } else if (entityRenderer instanceof ArmorStandEntityRenderer armorStandEntityRenderer) {
+                        registrationHelper.register(
+                                new IceSkateFeatureRenderer<>(
+                                        armorStandEntityRenderer,
+                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                )
+                        );
+                    } else if (entityRenderer instanceof GiantEntityRenderer giantEntityRenderer) {
+                        registrationHelper.register(
+                                new IceSkateFeatureRenderer<>(
+                                        giantEntityRenderer,
+                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
                                 )
                         );
                     }
