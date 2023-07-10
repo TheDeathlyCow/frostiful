@@ -5,7 +5,6 @@ import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,10 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Entity.class)
 public abstract class EntitySoundMixin {
 
-    @Shadow public int age;
     @Shadow @Final protected Random random;
-
-    @Shadow public abstract Vec3d getVelocity();
 
     @Inject(
             method = "playStepSounds",
@@ -55,9 +51,5 @@ public abstract class EntitySoundMixin {
                 }
             }
         }
-
-
-
     }
-
 }
