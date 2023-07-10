@@ -15,6 +15,8 @@ public interface FDamageSources {
 
     DamageSource frostiful$icicle();
 
+    DamageSource frostiful$iceSkate(Entity attacker);
+
     static FDamageSources getDamageSources(World world) {
         return (FDamageSources) world.getDamageSources();
     }

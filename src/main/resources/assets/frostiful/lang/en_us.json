@@ -119,6 +119,8 @@
   "death.attack.frostiful.icicle.player": "%1$s was impaled on an icicle whilst fighting %2$s",
   "death.attack.frostiful.fallingIcicle": "%1$s was skewered by a falling icicle",
   "death.attack.frostiful.fallingIcicle.player": "%1$s was skewered by a falling icicle whilst fighting %2$s",
+  "death.attack.frostiful.ice_skate": "%1$s got a skate to the face",
+  "death.attack.frostiful.ice_skate.player": "%1$s got a skate to the face from %2$s",
   "death.attack.frostiful.melt": "%1$s melted",
   "death.attack.frostiful.melt.player": "%1$s was turned into a puddle by %2$s",
 

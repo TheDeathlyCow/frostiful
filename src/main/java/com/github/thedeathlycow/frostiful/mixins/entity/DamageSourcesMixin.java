@@ -47,4 +47,10 @@ public abstract class DamageSourcesMixin implements FDamageSources {
     public DamageSource frostiful$icicle() {
         return this.frostiful$icicle;
     }
+
+    @Override
+    @Unique
+    public DamageSource frostiful$iceSkate(Entity attacker) {
+        return this.create(FDamageTypes.ICE_SKATE, attacker);
+    }
 }

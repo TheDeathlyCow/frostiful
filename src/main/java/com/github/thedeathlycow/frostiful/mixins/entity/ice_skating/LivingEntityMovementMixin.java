@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import net.minecraft.block.BlockState;
@@ -40,6 +41,8 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Shadow
     protected abstract float getVelocityMultiplier();
+
+    @Shadow protected abstract void attackLivingEntity(LivingEntity target);
 
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
@@ -160,6 +163,26 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     )
     private void updateGliding(Vec3d movementInput, float slipperiness, CallbackInfoReturnable<Vec3d> cir) {
         this.frostiful$setSkateFlag(FROSTIFUL_IS_GLIDING_INDEX, movementInput.horizontalLengthSquared() < 1e-3);
+    }
+
+    @Inject(
+            method = "pushAwayFrom",
+            at = @At("HEAD")
+    )
+    private void damageOnLandingUponEntity(Entity entity, CallbackInfo ci) {
+
+        if (!this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)) {
+            return;
+        }
+
+        if (entity instanceof LivingEntity target) {
+            double attackerHeight = this.getPos().y;
+            double targetEyeHeight = target.getEyePos().y;
+            if (attackerHeight > targetEyeHeight) {
+                FDamageSources damageSources = FDamageSources.getDamageSources(this.getWorld());
+                target.damage(damageSources.frostiful$iceSkate(this), 1.0f);
+            }
+        }
     }
 
     private void updateSlowness(BlockState velocityAffectingBlock) {
