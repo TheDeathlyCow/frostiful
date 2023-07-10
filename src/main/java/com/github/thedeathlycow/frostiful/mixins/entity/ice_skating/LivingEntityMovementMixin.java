@@ -8,8 +8,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
 import net.minecraft.entity.data.DataTracker;
 import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.data.TrackedDataHandlerRegistry;
@@ -18,12 +16,9 @@ import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
-import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -46,13 +41,9 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Shadow
     protected abstract float getVelocityMultiplier();
 
-    @Shadow
-    protected abstract SoundEvent getFallSound(int distance);
-
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
     }
-
 
     @Unique
     private static final int FROSTIFUL_IS_SKATING_INDEX = 0;
@@ -64,7 +55,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Unique
     private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
-            LivingEntity.class,
+            LivingEntityMovementMixin.class,
             TrackedDataHandlerRegistry.BYTE
     );
 
