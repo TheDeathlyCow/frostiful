@@ -146,30 +146,6 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     private void readRootedTicksFromNbt(NbtCompound nbt, CallbackInfo ci) {
         RootedEntity.frostiful$setRootedTicksFromNbt(this, nbt);
     }
-
-//    /**
-//     * Modifies the damage taken by the entity when their ice is broken. Bypasses armour, but does not bypass
-//     * protection.
-//     *
-//     * @param args A tuple containing a {@link DamageSource} and a {@link Float}
-//     */
-//    @ModifyArgs(
-//            method = "applyDamage",
-//            at = @At(
-//                    value = "INVOKE",
-//                    target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
-//            )
-//    )
-//    private void applyIceBreakDamage(Args args) {
-//        if (this.frostiful$isRooted() && !this.getWorld().isClient) {
-//            final DamageSource source = args.get(0);
-//            final float amount = args.get(1);
-//
-//            float damage = RootedEntity.getIceBreakerDamage(source.getAttacker());
-//
-//            args.set(1, amount + damage);
-//        }
-//    }
 }
 
 
