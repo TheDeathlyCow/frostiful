@@ -10,5 +10,8 @@ public class FDamageTypes {
     public static final RegistryKey<DamageType> FALLING_ICICLE =  RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("falling_icicle"));
     public static final RegistryKey<DamageType> ICICLE =  RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("icicle"));
     public static final RegistryKey<DamageType> ICE_SKATE =  RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("ice_skate"));
+    public static final RegistryKey<DamageType> BROKEN_ICE =  RegistryKey.of(RegistryKeys.DAMAGE_TYPE, Frostiful.id("broken_ice"));
 
+    private FDamageTypes() {
+    }
 }
