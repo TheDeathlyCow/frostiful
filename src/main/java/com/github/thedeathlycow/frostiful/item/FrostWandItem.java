@@ -6,6 +6,9 @@ import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.google.common.collect.ImmutableMultimap;
 import com.google.common.collect.Multimap;
+import net.fabricmc.fabric.api.entity.event.v1.EntityElytraEvents;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -37,6 +40,7 @@ public class FrostWandItem extends Item implements Vanishable {
         this.attributeModifiers = builder.build();
     }
 
+    @Override
     public UseAction getUseAction(ItemStack stack) {
         return UseAction.BOW;
     }
@@ -58,8 +62,6 @@ public class FrostWandItem extends Item implements Vanishable {
             fireFrostSpell(stack, world, user);
         }
     }
-
-
 
     public static void fireFrostSpell(ItemStack frostWandStack, World world, LivingEntity user) {
         FrostifulConfig config = Frostiful.getConfig();
@@ -115,9 +117,9 @@ public class FrostWandItem extends Item implements Vanishable {
 
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if ((double) state.getHardness(world, pos) != 0.0) {
-            stack.damage(2, miner, (e) -> {
-                e.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
+        if (state.getHardness(world, pos) != 0.0f) {
+            stack.damage(2, miner, entity -> {
+                entity.sendEquipmentBreakStatus(EquipmentSlot.MAINHAND);
             });
         }
 

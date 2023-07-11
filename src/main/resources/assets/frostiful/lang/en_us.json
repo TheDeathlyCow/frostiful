@@ -124,7 +124,8 @@
   "death.attack.frostiful.ice_skate.player": "%1$s got a skate to the face from %2$s",
   "death.attack.frostiful.melt": "%1$s melted",
   "death.attack.frostiful.melt.player": "%1$s was turned into a puddle by %2$s",
-
+  "death.attack.frostiful.brokenIce": "%1$s was shattered into a million pieces",
+  "death.attack.frostiful.brokenIce.player": "%1$s was shattered into a million pieces by %2$s",
 
   "subtitles.frostiful.block.sun_lichen.discharge": "Sun lichen discharges heat",
   "subtitles.frostiful.block.campfire.hiss": "Campfire hisses",

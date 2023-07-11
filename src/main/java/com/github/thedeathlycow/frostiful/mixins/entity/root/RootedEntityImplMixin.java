@@ -1,6 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
+import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
+import com.github.thedeathlycow.frostiful.entity.damage.FDamageTypes;
 import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -12,16 +15,16 @@ import net.minecraft.entity.data.TrackedDataHandlerRegistry;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyArgs;
 import org.spongepowered.asm.mixin.injection.Slice;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
-import org.spongepowered.asm.mixin.injection.invoke.arg.Args;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(LivingEntity.class)
 public abstract class RootedEntityImplMixin extends Entity implements RootedEntity {
@@ -69,6 +72,21 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     }
 
     @Inject(
+            method = "damage",
+            at = @At("RETURN")
+    )
+    private void shatterIceOnDamaged(DamageSource source, float amount, CallbackInfoReturnable<Boolean> cir) {
+        if (!cir.getReturnValue() || source.isOf(FDamageTypes.BROKEN_ICE) || !this.frostiful$isRooted()) {
+            return;
+        }
+
+        LivingEntity attacker = source.getAttacker() instanceof LivingEntity user ? user : null;
+        int level = attacker != null ? FEnchantmentHelper.getIceBreakerLevel(attacker) : 0;
+        IceBreakerEnchantment.applyIceBreakDamage(attacker, this, level);
+        RootedEntity.breakRootOnEntity((LivingEntity) (Object) this);
+    }
+
+    @Inject(
             method = "tickMovement",
             at = @At(
                     value = "INVOKE",
@@ -84,13 +102,13 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     )
     private void tickRoot(CallbackInfo ci) {
         World world = getWorld();
-        world.getProfiler().push("frostiful.rooted_tick");
 
         if (this.isSpectator()) {
             this.frostiful$setRootedTicks(0);
             return;
         }
-
+        Profiler profiler = world.getProfiler();
+        profiler.push("frostiful.rooted_tick");
         if (this.frostiful$isRooted()) {
             // remove tick
             int ticksLeft = this.frostiful$getRootedTicks();
@@ -110,7 +128,7 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                 this.playExtinguishSound();
             }
         }
-        world.getProfiler().pop();
+        profiler.pop();
     }
 
     @Inject(
@@ -129,29 +147,29 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
         RootedEntity.frostiful$setRootedTicksFromNbt(this, nbt);
     }
 
-    /**
-     * Modifies the damage taken by the entity when their ice is broken. Bypasses armour, but does not bypass
-     * protection.
-     *
-     * @param args A tuple containing a {@link DamageSource} and a {@link Float}
-     */
-    @ModifyArgs(
-            method = "applyDamage",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
-            )
-    )
-    private void applyIceBreakDamage(Args args) {
-        if (this.frostiful$isRooted() && !this.getWorld().isClient) {
-            final DamageSource source = args.get(0);
-            final float amount = args.get(1);
-
-            float damage = RootedEntity.getIceBreakerDamage(source.getAttacker());
-
-            args.set(1, amount + damage);
-        }
-    }
+//    /**
+//     * Modifies the damage taken by the entity when their ice is broken. Bypasses armour, but does not bypass
+//     * protection.
+//     *
+//     * @param args A tuple containing a {@link DamageSource} and a {@link Float}
+//     */
+//    @ModifyArgs(
+//            method = "applyDamage",
+//            at = @At(
+//                    value = "INVOKE",
+//                    target = "Lnet/minecraft/entity/LivingEntity;modifyAppliedDamage(Lnet/minecraft/entity/damage/DamageSource;F)F"
+//            )
+//    )
+//    private void applyIceBreakDamage(Args args) {
+//        if (this.frostiful$isRooted() && !this.getWorld().isClient) {
+//            final DamageSource source = args.get(0);
+//            final float amount = args.get(1);
+//
+//            float damage = RootedEntity.getIceBreakerDamage(source.getAttacker());
+//
+//            args.set(1, amount + damage);
+//        }
+//    }
 }
 
 

@@ -1,24 +1,24 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class FEnchantmentHelper {
 
-    public static boolean hasHeatDrain(LivingEntity entity) {
+    public static boolean hasHeatDrain(@NotNull LivingEntity entity) {
         return getHeatDrainLevel(entity) > 0;
     }
 
-    public static int getHeatDrainLevel(LivingEntity entity) {
+    public static int getHeatDrainLevel(@NotNull LivingEntity entity) {
         return EnchantmentHelper.getEquipmentLevel(FEnchantments.ENERVATION, entity);
     }
 
-    public static float getIceBreakerBonusDamage(LivingEntity user) {
-        FrostifulConfig config = Frostiful.getConfig();
-        int level = EnchantmentHelper.getEquipmentLevel(FEnchantments.ICE_BREAKER, user);
-        return level * config.combatConfig.getIceBreakerDamagePerLevel();
+    public static int getIceBreakerLevel(@NotNull LivingEntity entity) {
+        return EnchantmentHelper.getEquipmentLevel(FEnchantments.ICE_BREAKER, entity);
+    }
+
+    private FEnchantmentHelper() {
     }
 }
