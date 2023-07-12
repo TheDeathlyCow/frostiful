@@ -25,7 +25,6 @@
 		"entity.root.EntityMovementBlockMixin",
 		"entity.root.PlayerMovementBlockMixin",
 		"entity.root.RootedEntityImplMixin",
-		"entity.root.RootShatterMixin",
 		"entity.shearing.MobShearingMixin",
 		"entity.shearing.PolarBearShearingMixin",
 		"entity.soaking.WaterPotionSoakingMixin",
