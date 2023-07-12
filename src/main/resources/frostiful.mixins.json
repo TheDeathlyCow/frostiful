@@ -29,6 +29,7 @@
 		"entity.shearing.PolarBearShearingMixin",
 		"entity.soaking.WaterPotionSoakingMixin",
 		"item.ArmorItemMixin",
+		"item.ArmorTrimPatternsMixin",
 		"powder_snow_effects.EntityPowderSnowRedirect",
 		"powder_snow_effects.LivingEntityPowderSnowDisabler",
 		"server.IcicleGrowthMixin",
@@ -37,6 +38,7 @@
 		"world.spawner.PatrolSpawnerMixin"
 	],
 	"client": [
+		"client.ArmorFeatureRendererMixin",
 		"client.DrawContextInvoker",
 		"client.DrippingWetPlayerMixin",
 		"client.entity_renderer.PlayerModelCloakRenderer",
