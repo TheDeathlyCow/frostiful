@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
@@ -70,6 +71,7 @@ public class Frostiful implements ModInitializer {
 
         this.registerThermooEventListeners();
         FSmithingTemplateItem.addTemplatesToLoot();
+        FrostifulIntegrations.registerEmoteCraftServerListeners();
 
         LOGGER.info("Initialized Frostiful!");
     }
