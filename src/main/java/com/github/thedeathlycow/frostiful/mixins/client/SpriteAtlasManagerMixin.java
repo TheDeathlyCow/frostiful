@@ -22,7 +22,7 @@ public class SpriteAtlasManagerMixin {
         Map<Identifier, Identifier> mutableLoaders = new HashMap<>();
         mutableLoaders.putAll(FTexturedRenderLayers.LAYERS_TO_LOADERS);
         mutableLoaders.putAll(loaders);
-        return loaders;
+        return mutableLoaders;
     }
 
 }

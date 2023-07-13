@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class FTexturedRenderLayers {
 
-    public static final Identifier ARMOR_TRIMS_ATLAS_TEXTURE = Frostiful.id("textures/atlas/armor_trims.png");
+    public static final Identifier ARMOR_TRIMS_ATLAS_TEXTURE = Frostiful.id("textures/atlas/custom_armor_trims.png");
     public static final RenderLayer ARMOR_TRIMS_RENDER_LAYER = RenderLayer.getArmorCutoutNoCull(ARMOR_TRIMS_ATLAS_TEXTURE);
     public static final Map<Identifier, Identifier> LAYERS_TO_LOADERS = new HashMap<>();
 
@@ -19,7 +19,7 @@ public class FTexturedRenderLayers {
     }
 
     static {
-        LAYERS_TO_LOADERS.put(ARMOR_TRIMS_ATLAS_TEXTURE, new Identifier("armor_trims"));
+        LAYERS_TO_LOADERS.put(ARMOR_TRIMS_ATLAS_TEXTURE, Frostiful.id("custom_armor_trims"));
     }
 
 }
