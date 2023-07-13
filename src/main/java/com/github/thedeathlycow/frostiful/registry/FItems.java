@@ -39,6 +39,8 @@ public class FItems {
 
     public static final Item ICE_SKATE_UPGRADE_TEMPLATE = IceSkateUpgradeTemplate.createItem();
 
+    public static final Item FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE = SmithingTemplateItem.of(FArmorTrimPatterns.FROSTY);
+
     public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(
             FrostResistantArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.HELMET,
@@ -135,6 +137,7 @@ public class FItems {
         register("fur_padding", FUR_PADDING);
         register("fur_upgrade_template", FUR_UPGRADE_TEMPLATE);
         register("ice_skate_upgrade_template", ICE_SKATE_UPGRADE_TEMPLATE);
+        register("frosty_armor_trim_smithing_template", FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE);
 
         register("frostology_cloak", FROSTOLOGY_CLOAK);
         register("ice_skates", ICE_SKATES);

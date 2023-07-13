@@ -7,6 +7,6 @@
 		"tag": "minecraft:trimmable_armor"
 	},
 	"template": {
-		"item": "frostiful:packed_snowball"
+		"item": "frostiful:frosty_armor_trim_smithing_template"
 	}
 }
