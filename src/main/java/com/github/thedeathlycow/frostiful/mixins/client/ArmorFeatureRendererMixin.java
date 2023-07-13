@@ -3,12 +3,10 @@ package com.github.thedeathlycow.frostiful.mixins.client;
 import com.github.thedeathlycow.frostiful.client.FTexturedRenderLayers;
 import com.github.thedeathlycow.frostiful.item.FArmorTrimPatterns;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.ArmorFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.AnimalModel;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.model.BakedModelManager;
 import net.minecraft.client.texture.Sprite;
@@ -17,6 +15,7 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.trim.ArmorTrim;
+import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -38,7 +37,8 @@ public class ArmorFeatureRendererMixin<T extends LivingEntity, M extends BipedEn
 
     @Inject(
             method = "renderTrim",
-            at = @At("HEAD")
+            at = @At("HEAD"),
+            cancellable = true
     )
     private void renderCustomTrim(ArmorMaterial material, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmorTrim trim, A model, boolean leggings, CallbackInfo ci) {
 
@@ -46,11 +46,12 @@ public class ArmorFeatureRendererMixin<T extends LivingEntity, M extends BipedEn
             return;
         }
 
-        Sprite sprite = this.frostiful$customArmorTrimsAtlas.getSprite(
-                leggings
-                        ? trim.getLeggingsModelId(material)
-                        : trim.getGenericModelId(material)
-        );
+        Identifier id = leggings
+                ? trim.getLeggingsModelId(material)
+                : trim.getGenericModelId(material);
+
+        Sprite sprite = this.frostiful$customArmorTrimsAtlas.getSprite(id);
+
         VertexConsumer vertexConsumer = sprite.getTextureSpecificVertexConsumer(
                 vertexConsumers.getBuffer(FTexturedRenderLayers.ARMOR_TRIMS_RENDER_LAYER)
         );
