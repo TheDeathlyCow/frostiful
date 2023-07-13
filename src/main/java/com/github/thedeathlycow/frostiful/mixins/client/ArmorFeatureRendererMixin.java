@@ -42,7 +42,7 @@ public class ArmorFeatureRendererMixin<T extends LivingEntity, M extends BipedEn
     )
     private void renderCustomTrim(ArmorMaterial material, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmorTrim trim, A model, boolean leggings, CallbackInfo ci) {
 
-        if (!trim.getPattern().matchesKey(FArmorTrimPatterns.SNOWY)) {
+        if (!trim.getPattern().matchesKey(FArmorTrimPatterns.FROSTY)) {
             return;
         }
 

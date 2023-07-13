@@ -3,8 +3,8 @@
 		{
 			"type": "paletted_permutations",
 			"textures": [
-				"frostiful:trims/models/armor/snowy",
-				"frostiful:trims/models/armor/snowy_leggings"
+				"frostiful:trims/models/armor/frosty",
+				"frostiful:trims/models/armor/frosty_leggings"
 			],
 			"palette_key": "trims/color_palettes/trim_palette",
 			"permutations": {
