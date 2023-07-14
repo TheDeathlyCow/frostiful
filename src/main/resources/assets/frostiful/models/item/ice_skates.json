@@ -2,5 +2,67 @@
 	"parent": "minecraft:item/generated",
 	"textures": {
 		"layer0": "frostiful:item/ice_skates"
-	}
+	},
+    "overrides": [
+        {
+            "model": "frostiful:item/trims/ice_skates/quartz",
+            "predicate": {
+                "trim_type": 0.1
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/iron",
+            "predicate": {
+                "trim_type": 0.2
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/netherite",
+            "predicate": {
+                "trim_type": 0.3
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/redstone",
+            "predicate": {
+                "trim_type": 0.4
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/copper",
+            "predicate": {
+                "trim_type": 0.5
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/gold",
+            "predicate": {
+                "trim_type": 0.6
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/emerald",
+            "predicate": {
+                "trim_type": 0.7
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/diamond",
+            "predicate": {
+                "trim_type": 0.8
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/lapis",
+            "predicate": {
+                "trim_type": 0.9
+            }
+        },
+        {
+            "model": "frostiful:item/trims/ice_skates/amethyst",
+            "predicate": {
+                "trim_type": 1.0
+            }
+        }
+    ]
 }

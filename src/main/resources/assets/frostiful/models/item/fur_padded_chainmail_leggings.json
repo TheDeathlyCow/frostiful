@@ -1,6 +1,68 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "frostiful:item/fur_padded_chainmail_leggings"
-  }
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "frostiful:item/fur_padded_chainmail_leggings"
+    },
+    "overrides": [
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/quartz",
+            "predicate": {
+                "trim_type": 0.1
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/iron",
+            "predicate": {
+                "trim_type": 0.2
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/netherite",
+            "predicate": {
+                "trim_type": 0.3
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/redstone",
+            "predicate": {
+                "trim_type": 0.4
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/copper",
+            "predicate": {
+                "trim_type": 0.5
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/gold",
+            "predicate": {
+                "trim_type": 0.6
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/emerald",
+            "predicate": {
+                "trim_type": 0.7
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/diamond",
+            "predicate": {
+                "trim_type": 0.8
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/lapis",
+            "predicate": {
+                "trim_type": 0.9
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_padded_chainmail_leggings/amethyst",
+            "predicate": {
+                "trim_type": 1.0
+            }
+        }
+    ]
 }
