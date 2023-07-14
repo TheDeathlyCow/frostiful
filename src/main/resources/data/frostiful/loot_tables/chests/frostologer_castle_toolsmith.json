@@ -27,11 +27,6 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "weight": 1,
-                    "name": "frostiful:fur_upgrade_template"
-                },
-                {
-                    "type": "minecraft:item",
                     "weight": 4,
                     "name": "minecraft:iron_ingot",
                     "functions": [
@@ -174,6 +169,20 @@
                 {
                     "type": "minecraft:item",
                     "name": "minecraft:diamond_horse_armor"
+                }
+            ]
+        },
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:empty",
+                    "weight": 10
+                },
+                {
+                    "type": "minecraft:item",
+                    "weight": 10,
+                    "name": "frostiful:fur_upgrade_template"
                 }
             ]
         }
