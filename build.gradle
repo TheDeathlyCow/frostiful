@@ -68,7 +68,8 @@ dependencies {
     // HealthOverlay https://github.com/Terrails/HealthOverlay
     modCompileOnly("curse.maven:colorful-hearts-854213:${project.health_overlay_version}") { transitive = false }
     // Trinkets https://github.com/emilyploszaj/trinkets
-    modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
+    modImplementation  "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
+    include "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
     modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
