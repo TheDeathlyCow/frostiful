@@ -31,8 +31,8 @@ repositories {
         url = 'https://cfa2.cursemaven.com'
     }
     maven {
-        name = "Ladysnake Libs"
-        url = "https://ladysnake.jfrog.io/artifactory/mods"
+        name = "Ladysnake Mods"
+        url = 'https://maven.ladysnake.org/releases'
     }
 
     flatDir {
