@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.client;
 
 import com.github.thedeathlycow.frostiful.client.FTexturedRenderLayers;
 import com.github.thedeathlycow.frostiful.item.FArmorTrimPatterns;
+import com.github.thedeathlycow.frostiful.tag.FTrimTags;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
@@ -42,7 +43,7 @@ public class ArmorFeatureRendererMixin<T extends LivingEntity, M extends BipedEn
     )
     private void renderCustomTrim(ArmorMaterial material, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, ArmorTrim trim, A model, boolean leggings, CallbackInfo ci) {
 
-        if (!trim.getPattern().matchesKey(FArmorTrimPatterns.FROSTY)) {
+        if (!trim.getPattern().isIn(FTrimTags.CUSTOM_PATTERNS)) {
             return;
         }
 
