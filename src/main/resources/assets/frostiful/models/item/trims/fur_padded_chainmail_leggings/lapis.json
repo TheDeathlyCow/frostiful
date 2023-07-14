@@ -1,0 +1,7 @@
+{
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "frostiful:item/fur_padded_chainmail_leggings",
+        "layer1": "minecraft:trims/items/leggings_trim_lapis"
+    }
+}

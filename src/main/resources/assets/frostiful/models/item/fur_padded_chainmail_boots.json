@@ -1,6 +1,68 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "frostiful:item/fur_padded_chainmail_boots"
-  }
+	"parent": "minecraft:item/generated",
+	"textures": {
+		"layer0": "frostiful:item/fur_padded_chainmail_boots"
+	},
+	"overrides": [
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/quartz",
+			"predicate": {
+				"trim_type": 0.1
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/iron",
+			"predicate": {
+				"trim_type": 0.2
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/netherite",
+			"predicate": {
+				"trim_type": 0.3
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/redstone",
+			"predicate": {
+				"trim_type": 0.4
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/copper",
+			"predicate": {
+				"trim_type": 0.5
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/gold",
+			"predicate": {
+				"trim_type": 0.6
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/emerald",
+			"predicate": {
+				"trim_type": 0.7
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/diamond",
+			"predicate": {
+				"trim_type": 0.8
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/lapis",
+			"predicate": {
+				"trim_type": 0.9
+			}
+		},
+		{
+			"model": "frostiful:item/trims/fur_padded_chainmail_boots/amethyst",
+			"predicate": {
+				"trim_type": 1.0
+			}
+		}
+	]
 }

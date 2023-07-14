@@ -1,6 +1,68 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "frostiful:item/fur_boots"
-  }
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "frostiful:item/fur_boots"
+    },
+    "overrides": [
+        {
+            "model": "frostiful:item/trims/fur_boots/quartz",
+            "predicate": {
+                "trim_type": 0.1
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/iron",
+            "predicate": {
+                "trim_type": 0.2
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/netherite",
+            "predicate": {
+                "trim_type": 0.3
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/redstone",
+            "predicate": {
+                "trim_type": 0.4
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/copper",
+            "predicate": {
+                "trim_type": 0.5
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/gold",
+            "predicate": {
+                "trim_type": 0.6
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/emerald",
+            "predicate": {
+                "trim_type": 0.7
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/diamond",
+            "predicate": {
+                "trim_type": 0.8
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/lapis",
+            "predicate": {
+                "trim_type": 0.9
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_boots/amethyst",
+            "predicate": {
+                "trim_type": 1.0
+            }
+        }
+    ]
 }

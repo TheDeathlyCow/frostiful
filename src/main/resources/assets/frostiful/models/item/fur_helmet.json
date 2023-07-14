@@ -1,6 +1,68 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "frostiful:item/fur_helmet"
-  }
+    "parent": "minecraft:item/generated",
+    "textures": {
+        "layer0": "frostiful:item/fur_helmet"
+    },
+    "overrides": [
+        {
+            "model": "frostiful:item/trims/fur_helmet/quartz",
+            "predicate": {
+                "trim_type": 0.1
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/iron",
+            "predicate": {
+                "trim_type": 0.2
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/netherite",
+            "predicate": {
+                "trim_type": 0.3
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/redstone",
+            "predicate": {
+                "trim_type": 0.4
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/copper",
+            "predicate": {
+                "trim_type": 0.5
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/gold",
+            "predicate": {
+                "trim_type": 0.6
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/emerald",
+            "predicate": {
+                "trim_type": 0.7
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/diamond",
+            "predicate": {
+                "trim_type": 0.8
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/lapis",
+            "predicate": {
+                "trim_type": 0.9
+            }
+        },
+        {
+            "model": "frostiful:item/trims/fur_helmet/amethyst",
+            "predicate": {
+                "trim_type": 1.0
+            }
+        }
+    ]
 }
