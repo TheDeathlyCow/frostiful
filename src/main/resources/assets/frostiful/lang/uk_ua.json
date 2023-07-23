@@ -193,7 +193,7 @@
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[1]": "мод змінює значення на типові.",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[2]": "Рекомендується вимкнути цей параметр у пакетах модів",
 
-  "text.autoconfig.frostiful.option.combatConfig": "Налаштування битви",
+  "text.autoconfig.frostiful.option.combatConfig": "Конфігурація битви",
   "text.autoconfig.frostiful.option.combatConfig.doChillagerPatrols": "Патрулі морозників",
   "text.autoconfig.frostiful.option.combatConfig.straysCarryFrostArrows": "Примари носять морозні стріли",
   "text.autoconfig.frostiful.option.combatConfig.heatDrainPerLevel": "Вичерпування тепла на рівень нервовиснаження",
