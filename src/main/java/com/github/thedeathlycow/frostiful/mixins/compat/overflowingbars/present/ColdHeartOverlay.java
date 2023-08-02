@@ -7,6 +7,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -16,7 +17,9 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(value = HealthBarRenderer.class, remap = false)
 public abstract class ColdHeartOverlay {
 
+    @Unique
     private final int[] heartYPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
+    @Unique
     private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
 
     @Inject(

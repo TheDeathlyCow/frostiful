@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(InGameHud.HeartType.class)
-public class FreezingHearts {
+public abstract class FreezingHearts {
 
     @Inject(
             method = "fromPlayerState",

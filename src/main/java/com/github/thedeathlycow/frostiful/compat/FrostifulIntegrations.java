@@ -4,6 +4,8 @@ import net.fabricmc.loader.api.FabricLoader;
 
 public class FrostifulIntegrations {
 
+    private FrostifulIntegrations() {}
+
     public static final String COLORFUL_HEARTS_ID = "colorfulhearts";
 
     public static final String OVERFLOWING_BARS_ID = "overflowingbars";

@@ -5,6 +5,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -13,8 +14,10 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 @Mixin(InGameHud.class)
 abstract class ColdHeartOverlay {
 
+    @Unique
     private final int[] heartYPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
-    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];;
+    @Unique
+    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
 
     @Inject(
             method = "renderHealthBar",

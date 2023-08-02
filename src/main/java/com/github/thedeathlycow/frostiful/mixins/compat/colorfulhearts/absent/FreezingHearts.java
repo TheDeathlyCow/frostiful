@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.absent;
 
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(InGameHud.HeartType.class)
-public class FreezingHearts {
+public abstract class FreezingHearts {
 
     @Inject(
             method = "fromPlayerState",
