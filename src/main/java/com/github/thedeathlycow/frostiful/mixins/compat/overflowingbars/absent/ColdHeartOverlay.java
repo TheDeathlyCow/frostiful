@@ -1,8 +1,6 @@
-package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.absent;
+package com.github.thedeathlycow.frostiful.mixins.compat.overflowingbars.absent;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
-import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
@@ -16,7 +14,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 abstract class ColdHeartOverlay {
 
     private final int[] heartYPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
-    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
+    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];;
 
     @Inject(
             method = "renderHealthBar",
@@ -43,11 +41,10 @@ abstract class ColdHeartOverlay {
             // local captures
             InGameHud.HeartType heartType,
             int i, int j, int k, int l,
-            int m, // index //of heart
+            int m, // index of heart
             int n, int o,
             int p, int q // position of heart to capture
     ) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
         if (m < FrozenHeartsOverlay.MAX_COLD_HEARTS) {
             heartYPositions[m] = q;
             heartXPositions[m] = p;
@@ -73,7 +70,6 @@ abstract class ColdHeartOverlay {
             boolean blinking,
             CallbackInfo ci
     ) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
         FrozenHeartsOverlay.INSTANCE.drawHeartOverlayBar(
                 context,
                 player,

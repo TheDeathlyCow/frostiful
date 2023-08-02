@@ -34,6 +34,17 @@ repositories {
         name = "Ladysnake Mods"
         url = 'https://maven.ladysnake.org/releases'
     }
+    exclusiveContent {
+        forRepository {
+            maven {
+                name = "Modrinth"
+                url = "https://api.modrinth.com/maven"
+            }
+        }
+        filter {
+            includeGroup "maven.modrinth"
+        }
+    }
 
     flatDir {
         dirs 'libs'
@@ -67,6 +78,9 @@ dependencies {
 
     // HealthOverlay https://github.com/Terrails/HealthOverlay
     modCompileOnly("curse.maven:colorful-hearts-854213:${project.health_overlay_version}") { transitive = false }
+    // OverflowingBars https://modrinth.com/mod/overflowing-bars
+    modCompileOnly("maven.modrinth:overflowing-bars:${project.overflowing_bars_version}") { transitive = false }
+
     // Trinkets https://github.com/emilyploszaj/trinkets
     modCompileOnly "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
     modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {

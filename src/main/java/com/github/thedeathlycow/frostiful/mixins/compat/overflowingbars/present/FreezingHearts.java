@@ -1,6 +1,5 @@
-package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.absent;
+package com.github.thedeathlycow.frostiful.mixins.compat.overflowingbars.present;
 
-import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +17,7 @@ public class FreezingHearts {
             cancellable = true
     )
     private static void setFreezingHeartsWhenFrozen(PlayerEntity player, CallbackInfoReturnable<InGameHud.HeartType> cir) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
+        if (FabricLoader.getInstance().isModLoaded("overflowingbars")) return;
         if (player.thermoo$getTemperatureScale() <= -0.99) {
             cir.setReturnValue(InGameHud.HeartType.FROZEN);
         }
