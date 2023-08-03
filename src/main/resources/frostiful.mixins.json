@@ -50,8 +50,6 @@
 		"client.gui.RootedEffectOverlay",
 		"client.ice_skate_fx.GameRendererMixin",
 		"client.ice_skate_fx.ModelMixin",
-		"compat.colorfulhearts.absent.ColdHeartOverlay",
-		"compat.colorfulhearts.absent.FreezingHearts",
 		"compat.colorfulhearts.present.ColdHeartOverlay",
 		"compat.colorfulhearts.present.FreezingHearts",
 		"compat.overflowingbars.absent.ColdHeartOverlay",

@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.compat.overflowingbars.absent;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.entity.player.PlayerEntity;
@@ -42,6 +43,7 @@ abstract class ColdHeartOverlay {
             int n, int o,
             int p, int q // position of heart to capture
     ) {
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.COLORFUL_HEARTS_ID)) return;
         FrozenHeartsOverlay.INSTANCE.setHeartPos(m, p, q);
     }
 
@@ -64,6 +66,7 @@ abstract class ColdHeartOverlay {
             boolean blinking,
             CallbackInfo ci
     ) {
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.COLORFUL_HEARTS_ID)) return;
         FrozenHeartsOverlay.INSTANCE.drawHeartOverlayBar(
                 context,
                 player
