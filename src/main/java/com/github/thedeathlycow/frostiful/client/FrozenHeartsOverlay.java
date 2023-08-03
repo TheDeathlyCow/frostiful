@@ -9,6 +9,7 @@ import net.minecraft.client.gui.DrawContext;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
+import org.jetbrains.annotations.NotNull;
 
 @Environment(EnvType.CLIENT)
 public class FrozenHeartsOverlay {
@@ -18,7 +19,17 @@ public class FrozenHeartsOverlay {
     public static final Identifier HEART_OVERLAY_TEXTURE = new Identifier(Frostiful.MODID, "textures/gui/cold_heart_overlay.png");
     public static final int MAX_COLD_HEARTS = 20;
 
-    public int getNumColdPoints(PlayerEntity player) {
+    private final int[] heartXPositions = new int[MAX_COLD_HEARTS];
+    private final int[] heartYPositions = new int[MAX_COLD_HEARTS];
+
+    public void setHeartPos(int index, int xPos, int yPos) {
+        if (index >= 0 && index < MAX_COLD_HEARTS) {
+            this.heartXPositions[index] = xPos;
+            this.heartYPositions[index] = yPos;
+        }
+    }
+
+    public int getNumColdPoints(@NotNull PlayerEntity player) {
         float freezingProgress = player.thermoo$getTemperatureScale();
         if (freezingProgress >= 0f) {
             return 0;
@@ -29,10 +40,10 @@ public class FrozenHeartsOverlay {
 
         // number of half cold hearts
         int frozenHealthPoints;
-        // match the number of cold hearts to the display if HealthOverlay is loaded
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.COLORFUL_HEARTS_ID)) {
-            // 20 is the maximum number of health points that healthoverlay will display
-            frozenHealthPoints = (int) (freezingProgress * Math.min(20f, playerMaxHealth));
+        // match the number of cold hearts to the display if hearts render is altered
+        if (FrostifulIntegrations.isHeartsRenderOverridden()) {
+            // 20 is the (expected) maximum number of health points that the render mod will display
+            frozenHealthPoints = (int) (freezingProgress * Math.min(MAX_COLD_HEARTS, playerMaxHealth));
         } else {
             // max cold hearts is multiplied by 2 to covert to points
             frozenHealthPoints = (int) (freezingProgress * Math.min(MAX_COLD_HEARTS * 2.0f, playerMaxHealth));
@@ -49,9 +60,7 @@ public class FrozenHeartsOverlay {
 
     public void drawHeartOverlayBar(
             DrawContext context,
-            PlayerEntity player,
-            int[] heartXPositions,
-            int[] heartYPositions
+            PlayerEntity player
     ) {
 
         FrostifulConfig config = Frostiful.getConfig();

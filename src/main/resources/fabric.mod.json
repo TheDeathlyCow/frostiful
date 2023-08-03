@@ -1,56 +1,56 @@
 {
-	"schemaVersion": 1,
-	"id": "frostiful",
-	"version": "${version}",
-	"name": "Frostiful",
-	"description": "A Frosty Vanilla+ Survival Experience",
-	"authors": [
-		"TheDeathlyCow"
-	],
-	"contributors": [
-		"NerjalNosk (Health Overlay compatibility)"
-	],
-	"contact": {
-		"homepage": "https://github.com/TheDeathlyCow/frostiful/wiki",
-		"sources": "https://github.com/TheDeathlyCow/frostiful",
-		"issues": "https://github.com/TheDeathlyCow/frostiful/issues"
-	},
-	"license": "LGPL-3.0",
-	"icon": "assets/frostiful/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-			"com.github.thedeathlycow.frostiful.Frostiful"
-		],
-		"server": [
-			"com.github.thedeathlycow.frostiful.FrostifulServer"
-		],
-		"client": [
-			"com.github.thedeathlycow.frostiful.FrostifulClient"
-		],
-		"modmenu": [
-			"com.github.thedeathlycow.frostiful.FrostifulModMenu"
-		],
-		"mm:early_risers": [
-			"com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
-		]
-	},
-	"mixins": [
-		"frostiful.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.14.21",
-		"fabric-api": "*",
-		"minecraft": ">=1.20",
-		"thermoo": ">=1.6",
-		"mm": ">=2.3",
-		"java": ">=17"
-	},
-	"breaks": {
-		"healthoverlay": "<7.2.1"
-	},
-	"suggests": {
-		"another-mod": "*"
-	},
-	"accessWidener": "frostiful.accesswidener"
+    "schemaVersion": 1,
+    "id": "frostiful",
+    "version": "${version}",
+    "name": "Frostiful",
+    "description": "A Frosty Vanilla+ Survival Experience",
+    "authors": [
+        "TheDeathlyCow"
+    ],
+    "contributors": [
+        "NerjalNosk (Health Overlay compatibility)"
+    ],
+    "contact": {
+        "homepage": "https://github.com/TheDeathlyCow/frostiful/wiki",
+        "sources": "https://github.com/TheDeathlyCow/frostiful",
+        "issues": "https://github.com/TheDeathlyCow/frostiful/issues"
+    },
+    "license": "LGPL-3.0",
+    "icon": "assets/frostiful/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "main": [
+            "com.github.thedeathlycow.frostiful.Frostiful"
+        ],
+        "server": [
+            "com.github.thedeathlycow.frostiful.FrostifulServer"
+        ],
+        "client": [
+            "com.github.thedeathlycow.frostiful.FrostifulClient"
+        ],
+        "modmenu": [
+            "com.github.thedeathlycow.frostiful.FrostifulModMenu"
+        ],
+        "mm:early_risers": [
+            "com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
+        ]
+    },
+    "mixins": [
+        "frostiful.mixins.json"
+    ],
+    "depends": {
+        "fabricloader": ">=0.14.21",
+        "fabric-api": "*",
+        "minecraft": ">=1.20",
+        "thermoo": ">=1.6",
+        "mm": ">=2.3",
+        "java": ">=17"
+    },
+    "breaks": {
+        "healthoverlay": "<7.2.1"
+    },
+    "suggests": {
+        "another-mod": "*"
+    },
+    "accessWidener": "frostiful.accesswidener"
 }
