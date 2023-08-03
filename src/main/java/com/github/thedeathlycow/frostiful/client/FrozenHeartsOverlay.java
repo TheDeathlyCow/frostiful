@@ -19,6 +19,23 @@ public class FrozenHeartsOverlay {
     public static final Identifier HEART_OVERLAY_TEXTURE = new Identifier(Frostiful.MODID, "textures/gui/cold_heart_overlay.png");
     public static final int MAX_COLD_HEARTS = 20;
 
+    private final int[] heartXPositions = new int[MAX_COLD_HEARTS];
+    private final int[] heartYPositions = new int[MAX_COLD_HEARTS];
+
+    public void setXPos(int index, int value) {
+        index = Math.abs(index);
+        if (index < heartXPositions.length) {
+            heartXPositions[index] = value;
+        }
+    }
+
+    public void setYPos(int index, int value) {
+        index = Math.abs(index);
+        if (index < heartYPositions.length) {
+            heartYPositions[index] = value;
+        }
+    }
+
     public int getNumColdPoints(@NotNull PlayerEntity player) {
         float freezingProgress = player.thermoo$getTemperatureScale();
         if (freezingProgress >= 0f) {
@@ -50,9 +67,7 @@ public class FrozenHeartsOverlay {
 
     public void drawHeartOverlayBar(
             DrawContext context,
-            PlayerEntity player,
-            int[] heartXPositions,
-            int[] heartYPositions
+            PlayerEntity player
     ) {
 
         FrostifulConfig config = Frostiful.getConfig();
