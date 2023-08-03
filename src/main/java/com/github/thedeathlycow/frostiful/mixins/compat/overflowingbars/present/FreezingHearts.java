@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.mixins.compat.overflowingbars.present;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import fuzs.overflowingbars.client.handler.HealthBarRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import org.spongepowered.asm.mixin.Mixin;
