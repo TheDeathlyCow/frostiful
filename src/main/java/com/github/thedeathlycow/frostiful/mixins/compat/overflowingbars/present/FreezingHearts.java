@@ -56,7 +56,7 @@ public abstract class FreezingHearts {
             PlayerEntity player,
             boolean absorbing,
             boolean orange,
-            CallbackInfoReturnable<Object> cir
+            CallbackInfoReturnable<Object> cir // THIS IS ACTUALLY A HEART TYPE!!!!
     ) {
         if (player.thermoo$getTemperatureScale() <= -0.99) {
             if (frostiful$FrozenHeartType == null) {
