@@ -42,8 +42,7 @@ abstract class ColdHeartOverlay {
             int n, int o,
             int p, int q // position of heart to capture
     ) {
-        FrozenHeartsOverlay.INSTANCE.setXPos(m, p);
-        FrozenHeartsOverlay.INSTANCE.setYPos(m, q);
+        FrozenHeartsOverlay.INSTANCE.setHeartPos(m, p, q);
     }
 
     @Inject(

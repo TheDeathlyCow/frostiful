@@ -44,8 +44,7 @@ abstract class ColdHeartOverlay {
             int p, int q // position of heart to capture
     ) {
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
-        FrozenHeartsOverlay.INSTANCE.setXPos(m, p);
-        FrozenHeartsOverlay.INSTANCE.setYPos(m, q);
+        FrozenHeartsOverlay.INSTANCE.setHeartPos(m, p, q);
     }
 
     @Inject(

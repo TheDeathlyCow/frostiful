@@ -22,17 +22,10 @@ public class FrozenHeartsOverlay {
     private final int[] heartXPositions = new int[MAX_COLD_HEARTS];
     private final int[] heartYPositions = new int[MAX_COLD_HEARTS];
 
-    public void setXPos(int index, int value) {
-        index = Math.abs(index);
-        if (index < heartXPositions.length) {
-            heartXPositions[index] = value;
-        }
-    }
-
-    public void setYPos(int index, int value) {
-        index = Math.abs(index);
-        if (index < heartYPositions.length) {
-            heartYPositions[index] = value;
+    public void setHeartPos(int index, int xPos, int yPos) {
+        if (index >= 0 && index < MAX_COLD_HEARTS) {
+            this.heartXPositions[index] = xPos;
+            this.heartYPositions[index] = yPos;
         }
     }
 

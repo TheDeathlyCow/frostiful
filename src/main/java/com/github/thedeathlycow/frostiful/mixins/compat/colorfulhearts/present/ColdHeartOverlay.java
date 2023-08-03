@@ -80,7 +80,6 @@ public abstract class ColdHeartOverlay {
             boolean highlightHeart
     ) {
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
-        FrozenHeartsOverlay.INSTANCE.setXPos(index, xPos);
-        FrozenHeartsOverlay.INSTANCE.setYPos(index, yPos);
+        FrozenHeartsOverlay.INSTANCE.setHeartPos(index, xPos, yPos);
     }
 }
