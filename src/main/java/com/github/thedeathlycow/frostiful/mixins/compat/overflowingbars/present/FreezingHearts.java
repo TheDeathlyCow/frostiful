@@ -48,7 +48,11 @@ public abstract class FreezingHearts {
 
     @Inject(
             method = "forPlayer",
-            at = @At("TAIL"),
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/player/PlayerEntity;isFrozen()Z",
+                    shift = At.Shift.BEFORE
+            ),
             cancellable = true
     )
     private static void setFreezingHeartsWhenFrozen(
