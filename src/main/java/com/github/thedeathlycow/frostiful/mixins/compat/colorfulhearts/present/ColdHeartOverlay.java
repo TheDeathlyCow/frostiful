@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.present;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.mixins.client.DrawContextInvoker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -20,8 +21,6 @@ import terrails.colorfulhearts.render.HeartRenderer;
 @Environment(EnvType.CLIENT)
 @Mixin(value = HeartRenderer.class, remap = false)
 public abstract class ColdHeartOverlay {
-    private final int[] heartYPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
-    private final int[] heartXPositions = new int[FrozenHeartsOverlay.MAX_COLD_HEARTS];
 
     @Inject(
             method = "renderPlayerHearts",
@@ -42,13 +41,12 @@ public abstract class ColdHeartOverlay {
             boolean renderHighlight,
             CallbackInfo ci
     ) {
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
         MinecraftClient client = MinecraftClient.getInstance();
         DrawContext drawContext = DrawContextInvoker.create(client, poseStack, client.getBufferBuilders().getEntityVertexConsumers());
         FrozenHeartsOverlay.INSTANCE.drawHeartOverlayBar(
                 drawContext,
-                player,
-                heartXPositions,
-                heartYPositions
+                player
         );
     }
 
@@ -81,9 +79,7 @@ public abstract class ColdHeartOverlay {
             int xPos, int yPos,
             boolean highlightHeart
     ) {
-        if (index < FrozenHeartsOverlay.MAX_COLD_HEARTS) {
-            heartXPositions[index] = xPos;
-            heartYPositions[index] = yPos;
-        }
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
+        FrozenHeartsOverlay.INSTANCE.setHeartPos(index, xPos, yPos);
     }
 }
