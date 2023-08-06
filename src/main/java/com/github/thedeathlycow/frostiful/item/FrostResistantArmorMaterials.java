@@ -12,6 +12,7 @@ import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Util;
 
 import java.util.EnumMap;
+import java.util.Map;
 
 
 public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial {
@@ -63,19 +64,19 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
 
     private final String name;
     private final int durabilityMultiplier;
-    private final EnumMap<ArmorItem.Type, Integer> protectionAmounts;
+    private final Map<ArmorItem.Type, Integer> protectionAmounts;
     private final int enchantability;
     private final SoundEvent equipSound;
     private final float toughness;
     private final float knockbackResistance;
     private final Supplier<Ingredient> repairIngredientSupplier;
-    private final EnumMap<ArmorItem.Type, Double> frostResistanceAmounts;
+    private final Map<ArmorItem.Type, Double> frostResistanceAmounts;
 
 
     FrostResistantArmorMaterials(
             String name,
             int durabilityMultiplier,
-            EnumMap<ArmorItem.Type, Integer> protectionAmounts,
+            Map<ArmorItem.Type, Integer> protectionAmounts,
             int enchantability,
             SoundEvent equipSound,
             float toughness,
