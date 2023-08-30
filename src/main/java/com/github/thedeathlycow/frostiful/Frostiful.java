@@ -10,12 +10,11 @@ import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.survival.LivingEntityThermooEventListeners;
-import com.github.thedeathlycow.frostiful.survival.PlayerEventThermooListeners;
+import com.github.thedeathlycow.frostiful.survival.*;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
-import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntityEnvironmentEvents;
+import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
 import com.github.thedeathlycow.thermoo.api.temperature.event.PlayerEnvironmentEvents;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -75,16 +74,12 @@ public class Frostiful implements ModInitializer {
     }
 
     private void registerThermooEventListeners() {
-        PlayerEventThermooListeners player = new PlayerEventThermooListeners();
-
-        PlayerEnvironmentEvents.TICK_BIOME_TEMPERATURE_CHANGE.register(player::applyPassiveFreezing);
-
-        LivingEntityThermooEventListeners entity = new LivingEntityThermooEventListeners();
-
-        LivingEntityEnvironmentEvents.TICK_IN_HEATED_LOCATION.register(entity::tickHeatSources);
-        LivingEntityEnvironmentEvents.TICK_HEAT_EFFECTS.register(entity::tickHeatEffects);
-        LivingEntityEnvironmentEvents.TICK_IN_WET_LOCATION.register(entity::tickWetChange);
-
+        PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
+                (change, player) -> change <= 0 || player.thermoo$isCold()
+        );
+        EnvironmentControllerInitializeEvent.EVENT.register(AmbientTemperatureController::new);
+        EnvironmentControllerInitializeEvent.EVENT.register(EntityTemperatureController::new);
+        EnvironmentControllerInitializeEvent.EVENT.register(SoakingController::new);
     }
 
     public static FrostifulConfig getConfig() {

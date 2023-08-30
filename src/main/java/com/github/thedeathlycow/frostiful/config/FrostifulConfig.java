@@ -20,6 +20,9 @@ public class FrostifulConfig extends PartitioningSerializer.GlobalData {
     public final UpdateConfigGroup updateConfig = new UpdateConfigGroup();
 
     @ConfigEntry.Gui.CollapsibleObject
+    public final EnvironmentConfigGroup environmentConfig = new EnvironmentConfigGroup();
+
+    @ConfigEntry.Gui.CollapsibleObject
     public final CombatConfigGroup combatConfig = new CombatConfigGroup();
 
     @ConfigEntry.Gui.CollapsibleObject
