@@ -73,7 +73,7 @@ dependencies {
     }
 
     //modImplementation "com.github.thedeathlycow:thermoo:${project.thermoo_version}"
-    modImplementation files('libs/thermoo-2.0.0-pre1.jar')
+    modImplementation files('libs/thermoo-2.0.0-pre6.jar')
 
     //// Optional Dependencies ////
 
