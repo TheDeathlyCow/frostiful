@@ -22,8 +22,12 @@ public class FreezingWindEntity extends WindEntity {
     @Override
     public void onEntityCollision(LivingEntity entity) {
         super.onEntityCollision(entity);
+        freezeEntity(entity, this.frost);
+    }
+
+    public static void freezeEntity(LivingEntity entity, int frost) {
         if (entity.isPlayer()) {
-            entity.thermoo$addTemperature(-this.frost, HeatingModes.ACTIVE);
+            entity.thermoo$addTemperature(-frost, HeatingModes.ACTIVE);
         }
     }
 
