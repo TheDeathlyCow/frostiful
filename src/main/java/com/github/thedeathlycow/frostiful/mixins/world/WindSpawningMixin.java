@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.world;
 
-import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
+import com.github.thedeathlycow.frostiful.survival.wind.WindManager;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -37,7 +37,7 @@ public abstract class WindSpawningMixin extends World {
     private void tickWindSpawn(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
         Profiler profiler = this.getProfiler();
         profiler.push("frostiful.freezingWindTick");
-        WindSpawner.INSTANCE.trySpawnFreezingWind(this, chunk);
+        WindManager.INSTANCE.trySpawnFreezingWind(this, chunk);
         profiler.pop();
     }
 

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.world;
 
-import com.github.thedeathlycow.frostiful.world.spawner.WindSpawner;
+import com.github.thedeathlycow.frostiful.survival.wind.WindManager;
 import net.minecraft.server.world.ServerChunkManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,7 +18,7 @@ public class ServerChunkManagerMixin {
     )
     private void resetWindSpawnCount(CallbackInfo ci) {
         if ((++frostiful$tickCount) % 20 == 0) {
-            WindSpawner.INSTANCE.resetWindSpawnCount();
+            WindManager.INSTANCE.resetWindSpawnCount();
             frostiful$tickCount = 0;
         }
 
