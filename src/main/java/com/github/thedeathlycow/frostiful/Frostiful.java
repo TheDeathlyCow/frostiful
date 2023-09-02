@@ -82,13 +82,14 @@ public class Frostiful implements ModInitializer {
                     }
 
                     FrostifulConfig config = getConfig();
-                    if (!config.freezingConfig.doPassiveFreezing()) {
+                    boolean doPassiveFreezing = player.getWorld().getGameRules()
+                            .getBoolean(FGameRules.DO_PASSIVE_FREEZING);
+
+                    if (doPassiveFreezing && !config.freezingConfig.doPassiveFreezing()) {
                         return false;
-                    } else if (player.thermoo$getTemperatureScale() <= -config.freezingConfig.getMaxPassiveFreezingPercent()) {
-
+                    } else {
+                        return player.thermoo$getTemperatureScale() > -config.freezingConfig.getMaxPassiveFreezingPercent();
                     }
-
-                    return true;
                 }
         );
 
