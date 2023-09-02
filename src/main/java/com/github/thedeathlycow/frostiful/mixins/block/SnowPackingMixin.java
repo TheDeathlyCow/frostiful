@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.block;
 
 import com.github.thedeathlycow.frostiful.block.FBlocks;
 import com.github.thedeathlycow.frostiful.block.PackedSnowBlock;
+import com.github.thedeathlycow.frostiful.init.Frostiful;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.BlockState;
@@ -29,6 +30,7 @@ public abstract class SnowPackingMixin {
         boolean maySmushSnow = state.getBlock() == Blocks.SNOW
                 && entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES)
                 && !world.isClient
+                && Frostiful.getConfig().freezingConfig.doSnowPacking()
                 && world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)
                 && isEntityWalkingOn(pos, entity);
 
