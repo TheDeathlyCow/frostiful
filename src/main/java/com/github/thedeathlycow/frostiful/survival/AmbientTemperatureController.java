@@ -6,6 +6,8 @@ import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
 import net.minecraft.block.BlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
@@ -35,12 +37,16 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     }
 
     @Override
-    public int getFloorTemperature(BlockState state) {
+    public int getFloorTemperature(LivingEntity entity, World world, BlockState state, BlockPos pos) {
         if (state.isIn(FBlockTags.HOT_FLOOR)) {
+            if (EnchantmentHelper.hasFrostWalker(entity)) {
+                return controller.getFloorTemperature(entity, world, state, pos);
+            }
+
             FrostifulConfig config = Frostiful.getConfig();
-            return config.environmentConfig.getHotFloorWarmth();
+            return config.freezingConfig.getHeatFromHotFloor();
         } else {
-            return controller.getFloorTemperature(state);
+            return controller.getFloorTemperature(entity, world, state, pos);
         }
     }
 

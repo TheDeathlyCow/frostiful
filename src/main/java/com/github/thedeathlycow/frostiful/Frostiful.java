@@ -10,10 +10,7 @@ import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.survival.AmbientTemperatureController;
-import com.github.thedeathlycow.frostiful.survival.EntityTemperatureController;
-import com.github.thedeathlycow.frostiful.survival.PlayerTemperatureController;
-import com.github.thedeathlycow.frostiful.survival.SoakingController;
+import com.github.thedeathlycow.frostiful.survival.*;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
@@ -78,10 +75,28 @@ public class Frostiful implements ModInitializer {
 
     private void registerThermooEventListeners() {
         PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
-                (change, player) -> change <= 0 || player.thermoo$isCold()
+                (change, player) -> {
+
+                    if (change > 0 && player.thermoo$isWarm()) {
+                        return false;
+                    }
+
+                    FrostifulConfig config = getConfig();
+                    if (!config.freezingConfig.doPassiveFreezing()) {
+                        return false;
+                    } else if (player.thermoo$getTemperatureScale() <= -config.freezingConfig.getMaxPassiveFreezingPercent()) {
+
+                    }
+
+                    return true;
+                }
         );
 
         EnvironmentControllerInitializeEvent.EVENT.register(AmbientTemperatureController::new);
+        EnvironmentControllerInitializeEvent.EVENT.register(
+                EnvironmentControllerInitializeEvent.LISTENER_PHASE,
+                ControllerListeners::new
+        );
         EnvironmentControllerInitializeEvent.EVENT.register(EntityTemperatureController::new);
         EnvironmentControllerInitializeEvent.EVENT.register(
                 EnvironmentControllerInitializeEvent.MODIFY_PHASE,

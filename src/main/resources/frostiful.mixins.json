@@ -7,7 +7,6 @@
 	"mixins": [
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
-		"block.HotFloorMixin",
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
