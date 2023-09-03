@@ -218,7 +218,7 @@
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
   "text.autoconfig.frostiful.option.freezingConfig.doSnowPacking": "Do snow packing from heavy entities",
-  "text.autoconfig.frostiful.option.freezingConfig.doWindSpawning": "Do wind spawning",
+  "text.autoconfig.frostiful.option.freezingConfig.windSpawnStrategy": "Wind spawn strategy",
   "text.autoconfig.frostiful.option.freezingConfig.spawnWindInAir": "Do wind spawning in air",
   "text.autoconfig.frostiful.option.freezingConfig.windSpawnCapPerSecond": "Wind spawn cap per second",
   "text.autoconfig.frostiful.option.freezingConfig.windSpawnRarity": "Wind spawn rarity",

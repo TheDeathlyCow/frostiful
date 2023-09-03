@@ -71,7 +71,7 @@ public final class WindManager {
         }
     }
 
-    public void extinguishBlock(BlockState state, World world, BlockPos pos, Entity entity) {
+    public void extinguishBlock(BlockState state, World world, BlockPos pos, Runnable playSoundCallback) {
         if (!Frostiful.getConfig().freezingConfig.isWindDestroysTorches()) {
             return;
         }
@@ -101,7 +101,7 @@ public final class WindManager {
 
         if (blownOutResult != null) {
             world.setBlockState(pos, blownOutResult);
-            entity.playSound(FSoundEvents.ENTITY_FREEZING_WIND_BLOWOUT, 1.0f, 1.0f);
+            playSoundCallback.run();
         }
     }
 

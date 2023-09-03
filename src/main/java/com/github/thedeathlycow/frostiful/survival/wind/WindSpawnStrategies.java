@@ -5,7 +5,8 @@ import org.jetbrains.annotations.Nullable;
 public enum WindSpawnStrategies {
 
     NONE(null),
-    ENTITY(new WindEntitySpawnStrategy());
+    ENTITY(new WindEntitySpawnStrategy()),
+    POINT(new PointWindSpawnStrategy());
 
     @Nullable
     private final WindSpawnStrategy strategy;

@@ -192,12 +192,12 @@ public class WindEntity extends Entity {
     }
 
     public void onEntityCollision(LivingEntity entity) {
-        pushEntity(entity, getWorld(), this.getPos());
+        pushEntity(entity, getWorld(), this.getPos(), 1);
     }
 
-    public static void pushEntity(LivingEntity entity, World world, Vec3d pos) {
+    public static void pushEntity(LivingEntity entity, World world, Vec3d pos, double scale) {
         Vec3d push = entity.isFallFlying() ? ELYTRA_PUSH : REGULAR_PUSH;
-        entity.addVelocity(push.x, push.y, push.z);
+        entity.addVelocity(push.x * scale, push.y * scale, push.z * scale);
         entity.velocityModified = true;
         if (!world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {
             serverPlayer.networkHandler

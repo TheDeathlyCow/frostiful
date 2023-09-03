@@ -9,6 +9,7 @@ import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
+import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
 import com.github.thedeathlycow.frostiful.world.FGameRules;
@@ -44,6 +45,7 @@ public class Frostiful implements ModInitializer {
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {
                     RootCommand.register(dispatcher);
+                    WindCommand.register(dispatcher);
                 });
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
