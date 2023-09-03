@@ -15,42 +15,70 @@ public class LocalTemperatureTests {
     @GameTest(templateName = "frostiful-test:effects.local_temperature")
     public void villager_is_warmed_by_torch(TestContext context) {
         BlockPos pos = new BlockPos(1, 2, 1);
+        int temperature = -5300;
 
         EnvironmentController controller = EnvironmentManager.INSTANCE.getController();
 
-        int locationHeat = controller.getHeatAtLocation(context.getWorld(), pos);
+        VillagerEntity villager = context.spawnMob(EntityType.VILLAGER, pos);
+        villager.thermoo$setTemperature(temperature);
 
-        context.spawnMob(EntityType.VILLAGER, pos);
-
-        context.expectEntityWithDataEnd(
+        context.expectEntityWithData(
                 pos,
                 EntityType.VILLAGER,
-                e -> {
-                    return controller.getHeatAtLocation(e.getWorld(), e.getBlockPos());
-                },
-                locationHeat
+                VillagerEntity::thermoo$getTemperature,
+                temperature
+        );
+
+        context.waitAndRun(
+                5L,
+                () -> {
+                    context.addInstantFinalTask(() -> context.assertTrue(
+                            villager.thermoo$getTemperature() > temperature,
+                            "Villager must be warmed"
+                    ));
+                }
         );
     }
 
     @GameTest(templateName = "frostiful-test:effects.local_temperature")
     public void villager_in_boat_is_warmed_by_torch(TestContext context) {
         BlockPos pos = new BlockPos(1, 2, 1);
+        int temperature = -5300;
 
         EnvironmentController controller = EnvironmentManager.INSTANCE.getController();
-
-        int locationHeat = controller.getHeatAtLocation(context.getWorld(), pos);
 
         VillagerEntity villager = context.spawnMob(EntityType.VILLAGER, pos);
         Entity boat = context.spawnEntity(EntityType.BOAT, pos);
         villager.startRiding(boat, true);
 
-        context.expectEntityWithDataEnd(
+        villager.thermoo$setTemperature(temperature);
+
+        context.expectEntityWithData(
+                pos,
+                EntityType.VILLAGER,
+                VillagerEntity::thermoo$getTemperature,
+                temperature
+        );
+
+        context.expectEntityWithData(
                 pos,
                 EntityType.VILLAGER,
                 e -> {
-                    return controller.getHeatAtLocation(e.getWorld(), e.getBlockPos());
+                    Entity vehicle = e.getVehicle();
+                    context.assertFalse(vehicle == null, "Villager must have a vehicle");
+                    return vehicle.getId();
                 },
-                locationHeat
+                boat.getId()
+        );
+
+        context.waitAndRun(
+                5L,
+                () -> {
+                    context.addInstantFinalTask(() -> context.assertTrue(
+                            villager.thermoo$getTemperature() > temperature,
+                            "Villager must be warmed"
+                    ));
+                }
         );
     }
 
