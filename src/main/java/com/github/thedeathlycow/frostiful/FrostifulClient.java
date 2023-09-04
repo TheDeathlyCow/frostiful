@@ -6,10 +6,13 @@ import com.github.thedeathlycow.frostiful.client.render.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.client.render.entity.FEntityRenderers;
 import com.github.thedeathlycow.frostiful.particle.client.FParticleFactoryRegistry;
 import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
+import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacketListener;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.resource.ResourceType;
@@ -38,7 +41,10 @@ public class FrostifulClient implements ClientModInitializer {
 
         FCutouts.registerCutouts();
         FParticleFactoryRegistry.registerFactories();
-
+        ClientPlayNetworking.registerGlobalReceiver(
+                PointWindSpawnPacket.ID,
+                PointWindSpawnPacketListener::receive
+        );
 
 
         Frostiful.LOGGER.info("Initialized Frostiful client!");
