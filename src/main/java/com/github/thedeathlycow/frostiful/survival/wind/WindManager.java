@@ -60,7 +60,6 @@ public final class WindManager {
         boolean canSpawnOnGround = (world.isRaining() && biome.isIn(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
                 || biome.isIn(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
 
-
         WindSpawnStrategy strategy = config.getWindSpawnStrategy().getStrategy();
         if (strategy == null) {
             return;

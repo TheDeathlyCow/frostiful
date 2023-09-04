@@ -10,6 +10,7 @@ import net.minecraft.util.math.MathHelper;
 public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
+    boolean doWindSpawning = true;
     WindSpawnStrategies windSpawnStrategy = WindSpawnStrategies.ENTITY;
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
@@ -34,6 +35,10 @@ public class FreezingConfigGroup implements ConfigData {
     }
 
     public WindSpawnStrategies getWindSpawnStrategy() {
+        if (!doWindSpawning) {
+            return WindSpawnStrategies.NONE;
+        }
+
         return windSpawnStrategy;
     }
 
