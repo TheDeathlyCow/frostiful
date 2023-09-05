@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.server.network;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.wind.PointWindSpawnStrategy;
-import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
@@ -11,7 +10,6 @@ import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.network.PacketByteBuf;
-import net.minecraft.network.listener.PacketListener;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.sound.SoundCategory;
@@ -25,6 +23,8 @@ public class PointWindSpawnPacketListener {
     private static final ParticleEffect[] WIND_PARTICLES = new ParticleEffect[]{
             new WindParticleEffect(true),
             new WindParticleEffect(false),
+            ParticleTypes.SNOWFLAKE,
+            ParticleTypes.SNOWFLAKE,
             ParticleTypes.SNOWFLAKE
     };
 
