@@ -36,7 +36,7 @@ public class HotFloorTests {
                             }
 
                             @Override
-                            public int getOnFireWarmthRate(LivingEntity entity) {
+                            public int getTemperatureEffectsChange(LivingEntity entity) {
                                 return 0;
                             }
                         }

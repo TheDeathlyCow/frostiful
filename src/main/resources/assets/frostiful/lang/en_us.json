@@ -217,7 +217,9 @@
   
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
+  "text.autoconfig.frostiful.option.freezingConfig.doSnowPacking": "Do snow packing from heavy entities",
   "text.autoconfig.frostiful.option.freezingConfig.doWindSpawning": "Do wind spawning",
+  "text.autoconfig.frostiful.option.freezingConfig.windSpawnStrategy": "Wind spawn strategy",
   "text.autoconfig.frostiful.option.freezingConfig.spawnWindInAir": "Do wind spawning in air",
   "text.autoconfig.frostiful.option.freezingConfig.windSpawnCapPerSecond": "Wind spawn cap per second",
   "text.autoconfig.frostiful.option.freezingConfig.windSpawnRarity": "Wind spawn rarity",
@@ -247,6 +249,21 @@
   "text.autoconfig.frostiful.option.icicleConfig.minSkylightLevelToForm": "Minimum sky light level to form (inclusive)",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleDamage": "Thrown icicle damage",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleExtraDamage": "Thrown icicle hurts extra damage",
-  "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleCooldown": "Thrown icicle cooldown"
-
+  "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleCooldown": "Thrown icicle cooldown",
+  
+  "text.autoconfig.frostiful.option.environmentConfig": "Environment Config",
+  "text.autoconfig.frostiful.option.environmentConfig.doDryBiomeNightFreezing": "Do dry biome night freezing",
+  "text.autoconfig.frostiful.option.environmentConfig.biomeTemperatureMultiplier": "Biome temperature multiplier",
+  "text.autoconfig.frostiful.option.environmentConfig.passiveFreezingCutoffTemp": "Passive freezing cutoff temp",
+  "text.autoconfig.frostiful.option.environmentConfig.nightTimeTemperatureDecrease": "Night time temperature decrease",
+  "text.autoconfig.frostiful.option.environmentConfig.rainWetnessIncrease": "Rain wetness increase per tick",
+  "text.autoconfig.frostiful.option.environmentConfig.touchingWaterWetnessIncrease": "Touching water wetness increase per tick",
+  "text.autoconfig.frostiful.option.environmentConfig.dryRate": "Dry rate",
+  "text.autoconfig.frostiful.option.environmentConfig.onFireDryDate": "On fire dry rate",
+  "text.autoconfig.frostiful.option.environmentConfig.onFireWarmRate": "On fire warm rate",
+  "text.autoconfig.frostiful.option.environmentConfig.powderSnowFreezeRate": "Powder snow freeze rate",
+  "text.autoconfig.frostiful.option.environmentConfig.warmthPerLightLevel": "Warmth per light level",
+  "text.autoconfig.frostiful.option.environmentConfig.minLightForWarmth": "Minimum block light level for warmth",
+  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate",
+  "text.autoconfig.frostiful.option.environmentConfig.dryBiomeNightTemperature": "Dry biome night temperature"
 }

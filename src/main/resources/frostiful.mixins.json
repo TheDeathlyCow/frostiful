@@ -7,7 +7,6 @@
 	"mixins": [
 		"asm.EnchantmentTargetMixin",
 		"block.CampfireWarmthMixin",
-		"block.HotFloorMixin",
 		"block.PowderSnowWalkableMixin",
 		"block.SnowPackingMixin",
 		"block.WindBlowoutMixin",
@@ -15,7 +14,6 @@
 		"entity.EntityInvoker",
 		"entity.FallingBlockEntityAccessor",
 		"entity.FallingIcicleMixin",
-		"entity.PlayerEntityMixin",
 		"entity.ice_skating.EntitySoundMixin",
 		"entity.ice_skating.LivingEntityMovementMixin",
 		"entity.mob.OcelotPlayFightMixin",

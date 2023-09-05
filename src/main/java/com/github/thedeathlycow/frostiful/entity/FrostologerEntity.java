@@ -270,11 +270,6 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     HeatingModes.PASSIVE
             );
         }
-
-        if (this.isOnFire()) {
-            int heatFromFire = EnvironmentManager.INSTANCE.getController().getOnFireWarmthRate(this);
-            this.thermoo$addTemperature(-(heatFromFire / 2), HeatingModes.ACTIVE);
-        }
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.config.group;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import net.minecraft.util.math.MathHelper;
@@ -10,9 +11,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
     boolean doWindSpawning = true;
-
+    WindSpawnStrategies windSpawnStrategy = WindSpawnStrategies.ENTITY;
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
+    boolean doSnowPacking = true;
     int windSpawnCapPerSecond = 15;
     int windSpawnRarity = 750;
     int windSpawnRarityThunder = 500;
@@ -32,8 +34,12 @@ public class FreezingConfigGroup implements ConfigData {
         return doPassiveFreezing;
     }
 
-    public boolean doWindSpawning() {
-        return doWindSpawning;
+    public WindSpawnStrategies getWindSpawnStrategy() {
+        if (!doWindSpawning) {
+            return WindSpawnStrategies.NONE;
+        }
+
+        return windSpawnStrategy;
     }
 
     public boolean spawnWindInAir() {
@@ -42,6 +48,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean isWindDestroysTorches() {
         return windDestroysTorches;
+    }
+
+    public boolean doSnowPacking() {
+        return doSnowPacking;
     }
 
     public int getWindSpawnCapPerSecond() {
