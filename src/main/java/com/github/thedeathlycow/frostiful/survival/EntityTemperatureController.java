@@ -72,6 +72,10 @@ public class EntityTemperatureController extends EnvironmentControllerDecorator 
 
     @Override
     public int getEnvironmentTemperatureForPlayer(PlayerEntity player, int localTemperature) {
+        if (player.thermoo$isWarm() && localTemperature > 0) {
+            return controller.getEnvironmentTemperatureForPlayer(player, localTemperature);
+        }
+
         float modifier = 0f;
         if (localTemperature < 0) {
             modifier = getWetnessFreezeModifier(player);
