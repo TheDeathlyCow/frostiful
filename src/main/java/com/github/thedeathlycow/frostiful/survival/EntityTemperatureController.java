@@ -39,6 +39,10 @@ public class EntityTemperatureController extends EnvironmentControllerDecorator 
 
     @Override
     public int getTemperatureEffectsChange(LivingEntity entity) {
+        if (entity.thermoo$isWarm()) {
+            return controller.getTemperatureEffectsChange(entity);
+        }
+
         int warmth = 0;
         FrostifulConfig config = Frostiful.getConfig();
 

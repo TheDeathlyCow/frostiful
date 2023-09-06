@@ -59,7 +59,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
 
         int warmth = controller.getHeatAtLocation(world, pos);
         if (lightLevel >= minLightLevel) {
-            warmth = config.environmentConfig.getWarmthPerLightLevel() * (lightLevel - minLightLevel);
+            warmth += config.environmentConfig.getWarmthPerLightLevel() * (lightLevel - minLightLevel);
         }
 
         return warmth;
@@ -78,8 +78,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
 
     @Override
     public boolean isAreaHeated(World world, BlockPos pos) {
-        int minLightForWarmth = Frostiful.getConfig().environmentConfig.getMinLightForWarmth();
-        return getHeatAtLocation(world, pos) > minLightForWarmth;
+        return getHeatAtLocation(world, pos) > 0;
     }
 
     private int getTempChangeFromBiomeTemperature(World world, float temperature, boolean isDryBiome) {
@@ -96,7 +95,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
             }
         }
 
-        return MathHelper.floor(mul * (temperature - cutoff - tempShift) - 1);
+        return MathHelper.floor(mul * (temperature - cutoff - tempShift));
     }
 
 }
