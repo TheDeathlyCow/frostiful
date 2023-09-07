@@ -28,7 +28,9 @@ public class FreezingConfigGroup implements ConfigData {
     int freezingWindFrost = 160;
     int conduitPowerWarmthPerTick = 12;
     int heatFromHotFloor = 12;
-
+    float shiverBelow = -0.5f;
+    int shiverWarmth = 1;
+    int stopShiverWarmingBelowFoodLevel = 10;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -104,5 +106,17 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getHeatFromHotFloor() {
         return heatFromHotFloor;
+    }
+
+    public float getShiverBelow() {
+        return MathHelper.clamp(shiverBelow, -1.0f, 1.0f);
+    }
+
+    public int getShiverWarmth() {
+        return shiverWarmth;
+    }
+
+    public int getStopShiverWarmingBelowFoodLevel() {
+        return stopShiverWarmingBelowFoodLevel;
     }
 }

@@ -182,7 +182,6 @@
   "text.autoconfig.frostiful.option.clientConfig": "Client Config",
   "text.autoconfig.frostiful.option.clientConfig.frostOverlayStart": "Frost overlay start percent (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Do cold heart overlay",
-  "text.autoconfig.frostiful.option.clientConfig.shakingStartPercent": "Shaking start percent (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.renderDripParticles": "Render water drip particles when wet",
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Disable frost overlay when wearing Cloak of Frostology",
   
@@ -235,6 +234,9 @@
   "text.autoconfig.frostiful.option.freezingConfig.campfireWarmthTime": "Campfire warmth time (ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.freezingWindFrost": "Freezing wind frost (per 5 ticks)",
   "text.autoconfig.frostiful.option.freezingConfig.heatFromHotFloor": "Heat from hot floor (magma block, campfire)",
+  "text.autoconfig.frostiful.option.freezingConfig.shiverBelow": "Start shivering when below temp (scale from -1 to +1)",
+  "text.autoconfig.frostiful.option.freezingConfig.shiverWarmth": "Shivering warmth per tick",
+  "text.autoconfig.frostiful.option.freezingConfig.stopShiverWarmingBelowFoodLevel": "Stop shivering warmth below food level",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",

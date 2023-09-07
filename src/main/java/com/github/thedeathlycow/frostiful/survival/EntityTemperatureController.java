@@ -60,13 +60,6 @@ public class EntityTemperatureController extends EnvironmentControllerDecorator 
             warmth -= config.environmentConfig.getPowderSnowFreezeRate();
         }
 
-        boolean applyConduitPowerWarmth = entity.isSubmergedInWater()
-                && entity.hasStatusEffect(StatusEffects.CONDUIT_POWER);
-
-        if (applyConduitPowerWarmth) {
-            warmth += config.freezingConfig.getConduitWarmthPerTick();
-        }
-
         return warmth;
     }
 

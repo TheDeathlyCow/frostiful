@@ -103,7 +103,7 @@ public class Frostiful implements ModInitializer {
         EnvironmentControllerInitializeEvent.EVENT.register(EntityTemperatureController::new);
         EnvironmentControllerInitializeEvent.EVENT.register(
                 EnvironmentControllerInitializeEvent.MODIFY_PHASE,
-                PlayerTemperatureController::new
+                ModifyTemperatureController::new
         );
         EnvironmentControllerInitializeEvent.EVENT.register(SoakingController::new);
     }
