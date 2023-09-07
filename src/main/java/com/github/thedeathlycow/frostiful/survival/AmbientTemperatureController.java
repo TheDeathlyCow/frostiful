@@ -25,11 +25,16 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
         if (world.getDimension().natural()) {
             Biome biome = world.getBiome(pos).value();
             float temperature = biome.getTemperature();
-            return this.getTempChangeFromBiomeTemperature(
+            int temp = this.getTempChangeFromBiomeTemperature(
                     world,
                     temperature,
                     !biome.hasPrecipitation()
             );
+
+            if (temp < 0) {
+                return temp;
+            }
+
         } else if (world.getDimension().ultrawarm()) {
             return Frostiful.getConfig().environmentConfig.getUltrawarmWarmRate();
         }
@@ -87,8 +92,8 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
         double cutoff = config.environmentConfig.getPassiveFreezingCutoffTemp();
 
         double tempShift = 0.0;
-        if (world.isNight() && config.environmentConfig.doDryBiomeNightFreezing()) {
-            if (isDryBiome) {
+        if (world.isNight()) {
+            if (isDryBiome && config.environmentConfig.doDryBiomeNightFreezing()) {
                 temperature = Math.min(temperature, config.environmentConfig.getDryBiomeNightTemperature());
             } else {
                 tempShift = config.environmentConfig.getNightTimeTemperatureDecrease();
