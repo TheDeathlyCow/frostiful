@@ -12,6 +12,8 @@ public class ClientConfigGroup implements ConfigData {
     boolean doColdHeartOverlay = true;
     boolean renderDripParticles = true;
     boolean disableFrostOverlayWhenWearingFrostologyCloak = true;
+    boolean shakeCameraWhenShivering = true;
+    float cameraShakeIntensity = 1.0f;
 
     public float getFrostOverlayStart() {
         return frostOverlayStart;
@@ -27,5 +29,13 @@ public class ClientConfigGroup implements ConfigData {
 
     public boolean isDisableFrostOverlayWhenWearingFrostologyCloak() {
         return disableFrostOverlayWhenWearingFrostologyCloak;
+    }
+
+    public boolean isShakeCameraWhenShiveringEnabled() {
+        return shakeCameraWhenShivering;
+    }
+
+    public float getCameraShakeIntensity() {
+        return cameraShakeIntensity;
     }
 }
