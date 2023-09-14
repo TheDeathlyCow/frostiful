@@ -9,7 +9,7 @@ public class SurvivalUtils {
 
     public static boolean isShivering(TemperatureAware temperatureAware) {
         FrostifulConfig config = Frostiful.getConfig();
-        return temperatureAware.thermoo$getTemperatureScale() < config.freezingConfig.getShiverBelow();
+        return temperatureAware.thermoo$getTemperatureScale() <= config.freezingConfig.getShiverBelow();
     }
 
     private SurvivalUtils() {
