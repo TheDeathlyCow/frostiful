@@ -9,11 +9,9 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     boolean doDryBiomeNightFreezing = true;
 
-    double biomeTemperatureMultiplier = 4.0;
-
-    double passiveFreezingCutoffTemp = 0.25;
-
-    double nightTimeTemperatureDecrease = 0.25;
+    int nightTemperatureShift = -1;
+    int coldBiomeTemperatureChange = -1;
+    int freezingBiomeTemperatureChange = -3;
 
     int rainWetnessIncrease = 1;
     int touchingWaterWetnessIncrease = 5;
@@ -29,22 +27,20 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     int ultrawarmWarmRate = 15;
 
-    float dryBiomeNightTemperature = 0.0f;
-
     public boolean doDryBiomeNightFreezing() {
         return doDryBiomeNightFreezing;
     }
 
-    public double getBiomeTemperatureMultiplier() {
-        return biomeTemperatureMultiplier;
+    public int getNightTemperatureShift() {
+        return nightTemperatureShift;
     }
 
-    public double getPassiveFreezingCutoffTemp() {
-        return passiveFreezingCutoffTemp;
+    public int getColdBiomeTemperatureChange() {
+        return coldBiomeTemperatureChange;
     }
 
-    public double getNightTimeTemperatureDecrease() {
-        return nightTimeTemperatureDecrease;
+    public int getFreezingBiomeTemperatureChange() {
+        return freezingBiomeTemperatureChange;
     }
 
     public int getRainWetnessIncrease() {
@@ -81,10 +77,6 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     public int getUltrawarmWarmRate() {
         return ultrawarmWarmRate;
-    }
-
-    public float getDryBiomeNightTemperature() {
-        return dryBiomeNightTemperature;
     }
 
 }

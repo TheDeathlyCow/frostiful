@@ -255,9 +255,9 @@
   
   "text.autoconfig.frostiful.option.environmentConfig": "Environment Config",
   "text.autoconfig.frostiful.option.environmentConfig.doDryBiomeNightFreezing": "Do dry biome night freezing",
-  "text.autoconfig.frostiful.option.environmentConfig.biomeTemperatureMultiplier": "Biome temperature multiplier",
-  "text.autoconfig.frostiful.option.environmentConfig.passiveFreezingCutoffTemp": "Passive freezing cutoff temp",
-  "text.autoconfig.frostiful.option.environmentConfig.nightTimeTemperatureDecrease": "Night time temperature decrease",
+  "text.autoconfig.frostiful.option.environmentConfig.coldBiomeTemperatureChange": "Cold biome base temperature change (per tick)",
+  "text.autoconfig.frostiful.option.environmentConfig.freezingBiomeTemperatureChange": "Freezing biome base temperature change (per tick)",
+  "text.autoconfig.frostiful.option.environmentConfig.nightTemperatureShift": "Night time temperature shift",
   "text.autoconfig.frostiful.option.environmentConfig.rainWetnessIncrease": "Rain wetness increase per tick",
   "text.autoconfig.frostiful.option.environmentConfig.touchingWaterWetnessIncrease": "Touching water wetness increase per tick",
   "text.autoconfig.frostiful.option.environmentConfig.dryRate": "Dry rate",
@@ -266,6 +266,5 @@
   "text.autoconfig.frostiful.option.environmentConfig.powderSnowFreezeRate": "Powder snow freeze rate",
   "text.autoconfig.frostiful.option.environmentConfig.warmthPerLightLevel": "Warmth per light level",
   "text.autoconfig.frostiful.option.environmentConfig.minLightForWarmth": "Minimum block light level for warmth",
-  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate",
-  "text.autoconfig.frostiful.option.environmentConfig.dryBiomeNightTemperature": "Dry biome night temperature"
+  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate"
 }

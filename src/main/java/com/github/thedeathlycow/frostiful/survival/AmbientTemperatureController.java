@@ -8,8 +8,8 @@ import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDec
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -23,20 +23,9 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     @Override
     public int getLocalTemperatureChange(World world, BlockPos pos) {
         if (world.getDimension().natural()) {
-            Biome biome = world.getBiome(pos).value();
-            float temperature = biome.getTemperature();
-            int temp = this.getTempChangeFromBiomeTemperature(
-                    world,
-                    temperature,
-                    !biome.hasPrecipitation()
-            );
-
-            if (temp < 0) {
-                return temp;
-            }
-
+            return getNaturalWorldTemperatureChange(world, pos);
         } else if (world.getDimension().ultrawarm()) {
-            return Frostiful.getConfig().environmentConfig.getUltrawarmWarmRate();
+            return getUltrawarmTemperatureChange();
         }
         return controller.getLocalTemperatureChange(world, pos);
     }
@@ -86,21 +75,20 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
         return getHeatAtLocation(world, pos) > 0;
     }
 
-    private int getTempChangeFromBiomeTemperature(World world, float temperature, boolean isDryBiome) {
-        FrostifulConfig config = Frostiful.getConfig();
-        double mul = config.environmentConfig.getBiomeTemperatureMultiplier();
-        double cutoff = config.environmentConfig.getPassiveFreezingCutoffTemp();
+    private int getNaturalWorldTemperatureChange(World world, BlockPos pos) {
+        RegistryEntry<Biome> biome = world.getBiome(pos);
 
-        double tempShift = 0.0;
-        if (world.isNight()) {
-            if (isDryBiome && config.environmentConfig.doDryBiomeNightFreezing()) {
-                temperature = Math.min(temperature, config.environmentConfig.getDryBiomeNightTemperature());
-            } else {
-                tempShift = config.environmentConfig.getNightTimeTemperatureDecrease();
-            }
+        BiomeCategory category = BiomeCategory.fromBiome(biome);
+        int temp = category.getTemperatureChange(world);
+        if (temp < 0) {
+            return temp;
         }
 
-        return MathHelper.floor(mul * (temperature - cutoff - tempShift));
+        return controller.getLocalTemperatureChange(world, pos);
+    }
+
+    private int getUltrawarmTemperatureChange() {
+        return Frostiful.getConfig().environmentConfig.getUltrawarmWarmRate();
     }
 
 }
