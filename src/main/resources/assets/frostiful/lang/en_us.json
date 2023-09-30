@@ -184,8 +184,8 @@
   "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Do cold heart overlay",
   "text.autoconfig.frostiful.option.clientConfig.renderDripParticles": "Render water drip particles when wet",
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Disable frost overlay when wearing Cloak of Frostology",
-  "text.autoconfig.frostiful.option.clientConfig.shakeCameraWhenShivering": "Shake camera when shivering",
-  "text.autoconfig.frostiful.option.clientConfig.cameraShakeIntensity": "Camera shake intensity",
+  "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Shake hand when shivering",
+  "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Hand shake intensity",
   
   "text.autoconfig.frostiful.option.updateConfig": "Update Config",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Current config version",

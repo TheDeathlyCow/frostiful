@@ -7,9 +7,9 @@ import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.render.Camera;
 import net.minecraft.client.render.GameRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.math.RotationAxis;
 import net.minecraft.util.math.random.Random;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -30,26 +30,30 @@ public abstract class ShiveringRenderer {
     @Final
     private MinecraftClient client;
 
+    private static final float frostiful_baseShakeSift = 0.5f;
+    private static final float frostiful_baseIntensity = 0.01f;
+
+
     @Inject(
-            method = "renderWorld",
+            method = "renderHand",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/render/GameRenderer;tiltViewWhenHurt(Lnet/minecraft/client/util/math/MatrixStack;F)V"
+                    target = "Lnet/minecraft/client/option/GameOptions;getBobView()Lnet/minecraft/client/option/SimpleOption;"
             )
     )
-    private void shakeViewWhenShivering(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo ci) {
+    private void shakeViewWhenShivering(MatrixStack matrices, Camera camera, float tickDelta, CallbackInfo ci) {
+
         if (this.client.getCameraEntity() instanceof TemperatureAware temperatureAware && SurvivalUtils.isShivering(temperatureAware)) {
             ClientConfigGroup config = Frostiful.getConfig().clientConfig;
             if (config.isShakeCameraWhenShiveringEnabled()) {
 
-                final float intensity = config.getCameraShakeIntensity();
+                final float intensity = config.getHandShakeIntensity();
 
-                float shakeX = this.random.nextFloat() * 0.02f - 0.1f;
-                float shakeY = this.random.nextFloat() * 0.02f - 0.1f;
-                float shakeZRot = this.random.nextFloat() * 0.4f - 2;
+                float shakeX = (this.random.nextFloat() - frostiful_baseShakeSift) * frostiful_baseIntensity;
+                float shakeY = (this.random.nextFloat() - frostiful_baseShakeSift) * frostiful_baseIntensity;
+                float shakeZ = (this.random.nextFloat() - frostiful_baseShakeSift) * frostiful_baseIntensity;
 
-                matrices.translate(intensity * shakeX, intensity * shakeY, 0.0f);
-                matrices.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(intensity * shakeZRot));
+                matrices.translate(intensity * shakeX, intensity * shakeY, intensity * shakeZ);
             }
         }
     }

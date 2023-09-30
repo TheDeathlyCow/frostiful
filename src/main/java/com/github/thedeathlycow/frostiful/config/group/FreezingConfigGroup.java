@@ -28,7 +28,7 @@ public class FreezingConfigGroup implements ConfigData {
     int freezingWindFrost = 160;
     int conduitPowerWarmthPerTick = 12;
     int heatFromHotFloor = 12;
-    float shiverBelow = -0.5f;
+    float shiverBelow = -0.51f;
     int shiverWarmth = 1;
     int stopShiverWarmingBelowFoodLevel = 10;
 

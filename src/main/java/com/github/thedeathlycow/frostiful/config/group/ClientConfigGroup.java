@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import net.minecraft.util.math.MathHelper;
 
 @Config(name = Frostiful.MODID + ".client_config")
 public class ClientConfigGroup implements ConfigData {
@@ -12,8 +11,8 @@ public class ClientConfigGroup implements ConfigData {
     boolean doColdHeartOverlay = true;
     boolean renderDripParticles = true;
     boolean disableFrostOverlayWhenWearingFrostologyCloak = true;
-    boolean shakeCameraWhenShivering = true;
-    float cameraShakeIntensity = 1.0f;
+    boolean shakeHandWhenShivering = true;
+    float handShakeIntensity = 1.0f;
 
     public float getFrostOverlayStart() {
         return frostOverlayStart;
@@ -32,10 +31,10 @@ public class ClientConfigGroup implements ConfigData {
     }
 
     public boolean isShakeCameraWhenShiveringEnabled() {
-        return shakeCameraWhenShivering;
+        return shakeHandWhenShivering;
     }
 
-    public float getCameraShakeIntensity() {
-        return cameraShakeIntensity;
+    public float getHandShakeIntensity() {
+        return handShakeIntensity;
     }
 }
