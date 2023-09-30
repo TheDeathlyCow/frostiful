@@ -40,7 +40,7 @@ public class ModifyTemperatureController extends EnvironmentControllerDecorator 
         if (applyConduitPowerWarmth) {
             warmth += config.freezingConfig.getConduitWarmthPerTick();
         }
-        if (entity.thermoo$getTemperatureScale() < config.freezingConfig.getShiverBelow()) {
+        if (SurvivalUtils.isShivering(entity)) {
             warmth += this.updateShivering(entity, config);
         }
 
