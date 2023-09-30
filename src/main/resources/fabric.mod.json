@@ -33,6 +33,9 @@
         ],
         "mm:early_risers": [
             "com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
+        ],
+        "cardinal-components-entity": [
+            "com.github.thedeathlycow.frostiful.registry.FComponents"
         ]
     },
     "mixins": [
@@ -53,5 +56,11 @@
     "suggests": {
         "another-mod": "*"
     },
-    "accessWidener": "frostiful.accesswidener"
+    "accessWidener": "frostiful.accesswidener",
+    "custom": {
+        "cardinal-components": [
+            "frostiful:living_entity",
+            "frostiful:polar_bear"
+        ]
+    }
 }

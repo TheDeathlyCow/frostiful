@@ -31,7 +31,7 @@ public class LivingEntityComponents implements Component, AutoSyncedComponent {
     public void setRootedTicks(int rootedTicks) {
         if (this.rootedTicks != rootedTicks) {
             this.rootedTicks = rootedTicks;
-            FComponents.ENTITY_COMPONENTS.sync(this);
+            FComponents.ENTITY_COMPONENTS.sync(this.provider);
         }
     }
 
@@ -42,7 +42,7 @@ public class LivingEntityComponents implements Component, AutoSyncedComponent {
     public void setSkateFlags(byte skateFlags) {
         if (this.skateFlags != skateFlags) {
             this.skateFlags = skateFlags;
-            FComponents.ENTITY_COMPONENTS.sync(this);
+            FComponents.ENTITY_COMPONENTS.sync(this.provider);
         }
     }
 

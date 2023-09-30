@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity.shearing;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.FShearable;
+import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.damage.DamageSources;
@@ -29,59 +30,7 @@ public abstract class PolarBearShearingMixin extends AnimalEntity implements FSh
         super(entityType, world);
     }
 
-    private static final String FROSTIFUL$KEY = "Frostiful";
-    private static final String FROSTIFUL$LAST_SHEARED_AGE_KEY = "LastShearedAge";
-
     private static final int frostiful$SHEAR_COOLDOWN = 20 * 300;
-
-
-    private static final TrackedData<Integer> LAST_SHEARED_AGE = DataTracker.registerData(PolarBearShearingMixin.class, TrackedDataHandlerRegistry.INTEGER);
-
-
-    @Inject(
-            method = "initDataTracker",
-            at = @At("TAIL")
-    )
-    private void trackFrostData(CallbackInfo ci) {
-        this.dataTracker.startTracking(LAST_SHEARED_AGE, -1);
-    }
-
-
-    @Inject(
-            method = "writeCustomDataToNbt",
-            at = @At("TAIL")
-    )
-    private void saveShearingData(NbtCompound nbt, CallbackInfo ci) {
-        NbtCompound frostiful = new NbtCompound();
-
-        if (this.frostiful$wasSheared()) {
-            frostiful.putInt(FROSTIFUL$LAST_SHEARED_AGE_KEY, this.dataTracker.get(LAST_SHEARED_AGE));
-        }
-
-        if (!frostiful.isEmpty()) {
-            nbt.put(FROSTIFUL$KEY, frostiful);
-        }
-    }
-
-    @Inject(
-            method = "readCustomDataFromNbt",
-            at = @At("TAIL")
-    )
-    private void readShearingData(NbtCompound nbt, CallbackInfo ci) {
-
-        int lastShearedAge = -1;
-
-        if (nbt.contains(FROSTIFUL$KEY, NbtElement.COMPOUND_TYPE)) {
-            NbtCompound frostiful = nbt.getCompound(FROSTIFUL$KEY);
-
-            if (frostiful.contains(FROSTIFUL$LAST_SHEARED_AGE_KEY, NbtElement.INT_TYPE)) {
-                lastShearedAge = frostiful.getInt(FROSTIFUL$LAST_SHEARED_AGE_KEY);
-            }
-        }
-
-        this.dataTracker.set(LAST_SHEARED_AGE, lastShearedAge);
-
-    }
 
     @Override
     @Unique
@@ -95,7 +44,7 @@ public abstract class PolarBearShearingMixin extends AnimalEntity implements FSh
             FLootHelper.dropLootFromEntity(this, FShearable.POLAR_BEAR_SHEARING_LOOT_TABLE);
         }
 
-        this.dataTracker.set(LAST_SHEARED_AGE, this.age);
+        FComponents.POLAR_BEAR_COMPONENTS.get(this).setLastShearedAge(this.age);
     }
 
     @Override
@@ -109,7 +58,7 @@ public abstract class PolarBearShearingMixin extends AnimalEntity implements FSh
     @Override
     @Unique
     public boolean frostiful$wasSheared() {
-        int lastShearedAge = this.dataTracker.get(LAST_SHEARED_AGE);
+        int lastShearedAge = FComponents.POLAR_BEAR_COMPONENTS.get(this).getLastShearedAge();
 
         return lastShearedAge >= 0
                 && this.age - lastShearedAge <= frostiful$SHEAR_COOLDOWN;
