@@ -17,9 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 public interface RootedEntity {
 
-    String FROSTIFUL_KEY = "Frostiful";
-    String ROOTED_KEY = "RootedTicks";
-
     int frostiful$getRootedTicks();
 
     void frostiful$setRootedTicks(int amount);
@@ -63,32 +60,6 @@ public interface RootedEntity {
             rootedEntity.frostiful$breakRoot();
             IceBreakerEnchantment.spawnShatterParticlesAndSound(victim, (ServerWorld) world);
         }
-    }
-
-    static void frostiful$addRootedTicksToNbt(RootedEntity entity, NbtCompound nbt) {
-        NbtCompound frostifulNbt = FNbtHelper.getOrDefault(
-                nbt,
-                FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE,
-                NbtCompound::getCompound,
-                FNbtHelper.NEW_COMPOUND_FALLBACK
-        );
-
-        if (entity.frostiful$isRooted()) {
-            frostifulNbt.putInt(ROOTED_KEY, entity.frostiful$getRootedTicks());
-        }
-        nbt.put(FROSTIFUL_KEY, frostifulNbt);
-    }
-
-    static void frostiful$setRootedTicksFromNbt(RootedEntity entity, NbtCompound nbt) {
-        int amount = 0;
-        if (nbt.contains(FROSTIFUL_KEY, NbtElement.COMPOUND_TYPE)) {
-            NbtCompound frostifulNbt = nbt.getCompound(FROSTIFUL_KEY);
-            if (frostifulNbt.contains(ROOTED_KEY, NbtElement.INT_TYPE)) {
-                amount = frostifulNbt.getInt(ROOTED_KEY);
-            }
-        }
-
-        entity.frostiful$setRootedTicks(amount);
     }
 
 

@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
 import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageTypes;
+import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -32,28 +33,19 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     @Shadow
     public abstract boolean damage(DamageSource source, float amount);
 
-    private static final TrackedData<Integer> FROZEN_TICKS = DataTracker.registerData(RootedEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);
 
     public RootedEntityImplMixin(EntityType<?> type, World world) {
         super(type, world);
     }
 
-    @Inject(
-            method = "initDataTracker",
-            at = @At("TAIL")
-    )
-    private void trackFrostData(CallbackInfo ci) {
-        this.dataTracker.startTracking(FROZEN_TICKS, 0);
-    }
-
     @Override
     public int frostiful$getRootedTicks() {
-        return this.dataTracker.get(FROZEN_TICKS);
+        return FComponents.ENTITY_COMPONENTS.get(this).getRootedTicks();
     }
 
     @Override
     public void frostiful$setRootedTicks(int amount) {
-        this.dataTracker.set(FROZEN_TICKS, amount);
+        FComponents.ENTITY_COMPONENTS.get(this).setRootedTicks(amount);
     }
 
     @Override
@@ -102,14 +94,11 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     )
     private void tickRoot(CallbackInfo ci) {
         World world = getWorld();
-
-        if (this.isSpectator()) {
-            this.frostiful$setRootedTicks(0);
-            return;
-        }
         Profiler profiler = world.getProfiler();
         profiler.push("frostiful.rooted_tick");
-        if (this.frostiful$isRooted()) {
+        if (this.isSpectator()) {
+            this.frostiful$setRootedTicks(0);
+        } else if (this.frostiful$isRooted()) {
             // remove tick
             int ticksLeft = this.frostiful$getRootedTicks();
             this.frostiful$setRootedTicks(--ticksLeft);
@@ -128,24 +117,10 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
                 this.playExtinguishSound();
             }
         }
+
         profiler.pop();
     }
 
-    @Inject(
-            method = "writeCustomDataToNbt",
-            at = @At("TAIL")
-    )
-    private void writeRootedTicksToNbt(NbtCompound nbt, CallbackInfo ci) {
-        RootedEntity.frostiful$addRootedTicksToNbt(this, nbt);
-    }
-
-    @Inject(
-            method = "readCustomDataFromNbt",
-            at = @At("TAIL")
-    )
-    private void readRootedTicksFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        RootedEntity.frostiful$setRootedTicksFromNbt(this, nbt);
-    }
 }
 
 

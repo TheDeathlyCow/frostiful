@@ -1,7 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
+import com.github.thedeathlycow.frostiful.entity.component.LivingEntityComponents;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
+import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import net.minecraft.block.BlockState;
@@ -56,22 +58,18 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     private boolean frostiful$wasSlowed = false;
 
-    @Unique
-    private static final TrackedData<Byte> FROSTIFUL_SKATE_FLAGS = DataTracker.registerData(
-            LivingEntityMovementMixin.class,
-            TrackedDataHandlerRegistry.BYTE
-    );
-
     private boolean frostiful$getSkateFlag(int index) {
-        return (this.dataTracker.get(FROSTIFUL_SKATE_FLAGS) & 1 << index) != 0;
+        byte flags = FComponents.ENTITY_COMPONENTS.get(this).getSkateFlags();
+        return (flags & 1 << index) != 0;
     }
 
     private void frostiful$setSkateFlag(int index, boolean value) {
-        byte data = this.dataTracker.get(FROSTIFUL_SKATE_FLAGS);
+        LivingEntityComponents component = FComponents.ENTITY_COMPONENTS.get(this);
+        byte data = component.getSkateFlags();
         if (value) {
-            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte) (data | 1 << index));
+            component.setSkateFlags((byte) (data | 1 << index));
         } else {
-            this.dataTracker.set(FROSTIFUL_SKATE_FLAGS, (byte) (data & ~(1 << index)));
+            component.setSkateFlags((byte) (data & ~(1 << index)));
         }
     }
 
@@ -97,14 +95,6 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Unique
     public boolean frostiful$isGliding() {
         return frostiful$getSkateFlag(FROSTIFUL_IS_GLIDING_INDEX);
-    }
-
-    @Inject(
-            method = "initDataTracker",
-            at = @At("TAIL")
-    )
-    private void initIceSkateData(CallbackInfo ci) {
-        this.dataTracker.startTracking(FROSTIFUL_SKATE_FLAGS, (byte) 0);
     }
 
     @Inject(
