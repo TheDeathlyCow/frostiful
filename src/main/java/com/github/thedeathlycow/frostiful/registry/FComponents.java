@@ -8,7 +8,6 @@ import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.data.TrackedData;
 import net.minecraft.entity.passive.PolarBearEntity;
 
 public class FComponents implements EntityComponentInitializer {
@@ -22,8 +21,6 @@ public class FComponents implements EntityComponentInitializer {
             Frostiful.id("polar_bear"),
             PolarBearComponents.class
     );
-
-    TrackedData f;
 
     @Override
     public void registerEntityComponentFactories(EntityComponentFactoryRegistry registry) {
