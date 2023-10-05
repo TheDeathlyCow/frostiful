@@ -37,7 +37,6 @@
 	],
 	"client": [
 		"client.ArmorFeatureRendererMixin",
-		"client.DrawContextInvoker",
 		"client.DrippingWetPlayerMixin",
 		"client.SpriteAtlasManagerMixin",
 		"client.entity_renderer.PlayerModelCloakRenderer",

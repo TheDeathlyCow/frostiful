@@ -8,7 +8,7 @@
         "TheDeathlyCow"
     ],
     "contributors": [
-        "NerjalNosk (Health Overlay compatibility)"
+        "NerjalNosk (Various compatibility patches)"
     ],
     "contact": {
         "homepage": "https://github.com/TheDeathlyCow/frostiful/wiki",
@@ -48,10 +48,9 @@
     },
     "breaks": {
         "healthoverlay": "<7.2.1",
+        "colorfulhearts": "<4.0.1",
         "thermoo": "<2.0.0"
     },
-    "suggests": {
-        "another-mod": "*"
-    },
+    "suggests": {},
     "accessWidener": "frostiful.accesswidener"
 }
