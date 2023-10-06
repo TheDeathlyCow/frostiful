@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
 
 public class FSoundEvents {
 

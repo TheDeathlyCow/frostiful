@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.TexturedRenderLayers;
 import net.minecraft.util.Identifier;
 
 import java.util.HashMap;

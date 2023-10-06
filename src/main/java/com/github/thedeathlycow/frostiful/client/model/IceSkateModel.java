@@ -1,10 +1,8 @@
 package com.github.thedeathlycow.frostiful.client.model;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 
 public class IceSkateModel<T extends LivingEntity> extends BipedEntityModel<T> {

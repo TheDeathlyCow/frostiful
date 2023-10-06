@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.client;
 
 import com.github.thedeathlycow.frostiful.client.FTexturedRenderLayers;
-import com.github.thedeathlycow.frostiful.item.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.tag.FTrimTags;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumer;

@@ -10,7 +10,6 @@ import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDec
 import com.github.thedeathlycow.thermoo.api.temperature.Soakable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.MathHelper;
 

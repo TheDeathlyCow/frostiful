@@ -8,8 +8,6 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-import java.util.Objects;
-
 public class LivingEntityComponents implements Component, AutoSyncedComponent {
 
     private static final String ROOTED_TICKS_KEY = "rooted_ticks";

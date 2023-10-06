@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.mixins.client.gui;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
-import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
