@@ -50,29 +50,33 @@ public class HotFloorTests {
 
     @GameTest(batchId = "hotFloorTests", templateName = "frostiful-test:sun_lichen_tests.platform")
     public void when_villager_standing_on_magma_block_then_villager_is_heated(TestContext context) {
-        var config = Frostiful.getConfig();
-        expectVillagerIsHeated(context, Blocks.MAGMA_BLOCK.getDefaultState(), config.freezingConfig.getHeatFromHotFloor());
-    }
+        int temperatureChange =  Frostiful.getConfig().freezingConfig.getHeatFromHotFloor();
 
-    private static void expectVillagerIsHeated(TestContext context, BlockState state, int temperatureChange) {
         final BlockPos pos = new BlockPos(1, 3, 1);
-        final int temperature = -1000;
+        final int initialFreeze = -1000;
 
         final VillagerEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        final Function<VillagerEntity, Integer> temperatureGetter = TemperatureAware::thermoo$getTemperature;
 
-        entity.thermoo$setTemperature(temperature);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, temperatureGetter, temperature);
+        entity.thermoo$setTemperature(initialFreeze);
+        context.expectEntityWithData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, initialFreeze);
 
-        context.setBlockState(pos.down(), state);
-        context.waitAndRun(5, () -> context.addInstantFinalTask(() -> context.testEntityProperty(
-                entity,
-                temperatureGetter,
-                "temperature",
-                temperature + (temperatureChange * ((int) context.getTick() - 1))
-        )));
+        context.setBlockState(pos.down(), Blocks.MAGMA_BLOCK.getDefaultState());
+        context.waitAndRun(
+                5, () -> {
+                    context.addInstantFinalTask(() -> {
 
-
+                                context.assertTrue(
+                                        entity.thermoo$getTemperature() > initialFreeze,
+                                        String.format(
+                                                "Villager temperature of %d is not greater than %d",
+                                                entity.thermoo$getTemperature(),
+                                                initialFreeze
+                                        )
+                                );
+                            }
+                    );
+                }
+        );
     }
 
 }

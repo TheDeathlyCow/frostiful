@@ -1,14 +1,19 @@
 package com.github.thedeathlycow.frostiful.test.effects;
 
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.test.AfterBatch;
+import net.minecraft.test.BeforeBatch;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 @SuppressWarnings("unused")
 public class LocalTemperatureTests {
@@ -16,7 +21,7 @@ public class LocalTemperatureTests {
     @GameTest(templateName = "frostiful-test:effects.local_temperature")
     public void villager_is_warmed_by_torch(TestContext context) {
         BlockPos pos = new BlockPos(1, 2, 1);
-        int temperature = -5300;
+        int temperature = -2000;
 
         EnvironmentController controller = EnvironmentManager.INSTANCE.getController();
 
@@ -37,7 +42,11 @@ public class LocalTemperatureTests {
                 () -> {
                     context.addInstantFinalTask(() -> context.assertTrue(
                             villager.thermoo$getTemperature() > temperature,
-                            "Villager must be warmed"
+                            String.format(
+                                    "Villager temperature of %d is not greater than %d",
+                                    villager.thermoo$getTemperature(),
+                                    temperature
+                            )
                     ));
                 }
         );
@@ -46,7 +55,7 @@ public class LocalTemperatureTests {
     @GameTest(templateName = "frostiful-test:effects.local_temperature")
     public void villager_in_boat_is_warmed_by_torch(TestContext context) {
         BlockPos pos = new BlockPos(1, 2, 1);
-        int temperature = -5300;
+        int temperature = -2000;
 
         EnvironmentController controller = EnvironmentManager.INSTANCE.getController();
 
@@ -81,7 +90,11 @@ public class LocalTemperatureTests {
                 () -> {
                     context.addInstantFinalTask(() -> context.assertTrue(
                             villager.thermoo$getTemperature() > temperature,
-                            "Villager must be warmed"
+                            String.format(
+                                    "Villager temperature of %d is not greater than %d",
+                                    villager.thermoo$getTemperature(),
+                                    temperature
+                            )
                     ));
                 }
         );
@@ -91,7 +104,7 @@ public class LocalTemperatureTests {
     @GameTest(templateName = "frostiful-test:effects.local_temperature")
     public void villager_is_not_warmed(TestContext context) {
         BlockPos pos = new BlockPos(1, 2, 1);
-        int temperature = -5300;
+        int temperature = -2000;
 
         EnvironmentController controller = EnvironmentManager.INSTANCE.getController();
 
@@ -111,10 +124,18 @@ public class LocalTemperatureTests {
         context.waitAndRun(
                 5L,
                 () -> {
-                    context.addInstantFinalTask(() -> context.assertTrue(
-                            villager.thermoo$getTemperature() == temperature,
-                            "Villager must be warmed"
-                    ));
+                    context.addInstantFinalTask(() -> {
+                                int villagerTemperature = villager.thermoo$getTemperature();
+                                context.assertTrue(
+                                        villagerTemperature == temperature,
+                                        String.format(
+                                                "Villager temperature of %d does not match expected %d",
+                                                villagerTemperature,
+                                                temperature
+                                        )
+                                );
+                            }
+                    );
                 }
         );
     }
