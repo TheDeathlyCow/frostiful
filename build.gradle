@@ -76,8 +76,8 @@ dependencies {
 
     //// Optional Dependencies ////
 
-    // HealthOverlay https://github.com/Terrails/HealthOverlay
-    modCompileOnly("curse.maven:colorful-hearts-854213:${project.health_overlay_version}") { transitive = false }
+    // Colorful Hearts https://modrinth.com/mod/colorful-hearts
+    modCompileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
     // OverflowingBars https://modrinth.com/mod/overflowing-bars
     modCompileOnly("maven.modrinth:overflowing-bars:${project.overflowing_bars_version}") { transitive = false }
 

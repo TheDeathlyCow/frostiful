@@ -2,13 +2,11 @@ package com.github.thedeathlycow.frostiful.mixins.compat.colorfulhearts.present;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-import com.github.thedeathlycow.frostiful.mixins.client.DrawContextInvoker;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.player.PlayerEntity;
+import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,6 +18,7 @@ import terrails.colorfulhearts.render.HeartRenderer;
 
 @Environment(EnvType.CLIENT)
 @Mixin(value = HeartRenderer.class, remap = false)
+@Debug(export = true)
 public abstract class ColdHeartOverlay {
 
     @Inject(
@@ -31,19 +30,14 @@ public abstract class ColdHeartOverlay {
             )
     )
     private void drawColdHeartOverlayBar(
-            MatrixStack poseStack,
-            PlayerEntity player,
+            DrawContext drawContext, PlayerEntity player,
             int x, int y,
-            int maxHealth,
-            int currentHealth,
-            int displayHealth,
-            int absorption,
-            boolean renderHighlight,
-            CallbackInfo ci
+            int maxHealth, int currentHealth, int displayHealth, int absorption,
+            boolean renderHighlight, CallbackInfo ci
     ) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
-        MinecraftClient client = MinecraftClient.getInstance();
-        DrawContext drawContext = DrawContextInvoker.create(client, poseStack, client.getBufferBuilders().getEntityVertexConsumers());
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) {
+            return;
+        }
         FrozenHeartsOverlay.INSTANCE.drawHeartOverlayBar(
                 drawContext,
                 player
@@ -60,26 +54,19 @@ public abstract class ColdHeartOverlay {
             locals = LocalCapture.CAPTURE_FAILEXCEPTION
     )
     private void captureHeartPositions(
-            MatrixStack poseStack,
-            PlayerEntity player,
+            DrawContext guiGraphics, PlayerEntity player,
             int x, int y,
-            int maxHealth,
-            int currentHealth,
-            int displayHealth,
-            int absorption,
-            boolean renderHighlight,
+            int maxHealth, int currentHealth, int displayHealth, int absorption, boolean renderHighlight,
             CallbackInfo ci,
-            int healthHearts,
-            int displayHealthHearts,
-            boolean absorptionSameRow,
-            int regenIndex,
+            int healthHearts, int displayHealthHearts, boolean absorptionSameRow, int regenIndex,
             HeartType heartType,
             int index,
             Heart heart,
-            int xPos, int yPos,
-            boolean highlightHeart
+            int xPos, int yPos, boolean highlightHeart
     ) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) return;
+        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.OVERFLOWING_BARS_ID)) {
+            return;
+        }
         FrozenHeartsOverlay.INSTANCE.setHeartPos(index, xPos, yPos);
     }
 }
