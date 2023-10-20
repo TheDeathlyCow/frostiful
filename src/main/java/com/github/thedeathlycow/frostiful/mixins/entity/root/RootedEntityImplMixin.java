@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
+import com.github.thedeathlycow.frostiful.entity.component.FComponents;
 import com.github.thedeathlycow.frostiful.tag.entitytype.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -29,28 +30,18 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
     @Shadow
     public abstract boolean damage(DamageSource source, float amount);
 
-    private static final TrackedData<Integer> FROZEN_TICKS = DataTracker.registerData(RootedEntityImplMixin.class, TrackedDataHandlerRegistry.INTEGER);
-
     public RootedEntityImplMixin(EntityType<?> type, World world) {
         super(type, world);
     }
 
-    @Inject(
-            method = "initDataTracker",
-            at = @At("TAIL")
-    )
-    private void trackFrostData(CallbackInfo ci) {
-        this.dataTracker.startTracking(FROZEN_TICKS, 0);
-    }
-
     @Override
     public int frostiful$getRootedTicks() {
-        return this.dataTracker.get(FROZEN_TICKS);
+        return FComponents.ENTITY_COMPONENTS.get(this).getRootedTicks();
     }
 
     @Override
     public void frostiful$setRootedTicks(int amount) {
-        this.dataTracker.set(FROZEN_TICKS, amount);
+        FComponents.ENTITY_COMPONENTS.get(this).setRootedTicks(amount);
     }
 
     @Override
@@ -110,22 +101,6 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
             }
         }
         this.world.getProfiler().pop();
-    }
-
-    @Inject(
-            method = "writeCustomDataToNbt",
-            at = @At("TAIL")
-    )
-    private void writeRootedTicksToNbt(NbtCompound nbt, CallbackInfo ci) {
-        RootedEntity.frostiful$addRootedTicksToNbt(this, nbt);
-    }
-
-    @Inject(
-            method = "readCustomDataFromNbt",
-            at = @At("TAIL")
-    )
-    private void readRootedTicksFromNbt(NbtCompound nbt, CallbackInfo ci) {
-        RootedEntity.frostiful$setRootedTicksFromNbt(this, nbt);
     }
 
     /**

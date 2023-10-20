@@ -30,6 +30,9 @@
 		],
 		"mm:early_risers": [
 			"com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
+		],
+		"cardinal-components-entity": [
+			"com.github.thedeathlycow.frostiful.entity.component.FComponents"
 		]
 	},
 	"mixins": [
@@ -39,7 +42,7 @@
 		"fabricloader": ">=0.14.9",
 		"fabric": "*",
 		"minecraft": "1.19.2",
-		"thermoo": "1.4",
+		"thermoo": "1.4.1",
 		"mm": ">=2.3",
 		"java": ">=17"
 	},
@@ -49,5 +52,11 @@
 	"suggests": {
 		"another-mod": "*"
 	},
-	"accessWidener": "frostiful.accesswidener"
+	"accessWidener": "frostiful.accesswidener",
+	"custom": {
+		"cardinal-components": [
+			"frostiful:living_entity",
+			"frostiful:polar_bear"
+		]
+	}
 }
