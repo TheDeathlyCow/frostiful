@@ -38,7 +38,7 @@ public class EntityTemperatureController extends EnvironmentControllerDecorator 
 
     @Override
     public int getTemperatureEffectsChange(LivingEntity entity) {
-        if (entity.thermoo$isWarm()) {
+        if (!entity.thermoo$isCold()) {
             return controller.getTemperatureEffectsChange(entity);
         }
 
