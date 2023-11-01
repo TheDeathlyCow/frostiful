@@ -1,9 +1,6 @@
 {
 	"type": "thermoo:scaling_attribute_modifier",
-	"entity": {
-        "condition": "minecraft:reference",
-        "name": "frostiful:is_frostologer"
-    },
+	"entity_type": "frostiful:frostologer",
 	"temperature_scale_range": {
 		"max": 0
 	},

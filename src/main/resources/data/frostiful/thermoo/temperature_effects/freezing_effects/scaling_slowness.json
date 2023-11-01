@@ -1,5 +1,6 @@
 {
 	"type": "thermoo:scaling_attribute_modifier",
+	"entity_type": "minecraft:player",
 	"entity": {
         "condition": "minecraft:reference",
         "name": "frostiful:can_freeze"
