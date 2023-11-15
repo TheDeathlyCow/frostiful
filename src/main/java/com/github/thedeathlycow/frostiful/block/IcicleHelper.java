@@ -16,15 +16,11 @@ import java.util.function.Consumer;
 public class IcicleHelper {
 
     public static boolean canReplace(BlockState state) {
-        return state.isIn(FBlockTags.ICICLE_GROWABLE) || state.isIn(FBlockTags.ICICLE_REPLACEABLE_BLOCKS);
+        return (!state.isOf(Blocks.ICE) && state.isIn(FBlockTags.ICICLE_GROWABLE)) || state.isIn(FBlockTags.ICICLE_REPLACEABLE_BLOCKS);
     }
 
     public static boolean canGenerate(BlockState state) {
         return state.isAir() || state.isOf(Blocks.WATER);
-    }
-
-    public static boolean cannotGenerate(BlockState state) {
-        return !canGenerate(state);
     }
 
     public static boolean generateIceBaseBlock(WorldAccess world, BlockPos pos) {
@@ -41,17 +37,20 @@ public class IcicleHelper {
             return;
         }
         BlockPos.Mutable mutable = pos.mutableCopy();
-        generateIcicle(
+        placeWithThickness(
                 direction, height, merge,
                 state -> {
-                    state = state.with(IcicleBlock.WATERLOGGED, world.isWater(mutable));
-                    world.setBlockState(mutable, state, Block.NOTIFY_LISTENERS);
-                    mutable.move(direction);
+                    BlockState current = world.getBlockState(mutable);
+                    if (current.isAir() || current.isOf(Blocks.WATER)) {
+                        state = state.with(IcicleBlock.WATERLOGGED, world.isWater(mutable));
+                        world.setBlockState(mutable, state, Block.NOTIFY_LISTENERS);
+                        mutable.move(direction);
+                    }
                 }
         );
     }
 
-    private static void generateIcicle(
+    private static void placeWithThickness(
             Direction direction,
             int height,
             boolean merge,
