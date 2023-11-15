@@ -23,6 +23,9 @@ public class IcicleHelper {
         return state.isAir() || state.isOf(Blocks.WATER);
     }
 
+    public static boolean cannotGenerate(BlockState state) {
+        return !canGenerate(state);
+    }
 
     public static boolean generateIceBaseBlock(WorldAccess world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);

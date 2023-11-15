@@ -6,10 +6,7 @@
                 "feature": {
                     "type": "frostiful:icicle_patch",
                     "config": {
-                        "chance_of_taller_icicle": 0.2,
-                        "chance_of_directional_spread": 0.7,
-                        "chance_of_spread_radius2": 0.5,
-                        "chance_of_spread_radius3": 0.5
+
                     }
                 },
                 "placement": [
@@ -39,10 +36,10 @@
                 "feature": {
                     "type": "frostiful:icicle_patch",
                     "config": {
-                        "chance_of_taller_icicle": 0.2,
-                        "chance_of_directional_spread": 0.7,
-                        "chance_of_spread_radius2": 0.5,
-                        "chance_of_spread_radius3": 0.5
+                        "chance_of_taller_icicle": 1.0,
+                        "chance_of_directional_spread": 0.9,
+                        "chance_of_spread_radius2": 0.9,
+                        "chance_of_spread_radius3": 0.8
                     }
                 },
                 "placement": [
