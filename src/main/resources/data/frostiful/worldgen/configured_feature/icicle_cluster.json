@@ -6,7 +6,35 @@
                 "feature": {
                     "type": "frostiful:icicle_patch",
                     "config": {
-
+                        "icicle_height": {
+                            "type": "minecraft:uniform",
+                            "value": {
+                                "min_inclusive": 1,
+                                "max_inclusive": 6
+                            }
+                        },
+                        "radius": {
+                            "type": "minecraft:uniform",
+                            "value": {
+                                "min_inclusive": 2,
+                                "max_inclusive": 8
+                            }
+                        },
+                        "density": {
+                            "type": "minecraft:uniform",
+                            "value": {
+                                "min_inclusive": 0.3,
+                                "max_inclusive": 0.7
+                            }
+                        },
+                        "floor_to_ceiling_search_range": 12,
+                        "packed_ice_layer_thickness": {
+                            "type": "minecraft:uniform",
+                            "value": {
+                                "min_inclusive": 4,
+                                "max_inclusive": 7
+                            }
+                        }
                     }
                 },
                 "placement": [
