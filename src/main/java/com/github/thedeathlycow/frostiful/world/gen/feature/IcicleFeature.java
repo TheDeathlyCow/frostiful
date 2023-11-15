@@ -106,13 +106,45 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         }
 
         // place icicles
-        int floorIcicleHeight = config.icicleHeight.get(random);
-        int ceilingIcicleHeight = config.icicleHeight.get(random);
+        int floorIcicleLength = config.icicleHeight.get(random);
+        int ceilingIcicleLength = config.icicleHeight.get(random);
+        boolean merge = false;
+
+        // adjust icicle heights if they would intersect with each other or terrain
+        if (floorHeight.isPresent() && ceilingHeight.isPresent()) {
+            int floorY = floorHeight.getAsInt();
+            int ceilY = ceilingHeight.getAsInt();
+
+            // number of air blocks between floor and ceiling
+            // the -1 removes the stone blocks at the extrema
+            int span = ceilY - floorY - 1;
+
+            int iciclesLength = floorIcicleLength + ceilingIcicleLength;
+            // icicles will intersect if and only if their summed lengths exceed the available space
+            if (iciclesLength > span) {
+                floorIcicleLength = span / 2;
+                ceilingIcicleLength = floorIcicleLength + (span % 2);
+                merge = floorIcicleLength > 0 && ceilingIcicleLength > 0 && random.nextBoolean();
+            }
+        }
+
         if (ceilingHeight.isPresent() && random.nextDouble() < ceilingDensity) {
-            IcicleHelper.generateIcicle(world, position.withY(ceilingHeight.getAsInt() - 1), Direction.DOWN, ceilingIcicleHeight, false);
+            IcicleHelper.generateIcicle(
+                    world,
+                    position.withY(ceilingHeight.getAsInt() - 1),
+                    Direction.DOWN,
+                    ceilingIcicleLength,
+                    merge
+            );
         }
         if (floorHeight.isPresent() && random.nextDouble() < floorDensity) {
-            IcicleHelper.generateIcicle(world, position.withY(floorHeight.getAsInt() + 1), Direction.UP, floorIcicleHeight, false);
+            IcicleHelper.generateIcicle(
+                    world,
+                    position.withY(floorHeight.getAsInt() + 1),
+                    Direction.UP,
+                    floorIcicleLength,
+                    merge
+            );
         }
     }
 

@@ -40,12 +40,9 @@ public class IcicleHelper {
         placeWithThickness(
                 direction, height, merge,
                 state -> {
-                    BlockState current = world.getBlockState(mutable);
-                    if (current.isAir() || current.isOf(Blocks.WATER)) {
-                        state = state.with(IcicleBlock.WATERLOGGED, world.isWater(mutable));
-                        world.setBlockState(mutable, state, Block.NOTIFY_LISTENERS);
-                        mutable.move(direction);
-                    }
+                    state = state.with(IcicleBlock.WATERLOGGED, world.isWater(mutable));
+                    world.setBlockState(mutable, state, Block.NOTIFY_LISTENERS);
+                    mutable.move(direction);
                 }
         );
     }
