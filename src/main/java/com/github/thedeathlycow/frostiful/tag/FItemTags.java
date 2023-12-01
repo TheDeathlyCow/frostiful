@@ -16,6 +16,8 @@ public final class FItemTags {
 
     public static final TagKey<Item> ICE_SKATES = register("ice_skates");
 
+    public static final TagKey<Item> WARM_FOODS = register("warm_foods");
+
 
     private static TagKey<Item> register(String id) {
         return TagKey.of(RegistryKeys.ITEM, new Identifier(Frostiful.MODID, id));

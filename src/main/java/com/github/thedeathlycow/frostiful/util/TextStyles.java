@@ -14,4 +14,12 @@ public class TextStyles {
     public static final Style FROSTOLOGY_CLOAK_TOOLTIP = Style.EMPTY
             .withItalic(true)
             .withColor(TextColor.parse("blue"));
+
+    public static final Style WARMING_TOOLTIP = Style.EMPTY
+            .withItalic(false)
+            .withColor(TextColor.parse("gold"));
+
+    private TextStyles() {
+
+    }
 }

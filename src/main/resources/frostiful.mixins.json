@@ -26,6 +26,7 @@
         "entity.shearing.MobShearingMixin",
         "entity.shearing.PolarBearShearingMixin",
         "entity.soaking.WaterPotionSoakingMixin",
+        "food.compat.WarmFoodMixin",
         "item.ArmorItemMixin",
         "item.ArmorTrimPatternsMixin",
         "powder_snow_effects.EntityPowderSnowRedirect",

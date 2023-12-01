@@ -1,0 +1,97 @@
+{
+    "replace": false,
+    "values": [
+        {
+            "id": "farmersdelight:hot_cocoa",
+            "required": false
+        },
+        {
+            "id": "frozenup:mug_of_truffle_hot_chocolate",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:green_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:yellow_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:black_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:rose_hip_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:dandelion_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:purulent_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:coffee",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:long_green_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:long_yellow_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:long_black_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:long_dandelion_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:long_coffee",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:strong_green_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:strong_yellow_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:strong_black_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:strong_purulent_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:strong_rose_hip_tea",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:strong_coffee",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:tea_curry",
+            "required": false
+        },
+        {
+            "id": "farmersrespite:blazing_chili",
+            "required": false
+        },
+        {
+            "id": "festive_delight:christmas_tea",
+            "required": false
+        }
+    ]
+}
