@@ -12,7 +12,6 @@ import net.fabricmc.api.Environment;
 @Config(name = Frostiful.MODID)
 public class FrostifulConfig extends PartitioningSerializer.GlobalData {
 
-    @Environment(EnvType.CLIENT)
     @ConfigEntry.Gui.CollapsibleObject
     public final ClientConfigGroup clientConfig = new ClientConfigGroup();
 
