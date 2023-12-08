@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.food.compat;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
@@ -36,7 +37,8 @@ public abstract class WarmFoodMixin {
             CallbackInfoReturnable<ItemStack> cir
     ) {
         if (this.isWarmingFood(stack)) {
-            user.addStatusEffect(new StatusEffectInstance(FStatusEffects.WARMTH, 30 * 20));
+            int duration = Frostiful.getConfig().freezingConfig.getWarmFoodWarmthTime();
+            user.addStatusEffect(new StatusEffectInstance(FStatusEffects.WARMTH, duration));
         }
     }
 

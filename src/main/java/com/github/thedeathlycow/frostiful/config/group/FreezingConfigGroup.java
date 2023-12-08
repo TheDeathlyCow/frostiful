@@ -31,6 +31,7 @@ public class FreezingConfigGroup implements ConfigData {
     float shiverBelow = -0.51f;
     int shiverWarmth = 1;
     int stopShiverWarmingBelowFoodLevel = 10;
+    int warmFoodWarmthTime = 60 * 20;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -118,5 +119,9 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getStopShiverWarmingBelowFoodLevel() {
         return stopShiverWarmingBelowFoodLevel;
+    }
+
+    public int getWarmFoodWarmthTime() {
+        return warmFoodWarmthTime;
     }
 }

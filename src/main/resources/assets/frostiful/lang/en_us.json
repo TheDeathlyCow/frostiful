@@ -240,6 +240,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.shiverBelow": "Start shivering when below temp (scale from -1 to +1)",
   "text.autoconfig.frostiful.option.freezingConfig.shiverWarmth": "Shivering warmth per tick",
   "text.autoconfig.frostiful.option.freezingConfig.stopShiverWarmingBelowFoodLevel": "Stop shivering warmth below food level",
+  "text.autoconfig.frostiful.option.freezingConfig.warmFoodWarmthTime": "Warming food and drink Warmth duration (ticks)",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",
@@ -269,5 +270,6 @@
   "text.autoconfig.frostiful.option.environmentConfig.powderSnowFreezeRate": "Powder snow freeze rate",
   "text.autoconfig.frostiful.option.environmentConfig.warmthPerLightLevel": "Warmth per light level",
   "text.autoconfig.frostiful.option.environmentConfig.minLightForWarmth": "Minimum block light level for warmth",
-  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate"
+  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate",
+  "text.autoconfig.frostiful.option.environmentConfig.winterTemperatureShift": "Winter temperature shift (requires Fabric Seasons)"
 }
