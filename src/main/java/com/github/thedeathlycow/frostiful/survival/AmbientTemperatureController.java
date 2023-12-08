@@ -83,7 +83,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
         int temp = category.getTemperatureChange(world);
         if (temp < 0) {
             if (FrostifulIntegrations.isWinter(world)) {
-                temp -= Frostiful.getConfig().environmentConfig.getWinterTemperatureShift();
+                temp += Frostiful.getConfig().environmentConfig.getWinterTemperatureShift();
             }
             return temp;
         }
