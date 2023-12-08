@@ -20,6 +20,7 @@ Basically everything about this mod is documented extensively on the [wiki](http
 * [Colorful Hearts](https://modrinth.com/mod/colorful-hearts) & [Overflowing Bars](https://modrinth.com/mod/overflowing-bars): Cold Hearts render on top of the new hearts from these mods
 * [Tips](https://modrinth.com/mod/tips): Added some Frostiful-specific tips
 * [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions): Descriptions are provided for Frostiful's enchantments
+* [Trinkets](https://modrinth.com/mod/trinkets): The Cloak of Frostology can be equipped in the Cape slot to not have any effect, and just be cosmetic item
 * [Farmer's Delight](https://modrinth.com/mod/farmers-delight-fabric): Hot Cocoa provides the Warmth effect
 * [Farmer's Respite](https://www.curseforge.com/minecraft/mc-mods/farmers-respite): Teas and warm foods provide the Warmth effect
 * [Festive Delight](https://www.curseforge.com/minecraft/mc-mods/festive-delight): Christmas Tea provides the Warmth effect
