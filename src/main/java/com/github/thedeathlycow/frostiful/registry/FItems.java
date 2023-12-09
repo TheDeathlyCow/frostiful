@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.*;
+import com.github.thedeathlycow.frostiful.tag.FBannerPatternTags;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
@@ -123,6 +124,8 @@ public class FItems {
     public static final Item CUT_BLUE_ICE_SLAB = new BlockItem(FBlocks.CUT_BLUE_ICE_SLAB, new FabricItemSettings());
     public static final Item CUT_BLUE_ICE_WALL = new BlockItem(FBlocks.CUT_BLUE_ICE_WALL, new FabricItemSettings());
 
+    public static final Item SNOWFLAKE_BANNER_PATTERN = new BannerPatternItem(FBannerPatternTags.SNOWFLAKE_PATTERN_ITEM, new FabricItemSettings().maxCount(1));
+
     public static void registerItems() {
         register("fur_helmet", FUR_HELMET);
         register("fur_chestplate", FUR_CHESTPLATE);
@@ -177,6 +180,8 @@ public class FItems {
         register("cut_blue_ice_stairs", CUT_BLUE_ICE_STAIRS);
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
         register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
+
+        register("snowflake_banner_pattern", SNOWFLAKE_BANNER_PATTERN);
     }
 
     private static void register(String id, Item item) {

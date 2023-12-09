@@ -55,6 +55,9 @@
   
   "trim_pattern.frostiful.frosty": "Frosty Armor Trim",
   
+  "item.frostiful.snowflake_banner_pattern": "Banner Pattern",
+  "item.frostiful.snowflake_banner_pattern.desc": "Snowflake",
+  
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
@@ -76,7 +79,23 @@
   "block.frostiful.cut_blue_ice_stairs": "Cut Blue Ice Stairs",
   "block.frostiful.cut_blue_ice_slab": "Cut Blue Ice Slab",
   "block.frostiful.cut_blue_ice_wall": "Cut Blue Ice Wall",
-
+  
+  "block.minecraft.banner.frostiful.snowflake.black": "Black Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.blue": "Blue Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.brown": "Brown Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.cyan": "Cyan Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.gray": "Gray Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.green": "Green Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.light_blue": "Light Blue Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.light_gray": "Light Gray Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.lime": "Lime Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.magenta": "Magenta Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.orange": "Orange Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.pink": "Pink Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.purple": "Purple Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.red": "Red Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.white": "White Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.yellow": "Yellow Snowflake",
 
   "entity.frostiful.frost_spell": "Frost Spell",
   "entity.frostiful.packed_snowball": "Packed Snowball",
