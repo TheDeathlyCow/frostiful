@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
@@ -81,6 +82,9 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
         BiomeCategory category = BiomeCategory.fromBiome(biome);
         int temp = category.getTemperatureChange(world);
         if (temp < 0) {
+            if (FrostifulIntegrations.isWinter(world)) {
+                temp += Frostiful.getConfig().environmentConfig.getWinterTemperatureShift();
+            }
             return temp;
         }
 

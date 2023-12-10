@@ -1,3 +1,8 @@
+<p align="center">
+    <img src="./src/main/resources/assets/frostiful/frostiful.png" alt="Frostiful title">
+    A Frosty Vanilla+ Survival Experience
+</p>
+
 # Download Pages
 
 CurseForge: https://www.curseforge.com/minecraft/mc-mods/frostiful
@@ -10,18 +15,19 @@ The above download pages are the ONLY source of this mod, DO NOT TRUST ANY OTHER
 
 Basically everything about this mod is documented extensively on the [wiki](https://github.com/TheDeathlyCow/frostiful/wiki/).
 
-# Compatibility
+# Mod Integrations 
 
-Known compatibility issues and potential workarounds/fixes will be listed here as they become known. If you find a compatibility issue, feel free to raise an [issue](https://github.com/TheDeathlyCow/frostiful/issues) or tell me about it on my [Discord](https://discord.gg/aqASuWebRU) and I will add it here.
-
-| Mod Name             | Problem                                               | Versions              | Fix or Workaround                                                                                                                      |
-|----------------------|-------------------------------------------------------|-----------------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| Lithium              | Mixin error                                           | Frostiful 0.1.0-0.2.1 | Add the line `mixin.entity.fast_powder_snow_check=false` to Lithium's config in `lithium.properties`.                                  |
-| Origins              | Merling Origin freezes to death very quickly in water | Frostiful 0.1.0-0.2.1 | Frostiful 0.2.2+ now natively works with the Merling Origin appropriately                                                              |
-| EnvironmentZ         | Both mods add a temperatue bar                        | All                   | The mods don't seem to immediately crash when used together, however you should turn off passive freezing for Frostiful in the config. |
-| Immersive Weathering | Freezing Water is applied twice                       | All                   | In Immersive Weathering's Common Config, set `water_increment` to 0.                                                                   |
-| Health Overlay       | Cold hearts not rendering                             | Frostiful 0.1.0-0.2.6 | Frostiful 0.2.7+ now has native compatibility with Health Overlay                                                                      | 
+* [Colorful Hearts](https://modrinth.com/mod/colorful-hearts) & [Overflowing Bars](https://modrinth.com/mod/overflowing-bars): Cold Hearts render on top of the new hearts from these mods
+* [Tips](https://modrinth.com/mod/tips): Added some Frostiful-specific tips
+* [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions): Descriptions are provided for Frostiful's enchantments
+* [Trinkets](https://modrinth.com/mod/trinkets): The Cloak of Frostology can be equipped in the Cape slot to not have any effect, and just be cosmetic item
+* [Farmer's Delight](https://modrinth.com/mod/farmers-delight-fabric): Hot Cocoa provides the Warmth effect
+* [Farmer's Respite](https://www.curseforge.com/minecraft/mc-mods/farmers-respite): Teas and warm foods provide the Warmth effect
+* [Festive Delight](https://www.curseforge.com/minecraft/mc-mods/festive-delight): Christmas Tea provides the Warmth effect
+* [Frozen Up](https://www.curseforge.com/minecraft/mc-mods/frozen-up): Truffle Hot Chocolate provides the Warmth effect
+* [Fabric Seasons](https://modrinth.com/mod/fabric-seasons): Winters in snowy and freezing biomes are *even colder* than normal
 
 # Additional Credits
 
 [NerjalNosk](https://github.com/NerjalNosk) - Health Overlay compatibility.
+[YeoXuHang](https://github.com/YeoXuHang) - Assistance with the Frost Wand 3D model redesign

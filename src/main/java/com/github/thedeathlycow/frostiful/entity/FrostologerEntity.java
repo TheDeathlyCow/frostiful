@@ -189,6 +189,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                 || super.isInvulnerableTo(damageSource);
     }
 
+    @Override
     protected void initGoals() {
         super.initGoals();
         this.goalSelector.add(0, new SwimGoal(this));
@@ -196,7 +197,6 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.goalSelector.add(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
 
-        //this.goalSelector.add(2, new FleeEntityGoal<>(this, PlayerEntity.class, 8.0F, 1.2, 1.5));
         this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
 
         this.goalSelector.add(4, new FrostWandAttackGoal());
@@ -667,11 +667,17 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     protected class SummonMinionsGoal extends SpellcastingIllagerEntity.CastSpellGoal {
-        private final TargetPredicate closeMinionPredicate = TargetPredicate.createNonAttackable()
+        private static final TargetPredicate IS_MINION = TargetPredicate.createNonAttackable()
                 .setBaseMaxDistance(16.0)
                 .ignoreVisibility()
                 .ignoreDistanceScalingFactor();
 
+        // I could make this configurable, but it's for the sake of stopping biter spam and not really a significant mechanic
+        private static final int SUMMON_BITER_COOL_DOWN = 5 * 20;
+
+        private int nextStartTime = -1;
+
+        @Override
         public void start() {
             super.start();
             if (FrostologerEntity.this.isOnFire()) {
@@ -680,8 +686,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             }
         }
 
+        @Override
         public boolean canStart() {
-            if (FrostologerEntity.this.random.nextInt(2) == 0) {
+            if (FrostologerEntity.this.age <= nextStartTime) {
+                return false;
+            } else if (FrostologerEntity.this.random.nextInt(2) == 0) {
                 return false;
             } else if (!super.canStart()) {
                 return false;
@@ -690,7 +699,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             } else {
                 int numNearbyMinions = getWorld().getTargets(
                         BiterEntity.class,
-                        this.closeMinionPredicate,
+                        IS_MINION,
                         FrostologerEntity.this,
                         FrostologerEntity.this.getBoundingBox().expand(16.0)
                 ).size();
@@ -702,6 +711,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         @Override
         protected void castSpell() {
             ServerWorld serverWorld = (ServerWorld) getWorld();
+            nextStartTime = FrostologerEntity.this.age + SUMMON_BITER_COOL_DOWN;
 
             for (int i = 0; i < 3; ++i) {
                 BlockPos blockPos = FrostologerEntity.this.getBlockPos();
@@ -753,6 +763,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         private final IntProvider numIciclesProvider;
 
+        private static final int ICICLE_ATTACK_COOL_DOWN = 20;
+
+        private int nextStartTime = -1;
+
         public IcicleAttackGoal(IntProvider numIciclesProvider) {
             this.numIciclesProvider = numIciclesProvider;
         }
@@ -766,7 +780,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         public boolean canStart() {
-            if (FrostologerEntity.this.random.nextInt(2) == 0) {
+            if (FrostologerEntity.this.age <= nextStartTime) {
+                return false;
+            } else if (FrostologerEntity.this.random.nextInt(2) == 0) {
                 return false;
             } else if (!super.canStart()) {
                 return false;
@@ -780,6 +796,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             ServerWorld serverWorld = (ServerWorld) getWorld();
 
             int numIcicles = this.numIciclesProvider.get(random);
+            nextStartTime = FrostologerEntity.this.age + ICICLE_ATTACK_COOL_DOWN;
             for (int i = 0; i < numIcicles; ++i) {
                 BlockPos blockPos = FrostologerEntity.this.getBlockPos()
                         .add(

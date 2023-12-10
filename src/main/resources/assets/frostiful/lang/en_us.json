@@ -26,6 +26,7 @@
   "item.frostiful.ice_skates": "Ice Skates",
   "item.frostiful.armored_ice_skates": "Armored Ice Skates",
   "item.frostiful.frostology_cloak.tooltip": "Become Ice-like",
+  "item.frostiful.warming.tooltip": "Warming \uD83D\uDD25",
 
   "item.minecraft.potion.effect.frostiful.freezing": "Potion of Freezing",
   "item.minecraft.potion.effect.frostiful.freezing_long": "Potion of Freezing",
@@ -54,6 +55,9 @@
   
   "trim_pattern.frostiful.frosty": "Frosty Armor Trim",
   
+  "item.frostiful.snowflake_banner_pattern": "Banner Pattern",
+  "item.frostiful.snowflake_banner_pattern.desc": "Snowflake",
+  
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
   "block.frostiful.cool_sun_lichen": "Cool Sun Lichen",
@@ -75,7 +79,23 @@
   "block.frostiful.cut_blue_ice_stairs": "Cut Blue Ice Stairs",
   "block.frostiful.cut_blue_ice_slab": "Cut Blue Ice Slab",
   "block.frostiful.cut_blue_ice_wall": "Cut Blue Ice Wall",
-
+  
+  "block.minecraft.banner.frostiful.snowflake.black": "Black Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.blue": "Blue Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.brown": "Brown Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.cyan": "Cyan Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.gray": "Gray Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.green": "Green Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.light_blue": "Light Blue Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.light_gray": "Light Gray Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.lime": "Lime Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.magenta": "Magenta Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.orange": "Orange Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.pink": "Pink Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.purple": "Purple Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.red": "Red Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.white": "White Snowflake",
+  "block.minecraft.banner.frostiful.snowflake.yellow": "Yellow Snowflake",
 
   "entity.frostiful.frost_spell": "Frost Spell",
   "entity.frostiful.packed_snowball": "Packed Snowball",
@@ -113,7 +133,7 @@
   "advancements.frostiful.adventure.fur_armor.description": "Obtain a full suit of Fur Armor",
   "advancements.frostiful.adventure.chain_fur_armor.title": "Chained Up",
   "advancements.frostiful.adventure.chain_fur_armor.description": "Obtain a full suit of Fur Padded Chainmail Armor",
-  "advancements.frostiful.add_log_to_fire.title": "Timber on the Hearth",
+  "advancements.frostiful.add_log_to_fire.title": "Timber Hearth",
   "advancements.frostiful.add_log_to_fire.desc": "Add a log to a campfire",
   "advancements.frostiful.adventure.obtain_ice_skates.title": "Sword Shoes",
   "advancements.frostiful.adventure.obtain_ice_skates.description": "Craft a pair of Ice Skates in the Smithing Table",
@@ -239,6 +259,7 @@
   "text.autoconfig.frostiful.option.freezingConfig.shiverBelow": "Start shivering when below temp (scale from -1 to +1)",
   "text.autoconfig.frostiful.option.freezingConfig.shiverWarmth": "Shivering warmth per tick",
   "text.autoconfig.frostiful.option.freezingConfig.stopShiverWarmingBelowFoodLevel": "Stop shivering warmth below food level",
+  "text.autoconfig.frostiful.option.freezingConfig.warmFoodWarmthTime": "Warming food and drink Warmth duration (ticks)",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",
@@ -268,5 +289,6 @@
   "text.autoconfig.frostiful.option.environmentConfig.powderSnowFreezeRate": "Powder snow freeze rate",
   "text.autoconfig.frostiful.option.environmentConfig.warmthPerLightLevel": "Warmth per light level",
   "text.autoconfig.frostiful.option.environmentConfig.minLightForWarmth": "Minimum block light level for warmth",
-  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate"
+  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate",
+  "text.autoconfig.frostiful.option.environmentConfig.winterTemperatureShift": "Winter temperature shift (requires Fabric Seasons)"
 }

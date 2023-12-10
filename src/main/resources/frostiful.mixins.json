@@ -6,6 +6,7 @@
     "plugin": "com.github.thedeathlycow.frostiful.mixins.compat.Plugin",
     "mixins": [
         "asm.EnchantmentTargetMixin",
+        "block.BannerPatternsRegistryMixin",
         "block.CampfireWarmthMixin",
         "block.PowderSnowWalkableMixin",
         "block.SnowPackingMixin",
@@ -26,6 +27,7 @@
         "entity.shearing.MobShearingMixin",
         "entity.shearing.PolarBearShearingMixin",
         "entity.soaking.WaterPotionSoakingMixin",
+        "food.compat.WarmFoodMixin",
         "item.ArmorItemMixin",
         "item.ArmorTrimPatternsMixin",
         "powder_snow_effects.EntityPowderSnowRedirect",

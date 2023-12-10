@@ -16,6 +16,7 @@ public class FBlockTags {
     public static final TagKey<Block> HAS_OPEN_FLAME = register("has_open_flame");
     public static final TagKey<Block> IS_OPEN_FLAME = register("is_open_flame");
     public static final TagKey<Block> HOT_FLOOR = register("hot_floor");
+    public static final TagKey<Block> ICICLE_REPLACEABLE_BLOCKS = register("icicle_replaceable_blocks");
 
     private static TagKey<Block> register(String id) {
         return TagKey.of(RegistryKeys.BLOCK, Frostiful.id(id));

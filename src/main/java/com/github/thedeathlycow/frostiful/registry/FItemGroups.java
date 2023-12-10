@@ -57,17 +57,18 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.CUT_BLUE_ICE_SLAB));
                 entries.add(new ItemStack(FItems.CUT_BLUE_ICE_WALL));
 
-                entries.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
-                entries.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
-                entries.add(new ItemStack(FItems.BITER_SPAWN_EGG));
-
                 entries.add(new ItemStack(FItems.FUR_UPGRADE_TEMPLATE));
                 entries.add(new ItemStack(FItems.ICE_SKATE_UPGRADE_TEMPLATE));
                 entries.add(new ItemStack(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE));
+                entries.add(new ItemStack(FItems.SNOWFLAKE_BANNER_PATTERN));
 
                 entries.add(new ItemStack(FItems.ICICLE));
                 entries.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
                 entries.add(new ItemStack(FItems.FROZEN_TORCH));
+
+                entries.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
+                entries.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
+                entries.add(new ItemStack(FItems.BITER_SPAWN_EGG));
             }).build();
 
     public static void registerAll() {

@@ -10,6 +10,7 @@ import net.minecraft.world.gen.feature.Feature;
 public class FFeatures {
 
     public static final Feature<CoveredRockFeatureConfig> COVERED_ROCK = new CoveredRockFeature(CoveredRockFeatureConfig.CODEC);
+    public static final Feature<IcicleFeature.IcicleFeatureConfig> ICICLE_PATCH = new IcicleFeature(IcicleFeature.IcicleFeatureConfig.CODEC);
 
     private static void register(String name, Feature<?> feature) {
         Registry.register(Registries.FEATURE, Frostiful.id(name), feature);
@@ -17,5 +18,6 @@ public class FFeatures {
 
     public static void registerAll() {
         register("covered_rock", COVERED_ROCK);
+        register("icicle_patch", ICICLE_PATCH);
     }
 }
