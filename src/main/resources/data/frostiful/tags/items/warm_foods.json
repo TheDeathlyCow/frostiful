@@ -92,6 +92,22 @@
         {
             "id": "festive_delight:christmas_tea",
             "required": false
+        },
+        {
+            "id": "spectrum:hot_chocolate",
+            "required": false
+        },
+        {
+            "id": "spectrum:demon_tea",
+            "required": false
+        },
+        {
+            "id": "spectrum:restoration_tea",
+            "required": false
+        },
+        {
+            "id": "spectrum:glistering_jelly_tea",
+            "required": false
         }
     ]
 }
