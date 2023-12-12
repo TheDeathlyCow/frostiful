@@ -35,7 +35,7 @@ public enum BiomeCategory {
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
 
         // +inf means only tags will be considered
-        float temperature = config.isEnableDynamicTemperature() ? biome.getTemperature() : Float.POSITIVE_INFINITY;
+        float temperature = biome.getTemperature();
 
         BiomeCategory category;
 

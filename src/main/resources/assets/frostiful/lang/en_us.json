@@ -278,7 +278,6 @@
   
   "text.autoconfig.frostiful.option.environmentConfig": "Environment Config",
   "text.autoconfig.frostiful.option.environmentConfig.doDryBiomeNightFreezing": "Do dry biome night freezing",
-  "text.autoconfig.frostiful.option.environmentConfig.enableDynamicTemperature": "Enable dynamic temperature",
   "text.autoconfig.frostiful.option.environmentConfig.coldBiomeTemperatureChange": "Cold biome base temperature change (per tick)",
   "text.autoconfig.frostiful.option.environmentConfig.freezingBiomeTemperatureChange": "Freezing biome base temperature change (per tick)",
   "text.autoconfig.frostiful.option.environmentConfig.nightTemperatureShift": "Night time temperature shift",
