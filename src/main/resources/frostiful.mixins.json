@@ -11,6 +11,8 @@
         "block.PowderSnowWalkableMixin",
         "block.SnowPackingMixin",
         "block.WindBlowoutMixin",
+        "compat.farmersdelight.present.HotCocoaItemMixin",
+        "compat.farmersrespite.present.DrinkableItemMixin",
         "entity.DamageSourcesMixin",
         "entity.EntityInvoker",
         "entity.FallingBlockEntityAccessor",

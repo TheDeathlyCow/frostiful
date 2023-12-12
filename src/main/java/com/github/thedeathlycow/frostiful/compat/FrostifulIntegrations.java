@@ -24,12 +24,4 @@ public class FrostifulIntegrations {
     public static boolean isModLoaded(String id) {
         return FabricLoader.getInstance().isModLoaded(id);
     }
-
-    public static boolean isWinter(World world) {
-        if (isModLoaded(FABRIC_SEASONS_ID)) {
-            return Season.WINTER == FabricSeasons.getCurrentSeason(world);
-        } else {
-            return false;
-        }
-    }
 }
