@@ -1,8 +1,7 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-import com.github.thedeathlycow.frostiful.compat.SeasonsIntegration;
+import com.github.thedeathlycow.frostiful.compat.AdaptedSeason;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
@@ -15,6 +14,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import org.jetbrains.annotations.Nullable;
 
 public class AmbientTemperatureController extends EnvironmentControllerDecorator {
 
@@ -80,12 +80,10 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     private int getNaturalWorldTemperatureChange(World world, BlockPos pos) {
         RegistryEntry<Biome> biome = world.getBiome(pos);
 
-        BiomeCategory category = BiomeCategory.fromBiome(biome);
-        int temp = category.getTemperatureChange(world);
+        @Nullable AdaptedSeason season = AdaptedSeason.getCurrentSeason(world);
+        BiomeCategory category = BiomeCategory.fromBiome(biome, season);
+        int temp = category.getTemperatureChange(world, season);
         if (temp < 0) {
-            if (SeasonsIntegration.isWinter(world)) {
-                temp += Frostiful.getConfig().environmentConfig.getWinterTemperatureShift();
-            }
             return temp;
         }
 
