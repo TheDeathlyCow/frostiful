@@ -9,6 +9,8 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     boolean doDryBiomeNightFreezing = true;
 
+    boolean enableDynamicTemperature = true;
+
     int nightTemperatureShift = -1;
     int coldBiomeTemperatureChange = -1;
     int freezingBiomeTemperatureChange = -3;
@@ -31,6 +33,10 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     public boolean doDryBiomeNightFreezing() {
         return doDryBiomeNightFreezing;
+    }
+
+    public boolean isEnableDynamicTemperature() {
+        return enableDynamicTemperature;
     }
 
     public int getNightTemperatureShift() {

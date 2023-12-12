@@ -1,0 +1,11 @@
+{
+    "replace": false,
+    "values": [
+        "#c:aquatic_icy",
+        "#c:snowy",
+        "#c:snowy_plains",
+        "minecraft:jagged_peaks",
+        "minecraft:grove",
+        "minecraft:snowy_slopes"
+    ]
+}

@@ -30,14 +30,21 @@ public enum BiomeCategory {
     public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry) {
         Biome biome = biomeEntry.value();
 
-        float temperature = biome.getTemperature();
-        if (biomeEntry.isIn(FBiomeTags.FREEZING_BIOMES)) {
+        EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
+
+        // +inf means only tags will be considered
+        float temperature = config.isEnableDynamicTemperature() ? biome.getTemperature() : Float.POSITIVE_INFINITY;
+
+        if (biomeEntry.isIn(FBiomeTags.FREEZING_BLACKLIST_BIOMES)) {
+            return NORMAL;
+        } else if (biomeEntry.isIn(FBiomeTags.FREEZING_BIOMES)) {
             return FREEZING;
-        } else if (temperature <= SNOW_TEMPERATURE) {
+        } else if (temperature <= SNOW_TEMPERATURE || biomeEntry.isIn(FBiomeTags.COLD_BIOMES)) {
             return COLD;
         } else if (
                 temperature <= TAIGA_TEMPERATURE
-                        || (!biome.hasPrecipitation() && Frostiful.getConfig().environmentConfig.doDryBiomeNightFreezing())
+                        || (biomeEntry.isIn(FBiomeTags.DRY_BIOMES) && config.doDryBiomeNightFreezing())
+                        || biomeEntry.isIn(FBiomeTags.COOL_BIOMES)
         ) {
             return COLD_AT_NIGHT;
         } else {
