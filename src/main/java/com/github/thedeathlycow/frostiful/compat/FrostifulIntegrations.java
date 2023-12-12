@@ -1,9 +1,6 @@
 package com.github.thedeathlycow.frostiful.compat;
 
-import io.github.lucaargolo.seasons.FabricSeasons;
-import io.github.lucaargolo.seasons.utils.Season;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.world.World;
 
 public class FrostifulIntegrations {
 
@@ -23,13 +20,5 @@ public class FrostifulIntegrations {
 
     public static boolean isModLoaded(String id) {
         return FabricLoader.getInstance().isModLoaded(id);
-    }
-
-    public static boolean isWinter(World world) {
-        if (isModLoaded(FABRIC_SEASONS_ID)) {
-            return Season.WINTER == FabricSeasons.getCurrentSeason(world);
-        } else {
-            return false;
-        }
     }
 }

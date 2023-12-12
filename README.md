@@ -25,7 +25,8 @@ Basically everything about this mod is documented extensively on the [wiki](http
 * [Farmer's Respite](https://www.curseforge.com/minecraft/mc-mods/farmers-respite): Teas and warm foods provide the Warmth effect
 * [Festive Delight](https://www.curseforge.com/minecraft/mc-mods/festive-delight): Christmas Tea provides the Warmth effect
 * [Frozen Up](https://www.curseforge.com/minecraft/mc-mods/frozen-up): Truffle Hot Chocolate provides the Warmth effect
-* [Fabric Seasons](https://modrinth.com/mod/fabric-seasons): Winters in snowy and freezing biomes are *even colder* than normal
+* [Spectrum](https://modrinth.com/mod/spectrum): Hot Chocolate, Demon Tea, Restoration Tea, and Glistering Jelly Tea provide the Warmth effect
+* [Fabric Seasons](https://modrinth.com/mod/fabric-seasons): Winters in snowy and freezing biomes are *even colder* than normal. Freezing biomes are slightly warmer in Summer.
 
 # Additional Credits
 

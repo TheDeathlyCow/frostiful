@@ -11,6 +11,7 @@
         "block.PowderSnowWalkableMixin",
         "block.SnowPackingMixin",
         "block.WindBlowoutMixin",
+        "compat.farmersdelight.present.HotCocoaItemMixin",
         "entity.DamageSourcesMixin",
         "entity.EntityInvoker",
         "entity.FallingBlockEntityAccessor",
@@ -60,5 +61,5 @@
     ],
     "injectors": {
         "defaultRequire": 1
-	}
+    }
 }

@@ -22,15 +22,7 @@
             "required": false
         },
         {
-            "id": "farmersrespite:rose_hip_tea",
-            "required": false
-        },
-        {
             "id": "farmersrespite:dandelion_tea",
-            "required": false
-        },
-        {
-            "id": "farmersrespite:purulent_tea",
             "required": false
         },
         {
@@ -70,14 +62,6 @@
             "required": false
         },
         {
-            "id": "farmersrespite:strong_purulent_tea",
-            "required": false
-        },
-        {
-            "id": "farmersrespite:strong_rose_hip_tea",
-            "required": false
-        },
-        {
             "id": "farmersrespite:strong_coffee",
             "required": false
         },
@@ -91,6 +75,22 @@
         },
         {
             "id": "festive_delight:christmas_tea",
+            "required": false
+        },
+        {
+            "id": "spectrum:hot_chocolate",
+            "required": false
+        },
+        {
+            "id": "spectrum:demon_tea",
+            "required": false
+        },
+        {
+            "id": "spectrum:restoration_tea",
+            "required": false
+        },
+        {
+            "id": "spectrum:glistering_jelly_tea",
             "required": false
         }
     ]
