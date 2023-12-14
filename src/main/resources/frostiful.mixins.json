@@ -54,6 +54,7 @@
         "client.ice_skate_fx.ModelMixin",
         "compat.colorfulhearts.present.ColdHeartOverlay",
         "compat.colorfulhearts.present.FreezingHearts",
+        "compat.farmersdelight.present.HotCocoaItemClientMixin",
         "compat.overflowingbars.absent.ColdHeartOverlay",
         "compat.overflowingbars.absent.FreezingHearts",
         "compat.overflowingbars.present.ColdHeartOverlay",
