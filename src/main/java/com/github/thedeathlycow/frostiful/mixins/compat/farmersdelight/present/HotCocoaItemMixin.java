@@ -27,12 +27,4 @@ public abstract class HotCocoaItemMixin extends MilkBottleItem {
         FoodIntegration.onConsumeFood(this, stack, user);
     }
 
-    @Inject(
-            method = "appendTooltip",
-            at = @At("HEAD")
-    )
-    private void appendWarmthToolTip(ItemStack stack, @Nullable World world, List<Text> tooltip, TooltipContext context, CallbackInfo ci) {
-        FoodIntegration.appendWarmthTooltip(this, stack, tooltip);
-    }
-
 }
