@@ -32,6 +32,7 @@ public class FreezingConfigGroup implements ConfigData {
     int shiverWarmth = 1;
     int stopShiverWarmingBelowFoodLevel = 10;
     int warmFoodWarmthTime = 60 * 20;
+    double netheriteFrostResistance = 0.5;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -123,5 +124,9 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getWarmFoodWarmthTime() {
         return warmFoodWarmthTime;
+    }
+
+    public double getNetheriteFrostResistance() {
+        return netheriteFrostResistance;
     }
 }
