@@ -7,10 +7,12 @@ import net.minecraft.block.ShapeContext;
 import net.minecraft.entity.ai.pathing.NavigationType;
 import net.minecraft.item.ItemPlacementContext;
 import net.minecraft.registry.tag.BlockTags;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.IntProperty;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.random.Random;
 import net.minecraft.util.shape.VoxelShape;
 import net.minecraft.util.shape.VoxelShapes;
 import net.minecraft.world.BlockView;
@@ -42,6 +44,7 @@ public class PackedSnowBlock extends Block {
             Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0),
             Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
     };
+    private static final float MELT_CHANCE = 64f / 1125f;
 
 
     public PackedSnowBlock(Settings settings) {
@@ -99,6 +102,20 @@ public class PackedSnowBlock extends Block {
             return Block.isFaceFullSquare(blockState.getCollisionShape(world, pos.down()), Direction.UP)
                     || blockState.isOf(this)
                     && blockState.get(LAYERS) == MAX_LAYERS;
+        }
+    }
+
+    @Override
+    public boolean hasRandomTicks(BlockState state) {
+        return super.hasRandomTicks(state) && state.get(LAYERS) <= 2;
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        super.randomTick(state, world, pos, random);
+
+        if (random.nextFloat() < MELT_CHANCE) {
+            world.setBlockState(pos, Blocks.SNOW.getDefaultState());
         }
     }
 

@@ -112,6 +112,7 @@ public class FBlocks {
                     .strength(1.2f, 3.0f)
                     .requiresTool()
                     .sounds(FBlockSoundGroups.PACKED_SNOW)
+                    .ticksRandomly()
                     .blockVision((state, world, pos) -> {
                         return state.get(PackedSnowBlock.LAYERS) >= PackedSnowBlock.MAX_LAYERS;
                     })
