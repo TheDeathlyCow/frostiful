@@ -49,6 +49,7 @@ public class PackedSnowBlock extends Block {
         this.setDefaultState(this.stateManager.getDefaultState().with(LAYERS, 1));
     }
 
+    @Override
     public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
         if (type == NavigationType.LAND) {
             return state.get(LAYERS) <= MAX_LAYERS / 2;
@@ -57,30 +58,37 @@ public class PackedSnowBlock extends Block {
         }
     }
 
+    @Override
     public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return LAYERS_TO_SHAPE[state.get(LAYERS)];
     }
 
+    @Override
     public VoxelShape getCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return LAYERS_TO_SHAPE[state.get(LAYERS) - 1];
     }
 
+    @Override
     public VoxelShape getSidesShape(BlockState state, BlockView world, BlockPos pos) {
         return LAYERS_TO_SHAPE[state.get(LAYERS)];
     }
 
+    @Override
     public VoxelShape getCameraCollisionShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return LAYERS_TO_SHAPE[state.get(LAYERS)];
     }
 
+    @Override
     public boolean hasSidedTransparency(BlockState state) {
         return true;
     }
 
+    @Override
     public float getAmbientOcclusionLightLevel(BlockState state, BlockView world, BlockPos pos) {
         return state.get(LAYERS) == MAX_LAYERS ? 0.2f : 1.0f;
     }
 
+    @Override
     public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos.down());
         if (blockState.isIn(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)) {
@@ -94,10 +102,21 @@ public class PackedSnowBlock extends Block {
         }
     }
 
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        return !state.canPlaceAt(world, pos) ? Blocks.AIR.getDefaultState() : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
+    @Override
+    public BlockState getStateForNeighborUpdate(
+            BlockState state,
+            Direction direction,
+            BlockState neighborState,
+            WorldAccess world,
+            BlockPos pos,
+            BlockPos neighborPos
+    ) {
+        return !state.canPlaceAt(world, pos)
+                ? Blocks.AIR.getDefaultState()
+                : super.getStateForNeighborUpdate(state, direction, neighborState, world, pos, neighborPos);
     }
 
+    @Override
     public boolean canReplace(BlockState state, ItemPlacementContext context) {
         int layers = state.get(LAYERS);
         if (context.getStack().isOf(this.asItem()) && layers < MAX_LAYERS) {
@@ -111,6 +130,7 @@ public class PackedSnowBlock extends Block {
         }
     }
 
+    @Override
     @Nullable
     public BlockState getPlacementState(ItemPlacementContext ctx) {
         BlockState previousState = ctx.getWorld().getBlockState(ctx.getBlockPos());
@@ -121,6 +141,7 @@ public class PackedSnowBlock extends Block {
         }
     }
 
+    @Override
     protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
         builder.add(LAYERS);
     }
