@@ -62,6 +62,11 @@ public class ItemAttributeLoader implements SimpleSynchronousResourceReloadListe
         int numModifiers = this.values.size();
         Frostiful.LOGGER.info("Loaded {} item attribute modifier{}", numModifiers, numModifiers == 1 ? "" : "s");
 
+        if (numModifiers > 0) {
+            Frostiful.LOGGER.warn("Using deprecated item attribute modifiers from Frostiful! Use the item tags " +
+                    "#frostiful:very_warm_armor or #frostiful:warm_armor for adding Frost Resistance to armors instead.");
+        }
+
     }
 
     @Override

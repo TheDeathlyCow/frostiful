@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
+import com.github.thedeathlycow.frostiful.item.attribute.FrostResistantArmorTagApplicator;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
@@ -54,6 +55,7 @@ public class Frostiful implements ModInitializer {
 
         serverManager.registerReloadListener(ItemAttributeLoader.INSTANCE);
         ModifyItemAttributeModifiersCallback.EVENT.register(ItemAttributeLoader.INSTANCE);
+        ModifyItemAttributeModifiersCallback.EVENT.register(new FrostResistantArmorTagApplicator());
 
         FBlocks.registerBlocks();
         FItems.registerItems();

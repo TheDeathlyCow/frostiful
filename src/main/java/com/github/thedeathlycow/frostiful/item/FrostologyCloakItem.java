@@ -5,11 +5,16 @@ import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.google.common.collect.ImmutableMultimap;
+import com.google.common.collect.Multimap;
 import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.block.DispenserBlock;
 import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttribute;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.Equipment;
@@ -23,10 +28,24 @@ import net.minecraft.util.TypedActionResult;
 import net.minecraft.world.World;
 
 import java.util.List;
+import java.util.UUID;
 
 public class FrostologyCloakItem extends Item implements Equipment {
 
     public static final Identifier TEXTURE_ID = Frostiful.id("textures/entity/frostology_cloak.png");
+
+    private static final Multimap<EntityAttribute, EntityAttributeModifier> ATTRIBUTE_MODIFIERS = ImmutableMultimap.
+            <EntityAttribute, EntityAttributeModifier>builder()
+            .put(
+                    ThermooAttributes.FROST_RESISTANCE,
+                    new EntityAttributeModifier(
+                            UUID.fromString("6b330e71-f106-43f4-a568-9042ae560c65"),
+                            () -> "Frostology cloak",
+                            -3,
+                            EntityAttributeModifier.Operation.ADDITION
+                    )
+            )
+            .build();
 
     public FrostologyCloakItem(Settings settings) {
         super(settings);
@@ -66,9 +85,7 @@ public class FrostologyCloakItem extends Item implements Equipment {
     }
 
     public static boolean isWornBy(PlayerEntity player) {
-
         boolean isWearingInTrinketSlot = false;
-
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
             isWearingInTrinketSlot = TrinketsApi.getTrinketComponent(player)
                     .map(trinketComponent -> trinketComponent.isEquipped(FItems.FROSTOLOGY_CLOAK))
@@ -87,5 +104,13 @@ public class FrostologyCloakItem extends Item implements Equipment {
     @Override
     public EquipmentSlot getSlotType() {
         return EquipmentSlot.CHEST;
+    }
+
+    @Override
+    public Multimap<EntityAttribute, EntityAttributeModifier> getAttributeModifiers(ItemStack stack, EquipmentSlot slot) {
+        if (slot == EquipmentSlot.CHEST) {
+            return ATTRIBUTE_MODIFIERS;
+        }
+        return super.getAttributeModifiers(stack, slot);
     }
 }

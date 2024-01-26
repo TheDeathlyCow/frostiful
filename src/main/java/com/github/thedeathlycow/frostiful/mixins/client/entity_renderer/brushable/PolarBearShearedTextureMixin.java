@@ -1,7 +1,7 @@
-package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer;
+package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer.brushable;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.FShearable;
+import com.github.thedeathlycow.frostiful.client.BrushableTextures;
+import com.github.thedeathlycow.frostiful.entity.FBrushable;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.entity.PolarBearEntityRenderer;
@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Environment(EnvType.CLIENT)
 public class PolarBearShearedTextureMixin {
 
-    private static final Identifier FROSTIFUL$SHEARED_TEXTURE = Frostiful.id("textures/entity/bear/polar_bear_sheared.png");
 
     @Inject(
             method = "getTexture(Lnet/minecraft/entity/passive/PolarBearEntity;)Lnet/minecraft/util/Identifier;",
@@ -24,8 +23,8 @@ public class PolarBearShearedTextureMixin {
             cancellable = true
     )
     public void getShearedTexture(PolarBearEntity polarBear, CallbackInfoReturnable<Identifier> cir) {
-        if (polarBear instanceof FShearable shearable && shearable.frostiful$wasSheared()) {
-            cir.setReturnValue(FROSTIFUL$SHEARED_TEXTURE);
+        if (polarBear instanceof FBrushable brushable && brushable.frostiful$wasBrushed()) {
+            cir.setReturnValue(BrushableTextures.POLAR_BEAR);
         }
     }
 

@@ -60,7 +60,7 @@
     "custom": {
         "cardinal-components": [
             "frostiful:living_entity",
-            "frostiful:polar_bear"
+            "frostiful:brushable"
         ]
     }
 }

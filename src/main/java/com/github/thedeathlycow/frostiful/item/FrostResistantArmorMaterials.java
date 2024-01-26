@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import net.minecraft.item.ArmorItem;
+import net.minecraft.item.ArmorMaterial;
 import net.minecraft.item.Items;
 import net.minecraft.recipe.Ingredient;
 import net.minecraft.sound.SoundEvent;
@@ -15,7 +16,7 @@ import java.util.EnumMap;
 import java.util.Map;
 
 
-public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial {
+public enum FrostResistantArmorMaterials implements ArmorMaterial {
 
     FUR_ARMOR(
             "fur",
@@ -30,13 +31,7 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
             FSoundEvents.ITEM_ARMOR_EQUIP_FUR,
             0,
             0,
-            () -> Ingredient.fromTag(FItemTags.FUR),
-            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-                map.put(ArmorItem.Type.BOOTS, 0.5);
-                map.put(ArmorItem.Type.LEGGINGS, 1.0);
-                map.put(ArmorItem.Type.CHESTPLATE, 2.0);
-                map.put(ArmorItem.Type.HELMET, 1.5);
-            })
+            () -> Ingredient.fromTag(FItemTags.FUR)
     ),
     FUR_LINED_CHAIN(
             "fur_lined_chainmail",
@@ -51,14 +46,15 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
             SoundEvents.ITEM_ARMOR_EQUIP_CHAIN,
             0,
             0,
-            () -> Ingredient.ofItems(Items.IRON_INGOT),
-            Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
-                map.put(ArmorItem.Type.BOOTS, 0.5);
-                map.put(ArmorItem.Type.LEGGINGS, 1.0);
-                map.put(ArmorItem.Type.CHESTPLATE, 2.0);
-                map.put(ArmorItem.Type.HELMET, 1.5);
-            })
+            () -> Ingredient.ofItems(Items.IRON_INGOT)
     );
+
+    public static final Map<ArmorItem.Type, Double> FROST_RESISTANCE_AMOUNTS = Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
+        map.put(ArmorItem.Type.BOOTS, 0.5);
+        map.put(ArmorItem.Type.LEGGINGS, 1.0);
+        map.put(ArmorItem.Type.CHESTPLATE, 2.0);
+        map.put(ArmorItem.Type.HELMET, 1.5);
+    });
 
     private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY;
 
@@ -70,7 +66,6 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
     private final float toughness;
     private final float knockbackResistance;
     private final Supplier<Ingredient> repairIngredientSupplier;
-    private final Map<ArmorItem.Type, Double> frostResistanceAmounts;
 
 
     FrostResistantArmorMaterials(
@@ -81,8 +76,7 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
             SoundEvent equipSound,
             float toughness,
             float knockbackResistance,
-            Supplier<Ingredient> repairIngredientSupplier,
-            EnumMap<ArmorItem.Type, Double> frostResistanceAmounts
+            Supplier<Ingredient> repairIngredientSupplier
     ) {
         this.name = name;
         this.durabilityMultiplier = durabilityMultiplier;
@@ -92,12 +86,6 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
         this.toughness = toughness;
         this.knockbackResistance = knockbackResistance;
         this.repairIngredientSupplier = Suppliers.memoize(repairIngredientSupplier);
-        this.frostResistanceAmounts = frostResistanceAmounts;
-    }
-
-    @Override
-    public double getFrostResistance(ArmorItem.Type type) {
-        return this.frostResistanceAmounts.get(type);
     }
 
     @Override
@@ -127,7 +115,7 @@ public enum FrostResistantArmorMaterials implements FrostResistantArmorMaterial 
 
     @Override
     public String getName() {
-        return String.format("frostiful_" + this.name);
+        return "frostiful_" + this.name;
     }
 
     @Override

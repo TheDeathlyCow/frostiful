@@ -84,9 +84,6 @@ dependencies {
     // Fabric Seasons https://modrinth.com/mod/fabric-seasons
     modCompileOnly("maven.modrinth:fabric-seasons:${project.fabric_seasons_version}") { transitive = false }
 
-    // Farmer's Delight and add ons
-    modCompileOnly("maven.modrinth:farmers-delight-fabric:${project.farmers_delight_version}") { transitive = false }
-
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
     // Includes Cardinal Components API as a Jar-in-Jar dependency (optional but recommended)

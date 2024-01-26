@@ -17,6 +17,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * @deprecated Deprecated due to poor ability to synchronize on servers. Prefer using {@link com.github.thedeathlycow.frostiful.tag.FItemTags#VERY_WARM_ARMOR}
+ * or {@link com.github.thedeathlycow.frostiful.tag.FItemTags#WARM_ARMOR} instead.
+ */
+@Deprecated
 public class ItemAttributeModifier {
 
     @Nullable
