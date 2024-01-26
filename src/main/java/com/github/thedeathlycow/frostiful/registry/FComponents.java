@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.component.LivingEntityComponents;
-import com.github.thedeathlycow.frostiful.entity.component.PolarBearComponents;
+import com.github.thedeathlycow.frostiful.entity.component.BrushableComponents;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -17,9 +17,9 @@ public class FComponents implements EntityComponentInitializer {
             LivingEntityComponents.class
     );
 
-    public static final ComponentKey<PolarBearComponents> POLAR_BEAR_COMPONENTS = ComponentRegistry.getOrCreate(
-            Frostiful.id("polar_bear"),
-            PolarBearComponents.class
+    public static final ComponentKey<BrushableComponents> BRUSHABLE_COMPONENT = ComponentRegistry.getOrCreate(
+            Frostiful.id("brushable"),
+            BrushableComponents.class
     );
 
     @Override
@@ -31,8 +31,8 @@ public class FComponents implements EntityComponentInitializer {
         );
         registry.registerFor(
                 PolarBearEntity.class,
-                POLAR_BEAR_COMPONENTS,
-                PolarBearComponents::new
+                BRUSHABLE_COMPONENT,
+                BrushableComponents::new
         );
     }
 }
