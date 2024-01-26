@@ -33,7 +33,7 @@ public class FSmithingTemplateItem {
         addTemplateToLoot(
                 FItems.ICE_SKATE_UPGRADE_TEMPLATE,
                 new Identifier("chests/village/village_snowy_house"),
-                config.combatConfig.getFurUpgradeTemplateGenerateChance()
+                config.combatConfig.getSkateUpgradeTemplateGenerateChance()
         );
     }
 
