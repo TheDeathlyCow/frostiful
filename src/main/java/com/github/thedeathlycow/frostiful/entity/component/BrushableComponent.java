@@ -4,22 +4,22 @@ import com.github.thedeathlycow.frostiful.entity.FBrushable;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import dev.onyxstudios.cca.api.v3.component.Component;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
-import net.minecraft.entity.passive.PolarBearEntity;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.network.ServerPlayerEntity;
 
-public class BrushableComponents implements Component, AutoSyncedComponent {
+public class BrushableComponent implements Component, AutoSyncedComponent {
 
     private static final String LAST_BRUSHED_TIME_KEY = "last_brushed_time";
 
     private long lastBrushTime = -1;
 
-    private final PolarBearEntity provider;
+    private final AnimalEntity provider;
     private final FBrushable brushable;
 
-    public BrushableComponents(PolarBearEntity provider) {
+    public BrushableComponent(AnimalEntity provider) {
         this.provider = provider;
         this.brushable = (FBrushable) provider;
     }
@@ -61,6 +61,6 @@ public class BrushableComponents implements Component, AutoSyncedComponent {
 
     public boolean wasBrushed() {
         return lastBrushTime >= 0L
-                && this.provider.getWorld().getTimeOfDay() - lastBrushTime <= FBrushable.SHEAR_COOLDOWN;
+                && this.provider.getWorld().getTimeOfDay() - lastBrushTime <= FBrushable.BRUSH_COOLDOWN;
     }
 }

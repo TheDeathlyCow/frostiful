@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 
 public interface FBrushable {
 
-    int SHEAR_COOLDOWN = 20 * 300;
-    Identifier POLAR_BEAR_SHEARING_LOOT_TABLE = Frostiful.id("gameplay/polar_bear_shearing");
-
+    int BRUSH_COOLDOWN = 20 * 300;
+    Identifier POLAR_BEAR_BRUSHING_LOOT_TABLE = Frostiful.id("gameplay/polar_bear_brushing");
+    Identifier OCELOT_BRUSHING_LOOT_TABLE = Frostiful.id("gameplay/ocelot_brushing");
 
     void frostiful$brush(PlayerEntity source, SoundCategory shearedSoundCategory);
 
