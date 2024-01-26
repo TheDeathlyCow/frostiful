@@ -59,6 +59,12 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         }
     }
 
+    public boolean isBrushable() {
+        return this.provider.isAlive()
+                && !this.provider.isBaby()
+                && !this.wasBrushed();
+    }
+
     public boolean wasBrushed() {
         return lastBrushTime >= 0L
                 && this.provider.getWorld().getTimeOfDay() - lastBrushTime <= FBrushable.BRUSH_COOLDOWN;

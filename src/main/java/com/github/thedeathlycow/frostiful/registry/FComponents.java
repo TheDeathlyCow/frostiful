@@ -10,6 +10,7 @@ import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.passive.OcelotEntity;
 import net.minecraft.entity.passive.PolarBearEntity;
+import net.minecraft.entity.passive.WolfEntity;
 
 public class FComponents implements EntityComponentInitializer {
 
@@ -37,6 +38,11 @@ public class FComponents implements EntityComponentInitializer {
         );
         registry.registerFor(
                 OcelotEntity.class,
+                BRUSHABLE_COMPONENT,
+                BrushableComponent::new
+        );
+        registry.registerFor(
+                WolfEntity.class,
                 BRUSHABLE_COMPONENT,
                 BrushableComponent::new
         );
