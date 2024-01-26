@@ -9,6 +9,10 @@
         "frostiful:fur_padded_chainmail_chestplate",
         "frostiful:fur_padded_chainmail_leggings",
         "frostiful:fur_padded_chainmail_boots",
-        "#frostiful:ice_skates"
+        "#frostiful:ice_skates",
+        {
+            "required": false,
+            "id": "#ad_astra:freeze_resistant_armor"
+        }
     ]
 }
