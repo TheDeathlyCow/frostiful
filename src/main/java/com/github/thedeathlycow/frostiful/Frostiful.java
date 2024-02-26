@@ -83,13 +83,13 @@ public class Frostiful implements ModInitializer {
         PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
                 (change, player) -> {
 
-                    if (change > 0 || player.thermoo$isWarm()) {
+                    if (change > 0 && player.thermoo$isWarm()) {
                         return true;
                     }
 
                     FrostifulConfig config = getConfig();
 
-                    if (player.thermoo$getTemperatureScale() > -config.freezingConfig.getMaxPassiveFreezingPercent()) {
+                    if (player.thermoo$getTemperatureScale() < -config.freezingConfig.getMaxPassiveFreezingPercent()) {
                         return false;
                     }
 
