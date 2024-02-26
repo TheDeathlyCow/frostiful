@@ -14,7 +14,7 @@ import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
-import com.github.thedeathlycow.frostiful.world.FGameRules;
+import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
@@ -87,11 +87,16 @@ public class Frostiful implements ModInitializer {
                     }
 
                     FrostifulConfig config = getConfig();
+
+                    if (player.thermoo$getTemperatureScale() > -config.freezingConfig.getMaxPassiveFreezingPercent()) {
+                        return false;
+                    }
+
                     boolean doPassiveFreezing = config.freezingConfig.doPassiveFreezing()
                             && player.getWorld().getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
                     if (doPassiveFreezing) {
-                        return player.thermoo$getTemperatureScale() > -config.freezingConfig.getMaxPassiveFreezingPercent();
+                        return true;
                     } else {
                         return FrostologyCloakItem.isWornBy(player);
                     }

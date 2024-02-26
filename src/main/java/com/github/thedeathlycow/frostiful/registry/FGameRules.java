@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.world;
+package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.util.TextStyles;

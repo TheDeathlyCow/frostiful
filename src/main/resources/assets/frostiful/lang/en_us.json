@@ -118,11 +118,11 @@
   "commands.frostiful.root.set.success.multiple": "Rooted %s targets for %s ticks",
   
 
-  "gamerule.frostiful.doPassiveFreezing": "Do passive freezing",
-  "gamerule.maxSnowAccumulation": "Max snow accumulation",
+  "gamerule.frostiful.doPassiveFreezing": "Do environmental freezing",
+  "gamerule.frostiful.doPassiveFreezing.description": "If enabled, players will be slowly frozen by the environment over time. Players wearing a Cloak of Frostology are unaffected by this.",
   "gamerule.category.frostiful": "Frostiful",
 
-
+  
   "advancements.frostiful.adventure.obtain_frostology_cloak.title": "I'm the Frostologer Now!",
   "advancements.frostiful.adventure.obtain_frostology_cloak.description": "Obtain the Cloak of Frostology",
   "advancements.frostiful.adventure.find_frostologer_castle.title": "Packed In",
