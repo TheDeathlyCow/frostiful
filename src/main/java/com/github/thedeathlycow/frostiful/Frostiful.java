@@ -82,7 +82,7 @@ public class Frostiful implements ModInitializer {
                 (change, player) -> {
 
                     if (change > 0 && player.thermoo$isWarm()) {
-                        return false;
+                        return true;
                     }
 
                     FrostifulConfig config = getConfig();
