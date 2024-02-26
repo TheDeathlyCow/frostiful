@@ -23,6 +23,8 @@ public enum BiomeCategory {
     private static final float SNOW_TEMPERATURE = 0.15f;
     private static final float TAIGA_TEMPERATURE = 0.3f;
 
+    private static final int NIGHT_TIME_SURFACE_LIGHT = 4;
+
     private final ToIntFunction<EnvironmentConfigGroup> temperatureChange;
     private final boolean coldAtNight;
 
@@ -65,7 +67,7 @@ public enum BiomeCategory {
         int change = this.temperatureChange.applyAsInt(config);
 
         int sunlight = world.getLightLevel(LightType.SKY, pos) - world.getAmbientDarkness();
-        if (coldAtNight && sunlight < 0 && (!AdaptedSeason.isSummer(season) || config.isNightColdInSummer())) {
+        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT && (!AdaptedSeason.isSummer(season) || config.isNightColdInSummer())) {
             change += config.getNightTemperatureShift();
         }
 
