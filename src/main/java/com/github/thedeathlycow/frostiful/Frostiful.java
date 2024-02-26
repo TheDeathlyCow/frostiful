@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
+import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistantArmorTagApplicator;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
@@ -86,13 +87,13 @@ public class Frostiful implements ModInitializer {
                     }
 
                     FrostifulConfig config = getConfig();
-                    boolean doPassiveFreezing = player.getWorld().getGameRules()
-                            .getBoolean(FGameRules.DO_PASSIVE_FREEZING);
+                    boolean doPassiveFreezing = config.freezingConfig.doPassiveFreezing()
+                            && player.getWorld().getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
-                    if (doPassiveFreezing && !config.freezingConfig.doPassiveFreezing()) {
-                        return false;
-                    } else {
+                    if (doPassiveFreezing) {
                         return player.thermoo$getTemperatureScale() > -config.freezingConfig.getMaxPassiveFreezingPercent();
+                    } else {
+                        return FrostologyCloakItem.isWornBy(player);
                     }
                 }
         );
