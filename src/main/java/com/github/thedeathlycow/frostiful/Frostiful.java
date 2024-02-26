@@ -82,8 +82,7 @@ public class Frostiful implements ModInitializer {
     private void registerThermooEventListeners() {
         PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
                 (change, player) -> {
-
-                    if (change > 0 && player.thermoo$isWarm()) {
+                    if (change > 0) {
                         return true;
                     }
 
