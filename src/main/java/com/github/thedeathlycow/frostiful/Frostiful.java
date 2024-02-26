@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
@@ -113,7 +114,12 @@ public class Frostiful implements ModInitializer {
                 EnvironmentControllerInitializeEvent.MODIFY_PHASE,
                 ModifyTemperatureController::new
         );
-        EnvironmentControllerInitializeEvent.EVENT.register(SoakingController::new);
+        EnvironmentControllerInitializeEvent.EVENT.register(
+                controller -> FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID)
+                        ? controller
+                        : new SoakingController(controller)
+        );
+
     }
 
     public static FrostifulConfig getConfig() {

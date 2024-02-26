@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.client;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.entity.EntityType;
@@ -46,6 +47,11 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
     private void dripParticles(CallbackInfo ci) {
         World world = this.getWorld();
         if (world.isClient) { // only show particles on client to save bandwidth
+
+            // Scorchful does the same thing - let it handle this
+            if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID)) {
+                return;
+            }
 
             // spectators should not drip
             if (this.isSpectator()) {
