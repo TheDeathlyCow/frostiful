@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
 import net.minecraft.entity.SpawnReason;
@@ -67,6 +68,11 @@ public class ChillagerEntity extends PillagerEntity {
 
             frostologer.setPersistent();
             world.spawnEntityAndPassengers(frostologer);
+            ServerLivingEntityEvents.MOB_CONVERSION.invoker().onConversion(
+                    this,
+                    frostologer,
+                    false
+            );
             this.discard();
         } else {
             super.onStruckByLightning(world, lightning);
