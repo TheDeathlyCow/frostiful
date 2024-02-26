@@ -82,7 +82,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
 
         @Nullable AdaptedSeason season = AdaptedSeason.getCurrentSeason(world);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
-        int temp = category.getTemperatureChange(world, season);
+        int temp = category.getTemperatureChange(world, pos, season);
         if (temp < 0) {
             return temp;
         }

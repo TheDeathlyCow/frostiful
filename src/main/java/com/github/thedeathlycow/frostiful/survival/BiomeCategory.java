@@ -5,6 +5,8 @@ import com.github.thedeathlycow.frostiful.compat.AdaptedSeason;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
 import com.github.thedeathlycow.frostiful.tag.FBiomeTags;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import org.jetbrains.annotations.Nullable;
@@ -58,11 +60,12 @@ public enum BiomeCategory {
         return AdaptedSeason.getSeasonallyShiftedBiomeCategory(season, category);
     }
 
-    public int getTemperatureChange(World world, @Nullable AdaptedSeason season) {
+    public int getTemperatureChange(World world, BlockPos pos, @Nullable AdaptedSeason season) {
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
         int change = this.temperatureChange.applyAsInt(config);
 
-        if (coldAtNight && world.isNight() && (!AdaptedSeason.isSummer(season) || config.isNightColdInSummer())) {
+        int sunlight = world.getLightLevel(LightType.SKY, pos) - world.getAmbientDarkness();
+        if (coldAtNight && sunlight < 0 && (!AdaptedSeason.isSummer(season) || config.isNightColdInSummer())) {
             change += config.getNightTemperatureShift();
         }
 
