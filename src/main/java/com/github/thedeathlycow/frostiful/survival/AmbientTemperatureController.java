@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
+import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -59,6 +60,11 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
         }
 
         return warmth;
+    }
+
+    @Override
+    public int applyAwareHeat(TemperatureAware temperatureAware, int locationHeat) {
+        return temperatureAware.thermoo$isCold() ? locationHeat : 0;
     }
 
     @Override
