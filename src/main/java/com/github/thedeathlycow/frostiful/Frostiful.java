@@ -1,10 +1,12 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
+import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistantArmorTagApplicator;
 import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
@@ -13,7 +15,7 @@ import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
-import com.github.thedeathlycow.frostiful.world.FGameRules;
+import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
@@ -80,19 +82,23 @@ public class Frostiful implements ModInitializer {
     private void registerThermooEventListeners() {
         PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
                 (change, player) -> {
-
-                    if (change > 0 && player.thermoo$isWarm()) {
-                        return false;
+                    if (change > 0) {
+                        return true;
                     }
 
                     FrostifulConfig config = getConfig();
-                    boolean doPassiveFreezing = player.getWorld().getGameRules()
-                            .getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
-                    if (doPassiveFreezing && !config.freezingConfig.doPassiveFreezing()) {
+                    if (player.thermoo$getTemperatureScale() < -config.freezingConfig.getMaxPassiveFreezingPercent()) {
                         return false;
+                    }
+
+                    boolean doPassiveFreezing = config.freezingConfig.doPassiveFreezing()
+                            && player.getWorld().getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
+
+                    if (doPassiveFreezing) {
+                        return true;
                     } else {
-                        return player.thermoo$getTemperatureScale() > -config.freezingConfig.getMaxPassiveFreezingPercent();
+                        return FrostologyCloakItem.isWornBy(player);
                     }
                 }
         );
@@ -107,7 +113,12 @@ public class Frostiful implements ModInitializer {
                 EnvironmentControllerInitializeEvent.MODIFY_PHASE,
                 ModifyTemperatureController::new
         );
-        EnvironmentControllerInitializeEvent.EVENT.register(SoakingController::new);
+        EnvironmentControllerInitializeEvent.EVENT.register(
+                controller -> FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID)
+                        ? controller
+                        : new SoakingController(controller)
+        );
+
     }
 
     public static FrostifulConfig getConfig() {

@@ -11,7 +11,7 @@ public class FreezingConfigGroup implements ConfigData {
 
     boolean doPassiveFreezing = true;
     boolean doWindSpawning = true;
-    WindSpawnStrategies windSpawnStrategy = WindSpawnStrategies.ENTITY;
+    WindSpawnStrategies windSpawnStrategy = WindSpawnStrategies.POINT;
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
     boolean doSnowPacking = true;

@@ -67,6 +67,12 @@ public class ChillagerEntity extends PillagerEntity {
 
             frostologer.setPersistent();
             world.spawnEntityAndPassengers(frostologer);
+            // TODO: uncomment this line for 1.0.6
+//            ServerLivingEntityEvents.MOB_CONVERSION.invoker().onConversion(
+//                    this,
+//                    frostologer,
+//                    false
+//            );
             this.discard();
         } else {
             super.onStruckByLightning(world, lightning);

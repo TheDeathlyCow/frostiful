@@ -3,7 +3,7 @@
     "id": "frostiful",
     "version": "${version}",
     "name": "Frostiful",
-    "description": "A Frosty Vanilla+ Survival Experience",
+    "description": "A Frosty Vanilla+ Survival Experience. Also try Scorchful!",
     "authors": [
         "TheDeathlyCow"
     ],
@@ -43,10 +43,10 @@
         "frostiful.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.14.21",
-        "fabric-api": "*",
-        "minecraft": ">=1.20",
-        "thermoo": ">=2.1.0",
+        "fabricloader": ">=0.15.7",
+        "fabric-api": ">=0.91.0",
+        "minecraft": "~1.20.1",
+        "thermoo": ">=2.1.2",
         "mm": ">=2.3",
         "java": ">=17"
     },
@@ -55,7 +55,9 @@
         "colorfulhearts": "<4.0.1",
         "thermoo": "<2.0.0"
     },
-    "suggests": {},
+    "suggests": {
+        "scorchful": "*"
+    },
     "accessWidener": "frostiful.accesswidener",
     "custom": {
         "cardinal-components": [

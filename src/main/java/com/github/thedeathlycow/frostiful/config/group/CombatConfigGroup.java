@@ -11,7 +11,9 @@ public class CombatConfigGroup implements ConfigData {
 
 
     boolean doChillagerPatrols = true;
+
     boolean straysCarryFrostArrows = true;
+
     int heatDrainPerLevel = 210;
 
     double heatDrainEfficiency = 0.5;

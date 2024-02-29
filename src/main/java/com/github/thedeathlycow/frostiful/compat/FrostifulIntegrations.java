@@ -14,6 +14,8 @@ public class FrostifulIntegrations {
 
     public static final String FABRIC_SEASONS_ID = "seasons";
 
+    public static final String SCORCHFUL_ID = "scorchful";
+
     public static boolean isHeartsRenderOverridden() {
         return isModLoaded(COLORFUL_HEARTS_ID) || isModLoaded(OVERFLOWING_BARS_ID);
     }

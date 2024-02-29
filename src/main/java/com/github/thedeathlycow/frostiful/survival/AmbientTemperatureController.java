@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
+import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -62,6 +63,11 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     }
 
     @Override
+    public int applyAwareHeat(TemperatureAware temperatureAware, int locationHeat) {
+        return temperatureAware.thermoo$isCold() ? locationHeat : 0;
+    }
+
+    @Override
     public int getHeatFromBlockState(BlockState state) {
         return state.getLuminance();
     }
@@ -82,7 +88,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
 
         @Nullable AdaptedSeason season = AdaptedSeason.getCurrentSeason(world);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
-        int temp = category.getTemperatureChange(world, season);
+        int temp = category.getTemperatureChange(world, pos, season);
         if (temp < 0) {
             return temp;
         }

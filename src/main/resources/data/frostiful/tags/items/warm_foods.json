@@ -92,6 +92,18 @@
         {
             "id": "spectrum:glistering_jelly_tea",
             "required": false
+        },
+        {
+            "id": "croptopia:pumpkin_spice_latte",
+            "required": false
+        },
+        {
+            "id": "croptopia:chili_relleno",
+            "required": false
+        },
+        {
+            "id": "croptopia:tea",
+            "required": false
         }
     ]
 }
