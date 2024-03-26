@@ -6,7 +6,6 @@ import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.text.Text;
 
@@ -14,20 +13,20 @@ import java.util.List;
 
 public class FoodIntegration {
 
-    public static void onConsumeFood(Item item, ItemStack stack, LivingEntity user) {
-        if (isWarmingFood(item, stack)) {
+    public static void onConsumeFood(ItemStack stack, LivingEntity user) {
+        if (isWarmingFood(stack)) {
             applyWarmthFromFood(user);
         }
     }
 
-    public static void appendWarmthTooltip(Item item, ItemStack stack, List<Text> tooltip) {
-        if (isWarmingFood(item, stack)) {
+    public static void appendWarmthTooltip(ItemStack stack, List<Text> tooltip) {
+        if (isWarmingFood(stack)) {
             tooltip.add(Text.translatable("item.frostiful.warming.tooltip")
                     .setStyle(TextStyles.WARMING_TOOLTIP));
         }
     }
 
-    private static boolean isWarmingFood(Item item, ItemStack stack) {
+    private static boolean isWarmingFood(ItemStack stack) {
         return stack.isIn(FItemTags.WARM_FOODS);
     }
 

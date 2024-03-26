@@ -30,7 +30,7 @@
         "entity.root.RootedEntityImplMixin",
         "entity.soaking.WaterPotionSoakingMixin",
         "food.ConsumeItemCriterionMixin",
-        "food.ItemStackMixin",
+        "food.ItemMixin",
         "item.ArmorItemMixin",
         "item.ArmorTrimPatternsMixin",
         "powder_snow_effects.EntityPowderSnowRedirect",

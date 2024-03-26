@@ -17,7 +17,7 @@ public class ConsumeItemCriterionMixin {
             at = @At("HEAD")
     )
     private void onConsumeItem(ServerPlayerEntity player, ItemStack stack, CallbackInfo ci) {
-        FoodIntegration.onConsumeFood(stack.getItem(), stack, player);
+        FoodIntegration.onConsumeFood(stack, player);
     }
 
 }
