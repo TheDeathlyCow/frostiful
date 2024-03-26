@@ -6,10 +6,8 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.mob.PillagerEntity;
@@ -47,33 +45,10 @@ public class ChillagerEntity extends PillagerEntity {
     public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
         if (world.getDifficulty() != Difficulty.PEACEFUL) {
             Frostiful.LOGGER.info("Chillager {} was struck by lightning {}.", this, lightning);
-            FrostologerEntity frostologer = FEntityTypes.FROSTOLOGER.create(world);
-            if (frostologer == null) {
-                return;
+            FrostologerEntity frostologer = this.convertTo(FEntityTypes.FROSTOLOGER, false);
+            if (frostologer != null) {
+                frostologer.initEquipment(world.random, world.getLocalDifficulty(frostologer.getBlockPos()));
             }
-
-            frostologer.refreshPositionAndAngles(this.getX(), this.getY(), this.getZ(), this.getYaw(), this.getPitch());
-            frostologer.initialize(
-                    world,
-                    world.getLocalDifficulty(frostologer.getBlockPos()),
-                    SpawnReason.CONVERSION,
-                    null,
-                    null
-            );
-            frostologer.setAiDisabled(this.isAiDisabled());
-            if (this.hasCustomName()) {
-                frostologer.setCustomName(this.getCustomName());
-                frostologer.setCustomNameVisible(this.isCustomNameVisible());
-            }
-
-            frostologer.setPersistent();
-            world.spawnEntityAndPassengers(frostologer);
-            ServerLivingEntityEvents.MOB_CONVERSION.invoker().onConversion(
-                    this,
-                    frostologer,
-                    false
-            );
-            this.discard();
         } else {
             super.onStruckByLightning(world, lightning);
         }
