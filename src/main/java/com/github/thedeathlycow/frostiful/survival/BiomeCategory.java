@@ -1,9 +1,10 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.compat.AdaptedSeason;
+import com.github.thedeathlycow.frostiful.compat.SeasonHelper;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
 import com.github.thedeathlycow.frostiful.tag.FBiomeTags;
+import com.github.thedeathlycow.thermoo.api.season.ThermooSeasons;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
@@ -33,7 +34,7 @@ public enum BiomeCategory {
         this.coldAtNight = coldAtNight;
     }
 
-    public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry, @Nullable AdaptedSeason season) {
+    public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry, @Nullable ThermooSeasons season) {
         Biome biome = biomeEntry.value();
 
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
@@ -59,19 +60,19 @@ public enum BiomeCategory {
             category = NORMAL;
         }
 
-        return AdaptedSeason.getSeasonallyShiftedBiomeCategory(season, category);
+        return SeasonHelper.getSeasonallyShiftedBiomeCategory(season, category);
     }
 
-    public int getTemperatureChange(World world, BlockPos pos, @Nullable AdaptedSeason season) {
+    public int getTemperatureChange(World world, BlockPos pos, @Nullable ThermooSeasons season) {
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
         int change = this.temperatureChange.applyAsInt(config);
 
         int sunlight = world.getLightLevel(LightType.SKY, pos) - world.getAmbientDarkness();
-        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT && (!AdaptedSeason.isSummer(season) || config.isNightColdInSummer())) {
+        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT && (season != ThermooSeasons.SUMMER || config.isNightColdInSummer())) {
             change += config.getNightTemperatureShift();
         }
 
-        if (change < 0 && season == AdaptedSeason.WINTER) {
+        if (change < 0 && season == ThermooSeasons.WINTER) {
             change += config.getWinterTemperatureShift();
         }
 

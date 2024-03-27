@@ -41,8 +41,6 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Shadow
     protected abstract float getVelocityMultiplier();
 
-    @Shadow protected abstract void attackLivingEntity(LivingEntity target);
-
     public LivingEntityMovementMixin(EntityType<?> type, World world) {
         super(type, world);
     }
@@ -53,13 +51,16 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Unique
     private static final int FROSTIFUL_IS_GLIDING_INDEX = 1;
 
+    @Unique
     private boolean frostiful$wasSlowed = false;
 
+    @Unique
     private boolean frostiful$getSkateFlag(int index) {
         byte flags = FComponents.ENTITY_COMPONENTS.get(this).getSkateFlags();
         return (flags & 1 << index) != 0;
     }
 
+    @Unique
     private void frostiful$setSkateFlag(int index, boolean value) {
         LivingEntityComponents component = FComponents.ENTITY_COMPONENTS.get(this);
         byte data = component.getSkateFlags();
