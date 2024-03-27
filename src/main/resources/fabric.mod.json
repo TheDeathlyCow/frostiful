@@ -63,6 +63,14 @@
         "cardinal-components": [
             "frostiful:living_entity",
             "frostiful:brushable"
-        ]
+        ],
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.gg/aqASuWebRU",
+                "modmenu.wiki": "https://github.com/TheDeathlyCow/frostiful/wiki",
+                "modmenu.kofi": "https://ko-fi.com/thedeathlycow",
+                "modmenu.modrinth": "https://modrinth.com/mod/frostiful"
+            }
+        }
     }
 }
