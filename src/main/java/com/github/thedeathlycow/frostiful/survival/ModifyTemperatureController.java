@@ -32,7 +32,7 @@ public class ModifyTemperatureController extends EnvironmentControllerDecorator 
     public int getTemperatureEffectsChange(LivingEntity entity) {
         int warmth = controller.getTemperatureEffectsChange(entity);
         if (entity.thermoo$getTemperature() > 0) {
-            return controller.getTemperatureEffectsChange(entity);
+            return warmth;
         }
 
         FrostifulConfig config = Frostiful.getConfig();
