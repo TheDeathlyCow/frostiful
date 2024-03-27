@@ -43,7 +43,7 @@ public class FrozenHeartsOverlay {
 
     private static int getNumColdPoints(@NotNull PlayerEntity player, int maxDisplayHealth) {
         float freezingProgress = -player.thermoo$getTemperatureScale();
-        return (int)(freezingProgress * maxDisplayHealth);
+        return MathHelper.ceil(freezingProgress * maxDisplayHealth);
     }
 
     private static int getNumColdHeartsFromPoints(int frozenHealthPoints) {
