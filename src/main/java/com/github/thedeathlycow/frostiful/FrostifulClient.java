@@ -40,7 +40,7 @@ public class FrostifulClient implements ClientModInitializer {
         FParticleFactoryRegistry.registerFactories();
         ClientPlayNetworking.registerGlobalReceiver(PointWindSpawnPacket.ID, PointWindSpawnPacketListener::receive);
         StatusBarOverlayRenderEvents.AFTER_HEALTH_BAR.register(FrozenHeartsOverlay::afterHealthBar);
-
+        StatusBarOverlayRenderEvents.AFTER_MOUNT_HEALTH_BAR.register(FrozenHeartsOverlay::afterMountHealthBar);
 
         Frostiful.LOGGER.info("Initialized Frostiful client!");
     }
