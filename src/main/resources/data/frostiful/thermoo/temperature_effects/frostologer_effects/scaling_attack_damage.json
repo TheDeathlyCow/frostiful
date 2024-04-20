@@ -9,6 +9,6 @@
 		"modifier_uuid": "ea305030-b7fa-4782-9682-9d55a0319237",
 		"name": "Frostologer Attack Damage",
 		"attribute_type": "minecraft:generic.attack_damage",
-		"operation": "ADDITION"
+		"operation": "addition"
 	}
 }
