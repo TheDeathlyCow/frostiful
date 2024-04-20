@@ -4,10 +4,7 @@ import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import net.minecraft.client.model.ModelPart;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.entity.LivingEntity;
-import org.spongepowered.asm.mixin.Debug;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Slice;
@@ -17,8 +14,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Debug(export = true)
 public class ModelMixin<T extends LivingEntity> {
 
-    @Shadow
-    public boolean sneaking;
     @Shadow
     @Final
     public ModelPart leftLeg;
@@ -34,10 +29,13 @@ public class ModelMixin<T extends LivingEntity> {
     @Final
     public ModelPart rightArm;
 
+    @Unique
     private boolean frostiful$freezeLegs = false;
 
+    @Unique
     private final float[] frostiful$LimbPitches = new float[4];
 
+    @Unique
     private static final float FROSTIFUL_PITCH_REDUCTION = 0.75f;
 
     @Inject(
