@@ -8,14 +8,12 @@ import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistantArmorTagApplicator;
-import com.github.thedeathlycow.frostiful.item.attribute.ItemAttributeLoader;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
-import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
@@ -26,8 +24,6 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceType;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.slf4j.Logger;
@@ -53,10 +49,6 @@ public class Frostiful implements ModInitializer {
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
 
-        ResourceManagerHelper serverManager = ResourceManagerHelper.get(ResourceType.SERVER_DATA);
-
-        serverManager.registerReloadListener(ItemAttributeLoader.INSTANCE);
-        ModifyItemAttributeModifiersCallback.EVENT.register(ItemAttributeLoader.INSTANCE);
         ModifyItemAttributeModifiersCallback.EVENT.register(new FrostResistantArmorTagApplicator());
 
         FBlocks.registerBlocks();
