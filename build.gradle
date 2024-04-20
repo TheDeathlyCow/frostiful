@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.5-SNAPSHOT'
+    id 'fabric-loom' version '1.6-SNAPSHOT'
     id 'maven-publish'
 }
 
@@ -26,10 +26,6 @@ repositories {
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://jitpack.io/" }
-    maven {
-        name = "Curse"
-        url = 'https://cfa2.cursemaven.com'
-    }
     maven {
         name = "Ladysnake Mods"
         url = 'https://maven.ladysnake.org/releases'
@@ -80,9 +76,6 @@ dependencies {
     modCompileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
     // OverflowingBars https://modrinth.com/mod/overflowing-bars
     modCompileOnly("maven.modrinth:overflowing-bars:${project.overflowing_bars_version}") { transitive = false }
-
-    // Fabric Seasons https://modrinth.com/mod/fabric-seasons
-    modCompileOnly("maven.modrinth:fabric-seasons:${project.fabric_seasons_version}") { transitive = false }
 
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
