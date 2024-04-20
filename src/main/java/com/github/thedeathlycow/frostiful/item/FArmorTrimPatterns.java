@@ -20,10 +20,19 @@ public class FArmorTrimPatterns {
     }
 
     private static void register(Registerable<ArmorTrimPattern> registry, Item template, RegistryKey<ArmorTrimPattern> key) {
-        ArmorTrimPattern armorTrimPattern = new ArmorTrimPattern(key.getValue(), Registries.ITEM.getEntry(template), Text.translatable(Util.createTranslationKey("trim_pattern", key.getValue())));
+        ArmorTrimPattern armorTrimPattern = new ArmorTrimPattern(
+                key.getValue(),
+                Registries.ITEM.getEntry(template),
+                Text.translatable(Util.createTranslationKey("trim_pattern", key.getValue())),
+                false
+        );
         registry.register(key, armorTrimPattern);
     }
     private static RegistryKey<ArmorTrimPattern> of(String id) {
         return RegistryKey.of(RegistryKeys.TRIM_PATTERN, Frostiful.id(id));
+    }
+
+    private FArmorTrimPatterns() {
+
     }
 }

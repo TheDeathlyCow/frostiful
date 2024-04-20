@@ -115,23 +115,22 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
      */
     @Nullable
     private T findTarget() {
-
         World world = this.mob.getWorld();
         List<? extends T> candidates = world.getTargets(this.type, VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().expand(8.0));
         double closestEntityDistance = Double.POSITIVE_INFINITY;
 
-        T target = null;
+        T closestTargetSoFar = null;
         for (T candidate : candidates) {
-            double distance = this.mob.squaredAttackRange(candidate);
-            if (this.canPlayfightWith(candidate) && distance < closestEntityDistance) {
-                target = candidate;
+            double distance = this.mob.squaredDistanceTo(candidate);
+            if (this.canPlayFightWith(candidate) && distance < closestEntityDistance) {
+                closestTargetSoFar = candidate;
                 closestEntityDistance = distance;
             }
         }
-        return target;
+        return closestTargetSoFar;
     }
 
-    private boolean canPlayfightWith(PathAwareEntity candidate) {
+    private boolean canPlayFightWith(PathAwareEntity candidate) {
         return candidate.getType() == this.mob.getType() && this.mob.isBaby() == candidate.isBaby();
     }
 }

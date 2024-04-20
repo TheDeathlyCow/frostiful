@@ -82,9 +82,9 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
                 Box boundingBox = this.getBoundingBox();
 
                 // pick random pos in player bounding box
-                double x = boundingBox.getMin(Direction.Axis.X) + random.nextDouble(boundingBox.getXLength());
-                double y = boundingBox.getMin(Direction.Axis.Y) + random.nextDouble(boundingBox.getYLength());
-                double z = boundingBox.getMin(Direction.Axis.Z) + random.nextDouble(boundingBox.getZLength());
+                double x = boundingBox.getMin(Direction.Axis.X) + random.nextDouble(boundingBox.getLengthX());
+                double y = boundingBox.getMin(Direction.Axis.Y) + random.nextDouble(boundingBox.getLengthY());
+                double z = boundingBox.getMin(Direction.Axis.Z) + random.nextDouble(boundingBox.getLengthZ());
 
                 world.addParticle(
                         ParticleTypes.FALLING_DRIPSTONE_WATER,
