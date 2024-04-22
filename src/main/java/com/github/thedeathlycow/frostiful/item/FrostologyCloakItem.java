@@ -40,7 +40,7 @@ public class FrostologyCloakItem extends Item implements Equipment {
                     ThermooAttributes.FROST_RESISTANCE,
                     new EntityAttributeModifier(
                             UUID.fromString("6b330e71-f106-43f4-a568-9042ae560c65"),
-                            () -> "Frostology cloak",
+                            "Frostology cloak",
                             -3,
                             EntityAttributeModifier.Operation.ADDITION
                     )
