@@ -247,6 +247,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0f);
     }
 
+    @Override
     protected void initDataTracker() {
         super.initDataTracker();
         this.dataTracker.startTracking(IS_USING_FROST_WAND, false);
@@ -391,18 +392,6 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return this.dataTracker.get(IS_USING_FROST_WAND);
     }
 
-    private void startUsingFrostWand() {
-        this.playSound(
-                FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
-                1.0f, 1.0f
-        );
-        this.dataTracker.set(IS_USING_FROST_WAND, true);
-    }
-
-    private void stopUsingFrostWand() {
-        this.dataTracker.set(IS_USING_FROST_WAND, false);
-    }
-
     @Override
     public void addBonusForWave(int wave, boolean unused) {
 
@@ -461,7 +450,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             return true;
         } else if (other.getType() == FEntityTypes.BITER) {
             return this.isTeammate(((BiterEntity) other).getOwner());
-        } else if (other instanceof LivingEntity && ((LivingEntity) other).getGroup() == EntityGroup.ILLAGER) {
+        } else if (other instanceof LivingEntity otherEntity && otherEntity.getGroup() == EntityGroup.ILLAGER) {
             return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
         } else {
             return false;
@@ -497,11 +486,13 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         return isChanneling;
     }
 
+    @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
         this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
     }
 
+    @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
         nbt.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
@@ -526,6 +517,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             super(mob, mobSpeed, intervalTicks, maxShootRange);
         }
 
+        @Override
         public boolean canStart() {
             return super.canStart()
                     && FrostologerEntity.this.hasTarget()
@@ -533,18 +525,32 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     && FrostologerEntity.this.getMainHandStack().isOf(FItems.FROST_WAND);
         }
 
+        @Override
         public void start() {
             super.start();
             FrostologerEntity.this.setAttacking(true);
             FrostologerEntity.this.setCurrentHand(Hand.MAIN_HAND);
-            FrostologerEntity.this.startUsingFrostWand();
+            this.startUsingFrostWand();
         }
 
+        @Override
         public void stop() {
             super.stop();
             FrostologerEntity.this.setAttacking(false);
             FrostologerEntity.this.clearActiveItem();
-            FrostologerEntity.this.stopUsingFrostWand();
+            this.stopUsingFrostWand();
+        }
+
+        private void startUsingFrostWand() {
+            FrostologerEntity.this.playSound(
+                    FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
+                    1.0f, 1.0f
+            );
+            FrostologerEntity.this.dataTracker.set(IS_USING_FROST_WAND, true);
+        }
+
+        private void stopUsingFrostWand() {
+            FrostologerEntity.this.dataTracker.set(IS_USING_FROST_WAND, false);
         }
     }
 
@@ -557,6 +563,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             this.range = range;
         }
 
+        @Override
         public void start() {
             super.start();
             if (FrostologerEntity.this.isOnFire()) {
@@ -566,6 +573,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             FrostologerEntity.this.isChanneling = true;
         }
 
+        @Override
         public boolean canStart() {
             // no super call as that requires a target to be selected
             if (FrostologerEntity.this.isSpellcasting()) {
@@ -585,6 +593,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             return this.spellCooldown > 0;
         }
 
+        @Override
         public void tick() {
 
             Box box = FrostologerEntity.this.getBoundingBox().expand(this.range);
@@ -602,8 +611,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             }
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
-            for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, (entity) -> true)) {
-
+            for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, entity -> true)) {
                 victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
 
                 if (serverWorld != null) {
@@ -769,6 +777,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             this.numIciclesProvider = numIciclesProvider;
         }
 
+        @Override
         public void start() {
             super.start();
             if (FrostologerEntity.this.isOnFire()) {
@@ -777,6 +786,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             }
         }
 
+        @Override
         public boolean canStart() {
             if (FrostologerEntity.this.age <= nextStartTime) {
                 return false;
