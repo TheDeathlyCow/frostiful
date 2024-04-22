@@ -1,0 +1,11 @@
+{
+    "replace": false,
+    "values": [
+        "#frostiful:frost_wand_enchantments",
+        "minecraft:sharpness",
+        "minecraft:bane_of_arthropods",
+        "minecraft:smite",
+        "minecraft:fire_aspect",
+        "minecraft:looting"
+    ]
+}

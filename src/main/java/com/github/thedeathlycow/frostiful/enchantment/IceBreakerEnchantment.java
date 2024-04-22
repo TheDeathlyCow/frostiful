@@ -4,9 +4,11 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargets;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
+import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
@@ -15,6 +17,7 @@ import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.ItemCooldownManager;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.BlockStateParticleEffect;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
@@ -26,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 public class IceBreakerEnchantment extends Enchantment {
 
     public IceBreakerEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, FEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
+        super(weight, EnchantmentTarget.BREAKABLE, slotTypes);
     }
 
     @Override
@@ -63,6 +66,11 @@ public class IceBreakerEnchantment extends Enchantment {
                 procIceBreakerForAttacker(attacker);
             }
         }
+    }
+
+    @Override
+    public boolean isAcceptableItem(ItemStack stack) {
+        return stack.getItem() instanceof FrostWandItem;
     }
 
     private static void procIceBreakerForAttacker(LivingEntity attacker) {

@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
+import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistantArmorTagApplicator;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
@@ -14,6 +15,7 @@ import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
+import com.github.thedeathlycow.frostiful.tag.FEnchantmentTags;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
@@ -22,8 +24,15 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.item.v1.EnchantingContext;
+import net.fabricmc.fabric.api.item.v1.EnchantmentEvents;
 import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
+import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
+import net.fabricmc.fabric.api.util.TriState;
+import net.minecraft.item.Items;
+import net.minecraft.registry.Registries;
+import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.slf4j.Logger;
@@ -68,6 +77,36 @@ public class Frostiful implements ModInitializer {
         this.registerThermooEventListeners();
         FSmithingTemplateItem.addTemplatesToLoot();
 
+        EnchantmentEvents.ALLOW_ENCHANTING.register(
+                (enchantment, target, enchantingContext) -> {
+                    boolean isWeapon = target.isIn(ItemTags.SWORDS)
+                            || target.isIn(ItemTags.AXES)
+                            || target.isIn(ConventionalItemTags.SPEARS);
+
+                    boolean isFrostWandWeaponEnchantment = Registries.ENCHANTMENT
+                            .getEntry(enchantment)
+                            .isIn(FEnchantmentTags.HEAT_DRAIN);
+
+                    return isWeapon && isFrostWandWeaponEnchantment && enchantingContext == EnchantingContext.ANVIL
+                            ? TriState.TRUE
+                            : TriState.DEFAULT;
+                }
+        );
+
+        EnchantmentEvents.ALLOW_ENCHANTING.register(
+                (enchantment, target, enchantingContext) -> {
+                    boolean isFrostWand = target.getItem() instanceof FrostWandItem;
+
+                    boolean isFrostWandAnvilEnchantment = Registries.ENCHANTMENT
+                            .getEntry(enchantment)
+                            .isIn(FEnchantmentTags.FROST_WAND_ANVIL_ENCHANTMENTS);
+
+                    return isFrostWand && isFrostWandAnvilEnchantment && enchantingContext == EnchantingContext.ANVIL
+                            ? TriState.TRUE
+                            : TriState.DEFAULT;
+                }
+        );
+
         LOGGER.info("Initialized Frostiful!");
     }
 
@@ -110,7 +149,6 @@ public class Frostiful implements ModInitializer {
                         ? controller
                         : new SoakingController(controller)
         );
-
     }
 
     public static FrostifulConfig getConfig() {
