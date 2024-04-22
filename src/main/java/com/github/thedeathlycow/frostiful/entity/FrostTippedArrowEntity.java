@@ -6,9 +6,12 @@ import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
+import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 
@@ -16,16 +19,20 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
     private int freezeAmount = Frostiful.getConfig().icicleConfig.getFrostArrowFreezeAmount();
 
-    public FrostTippedArrowEntity(EntityType<? extends PersistentProjectileEntity> entityType, World world) {
-        super(entityType, world);
+    private static final ItemStack DEFAULT_STACK = new ItemStack(FItems.FROST_TIPPED_ARROW);
+
+    private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
+
+    public FrostTippedArrowEntity(EntityType<? extends FrostTippedArrowEntity> entityType, World world) {
+        super(entityType, world, DEFAULT_STACK);
     }
 
-    public FrostTippedArrowEntity(World world, LivingEntity owner) {
-        super(FEntityTypes.FROST_TIPPED_ARROW, owner, world);
+    public FrostTippedArrowEntity(World world, double x, double y, double z, ItemStack stack) {
+        super(FEntityTypes.FROST_TIPPED_ARROW, x, y, z, world, stack);
     }
 
-    public FrostTippedArrowEntity(World world, double x, double y, double z) {
-        super(FEntityTypes.FROST_TIPPED_ARROW, x, y, z, world);
+    public FrostTippedArrowEntity(World world, LivingEntity owner, ItemStack stack) {
+        super(FEntityTypes.FROST_TIPPED_ARROW, owner, world, stack);
     }
 
     @Override
@@ -38,6 +45,7 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
         return new ItemStack(FItems.FROST_TIPPED_ARROW);
     }
 
+    @Override
     public void tick() {
         super.tick();
 
@@ -47,20 +55,23 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
         }
     }
 
+    @Override
     protected void onHit(LivingEntity target) {
         super.onHit(target);
         target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
     }
 
+    @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        if (nbt.contains("FreezeAmount")) {
-            this.freezeAmount = nbt.getInt("FreezeAmount");
+        if (nbt.contains(FREEZE_AMOUNT_NBT_KEY, NbtElement.INT_TYPE)) {
+            this.freezeAmount = nbt.getInt(FREEZE_AMOUNT_NBT_KEY);
         }
     }
 
+    @Override
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putInt("FreezeAmount", this.freezeAmount);
+        nbt.putInt(FREEZE_AMOUNT_NBT_KEY, this.freezeAmount);
     }
 }

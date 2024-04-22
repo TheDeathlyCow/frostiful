@@ -15,7 +15,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class FrozenTorchBlock extends TorchBlock {
     public FrozenTorchBlock(Settings settings) {
-        super(settings, ParticleTypes.SNOWFLAKE);
+        super(ParticleTypes.SNOWFLAKE, settings);
     }
 
     @Override

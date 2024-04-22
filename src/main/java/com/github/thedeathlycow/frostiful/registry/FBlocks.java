@@ -217,9 +217,15 @@ public class FBlocks {
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
         register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
 
-        DispenserBlock.registerBehavior(FItems.FROST_TIPPED_ARROW, new ProjectileDispenserBehavior() {
+        DispenserBlock.registerBehavior(
+                FItems.FROST_TIPPED_ARROW,
+                new ProjectileDispenserBehavior() {
                     protected ProjectileEntity createProjectile(World world, Position position, ItemStack stack) {
-                        FrostTippedArrowEntity arrowEntity = new FrostTippedArrowEntity(world, position.getX(), position.getY(), position.getZ());
+                        FrostTippedArrowEntity arrowEntity = new FrostTippedArrowEntity(
+                                world,
+                                position.getX(), position.getY(), position.getZ(),
+                                stack.copyWithCount(1)
+                        );
                         arrowEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
                         return arrowEntity;
                     }
