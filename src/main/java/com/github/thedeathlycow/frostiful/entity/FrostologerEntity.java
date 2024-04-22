@@ -15,10 +15,7 @@ import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.TorchBlock;
+import net.minecraft.block.*;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -148,10 +145,10 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             frozenState = Blocks.ICE.getDefaultState();
         } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
             frozenState = Blocks.OBSIDIAN.getDefaultState();
-        } else if (heatedBlock instanceof TorchBlock) {
+        } else if (heatedBlock instanceof AbstractTorchBlock) {
             BlockState torch = FrozenTorchBlock.freezeTorch(state);
             frozenState = torch != null ? torch : Blocks.AIR.getDefaultState();
-        } else if (state.contains(Properties.WATERLOGGED) && state.get(Properties.WATERLOGGED)) {
+        } else if (state.contains(Properties.WATERLOGGED) && Boolean.TRUE.equals(state.get(Properties.WATERLOGGED))) {
             frozenState = Blocks.ICE.getDefaultState();
         } else {
             frozenState = Blocks.AIR.getDefaultState();
