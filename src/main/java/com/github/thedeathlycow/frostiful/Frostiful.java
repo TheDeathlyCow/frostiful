@@ -8,7 +8,6 @@ import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
-import com.github.thedeathlycow.frostiful.item.attribute.FrostResistantArmorTagApplicator;
 import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
@@ -57,8 +56,6 @@ public class Frostiful implements ModInitializer {
                 });
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
-
-        ModifyItemAttributeModifiersCallback.EVENT.register(new FrostResistantArmorTagApplicator());
 
         FBlocks.registerBlocks();
         FItems.registerItems();

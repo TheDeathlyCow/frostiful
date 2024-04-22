@@ -1,0 +1,13 @@
+{
+    "attribute": "thermoo:generic.frost_resistance",
+    "modifier": {
+        "uuid": "43ce6852-f0e9-48b5-a451-f6d458f835a2",
+        "name": "Warm armor frost resistance",
+        "value": 0.5,
+        "operation": "addition"
+    },
+    "item": {
+        "tag": "#frostiful:very_warm_armor"
+    },
+    "slot": "feet"
+}
