@@ -42,10 +42,10 @@
     ],
     "client": [
         "client.ArmorFeatureRendererMixin",
+        "client.CapeFeatureRendererMixin",
         "client.DrippingWetPlayerMixin",
         "client.SplashTextResourceSupplierMixin",
         "client.SpriteAtlasManagerMixin",
-        "client.entity_renderer.PlayerModelCloakRenderer",
         "client.entity_renderer.RootedEffectRenderer",
         "client.entity_renderer.ShakingRendererMixin",
         "client.entity_renderer.brushable.PolarBearShearedTextureMixin",

@@ -342,9 +342,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         for (int i = 0; i < NUM_POWER_PARTICLES; i++) {
             // pick random pos in bounding box
-            double x = box.getMin(Direction.Axis.X) + random.nextDouble(box.getXLength());
-            double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getYLength());
-            double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getZLength());
+            double x = box.getMin(Direction.Axis.X) + random.nextDouble(box.getLengthX());
+            double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getLengthY());
+            double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getLengthZ());
 
             getWorld().addParticle(
                     ParticleTypes.SNOWFLAKE,
@@ -364,7 +364,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public void attack(LivingEntity target, float pullProgress) {
+    public void shootAt(LivingEntity target, float pullProgress) {
         if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
             this.getLookControl().lookAt(target);
             FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.getWorld(), this);
@@ -377,10 +377,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     public boolean isTargetPlayer() {
-
         LivingEntity target = this.getTarget();
         return target != null && target.isAlive() && target.isPlayer();
-
     }
 
     public boolean isTargetRooted() {
