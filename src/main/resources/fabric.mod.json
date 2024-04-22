@@ -43,17 +43,12 @@
         "frostiful.mixins.json"
     ],
     "depends": {
-        "fabricloader": ">=0.15.7",
-        "fabric-api": ">=0.91.0",
-        "minecraft": "~1.20.1",
-        "thermoo": ">=2.3",
+        "fabricloader": ">=0.15.10",
+        "fabric-api": ">=0.91.6",
+        "minecraft": "1.20.2",
+        "thermoo": ">=3.0",
         "mm": ">=2.3",
         "java": ">=17"
-    },
-    "breaks": {
-        "healthoverlay": "<7.2.1",
-        "colorfulhearts": "<4.0.1",
-        "thermoo": "<2.0.0"
     },
     "suggests": {
         "scorchful": "*"
