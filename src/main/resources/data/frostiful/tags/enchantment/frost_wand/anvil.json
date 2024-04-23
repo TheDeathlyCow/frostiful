@@ -6,6 +6,7 @@
         "minecraft:bane_of_arthropods",
         "minecraft:smite",
         "minecraft:fire_aspect",
-        "minecraft:looting"
+        "minecraft:looting",
+        "minecraft:knockback"
     ]
 }
