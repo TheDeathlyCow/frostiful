@@ -9,5 +9,6 @@
     "item": {
         "tag": "#frostiful:very_warm_armor"
     },
-    "slot": "head"
+    "slot": "head",
+    "require_preferred_slot": true
 }
