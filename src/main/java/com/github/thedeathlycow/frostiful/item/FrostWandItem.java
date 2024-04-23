@@ -67,7 +67,7 @@ public class FrostWandItem extends Item implements Vanishable {
     @Override
     public boolean canBeEnchantedWith(ItemStack stack, Enchantment enchantment, EnchantingContext context) {
 
-        if (Registries.ENCHANTMENT.getEntry(enchantment).isIn(FEnchantmentTags.FROST_WAND_ENCHANTMENTS)) {
+        if (Registries.ENCHANTMENT.getEntry(enchantment).isIn(FEnchantmentTags.FROST_WAND_ENCHANTING_TABLE)) {
             return true;
         }
 

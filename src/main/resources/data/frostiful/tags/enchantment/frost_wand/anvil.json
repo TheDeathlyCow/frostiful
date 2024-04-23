@@ -1,7 +1,7 @@
 {
     "replace": false,
     "values": [
-        "#frostiful:frost_wand_enchantments",
+        "#frostiful:frost_wand/enchanting_table",
         "minecraft:sharpness",
         "minecraft:bane_of_arthropods",
         "minecraft:smite",

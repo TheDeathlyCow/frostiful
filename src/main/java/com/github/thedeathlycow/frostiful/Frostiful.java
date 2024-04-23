@@ -16,6 +16,7 @@ import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
 import com.github.thedeathlycow.frostiful.tag.FEnchantmentTags;
+import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
@@ -30,7 +31,6 @@ import net.fabricmc.fabric.api.item.v1.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.loot.v2.LootTableEvents;
 import net.fabricmc.fabric.api.tag.convention.v1.ConventionalItemTags;
 import net.fabricmc.fabric.api.util.TriState;
-import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.util.Identifier;
@@ -79,15 +79,13 @@ public class Frostiful implements ModInitializer {
 
         EnchantmentEvents.ALLOW_ENCHANTING.register(
                 (enchantment, target, enchantingContext) -> {
-                    boolean isWeapon = target.isIn(ItemTags.SWORDS)
-                            || target.isIn(ItemTags.AXES)
-                            || target.isIn(ConventionalItemTags.SPEARS);
+                    boolean isWeapon = target.isIn(FItemTags.SUPPORTS_HEAT_DRAIN);
 
                     boolean isFrostWandWeaponEnchantment = Registries.ENCHANTMENT
                             .getEntry(enchantment)
                             .isIn(FEnchantmentTags.HEAT_DRAIN);
 
-                    return isWeapon && isFrostWandWeaponEnchantment && enchantingContext == EnchantingContext.ANVIL
+                    return isWeapon && isFrostWandWeaponEnchantment && enchantingContext != EnchantingContext.RANDOM_ENCHANTMENT
                             ? TriState.TRUE
                             : TriState.DEFAULT;
                 }
@@ -99,9 +97,9 @@ public class Frostiful implements ModInitializer {
 
                     boolean isFrostWandAnvilEnchantment = Registries.ENCHANTMENT
                             .getEntry(enchantment)
-                            .isIn(FEnchantmentTags.FROST_WAND_ANVIL_ENCHANTMENTS);
+                            .isIn(FEnchantmentTags.FROST_WAND_ANVIL);
 
-                    return isFrostWand && isFrostWandAnvilEnchantment && enchantingContext == EnchantingContext.ANVIL
+                    return isFrostWand && isFrostWandAnvilEnchantment && enchantingContext != EnchantingContext.RANDOM_ENCHANTMENT
                             ? TriState.TRUE
                             : TriState.DEFAULT;
                 }
