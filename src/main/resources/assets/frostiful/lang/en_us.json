@@ -259,7 +259,6 @@
   "text.autoconfig.frostiful.option.freezingConfig.shiverWarmth": "Shivering warmth per tick",
   "text.autoconfig.frostiful.option.freezingConfig.stopShiverWarmingBelowFoodLevel": "Stop shivering warmth below food level",
   "text.autoconfig.frostiful.option.freezingConfig.warmFoodWarmthTime": "Warming food and drink Warmth duration (ticks)",
-  "text.autoconfig.frostiful.option.freezingConfig.netheriteFrostResistance": "Netherite Frost Resistance",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",
