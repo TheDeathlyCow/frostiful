@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.enchantment.EnchantmentEventListeners;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
@@ -71,33 +72,8 @@ public class Frostiful implements ModInitializer {
         this.registerThermooEventListeners();
         FSmithingTemplateItem.addTemplatesToLoot();
 
-        EnchantmentEvents.ALLOW_ENCHANTING.register(
-                (enchantment, target, enchantingContext) -> {
-                    boolean isWeapon = target.isIn(FItemTags.SUPPORTS_HEAT_DRAIN);
-
-                    boolean isFrostWandWeaponEnchantment = Registries.ENCHANTMENT
-                            .getEntry(enchantment)
-                            .isIn(FEnchantmentTags.HEAT_DRAIN);
-
-                    return isWeapon && isFrostWandWeaponEnchantment && enchantingContext != EnchantingContext.RANDOM_ENCHANTMENT
-                            ? TriState.TRUE
-                            : TriState.DEFAULT;
-                }
-        );
-
-        EnchantmentEvents.ALLOW_ENCHANTING.register(
-                (enchantment, target, enchantingContext) -> {
-                    boolean isFrostWand = target.getItem() instanceof FrostWandItem;
-
-                    boolean isFrostWandAnvilEnchantment = Registries.ENCHANTMENT
-                            .getEntry(enchantment)
-                            .isIn(FEnchantmentTags.FROST_WAND_ANVIL);
-
-                    return isFrostWand && isFrostWandAnvilEnchantment && enchantingContext != EnchantingContext.RANDOM_ENCHANTMENT
-                            ? TriState.TRUE
-                            : TriState.DEFAULT;
-                }
-        );
+        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowHeatDrainWeaponEnchanting);
+        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowFrostWandAnvilEnchanting);
 
         LOGGER.info("Initialized Frostiful!");
     }
