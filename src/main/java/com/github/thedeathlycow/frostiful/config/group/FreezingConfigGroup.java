@@ -15,6 +15,7 @@ public class FreezingConfigGroup implements ConfigData {
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
     boolean doSnowPacking = true;
+    int passiveFreezingTickInterval = 1;
     int windSpawnCapPerSecond = 15;
     int windSpawnRarity = 750;
     int windSpawnRarityThunder = 500;
@@ -55,6 +56,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doSnowPacking() {
         return doSnowPacking;
+    }
+
+    public int getPassiveFreezingTickInterval() {
+        return passiveFreezingTickInterval;
     }
 
     public int getWindSpawnCapPerSecond() {

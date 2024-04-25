@@ -87,6 +87,11 @@ public class Frostiful implements ModInitializer {
 
                     FrostifulConfig config = getConfig();
 
+                    int tickInterval = config.freezingConfig.getPassiveFreezingTickInterval();
+                    if (tickInterval > 1 && player.age % tickInterval != 0) {
+                        return false;
+                    }
+
                     if (player.thermoo$getTemperatureScale() < -config.freezingConfig.getMaxPassiveFreezingPercent()) {
                         return false;
                     }
