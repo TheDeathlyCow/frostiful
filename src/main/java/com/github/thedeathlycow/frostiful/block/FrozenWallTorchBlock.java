@@ -9,7 +9,7 @@ import net.minecraft.world.World;
 
 public class FrozenWallTorchBlock extends WallTorchBlock {
     public FrozenWallTorchBlock(Settings settings) {
-        super(settings, ParticleTypes.SNOWFLAKE);
+        super(ParticleTypes.SNOWFLAKE, settings);
     }
 
     @Override

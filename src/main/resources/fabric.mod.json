@@ -32,9 +32,6 @@
         "modmenu": [
             "com.github.thedeathlycow.frostiful.FrostifulModMenu"
         ],
-        "mm:early_risers": [
-            "com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargetEarlyRiser"
-        ],
         "cardinal-components-entity": [
             "com.github.thedeathlycow.frostiful.registry.FComponents"
         ]
@@ -44,10 +41,9 @@
     ],
     "depends": {
         "fabricloader": ">=0.15.10",
-        "fabric-api": ">=0.91.6",
-        "minecraft": "1.20.2",
-        "thermoo": ">=3.0",
-        "mm": ">=2.3",
+        "fabric-api": ">=0.97.0",
+        "minecraft": "1.20.4",
+        "thermoo": ">=3.1.2",
         "java": ">=17"
     },
     "suggests": {

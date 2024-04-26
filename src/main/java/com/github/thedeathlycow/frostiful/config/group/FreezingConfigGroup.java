@@ -15,6 +15,7 @@ public class FreezingConfigGroup implements ConfigData {
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
     boolean doSnowPacking = true;
+    int passiveFreezingTickInterval = 1;
     int windSpawnCapPerSecond = 15;
     int windSpawnRarity = 750;
     int windSpawnRarityThunder = 500;
@@ -32,7 +33,6 @@ public class FreezingConfigGroup implements ConfigData {
     int shiverWarmth = 1;
     int stopShiverWarmingBelowFoodLevel = 10;
     int warmFoodWarmthTime = 60 * 20;
-    double netheriteFrostResistance = 0.5;
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
@@ -56,6 +56,10 @@ public class FreezingConfigGroup implements ConfigData {
 
     public boolean doSnowPacking() {
         return doSnowPacking;
+    }
+
+    public int getPassiveFreezingTickInterval() {
+        return passiveFreezingTickInterval;
     }
 
     public int getWindSpawnCapPerSecond() {
@@ -124,9 +128,5 @@ public class FreezingConfigGroup implements ConfigData {
 
     public int getWarmFoodWarmthTime() {
         return warmFoodWarmthTime;
-    }
-
-    public double getNetheriteFrostResistance() {
-        return netheriteFrostResistance;
     }
 }

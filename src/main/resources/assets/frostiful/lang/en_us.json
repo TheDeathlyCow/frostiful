@@ -40,19 +40,22 @@
   "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Arrow of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing_long": "Arrow of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing_strong": "Arrow of Freezing",
-
+  
+  "item.frostiful.fur_upgrade_template": "Smithing Template",
   "item.frostiful.smithing_template.fur_upgrade.applies_to": "Chainmail Armor",
   "item.frostiful.smithing_template.fur_upgrade.ingredients": "Fur Padding",
   "item.frostiful.smithing_template.fur_upgrade.base_slot_description": "Place a piece of Chainmail armor here",
   "item.frostiful.smithing_template.fur_upgrade.additions_slot_description": "Put some Fur Padding here",
   "upgrade.frostiful.fur_upgrade": "Fur Padded Chainmail Upgrade",
   
+  "item.frostiful.ice_skate_upgrade_template": "Smithing Template",
   "item.frostiful.smithing_template.ice_skate_upgrade.applies_to": "Fur and Fur Padded Boots",
   "item.frostiful.smithing_template.ice_skate_upgrade.ingredients": "Iron Sword",
   "item.frostiful.smithing_template.ice_skate_upgrade.base_slot_description": "Place a Fur or Fur Padded boot here",
   "item.frostiful.smithing_template.ice_skate_upgrade.additions_slot_description": "Put an Iron Sword here",
   "upgrade.frostiful.ice_skate_upgrade": "Ice Skate Upgrade",
   
+  "item.frostiful.frosty_armor_trim_smithing_template": "Smithing Template",
   "trim_pattern.frostiful.frosty": "Frosty Armor Trim",
   
   "item.frostiful.snowflake_banner_pattern": "Banner Pattern",
@@ -238,6 +241,7 @@
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",
   "text.autoconfig.frostiful.option.freezingConfig.doSnowPacking": "Do snow packing from heavy entities",
+  "text.autoconfig.frostiful.option.freezingConfig.passiveFreezingTickInterval": "Passive freezing tick interval",
   "text.autoconfig.frostiful.option.freezingConfig.doWindSpawning": "Do wind spawning",
   "text.autoconfig.frostiful.option.freezingConfig.windSpawnStrategy": "Wind spawn strategy",
   "text.autoconfig.frostiful.option.freezingConfig.spawnWindInAir": "Do wind spawning in air",
@@ -259,7 +263,6 @@
   "text.autoconfig.frostiful.option.freezingConfig.shiverWarmth": "Shivering warmth per tick",
   "text.autoconfig.frostiful.option.freezingConfig.stopShiverWarmingBelowFoodLevel": "Stop shivering warmth below food level",
   "text.autoconfig.frostiful.option.freezingConfig.warmFoodWarmthTime": "Warming food and drink Warmth duration (ticks)",
-  "text.autoconfig.frostiful.option.freezingConfig.netheriteFrostResistance": "Netherite Frost Resistance",
   
   "text.autoconfig.frostiful.option.icicleConfig": "Icicle Config",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Icicles form in weather",

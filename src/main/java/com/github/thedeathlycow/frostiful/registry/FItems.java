@@ -13,22 +13,22 @@ import net.minecraft.util.math.Direction;
 public class FItems {
 
     public static final Item FUR_HELMET = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_ARMOR,
+            FurArmorMaterials.FUR_ARMOR,
             ArmorItem.Type.HELMET,
             new FabricItemSettings()
     );
     public static final Item FUR_CHESTPLATE = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_ARMOR,
+            FurArmorMaterials.FUR_ARMOR,
             ArmorItem.Type.CHESTPLATE,
             new FabricItemSettings()
     );
     public static final Item FUR_LEGGINGS = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_ARMOR,
+            FurArmorMaterials.FUR_ARMOR,
             ArmorItem.Type.LEGGINGS,
             new FabricItemSettings()
     );
     public static final Item FUR_BOOTS = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_ARMOR,
+            FurArmorMaterials.FUR_ARMOR,
             ArmorItem.Type.BOOTS,
             new FabricItemSettings()
     );
@@ -43,22 +43,22 @@ public class FItems {
     public static final Item FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE = SmithingTemplateItem.of(FArmorTrimPatterns.FROSTY);
 
     public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            FurArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.HELMET,
             new FabricItemSettings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_CHESTPLATE = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            FurArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.CHESTPLATE,
             new FabricItemSettings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            FurArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.LEGGINGS,
             new FabricItemSettings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            FurArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.BOOTS,
             new FabricItemSettings()
     );
@@ -70,14 +70,14 @@ public class FItems {
     );
 
     public static final Item ICE_SKATES = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_ARMOR,
+            FurArmorMaterials.FUR_ARMOR,
             ArmorItem.Type.BOOTS,
             new FabricItemSettings()
                     .maxCount(1)
     );
 
     public static final Item ARMORED_ICE_SKATES = new ArmorItem(
-            FrostResistantArmorMaterials.FUR_LINED_CHAIN,
+            FurArmorMaterials.FUR_LINED_CHAIN,
             ArmorItem.Type.BOOTS,
             new FabricItemSettings()
                     .maxCount(1)
@@ -91,7 +91,11 @@ public class FItems {
     public static final Item COOL_SUN_LICHEN = new BlockItem(FBlocks.COOL_SUN_LICHEN, new FabricItemSettings());
     public static final Item WARM_SUN_LICHEN = new BlockItem(FBlocks.WARM_SUN_LICHEN, new FabricItemSettings());
     public static final Item HOT_SUN_LICHEN = new BlockItem(FBlocks.HOT_SUN_LICHEN, new FabricItemSettings());
-    public static final Item FROST_WAND = new FrostWandItem(new FabricItemSettings().maxCount(1).maxDamage(250));
+    public static final Item FROST_WAND = new FrostWandItem(
+            new FabricItemSettings()
+                    .maxCount(1)
+                    .maxDamage(250)
+    );
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new FabricItemSettings());
 
     public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(FEntityTypes.FROSTOLOGER, 0x473882, 0xBEB2EB, new FabricItemSettings());

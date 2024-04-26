@@ -1,0 +1,12 @@
+{
+    "replace": false,
+    "values": [
+        "frostiful:frost_wand",
+        "#minecraft:swords",
+        "#minecraft:axes",
+        {
+            "required": false,
+            "id": "#c:spears"
+        }
+    ]
+}

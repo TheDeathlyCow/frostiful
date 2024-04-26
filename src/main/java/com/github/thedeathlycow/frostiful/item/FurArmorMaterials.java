@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
-import com.google.common.base.Supplier;
 import com.google.common.base.Suppliers;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.ArmorMaterial;
@@ -14,9 +13,13 @@ import net.minecraft.util.Util;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.UUID;
+import java.util.function.Supplier;
 
-
-public enum FrostResistantArmorMaterials implements ArmorMaterial {
+/**
+ * Handles normal attributes for fur armor. Frost Resistance is applied by {@link com.github.thedeathlycow.thermoo.api.attribute.ItemAttributeModifier}
+ */
+public enum FurArmorMaterials implements ArmorMaterial {
 
     FUR_ARMOR(
             "fur",
@@ -56,6 +59,13 @@ public enum FrostResistantArmorMaterials implements ArmorMaterial {
         map.put(ArmorItem.Type.HELMET, 1.5);
     });
 
+    public static final Map<ArmorItem.Type, UUID> UUID_MAP = Util.make(new EnumMap<>(ArmorItem.Type.class), uuidMap -> {
+        uuidMap.put(ArmorItem.Type.BOOTS, UUID.fromString("43ce6852-f0e9-48b5-a451-f6d458f835a2"));
+        uuidMap.put(ArmorItem.Type.LEGGINGS, UUID.fromString("015a4e56-3db0-45e7-a14c-82ebc3af86b5"));
+        uuidMap.put(ArmorItem.Type.CHESTPLATE, UUID.fromString("99cdd997-74a7-4427-a272-4f2e65c7d5d1"));
+        uuidMap.put(ArmorItem.Type.HELMET, UUID.fromString("87102398-36e2-4704-91c4-f2af697928ec"));
+    });
+
     private static final EnumMap<ArmorItem.Type, Integer> BASE_DURABILITY;
 
     private final String name;
@@ -68,7 +78,7 @@ public enum FrostResistantArmorMaterials implements ArmorMaterial {
     private final Supplier<Ingredient> repairIngredientSupplier;
 
 
-    FrostResistantArmorMaterials(
+    FurArmorMaterials(
             String name,
             int durabilityMultiplier,
             Map<ArmorItem.Type, Integer> protectionAmounts,
@@ -85,7 +95,7 @@ public enum FrostResistantArmorMaterials implements ArmorMaterial {
         this.equipSound = equipSound;
         this.toughness = toughness;
         this.knockbackResistance = knockbackResistance;
-        this.repairIngredientSupplier = Suppliers.memoize(repairIngredientSupplier);
+        this.repairIngredientSupplier = Suppliers.memoize(repairIngredientSupplier::get);
     }
 
     @Override

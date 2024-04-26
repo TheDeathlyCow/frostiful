@@ -2,18 +2,16 @@ package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.target.FEnchantmentTargets;
+import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.FMathHelper;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.AxeItem;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -22,7 +20,7 @@ import net.minecraft.world.World;
 public sealed class EnervationEnchantment extends Enchantment permits FrozenTouchCurse {
 
     public EnervationEnchantment(Rarity weight, EquipmentSlot[] slotTypes) {
-        super(weight, FEnchantmentTargets.FROSTIFUL_FROST_WAND, slotTypes);
+        super(weight, EnchantmentTarget.WEAPON, slotTypes);
     }
 
     @Override
@@ -42,10 +40,7 @@ public sealed class EnervationEnchantment extends Enchantment permits FrozenTouc
 
     @Override
     public boolean isAcceptableItem(ItemStack stack) {
-        Item item = stack.getItem();
-        return item instanceof SwordItem
-                || item instanceof AxeItem
-                || super.isAcceptableItem(stack);
+        return stack.getItem() instanceof FrostWandItem;
     }
 
     @Override

@@ -15,69 +15,71 @@ import net.minecraft.registry.Registry;
 
 public class FEntityTypes {
 
-    public static final EntityType<FrostologerEntity> FROSTOLOGER = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MONSTER,
-                    FrostologerEntity::new
+    public static final EntityType<FrostologerEntity> FROSTOLOGER = EntityType.Builder.create(
+                    FrostologerEntity::new,
+                    SpawnGroup.MONSTER
             )
-            .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
-            .trackRangeChunks(8)
+            .setDimensions(0.6f, 1.95f)
+            .maxTrackingRange(4)
             .build();
 
-    public static final EntityType<BiterEntity> BITER = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MONSTER,
-                    BiterEntity::new
+    public static final EntityType<BiterEntity> BITER = EntityType.Builder.create(
+                    BiterEntity::new,
+                    SpawnGroup.MONSTER
             )
-            .dimensions(EntityDimensions.fixed(1.0f, 2.0f))
-            .trackRangeChunks(8)
+            .setDimensions(1.0f, 2.0f)
+            .maxTrackingRange(8)
             .build();
 
-    public static final EntityType<ChillagerEntity> CHILLAGER = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MONSTER,
-                    ChillagerEntity::new
+    public static final EntityType<ChillagerEntity> CHILLAGER = EntityType.Builder.create(
+                    ChillagerEntity::new,
+                    SpawnGroup.MONSTER
             )
-            .dimensions(EntityDimensions.fixed(0.6f, 1.95f))
-            .trackRangeChunks(8)
+            .setDimensions(0.6f, 1.95f)
+            .maxTrackingRange(8)
             .build();
 
-    public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW = FabricEntityTypeBuilder.create(
-                    SpawnGroup.CREATURE,
-                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new
+    public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW = EntityType.Builder.create(
+                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new,
+                    SpawnGroup.CREATURE
             )
-            .dimensions(EntityDimensions.fixed(0.5f, 0.5f)).build();
-
-    public static final EntityType<FrostSpellEntity> FROST_SPELL = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MISC,
-                    (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new
-            )
-            .dimensions(EntityDimensions.fixed(3f / 8f, 3f / 8f))
-            .trackRangeChunks(8)
-            .trackedUpdateRate(10)
+            .setDimensions(0.5f, 0.5f)
             .build();
 
-    public static final EntityType<PackedSnowballEntity> PACKED_SNOWBALL = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MISC,
-                    (EntityType.EntityFactory<PackedSnowballEntity>) PackedSnowballEntity::new)
-            .dimensions(EntityDimensions.fixed(3f / 8f, 3f / 8f))
-            .trackRangeChunks(8)
-            .trackedUpdateRate(10)
+    public static final EntityType<FrostSpellEntity> FROST_SPELL = EntityType.Builder.create(
+                    (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new,
+                    SpawnGroup.MISC
+            )
+            .setDimensions(3f / 8f, 3f / 8f)
+            .maxTrackingRange(8)
+            .trackingTickInterval(10)
             .build();
 
-    public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = FabricEntityTypeBuilder.create(
-                    SpawnGroup.MISC,
-                    (EntityType.EntityFactory<ThrownIcicleEntity>) ThrownIcicleEntity::new
+    public static final EntityType<PackedSnowballEntity> PACKED_SNOWBALL = EntityType.Builder.create(
+                    (EntityType.EntityFactory<PackedSnowballEntity>) PackedSnowballEntity::new,
+                    SpawnGroup.MISC
             )
-            .dimensions(EntityDimensions.fixed(0.25f, 0.25f))
-            .trackRangeChunks(8)
-            .trackedUpdateRate(10)
+            .setDimensions(3f / 8f, 3f / 8f)
+            .maxTrackingRange(8)
+            .trackingTickInterval(10)
             .build();
 
-    public static final EntityType<FreezingWindEntity> FREEZING_WIND = FabricEntityTypeBuilder.create(
-                    SpawnGroup.AMBIENT,
-                    FreezingWindEntity::new
+    public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = EntityType.Builder.create(
+                    (EntityType.EntityFactory<ThrownIcicleEntity>) ThrownIcicleEntity::new,
+                    SpawnGroup.MISC
             )
-            .dimensions(EntityDimensions.fixed(2.0f, 2.0f))
-            .trackRangeChunks(8)
-            .trackedUpdateRate(10)
+            .setDimensions(0.25f, 0.25f)
+            .maxTrackingRange(8)
+            .trackingTickInterval(10)
+            .build();
+
+    public static final EntityType<FreezingWindEntity> FREEZING_WIND = EntityType.Builder.create(
+                    FreezingWindEntity::new,
+                    SpawnGroup.AMBIENT
+            )
+            .setDimensions(2.0f, 2.0f)
+            .maxTrackingRange(8)
+            .trackingTickInterval(10)
             .build();
 
     public static void registerEntities() {

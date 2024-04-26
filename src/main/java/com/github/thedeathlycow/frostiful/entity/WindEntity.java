@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.entity.attribute.EntityAttributes;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -197,6 +198,8 @@ public class WindEntity extends Entity {
 
     public static void pushEntity(LivingEntity entity, World world, Vec3d pos, double scale) {
         Vec3d push = entity.isFallFlying() ? ELYTRA_PUSH : REGULAR_PUSH;
+        scale *= 1.0 - entity.getAttributeValue(EntityAttributes.GENERIC_KNOCKBACK_RESISTANCE);
+
         entity.addVelocity(push.x * scale, push.y * scale, push.z * scale);
         entity.velocityModified = true;
         if (!world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {

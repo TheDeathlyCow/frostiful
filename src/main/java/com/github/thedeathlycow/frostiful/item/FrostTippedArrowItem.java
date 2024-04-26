@@ -14,7 +14,7 @@ public class FrostTippedArrowItem extends ArrowItem {
     }
 
     public PersistentProjectileEntity createArrow(World world, ItemStack stack, LivingEntity shooter) {
-        return new FrostTippedArrowEntity(world, shooter);
+        return new FrostTippedArrowEntity(world, shooter, stack);
     }
 
 }
