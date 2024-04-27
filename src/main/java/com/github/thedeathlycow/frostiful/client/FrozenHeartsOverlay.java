@@ -61,7 +61,7 @@ public class FrozenHeartsOverlay {
             int maxDisplayMountHealth
     ) {
         FrostifulConfig config = Frostiful.getConfig();
-        if (!config.clientConfig.doColdHeartOverlay() || player.thermoo$isWarm()) {
+        if (!config.clientConfig.doColdHeartOverlay() || mount.thermoo$isWarm()) {
             return;
         }
 
