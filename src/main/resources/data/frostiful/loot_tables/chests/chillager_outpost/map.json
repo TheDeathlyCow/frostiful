@@ -59,7 +59,8 @@
                         {
                             "function": "minecraft:set_name",
                             "name": {
-                                "translate": "filled_map.frostiful.frostologer_castle"
+                                "translate": "filled_map.frostiful.frostologer_castle",
+                                "font": "minecraft:illageralt"
                             }
                         }
                     ]
