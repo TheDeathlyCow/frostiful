@@ -36,6 +36,15 @@
                 "location": "frostiful:chillager_outpost/igloos/pumpkins",
                 "processors": "minecraft:empty"
             }
+        },
+        {
+            "weight": 2,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "projection": "rigid",
+                "location": "frostiful:chillager_outpost/towers/tower_01",
+                "processors": "minecraft:empty"
+            }
         }
     ]
 }
