@@ -53,7 +53,7 @@
                         {
                             "function": "minecraft:exploration_map",
                             "destination": "frostiful:chillager_map_locatable",
-                            "decoration": "red_marker",
+                            "decoration": "target_x",
                             "skip_existing_chunks": false
                         },
                         {
