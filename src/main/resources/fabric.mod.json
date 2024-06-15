@@ -37,6 +37,9 @@
         ],
         "cardinal-components-entity": [
             "com.github.thedeathlycow.frostiful.registry.FComponents"
+        ],
+        "colorfulhearts": [
+            "com.github.thedeathlycow.frostiful.compat.ColorfulHeartsIntegration"
         ]
     },
     "mixins": [
