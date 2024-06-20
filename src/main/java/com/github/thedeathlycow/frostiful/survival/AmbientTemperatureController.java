@@ -19,15 +19,18 @@ import org.jetbrains.annotations.Nullable;
 
 public class AmbientTemperatureController extends EnvironmentControllerDecorator {
 
-    public AmbientTemperatureController(EnvironmentController controller) {
+    private final boolean isScorchfulLoaded;
+
+    public AmbientTemperatureController(boolean isScorchfulLoaded, EnvironmentController controller) {
         super(controller);
+        this.isScorchfulLoaded = isScorchfulLoaded;
     }
 
     @Override
     public int getLocalTemperatureChange(World world, BlockPos pos) {
         if (world.getDimension().natural()) {
             return getNaturalWorldTemperatureChange(world, pos);
-        } else if (world.getDimension().ultrawarm()) {
+        } else if (!this.isScorchfulLoaded && world.getDimension().ultrawarm()) {
             return getUltrawarmTemperatureChange();
         }
         return controller.getLocalTemperatureChange(world, pos);
