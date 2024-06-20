@@ -37,6 +37,9 @@
         ],
         "cardinal-components-entity": [
             "com.github.thedeathlycow.frostiful.registry.FComponents"
+        ],
+        "colorfulhearts": [
+            "com.github.thedeathlycow.frostiful.compat.ColorfulHeartsIntegration"
         ]
     },
     "mixins": [
@@ -52,7 +55,7 @@
     },
     "breaks": {
         "healthoverlay": "<7.2.1",
-        "colorfulhearts": "<4.0.1",
+        "colorfulhearts": "<4.1.8",
         "thermoo": "<2.0.0"
     },
     "suggests": {
