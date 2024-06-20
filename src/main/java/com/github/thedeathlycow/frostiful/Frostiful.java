@@ -108,7 +108,12 @@ public class Frostiful implements ModInitializer {
                 }
         );
 
-        EnvironmentControllerInitializeEvent.EVENT.register(AmbientTemperatureController::new);
+        EnvironmentControllerInitializeEvent.EVENT.register(controller -> {
+            return new AmbientTemperatureController(
+                    FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID),
+                    controller
+            );
+        });
         EnvironmentControllerInitializeEvent.EVENT.register(
                 EnvironmentControllerInitializeEvent.LISTENER_PHASE,
                 ControllerListeners::new
