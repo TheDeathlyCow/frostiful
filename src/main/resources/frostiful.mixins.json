@@ -52,7 +52,6 @@
         "client.gui.ShiveringRenderer",
         "client.ice_skate_fx.GameRendererMixin",
         "client.ice_skate_fx.ModelMixin",
-        "compat.colorfulhearts.present.FreezingHearts",
         "compat.overflowingbars.absent.FreezingHearts",
         "compat.overflowingbars.present.FreezingHearts"
     ],
