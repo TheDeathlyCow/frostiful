@@ -25,7 +25,7 @@ public final class FItemTags {
     public static final TagKey<Item> SUPPORTS_HEAT_DRAIN = register("supports_heat_drain");
 
     private static TagKey<Item> register(String id) {
-        return TagKey.of(RegistryKeys.ITEM, new Identifier(Frostiful.MODID, id));
+        return TagKey.of(RegistryKeys.ITEM, Frostiful.id(id));
     }
 
 }
