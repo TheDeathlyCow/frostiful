@@ -40,7 +40,8 @@ public class ChillagerPatrolSpawner {
                 }
 
                 patroller.setPosition(pos.getX(), pos.getY(), pos.getZ());
-                patroller.initialize(world, world.getLocalDifficulty(pos), SpawnReason.PATROL, null, null);
+                patroller.initialize(world, world.getLocalDifficulty(pos), SpawnReason.PATROL, null);
+
                 world.spawnEntityAndPassengers(patroller);
                 return true;
             } else {

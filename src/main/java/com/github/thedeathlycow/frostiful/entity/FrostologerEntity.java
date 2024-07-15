@@ -7,15 +7,18 @@ import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.*;
+import net.minecraft.block.AbstractTorchBlock;
+import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.RangedAttackMob;
 import net.minecraft.entity.ai.TargetPredicate;
@@ -40,6 +43,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
@@ -227,17 +231,24 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         );
     }
 
+    @Nullable
     @Override
-    public EntityData initialize(ServerWorldAccess world, LocalDifficulty difficulty, SpawnReason spawnReason, @Nullable EntityData entityData, @Nullable NbtCompound entityNbt) {
+    public EntityData initialize(
+            ServerWorldAccess world,
+            LocalDifficulty difficulty,
+            SpawnReason spawnReason,
+            @Nullable EntityData entityData
+    ) {
         this.initEquipment(world.getRandom(), difficulty);
-        return super.initialize(world, difficulty, spawnReason, entityData, entityNbt);
+        return super.initialize(world, difficulty, spawnReason, entityData);
     }
 
     @Override
     protected void initEquipment(Random random, LocalDifficulty difficulty) {
         this.setStackInHand(Hand.MAIN_HAND, new ItemStack(FItems.FROST_WAND));
         this.equipStack(EquipmentSlot.CHEST, new ItemStack(FItems.FROSTOLOGY_CLOAK));
-        this.enchantMainHandItem(random, difficulty.getClampedLocalDifficulty());
+        // TODO: figure out enchanting equipment
+        // this.enchantMainHandItem(this.getWorld(), random, difficulty.getClampedLocalDifficulty());
 
         // equipment drops handled with loot table
         this.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
@@ -390,7 +401,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public void addBonusForWave(int wave, boolean unused) {
+    public void addBonusForWave(ServerWorld world, int wave, boolean unused) {
 
     }
 
@@ -447,7 +458,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             return true;
         } else if (other.getType() == FEntityTypes.BITER) {
             return this.isTeammate(((BiterEntity) other).getOwner());
-        } else if (other instanceof LivingEntity otherEntity && otherEntity.getGroup() == EntityGroup.ILLAGER) {
+        } else if (other instanceof LivingEntity otherEntity && otherEntity.getType().isIn(EntityTypeTags.ILLAGER_FRIENDS)) {
             return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
         } else {
             return false;
@@ -732,7 +743,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                         serverWorld,
                         serverWorld.getLocalDifficulty(blockPos),
                         SpawnReason.MOB_SUMMONED,
-                        null, null
+                        null
                 );
                 minionEntity.setOwner(FrostologerEntity.this);
 
