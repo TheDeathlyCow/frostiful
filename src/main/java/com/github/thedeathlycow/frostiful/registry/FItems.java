@@ -7,6 +7,7 @@ import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
 
 public class FItems {
@@ -65,7 +66,7 @@ public class FItems {
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(new Item.Settings()
             .equipmentSlot(FrostologyCloakItem::getPreferredEquipmentSlot)
             .maxCount(1)
-            .maxDamage(432)
+            .rarity(Rarity.RARE)
     );
 
     public static final Item ICE_SKATES = new ArmorItem(
@@ -73,6 +74,7 @@ public class FItems {
             ArmorItem.Type.BOOTS,
             new Item.Settings()
                     .maxCount(1)
+                    .rarity(Rarity.UNCOMMON)
     );
 
     public static final Item ARMORED_ICE_SKATES = new ArmorItem(
@@ -80,6 +82,7 @@ public class FItems {
             ArmorItem.Type.BOOTS,
             new Item.Settings()
                     .maxCount(1)
+                    .rarity(Rarity.UNCOMMON)
     );
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new Item.Settings());
@@ -94,6 +97,7 @@ public class FItems {
             new Item.Settings()
                     .maxCount(1)
                     .maxDamage(250)
+                    .rarity(Rarity.EPIC)
     );
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new Item.Settings());
 
