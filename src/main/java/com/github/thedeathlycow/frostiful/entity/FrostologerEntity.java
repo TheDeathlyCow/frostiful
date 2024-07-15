@@ -256,9 +256,9 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(IS_USING_FROST_WAND, false);
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(IS_USING_FROST_WAND, false);
     }
 
     @Override

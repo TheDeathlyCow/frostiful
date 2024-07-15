@@ -45,7 +45,7 @@ public abstract class MobBrushingMixin extends LivingEntity {
             if (!this.getWorld().isClient) {
                 heldItem.damage(
                         1, player,
-                        callback -> callback.sendToolBreakStatus(hand)
+                        LivingEntity.getSlotForHand(hand)
                 );
             }
         }

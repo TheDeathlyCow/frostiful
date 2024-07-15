@@ -77,11 +77,6 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
         }
     }
 
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
-    }
-
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
         if (!getWorld().isClient) {

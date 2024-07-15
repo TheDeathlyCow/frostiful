@@ -79,9 +79,10 @@ public class BiterEntity extends HostileEntity {
         return super.tryAttack(target);
     }
 
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ICE_GOLEM_FLAGS, (byte)0);
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ICE_GOLEM_FLAGS, (byte)0);
     }
 
     protected void initGoals() {
