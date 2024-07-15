@@ -81,7 +81,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
     }
 
     private ParticleEffect getParticleEffect() {
-        ItemStack itemStack = this.getItem();
+        ItemStack itemStack = this.getStack();
         return itemStack.isEmpty()
                 ? ParticleTypes.ITEM_SNOWBALL
                 : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);

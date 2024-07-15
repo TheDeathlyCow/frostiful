@@ -2,13 +2,11 @@ package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.enchantment.EnchantmentEventListeners;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
-import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
@@ -22,8 +20,8 @@ import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
-import net.fabricmc.fabric.api.item.v1.EnchantmentEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.slf4j.Logger;
@@ -67,8 +65,8 @@ public class Frostiful implements ModInitializer {
         this.registerThermooEventListeners();
         FSmithingTemplateItem.addTemplatesToLoot();
 
-        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowHeatDrainWeaponEnchanting);
-        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowFrostWandAnvilEnchanting);
+//        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowHeatDrainWeaponEnchanting);
+//        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowFrostWandAnvilEnchanting);
 
         LOGGER.info("Initialized Frostiful!");
     }
@@ -77,27 +75,27 @@ public class Frostiful implements ModInitializer {
         PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
                 (change, player) -> {
                     if (change > 0) {
-                        return true;
+                        return TriState.DEFAULT;
                     }
 
                     FrostifulConfig config = getConfig();
 
                     int tickInterval = config.freezingConfig.getPassiveFreezingTickInterval();
                     if (tickInterval > 1 && player.age % tickInterval != 0) {
-                        return false;
+                        return TriState.FALSE;
                     }
 
                     if (player.thermoo$getTemperatureScale() < -config.freezingConfig.getMaxPassiveFreezingPercent()) {
-                        return false;
+                        return TriState.FALSE;
                     }
 
                     boolean doPassiveFreezing = config.freezingConfig.doPassiveFreezing()
                             && player.getWorld().getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
                     if (doPassiveFreezing) {
-                        return true;
+                        return TriState.TRUE;
                     } else {
-                        return FrostologyCloakItem.isWornBy(player);
+                        return TriState.of(FrostologyCloakItem.isWornBy(player));
                     }
                 }
         );
@@ -136,6 +134,6 @@ public class Frostiful implements ModInitializer {
      */
     @Contract("_->new")
     public static Identifier id(String path) {
-        return Frostiful.id(path);
+        return Identifier.of(path);
     }
 }
