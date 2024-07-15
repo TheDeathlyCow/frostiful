@@ -1,5 +1,6 @@
 {
-    "values": [
+    "replace": false,
+    "values":[
         "minecraft:snowy_plains",
         {
             "id": "#c:snowy_plains",
