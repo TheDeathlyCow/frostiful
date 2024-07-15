@@ -23,7 +23,7 @@ public class FEnchantments {
     }
 
     private static void register(String name, Enchantment enchantment) {
-        Registry.register(Registries.ENCHANTMENT, new Identifier(Frostiful.MODID, name), enchantment);
+        Registry.register(Registries.ENCHANTMENT, Frostiful.id(Frostiful.MODID, name), enchantment);
     }
 
 }
