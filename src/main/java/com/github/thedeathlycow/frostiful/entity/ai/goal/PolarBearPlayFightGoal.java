@@ -1,15 +1,12 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import net.minecraft.entity.passive.PolarBearEntity;
-import net.minecraft.util.Identifier;
 
 public class PolarBearPlayFightGoal extends PlayFightGoal<PolarBearEntity> {
 
-    private static final Identifier PLAYFIGHT_LOOT_TABLE = Frostiful.id("gameplay/polar_bear_playfight");
-
     public PolarBearPlayFightGoal(PolarBearEntity polarBear, float adultChance, float babyChance) {
-        super(polarBear, PolarBearEntity.class, adultChance, babyChance, PLAYFIGHT_LOOT_TABLE);
+        super(polarBear, PolarBearEntity.class, adultChance, babyChance, FLootTables.POLAR_BEAR_PLAYFIGHT_GAMEPLAY);
     }
 
     @Override

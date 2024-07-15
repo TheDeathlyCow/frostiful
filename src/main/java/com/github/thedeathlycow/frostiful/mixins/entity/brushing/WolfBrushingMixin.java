@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity.brushing;
 
 import com.github.thedeathlycow.frostiful.entity.FBrushable;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.entity.passive.WolfEntity;
@@ -28,7 +29,7 @@ public abstract class WolfBrushingMixin extends TameableEntity implements FBrush
     @Override
     @Unique
     public void frostiful$brush(PlayerEntity player, SoundCategory shearedSoundCategory) {
-        FBrushable.brushEntity(this, shearedSoundCategory, FBrushable.WOLF_BRUSHING_LOOT_TABLE);
+        FBrushable.brushEntity(this, shearedSoundCategory, FLootTables.WOLF_BRUSHING_GAMEPLAY);
         if (!this.isTamed()) {
             this.setAngryAt(player.getUuid());
             this.chooseRandomAngerTime();
