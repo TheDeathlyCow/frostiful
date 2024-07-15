@@ -53,7 +53,7 @@ public class PackedSnowBlock extends Block {
     }
 
     @Override
-    public boolean canPathfindThrough(BlockState state, BlockView world, BlockPos pos, NavigationType type) {
+    protected boolean canPathfindThrough(BlockState state, NavigationType type) {
         if (type == NavigationType.LAND) {
             return state.get(LAYERS) <= MAX_LAYERS / 2;
         } else {
