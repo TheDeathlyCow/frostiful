@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.particle.client;
 
-import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
+import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;

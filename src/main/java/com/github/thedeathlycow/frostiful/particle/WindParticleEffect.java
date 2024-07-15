@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.particle;
 
+import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import com.mojang.brigadier.StringReader;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.particle.ParticleEffect;
