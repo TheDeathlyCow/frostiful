@@ -32,7 +32,7 @@ public class IcicleItem extends BlockItem {
         );
 
         if (!world.isClient) {
-            ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(user, world, itemStack);
+            ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, user, itemStack);
 
             icicleEntity.setVelocity(
                     user,

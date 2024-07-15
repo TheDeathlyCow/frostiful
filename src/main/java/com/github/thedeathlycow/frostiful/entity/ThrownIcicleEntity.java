@@ -6,10 +6,10 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.EntityTypeTags;
@@ -22,15 +22,11 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
     private static final ItemStack DEFAULT_STACK = new ItemStack(FItems.ICICLE);
 
     public ThrownIcicleEntity(EntityType<? extends ThrownIcicleEntity> entityType, World world) {
-        super(entityType, world, DEFAULT_STACK);
+        super(entityType, world);
     }
 
-    public ThrownIcicleEntity(double x, double y, double z, World world, ItemStack stack) {
-        super(FEntityTypes.THROWN_ICICLE, x, y, z, world, stack);
-    }
-
-    public ThrownIcicleEntity(LivingEntity livingEntity, World world, ItemStack stack) {
-        super(FEntityTypes.THROWN_ICICLE, livingEntity, world, stack);
+    public ThrownIcicleEntity(World world, LivingEntity owner, ItemStack stack) {
+        super(FEntityTypes.THROWN_ICICLE, owner, world, stack, null);
     }
 
     @Override

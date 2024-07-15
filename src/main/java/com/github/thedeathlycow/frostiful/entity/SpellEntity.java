@@ -23,12 +23,12 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     @Nullable
     private Vec3d startPosition = null;
 
-    public SpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
-        this(world, owner, velocityX, velocityY, velocityZ, Double.POSITIVE_INFINITY);
+    public SpellEntity(World world, @Nullable LivingEntity owner, Vec3d velocity) {
+        this(world, owner, velocity, Double.POSITIVE_INFINITY);
     }
 
-    public SpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
-        super(FEntityTypes.FROST_SPELL, owner, velocityX, velocityY, velocityZ, world);
+    public SpellEntity(World world, @Nullable LivingEntity owner, Vec3d velocity, double maxDistance) {
+        super(FEntityTypes.FROST_SPELL, owner, velocity, world);
         this.maxDistance = maxDistance;
     }
 

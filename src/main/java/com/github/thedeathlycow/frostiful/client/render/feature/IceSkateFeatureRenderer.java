@@ -35,11 +35,19 @@ public class IceSkateFeatureRenderer<
 
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, T entity, float limbAngle, float limbDistance, float tickDelta, float animationProgress, float headYaw, float headPitch) {
+    public void render(
+            MatrixStack matrices,
+            VertexConsumerProvider vertexConsumers,
+            int light,
+            T entity,
+            float limbAngle, float limbDistance,
+            float tickDelta, float animationProgress,
+            float headYaw, float headPitch
+    ) {
         if (entity.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)) {
             this.getContextModel().copyBipedStateTo(model);
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(SKATE_TEXTURE));
-            this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV, 1f, 1f, 1f, 1.0f);
+            this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
         }
     }
 }
