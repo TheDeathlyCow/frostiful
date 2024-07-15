@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.*;
-import com.github.thedeathlycow.frostiful.tag.FBannerPatternTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;

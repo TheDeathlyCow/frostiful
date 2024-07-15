@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.tag.FHasFeatureTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FHasFeatureTags;
 import net.fabricmc.fabric.api.biome.v1.BiomeModification;
 import net.fabricmc.fabric.api.biome.v1.BiomeModifications;
 import net.fabricmc.fabric.api.biome.v1.BiomeSelectors;

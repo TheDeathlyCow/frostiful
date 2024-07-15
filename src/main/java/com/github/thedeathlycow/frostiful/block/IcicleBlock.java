@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
-import com.github.thedeathlycow.frostiful.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.*;
 import net.minecraft.block.enums.Thickness;

@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import com.github.thedeathlycow.frostiful.tag.FItemTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.google.common.collect.ImmutableMultimap;

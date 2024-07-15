@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.SeasonHelper;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
-import com.github.thedeathlycow.frostiful.tag.FBiomeTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FBiomeTags;
 import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;

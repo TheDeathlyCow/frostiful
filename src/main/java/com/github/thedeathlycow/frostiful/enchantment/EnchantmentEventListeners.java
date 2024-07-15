@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.enchantment;
 
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
-import com.github.thedeathlycow.frostiful.tag.FEnchantmentTags;
-import com.github.thedeathlycow.frostiful.tag.FItemTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.fabricmc.fabric.api.item.v1.EnchantingContext;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.enchantment.Enchantment;
