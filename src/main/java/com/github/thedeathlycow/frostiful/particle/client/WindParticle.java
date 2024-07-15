@@ -92,8 +92,7 @@ public class WindParticle extends SpriteBillboardParticle {
         vertexConsumer.vertex(pos.x(), pos.y(), pos.z())
                 .texture(u, v)
                 .color(this.red, this.green, this.blue, this.alpha)
-                .light(light)
-                .next();
+                .light(light);
     }
 
     @Override
