@@ -2,9 +2,8 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
-import com.github.thedeathlycow.thermoo.api.season.ThermooSeasons;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
@@ -40,7 +39,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     @Override
     public int getFloorTemperature(LivingEntity entity, World world, BlockState state, BlockPos pos) {
         if (state.isIn(FBlockTags.HOT_FLOOR)) {
-            if (EnchantmentHelper.hasAnyEnchantmentsIn(entity)) {
+            if (EnchantmentHelper.hasAnyEnchantmentsIn(entity, null)) {
                 return controller.getFloorTemperature(entity, world, state, pos);
             }
 

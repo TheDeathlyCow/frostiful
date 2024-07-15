@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock;
 
-import com.github.thedeathlycow.frostiful.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.mojang.serialization.Codec;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;

@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.model.IceSkateModel;
-import com.github.thedeathlycow.frostiful.tag.FItemTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;

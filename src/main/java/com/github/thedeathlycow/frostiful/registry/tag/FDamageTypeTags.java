@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.tag;
+package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.entity.damage.DamageType;

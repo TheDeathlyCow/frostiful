@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.tag;
+package com.github.thedeathlycow.frostiful.registry.tag;
 
 import net.minecraft.registry.tag.TagKey;
 import net.minecraft.world.biome.Biome;
