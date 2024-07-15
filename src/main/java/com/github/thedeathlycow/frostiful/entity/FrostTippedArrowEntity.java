@@ -40,7 +40,7 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected ItemStack asItemStack() {
+    protected ItemStack getDefaultItemStack() {
         return new ItemStack(FItems.FROST_TIPPED_ARROW);
     }
 

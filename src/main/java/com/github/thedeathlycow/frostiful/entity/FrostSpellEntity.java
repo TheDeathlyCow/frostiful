@@ -1,14 +1,18 @@
 package com.github.thedeathlycow.frostiful.entity;
 
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Box;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,12 +22,12 @@ public class FrostSpellEntity extends SpellEntity {
 
     private static final double EFFECT_CLOUD_SIZE = 4.0;
 
-    public FrostSpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
-        super(world, owner, velocityX, velocityY, velocityZ);
+    public FrostSpellEntity(World world, @Nullable LivingEntity owner, Vec3d velocity) {
+        super(FEntityTypes.FROST_SPELL, world, owner, velocity);
     }
 
-    public FrostSpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
-        super(world, owner, velocityX, velocityY, velocityZ, maxDistance);
+    public FrostSpellEntity(World world, @Nullable LivingEntity owner, Vec3d velocity, double maxDistance) {
+        super(FEntityTypes.FROST_SPELL, world, owner, velocity, maxDistance);
     }
 
     public FrostSpellEntity(EntityType<? extends SpellEntity> entityType, World world) {

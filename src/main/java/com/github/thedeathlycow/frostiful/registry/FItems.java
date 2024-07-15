@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -97,6 +98,8 @@ public class FItems {
             new Item.Settings()
                     .maxCount(1)
                     .maxDamage(250)
+                    .attributeModifiers(FrostWandItem.createAttributeModifiers())
+                    .component(DataComponentTypes.TOOL, FrostWandItem.createToolComponent())
                     .rarity(Rarity.EPIC)
     );
     public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new Item.Settings());
