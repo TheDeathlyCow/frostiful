@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityStatuses;
@@ -35,13 +36,14 @@ public class PackedSnowballEntity extends ThrownItemEntity {
 
     @Override
     protected Item getDefaultItem() {
-        return null;
+        return FItems.PACKED_SNOWBALL;
     }
 
+    @Override
     public void handleStatus(byte status) {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
             ParticleEffect particleEffect = this.getParticleEffect();
-            for(int i = 0; i < 8; i++) {
+            for (int i = 0; i < 8; i++) {
                 this.getWorld().addParticle(
                         particleEffect,
                         this.getX(), this.getY(), this.getZ(),
@@ -51,6 +53,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
         }
     }
 
+    @Override
     protected void onEntityHit(EntityHitResult entityHitResult) {
         super.onEntityHit(entityHitResult);
         Entity target = entityHitResult.getEntity();
@@ -71,6 +74,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
         }
     }
 
+    @Override
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
         World world = getWorld();

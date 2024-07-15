@@ -17,6 +17,7 @@ import com.github.thedeathlycow.frostiful.world.gen.feature.FPlacedFeatures;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
 import com.github.thedeathlycow.thermoo.api.temperature.event.PlayerEnvironmentEvents;
 import me.shedaniel.autoconfig.AutoConfig;
+import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
@@ -24,6 +25,7 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,10 +36,14 @@ public class Frostiful implements ModInitializer {
 
     public static final int CONFIG_VERSION = 2;
 
+    @Nullable
+    private static ConfigHolder<FrostifulConfig> configHolder = null;
+
     @Override
     public void onInitialize() {
         AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
-        FrostifulConfig.updateConfig(AutoConfig.getConfigHolder(FrostifulConfig.class));
+        configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class); //NOSONAR this is fine
+        FrostifulConfig.updateConfig(configHolder);
 
         CommandRegistrationCallback.EVENT.register(
                 (dispatcher, registryAccess, environment) -> {
@@ -123,7 +129,11 @@ public class Frostiful implements ModInitializer {
     }
 
     public static FrostifulConfig getConfig() {
-        return AutoConfig.getConfigHolder(FrostifulConfig.class).getConfig();
+        if (configHolder == null) {
+            configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class);
+        }
+
+        return configHolder.getConfig();
     }
 
     /**

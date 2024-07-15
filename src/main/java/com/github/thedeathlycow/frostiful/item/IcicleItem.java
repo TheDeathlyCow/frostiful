@@ -50,11 +50,7 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
         }
 
         user.incrementStat(Stats.USED.getOrCreateStat(this));
-
-        if (user.getAbilities().creativeMode) {
-            itemStack.decrement(1);
-        }
-
+        itemStack.decrementUnlessCreative(1, user);
         user.getItemCooldownManager().set(this, Frostiful.getConfig().icicleConfig.getThrownIcicleCooldown());
 
         return TypedActionResult.success(itemStack, world.isClient());
