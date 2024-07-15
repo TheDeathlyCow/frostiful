@@ -20,4 +20,8 @@ public class FParticleFactoryRegistry {
         ParticleFactoryRegistry.getInstance().register(particle, factory);
     }
 
+    private FParticleFactoryRegistry() {
+
+    }
+
 }
