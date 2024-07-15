@@ -11,6 +11,7 @@ import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.sound.SoundEvent;
@@ -23,6 +24,10 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
 
     public ThrownIcicleEntity(EntityType<? extends ThrownIcicleEntity> entityType, World world) {
         super(entityType, world);
+    }
+
+    public ThrownIcicleEntity(World world, double x, double y, double z, ItemStack stack) {
+        super(FEntityTypes.THROWN_ICICLE, x, y, z, world, stack, stack);
     }
 
     public ThrownIcicleEntity(World world, LivingEntity owner, ItemStack stack) {
@@ -70,7 +75,7 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected ItemStack asItemStack() {
+    protected ItemStack getDefaultItemStack() {
         return new ItemStack(FItems.ICICLE);
     }
 }
