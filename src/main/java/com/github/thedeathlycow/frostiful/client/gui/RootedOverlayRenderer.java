@@ -25,11 +25,7 @@ public class RootedOverlayRenderer {
         }
     }
 
-    @FunctionalInterface
-    public interface OverlayRenderCallback {
-
-        void renderOverlay(DrawContext context, Identifier texture, float opacity);
-
+    private RootedOverlayRenderer() {
     }
-
+    
 }
