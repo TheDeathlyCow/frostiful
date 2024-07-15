@@ -97,7 +97,7 @@ public class FrostologyCloakItem extends Item implements Equipment {
                 .isOf(FItems.FROSTOLOGY_CLOAK);
     }
 
-    public static EquipmentSlot getPreferredEquipmentSlot(ItemStack stack) {
+    public static EquipmentSlot getPreferredEquipmentSlot(LivingEntity entity, ItemStack stack) {
         return EquipmentSlot.CHEST;
     }
 

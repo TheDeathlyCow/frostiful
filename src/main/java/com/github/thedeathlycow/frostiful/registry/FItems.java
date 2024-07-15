@@ -12,22 +12,22 @@ import net.minecraft.util.math.Direction;
 public class FItems {
 
     public static final Item FUR_HELMET = new ArmorItem(
-            FurArmorMaterials.FUR_ARMOR,
+            FArmorMaterials.FUR,
             ArmorItem.Type.HELMET,
             new Item.Settings()
     );
     public static final Item FUR_CHESTPLATE = new ArmorItem(
-            FurArmorMaterials.FUR_ARMOR,
+            FArmorMaterials.FUR,
             ArmorItem.Type.CHESTPLATE,
             new Item.Settings()
     );
     public static final Item FUR_LEGGINGS = new ArmorItem(
-            FurArmorMaterials.FUR_ARMOR,
+            FArmorMaterials.FUR,
             ArmorItem.Type.LEGGINGS,
             new Item.Settings()
     );
     public static final Item FUR_BOOTS = new ArmorItem(
-            FurArmorMaterials.FUR_ARMOR,
+            FArmorMaterials.FUR,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
     );
@@ -42,22 +42,22 @@ public class FItems {
     public static final Item FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE = SmithingTemplateItem.of(FArmorTrimPatterns.FROSTY);
 
     public static final Item FUR_PADDED_CHAINMAIL_HELMET = new ArmorItem(
-            FurArmorMaterials.FUR_LINED_CHAIN,
+            FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.HELMET,
             new Item.Settings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_CHESTPLATE = new ArmorItem(
-            FurArmorMaterials.FUR_LINED_CHAIN,
+            FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.CHESTPLATE,
             new Item.Settings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(
-            FurArmorMaterials.FUR_LINED_CHAIN,
+            FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.LEGGINGS,
             new Item.Settings()
     );
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(
-            FurArmorMaterials.FUR_LINED_CHAIN,
+            FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
     );
@@ -69,14 +69,14 @@ public class FItems {
     );
 
     public static final Item ICE_SKATES = new ArmorItem(
-            FurArmorMaterials.FUR_ARMOR,
+            FArmorMaterials.FUR,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
                     .maxCount(1)
     );
 
     public static final Item ARMORED_ICE_SKATES = new ArmorItem(
-            FurArmorMaterials.FUR_LINED_CHAIN,
+            FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
                     .maxCount(1)
