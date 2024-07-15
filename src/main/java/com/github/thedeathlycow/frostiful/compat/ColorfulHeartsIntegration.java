@@ -11,7 +11,7 @@ import terrails.colorfulhearts.api.heart.drawing.OverlayHeart;
 public class ColorfulHeartsIntegration implements ColorfulHeartsApi {
 
     public ColorfulHeartsIntegration() {
-        OverlayHeart frozenHearts = Hearts.OVERLAY_HEARTS.get(new Identifier("frozen"));
+        OverlayHeart frozenHearts = Hearts.OVERLAY_HEARTS.get(Identifier.ofVanilla("frozen"));
         if (frozenHearts != null) {
             FabHeartEvents.PRE_RENDER.register(event -> {
                 ClientPlayerEntity player = MinecraftClient.getInstance().player;

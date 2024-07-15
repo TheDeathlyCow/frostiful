@@ -17,7 +17,7 @@ public class FBiomeTags {
     public static final TagKey<Biome> FREEZING_BLACKLIST_BIOMES = FBiomeTags.register("freezing_blacklist_biomes");
 
     public static TagKey<Biome> register(String id) {
-        return TagKey.of(RegistryKeys.BIOME, new Identifier(Frostiful.MODID, id));
+        return TagKey.of(RegistryKeys.BIOME, Frostiful.id(id));
     }
 
 }

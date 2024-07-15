@@ -6,7 +6,7 @@ import net.minecraft.util.Identifier;
 
 public class PolarBearPlayFightGoal extends PlayFightGoal<PolarBearEntity> {
 
-    private static final Identifier PLAYFIGHT_LOOT_TABLE = new Identifier(Frostiful.MODID, "gameplay/polar_bear_playfight");
+    private static final Identifier PLAYFIGHT_LOOT_TABLE = Frostiful.id("gameplay/polar_bear_playfight");
 
     public PolarBearPlayFightGoal(PolarBearEntity polarBear, float adultChance, float babyChance) {
         super(polarBear, PolarBearEntity.class, adultChance, babyChance, PLAYFIGHT_LOOT_TABLE);
