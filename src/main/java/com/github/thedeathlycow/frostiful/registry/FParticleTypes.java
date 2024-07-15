@@ -7,7 +7,6 @@ import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 public class FParticleTypes {
 
@@ -15,8 +14,14 @@ public class FParticleTypes {
             HeatDrainParticleEffect.CODEC,
             HeatDrainParticleEffect.PACKET_CODEC
     );
-    public static final ParticleType<WindParticleEffect> WIND = FabricParticleTypes.complex(WindParticleEffect.FACTORY);
-    public static final ParticleType<WindParticleEffect> WIND_FLIPPED = FabricParticleTypes.complex(WindParticleEffect.FACTORY);
+    public static final ParticleType<WindParticleEffect> WIND = FabricParticleTypes.complex(
+            WindParticleEffect.CODEC,
+            WindParticleEffect.PACKET_CODEC
+    );
+    public static final ParticleType<WindParticleEffect> WIND_FLIPPED = FabricParticleTypes.complex(
+            WindParticleEffect.CODEC,
+            WindParticleEffect.PACKET_CODEC
+    );
 
     public static void registerParticleTypes() {
         register("heat_drain", HEAT_DRAIN);

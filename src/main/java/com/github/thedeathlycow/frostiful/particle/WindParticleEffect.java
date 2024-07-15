@@ -1,53 +1,44 @@
 package com.github.thedeathlycow.frostiful.particle;
 
 import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
+import com.github.thedeathlycow.frostiful.util.FPacketCodecs;
 import com.mojang.brigadier.StringReader;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.network.PacketByteBuf;
+import net.minecraft.network.RegistryByteBuf;
+import net.minecraft.network.codec.PacketCodec;
+import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleType;
 import net.minecraft.registry.Registries;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.Vec3d;
 
 import java.util.Locale;
 
-public class WindParticleEffect implements ParticleEffect {
+public record WindParticleEffect(
+        boolean flipped
+) implements ParticleEffect {
 
-    public static final Factory FACTORY = new Factory();
+    public static final MapCodec<WindParticleEffect> CODEC = RecordCodecBuilder.mapCodec(
+            instance -> instance.group(
+                            Codec.BOOL
+                                    .fieldOf("flipped")
+                                    .forGetter(WindParticleEffect::flipped)
+                    )
+                    .apply(instance, WindParticleEffect::new)
+    );
 
-    private final boolean flipped;
-
-    public WindParticleEffect(boolean flipped) {
-        this.flipped = flipped;
-    }
+    public static final PacketCodec<RegistryByteBuf, WindParticleEffect> PACKET_CODEC = PacketCodec.tuple(
+            PacketCodecs.BOOL,
+            WindParticleEffect::flipped,
+            WindParticleEffect::new
+    );
 
     @Override
     public ParticleType<?> getType() {
         return this.flipped ? FParticleTypes.WIND_FLIPPED : FParticleTypes.WIND;
-    }
-
-    @Override
-    public void write(PacketByteBuf buf) {
-
-    }
-
-    @Override
-    public String asString() {
-        Identifier id = Registries.PARTICLE_TYPE.getId(this.getType());
-        assert id != null;
-        return String.format(Locale.ROOT, "%s", id);
-    }
-
-    @SuppressWarnings("deprecation")
-    public static class Factory implements ParticleEffect.Factory<WindParticleEffect> {
-
-        @Override
-        public WindParticleEffect read(ParticleType<WindParticleEffect> type, StringReader reader) {
-            return new WindParticleEffect(type == FParticleTypes.WIND_FLIPPED);
-        }
-
-        @Override
-        public WindParticleEffect read(ParticleType<WindParticleEffect> type, PacketByteBuf buf) {
-            return new WindParticleEffect(type == FParticleTypes.WIND_FLIPPED);
-        }
     }
 }
