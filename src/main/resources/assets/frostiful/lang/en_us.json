@@ -29,17 +29,9 @@
   "item.frostiful.warming.tooltip": "Warming \uD83D\uDD25",
 
   "item.minecraft.potion.effect.frostiful.freezing": "Potion of Freezing",
-  "item.minecraft.potion.effect.frostiful.freezing_long": "Potion of Freezing",
-  "item.minecraft.potion.effect.frostiful.freezing_strong": "Potion of Freezing",
   "item.minecraft.splash_potion.effect.frostiful.freezing": "Splash Potion of Freezing",
-  "item.minecraft.splash_potion.effect.frostiful.freezing_long": "Splash Potion of Freezing",
-  "item.minecraft.splash_potion.effect.frostiful.freezing_strong": "Splash Potion of Freezing",
   "item.minecraft.lingering_potion.effect.frostiful.freezing": "Lingering Potion of Freezing",
-  "item.minecraft.lingering_potion.effect.frostiful.freezing_long": "Lingering Potion of Freezing",
-  "item.minecraft.lingering_potion.effect.frostiful.freezing_strong": "Lingering Potion of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Arrow of Freezing",
-  "item.minecraft.tipped_arrow.effect.frostiful.freezing_long": "Arrow of Freezing",
-  "item.minecraft.tipped_arrow.effect.frostiful.freezing_strong": "Arrow of Freezing",
   
   "item.frostiful.fur_upgrade_template": "Smithing Template",
   "item.frostiful.smithing_template.fur_upgrade.applies_to": "Chainmail Armor",
