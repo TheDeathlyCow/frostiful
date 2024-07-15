@@ -49,6 +49,7 @@ public class Frostiful implements ModInitializer {
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
 
+        FArmorMaterials.initialize();
         FBlocks.registerBlocks();
         FItems.registerItems();
         FEntityTypes.registerEntities();
