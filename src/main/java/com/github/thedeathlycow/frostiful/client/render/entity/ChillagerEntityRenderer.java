@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class ChillagerEntityRenderer extends IllagerEntityRenderer<ChillagerEntity> {
 
-    private static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/illager/chillager.png");
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/chillager.png");
 
 
     protected ChillagerEntityRenderer(EntityRendererFactory.Context context) {
