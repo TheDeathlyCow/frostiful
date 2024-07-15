@@ -4,12 +4,13 @@ import com.github.thedeathlycow.frostiful.entity.FrostTippedArrowEntity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ArrowItem;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class FrostTippedArrowItem extends ArrowItem {
 
-    public FrostTippedArrowItem(Settings settings) {
+    public FrostTippedArrowItem(Item.Settings settings) {
         super(settings);
     }
 

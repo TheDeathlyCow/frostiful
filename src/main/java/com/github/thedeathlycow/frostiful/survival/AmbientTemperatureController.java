@@ -40,7 +40,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     @Override
     public int getFloorTemperature(LivingEntity entity, World world, BlockState state, BlockPos pos) {
         if (state.isIn(FBlockTags.HOT_FLOOR)) {
-            if (EnchantmentHelper.hasFrostWalker(entity)) {
+            if (EnchantmentHelper.hasAnyEnchantmentsIn(entity)) {
                 return controller.getFloorTemperature(entity, world, state, pos);
             }
 
