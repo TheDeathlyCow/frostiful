@@ -7,6 +7,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.math.ColorHelper;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerEntityModel<F extends FrostologerEntity> extends IllagerEntityModel<F> {
@@ -33,18 +34,21 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
     }
 
 
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha, boolean applyColdOverlay) {
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color, boolean applyColdOverlay) {
         if (this.rgColourMul < 1 && applyColdOverlay) {
-            red *= this.rgColourMul;
-            green *= this.rgColourMul;
+            float alpha = ColorHelper.Argb.getAlpha(color) / 255f;
+            float red = ColorHelper.Argb.getRed(color) / 255f * this.rgColourMul;
+            float green = ColorHelper.Argb.getGreen(color) / 255f * this.rgColourMul;
+            float blue = ColorHelper.Argb.getBlue(color) / 255f;
+            color = ColorHelper.Argb.fromFloats(alpha, red, green, blue);
         }
 
-        super.render(matrices, vertices, light, overlay, red, green, blue, alpha);
+        super.render(matrices, vertices, light, overlay, color);
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        this.render(matrices, vertices, light, overlay, red, green, blue, alpha, true);
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+        this.render(matrices, vertices, light, overlay, color, true);
     }
 
     public void forceRenderCloak(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
