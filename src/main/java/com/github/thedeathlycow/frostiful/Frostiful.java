@@ -52,7 +52,7 @@ public class Frostiful implements ModInitializer {
         FBlocks.registerBlocks();
         FItems.registerItems();
         FEntityTypes.registerEntities();
-        FGameRules.registerGamerules();
+        FGameRules.initialize();
         FSoundEvents.registerSoundEvents();
         FStatusEffects.registerStatusEffects();
         FEnchantments.registerEnchantments();

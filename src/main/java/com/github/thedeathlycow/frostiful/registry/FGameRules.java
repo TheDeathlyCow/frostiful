@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.gamerule.v1.CustomGameRuleCategory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
 import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
 import net.minecraft.world.GameRules;
 
 /**
@@ -18,7 +17,7 @@ public class FGameRules {
      * Mod's dedicated category for game rules
      */
     public static final CustomGameRuleCategory CATEGORY = new CustomGameRuleCategory(
-            new Identifier(Frostiful.MODID, "gamerule_category"),
+            Frostiful.id("gamerule_category"),
             Text.translatable("gamerule.category." + Frostiful.MODID)
                     .setStyle(TextStyles.GAME_RULE_TITLE)
     );
@@ -35,7 +34,11 @@ public class FGameRules {
                     GameRuleFactory.createBooleanRule(true)
             );
 
-    public static void registerGamerules() {
+    public static void initialize() {
         // game rules already registered - calling this method just loads this class
+    }
+
+    private FGameRules() {
+
     }
 }
