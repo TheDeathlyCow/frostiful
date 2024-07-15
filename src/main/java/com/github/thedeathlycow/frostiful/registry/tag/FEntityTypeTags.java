@@ -17,7 +17,7 @@ public class FEntityTypeTags {
     }
 
     private static TagKey<EntityType<?>> registerCommon(String id) {
-        return TagKey.of(RegistryKeys.ENTITY_TYPE, new Identifier("c", id));
+        return TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of("c", id));
     }
 
 }

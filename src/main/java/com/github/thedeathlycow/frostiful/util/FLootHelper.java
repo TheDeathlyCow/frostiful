@@ -26,7 +26,7 @@ public class FLootHelper {
                     .add(LootContextParameters.THIS_ENTITY, entity)
                     .add(LootContextParameters.ORIGIN, entity.getPos())
                     .build(LootContextTypes.SELECTOR));
-            
+
             for (ItemStack stack : generatedItems) {
                 entity.dropStack(stack);
             }
