@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.SeasonHelper;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
 import com.github.thedeathlycow.frostiful.tag.FBiomeTags;
-import com.github.thedeathlycow.thermoo.api.season.ThermooSeasons;
+import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
@@ -34,7 +34,7 @@ public enum BiomeCategory {
         this.coldAtNight = coldAtNight;
     }
 
-    public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry, @Nullable ThermooSeasons season) {
+    public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry, @Nullable ThermooSeason season) {
         Biome biome = biomeEntry.value();
 
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
@@ -63,16 +63,16 @@ public enum BiomeCategory {
         return SeasonHelper.getSeasonallyShiftedBiomeCategory(season, category);
     }
 
-    public int getTemperatureChange(World world, BlockPos pos, @Nullable ThermooSeasons season) {
+    public int getTemperatureChange(World world, BlockPos pos, @Nullable ThermooSeason season) {
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
         int change = this.temperatureChange.applyAsInt(config);
 
         int sunlight = world.getLightLevel(LightType.SKY, pos) - world.getAmbientDarkness();
-        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT && (season != ThermooSeasons.SUMMER || config.isNightColdInSummer())) {
+        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT && (season != ThermooSeason.SUMMER || config.isNightColdInSummer())) {
             change += config.getNightTemperatureShift();
         }
 
-        if (change < 0 && season == ThermooSeasons.WINTER) {
+        if (change < 0 && season == ThermooSeason.WINTER) {
             change += config.getWinterTemperatureShift();
         }
 

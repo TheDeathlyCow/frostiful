@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.tag.FBlockTags;
+import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import com.github.thedeathlycow.thermoo.api.season.ThermooSeasons;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
@@ -89,7 +90,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     private int getNaturalWorldTemperatureChange(World world, BlockPos pos) {
         RegistryEntry<Biome> biome = world.getBiome(pos);
 
-        @Nullable ThermooSeasons season = ThermooSeasons.getCurrentSeason(world).orElse(null);
+        @Nullable ThermooSeason season = ThermooSeason.getCurrentSeason(world).orElse(null);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
         int temp = category.getTemperatureChange(world, pos, season);
         if (temp < 0) {

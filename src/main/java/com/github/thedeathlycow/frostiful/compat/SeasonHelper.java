@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.compat;
 
 import com.github.thedeathlycow.frostiful.survival.BiomeCategory;
-import com.github.thedeathlycow.thermoo.api.season.ThermooSeasons;
+import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import org.jetbrains.annotations.Nullable;
 
 public class SeasonHelper {
@@ -14,10 +14,10 @@ public class SeasonHelper {
      * @return Returns the biome category, adjusted for the season.
      */
     public static BiomeCategory getSeasonallyShiftedBiomeCategory(
-            @Nullable ThermooSeasons season,
+            @Nullable ThermooSeason season,
             BiomeCategory normalCategory
     ) {
-        if (season == ThermooSeasons.SUMMER && normalCategory == BiomeCategory.FREEZING) {
+        if (season == ThermooSeason.SUMMER && normalCategory == BiomeCategory.FREEZING) {
             return BiomeCategory.COLD;
         }
         return normalCategory;
