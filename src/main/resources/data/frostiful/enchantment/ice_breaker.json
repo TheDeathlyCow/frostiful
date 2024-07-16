@@ -42,7 +42,7 @@
         ],
         "minecraft:post_attack": [
             {
-                "enchanted": "victim",
+                "enchanted": "attacker",
                 "affected": "attacker",
                 "effect": {
                     "type": "minecraft:all_of",

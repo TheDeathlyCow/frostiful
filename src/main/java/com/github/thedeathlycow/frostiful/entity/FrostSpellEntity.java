@@ -22,11 +22,11 @@ public class FrostSpellEntity extends SpellEntity {
 
     private static final double EFFECT_CLOUD_SIZE = 4.0;
 
-    public FrostSpellEntity(World world, @Nullable LivingEntity owner, Vec3d velocity) {
+    public FrostSpellEntity(World world, LivingEntity owner, Vec3d velocity) {
         super(FEntityTypes.FROST_SPELL, world, owner, velocity);
     }
 
-    public FrostSpellEntity(World world, @Nullable LivingEntity owner, Vec3d velocity, double maxDistance) {
+    public FrostSpellEntity(World world, LivingEntity owner, Vec3d velocity, double maxDistance) {
         super(FEntityTypes.FROST_SPELL, world, owner, velocity, maxDistance);
     }
 

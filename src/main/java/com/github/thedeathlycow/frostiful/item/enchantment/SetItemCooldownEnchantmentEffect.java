@@ -30,7 +30,7 @@ public record SetItemCooldownEnchantmentEffect(
 
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity user, Vec3d pos) {
-        if (user instanceof PlayerEntity player) {
+        if (context.owner() instanceof PlayerEntity player) {
             player.getItemCooldownManager().set(this.item, this.durationTicks);
         }
     }
