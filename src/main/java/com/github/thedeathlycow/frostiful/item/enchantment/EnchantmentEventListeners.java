@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.enchantment;
+package com.github.thedeathlycow.frostiful.item.enchantment;
 
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;

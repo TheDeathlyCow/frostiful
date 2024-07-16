@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.enchantment;
+package com.github.thedeathlycow.frostiful.item.enchantment;
 
 import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import net.minecraft.enchantment.EnchantmentHelper;

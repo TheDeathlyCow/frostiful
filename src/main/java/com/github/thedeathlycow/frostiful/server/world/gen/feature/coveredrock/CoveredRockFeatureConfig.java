@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock;
+package com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

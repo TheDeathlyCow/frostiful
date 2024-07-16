@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.enchantment;
+package com.github.thedeathlycow.frostiful.item.enchantment;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
-import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
-import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
+import com.github.thedeathlycow.frostiful.item.enchantment.FEnchantmentHelper;
+import com.github.thedeathlycow.frostiful.item.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageTypes;
 import com.github.thedeathlycow.frostiful.registry.FComponents;

@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.mixins.entity.soaking;
+package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;

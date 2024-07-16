@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.world.gen.feature;
+package com.github.thedeathlycow.frostiful.server.world.gen.feature;
 
 import com.github.thedeathlycow.frostiful.block.IcicleHelper;
 import com.mojang.serialization.Codec;
@@ -16,8 +16,6 @@ import net.minecraft.util.math.random.Random;
 import net.minecraft.world.StructureWorldAccess;
 import net.minecraft.world.WorldAccess;
 import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.DripstoneClusterFeature;
-import net.minecraft.world.gen.feature.DripstoneClusterFeatureConfig;
 import net.minecraft.world.gen.feature.Feature;
 import net.minecraft.world.gen.feature.FeatureConfig;
 import net.minecraft.world.gen.feature.util.CaveSurface;

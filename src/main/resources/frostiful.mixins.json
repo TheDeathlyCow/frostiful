@@ -27,7 +27,7 @@
         "entity.root.EntityMovementBlockMixin",
         "entity.root.PlayerMovementBlockMixin",
         "entity.root.RootedEntityImplMixin",
-        "entity.soaking.WaterPotionSoakingMixin",
+        "entity.WaterPotionSoakingMixin",
         "food.ConsumeItemCriterionMixin",
         "item.ArmorTrimPatternsMixin",
         "powder_snow_effects.EntityPowderSnowRedirect",

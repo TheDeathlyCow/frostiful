@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.world.spawner;
+package com.github.thedeathlycow.frostiful.server.world;
 
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.minecraft.block.BlockState;

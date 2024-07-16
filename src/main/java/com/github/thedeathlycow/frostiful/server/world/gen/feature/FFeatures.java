@@ -1,8 +1,8 @@
-package com.github.thedeathlycow.frostiful.world.gen.feature;
+package com.github.thedeathlycow.frostiful.server.world.gen.feature;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredRockFeature;
-import com.github.thedeathlycow.frostiful.world.gen.feature.coveredrock.CoveredRockFeatureConfig;
+import com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock.CoveredRockFeature;
+import com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock.CoveredRockFeatureConfig;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.world.gen.feature.Feature;

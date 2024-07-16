@@ -1,14 +1,13 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.enchantment.EnervationEnchantment;
-import com.github.thedeathlycow.frostiful.enchantment.FrozenTouchCurse;
-import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
+import com.github.thedeathlycow.frostiful.item.enchantment.EnervationEnchantment;
+import com.github.thedeathlycow.frostiful.item.enchantment.FrozenTouchCurse;
+import com.github.thedeathlycow.frostiful.item.enchantment.IceBreakerEnchantment;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
 
 public class FEnchantments {
 
