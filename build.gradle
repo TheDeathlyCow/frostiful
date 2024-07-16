@@ -75,6 +75,7 @@ dependencies {
     // OverflowingBars https://modrinth.com/mod/overflowing-bars
     modCompileOnly("maven.modrinth:overflowing-bars:${project.overflowing_bars_version}") { transitive = false }
 
+
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
     // Includes Cardinal Components API as a Jar-in-Jar dependency (optional but recommended)

@@ -621,11 +621,12 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, entity -> true)) {
                 victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
 
-                if (serverWorld != null) {
-                    EnervationEnchantment.addHeatDrainParticles(
-                            serverWorld, FrostologerEntity.this, victim, 5, 0.08
-                    );
-                }
+                // TODO: add back heat drain particles
+//                if (serverWorld != null) {
+//                    EnervationEnchantment.addHeatDrainParticles(
+//                            serverWorld, FrostologerEntity.this, victim, 5, 0.08
+//                    );
+//                }
             }
 
             super.tick();

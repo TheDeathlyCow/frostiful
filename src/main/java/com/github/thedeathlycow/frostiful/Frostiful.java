@@ -153,6 +153,6 @@ public class Frostiful implements ModInitializer {
      */
     @Contract("_->new")
     public static Identifier id(String path) {
-        return Identifier.of(path);
+        return Identifier.of(MODID, path);
     }
 }

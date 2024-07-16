@@ -10,11 +10,11 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(EnchantmentEntityEffect.class)
-public class EnchantmentEntityEffectMixin {
+public interface EnchantmentEntityEffectMixin {
 
     @Inject(
             method = "registerAndGetDefault",
-            at = @At("RETURN")
+            at = @At("TAIL")
     )
     private static void registerCallback(
             Registry<MapCodec<? extends EnchantmentEntityEffect>> registry,
