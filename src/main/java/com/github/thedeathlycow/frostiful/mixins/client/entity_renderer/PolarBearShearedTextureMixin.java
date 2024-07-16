@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer.brushable;
+package com.github.thedeathlycow.frostiful.mixins.client.entity_renderer;
 
 import com.github.thedeathlycow.frostiful.client.BrushableTextures;
 import com.github.thedeathlycow.frostiful.entity.FBrushable;
