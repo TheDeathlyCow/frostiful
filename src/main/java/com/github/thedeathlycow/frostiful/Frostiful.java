@@ -66,6 +66,7 @@ public class Frostiful implements ModInitializer {
         FParticleTypes.registerParticleTypes();
         FPotions.initialize();
         FItemGroups.registerAll();
+        FLootConditionTypes.registerAll();
 
         FFeatures.registerAll();
         FPlacedFeatures.placeFeatures();
