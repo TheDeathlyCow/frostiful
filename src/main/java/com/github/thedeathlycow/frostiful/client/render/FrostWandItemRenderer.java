@@ -63,7 +63,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
                     vertexConsumers, this.model.getLayer(FrostWandItemModel.TEXTURE), false, stack.hasGlint()
             );
 
-            this.model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.model.render(matrices, vertexConsumer, light, overlay);
             matrices.pop();
         }
     }
