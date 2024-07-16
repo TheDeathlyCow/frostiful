@@ -37,7 +37,10 @@ public class FrostifulClient implements ClientModInitializer {
 
         FCutouts.registerCutouts();
         FParticleFactoryRegistry.registerFactories();
-        ClientPlayNetworking.registerGlobalReceiver(PointWindSpawnPacket.ID, PointWindSpawnPacketListener::receive);
+        ClientPlayNetworking.registerGlobalReceiver(
+                PointWindSpawnPacket.PACKET_ID,
+                new PointWindSpawnPacketListener()
+        );
         StatusBarOverlayRenderEvents.AFTER_HEALTH_BAR.register(FrozenHeartsOverlay::afterHealthBar);
         StatusBarOverlayRenderEvents.AFTER_MOUNT_HEALTH_BAR.register(FrozenHeartsOverlay::afterMountHealthBar);
 

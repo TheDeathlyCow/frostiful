@@ -10,6 +10,7 @@ import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
+import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.*;
 import com.github.thedeathlycow.frostiful.world.gen.feature.FFeatures;
@@ -22,6 +23,8 @@ import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
@@ -70,6 +73,10 @@ public class Frostiful implements ModInitializer {
 
         this.registerThermooEventListeners();
         FSmithingTemplateItem.addTemplatesToLoot();
+        PayloadTypeRegistry.playS2C().register(
+                PointWindSpawnPacket.PACKET_ID,
+                PointWindSpawnPacket.PACKET_CODEC
+        );
 
 //        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowHeatDrainWeaponEnchanting);
 //        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowFrostWandAnvilEnchanting);
