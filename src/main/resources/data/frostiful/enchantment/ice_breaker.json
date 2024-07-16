@@ -1,6 +1,6 @@
 {
     "description": {
-        "translate": "enchantment.scorchful.ice_breaker"
+        "translate": "enchantment.frostiful.ice_breaker"
     },
     "supported_items": "#frostiful:enchantable/frost_wand",
     "primary_items": "#frostiful:enchantable/frost_wand",
@@ -58,14 +58,18 @@
                         {
                             "type": "frostiful:set_item_cooldown",
                             "item": "frostiful:frost_wand",
-                            "value": 0
+                            "duration_ticks": 0
                         }
                     ]
                 },
                 "requirements": {
-                    "condition": "minecraft:entity_properties",
-                    "entity": "attacker",
-                    "predicate": {}
+                    "condition": "frostiful:rooted",
+                    "entity": "this",
+                    "predicate": {
+                        "root_ticks_remaining": {
+                            "min": 1
+                        }
+                    }
                 }
             }
         ]

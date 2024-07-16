@@ -10,24 +10,18 @@
 		"size": {
 			"x": {
 				"type": "minecraft:uniform",
-				"value": {
-					"min_inclusive": 0,
-					"max_inclusive": 2
-				}
+				"min_inclusive": 0,
+				"max_inclusive": 2
 			},
 			"y": {
 				"type": "minecraft:uniform",
-				"value": {
-					"min_inclusive": 0,
-					"max_inclusive": 2
-				}
+				"min_inclusive": 0,
+				"max_inclusive": 2
 			},
 			"z": {
 				"type": "minecraft:uniform",
-				"value": {
-					"min_inclusive": 0,
-					"max_inclusive": 2
-				}
+				"min_inclusive": 0,
+				"max_inclusive": 2
 			}
 		},
 		"covering_feature": {
