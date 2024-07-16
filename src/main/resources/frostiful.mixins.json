@@ -46,7 +46,6 @@
         "client.entity_renderer.RootedEffectRenderer",
         "client.entity_renderer.ShakingRendererMixin",
         "client.entity_renderer.brushable.PolarBearShearedTextureMixin",
-        "client.gui.FrostVinetteOverlay",
         "client.gui.InGameHudMixin",
         "client.gui.ShiveringRenderer",
         "client.ice_skate_fx.GameRendererMixin",
