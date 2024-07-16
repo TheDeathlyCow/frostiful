@@ -3,10 +3,16 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.item.enchantment.IceBreakerEnchantment;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
+import net.minecraft.particle.BlockStateParticleEffect;
+import net.minecraft.particle.ParticleEffect;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -54,8 +60,28 @@ public interface RootedEntity {
         World world = victim.getWorld();
         if (!world.isClient && rootedEntity.frostiful$isRooted()) {
             rootedEntity.frostiful$breakRoot();
-            IceBreakerEnchantment.spawnShatterParticlesAndSound(victim, (ServerWorld) world);
+            spawnShatterParticlesAndSound(victim, (ServerWorld) world);
         }
+    }
+
+    static void spawnShatterParticlesAndSound(LivingEntity victim, ServerWorld serverWorld) {
+        ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
+
+        serverWorld.spawnParticles(
+                shatteredIce,
+                victim.getX(), victim.getY(), victim.getZ(),
+                500,
+                0.5, 1.0, 0.5,
+                1.0
+        );
+
+        victim.getWorld().playSound(
+                null,
+                victim.getBlockPos(),
+                SoundEvents.BLOCK_GLASS_BREAK,
+                SoundCategory.AMBIENT,
+                1.0f, 0.75f
+        );
     }
 
 
