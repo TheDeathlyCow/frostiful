@@ -1,0 +1,73 @@
+{
+    "description": {
+        "translate": "enchantment.scorchful.ice_breaker"
+    },
+    "supported_items": "#frostiful:enchantable/frost_wand",
+    "primary_items": "#frostiful:enchantable/frost_wand",
+    "weight": 10,
+    "max_level": 5,
+    "min_cost": {
+        "base": 1,
+        "per_level_above_first": 11
+    },
+    "max_cost": {
+        "base": 21,
+        "per_level_above_first": 11
+    },
+    "anvil_cost": 1,
+    "slots": [
+        "mainhand"
+    ],
+    "effects": {
+        "minecraft:damage": [
+            {
+                "effect": {
+                    "type": "minecraft:add",
+                    "value": {
+                        "type": "minecraft:linear",
+                        "base": 3,
+                        "per_level_above_first": 1
+                    }
+                },
+                "requirements": {
+                    "condition": "frostiful:rooted",
+                    "entity": "this",
+                    "predicate": {
+                        "root_ticks_remaining": {
+                            "min": 1
+                        }
+                    }
+                }
+            }
+        ],
+        "minecraft:post_attack": [
+            {
+                "enchanted": "victim",
+                "affected": "attacker",
+                "effect": {
+                    "type": "minecraft:all_of",
+                    "effects": [
+                        {
+                            "type": "minecraft:apply_mob_effect",
+                            "to_apply": "minecraft:speed",
+                            "min_duration": 1.5,
+                            "max_duration": 1.5,
+                            "min_amplifier": 2,
+                            "max_amplifier": 2
+                        },
+                        {
+                            "type": "frostiful:set_item_cooldown",
+                            "item": "frostiful:frost_wand",
+                            "value": 0
+                        }
+                    ]
+                },
+                "requirements": {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "attacker",
+                    "predicate": {}
+                }
+            }
+        ]
+    }
+}
