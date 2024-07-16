@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.block.CampfireUseEventListener;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FPotions;
@@ -22,6 +23,7 @@ import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.util.TriState;
@@ -76,6 +78,7 @@ public class Frostiful implements ModInitializer {
                 PointWindSpawnPacket.PACKET_ID,
                 PointWindSpawnPacket.PACKET_CODEC
         );
+        UseBlockCallback.EVENT.register(new CampfireUseEventListener());
 
 //        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowHeatDrainWeaponEnchanting);
 //        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowFrostWandAnvilEnchanting);

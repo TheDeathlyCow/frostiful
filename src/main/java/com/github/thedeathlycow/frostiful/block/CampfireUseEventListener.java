@@ -1,16 +1,22 @@
-package com.github.thedeathlycow.frostiful.mixins.block;
+package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.event.player.UseItemCallback;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
+import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.CampfireBlock;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
@@ -20,39 +26,43 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-@Mixin(CampfireBlock.class)
-public abstract class CampfireWarmthMixin {
+public class CampfireUseEventListener implements UseBlockCallback {
 
-    @Inject(
-            method = "onUse",
-            at = @At("TAIL"),
-            cancellable = true
-    )
-    public void warmEntityOnUse(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockHitResult hit, CallbackInfoReturnable<ActionResult> cir) {
+    @Override
+    public ActionResult interact(PlayerEntity player, World world, Hand hand, BlockHitResult hitResult) {
 
-        if (!state.get(CampfireBlock.LIT)) {
-            return;
+        if (player.isSpectator()) {
+            return ActionResult.PASS;
         }
 
-        ItemStack inHand = player.getStackInHand(hand);
-        inHand = player.isCreative() ? inHand.copy() : inHand;
-        if (!inHand.isEmpty() && inHand.isIn(ItemTags.LOGS_THAT_BURN)) {
-            if (!world.isClient) {
-                player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE);
-                inHand.decrement(1);
-                warmNearbyEntities(world, pos);
-                cir.setReturnValue(ActionResult.SUCCESS);
-            } else {
-                cir.setReturnValue(ActionResult.CONSUME);
+        BlockPos pos = hitResult.getBlockPos();
+        BlockState state = world.getBlockState(pos);
+
+        if (state.isIn(BlockTags.CAMPFIRES) && Boolean.TRUE.equals(state.get(CampfireBlock.LIT))) {
+            ItemStack stack = player.getStackInHand(hand);
+            stack = player.isCreative() ? stack.copy() : stack;
+
+            if (!stack.isEmpty() && stack.isIn(ItemTags.LOGS_THAT_BURN)) {
+
+                if (!world.isClient) {
+                    warmNearbyEntities(world, pos);
+
+                    player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE);
+                    Criteria.ITEM_USED_ON_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
+                    stack.decrement(1);
+
+                    return ActionResult.SUCCESS;
+                } else {
+                    return ActionResult.CONSUME;
+                }
+
             }
         }
+
+        return ActionResult.PASS;
     }
 
     private static void warmNearbyEntities(World world, BlockPos pos) {

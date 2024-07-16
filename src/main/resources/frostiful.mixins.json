@@ -6,7 +6,6 @@
     "plugin": "com.github.thedeathlycow.frostiful.mixins.compat.Plugin",
     "mixins": [
         "block.BannerPatternsRegistryMixin",
-        "block.CampfireWarmthMixin",
         "block.PowderSnowWalkableMixin",
         "block.SnowPackingMixin",
         "block.WindBlowoutMixin",
