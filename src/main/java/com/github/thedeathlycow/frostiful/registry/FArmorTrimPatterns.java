@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.item;
+package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FItems;
