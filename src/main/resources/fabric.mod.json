@@ -46,7 +46,7 @@
         "fabricloader": ">=0.15.11",
         "fabric-api": ">=0.100.7",
         "minecraft": "1.21",
-        "thermoo": ">=4.0",
+        "thermoo": ">=4.1",
         "java": ">=21"
     },
     "suggests": {

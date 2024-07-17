@@ -3,19 +3,19 @@ package com.github.thedeathlycow.frostiful;
 import com.github.thedeathlycow.frostiful.block.CampfireUseEventListener;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.registry.FPotions;
-import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
 import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.item.event.FrostResistanceProvider;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
-import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.survival.*;
 import com.github.thedeathlycow.frostiful.server.world.gen.feature.FFeatures;
 import com.github.thedeathlycow.frostiful.server.world.gen.feature.FPlacedFeatures;
+import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
+import com.github.thedeathlycow.frostiful.survival.*;
+import com.github.thedeathlycow.thermoo.api.armor.material.ArmorMaterialEvents;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentControllerInitializeEvent;
 import com.github.thedeathlycow.thermoo.api.temperature.event.PlayerEnvironmentEvents;
 import me.shedaniel.autoconfig.AutoConfig;
@@ -87,6 +87,9 @@ public class Frostiful implements ModInitializer {
     }
 
     private void registerThermooEventListeners() {
+
+        ArmorMaterialEvents.GET_FROST_RESISTANCE.register(new FrostResistanceProvider());
+
         PlayerEnvironmentEvents.CAN_APPLY_PASSIVE_TEMPERATURE_CHANGE.register(
                 (change, player) -> {
                     if (change > 0) {

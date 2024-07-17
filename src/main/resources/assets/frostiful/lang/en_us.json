@@ -213,6 +213,8 @@
   "text.autoconfig.frostiful.option.combatConfig.chillagerFireDamageMultiplier": "Chillager fire damage multiplier",
   "text.autoconfig.frostiful.option.combatConfig.furUpgradeTemplateGenerateChance": "Fur upgrade generate chance (0-1)",
   "text.autoconfig.frostiful.option.combatConfig.skateUpgradeTemplateGenerateChance": "Ice Skate upgrade generate chance (0-1)",
+  "text.autoconfig.frostiful.option.combatConfig.veryProtectiveFrostResistanceMultiplier": "Very protective Frost Resistance multiplier",
+  "text.autoconfig.frostiful.option.combatConfig.protectiveFrostResistanceMultiplier": "Protective Frost Resistance multiplier",
   
   "text.autoconfig.frostiful.option.freezingConfig": "Freezing Config",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Do passive freezing (global)",

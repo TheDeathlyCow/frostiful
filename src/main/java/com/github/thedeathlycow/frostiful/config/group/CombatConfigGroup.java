@@ -41,6 +41,14 @@ public class CombatConfigGroup implements ConfigData {
 
     @ConfigEntry.Gui.RequiresRestart
     float skateUpgradeTemplateGenerateChance = 0.33f;
+
+    @ConfigEntry.Gui.RequiresRestart
+    double veryProtectiveFrostResistanceMultiplier = 1.0;
+
+    @ConfigEntry.Gui.RequiresRestart
+    double protectiveFrostResistanceMultiplier = 0.25;
+
+
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
     }
@@ -100,5 +108,21 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getSkateUpgradeTemplateGenerateChance() {
         return MathHelper.clamp(skateUpgradeTemplateGenerateChance, 0f, 1f);
+    }
+
+    public double getVeryProtectiveFrostResistanceMultiplier() {
+        return veryProtectiveFrostResistanceMultiplier;
+    }
+
+    public double getProtectiveFrostResistanceMultiplier() {
+        return protectiveFrostResistanceMultiplier;
+    }
+
+    public double getVeryHarmfulFrostResistanceMultiplier() {
+        return -veryProtectiveFrostResistanceMultiplier;
+    }
+
+    public double getHarmfulFrostResistanceMultiplier() {
+        return -protectiveFrostResistanceMultiplier;
     }
 }
