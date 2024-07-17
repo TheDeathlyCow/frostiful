@@ -6,9 +6,8 @@
     },
     "config": {
         "scale": -0.04,
-        "modifier_uuid": "19a8dc21-8588-4435-b692-2d04c62dcd0c",
-        "name": "Freezing speed",
+        "id": "frostiful:temperature_effect.freezing_speed",
         "attribute_type": "minecraft:generic.movement_speed",
-        "operation": "addition"
+        "operation": "add_value"
     }
 }
