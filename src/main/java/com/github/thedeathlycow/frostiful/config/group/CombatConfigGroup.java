@@ -14,14 +14,6 @@ public class CombatConfigGroup implements ConfigData {
 
     boolean straysCarryFrostArrows = true;
 
-    int heatDrainPerLevel = 210;
-
-    double heatDrainEfficiency = 0.5;
-
-    float iceBreakerDamagePerLevel = 1.0f;
-
-    float iceBreakerBaseDamage = 3.0f;
-
     double maxFrostSpellDistance = 25;
 
     int frostWandCooldown = 120;
@@ -55,22 +47,6 @@ public class CombatConfigGroup implements ConfigData {
 
     public boolean straysCarryFrostArrows() {
         return straysCarryFrostArrows;
-    }
-
-    public int getHeatDrainPerLevel() {
-        return heatDrainPerLevel;
-    }
-
-    public double getHeatDrainEfficiency() {
-        return heatDrainEfficiency;
-    }
-
-    public float getIceBreakerDamagePerLevel() {
-        return iceBreakerDamagePerLevel;
-    }
-
-    public float getIceBreakerBaseDamage() {
-        return iceBreakerBaseDamage;
     }
 
     public double getMaxFrostSpellDistance() {
