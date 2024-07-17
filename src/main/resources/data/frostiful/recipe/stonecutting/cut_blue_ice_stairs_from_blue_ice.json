@@ -3,6 +3,8 @@
     "ingredient": {
         "item": "minecraft:blue_ice"
     },
-    "result": "frostiful:cut_blue_ice_stairs",
-    "count": 4
+    "result": {
+        "id": "frostiful:cut_blue_ice_stairs",
+        "count": 4
+    }
 }

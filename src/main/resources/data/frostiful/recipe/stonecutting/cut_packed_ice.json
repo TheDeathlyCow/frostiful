@@ -3,6 +3,8 @@
     "ingredient": {
         "item": "minecraft:packed_ice"
     },
-    "result": "frostiful:cut_packed_ice",
-    "count": 4
+    "result": {
+        "id": "frostiful:cut_packed_ice",
+        "count": 4
+    }
 }

@@ -10,7 +10,7 @@
         }
     },
     "result": {
-        "item": "frostiful:packed_snow_brick_wall",
+        "id": "frostiful:packed_snow_brick_wall",
         "count": 6
     }
 }

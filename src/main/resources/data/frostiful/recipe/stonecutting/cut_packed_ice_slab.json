@@ -3,6 +3,8 @@
     "ingredient": {
         "item": "frostiful:cut_packed_ice"
     },
-    "result": "frostiful:cut_packed_ice_slab",
-    "count": 2
+    "result": {
+        "id": "frostiful:cut_packed_ice_slab",
+        "count": 2
+    }
 }

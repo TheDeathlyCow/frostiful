@@ -17,7 +17,7 @@
         }
     },
     "result": {
-        "item": "frostiful:fur_upgrade_template",
+        "id": "frostiful:fur_upgrade_template",
         "count": 2
     }
 }

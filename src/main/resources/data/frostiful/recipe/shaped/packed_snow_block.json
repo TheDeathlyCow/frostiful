@@ -12,7 +12,7 @@
         }
     },
     "result": {
-        "item": "frostiful:packed_snow_block",
+        "id": "frostiful:packed_snow_block",
         "count": 4
     }
 }

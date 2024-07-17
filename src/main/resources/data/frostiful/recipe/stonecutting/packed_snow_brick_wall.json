@@ -3,6 +3,8 @@
     "ingredient": {
         "item": "frostiful:packed_snow_bricks"
     },
-    "result": "frostiful:packed_snow_brick_wall",
-    "count": 1
+    "result": {
+        "id": "frostiful:packed_snow_brick_wall",
+        "count": 1
+    }
 }

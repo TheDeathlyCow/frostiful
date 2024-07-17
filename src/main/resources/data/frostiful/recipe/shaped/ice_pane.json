@@ -10,7 +10,7 @@
         }
     },
     "result": {
-        "item": "frostiful:ice_pane",
+        "id": "frostiful:ice_pane",
         "count": 16
     }
 }

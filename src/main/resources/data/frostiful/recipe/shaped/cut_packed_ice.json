@@ -10,7 +10,7 @@
         }
     },
     "result": {
-        "item": "frostiful:cut_packed_ice",
+        "id": "frostiful:cut_packed_ice",
         "count": 4
     }
 }

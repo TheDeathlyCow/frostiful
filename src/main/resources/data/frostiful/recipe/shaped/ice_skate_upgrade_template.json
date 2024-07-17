@@ -20,7 +20,7 @@
         }
     },
     "result": {
-        "item": "frostiful:ice_skate_upgrade_template",
+        "id": "frostiful:ice_skate_upgrade_template",
         "count": 2
     }
 }

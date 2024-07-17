@@ -10,7 +10,7 @@
         }
     },
     "result": {
-        "item": "frostiful:cut_blue_ice",
+        "id": "frostiful:cut_blue_ice",
         "count": 4
     }
 }

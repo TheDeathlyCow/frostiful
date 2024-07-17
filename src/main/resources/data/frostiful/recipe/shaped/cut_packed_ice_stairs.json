@@ -11,7 +11,7 @@
         }
     },
     "result": {
-        "item": "frostiful:cut_packed_ice_stairs",
+        "id": "frostiful:cut_packed_ice_stairs",
         "count": 4
     }
 }
