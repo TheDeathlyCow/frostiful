@@ -1,4 +1,5 @@
-package com.github.thedeathlycow.frostiful.mixins.server;
+package com.github.thedeathlycow.frostiful.server.world;
+
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
@@ -11,48 +12,24 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.util.math.random.Random;
-import net.minecraft.util.profiler.Profiler;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.LightType;
-import net.minecraft.world.World;
 import net.minecraft.world.chunk.WorldChunk;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Slice;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.function.Predicate;
 
-@Mixin(ServerWorld.class)
-public abstract class IcicleGrowthMixin {
+public final class IcicleWeatherGenerator {
 
+    public static void tickIciclesForChunk(ServerWorld world, WorldChunk chunk, int randomTickSpeed) {
 
-    @Inject(
-            method = "tickChunk",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V",
-                    shift = At.Shift.AFTER,
-                    ordinal = 0
-            ),
-            slice = @Slice(
-                    from = @At(
-                            value = "INVOKE",
-                            target = "Lnet/minecraft/block/Block;precipitationTick(Lnet/minecraft/block/BlockState;Lnet/minecraft/world/World;Lnet/minecraft/util/math/BlockPos;Lnet/minecraft/world/biome/Biome$Precipitation;)V"
-                    )
-            )
-    )
-    private void doIcicleGrowth(WorldChunk chunk, int randomTickSpeed, CallbackInfo ci) {
-        final ServerWorld instance = (ServerWorld) (Object) this;
-        final Random random = instance.random;
+        final Random random = world.random;
 
         IcicleConfigGroup icicleConfig = Frostiful.getConfig().icicleConfig;
         if (!icicleConfig.iciclesFormInWeather()) {
             return;
         }
 
-        if (!instance.isRaining()) {
+        if (!world.isRaining()) {
             return;
         }
 
@@ -61,31 +38,26 @@ public abstract class IcicleGrowthMixin {
             return;
         }
 
-        Profiler profiler = instance.getProfiler();
-        profiler.push("frostiful.icicle_growth_tick");
-
         final ChunkPos chunkPos = chunk.getPos();
-        final BlockPos startPos = instance.getTopPosition(
+        final BlockPos startPos = world.getTopPosition(
                 Heightmap.Type.WORLD_SURFACE,
-                instance.getRandomPosInChunk(chunkPos.getStartX(), 0, chunkPos.getStartZ(), 15)
+                world.getRandomPosInChunk(chunkPos.getStartX(), 0, chunkPos.getStartZ(), 15)
         );
 
-        if (instance.getBiome(startPos).value().doesNotSnow(startPos)) {
-            profiler.pop();
+        if (world.getBiome(startPos).value().doesNotSnow(startPos)) {
             return;
         }
 
         final BlockState downwardIcicle = FBlocks.ICICLE.getDefaultState()
                 .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
 
-        World world = chunk.getWorld();
         Predicate<BlockPos> validCondition = (testPos) -> {
-            BlockState at = instance.getBlockState(testPos);
+            BlockState at = world.getBlockState(testPos);
 
             // testing for sky light helps increase the chance that icicles will only ever form outside
             return at.isAir()
                     && world.getLightLevel(LightType.SKY, testPos) >= icicleConfig.getMinSkylightLevelToForm()
-                    && downwardIcicle.canPlaceAt(instance, testPos);
+                    && downwardIcicle.canPlaceAt(world, testPos);
         };
 
         BlockPos.Mutable placePos = startPos.mutableCopy();
@@ -94,17 +66,19 @@ public abstract class IcicleGrowthMixin {
             if (validCondition.test(placePos)) {
                 // only place if can place and light is not blocking it
                 if (world.getLightLevel(LightType.BLOCK, placePos) < icicleConfig.getMaxLightLevelToForm()) {
-                    instance.setBlockState(placePos, downwardIcicle, Block.NOTIFY_ALL);
+                    world.setBlockState(placePos, downwardIcicle, Block.NOTIFY_ALL);
                 }
 
                 // if can place but there is light blocking - stop looking
-                profiler.pop();
                 return;
             }
             placePos.move(Direction.DOWN);
         }
 
-        profiler.pop();
+    }
+
+    private IcicleWeatherGenerator() {
+
     }
 
 }

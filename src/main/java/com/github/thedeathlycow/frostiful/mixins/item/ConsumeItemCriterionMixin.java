@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.mixins.food;
+package com.github.thedeathlycow.frostiful.mixins.item;
 
 import com.github.thedeathlycow.frostiful.compat.FoodIntegration;
 import net.minecraft.advancement.criterion.ConsumeItemCriterion;
