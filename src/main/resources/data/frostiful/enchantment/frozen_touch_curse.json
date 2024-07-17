@@ -22,8 +22,8 @@
     "effects": {
         "minecraft:post_attack": [
             {
-                "enchanted": "victim",
-                "affected": "attacker",
+                "enchanted": "attacker",
+                "affected": "victim",
                 "effect": {
                     "type": "frostiful:heat_drain",
                     "heat_to_drain": {
@@ -31,7 +31,8 @@
                         "base": 210,
                         "per_level_above_first": 210
                     },
-                    "efficiency": 0.75
+                    "efficiency": 0.75,
+                    "drain_from_enchanted": true
                 }
             }
         ]

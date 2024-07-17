@@ -23,7 +23,8 @@ import java.util.function.Function;
 
 public record HeatDrainEnchantmentEffect(
         EnchantmentLevelBasedValue heatToDrain,
-        float efficiency
+        float efficiency,
+        boolean drainFromEnchanted
 ) implements EnchantmentEntityEffect {
 
     public static final MapCodec<HeatDrainEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec(
@@ -33,33 +34,46 @@ public record HeatDrainEnchantmentEffect(
                             .forGetter(HeatDrainEnchantmentEffect::heatToDrain),
                     rangedFloat(0.0f, 1f, v -> "Value must be between 0 and 1 (inclusive): " + v)
                             .fieldOf("efficiency")
-                            .forGetter(HeatDrainEnchantmentEffect::efficiency)
+                            .forGetter(HeatDrainEnchantmentEffect::efficiency),
+                    Codec.BOOL
+                            .fieldOf("drain_from_enchanted")
+                            .orElse(false)
+                            .forGetter(HeatDrainEnchantmentEffect::drainFromEnchanted)
             ).apply(instance, HeatDrainEnchantmentEffect::new)
     );
 
     @Override
     public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity user, Vec3d pos) {
-
-        if (user instanceof TemperatureAware temperatureAware && temperatureAware.thermoo$canFreeze()) {
-
-            int heatDrainedFromTarget = MathHelper.floor(this.heatToDrain.getValue(level));
-            temperatureAware.thermoo$addTemperature(-heatDrainedFromTarget, HeatingModes.ACTIVE);
-
-            LivingEntity owner = context.owner();
-            if (owner == null) {
-                return;
+        LivingEntity owner = context.owner();
+        if (owner != null && user instanceof LivingEntity livingVictim) {
+            if (drainFromEnchanted) {
+                // as in frozen touch curse
+                this.drainHeat(owner, livingVictim, level);
+            } else {
+                // as in enervation
+                this.drainHeat(livingVictim, owner, level);
             }
+        }
+    }
 
-            int heatAddedToOwner = MathHelper.floor(heatDrainedFromTarget * this.efficiency);
-            owner.thermoo$addTemperature(heatAddedToOwner, HeatingModes.ACTIVE);
+    private void drainHeat(LivingEntity source, LivingEntity destination, int level) {
 
-            if (owner.thermoo$isWarm()) {
-                owner.thermoo$setTemperature(0);
-            }
+        if (!source.thermoo$canFreeze()) {
+            return;
+        }
 
-            if (heatDrainedFromTarget != 0) {
-                addHeatDrainParticles(owner, user, level);
-            }
+        int heatDrainedFromTarget = MathHelper.floor(this.heatToDrain.getValue(level));
+        source.thermoo$addTemperature(-heatDrainedFromTarget, HeatingModes.ACTIVE);
+
+        int heatAddedToOwner = MathHelper.floor(heatDrainedFromTarget * this.efficiency);
+        destination.thermoo$addTemperature(heatAddedToOwner, HeatingModes.ACTIVE);
+
+        if (destination.thermoo$isWarm()) {
+            destination.thermoo$setTemperature(0);
+        }
+
+        if (heatDrainedFromTarget != 0) {
+            addHeatDrainParticles(source, destination, level);
         }
     }
 
@@ -68,16 +82,20 @@ public record HeatDrainEnchantmentEffect(
         return CODEC;
     }
 
-    public static void addHeatDrainParticles(Entity destination, Entity source, int level) {
+    public static void addHeatDrainParticles(LivingEntity source, LivingEntity destination, int level) {
         World world = destination.getWorld();
         if (world instanceof ServerWorld serverWorld) {
-            addHeatDrainParticles(serverWorld, destination, source, level, 0.5);
+            addHeatDrainParticles(serverWorld, source, destination, level, 0.5);
         }
     }
 
-    public static void addHeatDrainParticles(ServerWorld serverWorld, Entity destination, Entity source, int level, double delta) {
+    public static void addHeatDrainParticles(
+            ServerWorld serverWorld,
+            LivingEntity source, LivingEntity destination,
+            int level, double delta
+    ) {
         Vec3d from = FMathHelper.getMidPoint(source.getEyePos(), source.getPos());
-        final int numParticles = (level << 1) + 5;
+        final int numParticles = (level * 3) + 15;
 
         double fromX = from.getX();
         double fromY = from.getY();
