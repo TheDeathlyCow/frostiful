@@ -18,8 +18,6 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
     private int freezeAmount = Frostiful.getConfig().icicleConfig.getFrostArrowFreezeAmount();
 
-    private static final ItemStack DEFAULT_STACK = new ItemStack(FItems.FROST_TIPPED_ARROW);
-
     private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
 
     public FrostTippedArrowEntity(EntityType<? extends FrostTippedArrowEntity> entityType, World world) {
@@ -50,7 +48,11 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
         World world = getWorld();
         if (world.isClient && !this.inGround) {
-            world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+            world.addParticle(
+                    ParticleTypes.SNOWFLAKE,
+                    this.getX(), this.getY(), this.getZ(),
+                    0.0D, 0.0D, 0.0D
+            );
         }
     }
 
