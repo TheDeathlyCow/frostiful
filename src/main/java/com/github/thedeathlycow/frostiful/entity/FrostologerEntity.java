@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
+import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
@@ -621,12 +622,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, entity -> true)) {
                 victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
 
-                // TODO: add back heat drain particles
-//                if (serverWorld != null) {
-//                    EnervationEnchantment.addHeatDrainParticles(
-//                            serverWorld, FrostologerEntity.this, victim, 5, 0.08
-//                    );
-//                }
+                if (serverWorld != null) {
+                    HeatDrainEnchantmentEffect.addHeatDrainParticles(
+                            serverWorld, victim, FrostologerEntity.this, 5, 0.08
+                    );
+                }
             }
 
             super.tick();
