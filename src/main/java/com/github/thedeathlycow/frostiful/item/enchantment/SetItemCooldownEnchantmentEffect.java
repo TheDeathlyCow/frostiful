@@ -37,6 +37,6 @@ public record SetItemCooldownEnchantmentEffect(
 
     @Override
     public MapCodec<? extends EnchantmentEntityEffect> getCodec() {
-        return null;
+        return CODEC;
     }
 }
