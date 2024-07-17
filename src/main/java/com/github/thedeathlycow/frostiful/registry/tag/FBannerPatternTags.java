@@ -9,9 +9,11 @@ public class FBannerPatternTags {
 
     public static final TagKey<BannerPattern> SNOWFLAKE_PATTERN_ITEM = key("pattern_item/snowflake");
 
-
     private static TagKey<BannerPattern> key(String id) {
         return TagKey.of(RegistryKeys.BANNER_PATTERN, Frostiful.id(id));
     }
 
+    private FBannerPatternTags() {
+
+    }
 }

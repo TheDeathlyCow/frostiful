@@ -17,21 +17,25 @@ public class FItems {
             FArmorMaterials.FUR,
             ArmorItem.Type.HELMET,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(5))
     );
     public static final Item FUR_CHESTPLATE = new ArmorItem(
             FArmorMaterials.FUR,
             ArmorItem.Type.CHESTPLATE,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(5))
     );
     public static final Item FUR_LEGGINGS = new ArmorItem(
             FArmorMaterials.FUR,
             ArmorItem.Type.LEGGINGS,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(5))
     );
     public static final Item FUR_BOOTS = new ArmorItem(
             FArmorMaterials.FUR,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(5))
     );
 
     public static final Item FUR_PADDING = new Item(new Item.Settings());
@@ -47,21 +51,25 @@ public class FItems {
             FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.HELMET,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(15))
     );
     public static final Item FUR_PADDED_CHAINMAIL_CHESTPLATE = new ArmorItem(
             FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.CHESTPLATE,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(15))
     );
     public static final Item FUR_PADDED_CHAINMAIL_LEGGINGS = new ArmorItem(
             FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.LEGGINGS,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(15))
     );
     public static final Item FUR_PADDED_CHAINMAIL_BOOTS = new ArmorItem(
             FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
+                    .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))
     );
 
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(new Item.Settings()
@@ -74,16 +82,14 @@ public class FItems {
             FArmorMaterials.FUR,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
-                    .maxCount(1)
-                    .rarity(Rarity.UNCOMMON)
+                    .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(5))
     );
 
     public static final Item ARMORED_ICE_SKATES = new ArmorItem(
             FArmorMaterials.FUR_LINED_CHAINMAIL,
             ArmorItem.Type.BOOTS,
             new Item.Settings()
-                    .maxCount(1)
-                    .rarity(Rarity.UNCOMMON)
+                    .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))
     );
 
     public static final Item POLAR_BEAR_FUR_TUFT = new Item(new Item.Settings());
