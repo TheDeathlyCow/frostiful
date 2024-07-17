@@ -23,7 +23,7 @@ import net.minecraft.util.Identifier;
 public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer, SimpleSynchronousResourceReloadListener {
 
     public static final Identifier ID = Frostiful.id("frost_wand_renderer");
-    public static final Identifier INVENTORY_MODEL_ID = Frostiful.id("frost_wand_in_inventory");
+    public static final Identifier INVENTORY_MODEL_ID = Frostiful.id("item/frost_wand_in_inventory");
 
     private final EntityModelLayer modelLayer;
     private FrostWandItemModel model;
