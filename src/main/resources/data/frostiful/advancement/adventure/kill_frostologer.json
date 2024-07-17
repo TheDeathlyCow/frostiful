@@ -1,8 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "frostiful:frost_wand",
-            "nbt": "{Damage:0}"
+            "id": "frostiful:frost_wand"
         },
         "title": {
             "translate": "advancements.frostiful.adventure.kill_frostologer.title"
@@ -20,13 +19,15 @@
         "frostologer": {
             "trigger": "minecraft:player_killed_entity",
             "conditions": {
-                "entity": [{
-                    "condition": "minecraft:entity_properties",
-                    "entity": "this",
-                    "predicate": {
-                        "type": "frostiful:frostologer"
+                "entity": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "type": "frostiful:frostologer"
+                        }
                     }
-                }]
+                ]
             }
         }
     },

@@ -1,7 +1,7 @@
 {
-	"replace": false,
-	"values": [
-		"#minecraft:portals",
-		"minecraft:beacon"
-	]
+    "replace": false,
+    "values": [
+        "#minecraft:portals",
+        "minecraft:beacon"
+    ]
 }

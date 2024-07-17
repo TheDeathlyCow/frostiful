@@ -1,8 +1,7 @@
 {
     "display": {
         "icon": {
-            "item": "frostiful:frostology_cloak",
-            "nbt": "{Damage:0}"
+            "id": "frostiful:frostology_cloak"
         },
         "title": {
             "translate": "advancements.frostiful.adventure.obtain_frostology_cloak.title"

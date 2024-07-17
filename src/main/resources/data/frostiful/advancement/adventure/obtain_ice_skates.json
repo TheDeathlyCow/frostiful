@@ -1,38 +1,38 @@
 {
-	"parent": "frostiful:adventure/fur_armor",
-	"display": {
-		"icon": {
-			"item": "frostiful:ice_skates"
-		},
-		"title": {
-			"translate": "advancements.frostiful.adventure.obtain_ice_skates.title"
-		},
-		"description": {
-			"translate": "advancements.frostiful.adventure.obtain_ice_skates.description"
-		},
-		"frame": "goal",
-		"show_toast": true,
-		"announce_to_chat": true,
-		"hidden": false
-	},
-	"rewards": {
-		"experience": 15
-	},
-	"criteria": {
-		"has_ice_skates": {
-			"trigger": "minecraft:inventory_changed",
-			"conditions": {
-				"items": [
-					{
-						"tag": "frostiful:ice_skates"
-					}
-				]
-			}
-		}
-	},
-	"requirements": [
-		[
-			"has_ice_skates"
-		]
-	]
+    "parent": "frostiful:adventure/fur_armor",
+    "display": {
+        "icon": {
+            "id": "frostiful:ice_skates"
+        },
+        "title": {
+            "translate": "advancements.frostiful.adventure.obtain_ice_skates.title"
+        },
+        "description": {
+            "translate": "advancements.frostiful.adventure.obtain_ice_skates.description"
+        },
+        "frame": "goal",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "rewards": {
+        "experience": 15
+    },
+    "criteria": {
+        "has_ice_skates": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "tag": "frostiful:ice_skates"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_ice_skates"
+        ]
+    ]
 }

@@ -1,15 +1,15 @@
 {
-	"type": "minecraft:smithing_transform",
-	"template": {
-		"item": "frostiful:fur_upgrade_template"
-	},
-	"base": {
-		"item": "minecraft:chainmail_boots"
-	},
-	"addition": {
-		"item": "frostiful:fur_padding"
-	},
-	"result": {
-		"item": "frostiful:fur_padded_chainmail_boots"
-	}
+    "type": "minecraft:smithing_transform",
+    "template": {
+        "item": "frostiful:fur_upgrade_template"
+    },
+    "base": {
+        "item": "minecraft:chainmail_boots"
+    },
+    "addition": {
+        "item": "frostiful:fur_padding"
+    },
+    "result": {
+        "item": "frostiful:fur_padded_chainmail_boots"
+    }
 }
