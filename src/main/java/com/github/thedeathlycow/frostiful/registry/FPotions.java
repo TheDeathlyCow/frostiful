@@ -14,7 +14,7 @@ public class FPotions {
 
     public static final RegistryEntry<Potion> FREEZING = registerReference(
             "freezing",
-            create(new StatusEffectInstance(FStatusEffects.FROST_BITE, 180 * 20, 0))
+            create("freezing", new StatusEffectInstance(FStatusEffects.FROST_BITE, 180 * 20, 0))
     );
     public static final RegistryEntry<Potion> FREEZING_LONG = registerReference(
             "long_freezing",
@@ -33,10 +33,6 @@ public class FPotions {
                     builder.registerPotionRecipe(FPotions.FREEZING, Items.GLOWSTONE_DUST, FPotions.FREEZING_STRONG);
                 }
         );
-    }
-
-    private static Potion create(StatusEffectInstance... effects) {
-        return new Potion(effects);
     }
 
     private static Potion create(String name, StatusEffectInstance... effects) {
