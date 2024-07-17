@@ -2,7 +2,7 @@
     "values": [
         "minecraft:snowy_plains",
         {
-            "id": "#c:snowy_plains",
+            "id": "#c:is_snowy_plains",
             "required": false
         },
         "minecraft:ice_spikes"
