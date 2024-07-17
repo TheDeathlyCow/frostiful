@@ -14,9 +14,11 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.BlockTags;
 import net.minecraft.registry.tag.ItemTags;
 import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.ActionResult;
@@ -46,23 +48,41 @@ public class CampfireUseEventListener implements UseBlockCallback {
             stack = player.isCreative() ? stack.copy() : stack;
 
             if (!stack.isEmpty() && stack.isIn(ItemTags.LOGS_THAT_BURN)) {
-
                 if (!world.isClient) {
                     warmNearbyEntities(world, pos);
-
+                    addSmokeParticles(world, pos);
                     player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE);
                     Criteria.ITEM_USED_ON_BLOCK.trigger((ServerPlayerEntity) player, pos, stack);
                     stack.decrement(1);
-
-                    return ActionResult.SUCCESS;
-                } else {
-                    return ActionResult.CONSUME;
                 }
-
+                return ActionResult.SUCCESS;
             }
         }
 
         return ActionResult.PASS;
+    }
+
+    private static void addSmokeParticles(World world, BlockPos pos) {
+        if (world instanceof ServerWorld serverWorld) {
+
+            Vec3d position = pos.toCenterPos().add(0, -0.3, 0);
+
+            serverWorld.spawnParticles(
+                    ParticleTypes.SMOKE,
+                    position.x, position.y, position.z,
+                    15,
+                    0.5, 0.7, 0.5,
+                    1e-3
+            );
+            serverWorld.spawnParticles(
+                    ParticleTypes.LAVA,
+                    position.x, position.y, position.z,
+                    8,
+                    0.5, 0.7, 0.5,
+                    1e-2
+            );
+
+        }
     }
 
     private static void warmNearbyEntities(World world, BlockPos pos) {

@@ -24,7 +24,7 @@
             "conditions": {
                 "items": [
                     {
-                        "tag": "frostiful:ice_skates"
+                        "items": "#frostiful:ice_skates"
                     }
                 ]
             }
