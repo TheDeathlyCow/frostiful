@@ -1,6 +1,7 @@
-package com.github.thedeathlycow.frostiful.entity.effect;
+package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.effect.SimpleStatusEffect;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.effect.StatusEffect;
@@ -25,7 +26,7 @@ public class FStatusEffects {
     );
 
     public static final RegistryEntry<StatusEffect> FROST_BITE = registerReference(
-            "warmth",
+            "frost_bite",
             new SimpleStatusEffect(
                     StatusEffectCategory.HARMFUL, 0x4287F5
             ).addAttributeModifier(
