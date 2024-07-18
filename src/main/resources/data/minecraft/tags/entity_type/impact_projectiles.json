@@ -2,6 +2,7 @@
 	"replace": false,
 	"values": [
 		"frostiful:frost_tipped_arrow",
-		"frostiful:thrown_icicle"
+		"frostiful:thrown_icicle",
+		"frostiful:packed_snowball"
 	]
 }
