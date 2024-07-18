@@ -3,7 +3,7 @@
         "translate": "enchantment.frostiful.enervation"
     },
     "exclusive_set": "#frostiful:exclusive_set/heat_drain",
-    "supported_items": "#frostiful:enchantable/frost_wand",
+    "supported_items": "#minecraft:enchantable/weapon",
     "primary_items": "#frostiful:enchantable/frost_wand",
     "weight": 10,
     "max_level": 3,

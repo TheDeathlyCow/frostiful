@@ -5,7 +5,7 @@
     "supported_items": "#frostiful:enchantable/frost_wand",
     "primary_items": "#frostiful:enchantable/frost_wand",
     "weight": 10,
-    "max_level": 5,
+    "max_level": 3,
     "min_cost": {
         "base": 1,
         "per_level_above_first": 11
