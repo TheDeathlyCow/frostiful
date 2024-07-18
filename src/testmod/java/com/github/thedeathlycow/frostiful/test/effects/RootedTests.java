@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 public class RootedTests {
 
     @GameTest(templateName = "frostiful-test:effects.platform")
-    public void stopsWalkingWhenRooted(TestContext context) {
+    public void villager_stops_walking_when_rooted(TestContext context) {
         BlockPos start = new BlockPos(1, 2, 1);
         BlockPos end = start.add(2, 0, 2);
 
@@ -24,7 +24,7 @@ public class RootedTests {
     }
 
     @GameTest(templateName = "frostiful-test:effects.platform")
-    public void canWalkWhenNotRooted(TestContext context) {
+    public void villager_can_walk_when_not_rooted(TestContext context) {
         BlockPos start = new BlockPos(1, 2, 1);
         BlockPos end = start.add(2, 0, 2);
 

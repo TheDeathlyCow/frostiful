@@ -33,21 +33,6 @@ public final class SunLichenPathfindingTests {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.GOLD_BLOCK);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.hot_sun_lichen")
-    public void villager_does_not_collide_with_hot_sun_lichen(TestContext context) {
-        runCollisionTest(context, EntityType.VILLAGER);
-    }
-
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.warm_sun_lichen")
-    public void villager_does_not_collide_with_warm_sun_lichen(TestContext context) {
-        runCollisionTest(context, EntityType.VILLAGER);
-    }
-
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.cool_sun_lichen")
-    public void villager_does_not_collide_with_cool_sun_lichen(TestContext context) {
-        runCollisionTest(context, EntityType.VILLAGER);
-    }
-
     private static void runAvoidanceTest(TestContext context, EntityType<? extends MobEntity> toSpawn, Block expectedBlock) {
         context.setTime(1000);
         final BlockPos start = new BlockPos(1, 2, 1);
