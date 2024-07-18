@@ -44,8 +44,6 @@
                 "affected": "victim",
                 "effect": {
                     "type": "minecraft:apply_mob_effect",
-                    "enchanted": "attacker",
-                    "affected": "victim",
                     "to_apply": "minecraft:slowness",
                     "min_duration": {
                         "type": "minecraft:linear",

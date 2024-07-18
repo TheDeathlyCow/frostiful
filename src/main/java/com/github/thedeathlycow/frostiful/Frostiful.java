@@ -80,9 +80,6 @@ public class Frostiful implements ModInitializer {
         );
         UseBlockCallback.EVENT.register(new CampfireUseEventListener());
 
-//        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowHeatDrainWeaponEnchanting);
-//        EnchantmentEvents.ALLOW_ENCHANTING.register(EnchantmentEventListeners::allowFrostWandAnvilEnchanting);
-
         LOGGER.info("Initialized Frostiful!");
     }
 
