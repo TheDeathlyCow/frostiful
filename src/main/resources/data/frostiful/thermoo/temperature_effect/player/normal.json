@@ -1,0 +1,74 @@
+{
+    "type": "thermoo:sequence",
+    "entity_type": "minecraft:player",
+    "entity": {
+        "condition": "minecraft:reference",
+        "name": "frostiful:can_freeze"
+    },
+    "temperature_scale_range": {
+        "max": 0
+    },
+    "config": {
+        "children": [
+            {
+                "type": "thermoo:scaling_attribute_modifier",
+                "config": {
+                    "scale": 0.05,
+                    "id": "frostiful:temperature_effect.freezing_slow",
+                    "attribute_type": "minecraft:generic.movement_speed",
+                    "operation": "add_value"
+                }
+            },
+            {
+                "type": "thermoo:status_effect",
+                "temperature_scale_range": {
+                    "max": -0.5
+                },
+                "config": {
+                    "effects": [
+                        {
+                            "amplifier": 0,
+                            "duration": 20,
+                            "effect": "minecraft:weakness"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "thermoo:status_effect",
+                "temperature_scale_range": {
+                    "max": -0.75
+                },
+                "config": {
+                    "effects": [
+                        {
+                            "amplifier": 0,
+                            "duration": 20,
+                            "effect": "minecraft:mining_fatigue"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "thermoo:status_effect",
+                "temperature_scale_range": {
+                    "max": -0.99
+                },
+                "config": {
+                    "effects": [
+                        {
+                            "amplifier": 1,
+                            "duration": 20,
+                            "effect": "minecraft:mining_fatigue"
+                        },
+                        {
+                            "amplifier": 1,
+                            "duration": 20,
+                            "effect": "minecraft:weakness"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

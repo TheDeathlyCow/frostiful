@@ -1,0 +1,79 @@
+{
+    "description": {
+        "translate": "enchantment.frostiful.ice_breaker"
+    },
+    "supported_items": "#frostiful:enchantable/frost_wand",
+    "primary_items": "#frostiful:enchantable/frost_wand",
+    "weight": 10,
+    "max_level": 3,
+    "min_cost": {
+        "base": 1,
+        "per_level_above_first": 11
+    },
+    "max_cost": {
+        "base": 21,
+        "per_level_above_first": 11
+    },
+    "anvil_cost": 4,
+    "slots": [
+        "mainhand"
+    ],
+    "effects": {
+        "minecraft:damage": [
+            {
+                "effect": {
+                    "type": "minecraft:add",
+                    "value": {
+                        "type": "minecraft:linear",
+                        "base": 3,
+                        "per_level_above_first": 1
+                    }
+                },
+                "requirements": {
+                    "condition": "frostiful:rooted",
+                    "entity": "this",
+                    "root_ticks_remaining": {
+                        "min": 1
+                    }
+                }
+            }
+        ],
+        "minecraft:post_attack": [
+            {
+                "enchanted": "attacker",
+                "affected": "victim",
+                "effect": {
+                    "type": "minecraft:apply_mob_effect",
+                    "to_apply": "minecraft:slowness",
+                    "min_duration": {
+                        "type": "minecraft:linear",
+                        "base": 1,
+                        "per_level_above_first": 1
+                    },
+                    "max_duration": {
+                        "type": "minecraft:linear",
+                        "base": 2,
+                        "per_level_above_first": 1
+                    },
+                    "min_amplifier": {
+                        "type": "minecraft:linear",
+                        "base": 0,
+                        "per_level_above_first": 1
+                    },
+                    "max_amplifier": {
+                        "type": "minecraft:linear",
+                        "base": 0,
+                        "per_level_above_first": 1
+                    }
+                },
+                "requirements": {
+                    "condition": "frostiful:rooted",
+                    "entity": "this",
+                    "root_ticks_remaining": {
+                        "min": 1
+                    }
+                }
+            }
+        ]
+    }
+}

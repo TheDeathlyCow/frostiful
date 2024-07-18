@@ -2,14 +2,17 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.tag.FBlockTags;
-import com.github.thedeathlycow.thermoo.api.season.ThermooSeasons;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;
+import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentControllerDecorator;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.block.BlockState;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
@@ -39,7 +42,8 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     @Override
     public int getFloorTemperature(LivingEntity entity, World world, BlockState state, BlockPos pos) {
         if (state.isIn(FBlockTags.HOT_FLOOR)) {
-            if (EnchantmentHelper.hasFrostWalker(entity)) {
+            ItemStack footStack = entity.getEquippedStack(EquipmentSlot.FEET);
+            if (EnchantmentHelper.hasAnyEnchantmentsIn(footStack, FEnchantmentTags.IS_FROSTY)) {
                 return controller.getFloorTemperature(entity, world, state, pos);
             }
 
@@ -89,7 +93,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     private int getNaturalWorldTemperatureChange(World world, BlockPos pos) {
         RegistryEntry<Biome> biome = world.getBiome(pos);
 
-        @Nullable ThermooSeasons season = ThermooSeasons.getCurrentSeason(world).orElse(null);
+        @Nullable ThermooSeason season = ThermooSeason.getCurrentSeason(world).orElse(null);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
         int temp = category.getTemperatureChange(world, pos, season);
         if (temp < 0) {

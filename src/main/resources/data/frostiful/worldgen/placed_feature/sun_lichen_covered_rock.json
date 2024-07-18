@@ -1,19 +1,19 @@
 {
-	"feature": "frostiful:sun_lichen_covered_rock",
-	"placement": [
-		{
-			"type": "minecraft:rarity_filter",
-			"chance": 15
-		},
-		{
-			"type": "minecraft:in_square"
-		},
-		{
-			"type": "minecraft:heightmap",
-			"heightmap": "MOTION_BLOCKING_NO_LEAVES"
-		},
-		{
-			"type": "minecraft:biome"
-		}
-	]
+    "feature": "frostiful:sun_lichen_covered_rock",
+    "placement": [
+        {
+            "type": "minecraft:rarity_filter",
+            "chance": 15
+        },
+        {
+            "type": "minecraft:in_square"
+        },
+        {
+            "type": "minecraft:heightmap",
+            "heightmap": "MOTION_BLOCKING_NO_LEAVES"
+        },
+        {
+            "type": "minecraft:biome"
+        }
+    ]
 }

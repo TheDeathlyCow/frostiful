@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "frostiful:cut_packed_ice"
+    },
+    "result": {
+        "id": "frostiful:cut_packed_ice_wall",
+        "count": 1
+    }
+}

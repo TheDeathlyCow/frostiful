@@ -1,0 +1,40 @@
+{
+    "description": {
+        "translate": "enchantment.frostiful.frozen_touch_curse"
+    },
+    "exclusive_set": "#frostiful:exclusive_set/heat_drain",
+    "supported_items": "#minecraft:enchantable/weapon",
+    "primary_items": "#frostiful:enchantable/frost_wand",
+    "weight": 10,
+    "max_level": 3,
+    "min_cost": {
+        "base": 1,
+        "per_level_above_first": 11
+    },
+    "max_cost": {
+        "base": 21,
+        "per_level_above_first": 11
+    },
+    "anvil_cost": 4,
+    "slots": [
+        "mainhand"
+    ],
+    "effects": {
+        "minecraft:post_attack": [
+            {
+                "enchanted": "attacker",
+                "affected": "victim",
+                "effect": {
+                    "type": "frostiful:heat_drain",
+                    "heat_to_drain": {
+                        "type": "minecraft:linear",
+                        "base": 210,
+                        "per_level_above_first": 210
+                    },
+                    "efficiency": 0.75,
+                    "drain_from_enchanted": true
+                }
+            }
+        ]
+    }
+}

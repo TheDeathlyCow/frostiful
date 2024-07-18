@@ -3,15 +3,15 @@
     "values": [
         "#frostiful:freezing_wind_always_spawns",
         {
-            "id": "#c:snowy_plains",
+            "id": "#c:is_snowy_plains",
             "required": false
         },
         {
-            "id": "#c:snowy",
+            "id": "#c:is_snowy",
             "required": false
         },
         {
-            "id": "#c:climate_cold",
+            "id": "#c:is_cold/overworld",
             "required": false
         },
         "minecraft:snowy_plains",

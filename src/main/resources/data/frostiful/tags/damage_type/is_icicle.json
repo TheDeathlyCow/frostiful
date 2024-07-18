@@ -1,7 +1,7 @@
 {
-	"replace": false,
-	"values": [
-		"frostiful:icicle",
-		"frostiful:falling_icicle"
-	]
+    "replace": false,
+    "values": [
+        "frostiful:icicle",
+        "frostiful:falling_icicle"
+    ]
 }

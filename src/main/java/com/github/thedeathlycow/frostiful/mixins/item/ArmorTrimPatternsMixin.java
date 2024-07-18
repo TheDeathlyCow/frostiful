@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.item;
 
-import com.github.thedeathlycow.frostiful.item.FArmorTrimPatterns;
+import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import net.minecraft.item.trim.ArmorTrimPattern;
 import net.minecraft.item.trim.ArmorTrimPatterns;
 import net.minecraft.registry.Registerable;

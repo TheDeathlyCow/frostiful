@@ -3,6 +3,8 @@ package com.github.thedeathlycow.frostiful.mixins.client.gui;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -37,15 +39,19 @@ public abstract class ShiveringRenderer {
     private static final float frostiful_baseIntensity = 0.01f;
 
 
-    @Inject(
+    @WrapOperation(
             method = "renderHand",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/option/GameOptions;getBobView()Lnet/minecraft/client/option/SimpleOption;"
+                    target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V"
             )
     )
-    private void shakeViewWhenShivering(MatrixStack matrices, Camera camera, float tickDelta, CallbackInfo ci) {
-
+    private void shakeViewWhenShivering(
+            GameRenderer instance,
+            MatrixStack matrices,
+            float tickDelta,
+            Operation<Void> original
+    ) {
         if (this.client.getCameraEntity() instanceof LivingEntity livingEntity && SurvivalUtils.isShiveringRender(livingEntity)) {
             ClientConfigGroup config = Frostiful.getConfig().clientConfig;
             if (config.isShakeCameraWhenShiveringEnabled()) {
@@ -59,6 +65,9 @@ public abstract class ShiveringRenderer {
                 matrices.translate(intensity * shakeX, intensity * shakeY, intensity * shakeZ);
             }
         }
+
+        original.call(instance, matrices, tickDelta);
     }
+
 
 }

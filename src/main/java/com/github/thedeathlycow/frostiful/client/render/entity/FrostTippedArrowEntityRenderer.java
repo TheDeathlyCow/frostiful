@@ -11,7 +11,7 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class FrostTippedArrowEntityRenderer extends ProjectileEntityRenderer<FrostTippedArrowEntity> {
 
-    public static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/projectiles/frost_tipped_arrow.png");
+    public static final Identifier TEXTURE = Frostiful.id("textures/entity/projectiles/frost_tipped_arrow.png");
 
     public FrostTippedArrowEntityRenderer(EntityRendererFactory.Context context) {
         super(context);

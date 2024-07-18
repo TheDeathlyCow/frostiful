@@ -1,11 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
-import com.github.thedeathlycow.frostiful.enchantment.FEnchantmentHelper;
-import com.github.thedeathlycow.frostiful.enchantment.IceBreakerEnchantment;
 import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageTypes;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
-import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -67,10 +65,6 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
         if (!cir.getReturnValue() || source.isOf(FDamageTypes.BROKEN_ICE) || !this.frostiful$isRooted()) {
             return;
         }
-
-        LivingEntity attacker = source.getAttacker() instanceof LivingEntity user ? user : null;
-        int level = attacker != null ? FEnchantmentHelper.getIceBreakerLevel(attacker) : 0;
-        IceBreakerEnchantment.applyIceBreakDamage(attacker, this, level);
         RootedEntity.breakRootOnEntity((LivingEntity) (Object) this);
     }
 

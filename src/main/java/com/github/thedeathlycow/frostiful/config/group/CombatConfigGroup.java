@@ -14,14 +14,6 @@ public class CombatConfigGroup implements ConfigData {
 
     boolean straysCarryFrostArrows = true;
 
-    int heatDrainPerLevel = 210;
-
-    double heatDrainEfficiency = 0.5;
-
-    float iceBreakerDamagePerLevel = 1.0f;
-
-    float iceBreakerBaseDamage = 3.0f;
-
     double maxFrostSpellDistance = 25;
 
     int frostWandCooldown = 120;
@@ -49,28 +41,20 @@ public class CombatConfigGroup implements ConfigData {
 
     @ConfigEntry.Gui.RequiresRestart
     float skateUpgradeTemplateGenerateChance = 0.33f;
+
+    @ConfigEntry.Gui.RequiresRestart
+    double veryProtectiveFrostResistanceMultiplier = 1.0;
+
+    @ConfigEntry.Gui.RequiresRestart
+    double protectiveFrostResistanceMultiplier = 0.5;
+
+
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
     }
 
     public boolean straysCarryFrostArrows() {
         return straysCarryFrostArrows;
-    }
-
-    public int getHeatDrainPerLevel() {
-        return heatDrainPerLevel;
-    }
-
-    public double getHeatDrainEfficiency() {
-        return heatDrainEfficiency;
-    }
-
-    public float getIceBreakerDamagePerLevel() {
-        return iceBreakerDamagePerLevel;
-    }
-
-    public float getIceBreakerBaseDamage() {
-        return iceBreakerBaseDamage;
     }
 
     public double getMaxFrostSpellDistance() {
@@ -124,5 +108,21 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getSkateUpgradeTemplateGenerateChance() {
         return MathHelper.clamp(skateUpgradeTemplateGenerateChance, 0f, 1f);
+    }
+
+    public double getVeryProtectiveFrostResistanceMultiplier() {
+        return veryProtectiveFrostResistanceMultiplier;
+    }
+
+    public double getProtectiveFrostResistanceMultiplier() {
+        return protectiveFrostResistanceMultiplier;
+    }
+
+    public double getVeryHarmfulFrostResistanceMultiplier() {
+        return -veryProtectiveFrostResistanceMultiplier;
+    }
+
+    public double getHarmfulFrostResistanceMultiplier() {
+        return -protectiveFrostResistanceMultiplier;
     }
 }

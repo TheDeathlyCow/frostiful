@@ -56,7 +56,7 @@ public class HeatDrainParticle extends AbstractSlowingParticle {
         @Nullable
         @Override
         public Particle createParticle(HeatDrainParticleEffect parameters, ClientWorld world, double x, double y, double z, double velocityX, double velocityY, double velocityZ) {
-            HeatDrainParticle heatDrainParticle = new HeatDrainParticle(world, x, y, z, velocityX, velocityY, velocityZ, parameters.getDestination());
+            HeatDrainParticle heatDrainParticle = new HeatDrainParticle(world, x, y, z, velocityX, velocityY, velocityZ, parameters.destination());
             heatDrainParticle.setSprite(this.spriteProvider);
             return heatDrainParticle;
         }

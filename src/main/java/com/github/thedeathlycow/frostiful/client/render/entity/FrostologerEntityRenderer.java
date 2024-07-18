@@ -20,7 +20,7 @@ import net.minecraft.util.Identifier;
 public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> {
 
 
-    private static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/illager/frostologer.png");
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
 
     public FrostologerEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new FrostologerEntityModel<>(context.getPart(FEntityModelLayers.FROSTOLOGER)), 0.5F);

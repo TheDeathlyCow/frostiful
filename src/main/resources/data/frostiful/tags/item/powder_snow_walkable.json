@@ -1,0 +1,9 @@
+{
+    "replace": false,
+    "values": [
+        "minecraft:leather_boots",
+        "frostiful:fur_boots",
+        "frostiful:fur_padded_chainmail_boots",
+        "minecraft:leather_horse_armor"
+    ]
+}

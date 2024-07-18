@@ -14,7 +14,7 @@ import net.minecraft.util.Identifier;
  */
 @Environment(EnvType.CLIENT)
 public class FrostWandItemModel extends Model {
-    public static final Identifier TEXTURE = new Identifier(Frostiful.MODID, "textures/entity/frost_wand.png");
+    public static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_wand.png");
 
     private static final int FULL_BRIGHTNESS = (15 << 4) | (15 << 20); // packed lightmap coordinates are (block << 4) | (sky << 20)
 
@@ -51,7 +51,7 @@ public class FrostWandItemModel extends Model {
 
         ModelPartData cube_r2 = main.addChild("cube_r2", ModelPartBuilder.create().uv(8, 8).cuboid(-3.0F, -26.0F, 0.0F, 6.0F, 17.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(0.0F, 2.0F, 0.0F, 0.0F, 0.7854F, 0.0F));
 
-        ModelPartData sides = icicle.addChild("sides", ModelPartBuilder.create()    , ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        ModelPartData sides = icicle.addChild("sides", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
 
         ModelPartData west_r1 = sides.addChild("west_r1", ModelPartBuilder.create().uv(32, 16).cuboid(-3.0F, -6.0F, 0.0F, 6.0F, 9.0F, 0.0F, new Dilation(0.0F)), ModelTransform.of(4.0F, -16.0F, 0.0F, -0.1745F, 1.5708F, 0.0F));
 
@@ -64,7 +64,7 @@ public class FrostWandItemModel extends Model {
     }
 
     @Override
-    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, float red, float green, float blue, float alpha) {
-        this.root.render(matrices, vertices, FULL_BRIGHTNESS, overlay, 1.0f, 1.0f, 1.0f, alpha);
+    public void render(MatrixStack matrices, VertexConsumer vertices, int light, int overlay, int color) {
+        this.root.render(matrices, vertices, FULL_BRIGHTNESS, overlay, color);
     }
 }

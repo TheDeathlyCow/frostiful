@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "##"
+    ],
+    "key": {
+        "#": {
+            "item": "frostiful:packed_snow_block"
+        }
+    },
+    "result": {
+        "id": "frostiful:packed_snow_bricks",
+        "count": 4
+    }
+}

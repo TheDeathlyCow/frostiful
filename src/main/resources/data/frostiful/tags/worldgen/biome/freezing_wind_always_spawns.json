@@ -2,15 +2,11 @@
     "replace": false,
     "values": [
         {
-            "id": "#c:mountain",
+            "id": "#c:is_mountain",
             "required": false
         },
         {
-            "id": "#c:extreme_hills",
-            "required": false
-        },
-        {
-            "id": "#c:windswept",
+            "id": "#c:is_windswept",
             "required": false
         },
         "#minecraft:is_mountain",

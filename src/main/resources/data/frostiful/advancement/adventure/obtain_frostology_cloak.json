@@ -1,0 +1,40 @@
+{
+    "display": {
+        "icon": {
+            "id": "frostiful:frostology_cloak"
+        },
+        "title": {
+            "translate": "advancements.frostiful.adventure.obtain_frostology_cloak.title"
+        },
+        "description": {
+            "translate": "advancements.frostiful.adventure.obtain_frostology_cloak.description"
+        },
+        "frame": "challenge",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": true
+    },
+    "parent": "frostiful:adventure/find_frostologer_castle",
+    "criteria": {
+        "frostology_cloak": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "frostiful:frostology_cloak"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "frostology_cloak"
+        ]
+    ],
+    "rewards": {
+        "experience": 100
+    }
+}

@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "minecraft:blue_ice"
+    },
+    "result": {
+        "id": "frostiful:cut_blue_ice",
+        "count": 4
+    }
+}

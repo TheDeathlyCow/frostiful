@@ -11,6 +11,7 @@ import com.github.thedeathlycow.thermoo.api.temperature.Soakable;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.MathHelper;
 
 public class EntityTemperatureController extends EnvironmentControllerDecorator {
@@ -22,7 +23,7 @@ public class EntityTemperatureController extends EnvironmentControllerDecorator 
     }
 
     @Override
-    public double getBaseValueForAttribute(EntityAttribute attribute, LivingEntity entity) {
+    public double getBaseValueForAttribute(RegistryEntry<EntityAttribute> attribute, LivingEntity entity) {
         double base = controller.getBaseValueForAttribute(attribute, entity);
 
         if (base != 0) {

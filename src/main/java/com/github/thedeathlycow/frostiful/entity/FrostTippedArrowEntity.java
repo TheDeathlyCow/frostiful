@@ -6,33 +6,30 @@ import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.entity.projectile.PersistentProjectileEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.Nullable;
 
 public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
     private int freezeAmount = Frostiful.getConfig().icicleConfig.getFrostArrowFreezeAmount();
 
-    private static final ItemStack DEFAULT_STACK = new ItemStack(FItems.FROST_TIPPED_ARROW);
-
     private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
 
     public FrostTippedArrowEntity(EntityType<? extends FrostTippedArrowEntity> entityType, World world) {
-        super(entityType, world, DEFAULT_STACK);
+        super(entityType, world);
     }
 
-    public FrostTippedArrowEntity(World world, double x, double y, double z, ItemStack stack) {
-        super(FEntityTypes.FROST_TIPPED_ARROW, x, y, z, world, stack);
+    public FrostTippedArrowEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
+        super(FEntityTypes.FROST_TIPPED_ARROW, x, y, z, world, stack, shotFrom);
     }
 
-    public FrostTippedArrowEntity(World world, LivingEntity owner, ItemStack stack) {
-        super(FEntityTypes.FROST_TIPPED_ARROW, owner, world, stack);
+    public FrostTippedArrowEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
+        super(FEntityTypes.FROST_TIPPED_ARROW, owner, world, stack, shotFrom);
     }
 
     @Override
@@ -41,7 +38,7 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected ItemStack asItemStack() {
+    protected ItemStack getDefaultItemStack() {
         return new ItemStack(FItems.FROST_TIPPED_ARROW);
     }
 
@@ -51,7 +48,11 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
         World world = getWorld();
         if (world.isClient && !this.inGround) {
-            world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+            world.addParticle(
+                    ParticleTypes.SNOWFLAKE,
+                    this.getX(), this.getY(), this.getZ(),
+                    0.0D, 0.0D, 0.0D
+            );
         }
     }
 
@@ -74,4 +75,5 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
         super.writeCustomDataToNbt(nbt);
         nbt.putInt(FREEZE_AMOUNT_NBT_KEY, this.freezeAmount);
     }
+
 }

@@ -5,6 +5,8 @@ import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.loot.LootTable;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.Identifier;
@@ -13,9 +15,6 @@ import net.minecraft.world.World;
 public interface FBrushable {
 
     int BRUSH_COOLDOWN = 20 * 300;
-    Identifier POLAR_BEAR_BRUSHING_LOOT_TABLE = Frostiful.id("gameplay/polar_bear_brushing");
-    Identifier OCELOT_BRUSHING_LOOT_TABLE = Frostiful.id("gameplay/ocelot_brushing");
-    Identifier WOLF_BRUSHING_LOOT_TABLE = Frostiful.id("gameplay/wolf_brushing");
 
     void frostiful$brush(PlayerEntity source, SoundCategory shearedSoundCategory);
 
@@ -26,7 +25,7 @@ public interface FBrushable {
     static void brushEntity(
             AnimalEntity animalEntity,
             SoundCategory shearedSoundCategory,
-            Identifier furLootTable
+            RegistryKey<LootTable> furLootTable
     ) {
         World world = animalEntity.getWorld();
         world.playSoundFromEntity(

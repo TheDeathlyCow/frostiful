@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
 import com.github.thedeathlycow.frostiful.client.model.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.client.render.entity.FEntityRenderers;
+import com.github.thedeathlycow.frostiful.compat.FoodIntegration;
 import com.github.thedeathlycow.frostiful.particle.client.FParticleFactoryRegistry;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
@@ -14,7 +15,7 @@ import com.github.thedeathlycow.thermoo.api.client.StatusBarOverlayRenderEvents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
+import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -38,9 +39,13 @@ public class FrostifulClient implements ClientModInitializer {
 
         FCutouts.registerCutouts();
         FParticleFactoryRegistry.registerFactories();
-        ClientPlayNetworking.registerGlobalReceiver(PointWindSpawnPacket.ID, PointWindSpawnPacketListener::receive);
+        ClientPlayNetworking.registerGlobalReceiver(
+                PointWindSpawnPacket.PACKET_ID,
+                new PointWindSpawnPacketListener()
+        );
         StatusBarOverlayRenderEvents.AFTER_HEALTH_BAR.register(FrozenHeartsOverlay::afterHealthBar);
         StatusBarOverlayRenderEvents.AFTER_MOUNT_HEALTH_BAR.register(FrozenHeartsOverlay::afterMountHealthBar);
+        ItemTooltipCallback.EVENT.register(FoodIntegration::appendWarmthTooltip);
 
         Frostiful.LOGGER.info("Initialized Frostiful client!");
     }

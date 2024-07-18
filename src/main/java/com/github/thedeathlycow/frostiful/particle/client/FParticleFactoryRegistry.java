@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.particle.client;
 
-import com.github.thedeathlycow.frostiful.particle.FParticleTypes;
+import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
@@ -18,6 +18,10 @@ public class FParticleFactoryRegistry {
 
     private static <T extends ParticleEffect> void registerFactory(ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {
         ParticleFactoryRegistry.getInstance().register(particle, factory);
+    }
+
+    private FParticleFactoryRegistry() {
+
     }
 
 }

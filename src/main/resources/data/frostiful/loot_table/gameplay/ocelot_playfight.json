@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:selector",
+    "pools": [
+        {
+            "rolls": 1,
+            "entries": [
+                {
+                    "type": "minecraft:item",
+                    "name": "frostiful:ocelot_fur_tuft",
+                    "functions": [
+                        {
+                            "function": "minecraft:set_count",
+                            "count": 1
+                        }
+                    ],
+                    "conditions": [
+                        {
+                            "condition": "minecraft:random_chance",
+                            "chance": 0.67
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

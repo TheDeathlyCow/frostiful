@@ -1,0 +1,14 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "minecraft:arrow"
+        },
+        {
+            "tag": "frostiful:icicles"
+        }
+    ],
+    "result": {
+        "id": "frostiful:frost_tipped_arrow"
+    }
+}

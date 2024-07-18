@@ -22,8 +22,8 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer, SimpleSynchronousResourceReloadListener {
 
-    public static final Identifier ID = new Identifier(Frostiful.MODID, "frost_wand_renderer");
-    public static final ModelIdentifier INVENTORY_MODEL_ID = new ModelIdentifier(new Identifier(Frostiful.MODID, "frost_wand_in_inventory"), "inventory");
+    public static final Identifier ID = Frostiful.id("frost_wand_renderer");
+    public static final Identifier INVENTORY_MODEL_ID = Frostiful.id("item/frost_wand_in_inventory");
 
     private final EntityModelLayer modelLayer;
     private FrostWandItemModel model;
@@ -63,7 +63,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
                     vertexConsumers, this.model.getLayer(FrostWandItemModel.TEXTURE), false, stack.hasGlint()
             );
 
-            this.model.render(matrices, vertexConsumer, light, overlay, 1.0F, 1.0F, 1.0F, 1.0F);
+            this.model.render(matrices, vertexConsumer, light, overlay);
             matrices.pop();
         }
     }

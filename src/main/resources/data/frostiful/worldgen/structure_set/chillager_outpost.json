@@ -1,0 +1,18 @@
+{
+    "structures": [
+        {
+            "structure": "frostiful:chillager_outpost",
+            "weight": 1
+        }
+    ],
+    "placement": {
+        "type": "minecraft:random_spread",
+        "salt": 811785263,
+        "exclusion_zone": {
+            "other_set": "minecraft:villages",
+            "chunk_count": 10
+        },
+        "spacing": 32,
+        "separation": 8
+    }
+}

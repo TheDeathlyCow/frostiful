@@ -1,0 +1,32 @@
+{
+    "parent": "minecraft:recipes/root",
+    "rewards": {
+        "recipes": [
+            "frostiful:smithing/armored_ice_skates_upgrade"
+        ]
+    },
+    "criteria": {
+        "has_fur_boots": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "frostiful:fur_padded_chainmail_boots"
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:smithing/armored_ice_skates_upgrade"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_fur_boots",
+            "has_the_recipe"
+        ]
+    ]
+}
