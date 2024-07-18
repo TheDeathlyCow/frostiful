@@ -3,14 +3,18 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.github.thedeathlycow.frostiful.entity.RootedEntity;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.minecraft.block.BlockState;
 import net.minecraft.component.type.AttributeModifierSlot;
 import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.component.type.ToolComponent;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.damage.DamageSource;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -58,6 +62,29 @@ public class FrostWandItem extends Item {
         return new ToolComponent(List.of(), 1.0f, 2);
     }
 
+
+    @Override
+    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        return true;
+    }
+
+    @Override
+    public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.damage(1, attacker, EquipmentSlot.MAINHAND);
+    }
+
+    @Override
+    public float getBonusAttackDamage(Entity target, float baseAttackDamage, DamageSource damageSource) {
+
+        Entity attacker = damageSource.getAttacker();
+
+        boolean resetCooldown = target instanceof RootedEntity rooted && rooted.frostiful$isRooted();
+        if (attacker instanceof PlayerEntity player && resetCooldown) {
+            player.getItemCooldownManager().set(this, 0);
+        }
+
+        return super.getBonusAttackDamage(target, baseAttackDamage, damageSource);
+    }
 
     @Override
     public UseAction getUseAction(ItemStack stack) {

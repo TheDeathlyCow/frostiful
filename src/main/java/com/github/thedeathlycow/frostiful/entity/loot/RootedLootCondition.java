@@ -20,7 +20,6 @@ public record RootedLootCondition(
             instance -> instance.group(
                     NumberRange.IntRange.CODEC
                             .fieldOf("root_ticks_remaining")
-                            .orElse(NumberRange.IntRange.ANY)
                             .forGetter(RootedLootCondition::rootTicksRemaining)
             ).apply(instance, RootedLootCondition::new)
     );

@@ -46,7 +46,7 @@ public class CombatConfigGroup implements ConfigData {
     double veryProtectiveFrostResistanceMultiplier = 1.0;
 
     @ConfigEntry.Gui.RequiresRestart
-    double protectiveFrostResistanceMultiplier = 0.25;
+    double protectiveFrostResistanceMultiplier = 0.5;
 
 
     public boolean doChillagerPatrols() {

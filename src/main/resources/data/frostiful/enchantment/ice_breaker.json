@@ -32,10 +32,8 @@
                 "requirements": {
                     "condition": "frostiful:rooted",
                     "entity": "this",
-                    "predicate": {
-                        "root_ticks_remaining": {
-                            "min": 1
-                        }
+                    "root_ticks_remaining": {
+                        "min": 1
                     }
                 }
             }
@@ -43,32 +41,41 @@
         "minecraft:post_attack": [
             {
                 "enchanted": "attacker",
-                "affected": "attacker",
+                "affected": "victim",
                 "effect": {
                     "type": "minecraft:all_of",
                     "effects": [
                         {
                             "type": "minecraft:apply_mob_effect",
-                            "to_apply": "minecraft:speed",
-                            "min_duration": 1.5,
-                            "max_duration": 1.5,
-                            "min_amplifier": 2,
-                            "max_amplifier": 2
-                        },
-                        {
-                            "type": "frostiful:set_item_cooldown",
-                            "item": "frostiful:frost_wand",
-                            "duration_ticks": 0
+                            "to_apply": "minecraft:slowness",
+                            "min_duration": {
+                                "type": "minecraft:linear",
+                                "base": 1,
+                                "per_level_above_first": 0.5
+                            },
+                            "max_duration": {
+                                "type": "minecraft:linear",
+                                "base": 2,
+                                "per_level_above_first": 0.5
+                            },
+                            "min_amplifier": {
+                                "type": "minecraft:linear",
+                                "base": 2,
+                                "per_level_above_first": 1
+                            },
+                            "max_amplifier": {
+                                "type": "minecraft:linear",
+                                "base": 2,
+                                "per_level_above_first": 1
+                            }
                         }
                     ]
                 },
                 "requirements": {
                     "condition": "frostiful:rooted",
                     "entity": "this",
-                    "predicate": {
-                        "root_ticks_remaining": {
-                            "min": 1
-                        }
+                    "root_ticks_remaining": {
+                        "min": 1
                     }
                 }
             }

@@ -1,7 +1,6 @@
 {
     "replace": false,
     "values": [
-        "minecraft:pumpkin_pie",
         {
             "id": "farmersdelight:hot_cocoa",
             "required": false
