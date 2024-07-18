@@ -57,6 +57,16 @@
   
   "tag.block.c.icicles": "Icicles",
   "tag.item.c.icicles": "Icicles",
+  "tag.item.frostiful.icicles": "Icicles",
+  "tag.item.frostiful.fur_tufts": "Fur Tufts",
+  "tag.item.frostiful.warm_foods": "Warm Foods",
+  "tag.item.frostiful.ice_skates": "Ice Skates",
+  "tag.item.frostiful.sun_lichens": "Sun Lichens",
+  "tag.item.frostiful.fur_boots": "Fur Boots",
+  "tag.item.frostiful.powder_snow_walkable": "Powder Snow Walkable",
+  "tag.item.frostiful.enchantable.frost_wand": "Enchantable Frost Wands",
+  "tag.item.frostiful.supports_heat_drain": "Supports Enervation and Curse of Frozen Touch",
+  
   
   "block.frostiful.icicle": "Icicle",
   "block.frostiful.cold_sun_lichen": "Cold Sun Lichen",
