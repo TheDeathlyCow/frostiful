@@ -44,7 +44,7 @@ public class PackedSnowBlock extends Block {
             Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 15.0, 16.0),
             Block.createCuboidShape(0.0, 0.0, 0.0, 16.0, 16.0, 16.0)
     };
-    private static final float MELT_CHANCE = 64f / 1125f;
+    private static final float MELT_CHANCE = 128f / 1125f;
 
 
     public PackedSnowBlock(Settings settings) {
