@@ -33,7 +33,7 @@
         {pos: [0, 5, 3], state: "frostiful:icicle{thickness:tip,unstable:false,vertical_direction:down,waterlogged:false}"},
         {pos: [0, 5, 4], state: "minecraft:polished_andesite"},
         {pos: [0, 6, 0], state: "minecraft:stone_button{face:wall,facing:north,powered:false}"},
-        {pos: [0, 6, 1], state: "minecraft:dispenser{facing:south,triggered:false}", nbt: {Items: [{Count: 64b, Slot: 0b, id: "frostiful:frost_tipped_arrow"}], id: "minecraft:dispenser"}},
+        {pos: [0, 6, 1], state: "minecraft:dispenser{facing:south,triggered:false}", nbt: {Items: [{Count: 64b, Slot: 0b, id: "frostiful:glacial_arrow"}], id: "minecraft:dispenser"}},
         {pos: [0, 6, 2], state: "minecraft:air"},
         {pos: [0, 6, 3], state: "frostiful:icicle{thickness:frustum,unstable:false,vertical_direction:down,waterlogged:false}"},
         {pos: [0, 6, 4], state: "minecraft:polished_andesite"},

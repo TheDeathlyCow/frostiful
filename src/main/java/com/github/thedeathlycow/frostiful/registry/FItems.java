@@ -108,7 +108,7 @@ public class FItems {
                     .component(DataComponentTypes.TOOL, FrostWandItem.createToolComponent())
                     .rarity(Rarity.EPIC)
     );
-    public static final Item FROST_TIPPED_ARROW = new FrostTippedArrowItem(new Item.Settings());
+    public static final Item GLACIAL_ARROW = new GlacialArrowItem(new Item.Settings());
 
     public static final Item FROSTOLOGER_SPAWN_EGG = new SpawnEggItem(
             FEntityTypes.FROSTOLOGER,
@@ -188,7 +188,7 @@ public class FItems {
         register("warm_sun_lichen", WARM_SUN_LICHEN);
         register("hot_sun_lichen", HOT_SUN_LICHEN);
         register("frost_wand", FROST_WAND);
-        register("frost_tipped_arrow", FROST_TIPPED_ARROW);
+        register("glacial_arrow", GLACIAL_ARROW);
         register("frostologer_spawn_egg", FROSTOLOGER_SPAWN_EGG);
         register("chillager_spawn_egg", CHILLAGER_SPAWN_EGG);
         register("biter_spawn_egg", BITER_SPAWN_EGG);

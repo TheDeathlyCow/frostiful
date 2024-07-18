@@ -14,7 +14,7 @@
   "item.frostiful.fur_padded_chainmail_leggings": "Обитые мехом кольчужные поножи",
   "item.frostiful.fur_padded_chainmail_boots": "Обитые мехом кольчужные ботинки",
   "item.frostiful.fur_padding": "Меховая обивка",
-  "item.frostiful.frost_tipped_arrow": "Стрела с ледяным наконечником",
+  "item.frostiful.glacial_arrow": "Стрела с ледяным наконечником",
   "item.frostiful.polar_bear_fur_tuft": "Пучок меха белого медведя",
   "item.frostiful.wolf_fur_tuft": "Пучок шерсти волка",
   "item.frostiful.ocelot_fur_tuft": "Пучок шёрстки оцелота",
@@ -99,7 +99,7 @@
 
   "entity.frostiful.frost_spell": "Морозное заклинание",
   "entity.frostiful.packed_snowball": "Твёрдый снежок",
-  "entity.frostiful.frost_tipped_arrow": "Стрела с ледяным наконечником",
+  "entity.frostiful.glacial_arrow": "Стрела с ледяным наконечником",
   "entity.frostiful.frostologer": "Морозбойник",
   "entity.frostiful.chillager": "Хладный лучник",
   "entity.frostiful.thrown_icicle": "Сосулька",

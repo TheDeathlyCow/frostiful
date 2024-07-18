@@ -132,7 +132,7 @@
                 {
                     "type": "minecraft:item",
                     "weight": 4,
-                    "name": "frostiful:frost_tipped_arrow",
+                    "name": "frostiful:glacial_arrow",
                     "functions": [
                         {
                             "function": "minecraft:set_count",

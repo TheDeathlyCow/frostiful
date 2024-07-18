@@ -22,7 +22,7 @@
                 },
                 {
                     "type": "minecraft:item",
-                    "name": "frostiful:frost_tipped_arrow",
+                    "name": "frostiful:glacial_arrow",
                     "weight": 1,
                     "functions": [
                         {

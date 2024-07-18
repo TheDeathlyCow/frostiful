@@ -37,7 +37,7 @@ public abstract class StrayCarriesFrostArrowMixin extends PathAwareEntity {
             Predicate<ItemStack> isItemAmmoTest = rangedWeaponItem.getHeldProjectiles();
             ItemStack heldStack = RangedWeaponItem.getHeldProjectile(this, isItemAmmoTest);
             if (heldStack.isEmpty()) {
-                cir.setReturnValue(new ItemStack(FItems.FROST_TIPPED_ARROW));
+                cir.setReturnValue(new ItemStack(FItems.GLACIAL_ARROW));
             }
         }
     }

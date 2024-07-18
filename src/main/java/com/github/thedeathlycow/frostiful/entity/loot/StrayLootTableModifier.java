@@ -26,7 +26,7 @@ public class StrayLootTableModifier {
             LootPool.Builder builder = LootPool.builder()
                     .rolls(ConstantLootNumberProvider.create(1))
                     .with(
-                            ItemEntry.builder(FItems.FROST_TIPPED_ARROW)
+                            ItemEntry.builder(FItems.GLACIAL_ARROW)
                                     .apply(
                                             EnchantedCountIncreaseLootFunction.builder(
                                                     registries,
