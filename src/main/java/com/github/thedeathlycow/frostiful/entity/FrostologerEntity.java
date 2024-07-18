@@ -45,6 +45,7 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.registry.tag.EntityTypeTags;
 import net.minecraft.registry.tag.FluidTags;
+import net.minecraft.server.command.SetBlockCommand;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
@@ -158,7 +159,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             frozenState = Blocks.AIR.getDefaultState();
         }
 
-        world.setBlockState(blockPos, frozenState);
+        if (!frozenState.isAir()) {
+            world.setBlockState(blockPos, frozenState);
+        } else {
+            world.breakBlock(blockPos, true);
+        }
 
         world.playSound(
                 null,
