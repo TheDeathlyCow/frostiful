@@ -75,9 +75,7 @@ public class FrostWandItem extends Item {
 
     @Override
     public float getBonusAttackDamage(Entity target, float baseAttackDamage, DamageSource damageSource) {
-
         Entity attacker = damageSource.getAttacker();
-
         boolean resetCooldown = target instanceof RootedEntity rooted && rooted.frostiful$isRooted();
         if (attacker instanceof PlayerEntity player && resetCooldown) {
             player.getItemCooldownManager().set(this, 0);

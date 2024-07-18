@@ -43,33 +43,30 @@
                 "enchanted": "attacker",
                 "affected": "victim",
                 "effect": {
-                    "type": "minecraft:all_of",
-                    "effects": [
-                        {
-                            "type": "minecraft:apply_mob_effect",
-                            "to_apply": "minecraft:slowness",
-                            "min_duration": {
-                                "type": "minecraft:linear",
-                                "base": 1,
-                                "per_level_above_first": 0.5
-                            },
-                            "max_duration": {
-                                "type": "minecraft:linear",
-                                "base": 2,
-                                "per_level_above_first": 0.5
-                            },
-                            "min_amplifier": {
-                                "type": "minecraft:linear",
-                                "base": 2,
-                                "per_level_above_first": 1
-                            },
-                            "max_amplifier": {
-                                "type": "minecraft:linear",
-                                "base": 2,
-                                "per_level_above_first": 1
-                            }
-                        }
-                    ]
+                    "type": "minecraft:apply_mob_effect",
+                    "enchanted": "attacker",
+                    "affected": "victim",
+                    "to_apply": "minecraft:slowness",
+                    "min_duration": {
+                        "type": "minecraft:linear",
+                        "base": 1,
+                        "per_level_above_first": 1
+                    },
+                    "max_duration": {
+                        "type": "minecraft:linear",
+                        "base": 2,
+                        "per_level_above_first": 1
+                    },
+                    "min_amplifier": {
+                        "type": "minecraft:linear",
+                        "base": 0,
+                        "per_level_above_first": 1
+                    },
+                    "max_amplifier": {
+                        "type": "minecraft:linear",
+                        "base": 0,
+                        "per_level_above_first": 1
+                    }
                 },
                 "requirements": {
                     "condition": "frostiful:rooted",

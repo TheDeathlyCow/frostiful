@@ -34,7 +34,7 @@ public interface RootedEntity {
     }
 
     default void frostiful$breakRoot() {
-        this.frostiful$setRootedTicks(0);
+        this.frostiful$setRootedTicks(1);
     }
 
     default boolean frostiful$isRooted() {
