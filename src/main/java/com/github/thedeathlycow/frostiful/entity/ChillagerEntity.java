@@ -62,7 +62,7 @@ public class ChillagerEntity extends PillagerEntity {
                     rangedWeaponItem.getHeldProjectiles()
             );
 
-            return itemStack.isEmpty() ? new ItemStack(FItems.FROST_TIPPED_ARROW) : itemStack;
+            return itemStack.isEmpty() ? new ItemStack(FItems.GLACIAL_ARROW) : itemStack;
         } else {
             return ItemStack.EMPTY;
         }

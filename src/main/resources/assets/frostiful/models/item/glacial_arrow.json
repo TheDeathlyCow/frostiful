@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "frostiful:item/frost_tipped_arrow"
+    "layer0": "frostiful:item/glacial_arrow"
   }
 }

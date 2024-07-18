@@ -205,7 +205,7 @@ public class FBlocks {
         register("cut_blue_ice_slab", CUT_BLUE_ICE_SLAB);
         register("cut_blue_ice_wall", CUT_BLUE_ICE_WALL);
 
-        DispenserBlock.registerProjectileBehavior(FItems.FROST_TIPPED_ARROW);
+        DispenserBlock.registerProjectileBehavior(FItems.GLACIAL_ARROW);
         DispenserBlock.registerProjectileBehavior(FItems.PACKED_SNOWBALL);
     }
 

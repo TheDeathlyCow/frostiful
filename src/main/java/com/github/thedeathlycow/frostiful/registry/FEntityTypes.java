@@ -37,8 +37,8 @@ public class FEntityTypes {
             .maxTrackingRange(8)
             .build();
 
-    public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW = EntityType.Builder.<FrostTippedArrowEntity>create(
-                    FrostTippedArrowEntity::new,
+    public static final EntityType<GlacialArrowEntity> GLACIAL_ARROW = EntityType.Builder.<GlacialArrowEntity>create(
+                    GlacialArrowEntity::new,
                     SpawnGroup.CREATURE
             )
             .dimensions(0.5f, 0.5f)
@@ -84,7 +84,7 @@ public class FEntityTypes {
         register("frostologer", FROSTOLOGER);
         register("chillager", CHILLAGER);
         register("biter", BITER);
-        register("frost_tipped_arrow", FROST_TIPPED_ARROW);
+        register("glacial_arrow", GLACIAL_ARROW);
         register("frost_spell", FROST_SPELL);
         register("packed_snowball", PACKED_SNOWBALL);
         register("thrown_icicle", THROWN_ICICLE);

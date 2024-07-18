@@ -14,22 +14,22 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
-public class FrostTippedArrowEntity extends PersistentProjectileEntity {
+public class GlacialArrowEntity extends PersistentProjectileEntity {
 
     private int freezeAmount = Frostiful.getConfig().icicleConfig.getFrostArrowFreezeAmount();
 
     private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
 
-    public FrostTippedArrowEntity(EntityType<? extends FrostTippedArrowEntity> entityType, World world) {
+    public GlacialArrowEntity(EntityType<? extends GlacialArrowEntity> entityType, World world) {
         super(entityType, world);
     }
 
-    public FrostTippedArrowEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
-        super(FEntityTypes.FROST_TIPPED_ARROW, x, y, z, world, stack, shotFrom);
+    public GlacialArrowEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
+        super(FEntityTypes.GLACIAL_ARROW, x, y, z, world, stack, shotFrom);
     }
 
-    public FrostTippedArrowEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
-        super(FEntityTypes.FROST_TIPPED_ARROW, owner, world, stack, shotFrom);
+    public GlacialArrowEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
+        super(FEntityTypes.GLACIAL_ARROW, owner, world, stack, shotFrom);
     }
 
     @Override
@@ -39,7 +39,7 @@ public class FrostTippedArrowEntity extends PersistentProjectileEntity {
 
     @Override
     protected ItemStack getDefaultItemStack() {
-        return new ItemStack(FItems.FROST_TIPPED_ARROW);
+        return new ItemStack(FItems.GLACIAL_ARROW);
     }
 
     @Override

@@ -63,7 +63,7 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.SNOWFLAKE_BANNER_PATTERN));
 
                 entries.add(new ItemStack(FItems.ICICLE));
-                entries.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
+                entries.add(new ItemStack(FItems.GLACIAL_ARROW));
                 entries.add(new ItemStack(FItems.FROZEN_TORCH));
 
                 entries.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));

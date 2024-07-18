@@ -14,7 +14,7 @@
   "item.frostiful.fur_padded_chainmail_leggings": "Утеплені кольчужні наголінники",
   "item.frostiful.fur_padded_chainmail_boots": "Утеплені кольчужні чоботи",
   "item.frostiful.fur_padding": "Хутряна підкладка",
-  "item.frostiful.frost_tipped_arrow": "Морозна оброблена стріла",
+  "item.frostiful.glacial_arrow": "Морозна оброблена стріла",
   "item.frostiful.polar_bear_fur_tuft": "В'язка хутра білого ведмедя",
   "item.frostiful.wolf_fur_tuft": "В'язка хутра вовка",
   "item.frostiful.ocelot_fur_tuft": "В'язка хутра оцелота",
@@ -79,7 +79,7 @@
 
   "entity.frostiful.frost_spell": "Закляття морозу",
   "entity.frostiful.packed_snowball": "Утрамбована сніжка",
-  "entity.frostiful.frost_tipped_arrow": "Морозна оброблена стріла",
+  "entity.frostiful.glacial_arrow": "Морозна оброблена стріла",
   "entity.frostiful.frostologer": "Морозолог",
   "entity.frostiful.chillager": "Морозник",
   "entity.frostiful.thrown_icicle": "Кинута бурулька",

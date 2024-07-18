@@ -14,7 +14,7 @@
   "item.frostiful.fur_padded_chainmail_leggings": "Fur Padded Chainmail Leggings",
   "item.frostiful.fur_padded_chainmail_boots": "Fur Padded Chainmail Boots",
   "item.frostiful.fur_padding": "Fur Padding",
-  "item.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
+  "item.frostiful.glacial_arrow": "Glacial Arrow",
   "item.frostiful.polar_bear_fur_tuft": "Tuft of Polar Bear Fur",
   "item.frostiful.wolf_fur_tuft": "Tuft of Wolf Fur",
   "item.frostiful.ocelot_fur_tuft": "Tuft of Ocelot Fur",
@@ -94,7 +94,7 @@
 
   "entity.frostiful.frost_spell": "Frost Spell",
   "entity.frostiful.packed_snowball": "Packed Snowball",
-  "entity.frostiful.frost_tipped_arrow": "Frost Tipped Arrow",
+  "entity.frostiful.glacial_arrow": "Glacial Arrow",
   "entity.frostiful.frostologer": "Frostologer",
   "entity.frostiful.chillager": "Chillager",
   "entity.frostiful.thrown_icicle": "Thrown Icicle",

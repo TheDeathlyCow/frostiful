@@ -22,8 +22,8 @@ public final class IcicleBreakTests implements FabricGameTest {
     }
 
     @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_frost_tipped_arrow(TestContext context) {
-        strikeIcicleWithProjectile(context, FEntityTypes.FROST_TIPPED_ARROW);
+    public void icicles_break_when_struck_by_glacial_arrow(TestContext context) {
+        strikeIcicleWithProjectile(context, FEntityTypes.GLACIAL_ARROW);
     }
 
     @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")

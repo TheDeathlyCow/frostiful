@@ -2,7 +2,7 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "frostiful:shapeless/frost_tipped_arrow"
+            "frostiful:shapeless/glacial_arrow"
         ]
     },
     "criteria": {
@@ -19,7 +19,7 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "frostiful:shapeless/frost_tipped_arrow"
+                "recipe": "frostiful:shapeless/glacial_arrow"
             }
         }
     },

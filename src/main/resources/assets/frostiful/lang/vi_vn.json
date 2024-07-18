@@ -13,7 +13,7 @@
 "item.frostiful.fur_padded_chainmail_leggings": "Quần Giáp Lông Bọc Xích",
 "item.frostiful.fur_padded_chainmail_boots": "Giày Giáp Lông Bọc Xích",
 "item.frostiful.fur_padding": "Lớp Lót Lông",
-"item.frostiful.frost_tipped_arrow": "Mũi Tên Đầu Lạnh",
+"item.frostiful.glacial_arrow": "Mũi Tên Đầu Lạnh",
 "item.frostiful.polar_bear_fur_tuft": "Chùm Lông Gấu Bắc Cực",
 "item.frostiful.wolf_fur_tuft": "Chùm Lông Sói",
 "item.frostiful.ocelot_fur_tuft": "Chùm Lông Ocelot",
@@ -101,7 +101,7 @@
 
 "entity.frostiful.frost_spell": "Phép Lạnh",
 "entity.frostiful.packed_snowball": "Quả Cầu Tuyết Ép",
-"entity.frostiful.frost_tipped_arrow": "Mũi Tên Đầu Lạnh",
+"entity.frostiful.glacial_arrow": "Mũi Tên Đầu Lạnh",
 "entity.frostiful.frostologer": "Băng Sư",
 "entity.frostiful.chillager": "Lạnh Giả",
 "entity.frostiful.thrown_icicle": "Măng Băng Ném",
