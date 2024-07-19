@@ -2,6 +2,7 @@
 "attribute.frostiful.generic.frost_resistance": "Kháng Lạnh",
 "attribute.frostiful.generic.max_frost": "Lạnh Tối Đa",
 
+
 "itemGroup.frostiful.frostiful": "Frostiful",
 "item.frostiful.frost_wand": "Đũa Lạnh",
 "item.frostiful.fur_helmet": "Mũ Lông",
@@ -13,7 +14,7 @@
 "item.frostiful.fur_padded_chainmail_leggings": "Quần Giáp Lông Bọc Xích",
 "item.frostiful.fur_padded_chainmail_boots": "Giày Giáp Lông Bọc Xích",
 "item.frostiful.fur_padding": "Lớp Lót Lông",
-"item.frostiful.glacial_arrow": "Mũi Tên Đầu Lạnh",
+"item.frostiful.glacial_arrow": "Mũi Tên Băng Giá",
 "item.frostiful.polar_bear_fur_tuft": "Chùm Lông Gấu Bắc Cực",
 "item.frostiful.wolf_fur_tuft": "Chùm Lông Sói",
 "item.frostiful.ocelot_fur_tuft": "Chùm Lông Ocelot",
@@ -21,24 +22,19 @@
 "item.frostiful.chillager_spawn_egg": "Trứng Sinh ra Lạnh Giả",
 "item.frostiful.biter_spawn_egg": "Trứng Sinh ra Người Cắn",
 "item.frostiful.packed_snowball": "Quả Cầu Tuyết Ép",
+"item.frostiful.glacial_heart": "Trái Tim Băng Giá",
+"item.frostiful.inert_frostology_cloak": "Áo Choàng Băng Giá Trơ",
 "item.frostiful.frostology_cloak": "Áo Choàng Học Lạnh",
 "item.frostiful.ice_skates": "Giày Trượt Băng",
 "item.frostiful.armored_ice_skates": "Giày Trượt Băng Giáp",
-"item.frostiful.frostology_cloak.tooltip": "Trở Nên Giống Băng",
+"item.frostiful.frostology_cloak.tooltip": "Tái Sinh Trong Băng",
+"item.frostiful.inert_frostology_cloak.tooltip": "Trơ",
 "item.frostiful.warming.tooltip": "Sưởi Ấm 🔥",
 
 "item.minecraft.potion.effect.frostiful.freezing": "Thuốc Đóng Băng",
-"item.minecraft.potion.effect.frostiful.freezing_long": "Thuốc Đóng Băng Lâu Dài",
-"item.minecraft.potion.effect.frostiful.freezing_strong": "Thuốc Đóng Băng Mạnh",
-"item.minecraft.splash_potion.effect.frostiful.freezing": "Thuốc Đóng Băng Phun",
-"item.minecraft.splash_potion.effect.frostiful.freezing_long": "Thuốc Đóng Băng Phun Lâu Dài",
-"item.minecraft.splash_potion.effect.frostiful.freezing_strong": "Thuốc Đóng Băng Phun Mạnh",
+"item.minecraft.splash_potion.effect.frostiful.freezing": "Thuốc Đóng Băng có thể ném được",
 "item.minecraft.lingering_potion.effect.frostiful.freezing": "Thuốc Đóng Băng Tồn Tại",
-"item.minecraft.lingering_potion.effect.frostiful.freezing_long": "Thuốc Đóng Băng Tồn Tại Lâu Dài",
-"item.minecraft.lingering_potion.effect.frostiful.freezing_strong": "Thuốc Đóng Băng Tồn Tại Mạnh",
 "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Mũi Tên Đóng Băng",
-"item.minecraft.tipped_arrow.effect.frostiful.freezing_long": "Mũi Tên Đóng Băng Lâu Dài",
-"item.minecraft.tipped_arrow.effect.frostiful.freezing_strong": "Mũi Tên Đóng Băng Mạnh",
 
 "item.frostiful.fur_upgrade_template": "Mẫu Nâng Cấp",
 "item.frostiful.smithing_template.fur_upgrade.applies_to": "Áo Giáp Xích",
@@ -60,7 +56,23 @@
 "item.frostiful.snowflake_banner_pattern": "Hoạ Tiết Cờ",
 "item.frostiful.snowflake_banner_pattern.desc": "Bông Tuyết",
 
-"block.frostiful.icicle": "Măng Băng",
+"filled_map.frostiful.frostologer_castle": "Bản Đồ Khám Phá Lâu Đài Tuyết",
+  
+"tag.block.c.icicles": "Tảng Băng",
+"tag.item.c.icicles": "Tảng Băng",
+"tag.item.frostiful.icicles": "Tảng Băng",
+"tag.item.frostiful.fur_tufts": "Lông Đuôi",
+"tag.item.frostiful.warm_foods": "Thực Phẩm Ấm",
+"tag.item.frostiful.ice_skates": "Giày Trượt Băng",
+"tag.item.frostiful.sun_lichens": "Địa Y Mặt Trời",
+"tag.item.frostiful.fur_boots": "Giày Lông",
+"tag.item.frostiful.powder_snow_walkable": "Có Thể Đi Trên Tuyết Bột",
+"tag.item.frostiful.enchantable.frost_wand": "Gậy Phép Băng Có Thể Phù Phép",
+"tag.item.frostiful.supports_heat_drain": "Hỗ Trợ Sự Cạn Kiệt Nhiệt Và Lời Nguyền Chạm Băng",
+"tag.item.frostiful.frostology_cloaks": "Áo Choàng Băng Giá",
+
+
+"block.frostiful.icicle": "Tảng Băng",
 "block.frostiful.cold_sun_lichen": "Rêu Mặt Trời Lạnh",
 "block.frostiful.cool_sun_lichen": "Rêu Mặt Trời Mát",
 "block.frostiful.warm_sun_lichen": "Rêu Mặt Trời Ấm",
@@ -82,31 +94,17 @@
 "block.frostiful.cut_blue_ice_slab": "Tấm Băng Xanh Cắt",
 "block.frostiful.cut_blue_ice_wall": "Tường Băng Xanh Cắt",
 
-"block.minecraft.banner.frostiful.snowflake.black": "Bông Tuyết Màu Đen",
-"block.minecraft.banner.frostiful.snowflake.blue": "Bông Tuyết Màu Xanh Dương",
-"block.minecraft.banner.frostiful.snowflake.brown": "Bông Tuyết Màu Nâu",
-"block.minecraft.banner.frostiful.snowflake.cyan": "Bông Tuyết Màu Xanh Ngọc",
-"block.minecraft.banner.frostiful.snowflake.gray": "Bông Tuyết Màu Xám",
-"block.minecraft.banner.frostiful.snowflake.green": "Bông Tuyết Màu Xanh Lá",
-"block.minecraft.banner.frostiful.snowflake.light_blue": "Bông Tuyết Màu Xanh Nhạt",
-"block.minecraft.banner.frostiful.snowflake.light_gray": "Bông Tuyết Màu Xám Nhạt",
-"block.minecraft.banner.frostiful.snowflake.lime": "Bông Tuyết Màu Xanh Chanh",
-"block.minecraft.banner.frostiful.snowflake.magenta": "Bông Tuyết Màu Hồng Đậm",
-"block.minecraft.banner.frostiful.snowflake.orange": "Bông Tuyết Màu Cam",
-"block.minecraft.banner.frostiful.snowflake.pink": "Bông Tuyết Màu Hồng",
-"block.minecraft.banner.frostiful.snowflake.purple": "Bông Tuyết Màu Tím",
-"block.minecraft.banner.frostiful.snowflake.red": "Bông Tuyết Màu Đỏ",
-"block.minecraft.banner.frostiful.snowflake.white": "Bông Tuyết Màu Trắng",
-"block.minecraft.banner.frostiful.snowflake.yellow": "Bông Tuyết Màu Vàng",
+"block.minecraft.banner.frostiful.snowflake": "Bông Tuyết",
 
 "entity.frostiful.frost_spell": "Phép Lạnh",
 "entity.frostiful.packed_snowball": "Quả Cầu Tuyết Ép",
-"entity.frostiful.glacial_arrow": "Mũi Tên Đầu Lạnh",
+"entity.frostiful.glacial_arrow": "Mũi Tên Băng Giá",
 "entity.frostiful.frostologer": "Băng Sư",
 "entity.frostiful.chillager": "Lạnh Giả",
 "entity.frostiful.thrown_icicle": "Măng Băng Ném",
 "entity.frostiful.biter": "Người Cắn",
 "entity.frostiful.freezing_wind": "Gió Đóng Băng",
+
 
 "frostiful.commands.frost.exception.not_living_entity": "Mục tiêu không phải là sinh vật!",
 "commands.frostiful.get.progress.success": "Thang đo lạnh của %s là %d",
@@ -118,9 +116,11 @@
 "commands.frostiful.root.set.success.single": "Gốc rễ %s trong %s tick",
 "commands.frostiful.root.set.success.multiple": "Gốc rễ %s mục tiêu trong %s tick",
 
+
 "gamerule.frostiful.doPassiveFreezing": "Đóng băng môi trường",
 "gamerule.frostiful.doPassiveFreezing.description": "Nếu được bật, người chơi sẽ dần dần bị đóng băng bởi môi trường theo thời gian. Người chơi mặc Áo Choàng Học Lạnh không bị ảnh hưởng bởi điều này.",
 "gamerule.category.frostiful": "Frostiful",
+
 
 "advancements.frostiful.adventure.obtain_frostology_cloak.title": "Bây Giờ Tôi Là Băng Sư !",
 "advancements.frostiful.adventure.obtain_frostology_cloak.description": "Nhận Áo Choàng Học Lạnh",
@@ -181,6 +181,7 @@
 "effect.frostiful.frost_bite": "Cắn giá",
 "effect.frostiful.warmth": "Ấm áp",
 
+
 "enchantment.frostiful.enervation": "Kiệt sức",
 "enchantment.frostiful.enervation.desc": "Hút nhiệt từ kẻ thù khi tấn công",
 "enchantment.frostiful.ice_breaker": "Phá Băng",
@@ -188,10 +189,12 @@
 "enchantment.frostiful.frozen_touch_curse": "Lời nguyền Chạm Đóng Băng",
 "enchantment.frostiful.frozen_touch_curse.desc": "Chuyển nhiệt từ bạn sang kẻ thù khi tấn công",
 
+
 "frostiful.tip.freezing_wind_extinguishes_fire": "Gió đóng băng sẽ thổi tắt ngọn lửa hở",
 "frostiful.tip.stay_warm_near_light": "Giữ ấm bằng cách ở gần ánh sáng nhân tạo (đuốc, đá phát quang)",
 "frostiful.tip.frostologer_benefits_from_being_cold": "Băng Sư được nuôi dưỡng bởi Lạnh, hãy làm nóng nó lên!",
 "frostiful.tip.walk_on_sun_lichen": "Đi bộ trên Rêu Mặt Trời để ấm lên trong trường hợp khẩn cấp",
+
 
 "text.autoconfig.frostiful.title": "Cấu hình Frostiful",
 
@@ -226,6 +229,8 @@
 "text.autoconfig.frostiful.option.combatConfig.chillagerFireDamageMultiplier": "Bội số sát thương lửa của Lạnh Giả",
 "text.autoconfig.frostiful.option.combatConfig.furUpgradeTemplateGenerateChance": "Cơ hội sinh ra mẫu nâng cấp lông (0-1)",
 "text.autoconfig.frostiful.option.combatConfig.skateUpgradeTemplateGenerateChance": "Cơ hội sinh ra mẫu nâng cấp giày trượt băng (0-1)",
+"text.autoconfig.frostiful.option.combatConfig.veryProtectiveFrostResistanceMultiplier": "Hệ số chống đóng băng rất bảo vệ",
+"text.autoconfig.frostiful.option.combatConfig.protectiveFrostResistanceMultiplier": "Hệ số chống đóng băng bảo vệ",
 
 "text.autoconfig.frostiful.option.freezingConfig": "Cấu hình Đóng Băng",
 "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Thực hiện đóng băng thụ động (toàn cầu)",
