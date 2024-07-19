@@ -72,10 +72,16 @@ public class FItems {
                     .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))
     );
 
+    public static final Item GLACIAL_HEART = new Item(
+            new Item.Settings()
+                    .maxCount(1)
+                    .rarity(Rarity.UNCOMMON)
+    );
+
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(new Item.Settings()
             .equipmentSlot(FrostologyCloakItem::getPreferredEquipmentSlot)
             .maxCount(1)
-            .rarity(Rarity.RARE)
+            .rarity(Rarity.EPIC)
     );
 
     public static final Item ICE_SKATES = new ArmorItem(
@@ -106,7 +112,7 @@ public class FItems {
                     .maxDamage(250)
                     .attributeModifiers(FrostWandItem.createAttributeModifiers())
                     .component(DataComponentTypes.TOOL, FrostWandItem.createToolComponent())
-                    .rarity(Rarity.EPIC)
+                    .rarity(Rarity.UNCOMMON)
     );
     public static final Item GLACIAL_ARROW = new GlacialArrowItem(new Item.Settings());
 
@@ -174,6 +180,7 @@ public class FItems {
         register("ice_skate_upgrade_template", ICE_SKATE_UPGRADE_TEMPLATE);
         register("frosty_armor_trim_smithing_template", FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE);
 
+        register("glacial_heart", GLACIAL_HEART);
         register("frostology_cloak", FROSTOLOGY_CLOAK);
         register("ice_skates", ICE_SKATES);
         register("armored_ice_skates", ARMORED_ICE_SKATES);

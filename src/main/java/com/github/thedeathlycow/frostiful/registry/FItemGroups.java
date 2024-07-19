@@ -15,7 +15,10 @@ public class FItemGroups {
             .icon(() -> new ItemStack(FItems.FROST_WAND))
             .displayName(Text.translatable("itemGroup.frostiful.frostiful"))
             .entries((context, entries) -> {
+                entries.add(new ItemStack(FItems.GLACIAL_HEART));
                 entries.add(new ItemStack(FItems.FROST_WAND));
+                entries.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
+
                 entries.add(new ItemStack(FItems.FUR_HELMET));
                 entries.add(new ItemStack(FItems.FUR_CHESTPLATE));
                 entries.add(new ItemStack(FItems.FUR_LEGGINGS));
@@ -24,8 +27,6 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE));
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS));
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_BOOTS));
-
-                entries.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
                 entries.add(new ItemStack(FItems.ICE_SKATES));
                 entries.add(new ItemStack(FItems.ARMORED_ICE_SKATES));
 
