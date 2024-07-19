@@ -112,7 +112,7 @@ public class FItems {
                     .maxDamage(250)
                     .attributeModifiers(FrostWandItem.createAttributeModifiers())
                     .component(DataComponentTypes.TOOL, FrostWandItem.createToolComponent())
-                    .rarity(Rarity.UNCOMMON)
+                    .rarity(Rarity.RARE)
     );
     public static final Item GLACIAL_ARROW = new GlacialArrowItem(new Item.Settings());
 
