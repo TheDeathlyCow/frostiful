@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "I#I",
+        "FPF",
+        "FPF"
+    ],
+    "key": {
+        "#": {
+            "item": "frostiful:glacial_heart"
+        },
+        "I": {
+            "tag": "c:icicles"
+        },
+        "F": {
+            "item": "frostiful:fur_padding"
+        },
+        "P": {
+            "item": "frostiful:polar_bear_fur_tuft"
+        }
+    },
+    "result": {
+        "id": "frostiful:frost_wand",
+        "count": 1
+    }
+}

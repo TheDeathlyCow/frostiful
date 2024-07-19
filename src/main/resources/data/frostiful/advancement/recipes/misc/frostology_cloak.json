@@ -1,0 +1,35 @@
+{
+    "parent": "minecraft:recipes/root",
+    "criteria": {
+        "has_glacial_heart": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "frostiful:glacial_heart"
+                        ]
+                    }
+                ]
+            }
+        },
+        "has_the_recipe": {
+            "trigger": "minecraft:recipe_unlocked",
+            "conditions": {
+                "recipe": "frostiful:shaped/frostology_cloak"
+            }
+        }
+    },
+    "requirements": [
+        [
+            "has_glacial_heart",
+            "has_the_recipe"
+        ]
+    ],
+    "rewards": {
+        "recipes": [
+            "frostiful:shaped/frostology_cloak"
+        ]
+    },
+    "sends_telemetry_event": false
+}
