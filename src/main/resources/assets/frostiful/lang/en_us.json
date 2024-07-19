@@ -23,6 +23,7 @@
   "item.frostiful.biter_spawn_egg": "Biter Spawn Egg",
   "item.frostiful.packed_snowball": "Packed Snowball",
   "item.frostiful.glacial_heart": "Glacial Heart",
+  "item.frostiful.inert_frostology_cloak": "Inert Cloak of Frostology",
   "item.frostiful.frostology_cloak": "Cloak of Frostology",
   "item.frostiful.ice_skates": "Ice Skates",
   "item.frostiful.armored_ice_skates": "Armored Ice Skates",
@@ -68,6 +69,7 @@
   "tag.item.frostiful.powder_snow_walkable": "Powder Snow Walkable",
   "tag.item.frostiful.enchantable.frost_wand": "Enchantable Frost Wands",
   "tag.item.frostiful.supports_heat_drain": "Supports Enervation and Curse of Frozen Touch",
+  "tag.item.frostiful.frostology_cloaks": "Frostology Cloaks",
   
   
   "block.frostiful.icicle": "Icicle",

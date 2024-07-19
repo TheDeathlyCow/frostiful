@@ -13,7 +13,7 @@ public class TextStyles {
             .withClickEvent(new ClickEvent(ClickEvent.Action.OPEN_URL, "https://www.github.com/TheDeathlyCow/lost-in-the-cold"));
 
     public static final Style INERT_FROSTOLOGY_CLOAK_TOOLTIP = Style.EMPTY
-            .withItalic(true)
+            .withItalic(false)
             .withColor(TextColor.fromFormatting(Formatting.GRAY));
 
     public static final Style FROSTOLOGY_CLOAK_TOOLTIP = Style.EMPTY

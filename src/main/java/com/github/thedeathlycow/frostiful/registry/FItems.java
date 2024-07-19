@@ -84,6 +84,7 @@ public class FItems {
     public static final Item INERT_FROSTOLOGY_CLOAK = new InertFrostologyCloakItem(
             new Item.Settings()
                     .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
+                    .maxCount(1)
     );
 
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(
@@ -91,6 +92,7 @@ public class FItems {
                     .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
                     .attributeModifiers(FrostologyCloakItem.createAttributeModifiers())
                     .rarity(Rarity.EPIC)
+                    .maxCount(1)
     );
 
     public static final Item ICE_SKATES = new ArmorItem(
@@ -190,7 +192,7 @@ public class FItems {
         register("frosty_armor_trim_smithing_template", FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE);
 
         register("glacial_heart", GLACIAL_HEART);
-        register("insert_frostology_cloak", INERT_FROSTOLOGY_CLOAK);
+        register("inert_frostology_cloak", INERT_FROSTOLOGY_CLOAK);
         register("frostology_cloak", FROSTOLOGY_CLOAK);
         register("ice_skates", ICE_SKATES);
         register("armored_ice_skates", ARMORED_ICE_SKATES);
