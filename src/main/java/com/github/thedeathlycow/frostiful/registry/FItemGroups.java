@@ -17,6 +17,7 @@ public class FItemGroups {
             .entries((context, entries) -> {
                 entries.add(new ItemStack(FItems.GLACIAL_HEART));
                 entries.add(new ItemStack(FItems.FROST_WAND));
+                entries.add(new ItemStack(FItems.INERT_FROSTOLOGY_CLOAK));
                 entries.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
 
                 entries.add(new ItemStack(FItems.FUR_HELMET));
