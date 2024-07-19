@@ -1,17 +1,14 @@
 {
     "parent": "minecraft:recipes/root",
-    "rewards": {
-        "recipes": [
-            "frostiful:shaped/fur_helmet"
-        ]
-    },
     "criteria": {
-        "has_fur": {
+        "has_glacial_heart": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "items": "#frostiful:fur_tufts"
+                        "items": [
+                            "frostiful:glacial_heart"
+                        ]
                     }
                 ]
             }
@@ -19,14 +16,20 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "frostiful:shaped/fur_helmet"
+                "recipe": "frostiful:shapeless/frostology_cloak"
             }
         }
     },
     "requirements": [
         [
-            "has_fur",
+            "has_glacial_heart",
             "has_the_recipe"
         ]
-    ]
+    ],
+    "rewards": {
+        "recipes": [
+            "frostiful:shapeless/frostology_cloak"
+        ]
+    },
+    "sends_telemetry_event": false
 }

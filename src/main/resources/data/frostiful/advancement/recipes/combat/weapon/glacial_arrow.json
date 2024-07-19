@@ -1,17 +1,12 @@
 {
     "parent": "minecraft:recipes/root",
-    "rewards": {
-        "recipes": [
-            "frostiful:shapeless/glacial_arrow"
-        ]
-    },
     "criteria": {
         "has_icicle": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "tag": "frostiful:icicles"
+                        "items": "#frostiful:icicles"
                     }
                 ]
             }
@@ -28,5 +23,10 @@
             "has_icicle",
             "has_the_recipe"
         ]
-    ]
+    ],
+    "rewards": {
+        "recipes": [
+            "frostiful:shapeless/glacial_arrow"
+        ]
+    }
 }

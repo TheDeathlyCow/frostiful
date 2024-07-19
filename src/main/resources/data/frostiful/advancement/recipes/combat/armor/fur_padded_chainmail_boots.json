@@ -11,7 +11,9 @@
             "conditions": {
                 "items": [
                     {
-                        "item": "frostiful:fur_boots"
+                        "items": [
+                            "frostiful:fur_boots"
+                        ]
                     }
                 ]
             }

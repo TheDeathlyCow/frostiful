@@ -11,7 +11,7 @@
             "conditions": {
                 "items": [
                     {
-                        "tag": "frostiful:fur_tufts"
+                        "items": "#frostiful:fur_tufts"
                     }
                 ]
             }

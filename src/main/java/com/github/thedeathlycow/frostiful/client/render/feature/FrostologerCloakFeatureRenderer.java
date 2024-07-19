@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
-import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -69,7 +69,7 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
         matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + r / 2.0F + q));
         matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
         matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - s / 2.0F));
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(FrostologyCloakItem.TEXTURE_ID));
+        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(AbstractFrostologyCloakItem.MODEL_TEXTURE_ID));
         this.getContextModel().forceRenderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
         matrixStack.pop();
     }

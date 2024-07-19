@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.client;
 
-import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
@@ -8,7 +9,6 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.feature.CapeFeatureRenderer;
 import net.minecraft.client.util.SkinTextures;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.Entity;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
@@ -47,8 +47,12 @@ public class CapeFeatureRendererMixin {
             )
     )
     private Identifier getFrostologyCloakTexture(SkinTextures instance, Operation<Identifier> original) {
-        if (this.scorchful$renderedPlayer != null && FrostologyCloakItem.isWornBy(this.scorchful$renderedPlayer)) {
-            return FrostologyCloakItem.TEXTURE_ID;
+
+        boolean renderFrostologyCloak = this.scorchful$renderedPlayer != null
+                && AbstractFrostologyCloakItem.isWearing(this.scorchful$renderedPlayer, stack -> stack.isIn(FItemTags.FROSTOLOGY_CLOAKS));
+
+        if (renderFrostologyCloak) {
+            return AbstractFrostologyCloakItem.MODEL_TEXTURE_ID;
         } else {
             return original.call(instance);
         }

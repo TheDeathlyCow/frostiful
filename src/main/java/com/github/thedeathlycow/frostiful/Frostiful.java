@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FSmithingTemplateItem;
-import com.github.thedeathlycow.frostiful.item.FrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.event.FrostResistanceProvider;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
@@ -110,7 +110,12 @@ public class Frostiful implements ModInitializer {
                     if (doPassiveFreezing) {
                         return TriState.TRUE;
                     } else {
-                        return TriState.of(FrostologyCloakItem.isWornBy(player));
+                        return TriState.of(
+                                AbstractFrostologyCloakItem.isWearing(
+                                        player,
+                                        stack -> stack.isOf(FItems.FROSTOLOGY_CLOAK)
+                                )
+                        );
                     }
                 }
         );
