@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.attribute.EntityAttribute;
 import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.registry.entry.RegistryEntry;
 
 public class ModifyTemperatureController extends EnvironmentControllerDecorator {
 
@@ -20,7 +21,7 @@ public class ModifyTemperatureController extends EnvironmentControllerDecorator 
     }
 
     @Override
-    public double getBaseValueForAttribute(EntityAttribute attribute, LivingEntity entity) {
+    public double getBaseValueForAttribute(RegistryEntry<EntityAttribute> attribute, LivingEntity entity) {
         double base = controller.getBaseValueForAttribute(attribute, entity);
         if (attribute == ThermooAttributes.MIN_TEMPERATURE && entity.isPlayer()) {
             base += 5.0;

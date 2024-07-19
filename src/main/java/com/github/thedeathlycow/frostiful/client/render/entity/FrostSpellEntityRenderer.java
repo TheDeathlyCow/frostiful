@@ -11,10 +11,8 @@ import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.math.RotationAxis;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
 
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
@@ -26,32 +24,39 @@ public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
         super(ctx);
     }
 
-    @Override
-    public void render(SpellEntity spellEntity, float f, float g, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
+    public void render(
+            SpellEntity dragonFireballEntity,
+            float yaw, float tickDelta,
+            MatrixStack matrixStack,
+            VertexConsumerProvider vertexConsumerProvider,
+            int light
+    ) {
         matrixStack.push();
+        matrixStack.scale(2.0F, 2.0F, 2.0F);
         matrixStack.multiply(this.dispatcher.getRotation());
-        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F));
         MatrixStack.Entry entry = matrixStack.peek();
-        Matrix4f matrix4f = entry.getPositionMatrix();
-        Matrix3f matrix3f = entry.getNormalMatrix();
         VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
-        produceVertex(vertexConsumer, matrix4f, matrix3f, i, 0.0F, 0, 0, 1);
-        produceVertex(vertexConsumer, matrix4f, matrix3f, i, 1.0F, 0, 1, 1);
-        produceVertex(vertexConsumer, matrix4f, matrix3f, i, 1.0F, 1, 1, 0);
-        produceVertex(vertexConsumer, matrix4f, matrix3f, i, 0.0F, 1, 0, 0);
+        produceVertex(vertexConsumer, entry, light, 0.0F, 0, 0, 1);
+        produceVertex(vertexConsumer, entry, light, 1.0F, 0, 1, 1);
+        produceVertex(vertexConsumer, entry, light, 1.0F, 1, 1, 0);
+        produceVertex(vertexConsumer, entry, light, 0.0F, 1, 0, 0);
         matrixStack.pop();
-        super.render(spellEntity, f, g, matrixStack, vertexConsumerProvider, i);
+        super.render(dragonFireballEntity, yaw, tickDelta, matrixStack, vertexConsumerProvider, light);
     }
 
-    private static void produceVertex(VertexConsumer vertexConsumer, Matrix4f positionMatrix, Matrix3f normalMatrix, int light, float x, int y, int textureU, int textureV) {
-        vertexConsumer
-                .vertex(positionMatrix, x - 0.5f, y - 0.25f, 0.0f)
-                .color(0xff, 0xff, 0xff, 0xff)
+    private static void produceVertex(
+            VertexConsumer vertexConsumer,
+            MatrixStack.Entry matrix,
+            int light,
+            float x, int z,
+            int textureU, int textureV
+    ) {
+        vertexConsumer.vertex(matrix, x - 0.5F, z - 0.25F, 0.0F)
+                .color(Colors.WHITE)
                 .texture(textureU, textureV)
                 .overlay(OverlayTexture.DEFAULT_UV)
                 .light(light)
-                .normal(normalMatrix, 0.0F, 1.0F, 0.0F)
-                .next();
+                .normal(matrix, 0.0F, 1.0F, 0.0F);
     }
 
     @Override

@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "minecraft:packed_ice"
+    },
+    "result": {
+        "id": "frostiful:cut_packed_ice_stairs",
+        "count": 4
+    }
+}

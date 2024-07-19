@@ -2,10 +2,14 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
+import net.minecraft.registry.RegistryKeys;
+import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.text.Text;
 
 public class FItemGroups {
@@ -15,7 +19,11 @@ public class FItemGroups {
             .icon(() -> new ItemStack(FItems.FROST_WAND))
             .displayName(Text.translatable("itemGroup.frostiful.frostiful"))
             .entries((context, entries) -> {
+                entries.add(new ItemStack(FItems.GLACIAL_HEART));
                 entries.add(new ItemStack(FItems.FROST_WAND));
+                entries.add(new ItemStack(FItems.INERT_FROSTOLOGY_CLOAK));
+                addEnchantedFrostologyCloak(context, entries);
+
                 entries.add(new ItemStack(FItems.FUR_HELMET));
                 entries.add(new ItemStack(FItems.FUR_CHESTPLATE));
                 entries.add(new ItemStack(FItems.FUR_LEGGINGS));
@@ -24,8 +32,6 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE));
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS));
                 entries.add(new ItemStack(FItems.FUR_PADDED_CHAINMAIL_BOOTS));
-
-                entries.add(new ItemStack(FItems.FROSTOLOGY_CLOAK));
                 entries.add(new ItemStack(FItems.ICE_SKATES));
                 entries.add(new ItemStack(FItems.ARMORED_ICE_SKATES));
 
@@ -63,13 +69,22 @@ public class FItemGroups {
                 entries.add(new ItemStack(FItems.SNOWFLAKE_BANNER_PATTERN));
 
                 entries.add(new ItemStack(FItems.ICICLE));
-                entries.add(new ItemStack(FItems.FROST_TIPPED_ARROW));
+                entries.add(new ItemStack(FItems.GLACIAL_ARROW));
                 entries.add(new ItemStack(FItems.FROZEN_TORCH));
 
                 entries.add(new ItemStack(FItems.FROSTOLOGER_SPAWN_EGG));
                 entries.add(new ItemStack(FItems.CHILLAGER_SPAWN_EGG));
                 entries.add(new ItemStack(FItems.BITER_SPAWN_EGG));
             }).build();
+
+    private static void addEnchantedFrostologyCloak(ItemGroup.DisplayContext context, ItemGroup.Entries entries) {
+        ItemStack frostologyCloak = new ItemStack(FItems.FROSTOLOGY_CLOAK);
+        context.lookup()
+                .getWrapperOrThrow(RegistryKeys.ENCHANTMENT)
+                .getOptional(Enchantments.BINDING_CURSE)
+                .ifPresent(bindingCurse -> frostologyCloak.addEnchantment(bindingCurse, 1));
+        entries.add(frostologyCloak);
+    }
 
     public static void registerAll() {
         Registry.register(Registries.ITEM_GROUP, Frostiful.id("main"), FROSTIFUL);

@@ -1,0 +1,36 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "group": "frostiful:fur_padding",
+    "ingredients": [
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        },
+        {
+            "item": "minecraft:rabbit_hide"
+        }
+    ],
+    "result": {
+        "id": "frostiful:fur_padding"
+    }
+}

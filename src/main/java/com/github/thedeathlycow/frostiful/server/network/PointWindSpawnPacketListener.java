@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.frostiful.survival.wind.PointWindSpawnStrategy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayNetworkHandler;
@@ -16,7 +17,7 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
 
 @Environment(EnvType.CLIENT)
-public class PointWindSpawnPacketListener {
+public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPayloadHandler<PointWindSpawnPacket> {
 
     private static final int PARTICLE_COUNT = 50;
 
@@ -28,12 +29,10 @@ public class PointWindSpawnPacketListener {
             ParticleTypes.SNOWFLAKE
     };
 
-    public static void receive(MinecraftClient client, ClientPlayNetworkHandler handler, PacketByteBuf buf, PacketSender responseSender) {
-        Vec3d pos = new Vec3d(buf.readDouble(), buf.readDouble(), buf.readDouble());
-        ClientWorld world = client.world;
-
-        client.execute(() -> {
-            displayWind(world, pos);
+    @Override
+    public void receive(PointWindSpawnPacket payload, ClientPlayNetworking.Context context) {
+        context.client().execute(() -> {
+            displayWind(context.client().world, payload.position());
         });
     }
 
@@ -66,8 +65,5 @@ public class PointWindSpawnPacketListener {
         );
     }
 
-    private PointWindSpawnPacketListener() {
-
-    }
 
 }

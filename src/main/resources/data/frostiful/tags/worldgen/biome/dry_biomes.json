@@ -1,6 +1,6 @@
 {
     "replace": false,
     "values": [
-        "#c:climate_dry"
+        "#c:is_dry/overworld"
     ]
 }

@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.component.LivingEntityComponent
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.FItemTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;

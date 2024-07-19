@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:smithing_transform",
+    "template": {
+        "item": "frostiful:fur_upgrade_template"
+    },
+    "base": {
+        "item": "minecraft:chainmail_chestplate"
+    },
+    "addition": {
+        "item": "frostiful:fur_padding"
+    },
+    "result": {
+        "id": "frostiful:fur_padded_chainmail_chestplate"
+    }
+}

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
-import com.github.thedeathlycow.frostiful.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;

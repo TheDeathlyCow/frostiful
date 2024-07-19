@@ -2,12 +2,13 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
-import com.github.thedeathlycow.frostiful.tag.FEntityTypeTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.MovementType;
 import net.minecraft.entity.attribute.EntityAttributes;
+import net.minecraft.entity.data.DataTracker;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.network.listener.ClientPlayPacketListener;
@@ -18,6 +19,7 @@ import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.predicate.entity.EntityPredicates;
 import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.server.network.EntityTrackerEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.util.math.Vec3d;
@@ -49,6 +51,11 @@ public class WindEntity extends Entity {
         this.setNoGravity(true);
         this.setLifeTicks(LIFE_TICKS_PROVIDER.get(this.random));
         this.moveTickOffset = world.random.nextBetween(1, 10) - 1;
+    }
+
+    @Override
+    public boolean shouldSave() {
+        return false;
     }
 
     @Override
@@ -188,7 +195,7 @@ public class WindEntity extends Entity {
     }
 
     @Override
-    protected void initDataTracker() {
+    protected void initDataTracker(DataTracker.Builder builder) {
 
     }
 
@@ -230,11 +237,6 @@ public class WindEntity extends Entity {
                         CAN_BE_BLOWN
                 )
                 .forEach(this::onEntityCollision);
-    }
-
-    @Override
-    public Packet<ClientPlayPacketListener> createSpawnPacket() {
-        return new EntitySpawnS2CPacket(this);
     }
 
     @Override

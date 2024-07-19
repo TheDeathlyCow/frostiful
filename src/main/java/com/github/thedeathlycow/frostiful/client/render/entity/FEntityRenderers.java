@@ -14,7 +14,7 @@ import net.minecraft.client.render.entity.*;
 public class FEntityRenderers {
 
     public static void registerEntityRenderers() {
-        EntityRendererRegistry.register(FEntityTypes.FROST_TIPPED_ARROW, FrostTippedArrowEntityRenderer::new);
+        EntityRendererRegistry.register(FEntityTypes.GLACIAL_ARROW, GlacialArrowEntityRenderer::new);
         EntityRendererRegistry.register(FEntityTypes.FROST_SPELL, FrostSpellEntityRenderer::new);
         EntityRendererRegistry.register(FEntityTypes.FROSTOLOGER, FrostologerEntityRenderer::new);
         EntityRendererRegistry.register(FEntityTypes.CHILLAGER, ChillagerEntityRenderer::new);

@@ -1,0 +1,14 @@
+{
+    "fallback": "minecraft:empty",
+    "elements": [
+        {
+            "weight": 1,
+            "element": {
+                "element_type": "minecraft:single_pool_element",
+                "projection": "terrain_matching",
+                "location": "frostiful:chillager_outpost/base",
+                "processors": "minecraft:empty"
+            }
+        }
+    ]
+}

@@ -1,0 +1,41 @@
+{
+    "display": {
+        "icon": {
+            "id": "frostiful:packed_snowball"
+        },
+        "title": {
+            "translate": "advancements.frostiful.adventure.find_frostologer_castle.title"
+        },
+        "description": {
+            "translate": "advancements.frostiful.adventure.find_frostologer_castle.description"
+        },
+        "frame": "task",
+        "show_toast": true,
+        "announce_to_chat": true,
+        "hidden": false
+    },
+    "parent": "minecraft:adventure/root",
+    "criteria": {
+        "castle": {
+            "trigger": "minecraft:location",
+            "conditions": {
+                "player": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "location": {
+                                "structures": "frostiful:frostologer_castle"
+                            }
+                        }
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "castle"
+        ]
+    ]
+}

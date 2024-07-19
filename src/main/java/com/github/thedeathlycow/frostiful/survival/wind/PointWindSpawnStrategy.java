@@ -28,13 +28,9 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
         }
         Box box = new Box(spawnPos).expand(SIZE);
         Vec3d center = box.getCenter();
-        double x = center.x;
-        double y = center.y;
-        double z = center.z;
+        PointWindSpawnPacket.sendToNearbyPlayersFromServer(serverWorld, spawnPos, center);
 
-        PointWindSpawnPacket.sendToNearbyPlayersFromServer(serverWorld, center);
-
-        for (BlockPos pos : BlockPos.iterateOutwards(BlockPos.ofFloored(center), SIZE / 2, SIZE / 2, SIZE / 2)) {
+        for (BlockPos pos : BlockPos.iterateOutwards(spawnPos, SIZE / 2, SIZE / 2, SIZE / 2)) {
 
             WindManager.INSTANCE.extinguishBlock(
                     world.getBlockState(pos),
@@ -43,7 +39,7 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
                     () -> {
                         serverWorld.playSound(
                                 null,
-                                x, y, z,
+                                center.x, center.y, center.z,
                                 FSoundEvents.ENTITY_FREEZING_WIND_BLOWOUT,
                                 SoundCategory.AMBIENT,
                                 0.75f,

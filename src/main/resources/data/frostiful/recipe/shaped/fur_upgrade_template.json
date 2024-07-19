@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "#S#",
+        "#C#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:diamond"
+        },
+        "C": {
+            "item": "frostiful:packed_snow_block"
+        },
+        "S": {
+            "item": "frostiful:fur_upgrade_template"
+        }
+    },
+    "result": {
+        "id": "frostiful:fur_upgrade_template",
+        "count": 2
+    }
+}

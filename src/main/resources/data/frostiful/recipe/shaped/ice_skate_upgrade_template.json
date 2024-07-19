@@ -1,0 +1,26 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "DSD",
+        "#C#",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:iron_ingot"
+        },
+        "D": {
+            "item": "minecraft:diamond"
+        },
+        "C": {
+            "item": "frostiful:packed_snow_block"
+        },
+        "S": {
+            "item": "frostiful:ice_skate_upgrade_template"
+        }
+    },
+    "result": {
+        "id": "frostiful:ice_skate_upgrade_template",
+        "count": 2
+    }
+}

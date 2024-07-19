@@ -4,6 +4,10 @@ import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.entity.ai.TargetPredicate;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.mob.PathAwareEntity;
+import net.minecraft.entity.passive.PandaEntity;
+import net.minecraft.entity.passive.TurtleEntity;
+import net.minecraft.loot.LootTable;
+import net.minecraft.registry.RegistryKey;
 import net.minecraft.util.Hand;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.World;
@@ -24,13 +28,13 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
     @Nullable
     protected T target;
     @Nullable
-    protected final Identifier furLootTable;
+    protected final RegistryKey<LootTable> furLootTable;
     private final float adultChance;
     private final float babyChance;
     private int timer;
     private boolean droppedFur = false;
 
-    public PlayFightGoal(T mob, Class<T> type, float adultChance, float babyChance, @Nullable Identifier furLootTable) {
+    public PlayFightGoal(T mob, Class<T> type, float adultChance, float babyChance, @Nullable RegistryKey<LootTable> furLootTable) {
         this.mob = mob;
         this.type = type;
         this.adultChance = adultChance;

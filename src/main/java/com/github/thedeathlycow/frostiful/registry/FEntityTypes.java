@@ -5,9 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.*;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
-import net.fabricmc.fabric.api.object.builder.v1.entity.FabricEntityTypeBuilder;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityDimensions;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnGroup;
 import net.minecraft.registry.Registries;
@@ -19,7 +17,7 @@ public class FEntityTypes {
                     FrostologerEntity::new,
                     SpawnGroup.MONSTER
             )
-            .setDimensions(0.6f, 1.95f)
+            .dimensions(0.6f, 1.95f)
             .maxTrackingRange(4)
             .build();
 
@@ -27,7 +25,7 @@ public class FEntityTypes {
                     BiterEntity::new,
                     SpawnGroup.MONSTER
             )
-            .setDimensions(1.0f, 2.0f)
+            .dimensions(1.0f, 2.0f)
             .maxTrackingRange(8)
             .build();
 
@@ -35,40 +33,40 @@ public class FEntityTypes {
                     ChillagerEntity::new,
                     SpawnGroup.MONSTER
             )
-            .setDimensions(0.6f, 1.95f)
+            .dimensions(0.6f, 1.95f)
             .maxTrackingRange(8)
             .build();
 
-    public static final EntityType<FrostTippedArrowEntity> FROST_TIPPED_ARROW = EntityType.Builder.create(
-                    (EntityType.EntityFactory<FrostTippedArrowEntity>) FrostTippedArrowEntity::new,
+    public static final EntityType<GlacialArrowEntity> GLACIAL_ARROW = EntityType.Builder.<GlacialArrowEntity>create(
+                    GlacialArrowEntity::new,
                     SpawnGroup.CREATURE
             )
-            .setDimensions(0.5f, 0.5f)
+            .dimensions(0.5f, 0.5f)
             .build();
 
-    public static final EntityType<FrostSpellEntity> FROST_SPELL = EntityType.Builder.create(
-                    (EntityType.EntityFactory<FrostSpellEntity>) FrostSpellEntity::new,
+    public static final EntityType<FrostSpellEntity> FROST_SPELL = EntityType.Builder.<FrostSpellEntity>create(
+                    FrostSpellEntity::new,
                     SpawnGroup.MISC
             )
-            .setDimensions(3f / 8f, 3f / 8f)
+            .dimensions(3f / 8f, 3f / 8f)
             .maxTrackingRange(8)
             .trackingTickInterval(10)
             .build();
 
-    public static final EntityType<PackedSnowballEntity> PACKED_SNOWBALL = EntityType.Builder.create(
-                    (EntityType.EntityFactory<PackedSnowballEntity>) PackedSnowballEntity::new,
+    public static final EntityType<PackedSnowballEntity> PACKED_SNOWBALL = EntityType.Builder.<PackedSnowballEntity>create(
+                    PackedSnowballEntity::new,
                     SpawnGroup.MISC
             )
-            .setDimensions(3f / 8f, 3f / 8f)
+            .dimensions(3f / 8f, 3f / 8f)
             .maxTrackingRange(8)
             .trackingTickInterval(10)
             .build();
 
-    public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = EntityType.Builder.create(
-                    (EntityType.EntityFactory<ThrownIcicleEntity>) ThrownIcicleEntity::new,
+    public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = EntityType.Builder.<ThrownIcicleEntity>create(
+                    ThrownIcicleEntity::new,
                     SpawnGroup.MISC
             )
-            .setDimensions(0.25f, 0.25f)
+            .dimensions(0.25f, 0.25f)
             .maxTrackingRange(8)
             .trackingTickInterval(10)
             .build();
@@ -77,7 +75,7 @@ public class FEntityTypes {
                     FreezingWindEntity::new,
                     SpawnGroup.AMBIENT
             )
-            .setDimensions(2.0f, 2.0f)
+            .dimensions(2.0f, 2.0f)
             .maxTrackingRange(8)
             .trackingTickInterval(10)
             .build();
@@ -86,7 +84,7 @@ public class FEntityTypes {
         register("frostologer", FROSTOLOGER);
         register("chillager", CHILLAGER);
         register("biter", BITER);
-        register("frost_tipped_arrow", FROST_TIPPED_ARROW);
+        register("glacial_arrow", GLACIAL_ARROW);
         register("frost_spell", FROST_SPELL);
         register("packed_snowball", PACKED_SNOWBALL);
         register("thrown_icicle", THROWN_ICICLE);

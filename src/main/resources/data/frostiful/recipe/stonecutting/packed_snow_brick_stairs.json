@@ -1,0 +1,10 @@
+{
+    "type": "minecraft:stonecutting",
+    "ingredient": {
+        "item": "frostiful:packed_snow_bricks"
+    },
+    "result": {
+        "id": "frostiful:packed_snow_brick_stairs",
+        "count": 1
+    }
+}

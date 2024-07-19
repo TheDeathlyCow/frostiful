@@ -1,0 +1,16 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "###",
+        "###"
+    ],
+    "key": {
+        "#": {
+            "item": "minecraft:ice"
+        }
+    },
+    "result": {
+        "id": "frostiful:ice_pane",
+        "count": 16
+    }
+}

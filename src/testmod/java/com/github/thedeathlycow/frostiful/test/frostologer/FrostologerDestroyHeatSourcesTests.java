@@ -3,7 +3,10 @@ package com.github.thedeathlycow.frostiful.test.frostologer;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.entity.FrostologerEntity;
+import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.block.*;
+import net.minecraft.entity.EntityType;
+import net.minecraft.item.Items;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
@@ -299,6 +302,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 Blocks.AIR
         );
     }
+
     //endregion
 
     private static void runDestroyHeatSourceTest(TestContext context, BlockState toPlace, Block blockAtEnd) {

@@ -2,16 +2,22 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.entity.PackedSnowballEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.projectile.ProjectileEntity;
+import net.minecraft.entity.projectile.thrown.SnowballEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ProjectileItem;
+import net.minecraft.item.SnowballItem;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.stat.Stats;
 import net.minecraft.util.Hand;
 import net.minecraft.util.TypedActionResult;
+import net.minecraft.util.math.Direction;
+import net.minecraft.util.math.Position;
 import net.minecraft.world.World;
 
-public class PackedSnowBallItem extends Item {
+public class PackedSnowBallItem extends Item implements ProjectileItem {
 
     public PackedSnowBallItem(Item.Settings settings) {
         super(settings);
@@ -34,11 +40,15 @@ public class PackedSnowBallItem extends Item {
         }
 
         user.incrementStat(Stats.USED.getOrCreateStat(this));
-        if (!user.isCreative()) {
-            itemStack.decrement(1);
-        }
+        itemStack.decrementUnlessCreative(1, user);
 
         return TypedActionResult.success(itemStack, world.isClient());
     }
 
+    @Override
+    public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
+        PackedSnowballEntity packedSnowball = new PackedSnowballEntity(world, pos.getX(), pos.getY(), pos.getZ());
+        packedSnowball.setItem(stack);
+        return packedSnowball;
+    }
 }

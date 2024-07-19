@@ -1,60 +1,54 @@
 {
-	"type": "frostiful:covered_rock",
-	"config": {
-		"base": {
-			"type": "minecraft:simple_state_provider",
-			"state": {
-				"Name": "minecraft:cobblestone"
-			}
-		},
-		"size": {
-			"x": {
-				"type": "minecraft:uniform",
-				"value": {
-					"min_inclusive": 0,
-					"max_inclusive": 2
-				}
-			},
-			"y": {
-				"type": "minecraft:uniform",
-				"value": {
-					"min_inclusive": 0,
-					"max_inclusive": 2
-				}
-			},
-			"z": {
-				"type": "minecraft:uniform",
-				"value": {
-					"min_inclusive": 0,
-					"max_inclusive": 2
-				}
-			}
-		},
-		"covering_feature": {
-			"feature": {
-				"type": "minecraft:multiface_growth",
-				"config": {
-					"block": "frostiful:hot_sun_lichen",
-					"search_range": 20,
-					"chance_of_spreading": 0.5,
-					"can_place_on_floor": false,
-					"can_place_on_ceiling": true,
-					"can_place_on_wall": true,
-					"can_be_placed_on": [
-						"minecraft:stone",
-						"minecraft:cobblestone",
-						"minecraft:andesite",
-						"minecraft:diorite",
-						"minecraft:granite",
-						"minecraft:dripstone_block",
-						"minecraft:calcite",
-						"minecraft:tuff",
-						"minecraft:deepslate"
-					]
-				}
-			},
-			"placement": []
-		},
-		"place_covering_chance": 0.3
-	}
+    "type": "frostiful:covered_rock",
+    "config": {
+        "base": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+                "Name": "minecraft:cobblestone"
+            }
+        },
+        "size": {
+            "x": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 0,
+                "max_inclusive": 2
+            },
+            "y": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 0,
+                "max_inclusive": 2
+            },
+            "z": {
+                "type": "minecraft:uniform",
+                "min_inclusive": 0,
+                "max_inclusive": 2
+            }
+        },
+        "covering_feature": {
+            "feature": {
+                "type": "minecraft:multiface_growth",
+                "config": {
+                    "block": "frostiful:hot_sun_lichen",
+                    "search_range": 20,
+                    "chance_of_spreading": 0.5,
+                    "can_place_on_floor": false,
+                    "can_place_on_ceiling": true,
+                    "can_place_on_wall": true,
+                    "can_be_placed_on": [
+                        "minecraft:stone",
+                        "minecraft:cobblestone",
+                        "minecraft:andesite",
+                        "minecraft:diorite",
+                        "minecraft:granite",
+                        "minecraft:dripstone_block",
+                        "minecraft:calcite",
+                        "minecraft:tuff",
+                        "minecraft:deepslate"
+                    ]
+                }
+            },
+            "placement": []
+        },
+        "place_covering_chance": 0.3
+    }
 }

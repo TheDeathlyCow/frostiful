@@ -1,0 +1,23 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "I#I",
+        " R ",
+        " R "
+    ],
+    "key": {
+        "#": {
+            "item": "frostiful:glacial_heart"
+        },
+        "I": {
+            "tag": "c:icicles"
+        },
+        "R": {
+            "item": "minecraft:breeze_rod"
+        }
+    },
+    "result": {
+        "id": "frostiful:frost_wand",
+        "count": 1
+    }
+}

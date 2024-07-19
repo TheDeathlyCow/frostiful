@@ -8,11 +8,14 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.entity.EquipmentSlot;
+import net.minecraft.util.Identifier;
 
 import java.util.function.BiConsumer;
 
 @Environment(EnvType.CLIENT)
 public final class FrostOverlayRenderer {
+
+    private static final Identifier POWDER_SNOW_OUTLINE = Identifier.ofVanilla("textures/misc/powder_snow_outline.png");
 
     private FrostOverlayRenderer() {
     }
@@ -26,7 +29,7 @@ public final class FrostOverlayRenderer {
     public static void renderFrostOverlay(
             DrawContext context,
             ClientPlayerEntity player,
-            BiConsumer<DrawContext, Float> renderCallback
+            OverlayRenderCallback renderCallback
     ) {
         float freezeScale = player.thermoo$getTemperatureScale();
         if (freezeScale > 0) {
@@ -52,7 +55,7 @@ public final class FrostOverlayRenderer {
             float opacity = renderThreshold >= 1.0f
                     ? 0.0f
                     : (freezeScale - renderThreshold) / (1.0f - renderThreshold);
-            renderCallback.accept(context, opacity);
+            renderCallback.renderOverlay(context, POWDER_SNOW_OUTLINE, opacity);
         }
     }
 }

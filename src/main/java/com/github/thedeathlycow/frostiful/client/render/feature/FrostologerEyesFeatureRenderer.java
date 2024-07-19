@@ -32,9 +32,7 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntity, M exten
                             matrices,
                             vertexConsumer,
                             0x00F000F0,
-                            OverlayTexture.DEFAULT_UV,
-                            1.0f, 1.0f, 1.0f, 1.0f,
-                            false
+                            OverlayTexture.DEFAULT_UV
                     );
         }
     }

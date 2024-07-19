@@ -40,7 +40,7 @@ public class IceSkateUpgradeTemplate {
             )
     );
 
-    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE = new Identifier("item/empty_slot_sword");
+    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE = Identifier.ofVanilla("item/empty_slot_sword");
 
     public static SmithingTemplateItem createItem() {
         return new SmithingTemplateItem(
@@ -60,6 +60,10 @@ public class IceSkateUpgradeTemplate {
 
     private static List<Identifier> getIceSkateUpgradeEmptyAdditionsSlotTextures() {
         return List.of(EMPTY_SLOT_SWORD_TEXTURE);
+    }
+
+    private IceSkateUpgradeTemplate() {
+
     }
 
 }

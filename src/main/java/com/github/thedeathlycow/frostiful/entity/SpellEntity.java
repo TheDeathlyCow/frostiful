@@ -23,13 +23,14 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     @Nullable
     private Vec3d startPosition = null;
 
-    public SpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ) {
-        this(world, owner, velocityX, velocityY, velocityZ, Double.POSITIVE_INFINITY);
+    public SpellEntity(EntityType<? extends SpellEntity> type, World world, LivingEntity owner, Vec3d velocity) {
+        this(type, world, owner, velocity, Double.POSITIVE_INFINITY);
     }
 
-    public SpellEntity(World world, @Nullable LivingEntity owner, double velocityX, double velocityY, double velocityZ, double maxDistance) {
-        super(FEntityTypes.FROST_SPELL, owner, velocityX, velocityY, velocityZ, world);
+    public SpellEntity(EntityType<? extends SpellEntity> type, World world, LivingEntity owner, Vec3d velocity, double maxDistance) {
+        super(type, owner, velocity, world);
         this.maxDistance = maxDistance;
+        this.refreshPositionAndAngles(owner.getEyePos(), this.getYaw(), this.getPitch());
     }
 
     protected SpellEntity(EntityType<? extends SpellEntity> entityType, World world) {
@@ -75,11 +76,6 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
         if (nbt.contains(MAX_DISTANCE_NBT_KEY, NbtElement.DOUBLE_TYPE)) {
             this.maxDistance = nbt.getDouble(MAX_DISTANCE_NBT_KEY);
         }
-    }
-
-    @Override
-    protected void initDataTracker() {
-        super.initDataTracker();
     }
 
     protected void onCollision(HitResult hitResult) {

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
+import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.*;
@@ -79,9 +79,10 @@ public class BiterEntity extends HostileEntity {
         return super.tryAttack(target);
     }
 
-    protected void initDataTracker() {
-        super.initDataTracker();
-        this.dataTracker.startTracking(ICE_GOLEM_FLAGS, (byte)0);
+    @Override
+    protected void initDataTracker(DataTracker.Builder builder) {
+        super.initDataTracker(builder);
+        builder.add(ICE_GOLEM_FLAGS, (byte)0);
     }
 
     protected void initGoals() {
