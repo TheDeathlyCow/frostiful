@@ -1,12 +1,14 @@
 {
     "parent": "minecraft:recipes/root",
     "criteria": {
-        "has_icicle": {
+        "has_glacial_heart": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "items": "#frostiful:icicles"
+                        "items": [
+                            "frostiful:glacial_heart"
+                        ]
                     }
                 ]
             }
@@ -14,19 +16,20 @@
         "has_the_recipe": {
             "trigger": "minecraft:recipe_unlocked",
             "conditions": {
-                "recipe": "frostiful:shapeless/glacial_arrow"
+                "recipe": "frostiful:shapeless/frostology_cloak"
             }
         }
     },
     "requirements": [
         [
-            "has_icicle",
+            "has_glacial_heart",
             "has_the_recipe"
         ]
     ],
     "rewards": {
         "recipes": [
-            "frostiful:shapeless/glacial_arrow"
+            "frostiful:shapeless/frostology_cloak"
         ]
-    }
+    },
+    "sends_telemetry_event": false
 }

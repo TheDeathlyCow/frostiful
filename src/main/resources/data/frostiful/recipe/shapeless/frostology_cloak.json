@@ -1,0 +1,20 @@
+{
+    "type": "minecraft:crafting_shapeless",
+    "ingredients": [
+        {
+            "item": "frostiful:glacial_heart"
+        },
+        {
+            "item": "frostiful:inert_frostology_cloak"
+        }
+    ],
+    "result": {
+        "id": "frostiful:frostology_cloak",
+        "count": 1,
+        "components": {
+            "minecraft:enchantments": {
+                "minecraft:binding_curse": 1
+            }
+        }
+    }
+}
