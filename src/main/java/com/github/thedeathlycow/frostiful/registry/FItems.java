@@ -85,6 +85,7 @@ public class FItems {
             new Item.Settings()
                     .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
                     .maxCount(1)
+                    .rarity(Rarity.UNCOMMON)
     );
 
     public static final Item FROSTOLOGY_CLOAK = new FrostologyCloakItem(
