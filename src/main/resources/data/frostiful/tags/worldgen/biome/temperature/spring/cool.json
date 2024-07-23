@@ -6,6 +6,7 @@
         {
             "required": false,
             "id": "#frostiful:cool_biomes"
-        }
+        },
+        "#frostiful:temperature/spring/cold"
     ]
 }

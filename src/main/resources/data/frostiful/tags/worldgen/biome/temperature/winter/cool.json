@@ -3,6 +3,7 @@
     "values": [
         "#c:is_plains",
         "#c:is_temperate",
-        "#c:is_hill"
+        "#c:is_hill",
+        "#frostiful:temperature/winter/cold"
     ]
 }
