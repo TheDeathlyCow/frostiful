@@ -1,0 +1,11 @@
+{
+    "replace": false,
+    "values": [
+        "#c:is_taiga",
+        "#c:is_cold",
+        {
+            "required": false,
+            "id": "#frostiful:cool_biomes"
+        }
+    ]
+}

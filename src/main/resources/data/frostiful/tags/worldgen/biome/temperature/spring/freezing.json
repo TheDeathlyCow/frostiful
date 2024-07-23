@@ -1,0 +1,10 @@
+{
+    "replace": false,
+    "values": [
+        "#c:is_icy",
+        {
+            "required": false,
+            "id": "#frostiful:freezing_biomes"
+        }
+    ]
+}

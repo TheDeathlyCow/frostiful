@@ -1,0 +1,11 @@
+{
+    "replace": false,
+    "values": [
+        "#c:is_snowy",
+        "#c:is_snowy_plains",
+        {
+            "required": false,
+            "id": "#frostiful:cold_biomes"
+        }
+    ]
+}

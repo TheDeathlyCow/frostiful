@@ -32,9 +32,9 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     @Override
     public int getLocalTemperatureChange(World world, BlockPos pos) {
         if (world.getDimension().natural()) {
-            return getNaturalWorldTemperatureChange(world, pos);
+            return this.getNaturalWorldTemperatureChange(world, pos);
         } else if (!this.isScorchfulLoaded && world.getDimension().ultrawarm()) {
-            return getUltrawarmTemperatureChange();
+            return this.getUltrawarmTemperatureChange();
         }
         return controller.getLocalTemperatureChange(world, pos);
     }
@@ -93,7 +93,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     private int getNaturalWorldTemperatureChange(World world, BlockPos pos) {
         RegistryEntry<Biome> biome = world.getBiome(pos);
 
-        @Nullable ThermooSeason season = ThermooSeason.getCurrentSeason(world).orElse(null);
+        ThermooSeason season = ThermooSeason.getCurrentSeason(world).orElse(ThermooSeason.SPRING);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
         int temp = category.getTemperatureChange(world, pos, season);
         if (temp < 0) {

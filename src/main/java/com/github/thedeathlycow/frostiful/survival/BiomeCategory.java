@@ -1,16 +1,15 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.compat.SeasonHelper;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.tag.FBiomeTags;
+import com.github.thedeathlycow.frostiful.registry.tag.SeasonalBiomeTags;
 import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.function.ToIntFunction;
 
@@ -34,36 +33,35 @@ public enum BiomeCategory {
         this.coldAtNight = coldAtNight;
     }
 
-    public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry, @Nullable ThermooSeason season) {
+    public static BiomeCategory fromBiome(RegistryEntry<Biome> biomeEntry, ThermooSeason season) {
         Biome biome = biomeEntry.value();
-
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
 
         // +inf means only tags will be considered
         float temperature = biome.getTemperature();
+        SeasonalBiomeTags tags = SeasonalBiomeTags.forSeason(season);
 
         BiomeCategory category;
-
         if (biomeEntry.isIn(FBiomeTags.FREEZING_BLACKLIST_BIOMES)) {
             category = NORMAL;
-        } else if (biomeEntry.isIn(FBiomeTags.FREEZING_BIOMES)) {
+        } else if (biomeEntry.isIn(tags.freezing())) {
             category = FREEZING;
-        } else if (temperature <= SNOW_TEMPERATURE || biomeEntry.isIn(FBiomeTags.COLD_BIOMES)) {
+        } else if (temperature <= SNOW_TEMPERATURE || biomeEntry.isIn(tags.cold())) {
             category = COLD;
         } else if (
                 temperature <= TAIGA_TEMPERATURE
                         || (biomeEntry.isIn(FBiomeTags.DRY_BIOMES) && config.doDryBiomeNightFreezing())
-                        || biomeEntry.isIn(FBiomeTags.COOL_BIOMES)
+                        || biomeEntry.isIn(tags.cool())
         ) {
             category = COLD_AT_NIGHT;
         } else {
             category = NORMAL;
         }
 
-        return SeasonHelper.getSeasonallyShiftedBiomeCategory(season, category);
+        return category;
     }
 
-    public int getTemperatureChange(World world, BlockPos pos, @Nullable ThermooSeason season) {
+    public int getTemperatureChange(World world, BlockPos pos, ThermooSeason season) {
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
         int change = this.temperatureChange.applyAsInt(config);
 
