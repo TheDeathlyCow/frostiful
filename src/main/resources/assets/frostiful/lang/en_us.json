@@ -286,7 +286,5 @@
   "text.autoconfig.frostiful.option.environmentConfig.powderSnowFreezeRate": "Powder snow freeze rate",
   "text.autoconfig.frostiful.option.environmentConfig.warmthPerLightLevel": "Warmth per light level",
   "text.autoconfig.frostiful.option.environmentConfig.minLightForWarmth": "Minimum block light level for warmth",
-  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate",
-  "text.autoconfig.frostiful.option.environmentConfig.winterTemperatureShift": "Winter temperature shift (requires Fabric Seasons)",
-  "text.autoconfig.frostiful.option.environmentConfig.isNightColdInSummer": "Is night cold in summer (requires Fabric Seasons)"
+  "text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Ultrawarm dimension warm rate"
 }

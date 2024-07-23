@@ -61,19 +61,14 @@ public enum BiomeCategory {
         return category;
     }
 
-    public int getTemperatureChange(World world, BlockPos pos, ThermooSeason season) {
+    public int getTemperatureChange(World world, BlockPos pos) {
         EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
         int change = this.temperatureChange.applyAsInt(config);
 
         int sunlight = world.getLightLevel(LightType.SKY, pos) - world.getAmbientDarkness();
-        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT && (season != ThermooSeason.SUMMER || config.isNightColdInSummer())) {
+        if (coldAtNight && sunlight <= NIGHT_TIME_SURFACE_LIGHT) {
             change += config.getNightTemperatureShift();
         }
-
-        if (change < 0 && season == ThermooSeason.WINTER) {
-            change += config.getWinterTemperatureShift();
-        }
-
 
         return change;
     }

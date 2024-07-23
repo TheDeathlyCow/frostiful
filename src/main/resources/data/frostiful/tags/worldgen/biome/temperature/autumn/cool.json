@@ -1,7 +1,7 @@
 {
     "replace": false,
     "values": [
-        "#c:is_temperate",
+        "#c:is_hill",
         "#frostiful:temperature/spring/cool"
     ]
 }

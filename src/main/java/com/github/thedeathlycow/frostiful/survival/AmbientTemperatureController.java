@@ -18,7 +18,6 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import org.jetbrains.annotations.Nullable;
 
 public class AmbientTemperatureController extends EnvironmentControllerDecorator {
 
@@ -95,7 +94,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
 
         ThermooSeason season = ThermooSeason.getCurrentSeason(world).orElse(ThermooSeason.SPRING);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
-        int temp = category.getTemperatureChange(world, pos, season);
+        int temp = category.getTemperatureChange(world, pos);
         if (temp < 0) {
             return temp;
         }
