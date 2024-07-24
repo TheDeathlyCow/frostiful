@@ -27,6 +27,8 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     int ultrawarmWarmRate = 15;
 
+    boolean enableSeasonsIntegration = true;
+
     public boolean doDryBiomeNightFreezing() {
         return doDryBiomeNightFreezing;
     }
@@ -77,5 +79,9 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     public int getUltrawarmWarmRate() {
         return ultrawarmWarmRate;
+    }
+
+    public boolean enableSeasonsIntegration() {
+        return enableSeasonsIntegration;
     }
 }

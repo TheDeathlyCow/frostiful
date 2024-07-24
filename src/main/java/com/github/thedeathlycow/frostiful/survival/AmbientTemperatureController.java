@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import org.jetbrains.annotations.NotNull;
 
 public class AmbientTemperatureController extends EnvironmentControllerDecorator {
 
@@ -92,7 +93,7 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
     private int getNaturalWorldTemperatureChange(World world, BlockPos pos) {
         RegistryEntry<Biome> biome = world.getBiome(pos);
 
-        ThermooSeason season = ThermooSeason.getCurrentSeason(world).orElse(ThermooSeason.SPRING);
+        ThermooSeason season = getCurrentSeason(world);
         BiomeCategory category = BiomeCategory.fromBiome(biome, season);
         int temp = category.getTemperatureChange(world, pos);
         if (temp < 0) {
@@ -104,6 +105,15 @@ public class AmbientTemperatureController extends EnvironmentControllerDecorator
 
     private int getUltrawarmTemperatureChange() {
         return Frostiful.getConfig().environmentConfig.getUltrawarmWarmRate();
+    }
+
+    @NotNull
+    private static ThermooSeason getCurrentSeason(World world) {
+        if (Frostiful.getConfig().environmentConfig.enableSeasonsIntegration()) {
+            return ThermooSeason.getCurrentSeason(world).orElse(ThermooSeason.SPRING);
+        } else {
+            return ThermooSeason.SPRING;
+        }
     }
 
 }
