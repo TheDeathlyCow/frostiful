@@ -1,0 +1,7 @@
+{
+    "replace": false,
+    "values": [
+        "#frostiful:temperature/spring/freezing",
+        "#frostiful:temperature/summer/freezing"
+    ]
+}
