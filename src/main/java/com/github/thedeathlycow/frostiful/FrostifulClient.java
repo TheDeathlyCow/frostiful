@@ -37,8 +37,6 @@ public class FrostifulClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(() -> FItems.FROST_WAND, frostWandRenderer);
         ModelLoadingPlugin.register(new FrostifulModelLoadingPlugin());
 
-        FCutouts.registerCutouts();
-        FParticleFactoryRegistry.registerFactories();
         ClientPlayNetworking.registerGlobalReceiver(
                 PointWindSpawnPacket.PACKET_ID,
                 new PointWindSpawnPacketListener()
