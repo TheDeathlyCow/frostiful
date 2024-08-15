@@ -21,7 +21,6 @@ public enum BiomeCategory {
     FREEZING(EnvironmentConfigGroup::getFreezingBiomeTemperatureChange, true);
 
     private static final float SNOW_TEMPERATURE = 0.15f;
-    private static final float TAIGA_TEMPERATURE = 0.3f;
 
     private static final int NIGHT_TIME_SURFACE_LIGHT = 4;
 
@@ -49,9 +48,8 @@ public enum BiomeCategory {
         } else if (temperature <= SNOW_TEMPERATURE || biomeEntry.isIn(tags.cold())) {
             category = COLD;
         } else if (
-                temperature <= TAIGA_TEMPERATURE
+                biomeEntry.isIn(tags.cool())
                         || (biomeEntry.isIn(FBiomeTags.DRY_BIOMES) && config.doDryBiomeNightFreezing())
-                        || biomeEntry.isIn(tags.cool())
         ) {
             category = COLD_AT_NIGHT;
         } else {
