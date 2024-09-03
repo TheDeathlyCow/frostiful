@@ -44,6 +44,10 @@ public abstract class RootedEntityImplMixin extends Entity implements RootedEnti
 
     @Override
     public boolean frostiful$canRoot(@Nullable Entity attacker) {
+        if (this.frostiful$isRooted()) {
+            return false;
+        }
+
         final LivingEntity instance = (LivingEntity) (Object) this;
 
         if (instance.getType().isIn(FEntityTypeTags.ROOT_IMMUNE)) {
