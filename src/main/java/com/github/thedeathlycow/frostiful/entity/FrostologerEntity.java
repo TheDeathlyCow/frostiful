@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
@@ -11,6 +12,7 @@ import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.frostiful.sound.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentController;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
@@ -108,7 +110,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     public boolean isInHeatedArea() {
-        return EnvironmentManager.INSTANCE.getController().isAreaHeated(this.getWorld(), this.getBlockPos());
+        World world = this.getWorld();
+        EnvironmentController controller = EnvironmentManager.INSTANCE.getController();
+
+        CombatConfigGroup config = Frostiful.getConfig().combatConfig;
+        int intolerableHeat = config.getFrostologerIntolerableHeat();
+
+        return world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)
+                && controller.getHeatAtLocation(world, this.getBlockPos()) > intolerableHeat;
     }
 
     public boolean isAtMaxPower() {

@@ -36,6 +36,8 @@ public class CombatConfigGroup implements ConfigData {
 
     float chillagerFireDamageMultiplier = 1.5f;
 
+    int frostologerIntolerableHeat = 9;
+
     @ConfigEntry.Gui.RequiresRestart
     float furUpgradeTemplateGenerateChance = 0.5f;
 
@@ -100,6 +102,10 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getChillagerFireDamageMultiplier() {
         return chillagerFireDamageMultiplier;
+    }
+
+    public int getFrostologerIntolerableHeat() {
+        return frostologerIntolerableHeat;
     }
 
     public float getFurUpgradeTemplateGenerateChance() {
