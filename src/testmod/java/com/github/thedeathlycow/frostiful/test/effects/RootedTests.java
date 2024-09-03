@@ -33,4 +33,35 @@ public class RootedTests {
         context.startMovingTowards(entity, end, 1.0f);
         context.expectEntityAtEnd(EntityType.VILLAGER, end);
     }
+
+    @GameTest(templateName = "frostiful-test:effects.platform")
+    public void villager_root_is_not_reset(TestContext context) {
+        BlockPos start = new BlockPos(1, 2, 1);
+
+        MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);
+        RootedEntity rootedEntity = (RootedEntity) entity;
+
+        // initial root
+        rootedEntity.frostiful$root(null);
+
+        int initialRootTicks = rootedEntity.frostiful$getRootedTicks();
+        context.assertTrue(rootedEntity.frostiful$isRooted(), "Villager is not rooted");
+
+        context.waitAndRun(
+                10L,
+                () -> {
+                    context.assertTrue(rootedEntity.frostiful$isRooted(), "Villager is not rooted for re-apply");
+                    // root again, before root is expired
+                    rootedEntity.frostiful$root(null);
+
+                    int newRootTicks = rootedEntity.frostiful$getRootedTicks();
+                    context.assertFalse(
+                            newRootTicks >= initialRootTicks,
+                            "Villager root ticks were not reset"
+                    );
+
+                    context.complete();
+                }
+        );
+    }
 }
