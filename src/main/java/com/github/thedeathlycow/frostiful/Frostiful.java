@@ -27,6 +27,7 @@ import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.util.TriState;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
@@ -49,11 +50,14 @@ public class Frostiful implements ModInitializer {
         configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class); //NOSONAR this is fine
         FrostifulConfig.updateConfig(configHolder);
 
-        CommandRegistrationCallback.EVENT.register(
-                (dispatcher, registryAccess, environment) -> {
-                    RootCommand.register(dispatcher);
-                    WindCommand.register(dispatcher);
-                });
+        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+            CommandRegistrationCallback.EVENT.register(
+                    (dispatcher, registryAccess, environment) -> {
+                        RootCommand.register(dispatcher);
+                        WindCommand.register(dispatcher);
+                    });
+        }
+
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
 
