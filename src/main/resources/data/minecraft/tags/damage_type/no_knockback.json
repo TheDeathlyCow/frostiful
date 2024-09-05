@@ -1,6 +1,9 @@
 {
     "replace": false,
     "values": [
-        "frostiful:melt"
+        "frostiful:melt",
+        "frostiful:broken_ice",
+        "frostiful:icicle",
+        "frostiful:falling_icicle"
     ]
 }
