@@ -87,6 +87,9 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
+    testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
+    testImplementation "org.mockito:mockito-core:3.+"
+
     //// Bring depends into testmod ////
 
     afterEvaluate {
@@ -146,6 +149,10 @@ publishing {
 }
 
 sourceSets {
+    test {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+    }
     testmod {
         compileClasspath += main.compileClasspath
         runtimeClasspath += main.runtimeClasspath
@@ -187,4 +194,8 @@ loom {
             runDir "build/gametest"
         }
     }
+}
+
+test {
+    useJUnitPlatform()
 }
