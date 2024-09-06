@@ -4,6 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.effect.FStatusEffects;
 import com.github.thedeathlycow.frostiful.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
+import net.minecraft.client.item.TooltipContext;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.effect.StatusEffectInstance;
 import net.minecraft.item.ItemStack;
@@ -19,7 +20,7 @@ public class FoodIntegration {
         }
     }
 
-    public static void appendWarmthTooltip(ItemStack stack, List<Text> tooltip) {
+    public static void appendWarmthTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip) {
         if (isWarmingFood(stack)) {
             tooltip.add(Text.translatable("item.frostiful.warming.tooltip")
                     .setStyle(TextStyles.WARMING_TOOLTIP));
