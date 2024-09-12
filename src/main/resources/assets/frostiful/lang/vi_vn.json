@@ -33,7 +33,7 @@
 
 "item.minecraft.potion.effect.frostiful.freezing": "Thuốc Đóng Băng",
 "item.minecraft.splash_potion.effect.frostiful.freezing": "Thuốc Đóng Băng có thể ném được",
-"item.minecraft.lingering_potion.effect.frostiful.freezing": "Thuốc Đóng Băng Tồn Tại",
+"item.minecraft.lingering_potion.effect.frostiful.freezing": "Thuốc Đóng Băng kéo dài",
 "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Mũi Tên Đóng Băng",
 
 "item.frostiful.fur_upgrade_template": "Mẫu Nâng Cấp",
@@ -50,7 +50,7 @@
 "item.frostiful.smithing_template.ice_skate_upgrade.additions_slot_description": "Đặt một Kiếm Sắt vào đây",
 "upgrade.frostiful.ice_skate_upgrade": "Nâng Cấp Trượt Băng",
 
-"item.frostiful.frosty_armor_trim_smithing_template": "Mẫu Nâng Cấp",
+"item.frostiful.frosty_armor_trim_smithing_template": "Mẫu Rèn",
 "trim_pattern.frostiful.frosty": "Hoạ Tiết Giáp Lạnh",
 
 "item.frostiful.snowflake_banner_pattern": "Hoạ Tiết Cờ",
@@ -198,7 +198,7 @@
 
 "text.autoconfig.frostiful.title": "Cấu hình Frostiful",
 
-"text.autoconfig.frostiful.option.clientConfig": "Cấu hình Khách hàng",
+"text.autoconfig.frostiful.option.clientConfig": "Cấu hình Cục Bộ",
 "text.autoconfig.frostiful.option.clientConfig.frostOverlayStart": "Phần trăm bắt đầu phủ băng (0-1)",
 "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Hiển thị phủ tim lạnh",
 "text.autoconfig.frostiful.option.clientConfig.renderDripParticles": "Hiển thị hạt nhỏ giọt nước khi ướt",
@@ -227,6 +227,7 @@
 "text.autoconfig.frostiful.option.combatConfig.frostologerMaxPassiveFreezing": "Phần trăm đóng băng thụ động tối đa của Băng Sư (0-1)",
 "text.autoconfig.frostiful.option.combatConfig.biterFrostBiteMaxAmplifier": "Cường độ tối đa của Cắn Giá của Người Cắn (bao gồm)",
 "text.autoconfig.frostiful.option.combatConfig.chillagerFireDamageMultiplier": "Bội số sát thương lửa của Lạnh Giả",
+"text.autoconfig.frostiful.option.combatConfig.frostologerIntolerableHeat": "Nhiệt độ không thể chịu đựng của Băng Sư",
 "text.autoconfig.frostiful.option.combatConfig.furUpgradeTemplateGenerateChance": "Cơ hội sinh ra mẫu nâng cấp lông (0-1)",
 "text.autoconfig.frostiful.option.combatConfig.skateUpgradeTemplateGenerateChance": "Cơ hội sinh ra mẫu nâng cấp giày trượt băng (0-1)",
 "text.autoconfig.frostiful.option.combatConfig.veryProtectiveFrostResistanceMultiplier": "Hệ số chống đóng băng rất bảo vệ",
@@ -286,7 +287,6 @@
 "text.autoconfig.frostiful.option.environmentConfig.powderSnowFreezeRate": "Tỷ lệ đóng băng của tuyết bột",
 "text.autoconfig.frostiful.option.environmentConfig.warmthPerLightLevel": "Ấm áp mỗi mức ánh sáng",
 "text.autoconfig.frostiful.option.environmentConfig.minLightForWarmth": "Mức ánh sáng tối thiểu để ấm áp",
-"text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Tỷ lệ ấm áp của kích thước siêu nóng",
-"text.autoconfig.frostiful.option.environmentConfig.winterTemperatureShift": "Thay đổi nhiệt độ mùa đông (yêu cầu Fabric Seasons)",
-"text.autoconfig.frostiful.option.environmentConfig.isNightColdInSummer": "Đêm có lạnh vào mùa hè không (yêu cầu Fabric Seasons)"
+"text.autoconfig.frostiful.option.environmentConfig.ultrawarmWarmRate": "Tốc độ làm ấm của chiều không gian cực nóng",
+"text.autoconfig.frostiful.option.environmentConfig.enableSeasonsIntegration": "Bật tích hợp mùa (yêu cầu Thermoo Patches)"
 }
