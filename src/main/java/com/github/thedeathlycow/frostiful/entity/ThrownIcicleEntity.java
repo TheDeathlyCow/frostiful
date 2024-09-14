@@ -20,8 +20,6 @@ import net.minecraft.world.World;
 
 public class ThrownIcicleEntity extends PersistentProjectileEntity {
 
-    private static final ItemStack DEFAULT_STACK = new ItemStack(FItems.ICICLE);
-
     public ThrownIcicleEntity(EntityType<? extends ThrownIcicleEntity> entityType, World world) {
         super(entityType, world);
     }
