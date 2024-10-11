@@ -3,7 +3,6 @@
     "minVersion": "0.8",
     "package": "com.github.thedeathlycow.frostiful.mixins",
     "compatibilityLevel": "JAVA_21",
-    "plugin": "com.github.thedeathlycow.frostiful.mixins.compat.Plugin",
     "mixins": [
         "block.BannerPatternsRegistryMixin",
         "block.PowderSnowWalkableMixin",
@@ -27,8 +26,8 @@
         "entity.root.EntityMovementBlockMixin",
         "entity.root.PlayerMovementBlockMixin",
         "entity.root.RootedEntityImplMixin",
-        "item.ConsumeItemCriterionMixin",
         "item.ArmorTrimPatternsMixin",
+        "item.ConsumeItemCriterionMixin",
         "item.EnchantmentEntityEffectMixin",
         "powder_snow_effects.EntityPowderSnowRedirect",
         "powder_snow_effects.LivingEntityPowderSnowDisabler",
@@ -46,12 +45,11 @@
         "client.entity_renderer.PolarBearShearedTextureMixin",
         "client.entity_renderer.RootedEffectRenderer",
         "client.entity_renderer.ShakingRendererMixin",
+        "client.gui.HeartTypeMixin",
         "client.gui.InGameHudMixin",
         "client.gui.ShiveringRenderer",
         "client.ice_skate_fx.GameRendererMixin",
-        "client.ice_skate_fx.ModelMixin",
-        "compat.overflowingbars.absent.FreezingHearts",
-        "compat.overflowingbars.present.FreezingHearts"
+        "client.ice_skate_fx.ModelMixin"
     ],
     "injectors": {
         "defaultRequire": 1

@@ -72,8 +72,6 @@ dependencies {
 
     // Colorful Hearts https://modrinth.com/mod/colorful-hearts
     modCompileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
-    // OverflowingBars https://modrinth.com/mod/overflowing-bars
-    modCompileOnly("maven.modrinth:overflowing-bars:${project.overflowing_bars_version}") { transitive = false }
 
 
     modImplementation "dev.onyxstudios.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
