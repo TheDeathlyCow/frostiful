@@ -77,7 +77,6 @@ public class FItems {
 
     public static final Item GLACIAL_HEART = new Item(
             new Item.Settings()
-                    .maxCount(1)
                     .rarity(Rarity.UNCOMMON)
     );
 
