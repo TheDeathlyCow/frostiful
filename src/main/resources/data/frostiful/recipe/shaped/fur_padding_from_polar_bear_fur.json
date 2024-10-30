@@ -1,0 +1,15 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern": [
+        "##",
+        "##"
+    ],
+    "key": {
+        "#": {
+            "item": "frostiful:polar_bear_fur_tuft"
+        }
+    },
+    "result": {
+        "id": "frostiful:fur_padding"
+    }
+}

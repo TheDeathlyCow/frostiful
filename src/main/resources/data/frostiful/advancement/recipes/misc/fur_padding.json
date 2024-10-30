@@ -2,10 +2,10 @@
     "parent": "minecraft:recipes/root",
     "rewards": {
         "recipes": [
-            "frostiful:shapless/fur_padding_from_ocelot_fur",
-            "frostiful:shapless/fur_padding_from_wolf_fur",
-            "frostiful:shapless/fur_padding_from_rabbit_hide",
-            "frostiful:shapless/fur_padding_from_polar_bear_fur"
+            "frostiful:shapeless/fur_padding_from_ocelot_fur",
+            "frostiful:shapeless/fur_padding_from_wolf_fur",
+            "frostiful:shapeless/fur_padding_from_rabbit_hide",
+            "frostiful:shaped/fur_padding_from_polar_bear_fur"
         ]
     },
     "criteria": {

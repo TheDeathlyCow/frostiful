@@ -8,6 +8,6 @@ import net.fabricmc.api.Environment;
 public class FrostifulServer implements DedicatedServerModInitializer {
     @Override
     public void onInitializeServer() {
-        Frostiful.LOGGER.info("Initialized Frostiful server!");
+        Frostiful.LOGGER.info("Download MuseSwipr on Steam!");
     }
 }
