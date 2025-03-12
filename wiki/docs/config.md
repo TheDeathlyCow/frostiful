@@ -47,8 +47,6 @@ This config contains anything related to combat.
 * Chillager fire damage multiplier `chillagerFireDamageMultiplier`: Increases damage Chillagers take from fire
 * Frostologer fire damage multiplier `frostologerFireDamageMultiplier`: Increases damage Frostologers take from fire
 * Ice Skate upgrade generate chance in Igloos (0-1) `skateUpgradeTemplateIglooGenerateChance`: Chance of an Ice Skate upgrade template appearing in an Igloo chest
-* Very protective Frost Resistance multiplier `veryProtectiveFrostResistanceMultiplier`: Multiplies the base frost resistance of very protective armour materials
-* Protective Frost Resistance multiplier `protectiveFrostResistanceMultiplier`: Multiplies the base frost resistance of protective armour materials
 
 ## Freezing Config
 
@@ -65,7 +63,6 @@ This config contains all of the values associated with freezing.
 * Wind spawn rarity `windSpawnRarity`: Controls the chance of wind spawning when snowing. Higher values mean less wind.
 * Wind spawn rarity `windSpawnRarityThunder`: Controls the chance of wind spawning in a thunder storm. Higher values mean less wind.
 * :star: Max passive freezing percent (0-1) `maxPassiveFreezingPercent`: The minimum temperature scale at which passive freezing should apply (higher values = you can freeze more)
-* Passive freezing wetness scale multiplier `passiveFreezingWetnessScaleMultiplier`: Increases passive freezing when wet
 * Soak percent from splash water bottle (0-1) `soakPercentFromWaterPotion`: A 0-1 percentage of how wet splash water bottles should make a player.
 * Sun Lichen heat per level `sunLichenHeatPerLevel`: The amount of temperature that Sun Lichen adds to entities per level of warmth (The levels are cold=0, cool=1, warm=2, hot=3).
 * Sun Lichen burn time `sunLichenBurnTime`: How long Sun Lichen should set entities on fire when overheating, in ticks.
@@ -102,13 +99,8 @@ This config contains values associated with [icicles](./Icicle).
 
 This config contains all of the values associated with environmental temperature changes and effects.
 
-* :star: Do dry biome night freezing `doDryBiomeNightFreezing`: Whether dry biomes, like deserts, should be cold at night.
-* Night time temperature shift `nightTemperatureShift`: Ambient temperature per tick shift in dark areas of cold or cool biomes. *This will also apply in dark places during the day.*
-* :star: Cold biome base temperature change `coldBiomeTemperatureChange`: The base ambient temperature change per tick of snowy biomes that are not freezing. See [Temperature System](./Temperature-System).
-* :star: Freezing biome base temperature change `freezingBiomeTemperatureChange`: The base ambient temperature change per tick of freezing biomes. See [Temperature System](./Temperature-System).
 * Rain wetness increase per tick `rainWetnessIncrease`: How many points to increase wetness by each tick when in the rain.
 * Touching water wetness increase per tick `touchingWaterWetnessIncrease`: How many points to increase wetness by each tick when touching, but not submerged in, water.
-* Dry rate `dryRate`: How many points of wetness to remove each tick when not touching water in any way.
 * On fire dry rate `onFireDryDate`: How many points of wetness to remove each tick when on fire.
 * On fire warm rate `onFireWarmRate`: The amount of temperature per tick that should be added from entities that are on fire.
 * Powder snow freeze rate `powderSnowFreezeRate`: The per-tick temperature reduction of entities submerged in Powder Snow.
@@ -116,11 +108,26 @@ This config contains all of the values associated with environmental temperature
 * Minimum block light level for warmth `minLightForWarmth`: The minimum light level needed to an area to be warm.
 * Ultrawarm dimension warm rate `ultrawarmWarmRate`: The amount of warmth to apply in Ultrawarm dimensions like The Nether (does nothing if Scorchful is installed).
 * Maximum snow accumulation ticks `maxSnowAccumulationTicks`: Controls how much many ticks of snow can be accumulated on entities that will melt off them when they go inside or enter a warm area. Set to 0 to disable this feature.
-* :star: Enable seasons integration `enableSeasonsIntegration`: Allows the passive temperature of biomes to change depending on the Season. Requires a Seasons mod like Fabric Seasons or Serene Seasons and [Thermoo Patches](https://modrinth.com/mod/thermoo-patches) to have any effect. If disabled, then the Season will always be treated as being like Spring.
 
-# Removed Config Options
+## Removed Config Options
 
-These reflect some of the removed config options from Frostiful, and their replacements.
+These reflect the removed config options from Frostiful, and their replacements (starting from Frostiful 2.2).
 
-
-
+* Passive freezing wetness scale multiplier `passiveFreezingWetnessScaleMultiplier`: Increases passive freezing when wet
+    - Replaced with `environmentConfig/environmentFreezingSoakedMultiplier`
+* Very protective Frost Resistance multiplier `veryProtectiveFrostResistanceMultiplier`: Multiplies the base frost resistance of very protective armour materials
+    - Replaced with the [Frost Resistance Item Component](./components.md) 
+* Protective Frost Resistance multiplier `protectiveFrostResistanceMultiplier`: Multiplies the base frost resistance of protective armour materials
+    - Replaced with the [Frost Resistance Item Component](./components.md) 
+* Do dry biome night freezing `doDryBiomeNightFreezing`: Whether dry biomes, like deserts, should be cold at night.
+    - Feature is now defined by [Scorchful](https://github.com/TheDeathlyCow/scorchful)'s `scorchful:set_humidity/arid_climate` [environment provider](https://thermoo.thedeathlycow.com/datapacks/environment_provider_definition/)
+* Cold biome base temperature change `coldBiomeTemperatureChange`: The base ambient temperature change per tick of snowy biomes that are not freezing. See [Temperature System](https://github.com/TheDeathlyCow/frostiful/wiki/Temperature-System).
+    - Replaced by the `frostiful:cold_climate` [environment](https://thermoo.thedeathlycow.com/datapacks/environment_definition/).
+* Freezing biome base temperature change `freezingBiomeTemperatureChange`: The base ambient temperature change per tick of freezing biomes. See [Temperature System](https://github.com/TheDeathlyCow/frostiful/wiki/Temperature-System).
+    - Replaced by the `frostiful:freezing_climate` [environment](https://thermoo.thedeathlycow.com/datapacks/environment_definition/).
+* Night time temperature shift `nightTemperatureShift`: Ambient temperature per tick shift in dark areas of cold or cool biomes. *This will also apply in dark places during the day.*
+    - Replaced by the `frostiful:modifier/sun_light` [environment provider](https://thermoo.thedeathlycow.com/datapacks/environment_provider_definition/).
+* Dry rate `dryRate`: How many points of wetness to remove each tick when not touching water in any way.
+    - No replacement, hardcoded to be handled by Thermoo directly.
+* Enable seasons integration `enableSeasonsIntegration`: Allows the passive temperature of biomes to change depending on the Season. Requires a Seasons mod like Fabric Seasons or Serene Seasons and [Thermoo Patches](https://modrinth.com/mod/thermoo-patches) to have any effect. If disabled, then the Season will always be treated as being like Spring.
+    - Replaced by the `thermoo:seasonal/temperate` [environment provider types](https://thermoo.thedeathlycow.com/datapacks/environment_provider_definition/#temperate-seasonal), and used in the `frostiful:temperate_climate`, `frostiful:cool_climate`, `frostiful:cold_climate`, and `frostiful:freezing_climate` [environments](https://thermoo.thedeathlycow.com/datapacks/environment_definition/). 
