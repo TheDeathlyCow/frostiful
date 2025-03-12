@@ -1,5 +1,5 @@
 ---
-title: Datapack Tags
+title: 📋 Datapack Tags
 ---
 
 # Datapack Tags
@@ -7,7 +7,7 @@ title: Datapack Tags
 This page describes the various datapack tags used by Frostiful. It includes both new tags added by Frostiful, and tags
 from Thermoo that Frostiful appends to.
 
-!!! info
+!!! tip
     Items that are most relevant to mod pack authors have been marked with :star:
 
 !!! warning
@@ -25,8 +25,10 @@ Location: `data/frostiful/tags/armor_material`.
 These tags are defined in Thermoo, which you may want to read more
 about [here](https://thermoo.thedeathlycow.com/mods/armor_materials/).
 
+These tags will apply a [`frostiful:frost_resistance`](./components.md#frost-resistance) component to any new stacks created with these tags that does not already have this component. Editing these tags and reloading will not update existing stacks.
+
 !!! warning
-    These tags are deprecated, it is preferred that you use a separate mod like [Default Components](https://modrinth.com/mod/default-components) to modify attributes of custom armours instead.
+    These tags are deprecated, it is preferred that you use a the [`frostiful:frost_resistance`](./components.md#frost-resistance) component to modify attributes of custom armours instead.
 
 ## Banner Patterns
 

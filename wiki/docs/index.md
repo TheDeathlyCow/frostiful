@@ -1,18 +1,22 @@
 ---
-title: Homepage
+title: 🏠 Homepage
 ---
 # Frostiful Config Wiki
 
 Welcome to the Frostiful Config Wiki! This is a technical wiki specifically meant for addon and modpack developers who wish to configure Frostiful. For information about the content of Frostiful (blocks, items, mobs, etc) see: [https://github.com/TheDeathlyCow/frostiful/wiki](https://github.com/TheDeathlyCow/frostiful/wiki).
 
+!!! warning
+    Some links to content within Frostiful on this wiki are currently broken. These links will be fixed when Frostiful gets a new content wiki in the near future.
+
 ## 🌡️🐮 Thermoo Documentation
 
-Frostiful uses [Thermoo](https://github.com/TheDeathlyCow/thermoo) for its internal temperature and environment system. Mod pack authors may find its documentation useful. You can find the Thermoo Developer Wiki here: [https://thermoo.thedeathlycow.com/](https://thermoo.thedeathlycow.com/).
+Frostiful uses [Thermoo](https://github.com/TheDeathlyCow/thermoo) for its internal temperature and environment system. Mod pack authors may find its documentation useful. You can find the Thermoo Developer Wiki here: [https://thermoo.thedeathlycow.com/](https://thermoo.thedeathlycow.com/). This wiki is written with the assumption of general understanding of Thermoo.
 
 ## 🧭 Navigation
 
 - [Config File](./config.md)
 - [Datapack Tags](./tags.md)
+- [Component Types](./components.md)
 
 ## 🖥️ Mod Integrations
 

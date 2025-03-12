@@ -1,10 +1,10 @@
 ---
-title: Config File
+title: ⚙️ Config File
 ---
 # Config File
 Frostiful is highly configurable. However, not all of the values in the config are properly bounded and so adjusting them to weird values may result in undefined behaviour. Adjust the config at your own risk!
 
-!!! info
+!!! tip
     Items that are most relevant to mod pack authors have been marked with :star:
 
 !!! warning
@@ -116,9 +116,9 @@ These reflect the removed config options from Frostiful, and their replacements 
 * Passive freezing wetness scale multiplier `passiveFreezingWetnessScaleMultiplier`: Increases passive freezing when wet
     - Replaced with `environmentConfig/environmentFreezingSoakedMultiplier`
 * Very protective Frost Resistance multiplier `veryProtectiveFrostResistanceMultiplier`: Multiplies the base frost resistance of very protective armour materials
-    - Replaced with the [Frost Resistance Item Component](./components.md) 
+    - Replaced with the [Frost Resistance Item Component](./components.md#frost-resistance) 
 * Protective Frost Resistance multiplier `protectiveFrostResistanceMultiplier`: Multiplies the base frost resistance of protective armour materials
-    - Replaced with the [Frost Resistance Item Component](./components.md) 
+    - Replaced with the [Frost Resistance Item Component](./components.md#frost-resistance) 
 * Do dry biome night freezing `doDryBiomeNightFreezing`: Whether dry biomes, like deserts, should be cold at night.
     - Feature is now defined by [Scorchful](https://github.com/TheDeathlyCow/scorchful)'s `scorchful:set_humidity/arid_climate` [environment provider](https://thermoo.thedeathlycow.com/datapacks/environment_provider_definition/)
 * Cold biome base temperature change `coldBiomeTemperatureChange`: The base ambient temperature change per tick of snowy biomes that are not freezing. See [Temperature System](https://github.com/TheDeathlyCow/frostiful/wiki/Temperature-System).

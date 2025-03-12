@@ -7,7 +7,8 @@ nav:
   - index.md
   - config.md
   - tags.md
-  - Thermoo API: https://thermoo.thedeathlycow.com/
+  - components.md
+  - "🌡️ Thermoo API ↗": https://thermoo.thedeathlycow.com/
 
 theme:
   name: material
@@ -44,3 +45,6 @@ markdown_extensions:
   - pymdownx.emoji:
       emoji_index: !!python/name:material.extensions.emoji.twemoji
       emoji_generator: !!python/name:material.extensions.emoji.to_svg
+      options:
+          custom_icons:
+              - assets/.icons
