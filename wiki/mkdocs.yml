@@ -3,6 +3,12 @@ site_name: Frostiful Config Wiki
 repo_url: https://github.com/TheDeathlyCow/frostiful
 repo_name: TheDeathlyCow/frostiful
 
+nav:
+  - index.md
+  - config.md
+  - tags.md
+  - Thermoo API: https://thermoo.thedeathlycow.com/
+
 theme:
   name: material
   logo: assets/logo.png
@@ -35,6 +41,6 @@ markdown_extensions:
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true
-
-nav:
-  - index.md
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
