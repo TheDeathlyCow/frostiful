@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
 import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.frostiful.registry.FItems;
@@ -75,7 +76,11 @@ public final class ServerPlayerEnvironmentTickListeners {
         }
     }
 
-    static int envTemperatureToTemperaturePoint(TemperatureRecord temperature) {
+    public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature) {
+        return envTemperatureToTemperaturePoint(temperature, new EnvironmentConfigGroup());
+    }
+
+    private static int envTemperatureToTemperaturePoint(TemperatureRecord temperature, EnvironmentConfigGroup configGroup) {
         double temperatureC = temperature
                 .valueInUnit(TemperatureUnit.CELSIUS);
 

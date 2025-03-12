@@ -39,12 +39,6 @@ public class CombatConfigGroup implements ConfigData {
     @ConfigEntry.Gui.RequiresRestart
     float skateUpgradeTemplateIglooGenerateChance = 0.75f;
 
-    @ConfigEntry.Gui.RequiresRestart
-    double veryProtectiveFrostResistanceMultiplier = 1.0;
-
-    @ConfigEntry.Gui.RequiresRestart
-    double protectiveFrostResistanceMultiplier = 0.5;
-
     double iceBreakFallbackDamage = 3.0;
 
 
@@ -103,22 +97,6 @@ public class CombatConfigGroup implements ConfigData {
 
     public float getSkateUpgradeTemplateIglooGenerateChance() {
         return MathHelper.clamp(skateUpgradeTemplateIglooGenerateChance, 0f, 1f);
-    }
-
-    public double getVeryProtectiveFrostResistanceMultiplier() {
-        return veryProtectiveFrostResistanceMultiplier;
-    }
-
-    public double getProtectiveFrostResistanceMultiplier() {
-        return protectiveFrostResistanceMultiplier;
-    }
-
-    public double getVeryHarmfulFrostResistanceMultiplier() {
-        return -veryProtectiveFrostResistanceMultiplier;
-    }
-
-    public double getHarmfulFrostResistanceMultiplier() {
-        return -protectiveFrostResistanceMultiplier;
     }
 
     public double getIceBreakFallbackDamage() {
