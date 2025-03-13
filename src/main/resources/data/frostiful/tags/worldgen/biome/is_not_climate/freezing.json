@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
-        "#frostiful:freezing_blacklist_biomes"
+        "#frostiful:freezing_blacklist_biomes",
+        "minecraft:stony_peaks"
     ]
 }

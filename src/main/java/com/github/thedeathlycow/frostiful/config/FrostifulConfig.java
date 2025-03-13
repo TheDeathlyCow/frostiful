@@ -32,6 +32,8 @@ public class FrostifulConfig extends PartitioningSerializer.GlobalData {
 
     }
 
+
+
     public static void updateConfig(ConfigHolder<FrostifulConfig> configHolder) {
         UpdateConfigGroup config = configHolder.getConfig().updateConfig;
 

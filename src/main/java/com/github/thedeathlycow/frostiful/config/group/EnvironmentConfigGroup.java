@@ -3,9 +3,15 @@ package com.github.thedeathlycow.frostiful.config.group;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
+import me.shedaniel.autoconfig.annotation.ConfigEntry;
+import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = Frostiful.MODID + ".environment_config")
 public class EnvironmentConfigGroup implements ConfigData {
+    @ConfigEntry.Gui.Tooltip
+    double maxTemperatureForColdC = 10.0;
+    @ConfigEntry.Gui.Tooltip
+    double degreesCPerTemperatureDecrease = 10.0;
     int rainWetnessIncrease = 1;
     int touchingWaterWetnessIncrease = 5;
     int onFireDryDate = 50;
@@ -15,6 +21,14 @@ public class EnvironmentConfigGroup implements ConfigData {
     int minLightForWarmth = 5;
     int maxSnowAccumulationTicks = 100;
     float environmentFreezingSoakedMultiplier = 2.0f;
+
+    public double getMaxTemperatureForColdC() {
+        return maxTemperatureForColdC;
+    }
+
+    public double getDegreesCPerTemperatureDecrease() {
+        return degreesCPerTemperatureDecrease;
+    }
 
     public int getRainWetnessIncrease() {
         return rainWetnessIncrease;
@@ -56,5 +70,13 @@ public class EnvironmentConfigGroup implements ConfigData {
     public void validatePostLoad() throws ValidationException {
         ConfigData.super.validatePostLoad();
         this.maxSnowAccumulationTicks = Math.max(0, this.maxSnowAccumulationTicks);
+
+        if (this.maxTemperatureForColdC > 15) {
+            this.maxTemperatureForColdC = 15;
+        }
+
+        if (this.degreesCPerTemperatureDecrease <= 0) {
+            throw new ValidationException("Degrees C Per Temperature Decrease must be positive!");
+        }
     }
 }

@@ -4,6 +4,7 @@
         "#frostiful:freezing_blacklist_biomes",
         "#frostiful:is_climate/cool",
         "#frostiful:is_climate/cold",
-        "#frostiful:is_climate/freezing"
+        "#frostiful:is_climate/freezing",
+        "#c:is_swamp"
     ]
 }

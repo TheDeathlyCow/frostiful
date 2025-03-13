@@ -31,7 +31,8 @@ public final class ServerPlayerEnvironmentTickListeners {
         TemperatureRecord temperature = context.components()
                 .getOrDefault(EnvironmentComponentTypes.TEMPERATURE, TemperatureRecordComponent.DEFAULT);
 
-        int total = envTemperatureToTemperaturePoint(temperature);
+        EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
+        int total = envTemperatureToTemperaturePoint(temperature, config);
 
         if (total < 0 && context.affected().thermoo$isWet()) {
             total = (int) (total * Frostiful.getConfig().environmentConfig.getEnvironmentFreezingSoakedMultiplier());
@@ -80,14 +81,18 @@ public final class ServerPlayerEnvironmentTickListeners {
         return envTemperatureToTemperaturePoint(temperature, new EnvironmentConfigGroup());
     }
 
-    private static int envTemperatureToTemperaturePoint(TemperatureRecord temperature, EnvironmentConfigGroup configGroup) {
+    public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature, EnvironmentConfigGroup configGroup) {
         double temperatureC = temperature
                 .valueInUnit(TemperatureUnit.CELSIUS);
 
-        if (temperatureC > 10.0) {
+        double thresholdC = configGroup.getMaxTemperatureForColdC();
+        double degreesPerTemperatureDecrease = configGroup.getDegreesCPerTemperatureDecrease();
+
+        if (temperatureC > thresholdC) {
             return 0;
         }
-        return MathHelper.ceil((temperatureC / 10.0) - 2);
+        // Graphical proof: https://www.desmos.com/calculator/bn3ytw6lgj
+        return MathHelper.ceil((temperatureC - thresholdC - degreesPerTemperatureDecrease) / degreesPerTemperatureDecrease);
     }
 
     private ServerPlayerEnvironmentTickListeners() {

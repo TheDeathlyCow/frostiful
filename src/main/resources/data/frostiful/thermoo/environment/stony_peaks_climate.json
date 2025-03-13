@@ -1,0 +1,20 @@
+{
+    "biomes": [
+        "minecraft:stony_peaks"
+    ],
+    "provider": {
+        "type": "thermoo:seasonal/temperate",
+        "seasons": {
+            "winter": {
+                "type": "thermoo:modify",
+                "modifiers": "#frostiful:temperature_modifiers",
+                "base": {
+                    "type": "thermoo:constant",
+                    "components": {
+                        "thermoo:temperature": 5.0
+                    }
+                }
+            }
+        }
+    }
+}
