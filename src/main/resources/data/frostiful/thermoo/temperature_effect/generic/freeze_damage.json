@@ -1,15 +1,28 @@
+
 {
-    "type": "thermoo:damage",
-    "entity": {
-        "condition": "minecraft:reference",
-        "name": "frostiful:is_damaged_by_frost"
-    },
+    "type": "thermoo:sequence",
     "temperature_scale_range": {
         "max": -0.99
     },
     "config": {
-        "amount": 1,
-        "damage_interval": 20,
-        "damage_type": "minecraft:freeze"
+        "children": [
+            {
+                "type": "thermoo:damage",
+                "entity_type": "#minecraft:freeze_hurts_extra_types",
+                "config": {
+                    "amount": 5,
+                    "damage_interval": 20,
+                    "damage_type": "minecraft:freeze"
+                }
+            },
+            {
+                "type": "thermoo:damage",
+                "config": {
+                    "amount": 1,
+                    "damage_interval": 20,
+                    "damage_type": "minecraft:freeze"
+                }
+            }
+        ]
     }
 }
