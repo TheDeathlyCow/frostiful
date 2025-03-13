@@ -99,6 +99,8 @@ This config contains values associated with [icicles](./Icicle).
 
 This config contains all of the values associated with environmental temperature changes and effects.
 
+* Max temperature for cold (in °C) `maxTemperatureForColdC`: Cutoff temperature for freezing in Celsius. Biomes at or below this temperature will apply environment freezing to players. May not exceed 15°C.
+* Degrees per temperature level decrease (in °C/°K) `degreesCPerTemperatureDecrease`: Specifies the number of Celsius/Kelvin degrees the temperature must fall below the maximum cold threshold for each one-point decrease in player temperature per tick. Must be positive and non-zero.
 * Rain wetness increase per tick `rainWetnessIncrease`: How many points to increase wetness by each tick when in the rain.
 * Touching water wetness increase per tick `touchingWaterWetnessIncrease`: How many points to increase wetness by each tick when touching, but not submerged in, water.
 * On fire dry rate `onFireDryDate`: How many points of wetness to remove each tick when on fire.
