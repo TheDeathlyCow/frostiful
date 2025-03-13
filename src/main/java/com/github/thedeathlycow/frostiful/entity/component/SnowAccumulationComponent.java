@@ -2,25 +2,33 @@ package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
-import net.minecraft.world.LightType;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class SnowAccumulationComponent implements Component, ServerTickingComponent {
+    private static final EntityAttributeModifier SOAKED_MODIFIER = new EntityAttributeModifier(
+            Frostiful.id("soaked_cold_vulnerability"),
+            -1,
+            EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+    );
 
     private static final String KEY = "snow_accumulation";
 
     private final LivingEntity provider;
 
     private int snowAccumulation = 0;
+
+    private boolean appliedSoakedModifiers = false;
 
     public SnowAccumulationComponent(LivingEntity provider) {
         this.provider = provider;
@@ -36,6 +44,10 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
             this.addSnowAccumulation();
         } else {
             this.meltSnowAccumulation();
+        }
+
+        if (Frostiful.getConfig().environmentConfig.applyEnvironmentPenaltyWhenWet()) {
+            this.applySoakedEnvironmentFrostResistancePenalty();
         }
     }
 
@@ -81,6 +93,28 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
     private void addSnowAccumulation() {
         if (this.snowAccumulation < Frostiful.getConfig().environmentConfig.getMaxSnowAccumulationTicks()) {
             this.snowAccumulation++;
+        }
+    }
+
+    private void applySoakedEnvironmentFrostResistancePenalty() {
+        // this probably doesnt belong in this component but oh well i dont feel like making another one
+        boolean wet = provider.thermoo$isWet();
+        if (wet && !this.appliedSoakedModifiers && !provider.thermoo$ignoresFrigidWater()) {
+            var envFrostResistance = provider.getAttributeInstance(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
+
+            if (envFrostResistance != null) {
+                envFrostResistance.addTemporaryModifier(SOAKED_MODIFIER);
+                this.appliedSoakedModifiers = true;
+                Frostiful.LOGGER.debug("Applied soaked env frost resistance penalty");
+            }
+        } else if (!wet && this.appliedSoakedModifiers) {
+            var envFrostResistance = provider.getAttributeInstance(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
+
+            if (envFrostResistance != null) {
+                envFrostResistance.removeModifier(SOAKED_MODIFIER);
+                this.appliedSoakedModifiers = false;
+                Frostiful.LOGGER.debug("Removed soaked env frost resistance penalty");
+            }
         }
     }
 }

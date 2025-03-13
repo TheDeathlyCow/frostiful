@@ -366,6 +366,7 @@
   "text.autoconfig.frostiful.option.environmentConfig.maxTemperatureForColdC.@Tooltip": "May not exceed 15°C",
   "text.autoconfig.frostiful.option.environmentConfig.degreesCPerTemperatureDecrease": "Degrees per temperature level decrease (in °C/°K)",
   "text.autoconfig.frostiful.option.environmentConfig.degreesCPerTemperatureDecrease.@Tooltip": "Must be positive",
+  "text.autoconfig.frostiful.option.environmentConfig.applyEnvironmentPenaltyWhenWet": "Apply Environment Frost Resistance penalty when wet",
   "text.autoconfig.frostiful.option.environmentConfig.rainWetnessIncrease": "Rain wetness increase per tick",
   "text.autoconfig.frostiful.option.environmentConfig.touchingWaterWetnessIncrease": "Touching water wetness increase per tick",
   "text.autoconfig.frostiful.option.environmentConfig.onFireDryDate": "On fire dry rate",

@@ -15,6 +15,7 @@ public class FreezingConfigGroup implements ConfigData {
     boolean spawnWindInAir = true;
     boolean windDestroysTorches = true;
     boolean doSnowPacking = true;
+    boolean applyEnvironmentPenaltyWhenWet = true;
     int passiveFreezingTickInterval = 1;
     int windSpawnCapPerSecond = 15;
     int windSpawnRarity = 750;
