@@ -91,8 +91,9 @@ public final class ServerPlayerEnvironmentTickListeners {
         if (temperatureC > thresholdC) {
             return 0;
         }
-        // Graphical proof: https://www.desmos.com/calculator/bn3ytw6lgj
-        return MathHelper.ceil((temperatureC - thresholdC - degreesPerTemperatureDecrease) / degreesPerTemperatureDecrease);
+        // Graphical proof: https://www.desmos.com/calculator/01nd0aidxh
+        double base = (temperatureC - thresholdC - degreesPerTemperatureDecrease) / degreesPerTemperatureDecrease;
+        return MathHelper.ceil(configGroup.getEnvironmentTemperatureMultiplier() * base);
     }
 
     private ServerPlayerEnvironmentTickListeners() {

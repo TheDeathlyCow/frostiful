@@ -31,15 +31,13 @@ theme:
         icon: material/weather-night
         name: Switch to dark mode
 
-extra_css:
-  - assets/styles.css
-
 markdown_extensions:
   - attr_list
   - meta
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+  - footnotes
   - pymdownx.tabbed:
       alternate_style: true
   - pymdownx.emoji:
@@ -48,3 +46,14 @@ markdown_extensions:
       options:
           custom_icons:
               - assets/.icons
+  - pymdownx.arithmatex:
+      generic: true
+
+extra_javascript:
+  - assets/katex.js
+  - https://unpkg.com/katex@0/dist/katex.min.js
+  - https://unpkg.com/katex@0/dist/contrib/auto-render.min.js
+
+extra_css:
+  - assets/styles.css
+  - https://unpkg.com/katex@0/dist/katex.min.css

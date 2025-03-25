@@ -12,6 +12,7 @@ public class EnvironmentConfigGroup implements ConfigData {
     double maxTemperatureForColdC = 10.0;
     @ConfigEntry.Gui.Tooltip
     double degreesCPerTemperatureDecrease = 10.0;
+    double environmentTemperatureMultiplier = 1.0;
     boolean applyEnvironmentPenaltyWhenWet = true;
     int rainWetnessIncrease = 1;
     int touchingWaterWetnessIncrease = 5;
@@ -29,6 +30,10 @@ public class EnvironmentConfigGroup implements ConfigData {
 
     public double getDegreesCPerTemperatureDecrease() {
         return degreesCPerTemperatureDecrease;
+    }
+
+    public double getEnvironmentTemperatureMultiplier() {
+        return environmentTemperatureMultiplier;
     }
 
     public boolean applyEnvironmentPenaltyWhenWet() {

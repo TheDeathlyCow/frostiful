@@ -99,8 +99,9 @@ This config contains values associated with [icicles](./Icicle).
 
 This config contains all of the values associated with environmental temperature changes and effects.
 
-* :star: Max temperature for cold (in °C) `maxTemperatureForColdC`: Cutoff temperature for freezing in Celsius. Biomes at or below this temperature will apply environment freezing to players. May not exceed 15°C.
-* :star: Degrees per temperature level decrease (in °C/°K) `degreesCPerTemperatureDecrease`: Specifies the number of Celsius/Kelvin degrees the temperature must fall below the maximum cold threshold for each one-point decrease in player temperature per tick. Must be positive and non-zero.
+* :star: Max temperature for cold (in °C) `maxTemperatureForColdC` [^1]: Cutoff temperature for freezing in Celsius. Biomes at or below this temperature will apply environment freezing to players. May not exceed 15°C.
+* :star: Degrees per temperature level decrease (in °C/°K) `degreesCPerTemperatureDecrease` [^1]: Specifies the number of Celsius/Kelvin degrees the temperature must fall below the maximum cold threshold for each one-point decrease in player temperature per tick. Must be positive and non-zero.
+* :star: Environment temperature multiplier `environmentTemperatureMultiplier`[^1]: Multiplies the final temperature point change of an environment temperature change.
 * Apply Environment Frost Resistance penalty when wet `applyEnvironmentPenaltyWhenWet`: When true, entities will have their Environment Frost Resistance attribute set to 0 when wet.
 * Rain wetness increase per tick `rainWetnessIncrease`: How many points to increase wetness by each tick when in the rain.
 * Touching water wetness increase per tick `touchingWaterWetnessIncrease`: How many points to increase wetness by each tick when touching, but not submerged in, water.
@@ -142,4 +143,12 @@ These reflect the removed config options from Frostiful, and their replacements 
     - No replacement, hardcoded to be handled by Thermoo directly.
 * Enable seasons integration `enableSeasonsIntegration`: Allows the passive temperature of biomes to change depending on the Season. Requires a Seasons mod like Fabric Seasons or Serene Seasons and [Thermoo Patches](https://modrinth.com/mod/thermoo-patches) to have any effect. If disabled, then the Season will always be treated as being like Spring.
     - Removed in 2.2
-    - Replaced by the `thermoo:seasonal/temperate` [environment provider types](https://thermoo.thedeathlycow.com/datapacks/environment_provider_definition/#temperate-seasonal), and used in the `frostiful:temperate_climate`, `frostiful:cool_climate`, `frostiful:cold_climate`, and `frostiful:freezing_climate` [environments](https://thermoo.thedeathlycow.com/datapacks/environment_definition/). 
+    - Replaced by the `thermoo:seasonal/temperate` [environment provider types](https://thermoo.thedeathlycow.com/datapacks/environment_provider_definition/#temperate-seasonal), and used in the `frostiful:temperate_climate`, `frostiful:cool_climate`, `frostiful:cold_climate`, and `frostiful:freezing_climate` [environments](https://thermoo.thedeathlycow.com/datapacks/environment_definition/).
+
+[^1]: The final value of the environment temperature change is calculated using the formula below. You can find a graphical representation on [Desmos](https://www.desmos.com/calculator/01nd0aidxh).
+    ??? Formula
+        $$
+        B(T) = \frac{T - maxTemp - degreesPerTempDec}{degreesPerTempDec} \\
+        \\[12pt]
+        TemperatureChange(T) = max(0, ceil(multiplier * B(T))
+        $$
