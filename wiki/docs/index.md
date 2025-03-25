@@ -44,6 +44,7 @@ While this mod is designed to be as compatible as possible with other mods, it i
 Most other temperature mods do not work with Frostiful's temperature system and likely never will. Running Frostiful with these mods is redundant as they also add their own temperature system in addition to Frostiful. These mods may technically run together, however if you want to have a warm temperature system with Frostiful I would recommend using [Scorchful](https://modrinth.com/mod/scorchful) instead, as it was made to work together with Frostiful.
 
 All of the following temperature mods should not be used with Frostiful (note that this list is not exhaustive, these are just the ones I've heard of):
+
 * PyroFrost
 * EnvironmentZ
 * Thermite
