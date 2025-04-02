@@ -40,12 +40,12 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
             float limbAngle,
             float limbDistance
     ) {
-        if (!state.invisible && state.capeVisible) {
+        if (!state.invisible && state.capeTexture != null) {
             matrixStack.push();
             matrixStack.translate(0.0, 0.0, 3f / 16f);
 
             VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(
-                    RenderLayer.getEntitySolid(CapeComponent.DEFAULT_TEXTURE)
+                    RenderLayer.getEntitySolid(state.capeTexture)
             );
             this.model.setAngles(state);
             this.model.renderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);

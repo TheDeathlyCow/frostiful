@@ -76,7 +76,7 @@ public class FrostologerEntityModel<F extends FrostologerEntityRenderState> exte
             }
         }
 
-        if (state.capeVisible) {
+        if (state.capeTexture != null) {
             this.cloak.rotate(
                     new Quaternionf()
                             .rotateX((6.0f + state.capeSwing / 2.0f + state.capePitch) * MathHelper.PI / 180f)

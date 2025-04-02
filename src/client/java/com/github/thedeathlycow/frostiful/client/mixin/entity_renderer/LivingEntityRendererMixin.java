@@ -44,8 +44,11 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
         boolean isRooted = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity).isRooted();
         ((FLivingEntityRenderState) state).frostiful$isRooted(isRooted);
 
+        boolean shaking = state.shaking;
         if (SurvivalUtils.isShiveringRender(entity)) {
             state.shaking = true;
+        } else {
+            state.shaking = shaking;
         }
     }
 

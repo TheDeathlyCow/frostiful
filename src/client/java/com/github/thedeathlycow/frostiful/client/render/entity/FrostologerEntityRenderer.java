@@ -9,6 +9,8 @@ import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerEyesF
 import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerFrostFeatureRenderer;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
+import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -19,6 +21,7 @@ import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
 import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.component.DataComponentTypes;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.IllagerEntity;
 import net.minecraft.item.CrossbowItem;
@@ -73,15 +76,18 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
 
 
         state.usingFrostWand = frostologer.isUsingFrostWand();
-        state.capeVisible = frostologer.getEquippedStack(EquipmentSlot.CHEST).isOf(FItems.FROSTOLOGY_CLOAK);
         state.frostLayer = FrostLayer.fromFrostologer(frostologer);
         state.glowingEyes = frostologer.isAtMaxPower();
 
         float rgColorMul = 0.625f * frostologer.thermoo$getTemperatureScale() + 1f;
         state.tint = ColorHelper.fromFloats(1f, rgColorMul, rgColorMul, 1f);
 
-        if (state.capeVisible) {
+        CapeComponent cape = frostologer.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
+        if (cape != null) {
+            state.capeTexture = cape.capeTexture();
             updateCape(frostologer, state, tickDelta);
+        } else {
+            state.capeTexture = null;
         }
     }
 
