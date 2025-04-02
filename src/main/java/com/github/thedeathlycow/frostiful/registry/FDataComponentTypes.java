@@ -2,6 +2,8 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
+import com.github.thedeathlycow.frostiful.item.component.FrostologyCloakComponent;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
@@ -17,8 +19,21 @@ public final class FDataComponentTypes {
                     .cache()
     );
 
+    public static final ComponentType<FrostologyCloakComponent> FROSTOLOGY_CLOAK = register(
+            "frostology_claok",
+            builder -> builder
+                    .codec(FrostologyCloakComponent.CODEC)
+                    .packetCodec(FrostologyCloakComponent.PACKET_CODEC)
+                    .cache()
+    );
+
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful item components");
+
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
+            FrostologyCloakComponent component = FrostologyCloakComponent.getChestOrCape(entity);
+            return component != null && component.allowDamage(source);
+        });
     }
 
     private static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {

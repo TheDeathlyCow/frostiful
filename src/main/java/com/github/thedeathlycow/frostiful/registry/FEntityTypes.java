@@ -3,10 +3,7 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.*;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
-import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
-import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
-import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -15,7 +12,6 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.DamageTypeTags;
 
 public class FEntityTypes {
 
@@ -116,10 +112,6 @@ public class FEntityTypes {
                     }
                 })
         );
-
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
-            return !(source.isIn(DamageTypeTags.IS_FREEZING) && AbstractFrostologyCloakItem.isWearing(entity, stack -> stack.isOf(FItems.FROSTOLOGY_CLOAK)));
-        });
     }
 
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {

@@ -1,11 +1,13 @@
 package com.github.thedeathlycow.frostiful.client.render.state;
 
+import net.minecraft.util.Identifier;
+
 public interface FPlayerRendererState {
-    default boolean frostiful$wearingFrostologyCape() {
+    default Identifier frostiful$capeTexture() {
         throw new AssertionError("Implemented in mixin");
     }
 
-    default void frostiful$wearingFrostologyCape(boolean value) {
+    default void frostiful$capeTexture(Identifier id) {
         throw new AssertionError("Implemented in mixin");
     }
 }
