@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity.loot;
 
-import com.github.thedeathlycow.frostiful.item.component.FrostologyCloakComponent;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.FLootConditionTypes;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.entity.Entity;
@@ -22,7 +22,7 @@ public record ChestEquippedWithTrinketLootCondition() implements LootCondition {
     public boolean test(LootContext lootContext) {
         Entity entity = lootContext.get(LootContextParameters.THIS_ENTITY);
         if (entity instanceof LivingEntity livingEntity) {
-            return FrostologyCloakComponent.getChestOrCape(livingEntity) != null;
+            return CapeComponent.getChestOrCape(livingEntity) != null;
         }
 
         return false;

@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
-import com.github.thedeathlycow.frostiful.item.component.FrostologyCloakComponent;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
 import com.github.thedeathlycow.thermoo.api.environment.component.TemperatureRecordComponent;
@@ -67,7 +67,7 @@ public final class ServerPlayerEnvironmentTickListeners {
         if (doPassiveFreezing) {
             return TriState.TRUE;
         } else {
-            FrostologyCloakComponent component = FrostologyCloakComponent.getChestOrCape(player);
+            CapeComponent component = CapeComponent.getChestOrCape(player);
             return TriState.of(component != null && component.active());
         }
     }

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
-import com.github.thedeathlycow.frostiful.item.component.FrostologyCloakComponent;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
@@ -23,9 +23,9 @@ public class InertFrostologyCloakItem extends AbstractFrostologyCloakItem {
         );
     }
 
-    public static FrostologyCloakComponent createFrostologyCloakComponent() {
-        return new FrostologyCloakComponent(
-                FrostologyCloakComponent.DEFAULT_TEXTURE,
+    public static CapeComponent createCapeCloakComponent() {
+        return new CapeComponent(
+                CapeComponent.DEFAULT_TEXTURE,
                 DamageTypeTags.IS_FREEZING,
                 false
         );

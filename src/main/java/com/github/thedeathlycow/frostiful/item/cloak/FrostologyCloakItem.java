@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.item.component.FrostologyCloakComponent;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.component.type.AttributeModifierSlot;
@@ -9,11 +9,7 @@ import net.minecraft.component.type.AttributeModifiersComponent;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntryList;
 import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -38,9 +34,9 @@ public class FrostologyCloakItem extends AbstractFrostologyCloakItem {
         return builder.build();
     }
 
-    public static FrostologyCloakComponent createFrostologyCloakComponent() {
-        return new FrostologyCloakComponent(
-                FrostologyCloakComponent.DEFAULT_TEXTURE,
+    public static CapeComponent createCapeCloakComponent() {
+        return new CapeComponent(
+                CapeComponent.DEFAULT_TEXTURE,
                 DamageTypeTags.IS_FREEZING,
                 true
         );

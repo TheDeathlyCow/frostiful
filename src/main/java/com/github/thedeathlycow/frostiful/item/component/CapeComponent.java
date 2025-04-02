@@ -17,40 +17,40 @@ import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
-public record FrostologyCloakComponent(
+public record CapeComponent(
         Identifier capeTexture,
         TagKey<DamageType> blockedDamageTypes,
         boolean active
 ) {
     public static final Identifier DEFAULT_TEXTURE = Frostiful.id("textures/entity/frostology_cloak.png");
 
-    public static final Codec<FrostologyCloakComponent> CODEC = RecordCodecBuilder.create(
+    public static final Codec<CapeComponent> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     Identifier.CODEC
                             .optionalFieldOf("cape_texture", DEFAULT_TEXTURE)
-                            .forGetter(FrostologyCloakComponent::capeTexture),
+                            .forGetter(CapeComponent::capeTexture),
                     TagKey.codec(RegistryKeys.DAMAGE_TYPE)
                             .optionalFieldOf("block_damage_types", DamageTypeTags.IS_FREEZING)
-                            .forGetter(FrostologyCloakComponent::blockedDamageTypes),
+                            .forGetter(CapeComponent::blockedDamageTypes),
                     Codec.BOOL
                             .optionalFieldOf("active", false)
-                            .forGetter(FrostologyCloakComponent::active)
-            ).apply(instance, FrostologyCloakComponent::new)
+                            .forGetter(CapeComponent::active)
+            ).apply(instance, CapeComponent::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, FrostologyCloakComponent> PACKET_CODEC = PacketCodec.tuple(
+    public static final PacketCodec<RegistryByteBuf, CapeComponent> PACKET_CODEC = PacketCodec.tuple(
             Identifier.PACKET_CODEC,
-            FrostologyCloakComponent::capeTexture,
+            CapeComponent::capeTexture,
             TagKey.packetCodec(RegistryKeys.DAMAGE_TYPE),
-            FrostologyCloakComponent::blockedDamageTypes,
+            CapeComponent::blockedDamageTypes,
             PacketCodecs.BOOLEAN,
-            FrostologyCloakComponent::active,
-            FrostologyCloakComponent::new
+            CapeComponent::active,
+            CapeComponent::new
     );
 
     @Nullable
-    public static FrostologyCloakComponent getChestOrCape(LivingEntity entity) {
-        return entity.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.FROSTOLOGY_CLOAK);
+    public static CapeComponent getChestOrCape(LivingEntity entity) {
+        return entity.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
     }
 
     public boolean allowDamage(DamageSource source) {
