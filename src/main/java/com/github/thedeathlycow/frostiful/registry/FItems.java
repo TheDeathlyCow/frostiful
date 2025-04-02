@@ -134,6 +134,7 @@ public final class FItems {
             settings -> new InertFrostologyCloakItem(
                     settings
                             .maxCount(1)
+                            .component(FDataComponentTypes.FROSTOLOGY_CLOAK, InertFrostologyCloakItem.createFrostologyCloakComponent())
                             .rarity(Rarity.UNCOMMON)
             )
     );
@@ -143,6 +144,7 @@ public final class FItems {
             settings -> new FrostologyCloakItem(
                     settings
                             .attributeModifiers(FrostologyCloakItem.createAttributeModifiers())
+                            .component(FDataComponentTypes.FROSTOLOGY_CLOAK, FrostologyCloakItem.createFrostologyCloakComponent())
                             .rarity(Rarity.EPIC)
                             .maxCount(1)
             )

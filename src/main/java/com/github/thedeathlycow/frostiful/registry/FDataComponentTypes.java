@@ -32,7 +32,10 @@ public final class FDataComponentTypes {
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             FrostologyCloakComponent component = FrostologyCloakComponent.getChestOrCape(entity);
-            return component != null && component.allowDamage(source);
+            if (component != null) {
+                return component.allowDamage(source);
+            }
+            return true;
         });
     }
 

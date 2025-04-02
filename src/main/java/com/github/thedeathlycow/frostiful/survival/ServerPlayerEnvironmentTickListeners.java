@@ -68,7 +68,7 @@ public final class ServerPlayerEnvironmentTickListeners {
             return TriState.TRUE;
         } else {
             FrostologyCloakComponent component = FrostologyCloakComponent.getChestOrCape(player);
-            return TriState.of(component != null && component.isActive());
+            return TriState.of(component != null && component.active());
         }
     }
 

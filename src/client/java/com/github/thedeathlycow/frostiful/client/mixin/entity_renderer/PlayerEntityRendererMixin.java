@@ -2,14 +2,12 @@ package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
 import com.github.thedeathlycow.frostiful.client.render.state.FPlayerRendererState;
-import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.component.FrostologyCloakComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.client.network.AbstractClientPlayerEntity;
 import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.state.PlayerEntityRenderState;
 import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,6 +30,8 @@ public class PlayerEntityRendererMixin {
         FrostologyCloakComponent component = FrostologyCloakComponent.getChestOrCape(entity);
         if (component != null) {
             playerState.frostiful$capeTexture(component.capeTexture());
+        } else {
+            playerState.frostiful$capeTexture(null);
         }
     }
 }

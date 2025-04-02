@@ -11,16 +11,16 @@ import net.minecraft.entity.damage.DamageType;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.registry.RegistryCodecs;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.entry.RegistryEntryList;
+import net.minecraft.registry.tag.DamageTypeTags;
+import net.minecraft.registry.tag.TagKey;
 import net.minecraft.util.Identifier;
 import org.jetbrains.annotations.Nullable;
 
 public record FrostologyCloakComponent(
         Identifier capeTexture,
-        RegistryEntryList<DamageType> blockedDamageTypes,
-        boolean isActive
+        TagKey<DamageType> blockedDamageTypes,
+        boolean active
 ) {
     public static final Identifier DEFAULT_TEXTURE = Frostiful.id("textures/entity/frostology_cloak.png");
 
@@ -29,22 +29,22 @@ public record FrostologyCloakComponent(
                     Identifier.CODEC
                             .optionalFieldOf("cape_texture", DEFAULT_TEXTURE)
                             .forGetter(FrostologyCloakComponent::capeTexture),
-                    RegistryCodecs.entryList(RegistryKeys.DAMAGE_TYPE)
-                            .optionalFieldOf("block_damage_types", RegistryEntryList.empty())
+                    TagKey.codec(RegistryKeys.DAMAGE_TYPE)
+                            .optionalFieldOf("block_damage_types", DamageTypeTags.IS_FREEZING)
                             .forGetter(FrostologyCloakComponent::blockedDamageTypes),
                     Codec.BOOL
-                            .optionalFieldOf("is_active", false)
-                            .forGetter(FrostologyCloakComponent::isActive)
+                            .optionalFieldOf("active", false)
+                            .forGetter(FrostologyCloakComponent::active)
             ).apply(instance, FrostologyCloakComponent::new)
     );
 
     public static final PacketCodec<RegistryByteBuf, FrostologyCloakComponent> PACKET_CODEC = PacketCodec.tuple(
             Identifier.PACKET_CODEC,
             FrostologyCloakComponent::capeTexture,
-            PacketCodecs.registryEntryList(RegistryKeys.DAMAGE_TYPE),
+            TagKey.packetCodec(RegistryKeys.DAMAGE_TYPE),
             FrostologyCloakComponent::blockedDamageTypes,
             PacketCodecs.BOOLEAN,
-            FrostologyCloakComponent::isActive,
+            FrostologyCloakComponent::active,
             FrostologyCloakComponent::new
     );
 
@@ -54,6 +54,10 @@ public record FrostologyCloakComponent(
     }
 
     public boolean allowDamage(DamageSource source) {
-        return !this.blockedDamageTypes.contains(source.getTypeRegistryEntry());
+        if (source.isIn(this.blockedDamageTypes)) {
+            return !this.active;
+        } else {
+            return true;
+        }
     }
 }
