@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
-import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.client.item.ItemModelManager;
 import net.minecraft.client.render.entity.BipedEntityRenderer;
@@ -33,5 +33,12 @@ public abstract class BipedEntityRendererMixin<T extends MobEntity, S extends Bi
         FBipedRenderState fState = ((FBipedRenderState) state);
 
         fState.frostiful$wearingIceSkates(wearingSkates);
+
+        CapeComponent component = CapeComponent.getCapeOrChest(entity);
+        if (component != null) {
+            fState.frostiful$cape(component);
+        } else {
+            fState.frostiful$cape(null);
+        }
     }
 }
