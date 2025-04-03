@@ -29,9 +29,9 @@ public class PlayerEntityRendererMixin {
 
         CapeComponent component = CapeComponent.getCapeOrChest(entity);
         if (component != null) {
-            playerState.frostiful$capeTexture(component.capeTexture());
+            playerState.frostiful$cape(component);
         } else {
-            playerState.frostiful$capeTexture(null);
+            playerState.frostiful$cape(null);
         }
     }
 }

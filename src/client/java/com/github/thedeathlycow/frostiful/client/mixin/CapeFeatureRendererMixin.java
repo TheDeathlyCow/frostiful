@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FPlayerRendererState;
+import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -25,11 +26,13 @@ public class CapeFeatureRendererMixin {
             Operation<Identifier> original,
             @Local(argsOnly = true) PlayerEntityRenderState state
     ) {
-        Identifier frostologyCapeTexture = ((FPlayerRendererState) state).frostiful$capeTexture();
-        if (frostologyCapeTexture != null) {
-            return frostologyCapeTexture;
+        Identifier accountCape = original.call(instance);
+        CapeComponent cape = ((FPlayerRendererState) state).frostiful$cape();
+
+        if (cape != null && (accountCape == null || cape.overrideAccountCape())) {
+            return cape.capeTexture();
         } else {
-            return original.call(instance);
+            return accountCape;
         }
     }
 }
