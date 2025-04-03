@@ -11,6 +11,16 @@ This page documents the various component types added by Frostiful.
 This is a new component type added for items. For the full format in Vanilla,
 see: [https://minecraft.wiki/w/Data_component_format](https://minecraft.wiki/w/Data_component_format)
 
+### Cape
+
+This component is used to render capes and provide the freeze damage immunity of the [Cloak of Frostology](https://modded.wiki/w/Frostiful:Cloak_of_Frostology).
+
+- `{}` **minecraft:components**: Parent tag.
+    - `{}` **frostiful:cape**: A compound component.
+        - `"` **cape_texture**: An optional Identifier/Resource Location of the cape texture to use. Defaults to `textures/entity/frostology_cloak.png`.  
+        - `"` **block_damage_types**: An optional damage type tag ID of 
+
+
 ### Frost Resistance
 
 This component adds Frost Resistance and Environment Frost Resistance attribute modifiers to items. This does not modify

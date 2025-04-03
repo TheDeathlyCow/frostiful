@@ -27,7 +27,7 @@ public class PlayerEntityRendererMixin {
 
         bipedState.frostiful$wearingIceSkates(wearingSkates);
 
-        CapeComponent component = CapeComponent.getChestOrCape(entity);
+        CapeComponent component = CapeComponent.getCapeOrChest(entity);
         if (component != null) {
             playerState.frostiful$capeTexture(component.capeTexture());
         } else {

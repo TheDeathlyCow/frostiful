@@ -1,10 +1,8 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
-import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.tag.DamageTypeTags;
 import net.minecraft.text.Text;
 
 import java.util.List;
@@ -20,14 +18,6 @@ public class InertFrostologyCloakItem extends AbstractFrostologyCloakItem {
         tooltip.add(
                 Text.translatable("item.frostiful.inert_frostology_cloak.tooltip")
                         .setStyle(TextStyles.INERT_FROSTOLOGY_CLOAK_TOOLTIP)
-        );
-    }
-
-    public static CapeComponent createCapeCloakComponent() {
-        return new CapeComponent(
-                CapeComponent.DEFAULT_TEXTURE,
-                DamageTypeTags.IS_FREEZING,
-                false
         );
     }
 }

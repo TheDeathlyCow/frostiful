@@ -22,7 +22,7 @@ public record ChestEquippedWithTrinketLootCondition() implements LootCondition {
     public boolean test(LootContext lootContext) {
         Entity entity = lootContext.get(LootContextParameters.THIS_ENTITY);
         if (entity instanceof LivingEntity livingEntity) {
-            return CapeComponent.getChestOrCape(livingEntity) != null;
+            return CapeComponent.getCapeOrChest(livingEntity) != null;
         }
 
         return false;
