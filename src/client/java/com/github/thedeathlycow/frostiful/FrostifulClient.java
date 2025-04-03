@@ -9,7 +9,6 @@ import com.github.thedeathlycow.frostiful.client.registry.FEntityRenderers;
 import com.github.thedeathlycow.frostiful.client.registry.FParticleFactoryRegistry;
 import com.github.thedeathlycow.frostiful.client.render.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.compat.FoodIntegration;
-import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
 import com.github.thedeathlycow.thermoo.api.client.StatusBarOverlayRenderEvents;
 import net.fabricmc.api.ClientModInitializer;
@@ -18,9 +17,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
 import net.minecraft.client.render.item.model.special.SpecialModelTypes;
-import net.minecraft.resource.ResourceType;
 
 @Environment(EnvType.CLIENT)
 public class FrostifulClient implements ClientModInitializer {

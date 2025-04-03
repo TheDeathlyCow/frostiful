@@ -6,18 +6,13 @@ import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import dev.emi.trinkets.api.SlotReference;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
 import net.minecraft.util.Identifier;
-import net.minecraft.util.Pair;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public record CapeComponent(
         Identifier capeTexture,
@@ -50,11 +45,9 @@ public record CapeComponent(
     @Nullable
     public static CapeComponent getCapeOrChest(LivingEntity entity) {
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
-            List<Pair<SlotReference, ItemStack>> capes = TrinketsIntegration.getEquippedTrinket(entity, FDataComponentTypes.CAPE);
-            if (!capes.isEmpty()) {
-                return capes.getFirst()
-                        .getRight()
-                        .get(FDataComponentTypes.CAPE);
+            CapeComponent cape = TrinketsIntegration.getComponentInCapeSlot(entity, FDataComponentTypes.CAPE);
+            if (cape != null) {
+                return cape;
             }
         }
 
