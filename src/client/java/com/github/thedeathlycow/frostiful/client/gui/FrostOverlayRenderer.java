@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.client.gui;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -40,7 +41,7 @@ public final class FrostOverlayRenderer {
 
         // disable frost overlay when wearing frostology cloak
         boolean isOverlayDisabled = config.clientConfig.isDisableFrostOverlayWhenWearingFrostologyCloak()
-                && player.getEquippedStack(EquipmentSlot.CHEST).isOf(FItems.FROSTOLOGY_CLOAK);
+                && player.getEquippedStack(EquipmentSlot.CHEST).contains(FDataComponentTypes.ICE_LIKE);
 
         if (isOverlayDisabled) {
             return;
