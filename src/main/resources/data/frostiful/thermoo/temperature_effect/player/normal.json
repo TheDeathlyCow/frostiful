@@ -2,8 +2,10 @@
     "type": "thermoo:sequence",
     "entity_type": "minecraft:player",
     "entity": {
-        "condition": "minecraft:reference",
-        "name": "frostiful:can_freeze"
+        "condition": "minecraft:inverted",
+        "term": {
+            "condition": "frostiful:wearing_ice_like_item"
+        }
     },
     "temperature_scale_range": {
         "max": 0

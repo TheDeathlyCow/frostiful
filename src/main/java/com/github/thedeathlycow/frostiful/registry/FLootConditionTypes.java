@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.loot.ChestEquippedWithTrinketLootCondition;
+import com.github.thedeathlycow.frostiful.entity.loot.WearingIceLikeItem;
 import com.github.thedeathlycow.frostiful.entity.loot.LocationWarmthLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
 import net.minecraft.loot.condition.LootConditionType;
@@ -16,8 +16,8 @@ public class FLootConditionTypes {
             new LootConditionType(RootedLootCondition.CODEC)
     );
     public static final LootConditionType CHEST_EQUPPED_WITH_TRINKET = register(
-            "chest_equipped_with_trinket",
-            new LootConditionType(ChestEquippedWithTrinketLootCondition.CODEC)
+            "wearing_ice_like_item",
+            new LootConditionType(WearingIceLikeItem.CODEC)
     );
     public static final LootConditionType LOCATION_WARMTH = register(
             "location_warmth",

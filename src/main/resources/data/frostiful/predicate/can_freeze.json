@@ -1,7 +1,0 @@
-{
-    "condition": "minecraft:inverted",
-    "term": {
-        "condition": "minecraft:reference",
-        "name": "frostiful:benefits_from_cold"
-    }
-}

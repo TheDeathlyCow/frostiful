@@ -2,11 +2,19 @@
     "type": "thermoo:sequence",
     "entity_type": "minecraft:player",
     "entity": {
-        "condition": "minecraft:reference",
-        "name": "frostiful:wearing_frostology_cloak"
+        "condition": "frostiful:wearing_ice_like_item"
     },
     "config": {
         "children": [
+            {
+                "type": "thermoo:scaling_attribute_modifier",
+                "config": {
+                    "scale": -0.04,
+                    "id": "frostiful:temperature_effect.freezing_speed",
+                    "attribute_type": "minecraft:movement_speed",
+                    "operation": "add_value"
+                }
+            },
             {
                 "type": "thermoo:damage",
                 "temperature_scale_range": {
