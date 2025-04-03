@@ -18,34 +18,34 @@ import net.minecraft.registry.tag.TagKey;
 import java.util.ArrayList;
 import java.util.List;
 
-public record FrostologyComponent(
+public record IceLikeComponent(
         TagKey<DamageType> blockedDamageTypes
 ) {
-    public static final FrostologyComponent DEFAULT = new FrostologyComponent(DamageTypeTags.IS_FREEZING);
+    public static final IceLikeComponent DEFAULT = new IceLikeComponent(DamageTypeTags.IS_FREEZING);
 
-    public static final Codec<FrostologyComponent> CODEC = RecordCodecBuilder.create(
+    public static final Codec<IceLikeComponent> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                     TagKey.codec(RegistryKeys.DAMAGE_TYPE)
                             .optionalFieldOf("block_damage_types", DamageTypeTags.IS_FREEZING)
-                            .forGetter(FrostologyComponent::blockedDamageTypes)
-            ).apply(instance, FrostologyComponent::new)
+                            .forGetter(IceLikeComponent::blockedDamageTypes)
+            ).apply(instance, IceLikeComponent::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, FrostologyComponent> PACKET_CODEC = PacketCodec.tuple(
+    public static final PacketCodec<RegistryByteBuf, IceLikeComponent> PACKET_CODEC = PacketCodec.tuple(
             TagKey.packetCodec(RegistryKeys.DAMAGE_TYPE),
-            FrostologyComponent::blockedDamageTypes,
-            FrostologyComponent::new
+            IceLikeComponent::blockedDamageTypes,
+            IceLikeComponent::new
     );
 
     public static boolean isWearing(LivingEntity entity) {
         return !getAllEquipped(entity).isEmpty();
     }
 
-    public static List<FrostologyComponent> getAllEquipped(LivingEntity entity) {
-        List<FrostologyComponent> components = new ArrayList<>();
+    public static List<IceLikeComponent> getAllEquipped(LivingEntity entity) {
+        List<IceLikeComponent> components = new ArrayList<>();
 
         for (ItemStack stack : entity.getEquippedItems()) {
-            FrostologyComponent component = stack.get(FDataComponentTypes.FROSTOLOGY);
+            IceLikeComponent component = stack.get(FDataComponentTypes.ICE_LIKE);
             if (component != null) {
                 components.add(component);
             }
@@ -53,9 +53,9 @@ public record FrostologyComponent(
 
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
             components.addAll(
-                    TrinketsIntegration.getEquippedTrinket(entity, FDataComponentTypes.FROSTOLOGY)
+                    TrinketsIntegration.getEquippedTrinket(entity, FDataComponentTypes.ICE_LIKE)
                             .stream()
-                            .map(p -> p.getRight().get(FDataComponentTypes.FROSTOLOGY))
+                            .map(p -> p.getRight().get(FDataComponentTypes.ICE_LIKE))
                             .toList()
             );
         }

@@ -3,8 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
-import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
-import com.github.thedeathlycow.frostiful.item.component.FrostologyComponent;
+import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
 import com.github.thedeathlycow.thermoo.api.environment.component.TemperatureRecordComponent;
@@ -65,7 +64,7 @@ public final class ServerPlayerEnvironmentTickListeners {
         boolean doPassiveFreezing = config.freezingConfig.doPassiveFreezing()
                 && context.world().getGameRules().getBoolean(FGameRules.DO_PASSIVE_FREEZING);
 
-        if (FrostologyComponent.isWearing(player)) {
+        if (IceLikeComponent.isWearing(player)) {
             return TriState.TRUE;
         } else if (!doPassiveFreezing) {
             return TriState.FALSE;

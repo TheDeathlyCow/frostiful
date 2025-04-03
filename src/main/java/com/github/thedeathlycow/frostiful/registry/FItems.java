@@ -7,7 +7,7 @@ import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuil
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.cloak.InertFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
-import com.github.thedeathlycow.frostiful.item.component.FrostologyComponent;
+import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.block.Block;
@@ -146,7 +146,7 @@ public final class FItems {
             settings -> new FrostologyCloakItem(
                     settings
                             .attributeModifiers(FrostologyCloakItem.createAttributeModifiers())
-                            .component(FDataComponentTypes.FROSTOLOGY, FrostologyComponent.DEFAULT)
+                            .component(FDataComponentTypes.ICE_LIKE, IceLikeComponent.DEFAULT)
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
                             .rarity(Rarity.EPIC)
                             .maxCount(1)

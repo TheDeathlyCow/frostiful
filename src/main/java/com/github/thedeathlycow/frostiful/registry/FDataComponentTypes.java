@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
-import com.github.thedeathlycow.frostiful.item.component.FrostologyComponent;
+import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.component.ComponentType;
 import net.minecraft.registry.Registries;
@@ -29,11 +29,11 @@ public final class FDataComponentTypes {
                     .cache()
     );
 
-    public static final ComponentType<FrostologyComponent> FROSTOLOGY = register(
-            "frostology",
+    public static final ComponentType<IceLikeComponent> ICE_LIKE = register(
+            "ice_like",
             builder -> builder
-                    .codec(FrostologyComponent.CODEC)
-                    .packetCodec(FrostologyComponent.PACKET_CODEC)
+                    .codec(IceLikeComponent.CODEC)
+                    .packetCodec(IceLikeComponent.PACKET_CODEC)
                     .cache()
     );
 
@@ -41,8 +41,8 @@ public final class FDataComponentTypes {
         Frostiful.LOGGER.debug("Initialized Frostiful item components");
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
-            List<FrostologyComponent> components = FrostologyComponent.getAllEquipped(entity);
-            for (FrostologyComponent component : components) {
+            List<IceLikeComponent> components = IceLikeComponent.getAllEquipped(entity);
+            for (IceLikeComponent component : components) {
                 if (component.blockDamage(source)) {
                     return false;
                 }
