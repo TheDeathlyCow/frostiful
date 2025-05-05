@@ -357,7 +357,7 @@
   "text.autoconfig.frostiful.option.environmentConfig.maxTemperatureForColdC.@Tooltip": "No puede superar los 15°C",
   "text.autoconfig.frostiful.option.environmentConfig.degreesCPerTemperatureDecrease": "Grados por nivel de temperatura (en °C/°K)",
   "text.autoconfig.frostiful.option.environmentConfig.degreesCPerTemperatureDecrease.@Tooltip": "Debe ser un valor positivo",
-  "text.autoconfig.frostiful.option.environmentConfig.environmentTemperatureMultiplier": "Multiplicador de temperatura ambiental"
+  "text.autoconfig.frostiful.option.environmentConfig.environmentTemperatureMultiplier": "Multiplicador de temperatura ambiental",
   "text.autoconfig.frostiful.option.environmentConfig.applyEnvironmentPenaltyWhenWet": "Aplicar penalización de resistencia al frío al estar mojado",
   "text.autoconfig.frostiful.option.environmentConfig.rainWetnessIncrease": "Aumento de humedad por lluvia por tick",
   "text.autoconfig.frostiful.option.environmentConfig.touchingWaterWetnessIncrease": "Aumento de humedad al tocar agua por tick",
