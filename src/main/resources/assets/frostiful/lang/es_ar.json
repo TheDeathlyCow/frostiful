@@ -299,7 +299,7 @@
 
   "text.autoconfig.frostiful.option.updateConfig": "Actualizar Configuración",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Versión actual de configuración",
-    "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Activar actualizaciones automáticas de la configuración",
+  "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Activar actualizaciones automáticas de la configuración",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[0]": "Si está activado, actualiza automáticamente la configuración cuando",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[1]": "el mod haga cambios en los valores predeterminados.",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[2]": "Se recomienda que los modpacks desactiven esta opción",
@@ -366,7 +366,6 @@
   "text.autoconfig.frostiful.option.environmentConfig.maxTemperatureForColdC.@Tooltip": "No puede superar los 15°C",
   "text.autoconfig.frostiful.option.environmentConfig.degreesCPerTemperatureDecrease": "Grados por nivel de temperatura (en °C/°K)",
   "text.autoconfig.frostiful.option.environmentConfig.degreesCPerTemperatureDecrease.@Tooltip": "Debe ser un valor positivo",
-  "text.autoconfig.frostiful.option.environmentConfig.environmentTemperatureMultiplier": "Multiplicador de temperatura del entorno",
   "text.autoconfig.frostiful.option.environmentConfig.applyEnvironmentPenaltyWhenWet": "Aplicar penalización de resistencia al frío al estar mojado",
   "text.autoconfig.frostiful.option.environmentConfig.rainWetnessIncrease": "Aumento de humedad por lluvia por tick",
   "text.autoconfig.frostiful.option.environmentConfig.touchingWaterWetnessIncrease": "Aumento de humedad al tocar agua por tick",
