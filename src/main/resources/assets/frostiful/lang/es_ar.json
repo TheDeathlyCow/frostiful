@@ -163,16 +163,12 @@
   "entity.frostiful.freezing_wind": "Viento Gélido",
 
 
-  "attribute.frostiful.generic.ice_break_damage": "Daño por Romper Hielo",
+  "attribute.frostiful.ice_break_damage": "Daño por Romper Hielo",
 
 
   "frostiful.commands.frost.exception.not_living_entity": "¡El objetivo no es una entidad viva!",
   "commands.frostiful.get.progress.success": "La escala de congelación de %s es %d",
   "commands.frostiful.frost.add.success": "Se agregó %d de escarcha a %s (ahora %d)",
-  "commands.frostiful.frost.remove.success": "Se quitó %d de escarcha a %s (ahora %d)",
-  "commands.frostiful.frost.set.success": "Se estableció la escarcha de %s en %d",
-  "commands.frostiful.frost.get.current.success": "%s tiene %d de escarcha",
-  "commands.frostiful.frost.get.max.success": "%s puede tener un máximo de %d de escarcha",
   "commands.frostiful.root.set.success.single": "%s inmovilizado por %s ticks",
   "commands.frostiful.root.set.success.multiple": "%s objetivos inmovilizados por %s ticks",
 
