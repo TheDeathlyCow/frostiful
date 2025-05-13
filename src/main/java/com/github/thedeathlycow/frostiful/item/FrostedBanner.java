@@ -6,6 +6,7 @@ import net.minecraft.block.entity.BannerPattern;
 import net.minecraft.block.entity.BannerPatterns;
 import net.minecraft.component.DataComponentTypes;
 import net.minecraft.component.type.BannerPatternsComponent;
+import net.minecraft.component.type.TooltipDisplayComponent;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -42,7 +43,10 @@ public final class FrostedBanner {
                 .add(lookup, FBannerPatterns.FROSTOLOGY, DyeColor.CYAN)
                 .build();
         stack.set(DataComponentTypes.BANNER_PATTERNS, bannerPatterns);
-        stack.set(DataComponentTypes.HIDE_ADDITIONAL_TOOLTIP, Unit.INSTANCE);
+        stack.set(
+                DataComponentTypes.TOOLTIP_DISPLAY,
+                TooltipDisplayComponent.DEFAULT.with(DataComponentTypes.BANNER_PATTERNS, true)
+        );
         stack.set(DataComponentTypes.ITEM_NAME, FROSTED_BANNER_NAME);
 
         return stack;

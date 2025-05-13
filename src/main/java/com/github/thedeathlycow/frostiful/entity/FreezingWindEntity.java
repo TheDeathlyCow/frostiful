@@ -38,9 +38,7 @@ public class FreezingWindEntity extends WindEntity {
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        if (nbt.contains("Frost", NbtElement.INT_TYPE)) {
-            this.frost = nbt.getInt("Frost");
-        }
+        this.frost = nbt.getInt("Frost", Frostiful.getConfig().freezingConfig.getFreezingWindFrost());
     }
 
     @Override
