@@ -24,7 +24,7 @@ public abstract class WaterPotionSoakingMixin extends ThrownItemEntity {
     }
 
     @Inject(
-            method = "applyWater",
+            method = "explodeWaterPotion",
             at = @At("TAIL")
     )
     private void soakEntitiesWithWaterbottle(ServerWorld world, CallbackInfo ci, @Local Box box) {

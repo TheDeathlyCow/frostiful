@@ -78,9 +78,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
 
     @Override
     public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        if (tag.contains(LAST_BRUSHED_TIME_KEY, NbtElement.LONG_TYPE)) {
-            this.lastBrushTime = tag.getLong(LAST_BRUSHED_TIME_KEY);
-        }
+        this.lastBrushTime = tag.getLong(LAST_BRUSHED_TIME_KEY, -1);
     }
 
     @Override

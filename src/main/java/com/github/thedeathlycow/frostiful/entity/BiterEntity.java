@@ -147,7 +147,7 @@ public class BiterEntity extends HostileEntity {
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.attackTicks = nbt.getInt("AttackTicks");
+        this.attackTicks = nbt.getInt("AttackTicks", 0);
     }
 
     @Override
