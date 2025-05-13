@@ -5,7 +5,10 @@ import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.tag.FBiomeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
-import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
+import com.github.thedeathlycow.thermoo.api.environment.EnvironmentLookup;
+import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
+import com.github.thedeathlycow.thermoo.api.environment.component.TemperatureRecordComponent;
+import com.github.thedeathlycow.thermoo.api.util.TemperatureUnit;
 import net.minecraft.block.BlockState;
 import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.world.ServerWorld;
@@ -51,17 +54,19 @@ public final class WindManager {
         BlockPos.Mutable spawnPos = new BlockPos.Mutable();
         boolean spawnInAir = this.setSpawnPosition(world, chunk, spawnPos);
 
-        int temperatureChange = EnvironmentManager.INSTANCE.getController().getLocalTemperatureChange(world, spawnPos);
-        if (temperatureChange >= 0) {
-            return;
-        }
-
         if (spawnInAir && !config.spawnWindInAir()) {
             return;
         }
 
-        RegistryEntry<Biome> biome = world.getBiome(spawnPos);
+        RegistryEntry<Biome> biome = world.getBiomeAccess().getBiomeForNoiseGen(spawnPos);
         if (biome.isIn(FBiomeTags.FREEZING_WIND_NEVER_SPAWNS)) {
+            return;
+        }
+
+        double temperatureC = EnvironmentLookup.getInstance().findEnvironmentComponents(world, spawnPos)
+                .getOrDefault(EnvironmentComponentTypes.TEMPERATURE, TemperatureRecordComponent.DEFAULT)
+                .valueInUnit(TemperatureUnit.CELSIUS);
+        if (temperatureC > 0) {
             return;
         }
 
