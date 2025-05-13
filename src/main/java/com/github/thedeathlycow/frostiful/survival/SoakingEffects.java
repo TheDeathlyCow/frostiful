@@ -56,7 +56,7 @@ public final class SoakingEffects {
 
     private static int getSubmerged(EnvironmentTickContext<? extends LivingEntity> context, EntityInvoker invoker) {
         LivingEntity entity = context.affected();
-        return entity.isSubmergedInWater() || invoker.frostiful$invokeIsInsideBubbleColumn()
+        return entity.isSubmergedInWater()
                 ? entity.thermoo$getMaxWetTicks()
                 : 0;
     }

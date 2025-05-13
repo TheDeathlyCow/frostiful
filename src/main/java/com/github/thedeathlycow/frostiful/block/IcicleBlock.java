@@ -49,8 +49,7 @@ import java.util.function.Predicate;
  * damage players.
  * Largely based on code from {@link PointedDripstoneBlock}.
  */
-@SuppressWarnings("deprecation")
-public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
+public class IcicleBlock extends Block implements Falling, Waterloggable {
 
     /**
      * Icicles can point up and down
@@ -102,7 +101,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @return Returns true if the icicle can be placed, false otherwise
      */
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+    protected boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
         return canPlaceAtWithDirection(world, pos, state.get(VERTICAL_DIRECTION));
     }
 
@@ -115,7 +114,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @param projectile The projectile that hit the icicle
      */
     @Override
-    public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
+    protected void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
         BlockPos blockPos = hit.getBlockPos();
         if (world instanceof ServerWorld serverWorld && projectile.canModifyAt(serverWorld, blockPos) && projectile.getVelocity().length() > 0.6D) {
             world.breakBlock(blockPos, true);
@@ -132,10 +131,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @param fallDistance How far the entity fell
      */
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
             DamageSource damageSource = FDamageSources.getDamageSources(world).frostiful$icicle();
-            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, damageSource);
+            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0, 2.0f, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
                 livingEntity.thermoo$addTemperature(
@@ -194,7 +193,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @return Returns the updated {@link BlockState} of the icicle
      */
     @Override
-    public BlockState getStateForNeighborUpdate(
+    protected BlockState getStateForNeighborUpdate(
             BlockState state,
             WorldView world,
             ScheduledTickView tickView,
@@ -237,7 +236,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingUp(state) && !this.canPlaceAt(state, world, pos)) {
             world.breakBlock(pos, true);
         } else {
@@ -246,7 +245,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if (isPointingDown(state)) {
             FrostifulConfig config = Frostiful.getConfig();
             if (random.nextFloat() < config.icicleConfig.getBecomeUnstableChance() && isHeldByIcicleFallable(state, world, pos)) { // fall
@@ -272,19 +271,19 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public FluidState getFluidState(BlockState state) {
+    protected FluidState getFluidState(BlockState state) {
         return Boolean.TRUE.equals(state.get(WATERLOGGED))
                 ? Fluids.WATER.getStill(false)
                 : super.getFluidState(state);
     }
 
     @Override
-    public VoxelShape getCullingShape(BlockState state) {
+    protected VoxelShape getCullingShape(BlockState state) {
         return VoxelShapes.empty();
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
+    protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         Thickness thickness = state.get(THICKNESS);
         VoxelShape voxelShape;
         if (thickness == Thickness.TIP_MERGE) {
@@ -308,12 +307,12 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public boolean isShapeFullCube(BlockState state, BlockView world, BlockPos pos) {
+    protected boolean isShapeFullCube(BlockState state, BlockView world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public float getMaxHorizontalModelOffset() {
+    protected float getMaxHorizontalModelOffset() {
         return 0.125F;
     }
 
@@ -428,7 +427,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    public static boolean isTipDown(BlockState state) {
+    private static boolean isTipDown(BlockState state) {
         return isPointingDown(state) && state.get(THICKNESS) == Thickness.TIP;
     }
 
@@ -570,6 +569,6 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         double xOffset = (double) pos.getX() + 0.5D + vec3d.x;
         double yOffset = (double) ((float) (pos.getY() + 1) - 0.6875F) - 0.0625D;
         double zOffset = (double) pos.getZ() + 0.5D + vec3d.z;
-        world.addParticle(ParticleTypes.SNOWFLAKE, xOffset, yOffset, zOffset, 0.0D, 0.0D, 0.0D);
+        world.addParticleClient(ParticleTypes.SNOWFLAKE, xOffset, yOffset, zOffset, 0.0D, 0.0D, 0.0D);
     }
 }

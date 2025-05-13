@@ -370,7 +370,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getLengthY());
             double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getLengthZ());
 
-            getWorld().addParticle(
+            this.getWorld().addParticleClient(
                     ParticleTypes.SNOWFLAKE,
                     x, y, z,
                     0, 0, 0
@@ -509,7 +509,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
+        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand", false));
     }
 
     @Override
