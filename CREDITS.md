@@ -16,6 +16,8 @@
 * [Tefnya](https://github.com/tefnya) - Russian
 * [unroman](https://github.com/unroman) - Ukrainian
 * [Nezila](https://github.com/nezila) - Ukrainian
+* [Texaliuz](https://github.com/Texaliuz) - Spanish (Argentina)
+* [TheLegendofSaram](https://github.com/TheLegendofSaram) - Spanish (Mexico)
 
 # Sound Effects
 
