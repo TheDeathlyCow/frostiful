@@ -27,39 +27,32 @@
   "item.frostiful.inert_frostology_cloak.tooltip": "Inerte",
   "item.frostiful.castle_key": "Llave del Castillo",
   "item.frostiful.ominous_castle_key": "Llave del Castillo Tenebroso",
-  "item.frostiful.warming.tooltip": "Calentito \uD83D\uDD25",
+  "item.frostiful.warming.tooltip": "Calentito 🔥",
   "item.frostiful.frozen_rod": "Vara Congelada",
-
   "item.minecraft.potion.effect.frostiful.freezing": "Poción de Congelamiento",
   "item.minecraft.splash_potion.effect.frostiful.freezing": "Poción Arrojadiza de Congelamiento",
   "item.minecraft.lingering_potion.effect.frostiful.freezing": "Poción Persistente de Congelamiento",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Flecha de Congelamiento",
-  
   "item.frostiful.fur_upgrade_template": "Plantilla de Herrería",
   "item.frostiful.smithing_template.fur_upgrade.applies_to": "Armadura de Cota de Malla",
   "item.frostiful.smithing_template.fur_upgrade.ingredients": "Relleno de Piel",
   "item.frostiful.smithing_template.fur_upgrade.base_slot_description": "Colocá una pieza de cota de malla acá",
   "item.frostiful.smithing_template.fur_upgrade.additions_slot_description": "Poné un poco de relleno de piel acá",
-
   "item.frostiful.ice_skate_upgrade_template": "Plantilla de Herrería",
   "item.frostiful.smithing_template.ice_skate_upgrade.applies_to": "Botas de Piel y Botas de Piel con Cota",
   "item.frostiful.smithing_template.ice_skate_upgrade.ingredients": "Espada de Hierro",
   "item.frostiful.smithing_template.ice_skate_upgrade.base_slot_description": "Colocá unas botas de piel o de piel con cota acá",
   "item.frostiful.smithing_template.ice_skate_upgrade.additions_slot_description": "Poné una espada de hierro acá",
-
   "item.frostiful.frosty_armor_trim_smithing_template": "Plantilla de Herrería",
   "trim_pattern.frostiful.frosty": "Adorno Escarchado",
   "item.frostiful.glacial_armor_trim_smithing_template": "Plantilla de Herrería",
   "trim_pattern.frostiful.glacial": "Adorno Glacial",
   "item.frostiful.snow_man_armor_trim_smithing_template": "Plantilla de Herrería",
   "trim_pattern.frostiful.snow_man": "Adorno Hombre de Nieve",
-
   "item.frostiful.snowflake_banner_pattern": "Patrón de Estandarte",
   "item.frostiful.icicle_banner_pattern": "Patrón de Estandarte",
   "item.frostiful.frostology_banner_pattern": "Patrón de Estandarte",
-
   "filled_map.frostiful.frostologer_castle": "Mapa Explorador de Castillo Nevado",
-
   "tag.block.c.icicles": "Carámbanos",
   "tag.item.c.icicles": "Carámbanos",
   "tag.item.frostiful.icicles": "Carámbanos",
@@ -73,8 +66,6 @@
   "tag.item.frostiful.enchantable.frost_wand": "Varitas de Escarcha Encantables",
   "tag.item.frostiful.supports_heat_drain": "Soporta Agotamiento y la Maldición del Toque Congelado",
   "tag.item.frostiful.frostology_cloaks": "Capas de Frostología",
-
-
   "block.frostiful.icicle": "Carámbano",
   "block.frostiful.cold_sun_lichen": "Líquenes Solares Fríos",
   "block.frostiful.cool_sun_lichen": "Líquenes Solares Frescos",
@@ -100,7 +91,6 @@
   "block.frostiful.icy_vault": "Cámara helada",
   "block.frostiful.brittle_ice": "Hielo quebradizo",
   "block.frostiful.frosted_banner": "Estandarte escarchado",
-
   "block.minecraft.banner.frostiful.snowflake.white": "Copo de nieve blanco",
   "block.minecraft.banner.frostiful.snowflake.light_gray": "Copo de nieve gris claro",
   "block.minecraft.banner.frostiful.snowflake.gray": "Copo de nieve gris",
@@ -117,7 +107,6 @@
   "block.minecraft.banner.frostiful.snowflake.purple": "Copo de nieve violeta",
   "block.minecraft.banner.frostiful.snowflake.magenta": "Copo de nieve magenta",
   "block.minecraft.banner.frostiful.snowflake.pink": "Copo de nieve rosa",
-
   "block.minecraft.banner.frostiful.icicle.white": "Carámbano blanco",
   "block.minecraft.banner.frostiful.icicle.light_gray": "Carámbano gris claro",
   "block.minecraft.banner.frostiful.icicle.gray": "Carámbano gris",
@@ -134,7 +123,6 @@
   "block.minecraft.banner.frostiful.icicle.purple": "Carámbano violeta",
   "block.minecraft.banner.frostiful.icicle.magenta": "Carámbano magenta",
   "block.minecraft.banner.frostiful.icicle.pink": "Carámbano rosa",
-
   "block.minecraft.banner.frostiful.frostology.white": "Frostología blanca",
   "block.minecraft.banner.frostiful.frostology.light_gray": "Frostología gris claro",
   "block.minecraft.banner.frostiful.frostology.gray": "Frostología gris",
@@ -151,8 +139,6 @@
   "block.minecraft.banner.frostiful.frostology.purple": "Escarchología Violeta",
   "block.minecraft.banner.frostiful.frostology.magenta": "Escarchología Magenta",
   "block.minecraft.banner.frostiful.frostology.pink": "Escarchología Rosa",
-
-
   "entity.frostiful.frost_spell": "Hechizo de Escarcha",
   "entity.frostiful.packed_snowball": "Bola de Nieve Compactada",
   "entity.frostiful.glacial_arrow": "Flecha Glacial",
@@ -161,25 +147,14 @@
   "entity.frostiful.thrown_icicle": "Carámbano Lanzado",
   "entity.frostiful.biter": "Mordedor",
   "entity.frostiful.freezing_wind": "Viento Gélido",
-
-
   "attribute.frostiful.ice_break_damage": "Daño por Romper Hielo",
-
-
-  "frostiful.commands.frost.exception.not_living_entity": "¡El objetivo no es una entidad viva!",
-  "commands.frostiful.get.progress.success": "La escala de congelación de %s es %d",
-  "commands.frostiful.frost.add.success": "Se agregó %d de escarcha a %s (ahora %d)",
   "commands.frostiful.root.set.success.single": "%s inmovilizado por %s ticks",
   "commands.frostiful.root.set.success.multiple": "%s objetivos inmovilizados por %s ticks",
-
-
   "gamerule.frostiful.doPassiveFreezing": "Congelación ambiental",
   "gamerule.frostiful.doPassiveFreezing.description": "Si está activado, los jugadores se irán congelando lentamente por el entorno. Los jugadores con la Capa de Escarchología no se ven afectados.",
   "gamerule.category.frostiful": "Frostiful",
-
   "advancements.frostiful.root.title": "Frostiful",
   "advancements.frostiful.root.description": "Un mod de temperatura bajo cero",
-
   "advancements.frostiful.adventure.find_chillager_outpost.title": "Armando Campamento",
   "advancements.frostiful.adventure.find_chillager_outpost.description": "Encontrá un Puesto de Fríologos",
   "advancements.frostiful.adventure.find_frostologer_castle.title": "Bien Empacado",
@@ -190,30 +165,24 @@
   "advancements.frostiful.adventure.obtain_frostology_cloak.description": "Obtené la Capa de Frostología",
   "advancements.frostiful.adventure.freeze_creepers.title": "¡Quieto ahí!",
   "advancements.frostiful.adventure.freeze_creepers.description": "Congelá 3 creepers con un solo disparo usando la Vara de Escarcha",
-
   "advancements.frostiful.adventure.trim_with_packed_snow_patterns.title": "Frosty el Muñeco de Nieve",
   "advancements.frostiful.adventure.trim_with_packed_snow_patterns.description": "Aplicá al menos una vez los patrones de recorte Frosty y Muñeco de Nieve",
   "advancements.frostiful.adventure.trim_with_glacial_pattern.title": "Rey del Norte",
   "advancements.frostiful.adventure.trim_with_glacial_pattern.description": "Aplicá el patrón de recorte Glacial al menos una vez",
-
   "advancements.frostiful.adventure.brush_polar_bear.title": "Si no es amigo, ¿por qué tiene forma de amigo?",
   "advancements.frostiful.adventure.brush_polar_bear.description": "Cepillá a un oso polar para obtener su pelaje",
-
   "advancements.frostiful.adventure.craft_any_fur_armor.title": "Ropero invernal",
   "advancements.frostiful.adventure.craft_any_fur_armor.description": "Mantenete calentito con armadura de piel",
   "advancements.frostiful.adventure.chain_fur_armor.title": "Furro blindado",
   "advancements.frostiful.adventure.chain_fur_armor.description": "Obtené un conjunto completo de armadura de cota de malla acolchada con piel",
   "advancements.frostiful.adventure.obtain_ice_skates.title": "Zapatos con filo",
   "advancements.frostiful.adventure.obtain_ice_skates.description": "Fabricá un par de patines de hielo en la mesa de herrería",
-
   "advancements.frostiful.adventure.warm_by_light.title": "Una luz cálida y hermosa",
   "advancements.frostiful.adventure.warm_by_light.description": "Usá la luz para mantenerte calentito",
   "advancements.frostiful.adventure.add_log_to_fire.title": "Fogata rústica",
   "advancements.frostiful.adventure.add_log_to_fire.description": "Agregá un tronco a una fogata",
   "advancements.frostiful.adventure.step_on_sun_lichen.title": "¡Ay! ¡Quema!",
   "advancements.frostiful.adventure.step_on_sun_lichen.description": "Usá líquenes solares para entrar en calor",
-
-
   "death.attack.frostiful.icicle": "A %1$s lo empaló un carámbano",
   "death.attack.frostiful.icicle.player": "A %1$s lo empaló un carámbano mientras peleaba con %2$s",
   "death.attack.frostiful.fallingIcicle": "A %1$s lo atravesó un carámbano que cayó",
@@ -224,7 +193,6 @@
   "death.attack.frostiful.melt.player": "%1$s se convirtió en un charquito gracias a %2$s",
   "death.attack.frostiful.brokenIce": "A %1$s lo hicieron trizas",
   "death.attack.frostiful.brokenIce.player": "A %1$s lo hicieron trizas %2$s",
-
   "subtitles.frostiful.block.sun_lichen.discharge": "El líquen solar libera calor",
   "subtitles.frostiful.block.campfire.hiss": "La fogata chisporrotea",
   "subtitles.item.frostiful.frost_wand.cast_spell": "La vara de escarcha lanza un hechizo",
@@ -255,27 +223,19 @@
   "subtitles.entity.frostiful.generic.ice_skate.stop": "Patines se detienen",
   "subtitles.item.frostiful.armor.equip_leather": "La armadura de piel cruje",
   "subtitles.block.frostiful.brittle_ice.crack": "El hielo se resquebraja",
-
   "effect.frostiful.frost_bite": "Mordedura de Escarcha",
   "effect.frostiful.warmth": "Calidez",
-
-
   "enchantment.frostiful.enervation": "Enervación",
   "enchantment.frostiful.enervation.desc": "Roba calor de enemigos fríos al atacar",
   "enchantment.frostiful.ice_breaker": "Rompehielo",
   "enchantment.frostiful.ice_breaker.desc": "Aumenta el daño al atacar enemigos congelados en hielo",
   "enchantment.frostiful.frozen_touch_curse": "Maldición del Toque Helado",
   "enchantment.frostiful.frozen_touch_curse.desc": "Transfiere tu calor a los enemigos al atacar",
-
-
   "frostiful.tip.freezing_wind_extinguishes_fire": "El Viento Helado apaga las llamas al aire libre",
   "frostiful.tip.stay_warm_near_light": "Mantenete calentito quedándote cerca de fuentes de luz artificial (antorchas, piedra luminosa)",
   "frostiful.tip.frostologer_benefits_from_being_cold": "El Fríólogo se potencia con el frío. ¡Calentalo!",
   "frostiful.tip.walk_on_sun_lichen": "Caminá sobre líquenes solares para calentarte rápido",
-
-
   "text.autoconfig.frostiful.title": "Configuración de Frostiful",
-
   "text.autoconfig.frostiful.option.clientConfig": "Configuración del Cliente",
   "text.autoconfig.frostiful.option.clientConfig.frostOverlayStart": "Porcentaje de inicio de superposición de escarcha (0-1)",
   "text.autoconfig.frostiful.option.clientConfig.doColdHeartOverlay": "Mostrar superposición de corazón congelado",
@@ -283,14 +243,12 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Desactivar superposición de escarcha al usar la Capa de Fríología",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Temblar de la mano al tiritar",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Intensidad del temblor de mano",
-
   "text.autoconfig.frostiful.option.updateConfig": "Actualizar Configuración",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Versión actual de configuración",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Activar actualizaciones automáticas de la configuración",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[0]": "Si está activado, actualiza automáticamente la configuración cuando",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[1]": "el mod haga cambios en los valores predeterminados.",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates.@Tooltip[2]": "Se recomienda que los modpacks desactiven esta opción",
-  
   "text.autoconfig.frostiful.option.combatConfig": "Configuración de combate",
   "text.autoconfig.frostiful.option.combatConfig.doChillagerPatrols": "Habilitar patrullas de Chillagers",
   "text.autoconfig.frostiful.option.combatConfig.straysCarryFrostArrows": "Los Strays llevan flechas heladas",
@@ -307,7 +265,6 @@
   "text.autoconfig.frostiful.option.combatConfig.frostologerFireDamageMultiplier": "Multiplicador de daño por fuego al Frostólogo",
   "text.autoconfig.frostiful.option.combatConfig.skateUpgradeTemplateIglooGenerateChance": "Probabilidad de generar mejora de patines en iglús (0-1)",
   "text.autoconfig.frostiful.option.combatConfig.iceBreakFallbackDamage": "Daño de respaldo de Rompehielos",
-  
   "text.autoconfig.frostiful.option.freezingConfig": "Configuración de congelamiento",
   "text.autoconfig.frostiful.option.freezingConfig.doPassiveFreezing": "Habilitar congelamiento pasivo (global)",
   "text.autoconfig.frostiful.option.freezingConfig.doSnowPacking": "La nieve se compacta con entidades pesadas",
@@ -332,7 +289,6 @@
   "text.autoconfig.frostiful.option.freezingConfig.shiverWarmth": "Calor ganado por tiritar por tick",
   "text.autoconfig.frostiful.option.freezingConfig.stopShiverWarmingBelowFoodLevel": "Dejar de generar calor por tiritar si el nivel de comida es bajo",
   "text.autoconfig.frostiful.option.freezingConfig.warmFoodWarmthTime": "Duración del calor por comida o bebida caliente (ticks)",
-  
   "text.autoconfig.frostiful.option.icicleConfig": "Configuración de carámbanos",
   "text.autoconfig.frostiful.option.icicleConfig.iciclesFormInWeather": "Los carámbanos se forman con el clima",
   "text.autoconfig.frostiful.option.icicleConfig.becomeUnstableChance": "Probabilidad de volverse inestable",
@@ -347,7 +303,6 @@
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleDamage": "Daño del carámbano arrojado",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleExtraDamage": "Daño extra del carámbano arrojado",
   "text.autoconfig.frostiful.option.icicleConfig.thrownIcicleCooldown": "Enfriamiento del carámbano arrojado",
-  
   "text.autoconfig.frostiful.option.environmentConfig": "Configuración del entorno",
   "text.autoconfig.frostiful.option.environmentConfig.maxTemperatureForColdC": "Temperatura máxima para frío (en °C)",
   "text.autoconfig.frostiful.option.environmentConfig.maxTemperatureForColdC.@Tooltip": "No puede superar los 15°C",
