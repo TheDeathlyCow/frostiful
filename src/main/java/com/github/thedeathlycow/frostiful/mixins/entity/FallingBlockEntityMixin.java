@@ -16,9 +16,8 @@ import org.spongepowered.asm.mixin.injection.ModifyArg;
 import java.util.function.Consumer;
 
 @Mixin(FallingBlockEntity.class)
-public abstract class FallingIcicleMixin {
-
-    @Shadow private BlockState block;
+public abstract class FallingBlockEntityMixin {
+    @Shadow private BlockState blockState;
 
     @ModifyArg(
             method = "handleFallDamage",
@@ -29,8 +28,7 @@ public abstract class FallingIcicleMixin {
             index = 0
     )
     private Consumer<Entity> freezeVictimsOnFall(Consumer<Entity> par1) {
-
-        if (this.block.getBlock() != FBlocks.ICICLE) {
+        if (this.blockState.getBlock() != FBlocks.ICICLE) {
             return par1;
         }
 
@@ -43,5 +41,4 @@ public abstract class FallingIcicleMixin {
             }
         });
     }
-
 }

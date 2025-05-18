@@ -195,7 +195,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
         Vec3d pos = this.getPos();
 
         for (int i = 0; i < 25; i++) {
-            world.addParticle(
+            world.addParticleClient(
                     iceParticles,
                     pos.x + random.nextFloat() - 0.5f,
                     pos.y + random.nextFloat() - 0.5f,

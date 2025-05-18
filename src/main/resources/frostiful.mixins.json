@@ -13,7 +13,7 @@
         "entity.DamageSourcesMixin",
         "entity.EntityInvoker",
         "entity.FallingBlockEntityAccessor",
-        "entity.FallingIcicleMixin",
+        "entity.FallingBlockEntityMixin",
         "entity.LivingEntityMixin",
         "entity.WaterPotionSoakingMixin",
         "entity.ice_skating.EntitySoundMixin",
