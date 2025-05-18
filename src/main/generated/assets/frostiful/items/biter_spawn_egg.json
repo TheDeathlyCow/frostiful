@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -1310977
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -13736765
-      }
-    ]
+    "model": "frostiful:item/biter_spawn_egg"
   }
 }

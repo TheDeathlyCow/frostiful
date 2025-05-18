@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "frostiful:block/cut_packed_ice"
+    "model": "frostiful:item/cut_packed_ice"
   }
 }

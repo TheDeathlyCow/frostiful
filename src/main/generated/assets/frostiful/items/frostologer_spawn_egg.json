@@ -1,16 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "minecraft:item/template_spawn_egg",
-    "tints": [
-      {
-        "type": "minecraft:constant",
-        "value": -12109694
-      },
-      {
-        "type": "minecraft:constant",
-        "value": -4279573
-      }
-    ]
+    "model": "frostiful:item/frostologer_spawn_egg"
   }
 }

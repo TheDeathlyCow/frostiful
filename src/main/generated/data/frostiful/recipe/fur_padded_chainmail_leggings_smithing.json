@@ -3,7 +3,6 @@
   "addition": "frostiful:fur_padding",
   "base": "minecraft:chainmail_leggings",
   "result": {
-    "count": 1,
     "id": "frostiful:fur_padded_chainmail_leggings"
   },
   "template": "frostiful:fur_upgrade_template"

@@ -1,6 +1,6 @@
 {
   "model": {
     "type": "minecraft:model",
-    "model": "frostiful:block/packed_snow_block"
+    "model": "frostiful:item/packed_snow_block"
   }
 }
