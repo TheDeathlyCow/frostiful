@@ -21,7 +21,9 @@
         "noawx (Finnish Translation)",
         "Tefnya (Russian Translation)",
         "unroman (Ukrainian Translation)",
-        "Nezila (Ukrainian Translation)"
+        "Nezila (Ukrainian Translation)",
+        "Texaliuz (Argentine Spanish Translation)",
+        "TheLegendofSaram (Mexican Spanish Translation)"
     ],
     "contact": {
         "homepage": "https://github.com/TheDeathlyCow/frostiful/wiki",
@@ -84,7 +86,8 @@
                 "modmenu.discord": "https://discord.thedeathlycow.com",
                 "modmenu.wiki": "https://github.com/TheDeathlyCow/frostiful/wiki",
                 "modmenu.kofi": "https://ko-fi.com/thedeathlycow",
-                "modmenu.modrinth": "https://modrinth.com/mod/frostiful"
+                "modmenu.modrinth": "https://modrinth.com/mod/frostiful",
+                "modmenu.crowdin": "https://crowdin.com/project/frostiful"
             }
         }
     }

@@ -1,7 +1,6 @@
-<p align="center">
-    <img src="./src/main/resources/assets/frostiful/frostiful.png" alt="Frostiful title">
-    A Vanilla+ Freezing Temperature Mod. Also try <a href="https://github.com/TheDeathlyCow/scorchful">Scorchful</a>
-</p>
+# Frostiful
+
+A Vanilla+ Freezing Temperature Mod. Also try [Scorchful](https://github.com/TheDeathlyCow/scorchful/)!
 
 # Download Pages
 
@@ -18,9 +17,11 @@ A new wiki is currently in progress on Modded Wiki. Pages are still being migrat
 
 Thanks to [Patbox](https://github.com/Patbox/) for hosting the wiki!
 
-## Developer Docs
+# Translation
 
-Frostiful has documentation available for addon and modpack makers. This can be found at: https://frostiful.thedeathlycow.com/
+Translators can help translate Frostiful on Crowdin!
+
+https://crowdin.com/project/frostiful
 
 # Mod Integrations 
 

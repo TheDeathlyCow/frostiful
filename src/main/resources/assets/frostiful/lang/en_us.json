@@ -164,15 +164,8 @@
   
   
   "attribute.frostiful.ice_break_damage": "Ice Break Damage",
-
-
-  "frostiful.commands.frost.exception.not_living_entity": "Target is not a living entity!",
-  "commands.frostiful.get.progress.success": "The freezing scale of %s is %d",
-  "commands.frostiful.frost.add.success": "Added %d frost to %s (now %d)",
-  "commands.frostiful.frost.remove.success": "Removed %d frost to %s (now %d)",
-  "commands.frostiful.frost.set.success": "Set the frost of %s to %d",
-  "commands.frostiful.frost.get.current.success": "%s has %d frost",
-  "commands.frostiful.frost.get.max.success": "%s can have a maximum of %d frost",
+  
+  
   "commands.frostiful.root.set.success.single": "Rooted %s for %s ticks",
   "commands.frostiful.root.set.success.multiple": "Rooted %s targets for %s ticks",
   

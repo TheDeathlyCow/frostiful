@@ -1,0 +1,32 @@
+name: Publish Mod
+on: [workflow_dispatch] # Manual trigger
+
+jobs:
+  curseforge:
+    runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/openjdk/jdk:21-ubuntu
+      options: --user root
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: publish
+        run: ./gradlew build publishCurseforge
+        env:
+          CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
+  modrinth:
+    runs-on: ubuntu-22.04
+    container:
+      image: mcr.microsoft.com/openjdk/jdk:21-ubuntu
+      options: --user root
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+      - name: make gradle wrapper executable
+        run: chmod +x ./gradlew
+      - name: publish
+        run: ./gradlew build publishModrinth
+        env:
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
