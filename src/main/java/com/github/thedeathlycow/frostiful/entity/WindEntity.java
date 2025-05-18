@@ -51,8 +51,6 @@ public class WindEntity extends Entity {
         this.moveTickOffset = world.random.nextBetween(1, 10) - 1;
     }
 
-
-
     @Override
     public boolean shouldSave() {
         return false;
@@ -125,7 +123,7 @@ public class WindEntity extends Entity {
             ParticleEffect dust = this.getDustParticle();
 
             for (int i = 0; i < 2; ++i) {
-                world.addParticle(
+                world.addParticleClient(
                         particle,
                         this.getParticleX(0.5),
                         this.getRandomBodyY(),
@@ -133,7 +131,7 @@ public class WindEntity extends Entity {
                         -0.5, 0.0, 0.0
                 );
 
-                world.addParticle(
+                world.addParticleClient(
                         dust,
                         this.getParticleX(1.0),
                         this.getRandomBodyY(),
@@ -189,7 +187,7 @@ public class WindEntity extends Entity {
                 double vx = this.random.nextGaussian() * 0.02;
                 double vy = this.random.nextGaussian() * 0.02;
                 double vz = this.random.nextGaussian() * 0.02;
-                world.addParticle(
+                world.addParticleClient(
                         particle,
                         this.getParticleX(1.0), this.getRandomBodyY(), this.getParticleZ(1.0),
                         vx, vy, vz
@@ -226,7 +224,6 @@ public class WindEntity extends Entity {
         }
     }
 
-
     protected ParticleEffect getDustParticle() {
         return ParticleTypes.POOF;
     }
@@ -246,13 +243,8 @@ public class WindEntity extends Entity {
 
     @Override
     protected void readCustomDataFromNbt(NbtCompound nbt) {
-        if (nbt.contains("WindSpeed", NbtElement.FLOAT_TYPE)) {
-            this.setWindSpeed(nbt.getFloat("WindSpeed"));
-        }
-
-        if (nbt.contains("LifeTicks", NbtElement.INT_TYPE)) {
-            this.setLifeTicks(nbt.getInt("LifeTicks"));
-        }
+        this.setWindSpeed(nbt.getFloat("WindSpeed", 1.0f));
+        this.setLifeTicks(nbt.getInt("LifeTicks", 80));
     }
 
     @Override

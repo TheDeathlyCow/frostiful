@@ -53,7 +53,7 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
 
     @Override
     public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        this.snowAccumulation = tag.contains(KEY, NbtElement.INT_TYPE) ? tag.getInt(KEY) : 0;
+        this.snowAccumulation = tag.getInt(KEY, 0);
     }
 
     @Override

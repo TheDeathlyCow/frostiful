@@ -44,7 +44,7 @@ public class PackedSnowballEntity extends ThrownItemEntity {
         if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
             ParticleEffect particleEffect = this.getParticleEffect();
             for (int i = 0; i < 8; i++) {
-                this.getWorld().addParticle(
+                this.getWorld().addParticleClient(
                         particleEffect,
                         this.getX(), this.getY(), this.getZ(),
                         0.0, 0.0, 0.0

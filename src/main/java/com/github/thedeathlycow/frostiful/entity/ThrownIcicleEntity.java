@@ -35,7 +35,7 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
         super.tick();
         World world = getWorld();
         if (world.isClient && !this.isInGround()) {
-            world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
+            world.addParticleClient(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
         }
     }
 

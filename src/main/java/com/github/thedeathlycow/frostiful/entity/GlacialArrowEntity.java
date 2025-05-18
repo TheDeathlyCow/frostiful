@@ -48,7 +48,7 @@ public class GlacialArrowEntity extends PersistentProjectileEntity {
 
         World world = getWorld();
         if (world.isClient && !this.isInGround()) {
-            world.addParticle(
+            world.addParticleClient(
                     ParticleTypes.SNOWFLAKE,
                     this.getX(), this.getY(), this.getZ(),
                     0.0D, 0.0D, 0.0D
@@ -65,9 +65,7 @@ public class GlacialArrowEntity extends PersistentProjectileEntity {
     @Override
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        if (nbt.contains(FREEZE_AMOUNT_NBT_KEY, NbtElement.INT_TYPE)) {
-            this.freezeAmount = nbt.getInt(FREEZE_AMOUNT_NBT_KEY);
-        }
+        this.freezeAmount = nbt.getInt(FREEZE_AMOUNT_NBT_KEY, 0);
     }
 
     @Override

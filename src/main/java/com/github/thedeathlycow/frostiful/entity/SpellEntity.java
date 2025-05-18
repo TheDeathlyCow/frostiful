@@ -62,15 +62,14 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        nbt.putDouble(MAX_DISTANCE_NBT_KEY, this.maxDistance);
+        if (!Double.isInfinite(this.maxDistance)) {
+            nbt.putDouble(MAX_DISTANCE_NBT_KEY, this.maxDistance);
+        }
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-
-        if (nbt.contains(MAX_DISTANCE_NBT_KEY, NbtElement.DOUBLE_TYPE)) {
-            this.maxDistance = nbt.getDouble(MAX_DISTANCE_NBT_KEY);
-        }
+        this.maxDistance = nbt.getDouble(MAX_DISTANCE_NBT_KEY, Double.POSITIVE_INFINITY);
     }
 
     protected void onCollision(HitResult hitResult) {
