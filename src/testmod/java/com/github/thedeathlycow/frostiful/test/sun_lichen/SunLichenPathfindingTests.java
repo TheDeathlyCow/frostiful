@@ -1,33 +1,33 @@
 package com.github.thedeathlycow.frostiful.test.sun_lichen;
 
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.block.Block;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
 public final class SunLichenPathfindingTests {
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.hot_sun_lichen")
+    @GameTest(structure = "frostiful-test:sun_lichen_tests.pathfinding.hot_sun_lichen")
     public void villager_avoids_hot_sun_lichen(TestContext context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.EMERALD_BLOCK);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.warm_sun_lichen")
+    @GameTest(structure = "frostiful-test:sun_lichen_tests.pathfinding.warm_sun_lichen")
     public void villager_avoids_warm_sun_lichen(TestContext context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.EMERALD_BLOCK);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.cool_sun_lichen")
+    @GameTest(structure = "frostiful-test:sun_lichen_tests.pathfinding.cool_sun_lichen")
     public void villager_avoids_cool_sun_lichen(TestContext context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.EMERALD_BLOCK);
     }
 
-    @GameTest(templateName = "frostiful-test:sun_lichen_tests.pathfinding.cold_sun_lichen")
+    @GameTest(structure = "frostiful-test:sun_lichen_tests.pathfinding.cold_sun_lichen")
     public void villager_does_not_avoid_cold_sun_lichen(TestContext context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.GOLD_BLOCK);
     }

@@ -8,14 +8,14 @@ import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.test.GameTest;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
 public class EntityPowderSnowTests {
 
-    @GameTest(templateName = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
     public void zombie_wearing_fur_boots_does_not_fall(TestContext context) {
         context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
@@ -32,7 +32,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(templateName = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
     public void zombie_wearing_chainmail_fur_boots_does_not_fall(TestContext context) {
         context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
@@ -48,7 +48,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(templateName = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
     public void zombie_wearing_leather_boots_does_not_fall(TestContext context) {
         context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
@@ -65,7 +65,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(templateName = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
     public void zombie_wearing_no_boots_falls(TestContext context) {
         context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
@@ -80,7 +80,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(templateName = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
     public void rabbit_does_not_fall(TestContext context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 

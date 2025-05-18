@@ -4,13 +4,14 @@ import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.test.GameTest;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
 public class BlockLightTemperatureTests {
-    @GameTest(templateName = "frostiful-test:effects.local_temperature")
+    @GameTest(structure = "frostiful-test:effects.local_temperature")
     public void villager_is_warmed_by_torch(TestContext context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
@@ -32,10 +33,12 @@ public class BlockLightTemperatureTests {
                 () -> {
                     context.assertTrue(
                             villager.thermoo$getTemperature() > temperature,
-                            String.format(
-                                    "Villager temperature of %d is not greater than %d",
-                                    villager.thermoo$getTemperature(),
-                                    temperature
+                            Text.literal(
+                                    String.format(
+                                            "Villager temperature of %d is not greater than %d",
+                                            villager.thermoo$getTemperature(),
+                                            temperature
+                                    )
                             )
                     );
                     context.complete();
@@ -43,7 +46,7 @@ public class BlockLightTemperatureTests {
         );
     }
 
-    @GameTest(templateName = "frostiful-test:effects.local_temperature")
+    @GameTest(structure = "frostiful-test:effects.local_temperature")
     public void villager_in_boat_is_warmed_by_torch(TestContext context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
@@ -66,7 +69,7 @@ public class BlockLightTemperatureTests {
                 EntityType.VILLAGER,
                 e -> {
                     Entity vehicle = e.getVehicle();
-                    context.assertFalse(vehicle == null, "Villager must have a vehicle");
+                    context.assertFalse(vehicle == null, Text.literal("Villager must have a vehicle"));
                     return vehicle.getId();
                 },
                 boat.getId()
@@ -79,10 +82,12 @@ public class BlockLightTemperatureTests {
                 () -> {
                     context.assertTrue(
                             villager.thermoo$getTemperature() > temperature,
-                            String.format(
-                                    "Villager temperature of %d is not greater than %d",
-                                    villager.thermoo$getTemperature(),
-                                    temperature
+                            Text.literal(
+                                    String.format(
+                                            "Villager temperature of %d is not greater than %d",
+                                            villager.thermoo$getTemperature(),
+                                            temperature
+                                    )
                             )
                     );
                     context.complete();
@@ -91,7 +96,7 @@ public class BlockLightTemperatureTests {
     }
 
 
-    @GameTest(templateName = "frostiful-test:effects.local_temperature")
+    @GameTest(structure = "frostiful-test:effects.local_temperature")
     public void villager_is_not_warmed(TestContext context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
@@ -115,10 +120,12 @@ public class BlockLightTemperatureTests {
                     int villagerTemperature = villager.thermoo$getTemperature();
                     context.assertTrue(
                             villagerTemperature == temperature,
-                            String.format(
-                                    "Villager temperature of %d does not match expected %d",
-                                    villagerTemperature,
-                                    temperature
+                            Text.literal(
+                                    String.format(
+                                            "Villager temperature of %d does not match expected %d",
+                                            villagerTemperature,
+                                            temperature
+                                    )
                             )
                     );
                     context.complete();

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.loot;
 
 import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
-import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.loot.context.LootContext;
@@ -13,8 +13,8 @@ import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
-import net.minecraft.test.GameTest;
 import net.minecraft.test.TestContext;
+import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import org.mockito.Mockito;
@@ -28,7 +28,7 @@ public class FrozenByFrostWandCriterionTest {
 
     private static final int NUM_PREDICATES = 3;
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest()
     public void three_creeper_mobs_to_empty_predicates_is_true(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
@@ -43,11 +43,11 @@ public class FrozenByFrostWandCriterionTest {
                 NumberRange.IntRange.ANY
         );
 
-        context.assertTrue(conditions.matches(creepers), "Conditions do not match!");
+        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest()
     public void three_creeper_mobs_to_three_creeper_predicates_is_true(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
@@ -58,11 +58,11 @@ public class FrozenByFrostWandCriterionTest {
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
 
-        context.assertTrue(conditions.matches(creepers), "Conditions do not match!");
+        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest()
     public void five_creeper_mobs_to_three_creeper_predicates_is_true(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
@@ -75,11 +75,11 @@ public class FrozenByFrostWandCriterionTest {
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
 
-        context.assertTrue(conditions.matches(creepers), "Conditions do not match!");
+        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest()
     public void two_creeper_mobs_to_three_creeper_predicates_is_false(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
@@ -89,11 +89,11 @@ public class FrozenByFrostWandCriterionTest {
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
 
-        context.assertFalse(conditions.matches(creepers), "Conditions do match, but they should NOT!");
+        context.assertFalse(conditions.matches(creepers), Text.literal("Conditions do match, but they should NOT!"));
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest()
     public void two_creepers_and_one_zombie_to_three_creeper_predicates_is_false(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
@@ -104,17 +104,17 @@ public class FrozenByFrostWandCriterionTest {
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
 
-        context.assertFalse(conditions.matches(creepers), "Conditions do match, but they should NOT!");
+        context.assertFalse(conditions.matches(creepers), Text.literal("Conditions do match, but they should NOT!"));
         context.complete();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest()
     public void zero_mobs_to_three_creeper_predicates_is_false(TestContext context) {
         List<LootContext> creepers = List.of();
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
 
-        context.assertFalse(conditions.matches(creepers), "Conditions do match, but they should NOT!");
+        context.assertFalse(conditions.matches(creepers), Text.literal("Conditions do match, but they should NOT!"));
         context.complete();
     }
 
