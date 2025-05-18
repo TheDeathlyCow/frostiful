@@ -4,8 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.*;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuilder;
-import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
-import com.github.thedeathlycow.frostiful.item.cloak.InertFrostologyCloakItem;
+import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItemComponents;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
@@ -18,11 +17,9 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.BannerPatternTags;
 import net.minecraft.util.Rarity;
 import net.minecraft.util.math.Direction;
 
-import java.util.function.Consumer;
 import java.util.function.Function;
 
 public final class FItems {
@@ -127,21 +124,24 @@ public final class FItems {
 
     public static final Item INERT_FROSTOLOGY_CLOAK = register(
             "inert_frostology_cloak",
-            settings -> new InertFrostologyCloakItem(
+            settings -> new Item(
                     settings
-                            .maxCount(1)
+                            .component()
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
+                            .component(DataComponentTypes.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
                             .rarity(Rarity.UNCOMMON)
+                            .maxCount(1)
             )
     );
 
     public static final Item FROSTOLOGY_CLOAK = register(
             "frostology_cloak",
-            settings -> new FrostologyCloakItem(
+            settings -> new Item(
                     settings
-                            .attributeModifiers(FrostologyCloakItem.createAttributeModifiers())
+                            .attributeModifiers(FrostologyCloakItemComponents.createAttributeModifiers())
                             .component(FDataComponentTypes.ICE_LIKE, IceLikeComponent.DEFAULT)
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
+                            .component(DataComponentTypes.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
                             .rarity(Rarity.EPIC)
                             .maxCount(1)
             )
@@ -194,7 +194,7 @@ public final class FItems {
     );
     public static final Item GLACIAL_ARROW = register(
             "glacial_arrow",
-            settings -> new GlacialArrowItem(settings)
+            GlacialArrowItem::new
     );
 
     public static final Item FROSTOLOGER_SPAWN_EGG = register(
