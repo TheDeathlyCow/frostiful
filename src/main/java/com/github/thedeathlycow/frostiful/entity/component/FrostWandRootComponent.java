@@ -122,9 +122,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
     @Override
     public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        this.rootedTicks = tag.contains(ROOTED_TICKS_KEY, NbtElement.INT_TYPE)
-                ? tag.getInt(ROOTED_TICKS_KEY)
-                : 0;
+        this.rootedTicks = tag.getInt(ROOTED_TICKS_KEY, 0);
     }
 
     @Override
