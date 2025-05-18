@@ -40,7 +40,7 @@ public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPa
             }
         }
 
-        world.playSound(
+        world.playSoundClient(
                 pos.x, pos.y, pos.z,
                 FSoundEvents.ENTITY_WIND_BLOW,
                 SoundCategory.AMBIENT,
@@ -55,7 +55,7 @@ public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPa
         double vy = world.random.nextGaussian() * 0.02;
         double vz = world.random.nextGaussian() * 0.02;
         Vec3d rPos = PointWindSpawnStrategy.randomParticlePos(origin, world.random);
-        world.addParticle(
+        world.addParticleClient(
                 particleEffect,
                 rPos.x, rPos.y, rPos.z,
                 vx, vy, vz

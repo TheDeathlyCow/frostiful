@@ -16,6 +16,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
+import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
@@ -107,11 +108,11 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
     }
 
     private static void updateCape(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
-        double deltaX = MathHelper.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - MathHelper.lerp(tickDelta, frostologer.prevX, frostologer.getX());
-        double deltaY = MathHelper.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - MathHelper.lerp(tickDelta, frostologer.prevY, frostologer.getY());
-        double deltaZ = MathHelper.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - MathHelper.lerp(tickDelta, frostologer.prevZ, frostologer.getZ());
+        double deltaX = MathHelper.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - MathHelper.lerp(tickDelta, frostologer.lastX, frostologer.getX());
+        double deltaY = MathHelper.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - MathHelper.lerp(tickDelta, frostologer.lastY, frostologer.getY());
+        double deltaZ = MathHelper.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - MathHelper.lerp(tickDelta, frostologer.lastZ, frostologer.getZ());
 
-        float bodyYaw = MathHelper.lerpAngleDegrees(tickDelta, frostologer.prevBodyYaw, frostologer.bodyYaw);
+        float bodyYaw = MathHelper.lerpAngleDegrees(tickDelta, frostologer.lastBodyYaw, frostologer.bodyYaw);
         double sinYaw = MathHelper.sin(bodyYaw * (float) (Math.PI / 180.0));
         double cosYaw = -MathHelper.cos(bodyYaw * (float) (Math.PI / 180.0));
 

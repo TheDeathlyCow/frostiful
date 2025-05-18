@@ -64,7 +64,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             }
 
             // only spawn particles when out of water
-            if (this.isSubmergedInWater || this.isWet()) {
+            if (this.isSubmergedInWater) {
                 return;
             }
 
@@ -86,7 +86,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
                 double y = boundingBox.getMin(Direction.Axis.Y) + random.nextDouble(boundingBox.getLengthY());
                 double z = boundingBox.getMin(Direction.Axis.Z) + random.nextDouble(boundingBox.getLengthZ());
 
-                world.addParticle(
+                world.addParticleClient(
                         ParticleTypes.FALLING_DRIPSTONE_WATER,
                         x, y, z,
                         0, 0, 0

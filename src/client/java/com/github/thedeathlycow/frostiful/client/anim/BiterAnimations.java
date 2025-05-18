@@ -11,7 +11,7 @@ import net.minecraft.client.render.entity.animation.Transformation;
 public class BiterAnimations {
     public static final Animation BITE = Animation.Builder.create(0.225f)
             .addBoneAnimation("head",
-                    new Transformation(Transformation.Targets.TRANSLATE,
+                    new Transformation(Transformation.Targets.MOVE_ORIGIN,
                             new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(0.1125f, AnimationHelper.createTranslationalVector(0f, 2f, -4f),

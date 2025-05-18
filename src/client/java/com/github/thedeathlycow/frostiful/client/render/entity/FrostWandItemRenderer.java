@@ -12,7 +12,7 @@ import net.minecraft.client.render.item.ItemRenderer;
 import net.minecraft.client.render.item.model.special.SimpleSpecialModelRenderer;
 import net.minecraft.client.render.item.model.special.SpecialModelRenderer;
 import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ModelTransformationMode;
+import net.minecraft.item.ItemDisplayContext;
 
 @Environment(EnvType.CLIENT)
 public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
@@ -27,7 +27,7 @@ public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
 
     @Override
     public void render(
-            ModelTransformationMode modelTransformationMode,
+            ItemDisplayContext itemDisplayContext,
             MatrixStack matrices,
             VertexConsumerProvider vertexConsumers,
             int light,

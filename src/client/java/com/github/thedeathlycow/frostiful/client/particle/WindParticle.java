@@ -42,11 +42,11 @@ public class WindParticle extends SpriteBillboardParticle {
     public void render(VertexConsumer vertexConsumer, Camera camera, float tickDelta) {
         // flip so that both faces are rendered in the same direction in the absolute position of the world
         this.scale *= -1;
-        this.method_60373(vertexConsumer, camera, FRONT_ROTATION, tickDelta);
+        this.render(vertexConsumer, camera, FRONT_ROTATION, tickDelta);
 
         // flip back to normal
         this.scale *= -1;
-        this.method_60373(vertexConsumer, camera, BACK_ROTATION, tickDelta);
+        this.render(vertexConsumer, camera, BACK_ROTATION, tickDelta);
     }
 
     @Override

@@ -32,7 +32,7 @@ public class IceSkateModel<T extends BipedEntityRenderState> extends BipedEntity
                         // blade front
                         .uv(0, 0)
                         .cuboid(-1f, 11F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
-                ModelTransform.pivot(-1.9f, 12.0f, 0.0f)
+                ModelTransform.origin(-1.9f, 12.0f, 0.0f)
         );
 
         root.addChild(
@@ -49,7 +49,7 @@ public class IceSkateModel<T extends BipedEntityRenderState> extends BipedEntity
                         .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
                         .uv(0, 0)
                         .cuboid(-1f, 11f, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
-                ModelTransform.pivot(1.9f, 12.0f, 0.0f)
+                ModelTransform.origin(1.9f, 12.0f, 0.0f)
         );
         return TexturedModelData.of(modelData, 32, 32);
     }
