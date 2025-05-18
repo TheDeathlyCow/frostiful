@@ -59,13 +59,7 @@ public class FrostWandItem extends Item {
     }
 
     public static ToolComponent createToolComponent() {
-        return new ToolComponent(List.of(), 1.0f, 2);
-    }
-
-
-    @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        return true;
+        return new ToolComponent(List.of(), 1.0f, 2, false);
     }
 
     @Override
@@ -93,11 +87,6 @@ public class FrostWandItem extends Item {
     @Override
     public int getMaxUseTime(ItemStack stack, LivingEntity user) {
         return 72000;
-    }
-
-    @Override
-    public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
-        return !miner.isCreative();
     }
 
     @Override
