@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.datagen.generator;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -53,9 +54,9 @@ public class FRecipeProvider extends FabricRecipeProvider {
                         .input('R', FItems.FROZEN_ROD)
                         .offerTo(exporter);
 
-                offerSmithingTrimRecipe(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE, upgradeRecipeKey(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE));
-                offerSmithingTrimRecipe(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE, upgradeRecipeKey(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE));
-                offerSmithingTrimRecipe(FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE, upgradeRecipeKey(FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE));
+                offerSmithingTrimRecipe(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE, FArmorTrimPatterns.SNOW_MAN, upgradeRecipeKey(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE));
+                offerSmithingTrimRecipe(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE, FArmorTrimPatterns.FROSTY, upgradeRecipeKey(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE));
+                offerSmithingTrimRecipe(FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE, FArmorTrimPatterns.GLACIAL, upgradeRecipeKey(FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE));
 
                 offerFurUpgradeRecipe(Items.CHAINMAIL_HELMET, FItems.FUR_PADDED_CHAINMAIL_HELMET);
                 offerFurUpgradeRecipe(Items.CHAINMAIL_CHESTPLATE, FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE);

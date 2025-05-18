@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.entity.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.registry.FArmorMaterials;
 import com.github.thedeathlycow.frostiful.registry.FItems;
@@ -8,12 +9,14 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.*;
 import net.minecraft.client.render.item.model.ItemModel;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
+import net.minecraft.util.Identifier;
 
 public class FrostifulModelGenerator extends FabricModelProvider {
-    private static final String HELMET = "helmet";
-    private static final String CHESTPLATE = "chestplate";
-    private static final String LEGGINGS = "leggings";
-    private static final String BOOTS = "boots";
+    private static final Identifier HELMET = getTrimAssetIdPrefix("helmet");
+    private static final Identifier CHESTPLATE = getTrimAssetIdPrefix("chestplate");
+    private static final Identifier LEGGINGS = getTrimAssetIdPrefix("leggings");
+    private static final Identifier BOOTS = getTrimAssetIdPrefix("boots");
 
     public FrostifulModelGenerator(FabricDataOutput output) {
         super(output);
@@ -88,9 +91,9 @@ public class FrostifulModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(FItems.CASTLE_KEY);
         itemModelGenerator.register(FItems.OMINOUS_CASTLE_KEY);
 
-        itemModelGenerator.registerSpawnEgg(FItems.FROSTOLOGER_SPAWN_EGG, 0x473882, 0xBEB2EB);
-        itemModelGenerator.registerSpawnEgg(FItems.CHILLAGER_SPAWN_EGG, 0x3432A8, 0xA2CCFC);
-        itemModelGenerator.registerSpawnEgg(FItems.BITER_SPAWN_EGG, 0xEBFEFF, 0x2E64C3);
+        itemModelGenerator.register(FItems.FROSTOLOGER_SPAWN_EGG);
+        itemModelGenerator.register(FItems.CHILLAGER_SPAWN_EGG);
+        itemModelGenerator.register(FItems.BITER_SPAWN_EGG);
     }
 
     private void registerFrostWand(Item item, ItemModelGenerator itemModelGenerator) {
@@ -102,5 +105,9 @@ public class FrostifulModelGenerator extends FabricModelProvider {
         );
 
         itemModelGenerator.output.accept(item, ItemModelGenerator.createModelWithInHandVariant(sprite, inHand));
+    }
+
+    private static Identifier getTrimAssetIdPrefix(String prefix) {
+        return Frostiful.id("trims/items/" + prefix + "_trim");
     }
 }
