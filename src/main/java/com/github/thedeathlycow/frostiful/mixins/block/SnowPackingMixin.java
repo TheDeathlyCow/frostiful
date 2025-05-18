@@ -9,6 +9,7 @@ import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SnowBlock;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCollisionHandler;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
@@ -26,8 +27,7 @@ public abstract class SnowPackingMixin {
             method = "onEntityCollision",
             at = @At("TAIL")
     )
-    private void smushSnowWhenSteppedOnByHeavyEntity(BlockState state, World world, BlockPos pos, Entity entity, CallbackInfo ci) {
-
+    private void smushSnowWhenSteppedOnByHeavyEntity(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, CallbackInfo ci) {
         boolean maySmushSnow = state.getBlock() == Blocks.SNOW
                 && entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES)
                 && !world.isClient
