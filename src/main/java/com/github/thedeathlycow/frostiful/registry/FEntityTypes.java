@@ -12,87 +12,79 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKey;
 import net.minecraft.registry.RegistryKeys;
+import net.minecraft.util.Identifier;
 
 public class FEntityTypes {
 
     public static final EntityType<FrostologerEntity> FROSTOLOGER = register(
             "frostologer",
-            EntityType.Builder.create(
-                            FrostologerEntity::new,
-                            SpawnGroup.MONSTER
-                    )
+            EntityType.Builder.create(FrostologerEntity::new, SpawnGroup.MONSTER)
                     .dimensions(0.6f, 1.95f)
-                    .maxTrackingRange(4)
+                    .passengerAttachments(2.0F)
+                    .vehicleAttachment(-0.6F)
+                    .maxTrackingRange(10)
     );
 
     public static final EntityType<BiterEntity> BITER = register(
             "biter",
-            EntityType.Builder.create(
-                            BiterEntity::new,
-                            SpawnGroup.MONSTER
-                    )
+            EntityType.Builder.create(BiterEntity::new, SpawnGroup.MONSTER)
                     .dimensions(1.0f, 1.5f)
-                    .maxTrackingRange(8)
+                    .maxTrackingRange(10)
     );
 
     public static final EntityType<ChillagerEntity> CHILLAGER = register(
             "chillager",
-            EntityType.Builder.create(
-                            ChillagerEntity::new,
-                            SpawnGroup.MONSTER
-                    )
-                    .dimensions(0.6f, 1.95f)
-                    .maxTrackingRange(8)
+            EntityType.Builder.create(ChillagerEntity::new, SpawnGroup.MONSTER)
+                    .spawnableFarFromPlayer()
+                    .dimensions(0.6F, 1.95F)
+                    .passengerAttachments(2.0F)
+                    .vehicleAttachment(-0.6F)
+                    .maxTrackingRange(10)
     );
 
     public static final EntityType<GlacialArrowEntity> GLACIAL_ARROW = register(
             "glacial_arrow",
-            EntityType.Builder.<GlacialArrowEntity>create(
-                            GlacialArrowEntity::new,
-                            SpawnGroup.CREATURE
-                    )
-                    .dimensions(0.5f, 0.5f)
+            EntityType.Builder.<GlacialArrowEntity>create(GlacialArrowEntity::new, SpawnGroup.CREATURE)
+                    .dropsNothing()
+                    .dimensions(0.5F, 0.5F)
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(20)
     );
 
     public static final EntityType<FrostSpellEntity> FROST_SPELL = register(
             "frost_spell",
-            EntityType.Builder.<FrostSpellEntity>create(
-                            FrostSpellEntity::new,
-                            SpawnGroup.MISC
-                    )
-                    .dimensions(3f / 8f, 3f / 8f)
-                    .maxTrackingRange(8)
+            EntityType.Builder.<FrostSpellEntity>create(FrostSpellEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(1.0F, 1.0F)
+                    .maxTrackingRange(4)
                     .trackingTickInterval(10)
     );
 
     public static final EntityType<PackedSnowballEntity> PACKED_SNOWBALL = register(
             "packed_snowball",
-            EntityType.Builder.<PackedSnowballEntity>create(
-                            PackedSnowballEntity::new,
-                            SpawnGroup.MISC
-                    )
-                    .dimensions(3f / 8f, 3f / 8f)
-                    .maxTrackingRange(8)
+            EntityType.Builder.<PackedSnowballEntity>create(PackedSnowballEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.25F, 0.25F)
+                    .maxTrackingRange(4)
                     .trackingTickInterval(10)
     );
 
     public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = register(
             "thrown_icicle",
-            EntityType.Builder.<ThrownIcicleEntity>create(
-                            ThrownIcicleEntity::new,
-                            SpawnGroup.MISC
-                    )
-                    .dimensions(0.25f, 0.25f)
-                    .maxTrackingRange(8)
-                    .trackingTickInterval(10)
+            EntityType.Builder.<ThrownIcicleEntity>create(ThrownIcicleEntity::new, SpawnGroup.MISC)
+                    .dropsNothing()
+                    .dimensions(0.5F, 0.5F)
+                    .eyeHeight(0.13F)
+                    .maxTrackingRange(4)
+                    .trackingTickInterval(20)
     );
 
     public static final EntityType<FreezingWindEntity> FREEZING_WIND = register(
             "freezing_wind",
-            EntityType.Builder.create(
-                            FreezingWindEntity::new,
-                            SpawnGroup.AMBIENT
-                    )
+            EntityType.Builder.create(FreezingWindEntity::new, SpawnGroup.AMBIENT)
+                    .dropsNothing()
+                    .disableSaving()
                     .dimensions(2.0f, 2.0f)
                     .maxTrackingRange(8)
                     .trackingTickInterval(10)
@@ -114,9 +106,16 @@ public class FEntityTypes {
         );
     }
 
-    private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {
-        RegistryKey<EntityType<?>> key = RegistryKey.of(RegistryKeys.ENTITY_TYPE, Frostiful.id(id));
+    private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder)  {
+        return register(Frostiful.id(id), builder);
+    }
 
+    private static <T extends Entity> EntityType<T> register(Identifier id, EntityType.Builder<T> builder)  {
+        RegistryKey<EntityType<?>> key = RegistryKey.of(RegistryKeys.ENTITY_TYPE, id);
+        return register(key, builder);
+    }
+
+    private static <T extends Entity> EntityType<T> register(RegistryKey<EntityType<?>> key, EntityType.Builder<T> builder) {
         return Registry.register(Registries.ENTITY_TYPE, key, builder.build(key));
     }
 
