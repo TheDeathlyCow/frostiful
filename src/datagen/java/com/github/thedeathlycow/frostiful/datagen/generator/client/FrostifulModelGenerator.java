@@ -94,9 +94,9 @@ public class FrostifulModelGenerator extends FabricModelProvider {
         itemModelGenerator.register(FItems.CASTLE_KEY);
         itemModelGenerator.register(FItems.OMINOUS_CASTLE_KEY);
 
-        itemModelGenerator.register(FItems.FROSTOLOGER_SPAWN_EGG);
-        itemModelGenerator.register(FItems.CHILLAGER_SPAWN_EGG);
-        itemModelGenerator.register(FItems.BITER_SPAWN_EGG);
+        itemModelGenerator.register(FItems.FROSTOLOGER_SPAWN_EGG, Models.GENERATED);
+        itemModelGenerator.register(FItems.CHILLAGER_SPAWN_EGG, Models.GENERATED);
+        itemModelGenerator.register(FItems.BITER_SPAWN_EGG, Models.GENERATED);
     }
 
     private void registerFrostWand(Item item, ItemModelGenerator itemModelGenerator) {
