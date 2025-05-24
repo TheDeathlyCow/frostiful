@@ -1,0 +1,7 @@
+{
+    "type": "minecraft:block_based",
+    "environment": "minecraft:default",
+    "structure": "frostiful-test:zombie_avoids_hot_sun_lichen",
+    "max_ticks": 600,
+    "sky_access": false
+}
