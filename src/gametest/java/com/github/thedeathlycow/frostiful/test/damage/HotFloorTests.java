@@ -11,7 +11,7 @@ import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
 public class HotFloorTests {
-    @GameTest(structure = "frostiful-test:magma_block_test")
+    @GameTest(structure = "frostiful-test:magma_block_test", maxTicks = 40)
     public void villager_on_magma_heated_more_than_villager_on_stone(TestContext context) {
         int temperatureChange = Frostiful.getConfig().freezingConfig.getHeatFromHotFloor();
 
@@ -33,13 +33,16 @@ public class HotFloorTests {
                 TemperatureAware::thermoo$getTemperature, initialTemperature
         );
         context.waitAndRun(
-                20L, () -> {
+                20, () -> {
+                    int magmaTemperature = magmaVillager.thermoo$getTemperature();
+                    int stoneTemperature = stoneVillager.thermoo$getTemperature();
+
                     context.assertTrue(
-                            magmaVillager.thermoo$getTemperature() > stoneVillager.thermoo$getTemperature(),
+                            magmaTemperature > stoneTemperature,
                             Text.literal(String.format(
                                     "Magma Villager temperature of %d is not greater than Stone Villager temperature of %d",
-                                    magmaVillager.thermoo$getTemperature(),
-                                    stoneVillager.thermoo$getTemperature()
+                                    magmaTemperature,
+                                    stoneTemperature
                             ))
                     );
                     context.complete();

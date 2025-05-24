@@ -42,11 +42,13 @@ public final class PassiveTemperatureEffects {
     private static int getHotFloorTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context, FrostifulConfig config) {
         LivingEntity entity = context.affected();
         BlockState steppingState = entity.getSteppingBlockState();
+        ItemStack footStack = entity.getEquippedStack(EquipmentSlot.FEET);
 
-        if (steppingState.isIn(FBlockTags.HOT_FLOOR)) {
-            ItemStack footStack = entity.getEquippedStack(EquipmentSlot.FEET);
+        boolean applyHeat = steppingState.isIn(FBlockTags.HOT_FLOOR)
+                && !EnchantmentHelper.hasAnyEnchantmentsIn(footStack, FEnchantmentTags.IS_FROSTY);
 
-            if (entity.getRandom().nextInt(10) == 0 && !EnchantmentHelper.hasAnyEnchantmentsIn(footStack, FEnchantmentTags.IS_FROSTY)) {
+        if (applyHeat) {
+            if (entity.getRandom().nextInt(10) == 0) {
                 context.world().spawnParticles(
                         ParticleTypes.FLAME,
                         entity.getX(),
@@ -57,6 +59,8 @@ public final class PassiveTemperatureEffects {
                         1e-2
                 );
                 return config.freezingConfig.getHeatFromHotFloor();
+            } else {
+                return config.freezingConfig.getHeatFromHotFloor() / 10;
             }
         }
 
