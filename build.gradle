@@ -219,7 +219,7 @@ publishMods {
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "Ae6qoBj3"
-        minecraftVersions.addAll("1.21.4")
+        minecraftVersions.addAll("1.21.5")
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
 
