@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.sun_lichen;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;

@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.damage;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;

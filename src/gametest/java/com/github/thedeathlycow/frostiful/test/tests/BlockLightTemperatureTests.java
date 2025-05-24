@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.effects;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;

@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.sun_lichen;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;

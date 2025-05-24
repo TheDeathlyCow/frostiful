@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.frostologer;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;

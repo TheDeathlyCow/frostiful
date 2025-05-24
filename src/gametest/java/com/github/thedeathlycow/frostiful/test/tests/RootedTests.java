@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.effects;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.registry.FComponents;

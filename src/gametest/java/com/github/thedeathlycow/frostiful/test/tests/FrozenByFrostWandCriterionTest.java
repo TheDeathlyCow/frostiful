@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.loot;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;

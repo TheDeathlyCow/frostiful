@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.icicle;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import net.minecraft.block.Blocks;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;

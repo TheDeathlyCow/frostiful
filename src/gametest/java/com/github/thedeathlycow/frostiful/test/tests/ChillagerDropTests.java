@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.frostologer;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;

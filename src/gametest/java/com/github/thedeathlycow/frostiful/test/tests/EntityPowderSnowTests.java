@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.test.powder_snow_walkable;
+package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.entity.EntityType;
