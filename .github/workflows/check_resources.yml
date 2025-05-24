@@ -21,7 +21,9 @@ jobs:
           java-version: '21'
           distribution: 'microsoft'
       - name: make gradle wrapper executable
-        run: chmod +x ./gradlew
+        run: |
+          chmod +x ./gradlew
+          git update-index --chmod=+x ./gradlew
       - name: run data generation
         run: ./gradlew runDatagen
       - name: check for changes
