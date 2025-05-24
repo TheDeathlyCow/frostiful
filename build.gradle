@@ -48,6 +48,26 @@ repositories {
     }
 }
 
+loom {
+    splitEnvironmentSourceSets()
+}
+
+fabricApi {
+    configureDataGeneration() {
+        createSourceSet = true
+        modId = "frostiful-datagen"
+        client = true
+    }
+
+    configureTests {
+        createSourceSet = true
+        modId = "frostiful-test"
+        enableGameTests = true
+        enableClientGameTests = false
+        eula = true
+    }
+}
+
 dependencies {
 
     //// Required Dependencies ////
@@ -84,22 +104,7 @@ dependencies {
     testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
     testImplementation "org.junit.jupiter:junit-jupiter"
     testImplementation "org.mockito:mockito-core:3.+"
-
-    //// Bring depends into testmod ////
-
-    afterEvaluate {
-        subprojects.each {
-            api project(path: ":${it.name}", configuration: "namedElements")
-
-            if (!(it.name in devOnlyModules)) {
-                include project("${it.name}:")
-            }
-
-            testmodImplementation project("${it.name}:").sourceSets.testmod.output
-        }
-
-        testmodImplementation "org.mockito:mockito-core:3.+"
-    }
+    gametestImplementation "org.mockito:mockito-core:3.+"
 }
 
 processResources {
@@ -134,7 +139,8 @@ jar {
 // configure the maven publication
 publishing {
     publications {
-        mavenJava(MavenPublication) {
+        create("mavenJava", MavenPublication) {
+            artifactId = project.archives_base_name
             from components.java
         }
     }
@@ -148,46 +154,8 @@ publishing {
     }
 }
 
-loom {
-    splitEnvironmentSourceSets()
-}
-
-sourceSets {
-    test {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-        compileClasspath += client.compileClasspath
-        runtimeClasspath += client.runtimeClasspath
-    }
-    testmod {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-        compileClasspath += main.output
-        runtimeClasspath += main.output
-    }
-
-    testmodClient {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-        compileClasspath += client.compileClasspath
-        runtimeClasspath += client.runtimeClasspath
-        compileClasspath += main.output
-        runtimeClasspath += main.output
-        compileClasspath += client.output
-        runtimeClasspath += client.output
-
-        compileClasspath += testmod.compileClasspath
-        runtimeClasspath += testmod.runtimeClasspath
-        compileClasspath += testmod.output
-        runtimeClasspath += testmod.output
-    }
-}
-
-subprojects {
-    dependencies {
-        testmodImplementation sourceSets.main.output
-        testmodImplementation project(path: ':', configuration: 'namedElements')
-    }
+test {
+    useJUnitPlatform()
 }
 
 loom {
@@ -195,11 +163,6 @@ loom {
         "frostiful" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
-        }
-
-        "frostiful-test" {
-            sourceSet sourceSets.testmod
-            sourceSet sourceSets.testmodClient
         }
     }
 
@@ -209,23 +172,13 @@ loom {
             client()
             ideConfigGenerated project.rootProject == project
             name = "Testmod Client"
-            source sourceSets.testmodClient
+            source sourceSets.gametest
         }
         testmodServer {
             server()
             ideConfigGenerated project.rootProject == project
             name = "Testmod Server"
-            source sourceSets.testmod
-        }
-        gametest {
-            inherit testmodServer
-
-            name "Game Test"
-
-            // Enable the gametest runner
-            vmArg "-Dfabric-api.gametest"
-            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
-            runDir "build/gametest"
+            source sourceSets.gametest
         }
         updateStructures {
             server()
@@ -234,18 +187,6 @@ loom {
             vmArg("-Dfrostiful.update-structures")
             runDir "run/structure_update"
         }
-    }
-}
-
-test {
-    useJUnitPlatform()
-}
-
-fabricApi {
-    configureDataGeneration() {
-        createSourceSet = true
-        modId = "frostiful-datagen"
-        client = true
     }
 }
 
