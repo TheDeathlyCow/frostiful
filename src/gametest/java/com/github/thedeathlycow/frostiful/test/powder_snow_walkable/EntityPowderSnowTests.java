@@ -14,10 +14,10 @@ import net.minecraft.util.math.BlockPos;
 
 @SuppressWarnings("unused")
 public class EntityPowderSnowTests {
+    private static final String NIGHT_ENVIRONMENT = "frostiful-test:night";
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombie_wearing_fur_boots_does_not_fall(TestContext context) {
-        context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -32,9 +32,8 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombie_wearing_chainmail_fur_boots_does_not_fall(TestContext context) {
-        context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -48,9 +47,8 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombie_wearing_leather_boots_does_not_fall(TestContext context) {
-        context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -65,9 +63,8 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombie_wearing_no_boots_falls(TestContext context) {
-        context.setTime(18000);
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
