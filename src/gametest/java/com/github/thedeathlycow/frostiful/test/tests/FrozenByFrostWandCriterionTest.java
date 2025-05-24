@@ -29,7 +29,7 @@ public class FrozenByFrostWandCriterionTest {
     private static final int NUM_PREDICATES = 3;
 
     @GameTest()
-    public void three_creeper_mobs_to_empty_predicates_is_true(TestContext context) {
+    public void threeCreeperMobsToEmptyPredicatesIsTrue(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -48,7 +48,7 @@ public class FrozenByFrostWandCriterionTest {
     }
 
     @GameTest()
-    public void three_creeper_mobs_to_three_creeper_predicates_is_true(TestContext context) {
+    public void threeCreeperMobsToThreeCreeperPredicatesIsTrue(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -63,7 +63,24 @@ public class FrozenByFrostWandCriterionTest {
     }
 
     @GameTest()
-    public void five_creeper_mobs_to_three_creeper_predicates_is_true(TestContext context) {
+    public void threeCreeperMobsAndTwoZombiesToThreeCreeperPredicatesIsTrue(TestContext context) {
+        List<LootContext> creepers = createLootContexts(
+                context,
+                EntityType.CREEPER,
+                EntityType.CREEPER,
+                EntityType.CREEPER,
+                EntityType.ZOMBIE,
+                EntityType.ZOMBIE
+        );
+
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+
+        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
+        context.complete();
+    }
+
+    @GameTest()
+    public void fiveCreeperMobsToThreeCreeperPredicatesIsTrue(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -80,7 +97,7 @@ public class FrozenByFrostWandCriterionTest {
     }
 
     @GameTest()
-    public void two_creeper_mobs_to_three_creeper_predicates_is_false(TestContext context) {
+    public void twoCreeperMobsToThreeCreeperPredicatesIsFalse(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -94,7 +111,7 @@ public class FrozenByFrostWandCriterionTest {
     }
 
     @GameTest()
-    public void two_creepers_and_one_zombie_to_three_creeper_predicates_is_false(TestContext context) {
+    public void twoCreepersAndOneZombieToThreeCreeperPredicatesIsFalse(TestContext context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -109,7 +126,7 @@ public class FrozenByFrostWandCriterionTest {
     }
 
     @GameTest()
-    public void zero_mobs_to_three_creeper_predicates_is_false(TestContext context) {
+    public void zeroMobsToThreeCreeperPredicatesIsFalse(TestContext context) {
         List<LootContext> creepers = List.of();
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());

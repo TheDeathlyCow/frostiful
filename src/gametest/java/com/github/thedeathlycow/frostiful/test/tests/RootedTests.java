@@ -13,7 +13,7 @@ import net.minecraft.util.math.BlockPos;
 public class RootedTests {
 
     @GameTest(structure = "frostiful-test:effects.platform")
-    public void villager_stops_walking_when_rooted(TestContext context) {
+    public void villagerStopsWalkingWhenRooted(TestContext context) {
         BlockPos start = new BlockPos(1, 1, 1);
         BlockPos end = start.add(2, 0, 2);
 
@@ -26,7 +26,7 @@ public class RootedTests {
     }
 
     @GameTest(structure = "frostiful-test:effects.platform")
-    public void villager_can_walk_when_not_rooted(TestContext context) {
+    public void villagerCanWalkWhenNotRooted(TestContext context) {
         BlockPos start = new BlockPos(1, 1, 1);
         BlockPos end = start.add(2, 0, 2);
 
@@ -37,7 +37,7 @@ public class RootedTests {
     }
 
     @GameTest(structure = "frostiful-test:effects.platform")
-    public void villager_root_is_not_reset(TestContext context) {
+    public void villagerRootIsNotReset(TestContext context) {
         BlockPos start = new BlockPos(1, 1, 1);
 
         MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);

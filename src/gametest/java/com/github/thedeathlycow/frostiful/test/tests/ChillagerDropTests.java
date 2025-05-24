@@ -16,7 +16,7 @@ import net.minecraft.village.raid.Raid;
 @SuppressWarnings("unused")
 public class ChillagerDropTests {
     @GameTest()
-    public void regular_chillager_does_not_drop_ominous_bottle(TestContext context) {
+    public void regularChillagerDoesNotDropOminousBottle(TestContext context) {
         ServerWorld world = context.getWorld();
         DamageSources damageSources = world.getDamageSources();
 
@@ -30,7 +30,7 @@ public class ChillagerDropTests {
     }
 
     @GameTest()
-    public void chillager_captain_drops_ominous_bottle(TestContext context) {
+    public void chillagerCaptainDropsOminousBottle(TestContext context) {
         ServerWorld world = context.getWorld();
         DamageSources damageSources = world.getDamageSources();
 

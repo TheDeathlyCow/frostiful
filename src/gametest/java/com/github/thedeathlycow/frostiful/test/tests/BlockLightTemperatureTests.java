@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 @SuppressWarnings("unused")
 public class BlockLightTemperatureTests {
     @GameTest(structure = "frostiful-test:effects.local_temperature")
-    public void villager_is_warmed_by_torch(TestContext context) {
+    public void villagerIsWarmedByTorch(TestContext context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
 
@@ -47,7 +47,7 @@ public class BlockLightTemperatureTests {
     }
 
     @GameTest(structure = "frostiful-test:effects.local_temperature")
-    public void villager_in_boat_is_warmed_by_torch(TestContext context) {
+    public void villagerInBoatIsWarmedByTorch(TestContext context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
 
@@ -97,7 +97,7 @@ public class BlockLightTemperatureTests {
 
 
     @GameTest(structure = "frostiful-test:effects.local_temperature")
-    public void villager_is_not_warmed(TestContext context) {
+    public void villagerIsNotWarmedWithoutTorch(TestContext context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
 

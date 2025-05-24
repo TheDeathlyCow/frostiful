@@ -22,7 +22,7 @@ import java.util.function.Function;
 @SuppressWarnings("unused")
 public final class SunLichenCollisionTests {
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void cool_lichen_does_not_damage(TestContext context) {
+    public void coolLichenDoesNotDamage(TestContext context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
@@ -33,7 +33,7 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void hot_lichen_damages(TestContext context) {
+    public void hotLichenDamages(TestContext context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
@@ -45,7 +45,7 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void cold_lichen_does_not_warm(TestContext context) {
+    public void coldLichenDoesNotWarm(TestContext context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
@@ -60,7 +60,7 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void sun_lichen_does_not_overheat(TestContext context) {
+    public void sunLichenDoesNotOverheat(TestContext context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
         final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
@@ -76,7 +76,7 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void warm_villager_is_burned_by_hot_sun_lichen(TestContext context) {
+    public void warmVillagerIsBurnedByHotSunLichen(TestContext context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = 500;
         MobEntity entity = setupWarmVillagerTest(context, pos, temperature);
@@ -92,7 +92,7 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void warm_villager_is_not_burned_by_cool_sun_lichen(TestContext context) {
+    public void warmVillagerIsNotBurnedByCoolSunLichen(TestContext context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = 500;
         MobEntity entity = setupWarmVillagerTest(context, pos, temperature);
@@ -108,17 +108,17 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void hot_lichen_warms(TestContext context) {
+    public void hotLichenWarmsVillager(TestContext context) {
         expectWarmLichenWarmsVillager(context, FBlocks.HOT_SUN_LICHEN);
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void warm_lichen_warms(TestContext context) {
+    public void warmLichenWarmsVillager(TestContext context) {
         expectWarmLichenWarmsVillager(context, FBlocks.WARM_SUN_LICHEN);
     }
 
     @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
-    public void cool_lichen_warms(TestContext context) {
+    public void coolLichenWarmsVillager(TestContext context) {
         expectWarmLichenWarmsVillager(context, FBlocks.COOL_SUN_LICHEN);
     }
 

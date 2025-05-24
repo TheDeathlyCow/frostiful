@@ -17,7 +17,7 @@ public class EntityPowderSnowTests {
     private static final String NIGHT_ENVIRONMENT = "frostiful-test:night";
 
     @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
-    public void zombie_wearing_fur_boots_does_not_fall(TestContext context) {
+    public void zombieWearingFurBootsDoesNotFall(TestContext context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -33,7 +33,7 @@ public class EntityPowderSnowTests {
     }
 
     @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
-    public void zombie_wearing_chainmail_fur_boots_does_not_fall(TestContext context) {
+    public void zombieWearingChainmailFurBootsDoesNotFall(TestContext context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -48,7 +48,7 @@ public class EntityPowderSnowTests {
     }
 
     @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
-    public void zombie_wearing_leather_boots_does_not_fall(TestContext context) {
+    public void zombieWearingLeatherBootsDoesNotFall(TestContext context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -64,7 +64,7 @@ public class EntityPowderSnowTests {
     }
 
     @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
-    public void zombie_wearing_no_boots_falls(TestContext context) {
+    public void zombieWearingNoBootsFalls(TestContext context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         ZombieEntity zombie = context.spawnEntity(EntityType.ZOMBIE, spawnPos);
@@ -78,7 +78,7 @@ public class EntityPowderSnowTests {
     }
 
     @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
-    public void rabbit_does_not_fall(TestContext context) {
+    public void rabbitDoesNotFall(TestContext context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
         RabbitEntity rabbit = context.spawnEntity(EntityType.RABBIT, spawnPos);

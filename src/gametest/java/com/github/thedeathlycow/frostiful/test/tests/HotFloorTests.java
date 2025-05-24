@@ -12,7 +12,7 @@ import net.minecraft.util.math.BlockPos;
 @SuppressWarnings("unused")
 public class HotFloorTests {
     @GameTest(structure = "frostiful-test:magma_block_test", maxTicks = 40)
-    public void villager_on_magma_heated_more_than_villager_on_stone(TestContext context) {
+    public void villagerOnMagmaHeatedMoreThanVillagerOnStone(TestContext context) {
         int temperatureChange = Frostiful.getConfig().freezingConfig.getHeatFromHotFloor();
 
         final BlockPos stonePos = new BlockPos(2, 2, 3);
