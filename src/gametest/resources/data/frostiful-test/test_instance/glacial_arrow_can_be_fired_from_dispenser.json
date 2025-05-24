@@ -1,0 +1,7 @@
+{
+    "type": "minecraft:block_based",
+    "environment": "minecraft:default",
+    "structure": "frostiful-test:glacial_arrow_can_be_fired_from_dispenser",
+    "max_ticks": 20,
+    "sky_access": true
+}
