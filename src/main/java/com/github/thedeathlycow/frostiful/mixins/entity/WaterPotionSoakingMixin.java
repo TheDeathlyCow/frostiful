@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.thrown.PotionEntity;
@@ -26,10 +27,9 @@ public abstract class WaterPotionSoakingMixin extends ThrownItemEntity {
 
     @Inject(
             method = "applyWater",
-            at = @At("TAIL"),
-            locals = LocalCapture.CAPTURE_FAILEXCEPTION
+            at = @At("TAIL")
     )
-    private void soakEntitiesWithWaterbottle(CallbackInfo ci, Box box) {
+    private void soakEntitiesWithWaterbottle(CallbackInfo ci, @Local Box box) {
         List<PlayerEntity> players = getWorld().getNonSpectatingEntities(PlayerEntity.class, box);
         FrostifulConfig config = Frostiful.getConfig();
         float soakPercent = config.freezingConfig.getSoakPercentFromWaterPotion();
