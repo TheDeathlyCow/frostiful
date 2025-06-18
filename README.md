@@ -11,7 +11,7 @@ The above mod pages and this Git repository are the only official sources for th
 
 # Documentation
 
-Frostiful's current wiki is available at https://github.com/TheDeathlyCow/scorchful/wiki
+Frostiful's current wiki is available at https://github.com/TheDeathlyCow/frostiful/wiki
 
 A new wiki is currently in progress on Modded Wiki. Pages are still being migrated over, but it will be complete soon! You can find the main page at: https://modded.wiki/w/Mod:Frostiful
 
@@ -27,7 +27,7 @@ https://crowdin.com/project/frostiful
 
 This documents mod integrations that have been created specifically for Frostiful and are included with Frostiful out of the box.
 
-Many other patches that are also relevant for Scorchful are provided by the standalone [Thermoo Patches](https://modrinth.com/mod/thermoo-patches) mod, including season integration, heart bar fixes, and more.
+Many other patches that are also relevant for Frostiful are provided by the standalone [Thermoo Patches](https://modrinth.com/mod/thermoo-patches) mod, including season integration, heart bar fixes, and more.
 
 * [Tips](https://modrinth.com/mod/tips): Added some Frostiful-specific tips
 * [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions): Descriptions are provided for Frostiful's enchantments
