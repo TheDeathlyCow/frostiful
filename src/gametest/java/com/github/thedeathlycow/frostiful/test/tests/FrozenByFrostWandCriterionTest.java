@@ -2,22 +2,24 @@ package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
 import net.minecraft.loot.context.LootContext;
+import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.loot.context.LootContextTypes;
+import net.minecraft.loot.context.LootWorldContext;
 import net.minecraft.predicate.NumberRange;
 import net.minecraft.predicate.entity.EntityPredicate;
 import net.minecraft.predicate.entity.EntityTypePredicate;
 import net.minecraft.predicate.entity.LootContextPredicate;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.test.TestContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -140,13 +142,13 @@ public class FrozenByFrostWandCriterionTest {
             TestContext testContext,
             EntityType<? extends MobEntity>... entityTypes
     ) {
-        ServerPlayerEntity mockPlayer = createMockPlayer(testContext.getWorld());
         List<LootContext> contexts = new ArrayList<>();
 
         for (EntityType<? extends MobEntity> type : entityTypes) {
-            LootContext context = EntityPredicate.createAdvancementEntityLootContext(
-                    mockPlayer,
-                    testContext.spawnMob(type, BlockPos.ORIGIN)
+            LootContext context = createAdvancementEntityLootContext(
+                    testContext.getWorld(),
+                    testContext.spawnMob(type, BlockPos.ORIGIN),
+                    Vec3d.ZERO
             );
             contexts.add(context);
         }
@@ -154,14 +156,12 @@ public class FrozenByFrostWandCriterionTest {
         return contexts;
     }
 
-    private static ServerPlayerEntity createMockPlayer(ServerWorld world) {
-        ServerPlayerEntity mockPlayer = Mockito.mock(ServerPlayerEntity.class);
-
-        Mockito.doReturn(world).when(mockPlayer).getWorld();
-        Mockito.when(mockPlayer.getPos())
-                .thenReturn(Vec3d.ZERO);
-
-        return mockPlayer;
+    public static LootContext createAdvancementEntityLootContext(ServerWorld world, Entity target, Vec3d pos) {
+        LootWorldContext lootWorldContext = new LootWorldContext.Builder(world)
+                .add(LootContextParameters.THIS_ENTITY, target)
+                .add(LootContextParameters.ORIGIN, pos)
+                .build(LootContextTypes.ADVANCEMENT_ENTITY);
+        return new LootContext.Builder(lootWorldContext).build(Optional.empty());
     }
 
     private static FrozenByFrostWandCriterion.Conditions createConditions(ServerWorld world) {
