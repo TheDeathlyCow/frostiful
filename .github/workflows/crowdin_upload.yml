@@ -4,6 +4,7 @@ on:
   push:
     paths: [ 'src/main/resources/assets/frostiful/lang/**' ]
     branches:
+      - 1.21.8
       - 1.21.5
       - 1.21.1
   workflow_dispatch:
