@@ -140,7 +140,7 @@ public class FrozenByFrostWandCriterionTest {
             TestContext testContext,
             EntityType<? extends MobEntity>... entityTypes
     ) {
-        ServerPlayerEntity mockPlayer = createMockPlayer(testContext);
+        ServerPlayerEntity mockPlayer = createMockPlayer(testContext.getWorld());
         List<LootContext> contexts = new ArrayList<>();
 
         for (EntityType<? extends MobEntity> type : entityTypes) {
@@ -154,11 +154,10 @@ public class FrozenByFrostWandCriterionTest {
         return contexts;
     }
 
-    private static ServerPlayerEntity createMockPlayer(TestContext context) {
+    private static ServerPlayerEntity createMockPlayer(ServerWorld world) {
         ServerPlayerEntity mockPlayer = Mockito.mock(ServerPlayerEntity.class);
 
-        Mockito.when(mockPlayer.getWorld())
-                .thenReturn(context.getWorld());
+        Mockito.doReturn(world).when(mockPlayer).getWorld();
         Mockito.when(mockPlayer.getPos())
                 .thenReturn(Vec3d.ZERO);
 
