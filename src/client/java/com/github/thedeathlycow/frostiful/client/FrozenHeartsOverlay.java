@@ -2,8 +2,9 @@ package com.github.thedeathlycow.frostiful.client;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.thermoo.api.client.HeartBarContext;
+import net.minecraft.client.gl.RenderPipelines;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Identifier;
@@ -22,29 +23,28 @@ public class FrozenHeartsOverlay {
     public static void afterHealthBar(
             DrawContext context,
             PlayerEntity player,
-            Vector2i[] heartPositions,
-            int displayHealth,
-            int maxDisplayHealth
+            HeartBarContext heartBarContext
     ) {
         FrostifulConfig config = Frostiful.getConfig();
         if (!config.clientConfig.doColdHeartOverlay() || player.thermoo$isWarm()) {
             return;
         }
 
-        int frozenHealthPoints = getNumColdPoints(player, maxDisplayHealth);
-        int frozenHealthHearts = getNumColdHeartsFromPoints(frozenHealthPoints);
-        for (int i = 0; i < frozenHealthHearts; i++) {
-            Vector2i pos = heartPositions[i];
-            if (pos == null) {
-                continue;
+        final int coldHalfHearts = getColdHalfHearts(player, heartBarContext.positions().size());
+        final int coldHearts = getColdHeartsFromHalfHearts(coldHalfHearts);
+        final boolean drawHalfHeartAtEnd = coldHalfHearts % 2 != 0;
+
+        int heartsRendered = 0;
+
+        for (Vector2i pos : heartBarContext.positions()) {
+            if (heartsRendered >= coldHearts) {
+                break;
             }
-            // is half heart if this is the last heart being rendered and we have an odd
-            // number of frozen health points
-            boolean isHalfHeart = i + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1; // is odd check
+            boolean isHalfHeart = drawHalfHeartAtEnd && heartsRendered == coldHearts - 1;
 
             int u = isHalfHeart ? 9 : 0;
             context.drawTexture(
-                    RenderLayer::getGuiTextured,
+                    RenderPipelines.GUI_TEXTURED,
                     HEART_OVERLAY_TEXTURE,
                     pos.x, pos.y,
                     u, 0,
@@ -58,53 +58,56 @@ public class FrozenHeartsOverlay {
             DrawContext context,
             PlayerEntity player,
             LivingEntity mount,
-            Vector2i[] mountHeartPositions,
-            int displayMountHealth,
-            int maxDisplayMountHealth
+            HeartBarContext heartBarContext
     ) {
         FrostifulConfig config = Frostiful.getConfig();
         if (!config.clientConfig.doColdHeartOverlay() || mount.thermoo$isWarm()) {
             return;
         }
 
-        int frozenHealthPoints = getNumColdPoints(mount, maxDisplayMountHealth);
-        int frozenHealthHearts = getNumColdHeartsFromPoints(frozenHealthPoints);
-        for (int i = 0; i < frozenHealthHearts; i++) {
-            Vector2i pos = mountHeartPositions[i];
-            if (pos == null) {
-                continue;
+        final int coldHalfHearts = getColdHalfHearts(mount, heartBarContext.positions().size());
+        final int coldHearts = getColdHeartsFromHalfHearts(coldHalfHearts);
+        final boolean drawHalfHeartAtEnd = coldHalfHearts % 2 != 0;
+
+        int heartsRendered = 0;
+
+        for (Vector2i pos : heartBarContext.positions()) {
+            if (heartsRendered >= coldHearts) {
+                break;
             }
-            boolean isHalfHeart = i + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1; // is odd check
+            boolean isHalfHeart = drawHalfHeartAtEnd && heartsRendered == coldHearts - 1;
 
             if (isHalfHeart) {
                 // flips the half heart around, since animal hearts are backwards
                 context.drawTexture(
-                        RenderLayer::getGuiTextured,
+                        RenderPipelines.GUI_TEXTURED,
                         HEART_OVERLAY_TEXTURE,
-                        pos.x + 4, pos.y,
+                        pos.x() + 4, pos.y(),
                         4, 0,
                         5, 10,
                         TEXTURE_WIDTH, TEXTURE_HEIGHT
                 );
             } else {
                 context.drawTexture(
-                        RenderLayer::getGuiTextured,
+                        RenderPipelines.GUI_TEXTURED,
                         HEART_OVERLAY_TEXTURE,
-                        pos.x, pos.y,
+                        pos.x(), pos.y(),
                         0, 0,
                         9, 10,
                         TEXTURE_WIDTH, TEXTURE_HEIGHT
                 );
             }
+
+            heartsRendered++;
         }
     }
 
-    private static int getNumColdPoints(@NotNull LivingEntity entity, int maxDisplayHealth) {
+    private static int getColdHalfHearts(@NotNull LivingEntity entity, int maxDisplayHealth) {
         float freezingProgress = -entity.thermoo$getTemperatureScale();
         return Math.round(freezingProgress * maxDisplayHealth);
     }
 
-    private static int getNumColdHeartsFromPoints(int frozenHealthPoints) {
+    private static int getColdHeartsFromHalfHearts(int frozenHealthPoints) {
         // number of whole hearts
         return MathHelper.ceil(frozenHealthPoints / 2.0f);
     }
