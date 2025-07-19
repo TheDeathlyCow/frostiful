@@ -13,7 +13,7 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "minecraft:cut_packed_ice_wall_from_cut_packed_ice_stonecutting"
+        "recipe": "frostiful:cut_packed_ice_wall_from_cut_packed_ice_stonecutting"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
@@ -26,7 +26,7 @@
   ],
   "rewards": {
     "recipes": [
-      "minecraft:cut_packed_ice_wall_from_cut_packed_ice_stonecutting"
+      "frostiful:cut_packed_ice_wall_from_cut_packed_ice_stonecutting"
     ]
   }
 }
