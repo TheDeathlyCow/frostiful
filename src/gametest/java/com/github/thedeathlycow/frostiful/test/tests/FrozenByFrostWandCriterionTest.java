@@ -157,7 +157,7 @@ public class FrozenByFrostWandCriterionTest {
     private static ServerPlayerEntity createMockPlayer(TestContext context) {
         ServerPlayerEntity mockPlayer = Mockito.mock(ServerPlayerEntity.class);
 
-        Mockito.when(mockPlayer.getServerWorld())
+        Mockito.when(mockPlayer.getWorld())
                 .thenReturn(context.getWorld());
         Mockito.when(mockPlayer.getPos())
                 .thenReturn(Vec3d.ZERO);

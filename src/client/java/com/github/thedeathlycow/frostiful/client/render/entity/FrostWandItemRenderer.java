@@ -13,6 +13,9 @@ import net.minecraft.client.render.item.model.special.SimpleSpecialModelRenderer
 import net.minecraft.client.render.item.model.special.SpecialModelRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.item.ItemDisplayContext;
+import org.joml.Vector3f;
+
+import java.util.Set;
 
 @Environment(EnvType.CLIENT)
 public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
@@ -44,6 +47,13 @@ public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
         );
         this.model.render(matrices, vertexConsumer, FULL_BRIGHTNESS, overlay);
         matrices.pop();
+    }
+
+    @Override
+    public void collectVertices(Set<Vector3f> vertices) {
+        var matrixStack = new MatrixStack();
+        matrixStack.scale(1.0F, -1.0F, -1.0F);
+        this.model.getRootPart().collectVertices(matrixStack, vertices);
     }
 
     @Environment(EnvType.CLIENT)
