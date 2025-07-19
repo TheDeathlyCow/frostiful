@@ -37,7 +37,7 @@ public class BiterEntityModel extends EntityModel<BiterEntityRenderState> {
         this.leftArm = root.getChild(EntityModelPartNames.LEFT_ARM);
         this.rightArm = root.getChild(EntityModelPartNames.RIGHT_ARM);
 
-        this.biteAnimation = BiterAnimations.BITE.createAnimation(modelPart);
+        this.biteAnimation = BiterAnimations.BITE.createAnimation(this.root);
     }
 
     public static TexturedModelData getTexturedModelData() {

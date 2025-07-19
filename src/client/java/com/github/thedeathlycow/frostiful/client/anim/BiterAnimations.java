@@ -15,7 +15,7 @@ public class BiterAnimations {
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(0.225f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("bottom",
+            .addBoneAnimation("mouth_bottom",
                     new Transformation(Transformation.Targets.ROTATE,
                             new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
@@ -23,7 +23,7 @@ public class BiterAnimations {
                                     Transformation.Interpolations.LINEAR),
                             new Keyframe(0.225f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR)))
-            .addBoneAnimation("top",
+            .addBoneAnimation("mouth_top",
                     new Transformation(Transformation.Targets.ROTATE,
                             new Keyframe(0f, AnimationHelper.createRotationalVector(0f, 0f, 0f),
                                     Transformation.Interpolations.LINEAR),
