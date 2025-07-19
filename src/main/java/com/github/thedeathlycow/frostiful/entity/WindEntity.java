@@ -20,6 +20,8 @@ import net.minecraft.registry.entry.RegistryEntry;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.intprovider.IntProvider;
 import net.minecraft.util.math.intprovider.UniformIntProvider;
@@ -242,17 +244,17 @@ public class WindEntity extends Entity {
     }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {
-        this.setWindSpeed(nbt.getFloat("WindSpeed", 1.0f));
-        this.setLifeTicks(nbt.getInt("LifeTicks", 80));
+    protected void readCustomData(ReadView readView) {
+        this.setWindSpeed(readView.getFloat("WindSpeed", 1.0f));
+        this.setLifeTicks(readView.getInt("LifeTicks", 80));
     }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {
-        nbt.putFloat("WindSpeed", this.getWindSpeed());
+    protected void writeCustomData(WriteView writeView) {
+        writeView.putFloat("WindSpeed", this.getWindSpeed());
 
         if (this.isAlive()) {
-            nbt.putInt("LifeTicks", this.getLifeTicks());
+            writeView.putInt("LifeTicks", this.getLifeTicks());
         }
     }
 }

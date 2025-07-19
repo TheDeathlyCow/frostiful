@@ -8,6 +8,8 @@ import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
@@ -52,14 +54,14 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        this.snowAccumulation = tag.getInt(KEY, 0);
+    public void readData(ReadView readView) {
+        this.snowAccumulation = readView.getInt(KEY, 0);
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+    public void writeData(WriteView writeView) {
         if (this.snowAccumulation > 0) {
-            tag.putInt(KEY, this.snowAccumulation);
+            writeView.putInt(KEY, this.snowAccumulation);
         }
     }
 

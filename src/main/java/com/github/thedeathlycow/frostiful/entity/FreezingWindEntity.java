@@ -8,6 +8,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.world.World;
 
 public class FreezingWindEntity extends WindEntity {
@@ -36,15 +38,15 @@ public class FreezingWindEntity extends WindEntity {
     }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.frost = nbt.getInt("Frost", Frostiful.getConfig().freezingConfig.getFreezingWindFrost());
+    protected void readCustomData(ReadView readView) {
+        super.readCustomData(readView);
+        this.frost = readView.getInt("Frost", Frostiful.getConfig().freezingConfig.getFreezingWindFrost());
     }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    protected void writeCustomData(WriteView writeView) {
+        super.writeCustomData(writeView);
 
-        nbt.putInt("Frost", this.frost);
+        writeView.putInt("Frost", this.frost);
     }
 }

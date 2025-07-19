@@ -24,6 +24,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
@@ -139,15 +141,15 @@ public class BiterEntity extends HostileEntity {
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt("AttackTicks", this.attackTicks);
+    public void writeCustomData(WriteView writeView) {
+        super.writeCustomData(writeView);
+        writeView.putInt("AttackTicks", this.attackTicks);
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.attackTicks = nbt.getInt("AttackTicks", 0);
+    public void readCustomData(ReadView readView) {
+        super.readCustomData(readView);
+        this.attackTicks = readView.getInt("AttackTicks", 0);
     }
 
     @Override

@@ -11,6 +11,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
@@ -63,15 +65,15 @@ public class GlacialArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.freezeAmount = nbt.getInt(FREEZE_AMOUNT_NBT_KEY, 0);
+    public void readCustomData(ReadView readView) {
+        super.readCustomData(readView);
+        this.freezeAmount = readView.getInt(FREEZE_AMOUNT_NBT_KEY, 0);
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putInt(FREEZE_AMOUNT_NBT_KEY, this.freezeAmount);
+    public void writeCustomData(WriteView writeView) {
+        super.writeCustomData(writeView);
+        writeView.putInt(FREEZE_AMOUNT_NBT_KEY, this.freezeAmount);
     }
 
 }

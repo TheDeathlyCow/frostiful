@@ -47,6 +47,8 @@ import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.intprovider.IntProvider;
@@ -507,15 +509,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand", false));
+    public void readCustomData(ReadView readView) {
+        super.readCustomData(readView);
+        this.dataTracker.set(IS_USING_FROST_WAND, readView.getBoolean("IsUsingFrostWand", false));
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
+    public void writeCustomData(WriteView writeView) {
+        super.writeCustomData(writeView);
+        writeView.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
     }
 
     protected class DestroyHeatSourcesGoal extends SpellcastingIllagerEntity.CastSpellGoal {

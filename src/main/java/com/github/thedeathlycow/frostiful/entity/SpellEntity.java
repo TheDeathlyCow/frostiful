@@ -7,6 +7,8 @@ import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtElement;
 import net.minecraft.particle.ParticleEffect;
 import net.minecraft.particle.ParticleTypes;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.hit.EntityHitResult;
 import net.minecraft.util.hit.HitResult;
 import net.minecraft.util.math.Vec3d;
@@ -60,16 +62,16 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
         }
     }
 
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    public void writeCustomData(WriteView writeView) {
+        super.writeCustomData(writeView);
         if (!Double.isInfinite(this.maxDistance)) {
-            nbt.putDouble(MAX_DISTANCE_NBT_KEY, this.maxDistance);
+            writeView.putDouble(MAX_DISTANCE_NBT_KEY, this.maxDistance);
         }
     }
 
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.maxDistance = nbt.getDouble(MAX_DISTANCE_NBT_KEY, Double.POSITIVE_INFINITY);
+    public void readCustomData(ReadView readView) {
+        super.readCustomData(readView);
+        this.maxDistance = readView.getDouble(MAX_DISTANCE_NBT_KEY, Double.POSITIVE_INFINITY);
     }
 
     protected void onCollision(HitResult hitResult) {

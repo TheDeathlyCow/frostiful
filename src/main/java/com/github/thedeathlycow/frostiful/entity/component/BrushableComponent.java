@@ -22,6 +22,8 @@ import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
 import net.minecraft.world.World;
@@ -77,14 +79,14 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        this.lastBrushTime = tag.getLong(LAST_BRUSHED_TIME_KEY, -1);
+    public void readData(ReadView readView) {
+        this.lastBrushTime = readView.getLong(LAST_BRUSHED_TIME_KEY, -1);
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+    public void writeData(WriteView writeView) {
         if (this.wasBrushed()) {
-            tag.putLong(LAST_BRUSHED_TIME_KEY, this.getLastBrushTime());
+            writeView.putLong(LAST_BRUSHED_TIME_KEY, this.getLastBrushTime());
         }
     }
 

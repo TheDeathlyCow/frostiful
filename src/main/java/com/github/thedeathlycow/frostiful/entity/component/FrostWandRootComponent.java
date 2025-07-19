@@ -23,6 +23,8 @@ import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
+import net.minecraft.storage.ReadView;
+import net.minecraft.storage.WriteView;
 import net.minecraft.util.math.Vec3d;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
@@ -121,14 +123,14 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        this.rootedTicks = tag.getInt(ROOTED_TICKS_KEY, 0);
+    public void readData(ReadView readView) {
+        this.rootedTicks = readView.getInt(ROOTED_TICKS_KEY, 0);
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+    public void writeData(WriteView writeView) {
         if (this.rootedTicks != 0) {
-            tag.putInt(ROOTED_TICKS_KEY, this.rootedTicks);
+            writeView.putInt(ROOTED_TICKS_KEY, this.rootedTicks);
         }
     }
 
