@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.client.render.state.BiterEntityRenderS
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
+import net.minecraft.client.render.entity.animation.Animation;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.util.math.MathHelper;
@@ -18,6 +19,8 @@ public class BiterEntityModel extends EntityModel<BiterEntityRenderState> {
     private final ModelPart mouthBottom;
     private final ModelPart leftArm;
     private final ModelPart rightArm;
+
+    private final Animation biteAnimation;
 
     public BiterEntityModel(ModelPart modelPart) {
         super(modelPart);
@@ -33,6 +36,8 @@ public class BiterEntityModel extends EntityModel<BiterEntityRenderState> {
 
         this.leftArm = root.getChild(EntityModelPartNames.LEFT_ARM);
         this.rightArm = root.getChild(EntityModelPartNames.RIGHT_ARM);
+
+        this.biteAnimation = BiterAnimations.BITE.createAnimation(modelPart);
     }
 
     public static TexturedModelData getTexturedModelData() {
@@ -75,6 +80,6 @@ public class BiterEntityModel extends EntityModel<BiterEntityRenderState> {
         this.rightArm.yaw = 0.0F;
         this.leftArm.yaw = 0.0F;
 
-        this.animate(state.biteAnimationState, BiterAnimations.BITE, state.age);
+        this.biteAnimation.apply(state.biteAnimationState, state.age);
     }
 }

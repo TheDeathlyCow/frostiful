@@ -2,14 +2,11 @@ package com.github.thedeathlycow.frostiful.client.anim;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.animation.Animation;
-import net.minecraft.client.render.entity.animation.AnimationHelper;
-import net.minecraft.client.render.entity.animation.Keyframe;
-import net.minecraft.client.render.entity.animation.Transformation;
+import net.minecraft.client.render.entity.animation.*;
 
 @Environment(EnvType.CLIENT)
 public class BiterAnimations {
-    public static final Animation BITE = Animation.Builder.create(0.225f)
+    public static final AnimationDefinition BITE = AnimationDefinition.Builder.create(0.225f)
             .addBoneAnimation("head",
                     new Transformation(Transformation.Targets.MOVE_ORIGIN,
                             new Keyframe(0f, AnimationHelper.createTranslationalVector(0f, 0f, 0f),
