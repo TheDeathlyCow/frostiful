@@ -1,0 +1,56 @@
+package com.github.thedeathlycow.frostiful.mixins.world;
+
+import com.github.thedeathlycow.frostiful.server.world.ChillagerRaidSpawnerUtil;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.SpawnReason;
+import net.minecraft.server.world.ServerWorld;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.village.raid.Raid;
+import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+@Mixin(Raid.class)
+public class RaidMixin {
+    @Inject(
+            method = "spawnNextWave",
+            at = @At("HEAD")
+    )
+    private void trackIsBiomeCold(
+            ServerWorld world,
+            BlockPos pos,
+            CallbackInfo ci,
+            @Share("isBiomeCold") LocalBooleanRef isBiomeCold
+    ) {
+        Biome biome = world.getBiome(pos).value();
+
+        isBiomeCold.set(biome.isCold(pos, world.getSeaLevel()));
+    }
+
+    @WrapOperation(
+            method = "spawnNextWave",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;Lnet/minecraft/entity/SpawnReason;)Lnet/minecraft/entity/Entity;"
+            )
+    )
+    private Entity replacePillagersWithChillagers(
+            EntityType<?> instance,
+            World world,
+            SpawnReason reason,
+            Operation<? extends Entity> original,
+            @Share("isBiomeCold") LocalBooleanRef isBiomeCold
+    ) {
+        instance = ChillagerRaidSpawnerUtil.replaceRaidersInColdBiomes(instance, isBiomeCold.get());
+
+        return original.call(instance, world, reason);
+    }
+}
