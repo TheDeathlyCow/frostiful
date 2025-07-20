@@ -28,6 +28,7 @@
         "powder_snow_effects.EntityPowderSnowRedirect",
         "powder_snow_effects.LivingEntityPowderSnowDisabler",
         "world.IcicleGrowthMixin",
+        "world.RaidMixin",
         "world.ServerChunkManagerMixin",
         "world.WindSpawningMixin",
         "world.spawner.PatrolSpawnerMixin"
