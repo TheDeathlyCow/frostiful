@@ -1,11 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.world;
 
 import com.github.thedeathlycow.frostiful.server.world.ChillagerRaidSpawnerUtil;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.injector.ModifyReceiver;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalBooleanRef;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.server.world.ServerWorld;
@@ -35,22 +33,19 @@ public class RaidMixin {
         isBiomeCold.set(biome.isCold(pos, world.getSeaLevel()));
     }
 
-    @WrapOperation(
+    @ModifyReceiver(
             method = "spawnNextWave",
             at = @At(
                     value = "INVOKE",
                     target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;Lnet/minecraft/entity/SpawnReason;)Lnet/minecraft/entity/Entity;"
             )
     )
-    private Entity replacePillagersWithChillagers(
+    private EntityType<?> replacePillagersWithChillagers(
             EntityType<?> instance,
             World world,
             SpawnReason reason,
-            Operation<? extends Entity> original,
             @Share("isBiomeCold") LocalBooleanRef isBiomeCold
     ) {
-        instance = ChillagerRaidSpawnerUtil.replaceRaidersInColdBiomes(instance, isBiomeCold.get());
-
-        return original.call(instance, world, reason);
+        return ChillagerRaidSpawnerUtil.replaceRaidersInColdBiomes(instance, isBiomeCold.get());
     }
 }
