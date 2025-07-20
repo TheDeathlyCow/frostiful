@@ -11,39 +11,41 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.village.raid.Raid;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Raid.class)
 public class RaidMixin {
+    @Shadow @Final private ServerWorld world;
+
     @Inject(
             method = "spawnNextWave",
             at = @At("HEAD")
     )
     private void trackIsBiomeCold(
-            ServerWorld world,
             BlockPos pos,
             CallbackInfo ci,
             @Share("isBiomeCold") LocalBooleanRef isBiomeCold
     ) {
-        Biome biome = world.getBiome(pos).value();
+        Biome biome = this.world.getBiome(pos).value();
 
-        isBiomeCold.set(biome.isCold(pos, world.getSeaLevel()));
+        isBiomeCold.set(biome.isCold(pos));
     }
 
     @ModifyReceiver(
             method = "spawnNextWave",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;Lnet/minecraft/entity/SpawnReason;)Lnet/minecraft/entity/Entity;"
+                    target = "Lnet/minecraft/entity/EntityType;create(Lnet/minecraft/world/World;)Lnet/minecraft/entity/Entity;"
             )
     )
     private EntityType<?> replacePillagersWithChillagers(
             EntityType<?> instance,
             World world,
-            SpawnReason reason,
             @Share("isBiomeCold") LocalBooleanRef isBiomeCold
     ) {
         return ChillagerRaidSpawnerUtil.replaceRaidersInColdBiomes(instance, isBiomeCold.get());
