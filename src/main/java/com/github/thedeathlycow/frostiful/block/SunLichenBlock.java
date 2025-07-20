@@ -47,7 +47,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         super(settings);
         this.heatLevel = heatLevel;
         if (heatLevel > COLD_LEVEL) {
-            LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DANGER_OTHER);
+            LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DAMAGE_OTHER);
         }
     }
 
