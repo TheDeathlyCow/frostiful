@@ -5,12 +5,7 @@ on:
     paths: [ 'src/main/resources/assets/frostiful/lang/**' ]
     branches:
       - 1.21.8
-      - 1.21.5
-      - 1.21.1
   workflow_dispatch:
-
-env:
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   crowdin-upload:
@@ -25,7 +20,7 @@ jobs:
           upload_sources: true
           upload_translations: true
           download_translations: false
-          crowdin_branch_name: ${{ env.BRANCH_NAME }}
+          auto_approve_imported: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
