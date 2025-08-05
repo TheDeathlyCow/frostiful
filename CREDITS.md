@@ -18,6 +18,7 @@
 * [Nezila](https://github.com/nezila) - Ukrainian
 * [Texaliuz](https://github.com/Texaliuz) - Spanish (Argentina)
 * [TheLegendofSaram](https://github.com/TheLegendofSaram) - Spanish (Mexico)
+* [MaroonLuv](https://github.com/MaroonLuv) - Russian
 
 # Sound Effects
 
