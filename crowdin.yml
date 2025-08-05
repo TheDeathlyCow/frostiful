@@ -7,6 +7,26 @@
 "files": [
   {
     "source": "src/main/resources/assets/frostiful/lang/en_us.json",
-    "translation": "src/main/resources/assets/frostiful/lang/%locale_with_underscore%.json"
+    "translation": "src/main/resources/assets/frostiful/lang/%locale_with_underscore%.json",
+    "languages_mapping": {
+      "locale_with_underscore": {
+        "fr_FR": "fr_fr",
+        "es_ES": "es_es",
+        "de_DE": "de_de",
+        "fi_FI": "fi_fi",
+        "ja_JP": "ja_jp",
+        "pt_PT": "pt_pt",
+        "ru_RU": "ru_ru",
+        "uk_UA": "uk_ua",
+        "zh_CN": "zh_cn",
+        "vi_VN": "vi_vn",
+        "pt_BR": "pt_br",
+        "es_AR": "es_ar",
+        "es_MX": "es_mx",
+        "en_GB": "en_gb",
+        "fr_CA": "fr_ca",
+        "en_PT": "en_pt",
+      }
+    }
   }
 ]
