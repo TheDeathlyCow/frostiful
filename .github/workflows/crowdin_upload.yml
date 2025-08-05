@@ -7,9 +7,6 @@ on:
       - 1.21.1
   workflow_dispatch:
 
-env:
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
-
 jobs:
   crowdin-upload:
     runs-on: ubuntu-latest
@@ -23,7 +20,8 @@ jobs:
           upload_sources: true
           upload_translations: true
           download_translations: false
-          crowdin_branch_name: ${{ env.BRANCH_NAME }}
+          auto_approve_imported: true
+          crowdin_branch_name: 1.21.1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           CROWDIN_PROJECT_ID: ${{ secrets.CROWDIN_PROJECT_ID }}
