@@ -19,6 +19,7 @@
 * [Texaliuz](https://github.com/Texaliuz) - Spanish (Argentina)
 * [TheLegendofSaram](https://github.com/TheLegendofSaram) - Spanish (Mexico)
 * [MaroonLuv](https://github.com/MaroonLuv) - Russian
+* [Usia](https://crowdin.com/profile/usia) - Ukrainian
 
 # Sound Effects
 
