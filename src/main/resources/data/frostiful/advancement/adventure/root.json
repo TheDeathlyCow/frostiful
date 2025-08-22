@@ -12,7 +12,7 @@
         },
         "announce_to_chat": false,
         "show_toast": true,
-        "background": "frostiful:textures/block/brittle_ice/cracked_0.png"
+        "background": "frostiful:block/brittle_ice/cracked_0"
     },
     "criteria": {
         "player_is_cold": {
