@@ -23,7 +23,6 @@ jobs:
           upload_translations: false
           download_translations: true
 
-          crowdin_branch_name: ${{ env.BRANCH_NAME }}
           localization_branch_name: ${{ env.BRANCH_NAME }}-translate/l10n-crowdin-translations
 
           create_pull_request: true
