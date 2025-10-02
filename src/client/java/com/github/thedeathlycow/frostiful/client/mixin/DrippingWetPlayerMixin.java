@@ -45,8 +45,8 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             at = @At("TAIL")
     )
     private void dripParticles(CallbackInfo ci) {
-        World world = this.getWorld();
-        if (world.isClient) { // only show particles on client to save bandwidth
+        World world = this.getEntityWorld();
+        if (world.isClient()) { // only show particles on client to save bandwidth
 
             // Scorchful does the same thing - let it handle this
             if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID)) {
