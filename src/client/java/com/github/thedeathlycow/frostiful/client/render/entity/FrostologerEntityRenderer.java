@@ -16,7 +16,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.PlayerEntityRenderer;
 import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
 import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
@@ -83,7 +82,7 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
 
         CapeComponent cape = frostologer.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
         if (cape != null) {
-            state.capeTexture = cape.capeTexture();
+            state.capeTexture = cape.capeAsset();
             updateCape(frostologer, state, tickDelta);
         } else {
             state.capeTexture = null;

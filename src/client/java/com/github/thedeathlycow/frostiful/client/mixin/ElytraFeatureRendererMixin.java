@@ -18,7 +18,7 @@ public class ElytraFeatureRendererMixin {
             method = "getTexture",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/SkinTextures;capeTexture()Lnet/minecraft/util/Identifier;"
+                    target = "Lnet/minecraft/client/util/SkinTextures;capeAsset()Lnet/minecraft/util/Identifier;"
             )
     )
     private static Identifier getFrostologyCloakTexture(
@@ -30,7 +30,7 @@ public class ElytraFeatureRendererMixin {
         CapeComponent cape = ((FBipedRenderState) state).frostiful$cape();
 
         if (cape != null && (accountCape == null || cape.overrideAccountCape())) {
-            return cape.capeTexture();
+            return cape.capeAsset();
         } else {
             return accountCape;
         }

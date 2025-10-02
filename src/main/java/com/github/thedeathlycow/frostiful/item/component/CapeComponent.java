@@ -11,23 +11,23 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.RegistryByteBuf;
 import net.minecraft.network.codec.PacketCodec;
 import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.Identifier;
+import net.minecraft.util.AssetInfo;
 import org.jetbrains.annotations.Nullable;
 
 public record CapeComponent(
-        Identifier capeTexture,
+        AssetInfo.TextureAssetInfo capeAsset,
         boolean overrideAccountCape
 ) {
     public static final CapeComponent FROSTOLOGY_CLOAK = new CapeComponent(
-            Frostiful.id("textures/entity/frostology_cloak.png"),
+            new AssetInfo.TextureAssetInfo(Frostiful.id("entity/frostology_cloak")),
             true
     );
 
     public static final Codec<CapeComponent> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    Identifier.CODEC
-                            .fieldOf("cape_texture")
-                            .forGetter(CapeComponent::capeTexture),
+                    AssetInfo.TextureAssetInfo.CODEC
+                            .fieldOf("cape_asset")
+                            .forGetter(CapeComponent::capeAsset),
                     Codec.BOOL
                             .optionalFieldOf("override_account_cape", true)
                             .forGetter(CapeComponent::overrideAccountCape)
@@ -35,8 +35,8 @@ public record CapeComponent(
     );
 
     public static final PacketCodec<RegistryByteBuf, CapeComponent> PACKET_CODEC = PacketCodec.tuple(
-            Identifier.PACKET_CODEC,
-            CapeComponent::capeTexture,
+            AssetInfo.TextureAssetInfo.PACKET_CODEC,
+            CapeComponent::capeAsset,
             PacketCodecs.BOOLEAN,
             CapeComponent::overrideAccountCape,
             CapeComponent::new
