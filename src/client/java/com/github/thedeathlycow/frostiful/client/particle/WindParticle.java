@@ -15,7 +15,6 @@ import org.joml.Vector3f;
 
 @Environment(EnvType.CLIENT)
 public class WindParticle extends BillboardParticle {
-
     private static final Vector3f FROM = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
     private static final Vector3f TO = new Vector3f(-1.0F, -1.0F, 0.0F);
 

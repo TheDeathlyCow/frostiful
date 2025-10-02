@@ -15,6 +15,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.entity.EntityRendererFactory;
+import net.minecraft.client.render.entity.IllagerEntityRenderer;
 import net.minecraft.client.render.entity.MobEntityRenderer;
 import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
 import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
@@ -36,9 +37,10 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
     public FrostologerEntityRenderer(EntityRendererFactory.Context context) {
         super(context, new FrostologerEntityModel<>(context.getPart(FEntityModelLayers.FROSTOLOGER)), 0.5F);
 
-        this.addFeature(new HeadFeatureRenderer<>(this, context.getEntityModels(), HeadFeatureRenderer.HeadTransformation.DEFAULT));
+        this.addFeature(new HeadFeatureRenderer<>(this, context.getEntityModels(), context.getPlayerSkinCache()));
+
         this.addFeature(new HeldItemFeatureRenderer<>(this));
-        this.addFeature(new FrostologerCloakFeatureRenderer(this, context.getEntityModels(), context.getEquipmentModelLoader()));
+//        this.addFeature(new FrostologerCloakFeatureRenderer(this, context.getEntityModels(), context.getEquipmentModelLoader()));
         this.addFeature(
                 new FrostologerEyesFeatureRenderer<>(
                         this,
@@ -51,11 +53,6 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
     @Override
     public FrostologerEntityRenderState createRenderState() {
         return new FrostologerEntityRenderState();
-    }
-
-    @Override
-    public void render(FrostologerEntityRenderState livingEntityRenderState, MatrixStack matrixStack, VertexConsumerProvider vertexConsumerProvider, int i) {
-        super.render(livingEntityRenderState, matrixStack, vertexConsumerProvider, i);
     }
 
     @Override

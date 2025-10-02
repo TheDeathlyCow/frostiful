@@ -5,8 +5,10 @@ import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityR
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
+import net.minecraft.client.render.entity.feature.IronGolemCrackFeatureRenderer;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -22,7 +24,7 @@ public class FrostologerFrostFeatureRenderer extends FeatureRenderer<Frostologer
     @Override
     public void render(
             MatrixStack matrices,
-            VertexConsumerProvider vertexConsumers,
+            OrderedRenderCommandQueue queue,
             int light,
             FrostologerEntityRenderState state,
             float limbAngle,
@@ -34,10 +36,11 @@ public class FrostologerFrostFeatureRenderer extends FeatureRenderer<Frostologer
                     this.getContextModel(),
                     texture,
                     matrices,
-                    vertexConsumers,
+                    queue,
                     light,
                     state,
-                    -1
+                    -1,
+                    1
             );
         }
     }

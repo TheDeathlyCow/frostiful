@@ -10,10 +10,12 @@ import net.minecraft.block.Blocks;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -53,7 +55,7 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
     }
 
     @Inject(
-            method = "render(Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;I)V",
+            method = "render(Lnet/minecraft/client/render/entity/state/LivingEntityRenderState;Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/command/OrderedRenderCommandQueue;Lnet/minecraft/client/render/state/CameraRenderState;)V",
             at = @At(
                     value = "TAIL"
             )
@@ -61,8 +63,8 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
     private void renderIceOnEntity(
             S state,
             MatrixStack matrixStack,
-            VertexConsumerProvider vertexConsumerProvider,
-            int light,
+            OrderedRenderCommandQueue queue,
+            CameraRenderState cameraState,
             CallbackInfo ci
     ) {
         if (((FLivingEntityRenderState) state).frostiful$isRooted()) {
@@ -76,13 +78,16 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
             matrixStack.translate(-0.5, -0.3, -0.5);
 
             BlockState blockState = Blocks.ICE.getDefaultState();
-            this.frostiful$blockRenderManager.renderBlockAsEntity(
-                    blockState,
-                    matrixStack,
-                    vertexConsumerProvider,
-                    light,
-                    OverlayTexture.DEFAULT_UV
-            );
+
+//            queue.submitCustom(matrixStack, );
+//
+//            this.frostiful$blockRenderManager.renderBlockAsEntity(
+//                    blockState,
+//                    matrixStack,
+//                    vertexConsumerProvider,
+//                    light,
+//                    OverlayTexture.DEFAULT_UV
+//            );
 
             matrixStack.pop();
         }

@@ -1,17 +1,19 @@
 package com.github.thedeathlycow.frostiful.client.render.model;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
+import net.minecraft.client.render.entity.model.EntityModel;
 import net.minecraft.util.Identifier;
 
 /**
  * Made with Block Bench
  */
 @Environment(EnvType.CLIENT)
-public class FrostWandItemModel extends Model {
+public class FrostWandItemModel extends EntityModel<FrostologerEntityRenderState> {
     public static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_wand.png");
 
     public FrostWandItemModel(ModelPart root) {

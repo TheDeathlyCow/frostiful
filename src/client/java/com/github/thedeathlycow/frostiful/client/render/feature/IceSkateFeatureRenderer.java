@@ -7,10 +7,13 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
+import net.minecraft.client.render.model.BakedSimpleModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
@@ -34,16 +37,28 @@ public class IceSkateFeatureRenderer<
     @Override
     public void render(
             MatrixStack matrices,
-            VertexConsumerProvider vertexConsumers,
+            OrderedRenderCommandQueue queue,
             int light,
             S state,
             float limbAngle,
             float limbDistance
     ) {
         if (((FBipedRenderState) state).frostiful$wearingIceSkates()) {
-            this.getContextModel().copyTransforms(model);
-            VertexConsumer vertexConsumer = vertexConsumers.getBuffer(RenderLayer.getArmorCutoutNoCull(SKATE_TEXTURE));
-            this.model.render(matrices, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
+            this.getContextModel().applyTransform(matrices);
+
+            queue.getBatchingQueue(0)
+                    .submitModel(
+                            model,
+                            state,
+                            matrices,
+                            RenderLayer.getArmorCutoutNoCull(SKATE_TEXTURE),
+                            light,
+                            LivingEntityRenderer.getOverlay(state, 0.0f),
+                            -1,
+                            null,
+                            state.outlineColor,
+                            null
+                    );
         }
     }
 }

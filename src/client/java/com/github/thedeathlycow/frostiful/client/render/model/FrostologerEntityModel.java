@@ -29,14 +29,14 @@ public class FrostologerEntityModel<F extends FrostologerEntityRenderState> exte
         this.leftArm = this.getRootPart().getChild("left_arm");
 
         this.cloak = root.getChild("cloak");
-        this.cloak.visible = false;
+//        this.cloak.visible = false;
     }
 
-    public void renderCloak(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
-        this.cloak.visible = true;
-        this.cloak.render(matrices, vertices, light, overlay);
-        this.cloak.visible = false;
-    }
+//    public void renderCloak(MatrixStack matrices, VertexConsumer vertices, int light, int overlay) {
+//        this.cloak.visible = true;
+//        this.cloak.render(matrices, vertices, light, overlay);
+//        this.cloak.visible = false;
+//    }
 
     public static TexturedModelData getTexturedModelData() {
         ModelData modelData = new ModelData();

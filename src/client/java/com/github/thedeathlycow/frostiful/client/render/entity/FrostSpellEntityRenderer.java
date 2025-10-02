@@ -8,9 +8,12 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
+import net.minecraft.client.render.entity.DragonFireballEntityRenderer;
 import net.minecraft.client.render.entity.EntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.state.EntityRenderState;
+import net.minecraft.client.render.state.CameraRenderState;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Colors;
 import net.minecraft.util.Identifier;
@@ -30,23 +33,24 @@ public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, E
         return new EntityRenderState();
     }
 
+    @Override
     public void render(
-            EntityRenderState state,
-            MatrixStack matrixStack,
-            VertexConsumerProvider vertexConsumerProvider,
-            int light
+            EntityRenderState renderState,
+            MatrixStack matrices,
+            OrderedRenderCommandQueue queue,
+            CameraRenderState cameraState
     ) {
-        matrixStack.push();
-        matrixStack.scale(2.0F, 2.0F, 2.0F);
-        matrixStack.multiply(this.dispatcher.getRotation());
-        MatrixStack.Entry entry = matrixStack.peek();
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(LAYER);
-        produceVertex(vertexConsumer, entry, light, 0.0F, 0, 0, 1);
-        produceVertex(vertexConsumer, entry, light, 1.0F, 0, 1, 1);
-        produceVertex(vertexConsumer, entry, light, 1.0F, 1, 1, 0);
-        produceVertex(vertexConsumer, entry, light, 0.0F, 1, 0, 0);
-        matrixStack.pop();
-        super.render(state, matrixStack, vertexConsumerProvider, light);
+        matrices.push();
+        matrices.scale(2.0f, 2.0f, 2.0f);
+        matrices.multiply(cameraState.orientation);
+        queue.submitCustom(matrices, LAYER, (entry, vertexConsumer) -> {
+            produceVertex(vertexConsumer, entry, renderState.light, 0f, 0, 0, 1);
+            produceVertex(vertexConsumer, entry, renderState.light, 1f, 0, 1, 1);
+            produceVertex(vertexConsumer, entry, renderState.light, 1f, 1, 1, 0);
+            produceVertex(vertexConsumer, entry, renderState.light, 0f, 1, 0, 0);
+        });
+        matrices.pop();
+        super.render(renderState, matrices, queue, cameraState);
     }
 
     private static void produceVertex(

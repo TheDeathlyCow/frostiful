@@ -9,6 +9,7 @@ import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.equipment.EquipmentModelLoader;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -33,7 +34,7 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
     @Override
     public void render(
             MatrixStack matrixStack,
-            VertexConsumerProvider vertexConsumerProvider,
+            OrderedRenderCommandQueue queue,
             int light,
             FrostologerEntityRenderState state,
             float limbAngle,
@@ -43,11 +44,12 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
             matrixStack.push();
             matrixStack.translate(0.0, 0.0, 3f / 16f);
 
-            VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(
-                    RenderLayer.getEntitySolid(state.capeTexture)
-            );
-            this.model.setAngles(state);
-            this.model.renderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
+//            queue.submitModelPart(this.model.renderCloak());
+//            VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(
+//                    RenderLayer.getEntitySolid(state.capeTexture)
+//            );
+//            this.model.setAngles(state);
+//            this.model.renderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
 
             matrixStack.pop();
         }
