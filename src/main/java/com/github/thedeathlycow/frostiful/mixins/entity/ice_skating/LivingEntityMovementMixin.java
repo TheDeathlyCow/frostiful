@@ -101,7 +101,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
             at = @At("TAIL")
     )
     private void updateIsIceSkating(CallbackInfo ci) {
-        World world = this.getWorld();
+        World world = this.getEntityWorld();
         Profiler profiler = Profilers.get();
         profiler.push("frostiful.ice_skate_tick");
 
@@ -157,11 +157,11 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
             return;
         }
 
-        if (entity instanceof LivingEntity target && target.getWorld() instanceof ServerWorld world) {
-            double attackerHeight = this.getPos().y;
+        if (entity instanceof LivingEntity target && target.getEntityWorld() instanceof ServerWorld world) {
+            double attackerHeight = this.getEntityPos().y;
             double targetEyeHeight = target.getEyePos().y;
             if (attackerHeight > targetEyeHeight) {
-                FDamageSources damageSources = FDamageSources.getDamageSources(this.getWorld());
+                FDamageSources damageSources = FDamageSources.getDamageSources(this.getEntityWorld());
                 target.damage(world, damageSources.frostiful$iceSkate(this), 1.0f);
             }
         }
@@ -184,15 +184,15 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
         float pitch = this.random.nextFloat() * 0.75f + 0.5f;
         this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
 
-        World world = this.getWorld();
+        World world = this.getEntityWorld();
 
-        if (!world.isClient) {
+        if (!world.isClient()) {
             return;
         }
         ParticleEffect iceParticles = new BlockStateParticleEffect(ParticleTypes.BLOCK, velocityAffectingBlock);
 
         Vec3d velocity = this.getVelocity();
-        Vec3d pos = this.getPos();
+        Vec3d pos = this.getEntityPos();
 
         for (int i = 0; i < 25; i++) {
             world.addParticleClient(

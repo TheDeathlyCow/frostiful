@@ -42,12 +42,12 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     public void tick() {
         super.tick();
 
-        if (!getWorld().isClient && this.isAlive()) {
+        if (!getEntityWorld().isClient() && this.isAlive()) {
             if (this.startPosition == null) {
-                this.startPosition = this.getPos();
+                this.startPosition = this.getEntityPos();
             }
 
-            double distTravelledSqd = this.startPosition.squaredDistanceTo(this.getPos());
+            double distTravelledSqd = this.startPosition.squaredDistanceTo(this.getEntityPos());
             if (distTravelledSqd > this.maxDistance * this.maxDistance) {
                 this.applyEffectCloud();
             }
@@ -57,7 +57,7 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     @Override
     public void onEntityHit(EntityHitResult hitResult) {
         super.onEntityHit(hitResult);
-        if (!getWorld().isClient && this.isAlive()) {
+        if (!getEntityWorld().isClient() && this.isAlive()) {
             this.applyEffectCloud();
         }
     }
@@ -76,7 +76,7 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
 
     protected void onCollision(HitResult hitResult) {
         super.onCollision(hitResult);
-        if (!getWorld().isClient) {
+        if (!getEntityWorld().isClient()) {
             this.applyEffectCloud();
         }
     }

@@ -56,8 +56,8 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         BrushableComponent component = FComponents.BRUSHABLE_COMPONENT.getNullable(animal);
         if (component != null && component.isBrushable() && heldItem.isIn(ConventionalItemTags.BRUSH_TOOLS)) {
             component.brush(player);
-            if (!animal.getWorld().isClient) {
-                heldItem.damage(16, player, LivingEntity.getSlotForHand(hand));
+            if (!animal.getEntityWorld().isClient()) {
+                heldItem.damage(16, player, hand);
             }
             return ActionResult.SUCCESS;
         }
@@ -107,11 +107,11 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
 
     public boolean wasBrushed() {
         return lastBrushTime >= 0L
-                && this.provider.getWorld().getTimeOfDay() - lastBrushTime <= BRUSH_COOLDOWN;
+                && this.provider.getEntityWorld().getTimeOfDay() - lastBrushTime <= BRUSH_COOLDOWN;
     }
 
     private void brush(PlayerEntity brusher) {
-        World world = provider.getWorld();
+        World world = provider.getEntityWorld();
         world.playSoundFromEntity(
                 null,
                 provider,
@@ -121,7 +121,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         );
         provider.emitGameEvent(GameEvent.SHEAR, brusher);
 
-        if (!world.isClient) {
+        if (!world.isClient()) {
             RegistryKey<LootTable> furLootTable = getLootTableForAnimal(provider);
 
             if (furLootTable != null) {

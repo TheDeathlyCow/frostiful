@@ -82,7 +82,7 @@ public class WindEntity extends Entity {
             return;
         }
 
-        World world = getWorld();
+        World world = getEntityWorld();
         var profiler = Profilers.get();
         profiler.push("windTick");
 
@@ -106,7 +106,7 @@ public class WindEntity extends Entity {
         }
 
 
-        if (!world.isClient) {
+        if (!world.isClient()) {
             if (this.age % 30 == 0) {
                 this.playSound(FSoundEvents.ENTITY_WIND_BLOW, 0.75f, 0.9f + this.random.nextFloat() / 3);
             }
@@ -182,8 +182,8 @@ public class WindEntity extends Entity {
 
     protected void dissipate() {
         this.playSound(FSoundEvents.ENTITY_WIND_WOOSH, 1.0f, 1.0f);
-        World world = getWorld();
-        if (world.isClient) {
+        World world = getEntityWorld();
+        if (world.isClient()) {
             ParticleEffect particle = this.getDustParticle();
             for (int i = 0; i < 20; ++i) {
                 double vx = this.random.nextGaussian() * 0.02;
@@ -205,7 +205,7 @@ public class WindEntity extends Entity {
     }
 
     public void onEntityCollision(LivingEntity entity) {
-        pushEntity(entity, getWorld(), this.getPos(), 1);
+        pushEntity(entity, getEntityWorld(), this.getEntityPos(), 1);
     }
 
     public static void pushEntity(LivingEntity entity, World world, Vec3d pos, double scale) {
@@ -214,7 +214,7 @@ public class WindEntity extends Entity {
 
         entity.addVelocity(push.x * scale, push.y * scale, push.z * scale);
         entity.velocityModified = true;
-        if (!world.isClient && entity instanceof ServerPlayerEntity serverPlayer) {
+        if (!world.isClient() && entity instanceof ServerPlayerEntity serverPlayer) {
             serverPlayer.networkHandler
                     .sendPacket(new PlaySoundS2CPacket(
                             RegistryEntry.of(FSoundEvents.ENTITY_WIND_HOWL),
@@ -235,7 +235,7 @@ public class WindEntity extends Entity {
     }
 
     private void checkCollidingEntities() {
-        this.getWorld().getEntitiesByClass(
+        this.getEntityWorld().getEntitiesByClass(
                         LivingEntity.class,
                         this.getBoundingBox(),
                         CAN_BE_BLOWN

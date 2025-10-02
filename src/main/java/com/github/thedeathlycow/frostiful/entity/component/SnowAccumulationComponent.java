@@ -66,7 +66,7 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
     }
 
     public boolean isBeingSnowedOn() {
-        World world = this.provider.getWorld();
+        World world = this.provider.getEntityWorld();
         BlockPos pos = this.provider.getBlockPos();
         return hasSnow(world, pos)
                 || hasSnow(world, BlockPos.ofFloored(pos.getX(), this.provider.getBoundingBox().maxY, pos.getZ()));

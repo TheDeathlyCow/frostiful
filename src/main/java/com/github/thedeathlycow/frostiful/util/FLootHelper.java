@@ -17,13 +17,13 @@ import java.util.Objects;
 public class FLootHelper {
 
     public static <E extends LivingEntity> void dropLootFromEntity(E entity, RegistryKey<LootTable> lootTableId) {
-        World world = entity.getWorld();
+        World world = entity.getEntityWorld();
         if (world instanceof ServerWorld serverWorld && serverWorld.getGameRules().getBoolean(GameRules.DO_MOB_LOOT)) {
             LootTable lootTable = Objects.requireNonNull(world.getServer())
                     .getReloadableRegistries().getLootTable(lootTableId);
             List<ItemStack> generatedItems = lootTable.generateLoot(new LootWorldContext.Builder(serverWorld)
                     .add(LootContextParameters.THIS_ENTITY, entity)
-                    .add(LootContextParameters.ORIGIN, entity.getPos())
+                    .add(LootContextParameters.ORIGIN, entity.getEntityPos())
                     .build(LootContextTypes.SELECTOR));
 
             for (ItemStack stack : generatedItems) {

@@ -81,7 +81,7 @@ public record HeatDrainEnchantmentEffect(
     }
 
     public static void addHeatDrainParticles(LivingEntity source, LivingEntity destination, int level) {
-        World world = destination.getWorld();
+        World world = destination.getEntityWorld();
         if (world instanceof ServerWorld serverWorld) {
             addHeatDrainParticles(serverWorld, source, destination, level, 0.5);
         }
@@ -92,7 +92,7 @@ public record HeatDrainEnchantmentEffect(
             LivingEntity source, LivingEntity destination,
             int level, double delta
     ) {
-        Vec3d from = FMathHelper.getMidPoint(source.getEyePos(), source.getPos());
+        Vec3d from = FMathHelper.getMidPoint(source.getEyePos(), source.getEntityPos());
         final int numParticles = (level * 3) + 15;
 
         double fromX = from.getX();

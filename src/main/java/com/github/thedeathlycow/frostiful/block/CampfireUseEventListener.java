@@ -46,7 +46,7 @@ public class CampfireUseEventListener implements UseBlockCallback {
             stack = player.isCreative() ? stack.copy() : stack;
 
             if (!stack.isEmpty() && stack.isIn(ItemTags.LOGS_THAT_BURN)) {
-                if (!world.isClient) {
+                if (!world.isClient()) {
                     warmNearbyEntities(world, pos);
                     addSmokeParticles(world, pos);
                     player.incrementStat(Stats.INTERACT_WITH_CAMPFIRE);

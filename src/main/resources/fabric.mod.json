@@ -63,13 +63,13 @@
         }
     ],
     "depends": {
-        "fabricloader": ">=0.16.14",
-        "fabric-api": ">=0.128.2",
-        "minecraft": ">=1.21.6",
-        "thermoo": ">=7.0.0",
+        "fabricloader": ">=0.17.2",
+        "fabric-api": ">=0.133.14",
+        "minecraft": ">=1.21.9",
+        "thermoo": ">=8.0.0",
         "java": ">=21",
         "cloth-config": ">=19.0.147",
-        "cardinal-components-base": ">=7.0.0-beta.1"
+        "cardinal-components-base": ">=7.1.0-beta.1"
     },
     "suggests": {
         "scorchful": "*",

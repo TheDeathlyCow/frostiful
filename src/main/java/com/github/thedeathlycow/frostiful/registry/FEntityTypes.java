@@ -98,7 +98,7 @@ public class FEntityTypes {
         FabricDefaultAttributeRegistry.register(BITER, BiterEntity.createBiterAttributes());
 
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(
-                ((world, entity, killedEntity) -> {
+                ((world, entity, killedEntity, damageSource) -> {
                     if (entity.getType() == BITER) {
                         entity.playSound(FSoundEvents.ENTITY_BITER_BURP, 1.0f, 1.0f);
                     }

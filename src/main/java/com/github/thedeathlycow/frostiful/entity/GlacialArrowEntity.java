@@ -48,8 +48,8 @@ public class GlacialArrowEntity extends PersistentProjectileEntity {
     public void tick() {
         super.tick();
 
-        World world = getWorld();
-        if (world.isClient && !this.isInGround()) {
+        World world = getEntityWorld();
+        if (world.isClient() && !this.isInGround()) {
             world.addParticleClient(
                     ParticleTypes.SNOWFLAKE,
                     this.getX(), this.getY(), this.getZ(),

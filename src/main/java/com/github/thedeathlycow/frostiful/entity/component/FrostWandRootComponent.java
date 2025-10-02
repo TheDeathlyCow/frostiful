@@ -87,7 +87,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     public void breakRoot(@Nullable Entity attacker) {
-        if (this.isRooted() && provider.getWorld() instanceof ServerWorld serverWorld) {
+        if (this.isRooted() && provider.getEntityWorld() instanceof ServerWorld serverWorld) {
             this.setRootedTicks(1); // set to 1 so the icebreaker enchantment can detect it
             spawnShatterParticlesAndSound(provider, serverWorld);
 
@@ -95,7 +95,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
                     ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
                     : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
 
-            DamageSource source = FDamageSources.getDamageSources(provider.getWorld())
+            DamageSource source = FDamageSources.getDamageSources(provider.getEntityWorld())
                     .frostiful$brokenIce(attacker);
             provider.damage(serverWorld, source, (float) damage);
         }
@@ -185,7 +185,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
                 1.0
         );
 
-        victim.getWorld().playSound(
+        victim.getEntityWorld().playSound(
                 null,
                 victim.getBlockPos(),
                 SoundEvents.BLOCK_GLASS_BREAK,

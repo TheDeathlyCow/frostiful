@@ -92,7 +92,7 @@ public class FrostWandItem extends Item {
     @Override
     public boolean onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
         int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
-        if (useTime > 10 && !world.isClient) {
+        if (useTime > 10 && !world.isClient()) {
             fireFrostSpell(stack, world, user);
             return true;
         }
@@ -116,7 +116,7 @@ public class FrostWandItem extends Item {
         spell.playSound(FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, 1f, 1f);
 
         if (user instanceof PlayerEntity player) {
-            frostWandStack.damage(1, player, LivingEntity.getSlotForHand(player.getActiveHand()));
+            frostWandStack.damage(1, player);
             player.incrementStat(Stats.USED.getOrCreateStat(frostWandStack.getItem()));
             player.getItemCooldownManager().set(frostWandStack, config.combatConfig.getFrostWandCooldown());
         }
@@ -128,7 +128,7 @@ public class FrostWandItem extends Item {
         if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
             return ActionResult.FAIL;
         } else {
-            if (!world.isClient) {
+            if (!world.isClient()) {
                 world.playSound(
                         null,
                         user.getX(), user.getY(), user.getZ(),
@@ -145,7 +145,7 @@ public class FrostWandItem extends Item {
     @Override
     public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
         if (state.getHardness(world, pos) != 0.0f) {
-            stack.damage(2, miner, LivingEntity.getSlotForHand(miner.getActiveHand()));
+            stack.damage(2, miner, miner.getActiveHand());
         }
 
         return true;

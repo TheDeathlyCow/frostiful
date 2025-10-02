@@ -35,7 +35,7 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
                 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         );
 
-        if (!world.isClient) {
+        if (!world.isClient()) {
             ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, user, itemStack.copyWithCount(1));
 
             icicleEntity.setVelocity(

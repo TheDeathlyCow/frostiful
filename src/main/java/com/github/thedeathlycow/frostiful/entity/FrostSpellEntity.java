@@ -37,8 +37,8 @@ public class FrostSpellEntity extends SpellEntity {
 
     @Override
     protected void applyEffectCloud() {
-        World world = getWorld();
-        if (this.isRemoved() || world.isClient) {
+        World world = getEntityWorld();
+        if (this.isRemoved() || world.isClient()) {
             return;
         }
 
@@ -79,8 +79,8 @@ public class FrostSpellEntity extends SpellEntity {
     }
 
     protected boolean applySingleTargetEffect(Entity target) {
-        World world = target.getWorld();
-        if (!world.isClient) {
+        World world = target.getEntityWorld();
+        if (!world.isClient()) {
             if (FComponents.FROST_WAND_ROOT_COMPONENT.get(target).tryRootFromFrostWand(this.getOwner())) {
                 world.playSound(
                         null,

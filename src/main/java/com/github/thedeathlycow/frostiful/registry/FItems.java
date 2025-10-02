@@ -200,16 +200,16 @@ public final class FItems {
 
     public static final Item FROSTOLOGER_SPAWN_EGG = register(
             "frostologer_spawn_egg",
-            settings -> new SpawnEggItem(FEntityTypes.FROSTOLOGER, settings)
+            settings -> new SpawnEggItem(settings.spawnEgg(FEntityTypes.FROSTOLOGER))
     );
     public static final Item CHILLAGER_SPAWN_EGG = register(
             "chillager_spawn_egg",
-            settings -> new SpawnEggItem(FEntityTypes.CHILLAGER, settings)
+            settings -> new SpawnEggItem(settings.spawnEgg(FEntityTypes.CHILLAGER))
     );
 
     public static final Item BITER_SPAWN_EGG = register(
             "biter_spawn_egg",
-            settings -> new SpawnEggItem(FEntityTypes.BITER, settings)
+            settings -> new SpawnEggItem(settings.spawnEgg(FEntityTypes.BITER))
     );
 
     public static final Item FROZEN_TORCH = register(

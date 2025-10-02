@@ -30,7 +30,7 @@ public class PackedSnowBallItem extends Item implements ProjectileItem {
                 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         );
 
-        if (!world.isClient) {
+        if (!world.isClient()) {
             PackedSnowballEntity snowball = new PackedSnowballEntity(world, user, itemStack);
             snowball.setItem(itemStack);
             snowball.setVelocity(user, user.getPitch(), user.getYaw(), 0.0f, 1.5f, 1.0f);

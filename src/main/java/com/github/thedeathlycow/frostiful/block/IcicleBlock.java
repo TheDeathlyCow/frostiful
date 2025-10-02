@@ -267,7 +267,7 @@ public class IcicleBlock extends Block implements Falling, Waterloggable {
 
     @Override
     public DamageSource getDamageSource(Entity attacker) {
-        return FDamageSources.getDamageSources(attacker.getWorld()).frostiful$fallingIcicle(attacker);
+        return FDamageSources.getDamageSources(attacker.getEntityWorld()).frostiful$fallingIcicle(attacker);
     }
 
     @Override

@@ -279,7 +279,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        World world = this.getWorld();
+        World world = this.getEntityWorld();
         if (world.isClient() && this.isAtMaxPower()) {
             this.spawnPowerParticles();
         }
@@ -321,8 +321,8 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        World world = this.getWorld();
-        if (world.isClient) {
+        World world = this.getEntityWorld();
+        if (world.isClient()) {
             // dont place snow if client
             return;
         }
@@ -372,7 +372,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
             double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getLengthY());
             double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getLengthZ());
 
-            this.getWorld().addParticleClient(
+            this.getEntityWorld().addParticleClient(
                     ParticleTypes.SNOWFLAKE,
                     x, y, z,
                     0, 0, 0
@@ -393,7 +393,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     public void shootAt(LivingEntity target, float pullProgress) {
         if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
             this.getLookControl().lookAt(target);
-            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.getWorld(), this);
+            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.getEntityWorld(), this);
         }
     }
 
@@ -547,7 +547,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
             Box box = frostologer.getBoundingBox().expand(this.range);
 
-            World world = frostologer.getWorld();
+            World world = frostologer.getEntityWorld();
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             frostologer.thermoo$addTemperature(heatDrain);
@@ -565,7 +565,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected void castSpell() {
-            ServerWorld world = castToServerWorld(getWorld());
+            ServerWorld world = castToServerWorld(getEntityWorld());
             if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
                 return;
             }
@@ -645,7 +645,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         @Override
         protected void castSpell() {
-            ServerWorld serverWorld = (ServerWorld) getWorld();
+            ServerWorld serverWorld = (ServerWorld) getEntityWorld();
 
             int numIcicles = this.numIciclesProvider.get(random);
             nextStartTime = FrostologerEntity.this.age + cooldownProvider.get(random) * 20;
