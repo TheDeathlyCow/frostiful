@@ -7,8 +7,8 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.client.render.entity.feature.ElytraFeatureRenderer;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
-import net.minecraft.client.util.SkinTextures;
-import net.minecraft.util.Identifier;
+import net.minecraft.entity.player.SkinTextures;
+import net.minecraft.util.AssetInfo;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -18,15 +18,15 @@ public class ElytraFeatureRendererMixin {
             method = "getTexture",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/SkinTextures;capeAsset()Lnet/minecraft/util/Identifier;"
+                    target = "Lnet/minecraft/entity/player/SkinTextures;cape()Lnet/minecraft/util/AssetInfo$TextureAsset;"
             )
     )
-    private static Identifier getFrostologyCloakTexture(
+    private static AssetInfo.TextureAsset getFrostologyCloakTexture(
             SkinTextures instance,
-            Operation<Identifier> original,
+            Operation<AssetInfo.TextureAsset> original,
             @Local(argsOnly = true) BipedEntityRenderState state
     ) {
-        Identifier accountCape = original.call(instance);
+        AssetInfo.TextureAsset accountCape = original.call(instance);
         CapeComponent cape = ((FBipedRenderState) state).frostiful$cape();
 
         if (cape != null && (accountCape == null || cape.overrideAccountCape())) {
