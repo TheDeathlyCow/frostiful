@@ -45,7 +45,6 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
         if (!state.invisible && state.capeTexture != null) {
             matrixStack.push();
             matrixStack.translate(0.0, 0.0, 3f / 16f);
-//            this.model.setAngles(state);
             queue.submitModel(
                     this.model,
                     state,

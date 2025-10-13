@@ -8,7 +8,6 @@ import net.fabricmc.api.Environment;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.block.BlockRenderManager;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.EntityRendererFactory;
@@ -62,34 +61,30 @@ public class LivingEntityRendererMixin<T extends LivingEntity, S extends LivingE
     )
     private void renderIceOnEntity(
             S state,
-            MatrixStack matrixStack,
+            MatrixStack matrices,
             OrderedRenderCommandQueue queue,
             CameraRenderState cameraState,
             CallbackInfo ci
     ) {
         if (((FLivingEntityRenderState) state).frostiful$isRooted()) {
-            matrixStack.push();
+            matrices.push();
             float blockSize = 1.75f;
-            matrixStack.scale(
+            matrices.scale(
                     blockSize * state.width,
                     blockSize * state.height,
                     blockSize * state.width
             );
-            matrixStack.translate(-0.5, -0.3, -0.5);
+            matrices.translate(-0.5, -0.3, -0.5);
 
-            BlockState blockState = Blocks.ICE.getDefaultState();
+            queue.submitBlock(
+                    matrices,
+                    Blocks.ICE.getDefaultState(),
+                    state.light,
+                    OverlayTexture.DEFAULT_UV,
+                    state.outlineColor
+            );
 
-//            queue.submitCustom(matrixStack, );
-//
-//            this.frostiful$blockRenderManager.renderBlockAsEntity(
-//                    blockState,
-//                    matrixStack,
-//                    vertexConsumerProvider,
-//                    light,
-//                    OverlayTexture.DEFAULT_UV
-//            );
-
-            matrixStack.pop();
+            matrices.pop();
         }
     }
 }
