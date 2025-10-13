@@ -6,8 +6,6 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
@@ -17,10 +15,12 @@ import net.minecraft.util.Identifier;
 @Environment(EnvType.CLIENT)
 public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderState, M extends FrostologerEntityModel<T>> extends FeatureRenderer<T, M> {
     private final RenderLayer skin;
+    private final Identifier texture;
 
-    public FrostologerEyesFeatureRenderer(FeatureRendererContext<T, M> context, Identifier id) {
+    public FrostologerEyesFeatureRenderer(FeatureRendererContext<T, M> context, Identifier texture) {
         super(context);
-        this.skin = RenderLayer.getEntityTranslucentEmissive(id);
+        this.skin = RenderLayer.getEntityTranslucentEmissive(texture);
+        this.texture = texture;
     }
 
     @Override
@@ -33,15 +33,7 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderSta
             float limbDistance
     ) {
         if (state.glowingEyes) {
-            queue.submitCustom(matrices, skin, (matricesEntry, vertexConsumer) -> {
-                this.getContextModel()
-                        .render(
-                                matrices,
-                                vertexConsumer,
-                                0x00F000F0,
-                                OverlayTexture.DEFAULT_UV
-                        );
-            });
+            renderModel(this.getContextModel(), texture, matrices, queue, 0x00F000F0, state, -1, 1);
         }
     }
 }
