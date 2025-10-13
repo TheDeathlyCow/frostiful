@@ -53,7 +53,7 @@ public class BlockLightTemperatureTests {
 
         VillagerEntity villager = context.spawnMob(EntityType.VILLAGER, pos);
         Entity boat = context.spawnEntity(EntityType.OAK_BOAT, pos);
-        villager.startRiding(boat, true);
+        villager.startRiding(boat, true, true);
 
         villager.thermoo$setTemperature(temperature);
 
