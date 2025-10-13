@@ -68,7 +68,7 @@
         "minecraft": ">=1.21.9",
         "thermoo": ">=8.0.0",
         "java": ">=21",
-        "cloth-config": ">=19.0.147",
+        "cloth-config": ">=20.0.148",
         "cardinal-components-base": ">=7.1.0-beta.1"
     },
     "suggests": {
