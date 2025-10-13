@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
+import com.github.thedeathlycow.frostiful.client.render.model.FrostologerCapeModel;
 import com.github.thedeathlycow.frostiful.client.render.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
 import net.fabricmc.api.EnvType;
@@ -11,6 +12,7 @@ import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.equipment.EquipmentModelLoader;
+import net.minecraft.client.render.entity.feature.CapeFeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.LoadedEntityModels;
@@ -18,7 +20,7 @@ import net.minecraft.client.util.math.MatrixStack;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerCloakFeatureRenderer extends FeatureRenderer<FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
-    private final FrostologerEntityModel<FrostologerEntityRenderState> model;
+    private final FrostologerCapeModel<FrostologerEntityRenderState> model;
     private final EquipmentModelLoader equipmentModelLoader;
 
     public FrostologerCloakFeatureRenderer(
@@ -28,7 +30,7 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
     ) {
         super(featureRendererContext);
         this.equipmentModelLoader = equipmentModelLoader;
-        this.model = new FrostologerEntityModel<>(modelLoader.getModelPart(FEntityModelLayers.FROSTOLOGER));
+        this.model = new FrostologerCapeModel<>(modelLoader.getModelPart(FEntityModelLayers.FROSTOLOGER_CAPE));
     }
 
     @Override
@@ -43,13 +45,17 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
         if (!state.invisible && state.capeTexture != null) {
             matrixStack.push();
             matrixStack.translate(0.0, 0.0, 3f / 16f);
-
-//            queue.submitModelPart(this.model.renderCloak());
-//            VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(
-//                    RenderLayer.getEntitySolid(state.capeTexture)
-//            );
 //            this.model.setAngles(state);
-//            this.model.renderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
+            queue.submitModel(
+                    this.model,
+                    state,
+                    matrixStack,
+                    RenderLayer.getEntitySolid(state.capeTexture.texturePath()),
+                    light,
+                    OverlayTexture.DEFAULT_UV,
+                    state.outlineColor,
+                    null
+            );
 
             matrixStack.pop();
         }

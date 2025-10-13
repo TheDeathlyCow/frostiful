@@ -1,22 +1,19 @@
 package com.github.thedeathlycow.frostiful.client.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.client.render.model.BiterEntityModel;
-import com.github.thedeathlycow.frostiful.client.render.model.FrostWandItemModel;
-import com.github.thedeathlycow.frostiful.client.render.model.FrostologerEntityModel;
-import com.github.thedeathlycow.frostiful.client.render.model.IceSkateModel;
+import com.github.thedeathlycow.frostiful.client.render.model.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
-import net.minecraft.item.Items;
 
 @Environment(EnvType.CLIENT)
 public class FEntityModelLayers {
 
     public static final EntityModelLayer FROST_WAND = new EntityModelLayer(Frostiful.id("frost_wand"), "main");
     public static final EntityModelLayer FROSTOLOGER = new EntityModelLayer(Frostiful.id("frostologer"), "main");
+    public static final EntityModelLayer FROSTOLOGER_CAPE = new EntityModelLayer(Frostiful.id("frostologer"), "cape");
     public static final EntityModelLayer CHILLAGER = new EntityModelLayer(Frostiful.id("chillager"), "main");
 
     public static final EntityModelLayer BITER = new EntityModelLayer(Frostiful.id("biter"), "main");
@@ -28,6 +25,7 @@ public class FEntityModelLayers {
         Frostiful.LOGGER.debug("Initialized Frostiful entity model layers");
         EntityModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER_CAPE, FrostologerCapeModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(BITER, BiterEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ICE_SKATES, IceSkateModel::getTexturedModelData);
