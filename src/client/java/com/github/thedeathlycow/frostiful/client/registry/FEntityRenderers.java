@@ -6,7 +6,6 @@ import com.github.thedeathlycow.frostiful.client.render.feature.IceSkateFeatureR
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
 import net.minecraft.client.render.entity.*;
 
@@ -15,15 +14,14 @@ public class FEntityRenderers {
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity renderers");
-        EntityRendererRegistry.register(FEntityTypes.GLACIAL_ARROW, GlacialArrowEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.FROST_SPELL, FrostSpellEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.FROSTOLOGER, FrostologerEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.CHILLAGER, ChillagerEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.BITER, BiterEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.PACKED_SNOWBALL, FlyingItemEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.THROWN_ICICLE, ThrownIcicleEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.FREEZING_WIND, EmptyEntityRenderer::new);
-
+        EntityRendererFactories.register(FEntityTypes.GLACIAL_ARROW, GlacialArrowEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.FROST_SPELL, FrostSpellEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.FROSTOLOGER, FrostologerEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.CHILLAGER, ChillagerEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.BITER, BiterEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.PACKED_SNOWBALL, FlyingItemEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.THROWN_ICICLE, ThrownIcicleEntityRenderer::new);
+        EntityRendererFactories.register(FEntityTypes.FREEZING_WIND, EmptyEntityRenderer::new);
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
                 (entityType, entityRenderer, registrationHelper, context) -> {

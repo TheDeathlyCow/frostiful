@@ -7,7 +7,6 @@ import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.mob.Angerable;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.TameableEntity;

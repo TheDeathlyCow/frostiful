@@ -5,7 +5,6 @@ import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.block.BlockRenderManager;

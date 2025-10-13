@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.EquipmentSlot;
 import net.minecraft.entity.mob.ZombieEntity;
@@ -8,7 +9,6 @@ import net.minecraft.entity.passive.RabbitEntity;
 import net.minecraft.inventory.StackReference;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 

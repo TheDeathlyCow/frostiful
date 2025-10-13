@@ -2,9 +2,9 @@ package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.mob.MobEntity;
-import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.BlockPos;

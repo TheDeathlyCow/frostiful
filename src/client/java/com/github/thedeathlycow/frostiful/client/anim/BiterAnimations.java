@@ -2,7 +2,10 @@ package com.github.thedeathlycow.frostiful.client.anim;
 
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.animation.*;
+import net.minecraft.client.render.entity.animation.AnimationDefinition;
+import net.minecraft.client.render.entity.animation.AnimationHelper;
+import net.minecraft.client.render.entity.animation.Keyframe;
+import net.minecraft.client.render.entity.animation.Transformation;
 
 @Environment(EnvType.CLIENT)
 public class BiterAnimations {

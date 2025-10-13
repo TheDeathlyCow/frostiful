@@ -2,9 +2,7 @@ package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.registry.RegistryWrapper;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.storage.ReadView;
 import net.minecraft.storage.WriteView;

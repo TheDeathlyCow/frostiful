@@ -3,9 +3,9 @@ package com.github.thedeathlycow.frostiful.test.tests;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.block.*;
 import net.minecraft.server.world.ServerWorld;
-import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.test.TestContext;
 import net.minecraft.util.math.BlockPos;
 

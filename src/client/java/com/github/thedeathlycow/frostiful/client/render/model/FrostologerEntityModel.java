@@ -4,13 +4,9 @@ import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityR
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.VertexConsumer;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
-import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Arm;
-import net.minecraft.util.math.MathHelper;
-import org.joml.Quaternionf;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerEntityModel<F extends FrostologerEntityRenderState> extends IllagerEntityModel<F> {
