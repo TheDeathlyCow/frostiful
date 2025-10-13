@@ -204,7 +204,7 @@ publishMods {
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
         projectId = "715248"
-        minecraftVersions.addAll("1.21.6", "1.21.7", "1.21.8")
+        minecraftVersions.addAll("1.21.9")
 
         javaVersions.add(JavaVersion.VERSION_21)
 
@@ -219,7 +219,7 @@ publishMods {
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "Ae6qoBj3"
-        minecraftVersions.addAll("1.21.6", "1.21.7", "1.21.8")
+        minecraftVersions.addAll("1.21.9")
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
 
