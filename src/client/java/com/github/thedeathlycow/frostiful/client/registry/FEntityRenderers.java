@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.client.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.entity.*;
 import com.github.thedeathlycow.frostiful.client.render.feature.IceSkateFeatureRenderer;
-import com.github.thedeathlycow.frostiful.client.render.model.IceSkateModel;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -32,28 +31,28 @@ public class FEntityRenderers {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         bipedEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        context.getEntityModels()
                                 )
                         );
                     } else if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         playerEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        context.getEntityModels()
                                 )
                         );
                     } else if (entityRenderer instanceof ArmorStandEntityRenderer armorStandEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         armorStandEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        context.getEntityModels()
                                 )
                         );
                     } else if (entityRenderer instanceof GiantEntityRenderer giantEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         giantEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        context.getEntityModels()
                                 )
                         );
                     }

@@ -3,9 +3,11 @@ package com.github.thedeathlycow.frostiful.client.render.model;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
+import net.minecraft.client.render.entity.model.ModelTransformer;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
 
 public class IceSkateModel<T extends BipedEntityRenderState> extends BipedEntityModel<T> {
+    public static final ModelTransformer BABY_TRANSFORMER = ModelTransformer.scaling(0.5F);
 
     public IceSkateModel(ModelPart root) {
         super(root);
@@ -52,6 +54,10 @@ public class IceSkateModel<T extends BipedEntityRenderState> extends BipedEntity
                 ModelTransform.origin(1.9f, 12.0f, 0.0f)
         );
         return TexturedModelData.of(modelData, 32, 32);
+    }
+
+    public static TexturedModelData getBabyTexturedModelData() {
+        return getTexturedModelData().transform(BABY_TRANSFORMER);
     }
 
 //    @Override

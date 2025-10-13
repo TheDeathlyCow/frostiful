@@ -1,37 +1,35 @@
 package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.model.IceSkateModel;
 import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
-import net.minecraft.client.render.OverlayTexture;
 import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
 import net.minecraft.client.render.command.OrderedRenderCommandQueue;
 import net.minecraft.client.render.entity.LivingEntityRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRenderer;
 import net.minecraft.client.render.entity.feature.FeatureRendererContext;
 import net.minecraft.client.render.entity.model.BipedEntityModel;
+import net.minecraft.client.render.entity.model.LoadedEntityModels;
 import net.minecraft.client.render.entity.state.BipedEntityRenderState;
-import net.minecraft.client.render.model.BakedSimpleModel;
 import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 
 public class IceSkateFeatureRenderer<
         S extends BipedEntityRenderState,
-        M extends BipedEntityModel<S>,
-        I extends IceSkateModel<S>
-        > extends FeatureRenderer<S, M> {
-    private final I model;
+        M extends BipedEntityModel<S>> extends FeatureRenderer<S, M> {
+    private final IceSkateModel<S> model;
+    private final IceSkateModel<S> babyModel;
 
     private static final Identifier SKATE_TEXTURE = Frostiful.id("textures/entity/skates.png");
 
     public IceSkateFeatureRenderer(
             FeatureRendererContext<S, M> context,
-            I model
+            LoadedEntityModels loader
     ) {
         super(context);
-        this.model = model;
+        this.model = new IceSkateModel<>(loader.getModelPart(FEntityModelLayers.ICE_SKATES));
+        this.babyModel = new IceSkateModel<>(loader.getModelPart(FEntityModelLayers.ICE_SKATES_BABY));
     }
 
     @Override
@@ -44,9 +42,12 @@ public class IceSkateFeatureRenderer<
             float limbDistance
     ) {
         if (((FBipedRenderState) state).frostiful$wearingIceSkates()) {
-            this.getContextModel().applyTransform(matrices);
+            IceSkateModel<S> model = state.baby ? this.babyModel : this.model;
 
-            queue.getBatchingQueue(0)
+            M contextModel = this.getContextModel();
+            contextModel.getRootPart().applyTransform(matrices);
+
+            queue.getBatchingQueue(1)
                     .submitModel(
                             model,
                             state,

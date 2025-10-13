@@ -10,6 +10,7 @@ import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
 import net.minecraft.client.render.entity.model.EntityModelLayer;
 import net.minecraft.client.render.entity.model.IllagerEntityModel;
+import net.minecraft.item.Items;
 
 @Environment(EnvType.CLIENT)
 public class FEntityModelLayers {
@@ -21,6 +22,7 @@ public class FEntityModelLayers {
     public static final EntityModelLayer BITER = new EntityModelLayer(Frostiful.id("biter"), "main");
 
     public static final EntityModelLayer ICE_SKATES = new EntityModelLayer(Frostiful.id("ice_skates"), "main");
+    public static final EntityModelLayer ICE_SKATES_BABY = new EntityModelLayer(Frostiful.id("ice_skates_baby"), "main");
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity model layers");
@@ -29,6 +31,7 @@ public class FEntityModelLayers {
         EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(BITER, BiterEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ICE_SKATES, IceSkateModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(ICE_SKATES_BABY, IceSkateModel::getBabyTexturedModelData);
     }
 
     private FEntityModelLayers() {
