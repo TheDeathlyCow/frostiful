@@ -52,12 +52,12 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler) {
+    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
         if (this.heatLevel > COLD_LEVEL && entity instanceof LivingEntity livingEntity && this.canBurnEntity(entity)) {
             this.dischargeHeatToEntity(state, world, pos, livingEntity, handler, Frostiful.getConfig());
         }
 
-        super.onEntityCollision(state, world, pos, entity, handler);
+        super.onEntityCollision(state, world, pos, entity, handler, bl);
     }
 
     private void dischargeHeatToEntity(

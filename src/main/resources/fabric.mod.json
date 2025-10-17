@@ -64,12 +64,12 @@
     ],
     "depends": {
         "fabricloader": ">=0.17.2",
-        "fabric-api": ">=0.133.14",
-        "minecraft": ">=1.21.9",
-        "thermoo": ">=8.0.0",
+        "fabric-api": ">=0.135.0",
+        "minecraft": ">=1.21.10",
+        "thermoo": ">=8.0.2",
         "java": ">=21",
         "cloth-config": ">=20.0.148",
-        "cardinal-components-base": ">=7.1.0-beta.1"
+        "cardinal-components-base": ">=7.2.0"
     },
     "suggests": {
         "scorchful": "*",

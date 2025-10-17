@@ -21,7 +21,7 @@ public abstract class WindBlowoutMixin {
             method = "onEntityCollision",
             at = @At("HEAD")
     )
-    private void onCollideWithFreezingTorch(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, CallbackInfo ci) {
+    private void onCollideWithFreezingTorch(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl, CallbackInfo ci) {
         if (!world.isClient() && entity.getType() == FEntityTypes.FREEZING_WIND) {
             WindManager.INSTANCE.extinguishBlock(state, world, pos, () -> entity.playSound(FSoundEvents.ENTITY_FREEZING_WIND_BLOWOUT, 1.0f, 1.0f));
         }

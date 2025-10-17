@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'fabric-loom' version '1.12.0-alpha.25'
     id 'maven-publish'
     id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 }
@@ -204,7 +204,7 @@ publishMods {
     curseforge {
         accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
         projectId = "715248"
-        minecraftVersions.addAll("1.21.9")
+        minecraftVersions.addAll("1.21.10")
 
         javaVersions.add(JavaVersion.VERSION_21)
 
@@ -219,7 +219,7 @@ publishMods {
     modrinth {
         accessToken = providers.environmentVariable("MODRINTH_TOKEN")
         projectId = "Ae6qoBj3"
-        minecraftVersions.addAll("1.21.9")
+        minecraftVersions.addAll("1.21.10")
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
 
