@@ -280,6 +280,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Disable frost overlay when wearing Cloak of Frostology",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Shake hand when shivering",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Hand shake intensity",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
   
   "text.autoconfig.frostiful.option.updateConfig": "Update Config",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Current config version",

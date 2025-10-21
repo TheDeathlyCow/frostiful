@@ -13,6 +13,7 @@ public class ClientConfigGroup implements ConfigData {
     boolean disableFrostOverlayWhenWearingFrostologyCloak = true;
     boolean shakeHandWhenShivering = true;
     float handShakeIntensity = 1.0f;
+    boolean disableHurtPolarBearSkin = false;
 
     public float getFrostOverlayStart() {
         return frostOverlayStart;
@@ -36,5 +37,9 @@ public class ClientConfigGroup implements ConfigData {
 
     public float getHandShakeIntensity() {
         return handShakeIntensity;
+    }
+
+    public boolean isDisableHurtPolarBearSkin() {
+        return disableHurtPolarBearSkin;
     }
 }

@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.BrushableTextures;
 import com.github.thedeathlycow.frostiful.client.render.state.FPolarBearEntityRenderState;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
@@ -28,7 +29,7 @@ public class PolarBearEntityRendererMixin {
             method = "getTexture(Lnet/minecraft/client/render/entity/state/PolarBearEntityRenderState;)Lnet/minecraft/util/Identifier;"
     )
     private Identifier setPolarBearHurtTexture(PolarBearEntityRenderState state, Operation<Identifier> original) {
-        if (((FPolarBearEntityRenderState) state).frostiful$wasSheared()) {
+        if (!Frostiful.getConfig().clientConfig.isDisableHurtPolarBearSkin() && ((FPolarBearEntityRenderState) state).frostiful$wasSheared()) {
             return BrushableTextures.POLAR_BEAR;
         }
 
