@@ -248,6 +248,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Desactivar la superposición de escarcha al usar la Capa de escarcha",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Estrechar la mano al temblar",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Intensidad del temblor de la mano",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
   "text.autoconfig.frostiful.option.updateConfig": "Actualizar configuración",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Versión de configuración actual",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Habilitar actualizaciones automáticas de configuración",

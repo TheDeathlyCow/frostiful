@@ -248,6 +248,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Ota pois jäätymispeittäminen Jäälogistin viitan kanssa",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Käsi tärisee muun kehon kanssa",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Käden tärinän intensiivisyys",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
   "text.autoconfig.frostiful.option.updateConfig": "Päivitysasetukset",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Nykyinen asetusversio",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Asetukset automaattisesti päivittyy",
