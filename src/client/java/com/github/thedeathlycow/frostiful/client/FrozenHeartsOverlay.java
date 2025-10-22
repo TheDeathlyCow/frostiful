@@ -51,6 +51,8 @@ public class FrozenHeartsOverlay {
                     9, 10,
                     TEXTURE_WIDTH, TEXTURE_HEIGHT
             );
+
+            heartsRendered++;
         }
     }
 
@@ -104,7 +106,7 @@ public class FrozenHeartsOverlay {
 
     private static int getColdHalfHearts(@NotNull LivingEntity entity, int maxDisplayHealth) {
         float freezingProgress = -entity.thermoo$getTemperatureScale();
-        return Math.round(freezingProgress * maxDisplayHealth);
+        return Math.round(freezingProgress * maxDisplayHealth * 2);
     }
 
     private static int getColdHeartsFromHalfHearts(int frozenHealthPoints) {
