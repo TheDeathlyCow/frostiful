@@ -4,32 +4,32 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.loot.LocationWarmthLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.WearingIceLikeItem;
-import net.minecraft.loot.condition.LootConditionType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public class FLootConditionTypes {
 
 
-    public static final LootConditionType ROOTED = register(
+    public static final LootItemConditionType ROOTED = register(
             "rooted",
-            new LootConditionType(RootedLootCondition.CODEC)
+            new LootItemConditionType(RootedLootCondition.CODEC)
     );
-    public static final LootConditionType CHEST_EQUPPED_WITH_TRINKET = register(
+    public static final LootItemConditionType CHEST_EQUPPED_WITH_TRINKET = register(
             "wearing_ice_like_item",
-            new LootConditionType(WearingIceLikeItem.CODEC)
+            new LootItemConditionType(WearingIceLikeItem.CODEC)
     );
-    public static final LootConditionType LOCATION_WARMTH = register(
+    public static final LootItemConditionType LOCATION_WARMTH = register(
             "location_warmth",
-            new LootConditionType(LocationWarmthLootCondition.CODEC)
+            new LootItemConditionType(LocationWarmthLootCondition.CODEC)
     );
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful loot condition types");
     }
 
-    private static LootConditionType register(String name, LootConditionType lootCondition) {
-        return Registry.register(Registries.LOOT_CONDITION_TYPE, Frostiful.id(name), lootCondition);
+    private static LootItemConditionType register(String name, LootItemConditionType lootCondition) {
+        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, Frostiful.id(name), lootCondition);
     }
 
     private FLootConditionTypes() {

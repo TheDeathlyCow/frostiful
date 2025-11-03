@@ -5,32 +5,32 @@ import com.github.thedeathlycow.frostiful.config.group.CombatConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityStatuses;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ItemStackParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityEvent;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 
-public class PackedSnowballEntity extends ThrownItemEntity {
+public class PackedSnowballEntity extends ThrowableItemProjectile {
 
-    public PackedSnowballEntity(EntityType<? extends PackedSnowballEntity> entityType, World world) {
+    public PackedSnowballEntity(EntityType<? extends PackedSnowballEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public PackedSnowballEntity(World world, LivingEntity owner, ItemStack stack) {
+    public PackedSnowballEntity(Level world, LivingEntity owner, ItemStack stack) {
         super(FEntityTypes.PACKED_SNOWBALL, owner, world, stack);
     }
 
-    public PackedSnowballEntity(World world, double x, double y, double z, ItemStack stack) {
+    public PackedSnowballEntity(Level world, double x, double y, double z, ItemStack stack) {
         super(FEntityTypes.PACKED_SNOWBALL, x, y, z, world, stack);
     }
 
@@ -40,11 +40,11 @@ public class PackedSnowballEntity extends ThrownItemEntity {
     }
 
     @Override
-    public void handleStatus(byte status) {
-        if (status == EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES) {
-            ParticleEffect particleEffect = this.getParticleEffect();
+    public void handleEntityEvent(byte status) {
+        if (status == EntityEvent.DEATH) {
+            ParticleOptions particleEffect = this.getParticleEffect();
             for (int i = 0; i < 8; i++) {
-                this.getEntityWorld().addParticleClient(
+                this.level().addParticle(
                         particleEffect,
                         this.getX(), this.getY(), this.getZ(),
                         0.0, 0.0, 0.0
@@ -54,17 +54,17 @@ public class PackedSnowballEntity extends ThrownItemEntity {
     }
 
     @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
-        super.onEntityHit(entityHitResult);
+    protected void onHitEntity(EntityHitResult entityHitResult) {
+        super.onHitEntity(entityHitResult);
         Entity target = entityHitResult.getEntity();
 
         CombatConfigGroup config = Frostiful.getConfig().combatConfig;
 
-        float damage = target.getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
+        float damage = target.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
                 ? config.getPackedSnowballVulnerableTypesDamage()
                 : config.getPackedSnowballDamage();
 
-        target.serverDamage(this.getDamageSources().thrown(this, this.getOwner()), damage);
+        target.hurt(this.damageSources().thrown(this, this.getOwner()), damage);
 
         if (target instanceof LivingEntity livingTarget) {
             livingTarget.thermoo$addTemperature(
@@ -75,20 +75,20 @@ public class PackedSnowballEntity extends ThrownItemEntity {
     }
 
     @Override
-    protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
-        World world = getEntityWorld();
-        if (!world.isClient()) {
-            world.sendEntityStatus(this, EntityStatuses.PLAY_DEATH_SOUND_OR_ADD_PROJECTILE_HIT_PARTICLES);
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
+        Level world = level();
+        if (!world.isClientSide()) {
+            world.broadcastEntityEvent(this, EntityEvent.DEATH);
             this.discard();
         }
     }
 
-    private ParticleEffect getParticleEffect() {
-        ItemStack itemStack = this.getStack();
+    private ParticleOptions getParticleEffect() {
+        ItemStack itemStack = this.getItem();
         return itemStack.isEmpty()
                 ? ParticleTypes.ITEM_SNOWBALL
-                : new ItemStackParticleEffect(ParticleTypes.ITEM, itemStack);
+                : new ItemParticleOption(ParticleTypes.ITEM, itemStack);
     }
 
 }

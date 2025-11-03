@@ -9,17 +9,17 @@ import com.github.thedeathlycow.thermoo.api.environment.EnvironmentLookup;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
 import com.github.thedeathlycow.thermoo.api.environment.component.TemperatureRecordComponent;
 import com.github.thedeathlycow.thermoo.api.util.TemperatureUnit;
-import net.minecraft.block.BlockState;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.WorldChunk;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
 public final class WindManager {
@@ -36,10 +36,10 @@ public final class WindManager {
         this.windSpawnCount = 0;
     }
 
-    public void trySpawnFreezingWind(World world, WorldChunk chunk) {
+    public void trySpawnFreezingWind(Level world, LevelChunk chunk) {
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
 
-        if (!world.getDimension().natural() || this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
+        if (!world.dimensionType().natural() || this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
             return;
         }
 
@@ -51,15 +51,15 @@ public final class WindManager {
             return;
         }
 
-        BlockPos.Mutable spawnPos = new BlockPos.Mutable();
+        BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos();
         boolean spawnInAir = this.setSpawnPosition(world, chunk, spawnPos);
 
         if (spawnInAir && !config.spawnWindInAir()) {
             return;
         }
 
-        RegistryEntry<Biome> biome = world.getBiomeAccess().getBiomeForNoiseGen(spawnPos);
-        if (biome.isIn(FBiomeTags.FREEZING_WIND_NEVER_SPAWNS)) {
+        Holder<Biome> biome = world.getBiomeManager().getNoiseBiomeAtPosition(spawnPos);
+        if (biome.is(FBiomeTags.FREEZING_WIND_NEVER_SPAWNS)) {
             return;
         }
 
@@ -70,8 +70,8 @@ public final class WindManager {
             return;
         }
 
-        boolean canSpawnOnGround = (world.isRaining() && biome.isIn(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
-                || biome.isIn(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
+        boolean canSpawnOnGround = (world.isRaining() && biome.is(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
+                || biome.is(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
 
         WindSpawnStrategy strategy = config.getWindSpawnStrategy().getStrategy();
         if (strategy == null) {
@@ -83,36 +83,36 @@ public final class WindManager {
         }
     }
 
-    public void extinguishBlock(BlockState state, World world, BlockPos pos, Runnable playSoundCallback) {
+    public void extinguishBlock(BlockState state, Level world, BlockPos pos, Runnable playSoundCallback) {
         if (!Frostiful.getConfig().freezingConfig.isWindDestroysTorches()) {
             return;
         }
 
-        if (!(world instanceof ServerWorld serverWorld) || !serverWorld.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+        if (!(world instanceof ServerLevel serverWorld) || !serverWorld.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
 
-        if (state.isIn(FBlockTags.FROZEN_TORCHES)) {
+        if (state.is(FBlockTags.FROZEN_TORCHES)) {
             return;
         }
 
         @Nullable
         BlockState blownOutResult;
 
-        if (state.isIn(FBlockTags.IS_OPEN_FLAME)) {
-            blownOutResult = state.getFluidState().getBlockState();
+        if (state.is(FBlockTags.IS_OPEN_FLAME)) {
+            blownOutResult = state.getFluidState().createLegacyBlock();
         } else if (
-                state.isIn(FBlockTags.HAS_OPEN_FLAME)
-                        && state.contains(Properties.LIT)
-                        && state.get(Properties.LIT)
+                state.is(FBlockTags.HAS_OPEN_FLAME)
+                        && state.hasProperty(BlockStateProperties.LIT)
+                        && state.getValue(BlockStateProperties.LIT)
         ) {
-            blownOutResult = state.with(Properties.LIT, false);
+            blownOutResult = state.setValue(BlockStateProperties.LIT, false);
         } else {
             blownOutResult = FrozenTorchBlock.freezeTorch(state);
         }
 
         if (blownOutResult != null) {
-            world.setBlockState(pos, blownOutResult);
+            world.setBlockAndUpdate(pos, blownOutResult);
             playSoundCallback.run();
         }
     }
@@ -126,19 +126,19 @@ public final class WindManager {
      * @param blockPos The mutable blockpos to set the spawn position into
      * @return Returns true if the blockpos is an air blockpos
      */
-    private boolean setSpawnPosition(World world, WorldChunk chunk, BlockPos.Mutable blockPos) {
+    private boolean setSpawnPosition(Level world, LevelChunk chunk, BlockPos.MutableBlockPos blockPos) {
         ChunkPos chunkPos = chunk.getPos();
-        BlockPos spawnPos = world.getTopPosition(
-                Heightmap.Type.MOTION_BLOCKING_NO_LEAVES,
-                world.getRandomPosInChunk(chunkPos.getStartX(), 0, chunkPos.getStartZ(), 15)
+        BlockPos spawnPos = world.getHeightmapPos(
+                Heightmap.Types.MOTION_BLOCKING_NO_LEAVES,
+                world.getBlockRandomPos(chunkPos.getMinBlockX(), 0, chunkPos.getMinBlockZ(), 15)
         );
         blockPos.set(spawnPos);
 
         boolean spawnInAir = world.random.nextBoolean();
         if (spawnInAir) {
-            int topY = world.getTopYInclusive();
+            int topY = world.getMaxY();
             blockPos.setY(
-                    spawnPos.getY() + (int) world.random.nextTriangular(
+                    spawnPos.getY() + (int) world.random.triangle(
                             topY,
                             ((double) topY) - spawnPos.getY()
                     )

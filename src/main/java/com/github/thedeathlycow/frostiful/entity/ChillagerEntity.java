@@ -6,63 +6,63 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LightningEntity;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.conversion.EntityConversionContext;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.mob.PillagerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.ConversionParams;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.level.Level;
 
-public class ChillagerEntity extends PillagerEntity {
-    public ChillagerEntity(EntityType<? extends ChillagerEntity> entityType, World world) {
+public class ChillagerEntity extends Pillager {
+    public ChillagerEntity(EntityType<? extends ChillagerEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public static DefaultAttributeContainer.Builder createChillagerAttributes() {
-        return PillagerEntity.createPillagerAttributes()
+    public static AttributeSupplier.Builder createChillagerAttributes() {
+        return Pillager.createAttributes()
                 .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
                 .add(ThermooAttributes.FROST_RESISTANCE, 10.0);
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
-        if (source.isIn(DamageTypeTags.IS_FIRE)) {
+    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
+        if (source.is(DamageTypeTags.IS_FIRE)) {
             FrostifulConfig config = Frostiful.getConfig();
             amount *= config.combatConfig.getChillagerFireDamageMultiplier();
         }
 
-        return super.damage(world, source, amount);
+        return super.hurtServer(world, source, amount);
     }
 
     @Override
-    public void onStruckByLightning(ServerWorld world, LightningEntity lightning) {
+    public void thunderHit(ServerLevel world, LightningBolt lightning) {
         if (world.getDifficulty() != Difficulty.PEACEFUL) {
             Frostiful.LOGGER.info("Chillager {} was struck by lightning {}.", this, lightning);
             this.convertTo(
                     FEntityTypes.FROSTOLOGER,
-                    EntityConversionContext.create(this, false, true) ,
+                    ConversionParams.single(this, false, true) ,
                     frostologer -> {
-                        frostologer.initEquipment(world.random, world.getLocalDifficulty(frostologer.getBlockPos()));
+                        frostologer.populateDefaultEquipmentSlots(world.random, world.getCurrentDifficultyAt(frostologer.blockPosition()));
                     }
             );
         } else {
-            super.onStruckByLightning(world, lightning);
+            super.thunderHit(world, lightning);
         }
     }
 
     @Override
-    public ItemStack getProjectileType(ItemStack stack) {
-        if (stack.getItem() instanceof RangedWeaponItem rangedWeaponItem) {
-            ItemStack itemStack = RangedWeaponItem.getHeldProjectile(
+    public ItemStack getProjectile(ItemStack stack) {
+        if (stack.getItem() instanceof ProjectileWeaponItem rangedWeaponItem) {
+            ItemStack itemStack = ProjectileWeaponItem.getHeldProjectile(
                     this,
-                    rangedWeaponItem.getHeldProjectiles()
+                    rangedWeaponItem.getSupportedHeldProjectiles()
             );
 
             return itemStack.isEmpty() ? new ItemStack(FItems.GLACIAL_ARROW) : itemStack;
@@ -87,7 +87,7 @@ public class ChillagerEntity extends PillagerEntity {
     }
 
     @Override
-    public SoundEvent getCelebratingSound() {
+    public SoundEvent getCelebrateSound() {
         return FSoundEvents.ENTITY_CHILLAGER_CELEBRATE;
     }
 

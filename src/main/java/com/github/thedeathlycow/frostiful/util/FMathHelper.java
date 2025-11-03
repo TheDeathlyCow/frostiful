@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.util;
 
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.Vec3i;
+import net.minecraft.core.Vec3i;
+import net.minecraft.world.phys.Vec3;
 import org.joml.Vector3f;
 
 public class FMathHelper {
@@ -46,11 +46,11 @@ public class FMathHelper {
      * @return Returns a new vector that represents the mid point between
      * the two vectors. If the vectors are equal, returns the first vector.
      */
-    public static Vec3d getMidPoint(Vec3d vec1, Vec3d vec2) {
-        return vec1.equals(vec2) ? vec1 : new Vec3d(
-                (vec1.getX() + vec2.getX()) / 2,
-                (vec1.getY() + vec2.getY()) / 2,
-                (vec1.getZ() + vec2.getZ()) / 2
+    public static Vec3 getMidPoint(Vec3 vec1, Vec3 vec2) {
+        return vec1.equals(vec2) ? vec1 : new Vec3(
+                (vec1.x() + vec2.x()) / 2,
+                (vec1.y() + vec2.y()) / 2,
+                (vec1.z() + vec2.z()) / 2
         );
     }
 }

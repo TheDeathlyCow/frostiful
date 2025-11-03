@@ -3,64 +3,64 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import net.minecraft.block.Block;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.item.BlockItem;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.ProjectileItem;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Position;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Position;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 
 public class IcicleItem extends BlockItem implements ProjectileItem {
-    public IcicleItem(Block block, Item.Settings settings) {
-        super(block, settings.useBlockPrefixedTranslationKey());
+    public IcicleItem(Block block, Item.Properties settings) {
+        super(block, settings.useBlockDescriptionPrefix());
     }
 
     @Override
-    public ActionResult use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
+    public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        ItemStack itemStack = user.getItemInHand(hand);
 
         world.playSound(
                 null,
                 user.getX(), user.getY(), user.getZ(),
-                FSoundEvents.ENTITY_THROWN_ICICLE_THROW, SoundCategory.NEUTRAL,
+                FSoundEvents.ENTITY_THROWN_ICICLE_THROW, SoundSource.NEUTRAL,
                 0.5f, 0.4f / (world.getRandom().nextFloat() * 0.4f + 0.8f)
         );
 
-        if (!world.isClient()) {
+        if (!world.isClientSide()) {
             ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, user, itemStack.copyWithCount(1));
 
-            icicleEntity.setVelocity(
+            icicleEntity.shootFromRotation(
                     user,
-                    user.getPitch(), user.getYaw(),
+                    user.getXRot(), user.getYRot(),
                     0.0f, 1.0f, 1.0f
             );
-            if (user.getAbilities().creativeMode) {
-                icicleEntity.pickupType = PersistentProjectileEntity.PickupPermission.CREATIVE_ONLY;
+            if (user.getAbilities().instabuild) {
+                icicleEntity.pickup = AbstractArrow.Pickup.CREATIVE_ONLY;
             }
 
-            world.spawnEntity(icicleEntity);
+            world.addFreshEntity(icicleEntity);
         }
 
-        user.incrementStat(Stats.USED.getOrCreateStat(this));
-        itemStack.decrementUnlessCreative(1, user);
-        user.getItemCooldownManager().set(itemStack, Frostiful.getConfig().icicleConfig.getThrownIcicleCooldown());
+        user.awardStat(Stats.ITEM_USED.get(this));
+        itemStack.consume(1, user);
+        user.getCooldowns().addCooldown(itemStack, Frostiful.getConfig().icicleConfig.getThrownIcicleCooldown());
 
-        return ActionResult.SUCCESS;
+        return InteractionResult.SUCCESS;
     }
 
     @Override
-    public ProjectileEntity createEntity(World world, Position pos, ItemStack stack, Direction direction) {
-        ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, pos.getX(), pos.getY(), pos.getZ(), stack.copyWithCount(1));
-        icicleEntity.pickupType = PersistentProjectileEntity.PickupPermission.ALLOWED;
+    public Projectile asProjectile(Level world, Position pos, ItemStack stack, Direction direction) {
+        ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, pos.x(), pos.y(), pos.z(), stack.copyWithCount(1));
+        icicleEntity.pickup = AbstractArrow.Pickup.ALLOWED;
         return icicleEntity;
     }
 }

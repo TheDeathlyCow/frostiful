@@ -2,46 +2,45 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.PointedDripstoneBlock;
-import net.minecraft.block.enums.Thickness;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.WorldAccess;
-
 import java.util.function.Consumer;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.PointedDripstoneBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.DripstoneThickness;
 
 public class IcicleHelper {
 
     public static boolean canReplace(BlockState state) {
-        return (!state.isOf(Blocks.ICE) && state.isIn(FBlockTags.ICICLE_GROWABLE)) || state.isIn(FBlockTags.ICICLE_REPLACEABLE_BLOCKS);
+        return (!state.is(Blocks.ICE) && state.is(FBlockTags.ICICLE_GROWABLE)) || state.is(FBlockTags.ICICLE_REPLACEABLE_BLOCKS);
     }
 
     public static boolean canGenerate(BlockState state) {
-        return state.isAir() || state.isOf(Blocks.WATER);
+        return state.isAir() || state.is(Blocks.WATER);
     }
 
-    public static boolean generateIceBaseBlock(WorldAccess world, BlockPos pos) {
+    public static boolean generateIceBaseBlock(LevelAccessor world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos);
-        if (blockState.isIn(FBlockTags.ICICLE_REPLACEABLE_BLOCKS)) {
-            world.setBlockState(pos, Blocks.PACKED_ICE.getDefaultState(), Block.NOTIFY_LISTENERS);
+        if (blockState.is(FBlockTags.ICICLE_REPLACEABLE_BLOCKS)) {
+            world.setBlock(pos, Blocks.PACKED_ICE.defaultBlockState(), Block.UPDATE_CLIENTS);
             return true;
         }
         return false;
     }
 
-    public static void generateIcicle(WorldAccess world, BlockPos pos, Direction direction, int height, boolean merge) {
-        if (!IcicleHelper.canReplace(world.getBlockState(pos.offset(direction.getOpposite())))) {
+    public static void generateIcicle(LevelAccessor world, BlockPos pos, Direction direction, int height, boolean merge) {
+        if (!IcicleHelper.canReplace(world.getBlockState(pos.relative(direction.getOpposite())))) {
             return;
         }
-        BlockPos.Mutable mutable = pos.mutableCopy();
+        BlockPos.MutableBlockPos mutable = pos.mutable();
         placeWithThickness(
                 direction, height, merge,
                 state -> {
-                    state = state.with(IcicleBlock.WATERLOGGED, world.isWater(mutable));
-                    world.setBlockState(mutable, state, Block.NOTIFY_LISTENERS);
+                    state = state.setValue(IcicleBlock.WATERLOGGED, world.isWaterAt(mutable));
+                    world.setBlock(mutable, state, Block.UPDATE_CLIENTS);
                     mutable.move(direction);
                 }
         );
@@ -58,25 +57,25 @@ public class IcicleHelper {
         // callback moves one block in the direction for each call
 
         if (height >= 3) {
-            placeCallback.accept(getState(direction, Thickness.BASE));
+            placeCallback.accept(getState(direction, DripstoneThickness.BASE));
             for (int i = 0; i < height - 3; ++i) {
-                placeCallback.accept(getState(direction, Thickness.MIDDLE));
+                placeCallback.accept(getState(direction, DripstoneThickness.MIDDLE));
             }
         }
 
         if (height >= 2) {
-            placeCallback.accept(getState(direction, Thickness.FRUSTUM));
+            placeCallback.accept(getState(direction, DripstoneThickness.FRUSTUM));
         }
 
         if (height >= 1) {
-            placeCallback.accept(getState(direction, merge ? Thickness.TIP_MERGE : Thickness.TIP));
+            placeCallback.accept(getState(direction, merge ? DripstoneThickness.TIP_MERGE : DripstoneThickness.TIP));
         }
     }
 
-    private static BlockState getState(Direction direction, Thickness thickness) {
-        return FBlocks.ICICLE.getDefaultState()
-                .with(PointedDripstoneBlock.VERTICAL_DIRECTION, direction)
-                .with(PointedDripstoneBlock.THICKNESS, thickness);
+    private static BlockState getState(Direction direction, DripstoneThickness thickness) {
+        return FBlocks.ICICLE.defaultBlockState()
+                .setValue(PointedDripstoneBlock.TIP_DIRECTION, direction)
+                .setValue(PointedDripstoneBlock.THICKNESS, thickness);
     }
 
 

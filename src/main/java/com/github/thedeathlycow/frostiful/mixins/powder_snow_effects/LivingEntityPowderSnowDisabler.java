@@ -1,10 +1,10 @@
 package com.github.thedeathlycow.frostiful.mixins.powder_snow_effects;
 
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(LivingEntity.class)
 public abstract class LivingEntityPowderSnowDisabler extends Entity implements TemperatureAware {
 
-    public LivingEntityPowderSnowDisabler(EntityType<?> type, World world) {
+    public LivingEntityPowderSnowDisabler(EntityType<?> type, Level world) {
         super(type, world);
     }
 
@@ -32,18 +32,18 @@ public abstract class LivingEntityPowderSnowDisabler extends Entity implements T
     }
 
     @ModifyArg(
-            method = "tickMovement",
+            method = "aiStep",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;setFrozenTicks(I)V"
+                    target = "Lnet/minecraft/world/entity/LivingEntity;setTicksFrozen(I)V"
             )
     )
     private int disableTicksFreezingIncreaseInPowderSnow(int par1) {
-        return this.getFrozenTicks();
+        return this.getTicksFrozen();
     }
 
     @Inject(
-            method = "addPowderSnowSlowIfNeeded",
+            method = "tryAddFrost",
             at = @At(
                     value = "HEAD"
             ),
@@ -54,7 +54,7 @@ public abstract class LivingEntityPowderSnowDisabler extends Entity implements T
     }
 
     @Inject(
-            method = "removePowderSnowSlow",
+            method = "removeFrost",
             at = @At(
                     value = "HEAD"
             ),
@@ -66,16 +66,16 @@ public abstract class LivingEntityPowderSnowDisabler extends Entity implements T
 
 
     @ModifyArg(
-            method = "tickMovement",
+            method = "aiStep",
             slice = @Slice(
                     from = @At(
                             value = "INVOKE",
-                            target = "Lnet/minecraft/entity/LivingEntity;addPowderSnowSlowIfNeeded()V"
+                            target = "Lnet/minecraft/world/entity/LivingEntity;tryAddFrost()V"
                     )
             ),
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/LivingEntity;damage(Lnet/minecraft/server/world/ServerWorld;Lnet/minecraft/entity/damage/DamageSource;F)Z",
+                    target = "Lnet/minecraft/world/entity/LivingEntity;hurtServer(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/damagesource/DamageSource;F)Z",
                     ordinal = 0
             ),
             index = 2

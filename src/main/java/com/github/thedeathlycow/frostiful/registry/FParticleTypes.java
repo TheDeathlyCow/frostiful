@@ -4,10 +4,10 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import net.fabricmc.fabric.api.particle.v1.FabricParticleTypes;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
+import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
 
 public class FParticleTypes {
 
@@ -37,8 +37,8 @@ public class FParticleTypes {
         Frostiful.LOGGER.debug("Initialized Frostiful particle types");
     }
 
-    private static <T extends ParticleEffect> ParticleType<T> register(String name, ParticleType<T> particle) {
-        return Registry.register(Registries.PARTICLE_TYPE, Frostiful.id(name), particle);
+    private static <T extends ParticleOptions> ParticleType<T> register(String name, ParticleType<T> particle) {
+        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, Frostiful.id(name), particle);
     }
 
     private FParticleTypes() {

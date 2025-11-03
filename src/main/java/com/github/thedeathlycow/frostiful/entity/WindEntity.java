@@ -3,40 +3,39 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.network.packet.s2c.play.PlaySoundS2CPacket;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.predicate.entity.EntityPredicates;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.profiler.Profilers;
-import net.minecraft.world.World;
-
 import java.util.function.Predicate;
+import net.minecraft.core.Holder;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.profiling.Profiler;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntitySelector;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.Vec3;
 
 public class WindEntity extends Entity {
 
-    private static final IntProvider LIFE_TICKS_PROVIDER = UniformIntProvider.create(80, 140);
-    public static final Vec3d REGULAR_PUSH = new Vec3d(-0.16, 0, 0);
-    public static final Vec3d ELYTRA_PUSH = new Vec3d(-1.75, 0, 0);
+    private static final IntProvider LIFE_TICKS_PROVIDER = UniformInt.of(80, 140);
+    public static final Vec3 REGULAR_PUSH = new Vec3(-0.16, 0, 0);
+    public static final Vec3 ELYTRA_PUSH = new Vec3(-1.75, 0, 0);
 
-    public static final Predicate<Entity> CAN_BE_BLOWN = EntityPredicates.EXCEPT_SPECTATOR
-            .and(EntityPredicates.VALID_ENTITY)
-            .and(entity -> !entity.getType().isIn(FEntityTypeTags.HEAVY_ENTITY_TYPES));
+    public static final Predicate<Entity> CAN_BE_BLOWN = EntitySelector.NO_SPECTATORS
+            .and(EntitySelector.ENTITY_STILL_ALIVE)
+            .and(entity -> !entity.getType().is(FEntityTypeTags.HEAVY_ENTITY_TYPES));
 
     private float windSpeed = 1.0f;
 
@@ -44,15 +43,15 @@ public class WindEntity extends Entity {
 
     private final int moveTickOffset;
 
-    public WindEntity(EntityType<? extends WindEntity> type, World world) {
+    public WindEntity(EntityType<? extends WindEntity> type, Level world) {
         super(type, world);
         this.setNoGravity(true);
-        this.setLifeTicks(LIFE_TICKS_PROVIDER.get(this.random));
-        this.moveTickOffset = world.random.nextBetween(1, 10) - 1;
+        this.setLifeTicks(LIFE_TICKS_PROVIDER.sample(this.random));
+        this.moveTickOffset = world.random.nextIntBetweenInclusive(1, 10) - 1;
     }
 
     @Override
-    public boolean shouldSave() {
+    public boolean shouldBeSaved() {
         return false;
     }
 
@@ -80,36 +79,36 @@ public class WindEntity extends Entity {
             return;
         }
 
-        World world = getEntityWorld();
-        var profiler = Profilers.get();
+        Level world = level();
+        var profiler = Profiler.get();
         profiler.push("windTick");
 
         if (this.isOnFire()) {
-            this.extinguish();
+            this.clearFire();
         }
 
-        if (this.age % 10 == moveTickOffset) {
+        if (this.tickCount % 10 == moveTickOffset) {
 
-            Vec3d velocity;
+            Vec3 velocity;
             if (this.verticalCollision) {
-                velocity = Vec3d.ZERO.add(0, 0, this.windSpeed * 0.5f);
+                velocity = Vec3.ZERO.add(0, 0, this.windSpeed * 0.5f);
             } else if (this.horizontalCollision) {
-                velocity = Vec3d.ZERO.add(0, this.windSpeed * 0.5f, 0);
+                velocity = Vec3.ZERO.add(0, this.windSpeed * 0.5f, 0);
             } else {
-                velocity = Vec3d.ZERO.add(-this.windSpeed, 0, 0);
+                velocity = Vec3.ZERO.add(-this.windSpeed, 0, 0);
             }
 
-            this.setVelocity(velocity);
-            this.move(MovementType.SELF, this.getVelocity());
+            this.setDeltaMovement(velocity);
+            this.move(MoverType.SELF, this.getDeltaMovement());
         }
 
 
-        if (!world.isClient()) {
-            if (this.age % 30 == 0) {
+        if (!world.isClientSide()) {
+            if (this.tickCount % 30 == 0) {
                 this.playSound(FSoundEvents.ENTITY_WIND_BLOW, 0.75f, 0.9f + this.random.nextFloat() / 3);
             }
 
-            if (this.age % 5 == 0) {
+            if (this.tickCount % 5 == 0) {
                 profiler.push("windCollision");
                 this.checkCollidingEntities();
                 profiler.pop();
@@ -120,22 +119,22 @@ public class WindEntity extends Entity {
                     ? new WindParticleEffect(true)
                     : new WindParticleEffect(false);
 
-            ParticleEffect dust = this.getDustParticle();
+            ParticleOptions dust = this.getDustParticle();
 
             for (int i = 0; i < 2; ++i) {
-                world.addParticleClient(
+                world.addParticle(
                         particle,
-                        this.getParticleX(0.5),
-                        this.getRandomBodyY(),
-                        this.getParticleZ(0.5),
+                        this.getRandomX(0.5),
+                        this.getRandomY(),
+                        this.getRandomZ(0.5),
                         -0.5, 0.0, 0.0
                 );
 
-                world.addParticleClient(
+                world.addParticle(
                         dust,
-                        this.getParticleX(1.0),
-                        this.getRandomBodyY(),
-                        this.getParticleZ(1.0),
+                        this.getRandomX(1.0),
+                        this.getRandomY(),
+                        this.getRandomZ(1.0),
                         -0.1, 0.1, 0.0
                 );
             }
@@ -153,12 +152,12 @@ public class WindEntity extends Entity {
         return false;
     }
 
-    public boolean isFireImmune() {
+    public boolean fireImmune() {
         return true;
     }
 
     @Override
-    public boolean damage(ServerWorld world, DamageSource source, float amount) {
+    public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
         return false;
     }
 
@@ -180,16 +179,16 @@ public class WindEntity extends Entity {
 
     protected void dissipate() {
         this.playSound(FSoundEvents.ENTITY_WIND_WOOSH, 1.0f, 1.0f);
-        World world = getEntityWorld();
-        if (world.isClient()) {
-            ParticleEffect particle = this.getDustParticle();
+        Level world = level();
+        if (world.isClientSide()) {
+            ParticleOptions particle = this.getDustParticle();
             for (int i = 0; i < 20; ++i) {
                 double vx = this.random.nextGaussian() * 0.02;
                 double vy = this.random.nextGaussian() * 0.02;
                 double vz = this.random.nextGaussian() * 0.02;
-                world.addParticleClient(
+                world.addParticle(
                         particle,
-                        this.getParticleX(1.0), this.getRandomBodyY(), this.getParticleZ(1.0),
+                        this.getRandomX(1.0), this.getRandomY(), this.getRandomZ(1.0),
                         vx, vy, vz
                 );
             }
@@ -198,25 +197,25 @@ public class WindEntity extends Entity {
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
 
     }
 
     public void onEntityCollision(LivingEntity entity) {
-        pushEntity(entity, getEntityWorld(), this.getEntityPos(), 1);
+        pushEntity(entity, level(), this.position(), 1);
     }
 
-    public static void pushEntity(LivingEntity entity, World world, Vec3d pos, double scale) {
-        Vec3d push = entity.isGliding() ? ELYTRA_PUSH : REGULAR_PUSH;
-        scale *= 1.0 - entity.getAttributeValue(EntityAttributes.KNOCKBACK_RESISTANCE);
+    public static void pushEntity(LivingEntity entity, Level world, Vec3 pos, double scale) {
+        Vec3 push = entity.isFallFlying() ? ELYTRA_PUSH : REGULAR_PUSH;
+        scale *= 1.0 - entity.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
 
-        entity.addVelocity(push.x * scale, push.y * scale, push.z * scale);
-        entity.velocityModified = true;
-        if (!world.isClient() && entity instanceof ServerPlayerEntity serverPlayer) {
-            serverPlayer.networkHandler
-                    .sendPacket(new PlaySoundS2CPacket(
-                            RegistryEntry.of(FSoundEvents.ENTITY_WIND_HOWL),
-                            SoundCategory.WEATHER,
+        entity.push(push.x * scale, push.y * scale, push.z * scale);
+        entity.hurtMarked = true;
+        if (!world.isClientSide() && entity instanceof ServerPlayer serverPlayer) {
+            serverPlayer.connection
+                    .send(new ClientboundSoundPacket(
+                            Holder.direct(FSoundEvents.ENTITY_WIND_HOWL),
+                            SoundSource.WEATHER,
                             pos.x, pos.y, pos.z,
                             1.0f, 1.0f,
                             world.getRandom().nextLong()
@@ -224,16 +223,16 @@ public class WindEntity extends Entity {
         }
     }
 
-    protected ParticleEffect getDustParticle() {
+    protected ParticleOptions getDustParticle() {
         return ParticleTypes.POOF;
     }
 
-    protected MoveEffect getMoveEffect() {
-        return MoveEffect.NONE;
+    protected MovementEmission getMovementEmission() {
+        return MovementEmission.NONE;
     }
 
     private void checkCollidingEntities() {
-        this.getEntityWorld().getEntitiesByClass(
+        this.level().getEntitiesOfClass(
                         LivingEntity.class,
                         this.getBoundingBox(),
                         CAN_BE_BLOWN
@@ -242,13 +241,13 @@ public class WindEntity extends Entity {
     }
 
     @Override
-    protected void readCustomData(ReadView readView) {
-        this.setWindSpeed(readView.getFloat("WindSpeed", 1.0f));
-        this.setLifeTicks(readView.getInt("LifeTicks", 80));
+    protected void readAdditionalSaveData(ValueInput readView) {
+        this.setWindSpeed(readView.getFloatOr("WindSpeed", 1.0f));
+        this.setLifeTicks(readView.getIntOr("LifeTicks", 80));
     }
 
     @Override
-    protected void writeCustomData(WriteView writeView) {
+    protected void addAdditionalSaveData(ValueOutput writeView) {
         writeView.putFloat("WindSpeed", this.getWindSpeed());
 
         if (this.isAlive()) {

@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 @Config(name = Frostiful.MODID + ".combat_config")
 public class CombatConfigGroup implements ConfigData {
@@ -96,7 +96,7 @@ public class CombatConfigGroup implements ConfigData {
     }
 
     public float getSkateUpgradeTemplateIglooGenerateChance() {
-        return MathHelper.clamp(skateUpgradeTemplateIglooGenerateChance, 0f, 1f);
+        return Mth.clamp(skateUpgradeTemplateIglooGenerateChance, 0f, 1f);
     }
 
     public double getIceBreakFallbackDamage() {

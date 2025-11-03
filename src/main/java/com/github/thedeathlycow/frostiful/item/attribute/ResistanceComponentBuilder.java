@@ -6,21 +6,20 @@ import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.item.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.EquippableComponent;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.item.Items;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.equipment.Equippable;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
 public final class ResistanceComponentBuilder {
-    private static final Map<EquipmentSlot, Identifier> SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
-    private static final Map<EquipmentSlot, Identifier> ENVIRONMENT_SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
+    private static final Map<EquipmentSlot, ResourceLocation> SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
+    private static final Map<EquipmentSlot, ResourceLocation> ENVIRONMENT_SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
 
     public static void initialize() {
         initializeComponentModifiers();
@@ -29,27 +28,27 @@ public final class ResistanceComponentBuilder {
 
     private static void initializeItemModifiers() {
         ModifyItemAttributeModifiersCallback.EVENT.register((stack, builder) -> {
-            if (stack.isIn(ConventionalItemTags.ARMORS) && stack.contains(DataComponentTypes.EQUIPPABLE)) {
+            if (stack.is(ConventionalItemTags.ARMORS) && stack.has(DataComponents.EQUIPPABLE)) {
                 FrostResistanceComponent resistance = stack.getOrDefault(
                         FDataComponentTypes.FROST_RESISTANCE,
                         FrostResistanceComponent.DEFAULT
                 );
 
-                EquippableComponent equippable = stack.get(DataComponentTypes.EQUIPPABLE);
+                Equippable equippable = stack.get(DataComponents.EQUIPPABLE);
                 EquipmentSlot slot = equippable.slot();
-                AttributeModifierSlot attributeModifierSlot = AttributeModifierSlot.forEquipmentSlot(slot);
+                EquipmentSlotGroup attributeModifierSlot = EquipmentSlotGroup.bySlot(slot);
                 FArmorType fArmorType = FArmorType.forEquipmentSlot(slot);
 
                 if (resistance.frostResistanceMultiplier() != 0) {
                     builder.add(
                             ThermooAttributes.FROST_RESISTANCE,
-                            new EntityAttributeModifier(
+                            new AttributeModifier(
                                     SLOT_IDS.computeIfAbsent(
                                             slot,
-                                            sl -> Frostiful.id("base_frost_resistance/" + sl.asString())
+                                            sl -> Frostiful.id("base_frost_resistance/" + sl.getSerializedName())
                                     ),
                                     fArmorType.getBaseFrostResistance() * resistance.frostResistanceMultiplier(),
-                                    EntityAttributeModifier.Operation.ADD_VALUE
+                                    AttributeModifier.Operation.ADD_VALUE
                             ),
                             attributeModifierSlot
                     );
@@ -58,13 +57,13 @@ public final class ResistanceComponentBuilder {
                 if (resistance.environmentFrostResistanceMultiplier() != 0) {
                     builder.add(
                             ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE,
-                            new EntityAttributeModifier(
+                            new AttributeModifier(
                                     ENVIRONMENT_SLOT_IDS.computeIfAbsent(
                                             slot,
-                                            sl -> Frostiful.id("base_environment_frost_resistance/" + sl.asString())
+                                            sl -> Frostiful.id("base_environment_frost_resistance/" + sl.getSerializedName())
                                     ),
                                     fArmorType.getBaseEnvironmentFrostResistance() * resistance.environmentFrostResistanceMultiplier(),
-                                    EntityAttributeModifier.Operation.ADD_VALUE
+                                    AttributeModifier.Operation.ADD_VALUE
                             ),
                             attributeModifierSlot
                     );
@@ -83,14 +82,14 @@ public final class ResistanceComponentBuilder {
                             Items.NETHERITE_BOOTS
                     ),
                     (builder, item) -> {
-                        builder.add(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.PROTECTIVE);
+                        builder.set(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.PROTECTIVE);
                     }
             );
 
             context.modify(
                     Items.TURTLE_HELMET,
                     builder -> {
-                        builder.add(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_HARMFUL);
+                        builder.set(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_HARMFUL);
                     }
             );
         });

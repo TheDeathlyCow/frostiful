@@ -1,37 +1,37 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.ExplosiveProjectileEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.util.hit.HitResult;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractHurtingProjectile;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-public abstract class SpellEntity extends ExplosiveProjectileEntity {
+public abstract class SpellEntity extends AbstractHurtingProjectile {
 
     private static final String AMPLIFIER_NBT_KEY = "EffectAmplifier";
     private static final String MAX_DISTANCE_NBT_KEY = "MaxDistance";
     private double maxDistance = Double.POSITIVE_INFINITY;
     @Nullable
-    private Vec3d startPosition = null;
+    private Vec3 startPosition = null;
 
-    public SpellEntity(EntityType<? extends SpellEntity> type, World world, LivingEntity owner, Vec3d velocity) {
+    public SpellEntity(EntityType<? extends SpellEntity> type, Level world, LivingEntity owner, Vec3 velocity) {
         this(type, world, owner, velocity, Double.POSITIVE_INFINITY);
     }
 
-    public SpellEntity(EntityType<? extends SpellEntity> type, World world, LivingEntity owner, Vec3d velocity, double maxDistance) {
+    public SpellEntity(EntityType<? extends SpellEntity> type, Level world, LivingEntity owner, Vec3 velocity, double maxDistance) {
         super(type, owner, velocity, world);
         this.maxDistance = maxDistance;
-        this.refreshPositionAndAngles(owner.getEyePos(), this.getYaw(), this.getPitch());
+        this.snapTo(owner.getEyePosition(), this.getYRot(), this.getXRot());
     }
 
-    protected SpellEntity(EntityType<? extends SpellEntity> entityType, World world) {
+    protected SpellEntity(EntityType<? extends SpellEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -40,12 +40,12 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     public void tick() {
         super.tick();
 
-        if (!getEntityWorld().isClient() && this.isAlive()) {
+        if (!level().isClientSide() && this.isAlive()) {
             if (this.startPosition == null) {
-                this.startPosition = this.getEntityPos();
+                this.startPosition = this.position();
             }
 
-            double distTravelledSqd = this.startPosition.squaredDistanceTo(this.getEntityPos());
+            double distTravelledSqd = this.startPosition.distanceToSqr(this.position());
             if (distTravelledSqd > this.maxDistance * this.maxDistance) {
                 this.applyEffectCloud();
             }
@@ -53,44 +53,44 @@ public abstract class SpellEntity extends ExplosiveProjectileEntity {
     }
 
     @Override
-    public void onEntityHit(EntityHitResult hitResult) {
-        super.onEntityHit(hitResult);
-        if (!getEntityWorld().isClient() && this.isAlive()) {
+    public void onHitEntity(EntityHitResult hitResult) {
+        super.onHitEntity(hitResult);
+        if (!level().isClientSide() && this.isAlive()) {
             this.applyEffectCloud();
         }
     }
 
-    public void writeCustomData(WriteView writeView) {
-        super.writeCustomData(writeView);
+    public void addAdditionalSaveData(ValueOutput writeView) {
+        super.addAdditionalSaveData(writeView);
         if (!Double.isInfinite(this.maxDistance)) {
             writeView.putDouble(MAX_DISTANCE_NBT_KEY, this.maxDistance);
         }
     }
 
-    public void readCustomData(ReadView readView) {
-        super.readCustomData(readView);
-        this.maxDistance = readView.getDouble(MAX_DISTANCE_NBT_KEY, Double.POSITIVE_INFINITY);
+    public void readAdditionalSaveData(ValueInput readView) {
+        super.readAdditionalSaveData(readView);
+        this.maxDistance = readView.getDoubleOr(MAX_DISTANCE_NBT_KEY, Double.POSITIVE_INFINITY);
     }
 
-    protected void onCollision(HitResult hitResult) {
-        super.onCollision(hitResult);
-        if (!getEntityWorld().isClient()) {
+    protected void onHit(HitResult hitResult) {
+        super.onHit(hitResult);
+        if (!level().isClientSide()) {
             this.applyEffectCloud();
         }
     }
 
     @Override
-    protected ParticleEffect getParticleType() {
+    protected ParticleOptions getTrailParticle() {
         return ParticleTypes.SNOWFLAKE;
     }
 
     @Override
-    protected float getDrag() {
+    protected float getInertia() {
         return 1.0f;
     }
 
     @Override
-    protected boolean isBurning() {
+    protected boolean shouldBurn() {
         return false;
     }
 

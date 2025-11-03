@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.block.Block;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.block.Block;
 
 public class FBlockTags {
 
@@ -19,6 +19,6 @@ public class FBlockTags {
     public static final TagKey<Block> ICICLE_REPLACEABLE_BLOCKS = register("icicle_replaceable_blocks");
 
     private static TagKey<Block> register(String id) {
-        return TagKey.of(RegistryKeys.BLOCK, Frostiful.id(id));
+        return TagKey.create(Registries.BLOCK, Frostiful.id(id));
     }
 }

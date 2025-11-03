@@ -8,45 +8,44 @@ import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
 import com.mojang.serialization.Codec;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
-import net.minecraft.component.ComponentType;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.codec.StreamCodec;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
 public final class FDataComponentTypes {
-    public static final ComponentType<FrostResistanceComponent> FROST_RESISTANCE = register(
+    public static final DataComponentType<FrostResistanceComponent> FROST_RESISTANCE = register(
             "frost_resistance",
             builder -> builder
-                    .codec(FrostResistanceComponent.CODEC)
-                    .packetCodec(FrostResistanceComponent.PACKET_CODEC)
-                    .cache()
+                    .persistent(FrostResistanceComponent.CODEC)
+                    .networkSynchronized(FrostResistanceComponent.PACKET_CODEC)
+                    .cacheEncoding()
     );
 
-    public static final ComponentType<InertTooltipComponent> INERT_TOOLTIP = register(
+    public static final DataComponentType<InertTooltipComponent> INERT_TOOLTIP = register(
             "inert_tooltip",
             builder -> builder
-                    .codec(Codec.unit(InertTooltipComponent.INSTANCE))
-                    .packetCodec(PacketCodec.unit(InertTooltipComponent.INSTANCE))
-                    .cache()
+                    .persistent(Codec.unit(InertTooltipComponent.INSTANCE))
+                    .networkSynchronized(StreamCodec.unit(InertTooltipComponent.INSTANCE))
+                    .cacheEncoding()
     );
 
-    public static final ComponentType<CapeComponent> CAPE = register(
+    public static final DataComponentType<CapeComponent> CAPE = register(
             "cape",
             builder -> builder
-                    .codec(CapeComponent.CODEC)
-                    .packetCodec(CapeComponent.PACKET_CODEC)
-                    .cache()
+                    .persistent(CapeComponent.CODEC)
+                    .networkSynchronized(CapeComponent.PACKET_CODEC)
+                    .cacheEncoding()
     );
 
-    public static final ComponentType<IceLikeComponent> ICE_LIKE = register(
+    public static final DataComponentType<IceLikeComponent> ICE_LIKE = register(
             "ice_like",
             builder -> builder
-                    .codec(IceLikeComponent.CODEC)
-                    .packetCodec(IceLikeComponent.PACKET_CODEC)
-                    .cache()
+                    .persistent(IceLikeComponent.CODEC)
+                    .networkSynchronized(IceLikeComponent.PACKET_CODEC)
+                    .cacheEncoding()
     );
 
     public static void initialize() {
@@ -67,11 +66,11 @@ public final class FDataComponentTypes {
         });
     }
 
-    private static <T> ComponentType<T> register(String id, UnaryOperator<ComponentType.Builder<T>> builderOperator) {
+    private static <T> DataComponentType<T> register(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return Registry.register(
-                Registries.DATA_COMPONENT_TYPE,
+                BuiltInRegistries.DATA_COMPONENT_TYPE,
                 Frostiful.id(id),
-                builderOperator.apply(ComponentType.builder()).build()
+                builderOperator.apply(DataComponentType.builder()).build()
         );
     }
 

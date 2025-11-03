@@ -5,36 +5,36 @@ import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.registry.FLootConditionTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.entity.Entity;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.condition.LootConditionType;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.predicate.NumberRange;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 public record RootedLootCondition(
-        NumberRange.IntRange rootTicksRemaining
-) implements LootCondition {
+        MinMaxBounds.Ints rootTicksRemaining
+) implements LootItemCondition {
 
     public static final MapCodec<RootedLootCondition> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    NumberRange.IntRange.CODEC
+                    MinMaxBounds.Ints.CODEC
                             .fieldOf("root_ticks_remaining")
                             .forGetter(RootedLootCondition::rootTicksRemaining)
             ).apply(instance, RootedLootCondition::new)
     );
 
     @Override
-    public LootConditionType getType() {
+    public LootItemConditionType getType() {
         return FLootConditionTypes.ROOTED;
     }
 
     @Override
     public boolean test(LootContext lootContext) {
-        Entity entity = lootContext.get(LootContextParameters.THIS_ENTITY);
+        Entity entity = lootContext.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity != null) {
             FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
-            return this.rootTicksRemaining.test(component.getRootedTicks());
+            return this.rootTicksRemaining.matches(component.getRootedTicks());
         }
 
         return false;

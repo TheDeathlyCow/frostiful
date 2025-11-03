@@ -3,22 +3,22 @@ package com.github.thedeathlycow.frostiful.entity.component;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.World;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class SnowAccumulationComponent implements Component, ServerTickingComponent {
-    private static final EntityAttributeModifier SOAKED_MODIFIER = new EntityAttributeModifier(
+    private static final AttributeModifier SOAKED_MODIFIER = new AttributeModifier(
             Frostiful.id("soaked_cold_vulnerability"),
             -1,
-            EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
     );
 
     private static final String KEY = "snow_accumulation";
@@ -51,34 +51,34 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
     }
 
     @Override
-    public void readData(ReadView readView) {
-        this.snowAccumulation = readView.getInt(KEY, 0);
+    public void readData(ValueInput readView) {
+        this.snowAccumulation = readView.getIntOr(KEY, 0);
     }
 
     @Override
-    public void writeData(WriteView writeView) {
+    public void writeData(ValueOutput writeView) {
         if (this.snowAccumulation > 0) {
             writeView.putInt(KEY, this.snowAccumulation);
         }
     }
 
     public boolean isBeingSnowedOn() {
-        World world = this.provider.getEntityWorld();
-        BlockPos pos = this.provider.getBlockPos();
+        Level world = this.provider.level();
+        BlockPos pos = this.provider.blockPosition();
         return hasSnow(world, pos)
-                || hasSnow(world, BlockPos.ofFloored(pos.getX(), this.provider.getBoundingBox().maxY, pos.getZ()));
+                || hasSnow(world, BlockPos.containing(pos.getX(), this.provider.getBoundingBox().maxY, pos.getZ()));
     }
 
-    public static boolean hasSnow(World world, BlockPos pos) {
+    public static boolean hasSnow(Level world, BlockPos pos) {
         if (!world.isRaining()) {
             return false;
-        } else if (!world.isSkyVisible(pos)) {
+        } else if (!world.canSeeSky(pos)) {
             return false;
-        } else if (world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, pos).getY() > pos.getY()) {
+        } else if (world.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, pos).getY() > pos.getY()) {
             return false;
         } else {
             Biome biome = world.getBiome(pos).value();
-            return biome.getPrecipitation(pos, world.getSeaLevel()) == Biome.Precipitation.SNOW;
+            return biome.getPrecipitationAt(pos, world.getSeaLevel()) == Biome.Precipitation.SNOW;
         }
     }
 
@@ -99,15 +99,15 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
         // this probably doesnt belong in this component but oh well i dont feel like making another one
         boolean wet = provider.thermoo$isWet();
         if (wet && !this.appliedSoakedModifiers && !provider.thermoo$ignoresFrigidWater()) {
-            var envFrostResistance = provider.getAttributeInstance(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
+            var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
 
             if (envFrostResistance != null) {
-                envFrostResistance.addTemporaryModifier(SOAKED_MODIFIER);
+                envFrostResistance.addTransientModifier(SOAKED_MODIFIER);
                 this.appliedSoakedModifiers = true;
                 Frostiful.LOGGER.debug("Applied soaked env frost resistance penalty");
             }
         } else if (!wet && this.appliedSoakedModifiers) {
-            var envFrostResistance = provider.getAttributeInstance(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
+            var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
 
             if (envFrostResistance != null) {
                 envFrostResistance.removeModifier(SOAKED_MODIFIER);

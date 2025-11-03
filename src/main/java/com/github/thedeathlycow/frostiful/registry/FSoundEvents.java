@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 
 public class FSoundEvents {
 
@@ -52,20 +52,20 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_GLIDE = register("entity.generic.ice_skate.glide");
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_STOP = register("entity.generic.ice_skate.stop");
 
-    public static final RegistryEntry<SoundEvent> ITEM_ARMOR_EQUIP_FUR = registerReference("item.armor.equip_fur");
+    public static final Holder<SoundEvent> ITEM_ARMOR_EQUIP_FUR = registerReference("item.armor.equip_fur");
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful sound events");
     }
 
-    private static RegistryEntry.Reference<SoundEvent> registerReference(String name) {
-        Identifier id = Frostiful.id(name);
-        return Registry.registerReference(Registries.SOUND_EVENT, id, SoundEvent.of(id));
+    private static Holder.Reference<SoundEvent> registerReference(String name) {
+        ResourceLocation id = Frostiful.id(name);
+        return Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
     }
 
     private static SoundEvent register(String name) {
-        SoundEvent event = SoundEvent.of(Frostiful.id(name));
-        Registry.register(Registries.SOUND_EVENT, event.id(), event);
+        SoundEvent event = SoundEvent.createVariableRangeEvent(Frostiful.id(name));
+        Registry.register(BuiltInRegistries.SOUND_EVENT, event.location(), event);
         return event;
     }
 
