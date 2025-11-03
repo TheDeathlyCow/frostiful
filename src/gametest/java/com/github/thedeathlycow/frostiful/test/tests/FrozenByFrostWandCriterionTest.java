@@ -2,25 +2,24 @@ package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
-import net.minecraft.loot.context.LootContextTypes;
-import net.minecraft.loot.context.LootWorldContext;
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.EntityTypePredicate;
-import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.registry.RegistryEntryLookup;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.test.TestContext;
-import net.minecraft.text.Text;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.EntityTypePredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.HolderGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,7 +30,7 @@ public class FrozenByFrostWandCriterionTest {
     private static final int NUM_PREDICATES = 3;
 
     @GameTest()
-    public void threeCreeperMobsToEmptyPredicatesIsTrue(TestContext context) {
+    public void threeCreeperMobsToEmptyPredicatesIsTrue(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -42,15 +41,15 @@ public class FrozenByFrostWandCriterionTest {
         FrozenByFrostWandCriterion.Conditions conditions = new FrozenByFrostWandCriterion.Conditions(
                 Optional.empty(),
                 List.of(),
-                NumberRange.IntRange.ANY
+                MinMaxBounds.Ints.ANY
         );
 
-        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
-        context.complete();
+        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.succeed();
     }
 
     @GameTest()
-    public void threeCreeperMobsToThreeCreeperPredicatesIsTrue(TestContext context) {
+    public void threeCreeperMobsToThreeCreeperPredicatesIsTrue(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -58,14 +57,14 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
 
-        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
-        context.complete();
+        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.succeed();
     }
 
     @GameTest()
-    public void threeCreeperMobsAndTwoZombiesToThreeCreeperPredicatesIsTrue(TestContext context) {
+    public void threeCreeperMobsAndTwoZombiesToThreeCreeperPredicatesIsTrue(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -75,14 +74,14 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.ZOMBIE
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
 
-        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
-        context.complete();
+        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.succeed();
     }
 
     @GameTest()
-    public void fiveCreeperMobsToThreeCreeperPredicatesIsTrue(TestContext context) {
+    public void fiveCreeperMobsToThreeCreeperPredicatesIsTrue(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -92,28 +91,28 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
 
-        context.assertTrue(conditions.matches(creepers), Text.literal("Conditions do not match!"));
-        context.complete();
+        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.succeed();
     }
 
     @GameTest()
-    public void twoCreeperMobsToThreeCreeperPredicatesIsFalse(TestContext context) {
+    public void twoCreeperMobsToThreeCreeperPredicatesIsFalse(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
 
-        context.assertFalse(conditions.matches(creepers), Text.literal("Conditions do match, but they should NOT!"));
-        context.complete();
+        context.assertFalse(conditions.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
+        context.succeed();
     }
 
     @GameTest()
-    public void twoCreepersAndOneZombieToThreeCreeperPredicatesIsFalse(TestContext context) {
+    public void twoCreepersAndOneZombieToThreeCreeperPredicatesIsFalse(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -121,34 +120,34 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.ZOMBIE
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
 
-        context.assertFalse(conditions.matches(creepers), Text.literal("Conditions do match, but they should NOT!"));
-        context.complete();
+        context.assertFalse(conditions.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
+        context.succeed();
     }
 
     @GameTest()
-    public void zeroMobsToThreeCreeperPredicatesIsFalse(TestContext context) {
+    public void zeroMobsToThreeCreeperPredicatesIsFalse(GameTestHelper context) {
         List<LootContext> creepers = List.of();
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getWorld());
+        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
 
-        context.assertFalse(conditions.matches(creepers), Text.literal("Conditions do match, but they should NOT!"));
-        context.complete();
+        context.assertFalse(conditions.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
+        context.succeed();
     }
 
     @SafeVarargs
     private static List<LootContext> createLootContexts(
-            TestContext testContext,
-            EntityType<? extends MobEntity>... entityTypes
+            GameTestHelper testContext,
+            EntityType<? extends Mob>... entityTypes
     ) {
         List<LootContext> contexts = new ArrayList<>();
 
-        for (EntityType<? extends MobEntity> type : entityTypes) {
+        for (EntityType<? extends Mob> type : entityTypes) {
             LootContext context = createAdvancementEntityLootContext(
-                    testContext.getWorld(),
-                    testContext.spawnMob(type, BlockPos.ORIGIN),
-                    Vec3d.ZERO
+                    testContext.getLevel(),
+                    testContext.spawnWithNoFreeWill(type, BlockPos.ZERO),
+                    Vec3.ZERO
             );
             contexts.add(context);
         }
@@ -156,22 +155,22 @@ public class FrozenByFrostWandCriterionTest {
         return contexts;
     }
 
-    public static LootContext createAdvancementEntityLootContext(ServerWorld world, Entity target, Vec3d pos) {
-        LootWorldContext lootWorldContext = new LootWorldContext.Builder(world)
-                .add(LootContextParameters.THIS_ENTITY, target)
-                .add(LootContextParameters.ORIGIN, pos)
-                .build(LootContextTypes.ADVANCEMENT_ENTITY);
-        return new LootContext.Builder(lootWorldContext).build(Optional.empty());
+    public static LootContext createAdvancementEntityLootContext(ServerLevel world, Entity target, Vec3 pos) {
+        LootParams lootWorldContext = new LootParams.Builder(world)
+                .withParameter(LootContextParams.THIS_ENTITY, target)
+                .withParameter(LootContextParams.ORIGIN, pos)
+                .create(LootContextParamSets.ADVANCEMENT_ENTITY);
+        return new LootContext.Builder(lootWorldContext).create(Optional.empty());
     }
 
-    private static FrozenByFrostWandCriterion.Conditions createConditions(ServerWorld world) {
-        List<LootContextPredicate> predicates = new ArrayList<>();
-        RegistryEntryLookup<EntityType<?>> lookup = world.getRegistryManager().getOrThrow(RegistryKeys.ENTITY_TYPE);
+    private static FrozenByFrostWandCriterion.Conditions createConditions(ServerLevel world) {
+        List<ContextAwarePredicate> predicates = new ArrayList<>();
+        HolderGetter<EntityType<?>> lookup = world.registryAccess().lookupOrThrow(Registries.ENTITY_TYPE);
 
         for (int i = 0; i < NUM_PREDICATES; i++) {
-            LootContextPredicate context = EntityPredicate.contextPredicateFromEntityPredicate(
-                    EntityPredicate.Builder.create()
-                            .type(EntityTypePredicate.create(lookup, EntityType.CREEPER))
+            ContextAwarePredicate context = EntityPredicate.wrap(
+                    EntityPredicate.Builder.entity()
+                            .entityType(EntityTypePredicate.of(lookup, EntityType.CREEPER))
             );
             predicates.add(context);
         }
@@ -179,7 +178,7 @@ public class FrozenByFrostWandCriterionTest {
         return new FrozenByFrostWandCriterion.Conditions(
                 Optional.empty(),
                 predicates,
-                NumberRange.IntRange.ANY
+                MinMaxBounds.Ints.ANY
         );
     }
 }
