@@ -59,12 +59,12 @@ public class FSoundEvents {
     }
 
     private static Holder.Reference<SoundEvent> registerReference(String name) {
-        ResourceLocation id = Frostiful.id(name);
+        ResourceLocation id = Frostiful.location(name);
         return Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
     }
 
     private static SoundEvent register(String name) {
-        SoundEvent event = SoundEvent.createVariableRangeEvent(Frostiful.id(name));
+        SoundEvent event = SoundEvent.createVariableRangeEvent(Frostiful.location(name));
         Registry.register(BuiltInRegistries.SOUND_EVENT, event.location(), event);
         return event;
     }

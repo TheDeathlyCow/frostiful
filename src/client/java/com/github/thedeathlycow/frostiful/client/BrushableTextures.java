@@ -8,7 +8,7 @@ import net.minecraft.resources.ResourceLocation;
 @Environment(EnvType.CLIENT)
 public class BrushableTextures {
 
-    public static final ResourceLocation POLAR_BEAR = Frostiful.id("textures/entity/bear/polar_bear_brushed.png");
+    public static final ResourceLocation POLAR_BEAR = Frostiful.location("textures/entity/bear/polar_bear_brushed.png");
 
     private BrushableTextures() {
     }

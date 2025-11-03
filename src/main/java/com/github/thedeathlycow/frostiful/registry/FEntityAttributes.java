@@ -25,7 +25,7 @@ public final class FEntityAttributes {
     }
 
     private static Holder<Attribute> register(String name, Attribute attribute) {
-        return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, Frostiful.id(name), attribute);
+        return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, Frostiful.location(name), attribute);
     }
 
     public static void initialize() {

@@ -12,8 +12,8 @@ import net.minecraft.world.item.equipment.EquipmentAsset;
 import net.minecraft.world.item.equipment.EquipmentAssets;
 
 public class FArmorMaterials {
-    public static final ResourceKey<EquipmentAsset> FUR_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, Frostiful.id("fur"));
-    public static final ResourceKey<EquipmentAsset> FUR_LINED_CHAINMAIL_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, Frostiful.id("fur_lined_chainmail"));
+    public static final ResourceKey<EquipmentAsset> FUR_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, Frostiful.location("fur"));
+    public static final ResourceKey<EquipmentAsset> FUR_LINED_CHAINMAIL_ASSET = ResourceKey.create(EquipmentAssets.ROOT_ID, Frostiful.location("fur_lined_chainmail"));
 
     public static final ArmorMaterial FUR = new ArmorMaterial(
             5,

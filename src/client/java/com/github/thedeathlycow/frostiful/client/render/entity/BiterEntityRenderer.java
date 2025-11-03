@@ -14,7 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 @Environment(EnvType.CLIENT)
 public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityRenderState, BiterEntityModel> {
 
-    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/biter.png");
+    public static final ResourceLocation TEXTURE = Frostiful.location("textures/entity/biter.png");
 
     public BiterEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new BiterEntityModel(context.bakeLayer(FEntityModelLayers.BITER)), 0.5F);

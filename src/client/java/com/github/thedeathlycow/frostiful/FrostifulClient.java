@@ -26,7 +26,7 @@ public class FrostifulClient implements ClientModInitializer {
         FEntityModelLayers.initialize();
         FEntityRenderers.initialize();
 
-        SpecialModelRenderers.ID_MAPPER.put(Frostiful.id("frost_wand"), FrostWandItemRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Frostiful.location("frost_wand"), FrostWandItemRenderer.Unbaked.CODEC);
 
         ClientPlayNetworking.registerGlobalReceiver(
                 PointWindSpawnPacket.PACKET_ID,

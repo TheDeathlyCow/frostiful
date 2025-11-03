@@ -14,7 +14,7 @@ import org.joml.Vector2i;
 
 public class FrozenHeartsOverlay {
 
-    public static final ResourceLocation HEART_OVERLAY_TEXTURE = Frostiful.id("textures/gui/cold_heart_overlay.png");
+    public static final ResourceLocation HEART_OVERLAY_TEXTURE = Frostiful.location("textures/gui/cold_heart_overlay.png");
 
     private static final int TEXTURE_WIDTH = 18;
 

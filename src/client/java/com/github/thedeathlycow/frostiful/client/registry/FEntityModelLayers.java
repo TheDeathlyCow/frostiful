@@ -11,15 +11,15 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 @Environment(EnvType.CLIENT)
 public class FEntityModelLayers {
 
-    public static final ModelLayerLocation FROST_WAND = new ModelLayerLocation(Frostiful.id("frost_wand"), "main");
-    public static final ModelLayerLocation FROSTOLOGER = new ModelLayerLocation(Frostiful.id("frostologer"), "main");
-    public static final ModelLayerLocation FROSTOLOGER_CAPE = new ModelLayerLocation(Frostiful.id("frostologer"), "cape");
-    public static final ModelLayerLocation CHILLAGER = new ModelLayerLocation(Frostiful.id("chillager"), "main");
+    public static final ModelLayerLocation FROST_WAND = new ModelLayerLocation(Frostiful.location("frost_wand"), "main");
+    public static final ModelLayerLocation FROSTOLOGER = new ModelLayerLocation(Frostiful.location("frostologer"), "main");
+    public static final ModelLayerLocation FROSTOLOGER_CAPE = new ModelLayerLocation(Frostiful.location("frostologer"), "cape");
+    public static final ModelLayerLocation CHILLAGER = new ModelLayerLocation(Frostiful.location("chillager"), "main");
 
-    public static final ModelLayerLocation BITER = new ModelLayerLocation(Frostiful.id("biter"), "main");
+    public static final ModelLayerLocation BITER = new ModelLayerLocation(Frostiful.location("biter"), "main");
 
-    public static final ModelLayerLocation ICE_SKATES = new ModelLayerLocation(Frostiful.id("ice_skates"), "main");
-    public static final ModelLayerLocation ICE_SKATES_BABY = new ModelLayerLocation(Frostiful.id("ice_skates_baby"), "main");
+    public static final ModelLayerLocation ICE_SKATES = new ModelLayerLocation(Frostiful.location("ice_skates"), "main");
+    public static final ModelLayerLocation ICE_SKATES_BABY = new ModelLayerLocation(Frostiful.location("ice_skates_baby"), "main");
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity model layers");

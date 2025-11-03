@@ -45,7 +45,7 @@ public final class ResistanceComponentBuilder {
                             new AttributeModifier(
                                     SLOT_IDS.computeIfAbsent(
                                             slot,
-                                            sl -> Frostiful.id("base_frost_resistance/" + sl.getSerializedName())
+                                            sl -> Frostiful.location("base_frost_resistance/" + sl.getSerializedName())
                                     ),
                                     fArmorType.getBaseFrostResistance() * resistance.frostResistanceMultiplier(),
                                     AttributeModifier.Operation.ADD_VALUE
@@ -60,7 +60,7 @@ public final class ResistanceComponentBuilder {
                             new AttributeModifier(
                                     ENVIRONMENT_SLOT_IDS.computeIfAbsent(
                                             slot,
-                                            sl -> Frostiful.id("base_environment_frost_resistance/" + sl.getSerializedName())
+                                            sl -> Frostiful.location("base_environment_frost_resistance/" + sl.getSerializedName())
                                     ),
                                     fArmorType.getBaseEnvironmentFrostResistance() * resistance.environmentFrostResistanceMultiplier(),
                                     AttributeModifier.Operation.ADD_VALUE

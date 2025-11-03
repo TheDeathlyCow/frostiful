@@ -29,7 +29,7 @@ public class FLootConditionTypes {
     }
 
     private static LootItemConditionType register(String name, LootItemConditionType lootCondition) {
-        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, Frostiful.id(name), lootCondition);
+        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, Frostiful.location(name), lootCondition);
     }
 
     private FLootConditionTypes() {

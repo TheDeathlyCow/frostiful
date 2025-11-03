@@ -10,7 +10,7 @@ public class FTrimTags {
     public static final TagKey<TrimPattern> CUSTOM_PATTERNS = pattern("custom_patterns");
 
     private static TagKey<TrimPattern> pattern(String id) {
-        return TagKey.create(Registries.TRIM_PATTERN, Frostiful.id(id));
+        return TagKey.create(Registries.TRIM_PATTERN, Frostiful.location(id));
     }
 
     private FTrimTags() {

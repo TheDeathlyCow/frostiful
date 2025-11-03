@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 @Environment(EnvType.CLIENT)
 public class ThrownIcicleEntityRenderer extends ArrowRenderer<ThrownIcicleEntity, ArrowRenderState> {
 
-    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/projectiles/thrown_icicle.png");
+    public static final ResourceLocation TEXTURE = Frostiful.location("textures/entity/projectiles/thrown_icicle.png");
 
 
     public ThrownIcicleEntityRenderer(EntityRendererProvider.Context context) {

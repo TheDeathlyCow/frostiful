@@ -20,7 +20,7 @@ import net.minecraft.resources.ResourceLocation;
  */
 @Environment(EnvType.CLIENT)
 public class FrostWandItemModel extends EntityModel<FrostologerEntityRenderState> {
-    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/frost_wand.png");
+    public static final ResourceLocation TEXTURE = Frostiful.location("textures/entity/frost_wand.png");
 
     public FrostWandItemModel(ModelPart root) {
         super(root, RenderType::entityTranslucent);

@@ -17,7 +17,7 @@ public record PointWindSpawnPacket(
 ) implements CustomPacketPayload {
 
     public static final CustomPacketPayload.Type<PointWindSpawnPacket> PACKET_ID = new CustomPacketPayload.Type<>(
-            Frostiful.id("point_wind_spawn")
+            Frostiful.location("point_wind_spawn")
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, PointWindSpawnPacket> PACKET_CODEC = FPacketCodecs.VEC3D

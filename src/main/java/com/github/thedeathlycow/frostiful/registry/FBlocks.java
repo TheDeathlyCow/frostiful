@@ -320,7 +320,7 @@ public class FBlocks {
     }
 
     private static Block register(String id, Function<BlockBehaviour.Properties, Block> blockFactory, BlockBehaviour.Properties settings) {
-        ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Frostiful.id(id));
+        ResourceKey<Block> key = ResourceKey.create(Registries.BLOCK, Frostiful.location(id));
         Block block = blockFactory.apply(settings.setId(key));
         return Registry.register(BuiltInRegistries.BLOCK, key, block);
     }

@@ -15,27 +15,27 @@ public class FurSmithingUpgradeTemplate {
     private static final Component FUR_UPGRADE_APPLIES_TO_TEXT = Component.translatable(
             Util.makeDescriptionId(
                     "item",
-                    Frostiful.id("smithing_template.fur_upgrade.applies_to")
+                    Frostiful.location("smithing_template.fur_upgrade.applies_to")
             )).withStyle(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
     private static final Component FUR_UPGRADE_INGREDIENTS_TEXT = Component.translatable(
             Util.makeDescriptionId(
                     "item",
-                    Frostiful.id("smithing_template.fur_upgrade.ingredients")
+                    Frostiful.location("smithing_template.fur_upgrade.ingredients")
             )
     ).withStyle(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
     private static final Component FUR_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(
             Util.makeDescriptionId(
-                    "item", Frostiful.id("smithing_template.fur_upgrade.base_slot_description")
+                    "item", Frostiful.location("smithing_template.fur_upgrade.base_slot_description")
             )
     );
     private static final Component FUR_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(
             Util.makeDescriptionId(
                     "item",
-                    Frostiful.id("smithing_template.fur_upgrade.additions_slot_description")
+                    Frostiful.location("smithing_template.fur_upgrade.additions_slot_description")
             )
     );
 
-    private static final ResourceLocation EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("item/empty/fur_padding");
+    private static final ResourceLocation EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.location("item/empty/fur_padding");
 
 
     public static SmithingTemplateItem createItem(Item.Properties settings) {

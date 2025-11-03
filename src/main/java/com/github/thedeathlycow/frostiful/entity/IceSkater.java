@@ -80,7 +80,7 @@ public interface IceSkater {
         private static final float SPRINT_SLIPPERINESS = 1.078f;
         private static final float BRAKE_SLIPPERINESS = 1.0f;
 
-        private static final ResourceLocation SKATE_WALK_PENALITY_ID = Frostiful.id("gameplay.skate_walk_penalty");
+        private static final ResourceLocation SKATE_WALK_PENALITY_ID = Frostiful.location("gameplay.skate_walk_penalty");
 
         private static final AttributeModifier SKATE_WALK_PENALTY = new AttributeModifier(
                 SKATE_WALK_PENALITY_ID,

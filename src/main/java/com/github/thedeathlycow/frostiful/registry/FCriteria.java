@@ -23,7 +23,7 @@ public final class FCriteria {
     }
 
     public static <T extends CriterionTrigger<?>> T register(String name, T criterion) {
-        return Registry.register(BuiltInRegistries.TRIGGER_TYPES, Frostiful.id(name), criterion);
+        return Registry.register(BuiltInRegistries.TRIGGER_TYPES, Frostiful.location(name), criterion);
     }
 
     private FCriteria() {

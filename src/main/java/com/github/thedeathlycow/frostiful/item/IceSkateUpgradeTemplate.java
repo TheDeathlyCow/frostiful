@@ -14,23 +14,23 @@ public class IceSkateUpgradeTemplate {
     private static final Component ICE_SKATE_UPGRADE_APPLIES_TO_TEXT = Component.translatable(
             Util.makeDescriptionId(
                     "item",
-                    Frostiful.id("smithing_template.ice_skate_upgrade.applies_to")
+                    Frostiful.location("smithing_template.ice_skate_upgrade.applies_to")
             )).withStyle(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
     private static final Component ICE_SKATE_UPGRADE_INGREDIENTS_TEXT = Component.translatable(
             Util.makeDescriptionId(
                     "item",
-                    Frostiful.id("smithing_template.ice_skate_upgrade.ingredients")
+                    Frostiful.location("smithing_template.ice_skate_upgrade.ingredients")
             )
     ).withStyle(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
     private static final Component ICE_SKATE_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(
             Util.makeDescriptionId(
-                    "item", Frostiful.id("smithing_template.ice_skate_upgrade.base_slot_description")
+                    "item", Frostiful.location("smithing_template.ice_skate_upgrade.base_slot_description")
             )
     );
     private static final Component ICE_SKATE_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(
             Util.makeDescriptionId(
                     "item",
-                    Frostiful.id("smithing_template.ice_skate_upgrade.additions_slot_description")
+                    Frostiful.location("smithing_template.ice_skate_upgrade.additions_slot_description")
             )
     );
 

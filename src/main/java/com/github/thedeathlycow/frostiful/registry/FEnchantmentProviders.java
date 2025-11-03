@@ -10,7 +10,7 @@ public final class FEnchantmentProviders {
     public static final ResourceKey<EnchantmentProvider> FROSTOLOGER_SPAWN_FROST_WAND = key("frostologer_spawn_frost_wand");
 
     private static ResourceKey<EnchantmentProvider> key(String id) {
-        return ResourceKey.create(Registries.ENCHANTMENT_PROVIDER, Frostiful.id(id));
+        return ResourceKey.create(Registries.ENCHANTMENT_PROVIDER, Frostiful.location(id));
     }
 
     private FEnchantmentProviders() {

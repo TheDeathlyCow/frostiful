@@ -19,7 +19,7 @@ import net.minecraft.util.CommonColors;
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, EntityRenderState> {
 
-    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
+    private static final ResourceLocation TEXTURE = Frostiful.location("textures/entity/frost_spell.png");
     private static final RenderType LAYER = RenderType.entityCutoutNoCull(TEXTURE);
 
     public FrostSpellEntityRenderer(EntityRendererProvider.Context ctx) {

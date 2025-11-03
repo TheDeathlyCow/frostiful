@@ -19,7 +19,7 @@ public final class FArmorTrimPatterns {
     }
 
     private static ResourceKey<TrimPattern> key(String id) {
-        return ResourceKey.create(Registries.TRIM_PATTERN, Frostiful.id(id));
+        return ResourceKey.create(Registries.TRIM_PATTERN, Frostiful.location(id));
     }
 
     private FArmorTrimPatterns() {

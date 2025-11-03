@@ -23,7 +23,7 @@ public class FEntityTypeTags {
     public static final TagKey<EntityType<?>> BRUSHING_DROPS_OCELOT_FUR = register("brushing/drops_ocelot_fur");
 
     private static TagKey<EntityType<?>> register(String id) {
-        return TagKey.create(Registries.ENTITY_TYPE, Frostiful.id(id));
+        return TagKey.create(Registries.ENTITY_TYPE, Frostiful.location(id));
     }
 
     private static TagKey<EntityType<?>> registerCommon(String id) {

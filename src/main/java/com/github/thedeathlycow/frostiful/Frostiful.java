@@ -105,7 +105,7 @@ public class Frostiful implements ModInitializer {
      * @return Returns a new {@link ResourceLocation}
      */
     @Contract("_->new")
-    public static ResourceLocation id(String path) {
+    public static ResourceLocation location(String path) {
         return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

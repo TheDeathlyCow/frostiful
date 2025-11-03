@@ -38,7 +38,7 @@ public class FParticleTypes {
     }
 
     private static <T extends ParticleOptions> ParticleType<T> register(String name, ParticleType<T> particle) {
-        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, Frostiful.id(name), particle);
+        return Registry.register(BuiltInRegistries.PARTICLE_TYPE, Frostiful.location(name), particle);
     }
 
     private FParticleTypes() {

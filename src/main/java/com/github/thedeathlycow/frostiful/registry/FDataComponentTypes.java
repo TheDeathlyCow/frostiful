@@ -69,7 +69,7 @@ public final class FDataComponentTypes {
     private static <T> DataComponentType<T> register(String id, UnaryOperator<DataComponentType.Builder<T>> builderOperator) {
         return Registry.register(
                 BuiltInRegistries.DATA_COMPONENT_TYPE,
-                Frostiful.id(id),
+                Frostiful.location(id),
                 builderOperator.apply(DataComponentType.builder()).build()
         );
     }

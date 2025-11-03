@@ -19,6 +19,6 @@ public class FBlockTags {
     public static final TagKey<Block> ICICLE_REPLACEABLE_BLOCKS = register("icicle_replaceable_blocks");
 
     private static TagKey<Block> register(String id) {
-        return TagKey.create(Registries.BLOCK, Frostiful.id(id));
+        return TagKey.create(Registries.BLOCK, Frostiful.location(id));
     }
 }
