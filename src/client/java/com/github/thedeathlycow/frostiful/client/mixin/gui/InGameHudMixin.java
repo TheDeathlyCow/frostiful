@@ -32,7 +32,7 @@ public abstract class InGameHudMixin {
             slice = @Slice(
                     from = @At(
                             value = "INVOKE",
-                            target = "Lnet/minecraft/client/player/LocalPlayer;getFrozenTicks()I"
+                            target = "Lnet/minecraft/client/player/LocalPlayer;getTicksFrozen()I"
                     )
             ),
             at = @At(
