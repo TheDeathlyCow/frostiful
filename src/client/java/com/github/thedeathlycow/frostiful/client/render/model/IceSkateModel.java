@@ -1,63 +1,69 @@
 package com.github.thedeathlycow.frostiful.client.render.model;
 
 import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.client.render.entity.model.ModelTransformer;
-import net.minecraft.client.render.entity.state.BipedEntityRenderState;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartNames;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.CubeDeformation;
+import net.minecraft.client.model.geom.builders.CubeListBuilder;
+import net.minecraft.client.model.geom.builders.LayerDefinition;
+import net.minecraft.client.model.geom.builders.MeshDefinition;
+import net.minecraft.client.model.geom.builders.MeshTransformer;
+import net.minecraft.client.model.geom.builders.PartDefinition;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 
-public class IceSkateModel<T extends BipedEntityRenderState> extends BipedEntityModel<T> {
-    public static final ModelTransformer BABY_TRANSFORMER = ModelTransformer.scaling(0.5F);
+public class IceSkateModel<T extends HumanoidRenderState> extends HumanoidModel<T> {
+    public static final MeshTransformer BABY_TRANSFORMER = MeshTransformer.scaling(0.5F);
 
     public IceSkateModel(ModelPart root) {
         super(root);
-        this.setVisible(false);
+        this.setAllVisible(false);
         this.leftLeg.visible = true;
         this.rightLeg.visible = true;
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = BipedEntityModel.getModelData(Dilation.NONE, 0.0f);
-        ModelPartData root = modelData.getRoot();
-        root.addChild(
-                EntityModelPartNames.RIGHT_LEG,
-                ModelPartBuilder.create()
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = HumanoidModel.createMesh(CubeDeformation.NONE, 0.0f);
+        PartDefinition root = modelData.getRoot();
+        root.addOrReplaceChild(
+                PartNames.RIGHT_LEG,
+                CubeListBuilder.create()
                         // blade base
-                        .uv(0, 0)
-                        .cuboid(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+                        .texOffs(0, 0)
+                        .addBox(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, CubeDeformation.NONE)
                         // blade cross
-                        .uv(8, 0)
-                        .cuboid(0.0F, 13.0F, -4.0F, 0.0F, 1.0F, 8.0F, Dilation.NONE)
+                        .texOffs(8, 0)
+                        .addBox(0.0F, 13.0F, -4.0F, 0.0F, 1.0F, 8.0F, CubeDeformation.NONE)
                         // blade back
-                        .uv(0, 2)
-                        .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
+                        .texOffs(0, 2)
+                        .addBox(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, CubeDeformation.NONE)
                         // blade front
-                        .uv(0, 0)
-                        .cuboid(-1f, 11F, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
-                ModelTransform.origin(-1.9f, 12.0f, 0.0f)
+                        .texOffs(0, 0)
+                        .addBox(-1f, 11F, 4.0F, 2.0F, 2.0F, 0.0F, CubeDeformation.NONE),
+                PartPose.offset(-1.9f, 12.0f, 0.0f)
         );
 
-        root.addChild(
-                EntityModelPartNames.LEFT_LEG,
-                ModelPartBuilder.create()
-                        .mirrored()
-                        .uv(0, 0)
-                        .cuboid(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, Dilation.NONE)
+        root.addOrReplaceChild(
+                PartNames.LEFT_LEG,
+                CubeListBuilder.create()
+                        .mirror()
+                        .texOffs(0, 0)
+                        .addBox(-1f, 13.0F, -4.0F, 2.0F, 0.0F, 8.0F, CubeDeformation.NONE)
 
-                        .uv(8, 0)
-                        .cuboid(0.0F, 13.0F, -4.0F, 0.0F, 1.0F, 8.0F, Dilation.NONE)
+                        .texOffs(8, 0)
+                        .addBox(0.0F, 13.0F, -4.0F, 0.0F, 1.0F, 8.0F, CubeDeformation.NONE)
 
-                        .uv(0, 2)
-                        .cuboid(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE)
-                        .uv(0, 0)
-                        .cuboid(-1f, 11f, 4.0F, 2.0F, 2.0F, 0.0F, Dilation.NONE),
-                ModelTransform.origin(1.9f, 12.0f, 0.0f)
+                        .texOffs(0, 2)
+                        .addBox(-1f, 11F, -4.0F, 2.0F, 2.0F, 0.0F, CubeDeformation.NONE)
+                        .texOffs(0, 0)
+                        .addBox(-1f, 11f, 4.0F, 2.0F, 2.0F, 0.0F, CubeDeformation.NONE),
+                PartPose.offset(1.9f, 12.0f, 0.0f)
         );
-        return TexturedModelData.of(modelData, 32, 32);
+        return LayerDefinition.create(modelData, 32, 32);
     }
 
-    public static TexturedModelData getBabyTexturedModelData() {
-        return getTexturedModelData().transform(BABY_TRANSFORMER);
+    public static LayerDefinition getBabyTexturedModelData() {
+        return getTexturedModelData().apply(BABY_TRANSFORMER);
     }
 
 //    @Override

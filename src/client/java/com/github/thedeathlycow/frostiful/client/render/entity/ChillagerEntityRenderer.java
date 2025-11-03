@@ -5,33 +5,33 @@ import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.IllagerEntityRenderer;
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
-import net.minecraft.client.render.entity.model.IllagerEntityModel;
-import net.minecraft.client.render.entity.state.IllagerEntityRenderState;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.model.IllagerModel;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.IllagerRenderer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.client.renderer.entity.state.IllagerRenderState;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class ChillagerEntityRenderer extends IllagerEntityRenderer<ChillagerEntity, IllagerEntityRenderState> {
+public class ChillagerEntityRenderer extends IllagerRenderer<ChillagerEntity, IllagerRenderState> {
 
-    private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/chillager.png");
+    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/illager/chillager.png");
 
 
-    public ChillagerEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new IllagerEntityModel<>(context.getPart(FEntityModelLayers.CHILLAGER)), 0.5F);
-        this.addFeature(new HeldItemFeatureRenderer<>(this));
+    public ChillagerEntityRenderer(EntityRendererProvider.Context context) {
+        super(context, new IllagerModel<>(context.bakeLayer(FEntityModelLayers.CHILLAGER)), 0.5F);
+        this.addLayer(new ItemInHandLayer<>(this));
 
         this.model.getHat().visible = true;
     }
 
     @Override
-    public IllagerEntityRenderState createRenderState() {
-        return new IllagerEntityRenderState();
+    public IllagerRenderState createRenderState() {
+        return new IllagerRenderState();
     }
 
     @Override
-    public Identifier getTexture(IllagerEntityRenderState state) {
+    public ResourceLocation getTexture(IllagerRenderState state) {
         return TEXTURE;
     }
 }

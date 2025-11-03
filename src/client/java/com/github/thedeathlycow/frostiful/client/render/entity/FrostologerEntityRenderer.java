@@ -13,38 +13,38 @@ import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.client.render.entity.feature.HeadFeatureRenderer;
-import net.minecraft.client.render.entity.feature.HeldItemFeatureRenderer;
-import net.minecraft.client.render.entity.state.ArmedEntityRenderState;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.mob.IllagerEntity;
-import net.minecraft.item.CrossbowItem;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
+import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
+import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.ARGB;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.item.CrossbowItem;
 
 @Environment(EnvType.CLIENT)
-public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEntity, FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
+public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
 
 
-    private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
+    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
 
-    public FrostologerEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new FrostologerEntityModel<>(context.getPart(FEntityModelLayers.FROSTOLOGER)), 0.5F);
+    public FrostologerEntityRenderer(EntityRendererProvider.Context context) {
+        super(context, new FrostologerEntityModel<>(context.bakeLayer(FEntityModelLayers.FROSTOLOGER)), 0.5F);
 
-        this.addFeature(new HeadFeatureRenderer<>(this, context.getEntityModels(), context.getPlayerSkinCache()));
+        this.addLayer(new CustomHeadLayer<>(this, context.getModelSet(), context.getPlayerSkinRenderCache()));
 
-        this.addFeature(new HeldItemFeatureRenderer<>(this));
-        this.addFeature(new FrostologerCloakFeatureRenderer(this, context.getEntityModels(), context.getEquipmentModelLoader()));
-        this.addFeature(
+        this.addLayer(new ItemInHandLayer<>(this));
+        this.addLayer(new FrostologerCloakFeatureRenderer(this, context.getModelSet(), context.getEquipmentAssets()));
+        this.addLayer(
                 new FrostologerEyesFeatureRenderer<>(
                         this,
                         Frostiful.id("textures/entity/illager/frostologer/glow.png")
                 )
         );
-        this.addFeature(new FrostologerFrostFeatureRenderer(this));
+        this.addLayer(new FrostologerFrostFeatureRenderer(this));
     }
 
     @Override
@@ -54,13 +54,13 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
 
     @Override
     public void updateRenderState(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
-        super.updateRenderState(frostologer, state, tickDelta);
-        ArmedEntityRenderState.updateRenderState(frostologer, state, this.itemModelResolver);
+        super.extractRenderState(frostologer, state, tickDelta);
+        ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver);
         state.hasVehicle = frostologer.hasVehicle();
         state.illagerMainArm = frostologer.getMainArm();
         state.illagerState = frostologer.getState();
-        state.crossbowPullTime = state.illagerState == IllagerEntity.State.CROSSBOW_CHARGE
-                ? CrossbowItem.getPullTime(frostologer.getActiveItem(), frostologer)
+        state.crossbowPullTime = state.illagerState == AbstractIllager.IllagerArmPose.CROSSBOW_CHARGE
+                ? CrossbowItem.getChargeDuration(frostologer.getActiveItem(), frostologer)
                 : 0;
         state.itemUseTime = frostologer.getItemUseTime();
         state.handSwingProgress = frostologer.getHandSwingProgress(tickDelta);
@@ -72,7 +72,7 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
         state.glowingEyes = frostologer.isAtMaxPower();
 
         float rgColorMul = 0.625f * frostologer.thermoo$getTemperatureScale() + 1f;
-        state.tint = ColorHelper.fromFloats(1f, rgColorMul, rgColorMul, 1f);
+        state.tint = ARGB.colorFromFloat(1f, rgColorMul, rgColorMul, 1f);
 
         CapeComponent cape = frostologer.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
         if (cape != null) {
@@ -96,27 +96,27 @@ public class FrostologerEntityRenderer extends MobEntityRenderer<FrostologerEnti
 //    }
 
     @Override
-    public Identifier getTexture(FrostologerEntityRenderState pillagerEntity) {
+    public ResourceLocation getTexture(FrostologerEntityRenderState pillagerEntity) {
         return TEXTURE;
     }
 
     private static void updateCape(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
-        double deltaX = MathHelper.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - MathHelper.lerp(tickDelta, frostologer.lastX, frostologer.getX());
-        double deltaY = MathHelper.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - MathHelper.lerp(tickDelta, frostologer.lastY, frostologer.getY());
-        double deltaZ = MathHelper.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - MathHelper.lerp(tickDelta, frostologer.lastZ, frostologer.getZ());
+        double deltaX = Mth.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerp(tickDelta, frostologer.lastX, frostologer.getX());
+        double deltaY = Mth.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerp(tickDelta, frostologer.lastY, frostologer.getY());
+        double deltaZ = Mth.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerp(tickDelta, frostologer.lastZ, frostologer.getZ());
 
-        float bodyYaw = MathHelper.lerpAngleDegrees(tickDelta, frostologer.lastBodyYaw, frostologer.bodyYaw);
-        double sinYaw = MathHelper.sin(bodyYaw * (float) (Math.PI / 180.0));
-        double cosYaw = -MathHelper.cos(bodyYaw * (float) (Math.PI / 180.0));
+        float bodyYaw = Mth.rotLerp(tickDelta, frostologer.lastBodyYaw, frostologer.bodyYaw);
+        double sinYaw = Mth.sin(bodyYaw * (float) (Math.PI / 180.0));
+        double cosYaw = -Mth.cos(bodyYaw * (float) (Math.PI / 180.0));
 
         state.capePitch = (float) deltaY * 10.0f;
-        state.capePitch = MathHelper.clamp(state.capePitch, -6.0f, 32.0f);
+        state.capePitch = Mth.clamp(state.capePitch, -6.0f, 32.0f);
 
         state.capeSwing = (float) (deltaX * sinYaw + deltaZ * cosYaw) * 100.0f;
-        state.capeSwing = MathHelper.clamp(state.capeSwing, 0.0f, 150.0f);
+        state.capeSwing = Mth.clamp(state.capeSwing, 0.0f, 150.0f);
 
         state.capeStrafe = (float) (deltaX * cosYaw - deltaZ * sinYaw) * 100.0f;
-        state.capeStrafe = MathHelper.clamp(state.capeStrafe, -20.0f, 20.0f);
+        state.capeStrafe = Mth.clamp(state.capeStrafe, -20.0f, 20.0f);
 
         if (state.sneaking) {
             state.capePitch += 25.0F;

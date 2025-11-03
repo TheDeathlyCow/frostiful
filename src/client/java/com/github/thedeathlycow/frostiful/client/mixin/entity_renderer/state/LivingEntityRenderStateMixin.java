@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer.state;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FLivingEntityRenderState;
-import net.minecraft.client.render.entity.state.LivingEntityRenderState;
+import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 

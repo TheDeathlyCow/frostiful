@@ -15,7 +15,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.item.v1.ItemTooltipCallback;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.render.item.model.special.SpecialModelTypes;
+import net.minecraft.client.renderer.special.SpecialModelRenderers;
 
 @Environment(EnvType.CLIENT)
 public class FrostifulClient implements ClientModInitializer {
@@ -26,7 +26,7 @@ public class FrostifulClient implements ClientModInitializer {
         FEntityModelLayers.initialize();
         FEntityRenderers.initialize();
 
-        SpecialModelTypes.ID_MAPPER.put(Frostiful.id("frost_wand"), FrostWandItemRenderer.Unbaked.CODEC);
+        SpecialModelRenderers.ID_MAPPER.put(Frostiful.id("frost_wand"), FrostWandItemRenderer.Unbaked.CODEC);
 
         ClientPlayNetworking.registerGlobalReceiver(
                 PointWindSpawnPacket.PACKET_ID,

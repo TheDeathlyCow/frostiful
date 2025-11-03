@@ -2,11 +2,11 @@ package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer.state;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
-import net.minecraft.client.render.entity.state.BipedEntityRenderState;
+import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
-@Mixin(BipedEntityRenderState.class)
+@Mixin(HumanoidRenderState.class)
 public class BipedEntityRenderStateMixin implements FBipedRenderState {
     @Unique
     private boolean frostiful$wearingIceSkates = false;

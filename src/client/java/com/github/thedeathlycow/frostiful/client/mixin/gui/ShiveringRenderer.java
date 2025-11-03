@@ -5,13 +5,13 @@ import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,11 +24,11 @@ public abstract class ShiveringRenderer {
 
     @Shadow
     @Final
-    private Random random;
+    private RandomSource random;
 
     @Shadow
     @Final
-    private MinecraftClient client;
+    private Minecraft minecraft;
 
     @Unique
     private static final float frostiful_baseShakeSift = 0.5f;
@@ -37,19 +37,19 @@ public abstract class ShiveringRenderer {
 
 
     @WrapOperation(
-            method = "renderHand",
+            method = "renderItemInHand",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/render/GameRenderer;bobView(Lnet/minecraft/client/util/math/MatrixStack;F)V"
+                    target = "Lnet/minecraft/client/renderer/GameRenderer;bobView(Lcom/mojang/blaze3d/vertex/PoseStack;F)V"
             )
     )
     private void shakeViewWhenShivering(
             GameRenderer instance,
-            MatrixStack matrices,
+            PoseStack matrices,
             float tickDelta,
             Operation<Void> original
     ) {
-        if (this.client.getCameraEntity() instanceof LivingEntity livingEntity && SurvivalUtils.isShiveringRender(livingEntity)) {
+        if (this.minecraft.getCameraEntity() instanceof LivingEntity livingEntity && SurvivalUtils.isShiveringRender(livingEntity)) {
             ClientConfigGroup config = Frostiful.getConfig().clientConfig;
             if (config.isShakeCameraWhenShiveringEnabled()) {
 
