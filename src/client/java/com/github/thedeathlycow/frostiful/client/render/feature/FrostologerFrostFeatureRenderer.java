@@ -20,7 +20,7 @@ public class FrostologerFrostFeatureRenderer extends RenderLayer<FrostologerEnti
     }
 
     @Override
-    public void render(
+    public void submit(
             PoseStack matrices,
             SubmitNodeCollector queue,
             int light,

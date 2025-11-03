@@ -34,7 +34,7 @@ public class FrostologerCapeModel<F extends FrostologerEntityRenderState> extend
     }
 
     @Override
-    public void setAngles(F state) {
+    public void setupAnim(F state) {
         super.setupAnim(state);
         if (state.capeTexture != null) {
             this.cloak.rotateBy(

@@ -57,11 +57,11 @@ public class FrostologerEntityModel<F extends FrostologerEntityRenderState> exte
     }
 
     @Override
-    public void setAngles(F state) {
+    public void setupAnim(F state) {
         super.setupAnim(state);
 
         if (state.usingFrostWand) {
-            if (state.illagerMainArm == HumanoidArm.LEFT) {
+            if (state.mainArm == HumanoidArm.LEFT) {
                 this.leftArm.yRot = 0.1f + this.head.yRot;
                 this.leftArm.xRot = -1.57f + this.head.xRot;
             } else {

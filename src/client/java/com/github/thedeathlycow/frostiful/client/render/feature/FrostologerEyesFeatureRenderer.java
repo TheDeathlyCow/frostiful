@@ -23,7 +23,7 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderSta
     }
 
     @Override
-    public void render(
+    public void submit(
             PoseStack matrices,
             SubmitNodeCollector queue,
             int light,

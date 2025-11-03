@@ -1,9 +1,10 @@
 package com.github.thedeathlycow.frostiful.client.render.state;
 
 import com.github.thedeathlycow.frostiful.client.render.feature.FrostLayer;
+import net.minecraft.client.renderer.entity.state.IllagerRenderState;
 import net.minecraft.core.ClientAsset;
 
-public class FrostologerEntityRenderState extends IllagerEntityRenderState {
+public class FrostologerEntityRenderState extends IllagerRenderState {
     public boolean usingFrostWand = false;
     public ClientAsset.ResourceTexture capeTexture = null;
     public int tint = 0;

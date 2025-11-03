@@ -78,14 +78,14 @@ public class BiterEntityModel extends EntityModel<BiterEntityRenderState> {
     }
 
     @Override
-    public void setAngles(BiterEntityRenderState state) {
+    public void setupAnim(BiterEntityRenderState state) {
         super.setupAnim(state);
 
-        this.rightArm.xRot = -1.5F * Mth.triangleWave(state.limbSwingAnimationProgress, 10.0F) * state.limbSwingAmplitude;
-        this.leftArm.xRot = 1.5F * Mth.triangleWave(state.limbSwingAnimationProgress, 10.0F) * state.limbSwingAmplitude;
+        this.rightArm.xRot = -1.5F * Mth.triangleWave(state.walkAnimationPos, 10.0F) * state.walkAnimationSpeed;
+        this.leftArm.xRot = 1.5F * Mth.triangleWave(state.walkAnimationPos, 10.0F) * state.walkAnimationSpeed;
         this.rightArm.yRot = 0.0F;
         this.leftArm.yRot = 0.0F;
 
-        this.biteAnimation.apply(state.biteAnimationState, state.age);
+        this.biteAnimation.apply(state.biteAnimationState, state.ageInTicks);
     }
 }

@@ -53,18 +53,18 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
     }
 
     @Override
-    public void updateRenderState(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
+    public void extractRenderState(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
         super.extractRenderState(frostologer, state, tickDelta);
         ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver);
-        state.hasVehicle = frostologer.hasVehicle();
-        state.illagerMainArm = frostologer.getMainArm();
-        state.illagerState = frostologer.getState();
-        state.crossbowPullTime = state.illagerState == AbstractIllager.IllagerArmPose.CROSSBOW_CHARGE
-                ? CrossbowItem.getChargeDuration(frostologer.getActiveItem(), frostologer)
+        state.isRiding = frostologer.isPassenger();
+        state.mainArm = frostologer.getMainArm();
+        state.armPose = frostologer.getArmPose();
+        state.maxCrossbowChargeDuration = state.armPose == AbstractIllager.IllagerArmPose.CROSSBOW_CHARGE
+                ? CrossbowItem.getChargeDuration(frostologer.getUseItem(), frostologer)
                 : 0;
-        state.itemUseTime = frostologer.getItemUseTime();
-        state.handSwingProgress = frostologer.getHandSwingProgress(tickDelta);
-        state.attacking = frostologer.isAttacking();
+        state.ticksUsingItem = frostologer.getTicksUsingItem();
+        state.attackAnim = frostologer.getAttackAnim(tickDelta);
+        state.isAggressive = frostologer.isAggressive();
 
 
         state.usingFrostWand = frostologer.isUsingFrostWand();
@@ -74,7 +74,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
         float rgColorMul = 0.625f * frostologer.thermoo$getTemperatureScale() + 1f;
         state.tint = ARGB.colorFromFloat(1f, rgColorMul, rgColorMul, 1f);
 
-        CapeComponent cape = frostologer.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
+        CapeComponent cape = frostologer.getItemBySlot(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
         if (cape != null) {
             state.capeTexture = cape.capeAsset();
             updateCape(frostologer, state, tickDelta);
@@ -84,7 +84,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
     }
 
     @Override
-    protected int getMixColor(FrostologerEntityRenderState state) {
+    protected int getModelTint(FrostologerEntityRenderState state) {
         return state.tint;
     }
 
@@ -96,16 +96,16 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
 //    }
 
     @Override
-    public ResourceLocation getTexture(FrostologerEntityRenderState pillagerEntity) {
+    public ResourceLocation getTextureLocation(FrostologerEntityRenderState pillagerEntity) {
         return TEXTURE;
     }
 
     private static void updateCape(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
-        double deltaX = Mth.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerp(tickDelta, frostologer.lastX, frostologer.getX());
-        double deltaY = Mth.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerp(tickDelta, frostologer.lastY, frostologer.getY());
-        double deltaZ = Mth.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerp(tickDelta, frostologer.lastZ, frostologer.getZ());
+        double deltaX = Mth.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerp(tickDelta, frostologer.xo, frostologer.getX());
+        double deltaY = Mth.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerp(tickDelta, frostologer.yo, frostologer.getY());
+        double deltaZ = Mth.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerp(tickDelta, frostologer.zo, frostologer.getZ());
 
-        float bodyYaw = Mth.rotLerp(tickDelta, frostologer.lastBodyYaw, frostologer.bodyYaw);
+        float bodyYaw = Mth.rotLerp(tickDelta, frostologer.yBodyRotO, frostologer.yBodyRot);
         double sinYaw = Mth.sin(bodyYaw * (float) (Math.PI / 180.0));
         double cosYaw = -Mth.cos(bodyYaw * (float) (Math.PI / 180.0));
 
@@ -118,7 +118,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
         state.capeStrafe = (float) (deltaX * cosYaw - deltaZ * sinYaw) * 100.0f;
         state.capeStrafe = Mth.clamp(state.capeStrafe, -20.0f, 20.0f);
 
-        if (state.sneaking) {
+        if (state.isDiscrete) {
             state.capePitch += 25.0F;
         }
 

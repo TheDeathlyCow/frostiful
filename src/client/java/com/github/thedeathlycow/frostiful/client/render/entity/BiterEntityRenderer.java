@@ -21,7 +21,7 @@ public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityRen
     }
 
     @Override
-    public void updateRenderState(BiterEntity entity, BiterEntityRenderState state, float tickDelta) {
+    public void extractRenderState(BiterEntity entity, BiterEntityRenderState state, float tickDelta) {
         super.extractRenderState(entity, state, tickDelta);
         state.biteAnimationState.copyFrom(entity.bitingAnimation);
     }
@@ -32,7 +32,7 @@ public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityRen
     }
 
     @Override
-    public ResourceLocation getTexture(BiterEntityRenderState state) {
+    public ResourceLocation getTextureLocation(BiterEntityRenderState state) {
         return TEXTURE;
     }
 }

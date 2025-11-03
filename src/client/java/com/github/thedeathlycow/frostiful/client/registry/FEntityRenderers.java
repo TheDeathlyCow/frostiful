@@ -7,10 +7,8 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
-import net.minecraft.client.render.entity.*;
-import net.minecraft.client.renderer.entity.EntityRenderers;
-import net.minecraft.client.renderer.entity.NoopRenderer;
-import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 
 @Environment(EnvType.CLIENT)
 public class FEntityRenderers {
@@ -28,32 +26,32 @@ public class FEntityRenderers {
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
                 (entityType, entityRenderer, registrationHelper, context) -> {
-                    if (entityRenderer instanceof BipedEntityRenderer<?, ?, ?> bipedEntityRenderer) {
+                    if (entityRenderer instanceof HumanoidMobRenderer<?, ?, ?> bipedEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         bipedEntityRenderer,
-                                        context.getEntityModels()
+                                        context.getModelSet()
                                 )
                         );
-                    } else if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
+                    } else if (entityRenderer instanceof AvatarRenderer<?> playerEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         playerEntityRenderer,
-                                        context.getEntityModels()
+                                        context.getModelSet()
                                 )
                         );
-                    } else if (entityRenderer instanceof ArmorStandEntityRenderer armorStandEntityRenderer) {
+                    } else if (entityRenderer instanceof ArmorStandRenderer armorStandEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         armorStandEntityRenderer,
-                                        context.getEntityModels()
+                                        context.getModelSet()
                                 )
                         );
-                    } else if (entityRenderer instanceof GiantEntityRenderer giantEntityRenderer) {
+                    } else if (entityRenderer instanceof GiantMobRenderer giantEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         giantEntityRenderer,
-                                        context.getEntityModels()
+                                        context.getModelSet()
                                 )
                         );
                     }

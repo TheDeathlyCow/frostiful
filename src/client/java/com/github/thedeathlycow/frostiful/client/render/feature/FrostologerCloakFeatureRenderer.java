@@ -31,7 +31,7 @@ public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEnti
     }
 
     @Override
-    public void render(
+    public void submit(
             PoseStack matrixStack,
             SubmitNodeCollector queue,
             int light,
@@ -39,7 +39,7 @@ public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEnti
             float limbAngle,
             float limbDistance
     ) {
-        if (!state.invisible && state.capeTexture != null) {
+        if (!state.isInvisible && state.capeTexture != null) {
             matrixStack.pushPose();
             matrixStack.translate(0.0, 0.0, 3f / 16f);
             queue.submitModel(

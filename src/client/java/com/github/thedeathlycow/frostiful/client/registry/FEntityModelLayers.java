@@ -24,9 +24,9 @@ public class FEntityModelLayers {
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity model layers");
         EntityModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER_CAPE, FrostologerCapeModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerModel::getTexturedModelData);
+        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER_CAPE, FrostologerCapeModel::createBodyLayer);
+        EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(BITER, BiterEntityModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ICE_SKATES, IceSkateModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(ICE_SKATES_BABY, IceSkateModel::getBabyTexturedModelData);

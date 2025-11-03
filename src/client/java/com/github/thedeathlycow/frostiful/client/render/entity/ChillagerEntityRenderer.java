@@ -31,7 +31,7 @@ public class ChillagerEntityRenderer extends IllagerRenderer<ChillagerEntity, Il
     }
 
     @Override
-    public ResourceLocation getTexture(IllagerRenderState state) {
+    public ResourceLocation getTextureLocation(IllagerRenderState state) {
         return TEXTURE;
     }
 }
