@@ -27,7 +27,7 @@ public final class SunLichenCollisionTests {
         final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
         context.assertEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
 
-        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
     }
 
@@ -39,7 +39,7 @@ public final class SunLichenCollisionTests {
 
         context.assertEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
 
-        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
     }
 
@@ -53,7 +53,7 @@ public final class SunLichenCollisionTests {
         entity.thermoo$setTemperature(0);
         context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
 
-        context.setBlock(pos, FBlocks.COLD_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.COLD_SUN_LICHEN.defaultBlockState());
 
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
@@ -69,7 +69,7 @@ public final class SunLichenCollisionTests {
         entity.thermoo$setTemperature(freezeAmount);
         context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, freezeAmount);
 
-        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
 
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
@@ -80,7 +80,7 @@ public final class SunLichenCollisionTests {
         int temperature = 500;
         Mob entity = setupWarmVillagerTest(context, pos, temperature);
 
-        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
 
         context.runAfterDelay(1L, () -> {
             context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
@@ -96,7 +96,7 @@ public final class SunLichenCollisionTests {
         int temperature = 500;
         Mob entity = setupWarmVillagerTest(context, pos, temperature);
 
-        context.setBlock(pos, FBlocks.COOL_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.COOL_SUN_LICHEN.defaultBlockState());
 
         context.runAfterDelay(1L, () -> {
             context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);

@@ -22,7 +22,7 @@ public class ChillagerDropTests {
 
         ChillagerEntity chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
 
-        chillager.damage(world, damageSources.genericKill(), Float.MAX_VALUE);
+        chillager.hurtServer(world, damageSources.genericKill(), Float.MAX_VALUE);
 
         context.assertItemEntityNotPresent(Items.OMINOUS_BOTTLE, BlockPos.ZERO, 3f);
 
@@ -36,14 +36,14 @@ public class ChillagerDropTests {
 
         ChillagerEntity chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
         chillager.setPatrolLeader(true);
-        chillager.equipStack(
+        chillager.setItemSlot(
                 EquipmentSlot.HEAD,
-                Raid.getOminousBannerInstance(chillager.getRegistryManager().getOrThrow(Registries.BANNER_PATTERN))
+                Raid.getOminousBannerInstance(chillager.registryAccess().lookupOrThrow(Registries.BANNER_PATTERN))
         );
 
         context.assertTrue(chillager.isCaptain(), Component.literal("Chillager is not a captain!"));
 
-        chillager.damage(world, damageSources.genericKill(), Float.MAX_VALUE);
+        chillager.hurtServer(world, damageSources.genericKill(), Float.MAX_VALUE);
 
         context.assertItemEntityPresent(Items.OMINOUS_BOTTLE, BlockPos.ZERO, 3f);
 

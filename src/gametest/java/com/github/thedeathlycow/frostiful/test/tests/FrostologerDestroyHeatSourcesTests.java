@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.block.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.server.level.ServerLevel;
@@ -248,8 +247,8 @@ public class FrostologerDestroyHeatSourcesTests {
     public void waterloggedHotSunLichenBecomesAir(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
-                FBlocks.HOT_SUN_LICHEN.getDefaultState()
-                        .with(AmethystClusterBlock.WATERLOGGED, true),
+                FBlocks.HOT_SUN_LICHEN.defaultBlockState()
+                        .setValue(AmethystClusterBlock.WATERLOGGED, true),
                 Blocks.AIR
         );
     }
@@ -318,7 +317,7 @@ public class FrostologerDestroyHeatSourcesTests {
     public void hotSunLichenBecomesAir(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
-                FBlocks.HOT_SUN_LICHEN.getDefaultState(),
+                FBlocks.HOT_SUN_LICHEN.defaultBlockState(),
                 Blocks.AIR
         );
     }
@@ -333,7 +332,7 @@ public class FrostologerDestroyHeatSourcesTests {
 
         FrostologerEntity frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
         frostologer.setInvulnerable(true);
-        frostologer.setAiDisabled(true);
+        frostologer.setNoAi(true);
         frostologer.destroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
 
         context.succeedWhenBlockPresent(blockAtEnd, pos);
