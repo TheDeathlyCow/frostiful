@@ -23,7 +23,7 @@ public final class FItemTags {
     public static final TagKey<Item> FUR_TUFTS = register("fur_tufts");
 
     private static TagKey<Item> register(String id) {
-        return TagKey.create(Registries.ITEM, Frostiful.location(id));
+        return TagKey.create(Registries.ITEM, Frostiful.id(id));
     }
 
 }

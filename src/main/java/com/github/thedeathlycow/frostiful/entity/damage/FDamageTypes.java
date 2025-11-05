@@ -7,10 +7,10 @@ import net.minecraft.world.damagesource.DamageType;
 
 public class FDamageTypes {
 
-    public static final ResourceKey<DamageType> FALLING_ICICLE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.location("falling_icicle"));
-    public static final ResourceKey<DamageType> ICICLE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.location("icicle"));
-    public static final ResourceKey<DamageType> ICE_SKATE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.location("ice_skate"));
-    public static final ResourceKey<DamageType> BROKEN_ICE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.location("broken_ice"));
+    public static final ResourceKey<DamageType> FALLING_ICICLE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.id("falling_icicle"));
+    public static final ResourceKey<DamageType> ICICLE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.id("icicle"));
+    public static final ResourceKey<DamageType> ICE_SKATE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.id("ice_skate"));
+    public static final ResourceKey<DamageType> BROKEN_ICE =  ResourceKey.create(Registries.DAMAGE_TYPE, Frostiful.id("broken_ice"));
 
     private FDamageTypes() {
     }

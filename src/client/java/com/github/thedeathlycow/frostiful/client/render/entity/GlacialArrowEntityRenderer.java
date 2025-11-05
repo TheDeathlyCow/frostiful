@@ -12,7 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 @Environment(EnvType.CLIENT)
 public class GlacialArrowEntityRenderer extends ArrowRenderer<GlacialArrowEntity, ArrowRenderState> {
 
-    public static final ResourceLocation TEXTURE = Frostiful.location("textures/entity/projectiles/glacial_arrow.png");
+    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/projectiles/glacial_arrow.png");
 
     public GlacialArrowEntityRenderer(EntityRendererProvider.Context context) {
         super(context);

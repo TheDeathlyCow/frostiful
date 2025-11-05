@@ -20,7 +20,7 @@ public class FBannerPatterns {
     }
 
     private static ResourceKey<BannerPattern> key(String id) {
-        return ResourceKey.create(Registries.BANNER_PATTERN, Frostiful.location(id));
+        return ResourceKey.create(Registries.BANNER_PATTERN, Frostiful.id(id));
     }
 
     private FBannerPatterns() {

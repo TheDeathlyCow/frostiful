@@ -263,7 +263,7 @@ public class FRecipeProvider extends FabricRecipeProvider {
 
             private void offerFurPaddingRecipe(ItemLike input, int amount) {
                 shapeless(RecipeCategory.MISC, FItems.FUR_PADDING)
-                        .group(Frostiful.location("fur_padding").toString())
+                        .group(Frostiful.id("fur_padding").toString())
                         .criterion(getHasName(input), has(input))
                         .input(input, amount)
                         .offerTo(output, furPaddingFrom(input));
@@ -272,7 +272,7 @@ public class FRecipeProvider extends FabricRecipeProvider {
             // </editor-fold>
 
             private static ResourceKey<Recipe<?>> upgradeRecipeKey(ItemLike item) {
-                return ResourceKey.create(Registries.RECIPE, Frostiful.location(getItemName(item) + "_smithing_trim"));
+                return ResourceKey.create(Registries.RECIPE, Frostiful.id(getItemName(item) + "_smithing_trim"));
             }
 
             private static String getItemId(ItemLike item) {

@@ -17,7 +17,7 @@ public class FLootTables {
     public static final ResourceKey<LootTable> WOLF_PLAYFIGHT_GAMEPLAY = createKey("gameplay/wolf_playfight");
 
     private static ResourceKey<LootTable> createKey(String name) {
-        return ResourceKey.create(Registries.LOOT_TABLE, Frostiful.location(name));
+        return ResourceKey.create(Registries.LOOT_TABLE, Frostiful.id(name));
     }
 
     private FLootTables() {

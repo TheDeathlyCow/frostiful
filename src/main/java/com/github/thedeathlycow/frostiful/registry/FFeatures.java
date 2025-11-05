@@ -25,7 +25,7 @@ public class FFeatures {
     }
 
     private static <C extends FeatureConfiguration> Feature<C> register(String name, Feature<C> feature) {
-        return Registry.register(BuiltInRegistries.FEATURE, Frostiful.location(name), feature);
+        return Registry.register(BuiltInRegistries.FEATURE, Frostiful.id(name), feature);
     }
 
     private FFeatures() {

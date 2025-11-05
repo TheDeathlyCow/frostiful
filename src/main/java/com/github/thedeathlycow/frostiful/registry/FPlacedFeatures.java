@@ -20,7 +20,7 @@ public class FPlacedFeatures {
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful placed features");
 
-        BiomeModification modification = BiomeModifications.create(Frostiful.location("vegetation"));
+        BiomeModification modification = BiomeModifications.create(Frostiful.id("vegetation"));
 
         modification.add(
                 ModificationPhase.ADDITIONS,
@@ -57,7 +57,7 @@ public class FPlacedFeatures {
     }
 
     private static ResourceKey<PlacedFeature> of(String id) {
-        return ResourceKey.create(Registries.PLACED_FEATURE, Frostiful.location(id));
+        return ResourceKey.create(Registries.PLACED_FEATURE, Frostiful.id(id));
     }
 
     private FPlacedFeatures() {

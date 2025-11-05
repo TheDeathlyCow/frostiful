@@ -41,7 +41,7 @@ public class FPotions {
     }
 
     private static Holder<Potion> registerReference(String name, Potion potion) {
-        return Registry.registerForHolder(BuiltInRegistries.POTION, Frostiful.location(name), potion);
+        return Registry.registerForHolder(BuiltInRegistries.POTION, Frostiful.id(name), potion);
     }
 
     private FPotions() {

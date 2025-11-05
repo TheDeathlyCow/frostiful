@@ -21,7 +21,7 @@ public class IceSkateFeatureRenderer<
     private final IceSkateModel<S> model;
     private final IceSkateModel<S> babyModel;
 
-    private static final ResourceLocation SKATE_TEXTURE = Frostiful.location("textures/entity/skates.png");
+    private static final ResourceLocation SKATE_TEXTURE = Frostiful.id("textures/entity/skates.png");
 
     public IceSkateFeatureRenderer(
             RenderLayerParent<S, M> context,

@@ -13,9 +13,9 @@ import java.util.stream.Stream;
 @Environment(EnvType.CLIENT)
 public enum FrostLayer {
     NONE(0.0f, null),
-    LOW(-0.25f, Frostiful.location("textures/entity/illager/frostologer/low_frost.png")),
-    MEDIUM(-0.5f, Frostiful.location("textures/entity/illager/frostologer/medium_frost.png")),
-    HIGH(FrostologerEntity.MAX_POWER_SCALE_START, Frostiful.location("textures/entity/illager/frostologer/high_frost.png"));
+    LOW(-0.25f, Frostiful.id("textures/entity/illager/frostologer/low_frost.png")),
+    MEDIUM(-0.5f, Frostiful.id("textures/entity/illager/frostologer/medium_frost.png")),
+    HIGH(FrostologerEntity.MAX_POWER_SCALE_START, Frostiful.id("textures/entity/illager/frostologer/high_frost.png"));
 
     public static final FrostLayer[] LAYERS_WITHOUT_NONE = Stream.of(FrostLayer.values())
             .filter(layer -> layer != NONE)

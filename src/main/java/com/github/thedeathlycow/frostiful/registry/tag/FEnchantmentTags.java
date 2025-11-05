@@ -10,7 +10,7 @@ public class FEnchantmentTags {
     public static final TagKey<Enchantment> IS_FROSTY = register("is_frosty");
 
     private static TagKey<Enchantment> register(String id) {
-        return TagKey.create(Registries.ENCHANTMENT, Frostiful.location(id));
+        return TagKey.create(Registries.ENCHANTMENT, Frostiful.id(id));
     }
 
 

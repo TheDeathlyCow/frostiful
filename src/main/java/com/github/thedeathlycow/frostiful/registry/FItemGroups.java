@@ -13,7 +13,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 public class FItemGroups {
     public static final CreativeModeTab FROSTIFUL = Registry.register(
             BuiltInRegistries.CREATIVE_MODE_TAB,
-            Frostiful.location("main"),
+            Frostiful.id("main"),
             FabricItemGroup.builder()
                     .icon(() -> new ItemStack(FItems.FROST_WAND))
                     .title(Component.translatable("itemGroup.frostiful.frostiful"))

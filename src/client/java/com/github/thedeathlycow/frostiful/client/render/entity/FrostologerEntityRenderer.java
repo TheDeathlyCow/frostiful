@@ -29,7 +29,7 @@ import net.minecraft.world.item.CrossbowItem;
 public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
 
 
-    private static final ResourceLocation TEXTURE = Frostiful.location("textures/entity/illager/frostologer.png");
+    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
 
     public FrostologerEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new FrostologerEntityModel<>(context.bakeLayer(FEntityModelLayers.FROSTOLOGER)), 0.5F);
@@ -41,7 +41,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
         this.addLayer(
                 new FrostologerEyesFeatureRenderer<>(
                         this,
-                        Frostiful.location("textures/entity/illager/frostologer/glow.png")
+                        Frostiful.id("textures/entity/illager/frostologer/glow.png")
                 )
         );
         this.addLayer(new FrostologerFrostFeatureRenderer(this));

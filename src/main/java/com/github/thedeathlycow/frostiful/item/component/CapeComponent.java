@@ -19,7 +19,7 @@ public record CapeComponent(
         boolean overrideAccountCape
 ) {
     public static final CapeComponent FROSTOLOGY_CLOAK = new CapeComponent(
-            new ClientAsset.ResourceTexture(Frostiful.location("entity/frostology_cloak")),
+            new ClientAsset.ResourceTexture(Frostiful.id("entity/frostology_cloak")),
             true
     );
 

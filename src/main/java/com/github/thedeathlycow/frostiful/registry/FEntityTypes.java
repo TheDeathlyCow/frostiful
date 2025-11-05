@@ -107,7 +107,7 @@ public class FEntityTypes {
     }
 
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder)  {
-        return register(Frostiful.location(id), builder);
+        return register(Frostiful.id(id), builder);
     }
 
     private static <T extends Entity> EntityType<T> register(ResourceLocation id, EntityType.Builder<T> builder)  {

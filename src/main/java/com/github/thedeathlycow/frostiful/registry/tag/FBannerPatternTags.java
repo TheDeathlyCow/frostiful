@@ -12,7 +12,7 @@ public class FBannerPatternTags {
     public static final TagKey<BannerPattern> FROSTOLOGY_PATTERN_ITEM = key("pattern_item/frostology");
 
     private static TagKey<BannerPattern> key(String id) {
-        return TagKey.create(Registries.BANNER_PATTERN, Frostiful.location(id));
+        return TagKey.create(Registries.BANNER_PATTERN, Frostiful.id(id));
     }
 
     private FBannerPatternTags() {

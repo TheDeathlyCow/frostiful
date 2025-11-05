@@ -16,7 +16,7 @@ import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
 public class SnowAccumulationComponent implements Component, ServerTickingComponent {
     private static final AttributeModifier SOAKED_MODIFIER = new AttributeModifier(
-            Frostiful.location("soaked_cold_vulnerability"),
+            Frostiful.id("soaked_cold_vulnerability"),
             -1,
             AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
     );

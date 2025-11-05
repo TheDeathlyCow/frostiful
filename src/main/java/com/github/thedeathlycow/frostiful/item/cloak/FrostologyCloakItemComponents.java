@@ -20,7 +20,7 @@ public final class FrostologyCloakItemComponents {
         builder.add(
                 ThermooAttributes.FROST_RESISTANCE,
                 new AttributeModifier(
-                        Frostiful.location("cloak.frost_resistance_penalty"),
+                        Frostiful.id("cloak.frost_resistance_penalty"),
                         -3.0,
                         AttributeModifier.Operation.ADD_VALUE
                 ),

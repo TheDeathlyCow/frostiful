@@ -19,7 +19,7 @@ public class FStatusEffects {
                     MobEffectCategory.BENEFICIAL, 0xE3963E
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.location("effect.warmth"),
+                    Frostiful.id("effect.warmth"),
                     1.0,
                     AttributeModifier.Operation.ADD_VALUE
             )
@@ -31,7 +31,7 @@ public class FStatusEffects {
                     MobEffectCategory.HARMFUL, 0x4287F5
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.location("effect.frost_base"),
+                    Frostiful.id("effect.frost_base"),
                     -1.0,
                     AttributeModifier.Operation.ADD_VALUE
             )
@@ -42,7 +42,7 @@ public class FStatusEffects {
     }
 
     private static Holder<MobEffect> registerReference(String name, MobEffect statusEffect) {
-        return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Frostiful.location(name), statusEffect);
+        return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Frostiful.id(name), statusEffect);
     }
 
     private FStatusEffects() {

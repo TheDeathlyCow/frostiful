@@ -11,7 +11,7 @@ public final class FDamageTypeTags {
     public static final TagKey<DamageType> DOES_NOT_BREAK_ROOT = register("does_not_break_root");
 
     private static TagKey<DamageType> register(String id) {
-        return TagKey.create(Registries.DAMAGE_TYPE, Frostiful.location(id));
+        return TagKey.create(Registries.DAMAGE_TYPE, Frostiful.id(id));
     }
 
     private FDamageTypeTags() {

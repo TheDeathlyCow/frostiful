@@ -12,8 +12,8 @@ public class FEnchantmentEntityEffects {
     public static void registerAndGetDefault(Registry<MapCodec<? extends EnchantmentEntityEffect>> registry) {
         Frostiful.LOGGER.debug("Initialized Frostiful enchantment effects");
 
-        Registry.register(registry, Frostiful.location("set_item_cooldown"), SetItemCooldownEnchantmentEffect.CODEC);
-        Registry.register(registry, Frostiful.location("heat_drain"), HeatDrainEnchantmentEffect.CODEC);
+        Registry.register(registry, Frostiful.id("set_item_cooldown"), SetItemCooldownEnchantmentEffect.CODEC);
+        Registry.register(registry, Frostiful.id("heat_drain"), HeatDrainEnchantmentEffect.CODEC);
     }
 
     private FEnchantmentEntityEffects() {

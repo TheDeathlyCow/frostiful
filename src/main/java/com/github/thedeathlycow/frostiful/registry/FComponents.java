@@ -15,22 +15,22 @@ import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 public class FComponents implements EntityComponentInitializer {
 
     public static final ComponentKey<LivingEntityComponents> ENTITY_COMPONENTS = ComponentRegistry.getOrCreate(
-            Frostiful.location("living_entity"),
+            Frostiful.id("living_entity"),
             LivingEntityComponents.class
     );
 
     public static final ComponentKey<FrostWandRootComponent> FROST_WAND_ROOT_COMPONENT = ComponentRegistry.getOrCreate(
-            Frostiful.location("frost_wand_root"),
+            Frostiful.id("frost_wand_root"),
             FrostWandRootComponent.class
     );
 
     public static final ComponentKey<BrushableComponent> BRUSHABLE_COMPONENT = ComponentRegistry.getOrCreate(
-            Frostiful.location("brushable"),
+            Frostiful.id("brushable"),
             BrushableComponent.class
     );
 
     public static final ComponentKey<SnowAccumulationComponent> SNOW_ACCUMULATION = ComponentRegistry.getOrCreate(
-            Frostiful.location("snow_accumulation"),
+            Frostiful.id("snow_accumulation"),
             SnowAccumulationComponent.class
     );
 
