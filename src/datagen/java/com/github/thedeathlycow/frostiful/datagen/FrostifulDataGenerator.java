@@ -7,8 +7,8 @@ import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.minecraft.registry.RegistryBuilder;
-import net.minecraft.registry.RegistryKeys;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,14 +29,14 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
     }
 
     @Override
-    public void buildRegistry(RegistryBuilder registryBuilder) {
+    public void buildRegistry(RegistrySetBuilder registryBuilder) {
         DataGeneratorEntrypoint.super.buildRegistry(registryBuilder);
-        registryBuilder.addRegistry(
-                RegistryKeys.TRIM_PATTERN,
+        registryBuilder.add(
+                Registries.TRIM_PATTERN,
                 FArmorTrimPatterns::bootstrap
         );
-        registryBuilder.addRegistry(
-                RegistryKeys.BANNER_PATTERN,
+        registryBuilder.add(
+                Registries.BANNER_PATTERN,
                 FBannerPatterns::bootstrap
         );
     }

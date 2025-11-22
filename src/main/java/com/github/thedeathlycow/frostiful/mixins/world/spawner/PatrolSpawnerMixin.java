@@ -2,10 +2,10 @@ package com.github.thedeathlycow.frostiful.mixins.world.spawner;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.server.world.ChillagerPatrolSpawner;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.spawner.PatrolSpawner;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.levelgen.PatrolSpawner;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,18 +16,18 @@ public class PatrolSpawnerMixin {
 
 
     @Inject(
-            method = "spawnPillager",
+            method = "spawnPatrolMember",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void spawnChillagerInColdBiomes(ServerWorld world, BlockPos pos, Random random, boolean captain, CallbackInfoReturnable<Boolean> cir) {
+    private void spawnChillagerInColdBiomes(ServerLevel world, BlockPos pos, RandomSource random, boolean captain, CallbackInfoReturnable<Boolean> cir) {
         if (!Frostiful.getConfig().combatConfig.doChillagerPatrols()) {
             return;
         }
 
         var biome = world.getBiome(pos).value();
 
-        if (biome.isCold(pos, world.getSeaLevel())) {
+        if (biome.coldEnoughToSnow(pos, world.getSeaLevel())) {
             cir.setReturnValue(ChillagerPatrolSpawner.spawnChillagerPatrol(world, pos, random, captain));
         }
     }

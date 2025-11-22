@@ -2,37 +2,37 @@ package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.client.render.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderState, M extends FrostologerEntityModel<T>> extends FeatureRenderer<T, M> {
-    private final RenderLayer skin;
-    private final Identifier texture;
+public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderState, M extends FrostologerEntityModel<T>> extends RenderLayer<T, M> {
+    private final RenderType skin;
+    private final ResourceLocation texture;
 
-    public FrostologerEyesFeatureRenderer(FeatureRendererContext<T, M> context, Identifier texture) {
+    public FrostologerEyesFeatureRenderer(RenderLayerParent<T, M> context, ResourceLocation texture) {
         super(context);
-        this.skin = RenderLayer.getEntityTranslucentEmissive(texture);
+        this.skin = RenderType.entityTranslucentEmissive(texture);
         this.texture = texture;
     }
 
     @Override
-    public void render(
-            MatrixStack matrices,
-            OrderedRenderCommandQueue queue,
+    public void submit(
+            PoseStack matrices,
+            SubmitNodeCollector queue,
             int light,
             T state,
             float limbAngle,
             float limbDistance
     ) {
         if (state.glowingEyes) {
-            renderModel(this.getContextModel(), texture, matrices, queue, 0x00F000F0, state, -1, 1);
+            renderColoredCutoutModel(this.getParentModel(), texture, matrices, queue, 0x00F000F0, state, -1, 1);
         }
     }
 }

@@ -4,41 +4,41 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
-public class GlacialArrowEntity extends PersistentProjectileEntity {
+public class GlacialArrowEntity extends AbstractArrow {
 
     private int freezeAmount = Frostiful.getConfig().icicleConfig.getFrostArrowFreezeAmount();
 
     private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
 
-    public GlacialArrowEntity(EntityType<? extends GlacialArrowEntity> entityType, World world) {
+    public GlacialArrowEntity(EntityType<? extends GlacialArrowEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public GlacialArrowEntity(World world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
+    public GlacialArrowEntity(Level world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(FEntityTypes.GLACIAL_ARROW, x, y, z, world, stack, shotFrom);
     }
 
-    public GlacialArrowEntity(World world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
+    public GlacialArrowEntity(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(FEntityTypes.GLACIAL_ARROW, owner, world, stack, shotFrom);
     }
 
     @Override
-    public boolean isFireImmune() {
+    public boolean fireImmune() {
         return true;
     }
 
     @Override
-    protected ItemStack getDefaultItemStack() {
+    protected ItemStack getDefaultPickupItem() {
         return new ItemStack(FItems.GLACIAL_ARROW);
     }
 
@@ -46,9 +46,9 @@ public class GlacialArrowEntity extends PersistentProjectileEntity {
     public void tick() {
         super.tick();
 
-        World world = getEntityWorld();
-        if (world.isClient() && !this.isInGround()) {
-            world.addParticleClient(
+        Level world = level();
+        if (world.isClientSide() && !this.isInGround()) {
+            world.addParticle(
                     ParticleTypes.SNOWFLAKE,
                     this.getX(), this.getY(), this.getZ(),
                     0.0D, 0.0D, 0.0D
@@ -57,20 +57,20 @@ public class GlacialArrowEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected void onHit(LivingEntity target) {
-        super.onHit(target);
+    protected void doPostHurtEffects(LivingEntity target) {
+        super.doPostHurtEffects(target);
         target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
     }
 
     @Override
-    public void readCustomData(ReadView readView) {
-        super.readCustomData(readView);
-        this.freezeAmount = readView.getInt(FREEZE_AMOUNT_NBT_KEY, 0);
+    public void readAdditionalSaveData(ValueInput readView) {
+        super.readAdditionalSaveData(readView);
+        this.freezeAmount = readView.getIntOr(FREEZE_AMOUNT_NBT_KEY, 0);
     }
 
     @Override
-    public void writeCustomData(WriteView writeView) {
-        super.writeCustomData(writeView);
+    public void addAdditionalSaveData(ValueOutput writeView) {
+        super.addAdditionalSaveData(writeView);
         writeView.putInt(FREEZE_AMOUNT_NBT_KEY, this.freezeAmount);
     }
 

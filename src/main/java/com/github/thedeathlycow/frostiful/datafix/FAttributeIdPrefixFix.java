@@ -1,14 +1,14 @@
 package com.github.thedeathlycow.frostiful.datafix;
 
-import net.minecraft.datafixer.schema.IdentifierNormalizingSchema;
+import net.minecraft.util.datafix.schemas.NamespacedSchema;
 
 public final class FAttributeIdPrefixFix {
     private static final String PREFIX = "frostiful:generic.";
 
     public static String fixPrefixedAttributeIds(String id) {
-        String normalizedID = IdentifierNormalizingSchema.normalize(id);
+        String normalizedID = NamespacedSchema.ensureNamespaced(id);
 
-        String normalizedPrefix = IdentifierNormalizingSchema.normalize(PREFIX);
+        String normalizedPrefix = NamespacedSchema.ensureNamespaced(PREFIX);
         if (normalizedID.startsWith(normalizedPrefix)) {
             return "frostiful:" + normalizedID.substring(normalizedPrefix.length());
         }

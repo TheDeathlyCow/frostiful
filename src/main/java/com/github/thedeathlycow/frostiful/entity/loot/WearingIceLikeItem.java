@@ -3,24 +3,24 @@ package com.github.thedeathlycow.frostiful.entity.loot;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.registry.FLootConditionTypes;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.loot.condition.LootCondition;
-import net.minecraft.loot.condition.LootConditionType;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.loot.context.LootContextParameters;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
-public record WearingIceLikeItem() implements LootCondition {
+public record WearingIceLikeItem() implements LootItemCondition {
     public static final MapCodec<WearingIceLikeItem> CODEC = MapCodec.unit(new WearingIceLikeItem());
 
     @Override
-    public LootConditionType getType() {
+    public LootItemConditionType getType() {
         return FLootConditionTypes.CHEST_EQUPPED_WITH_TRINKET;
     }
 
     @Override
     public boolean test(LootContext lootContext) {
-        Entity entity = lootContext.get(LootContextParameters.THIS_ENTITY);
+        Entity entity = lootContext.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity instanceof LivingEntity livingEntity) {
             return IceLikeComponent.isWearing(livingEntity);
         }

@@ -7,22 +7,22 @@ import com.github.thedeathlycow.frostiful.client.render.state.BiterEntityRenderS
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.MobEntityRenderer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.MobRenderer;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class BiterEntityRenderer extends MobEntityRenderer<BiterEntity, BiterEntityRenderState, BiterEntityModel> {
+public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityRenderState, BiterEntityModel> {
 
-    public static final Identifier TEXTURE = Frostiful.id("textures/entity/biter.png");
+    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/biter.png");
 
-    public BiterEntityRenderer(EntityRendererFactory.Context context) {
-        super(context, new BiterEntityModel(context.getPart(FEntityModelLayers.BITER)), 0.5F);
+    public BiterEntityRenderer(EntityRendererProvider.Context context) {
+        super(context, new BiterEntityModel(context.bakeLayer(FEntityModelLayers.BITER)), 0.5F);
     }
 
     @Override
-    public void updateRenderState(BiterEntity entity, BiterEntityRenderState state, float tickDelta) {
-        super.updateRenderState(entity, state, tickDelta);
+    public void extractRenderState(BiterEntity entity, BiterEntityRenderState state, float tickDelta) {
+        super.extractRenderState(entity, state, tickDelta);
         state.biteAnimationState.copyFrom(entity.bitingAnimation);
     }
 
@@ -32,7 +32,7 @@ public class BiterEntityRenderer extends MobEntityRenderer<BiterEntity, BiterEnt
     }
 
     @Override
-    public Identifier getTexture(BiterEntityRenderState state) {
+    public ResourceLocation getTextureLocation(BiterEntityRenderState state) {
         return TEXTURE;
     }
 }

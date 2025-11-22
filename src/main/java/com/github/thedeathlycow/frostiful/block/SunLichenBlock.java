@@ -8,25 +8,24 @@ import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.GlowLichenBlock;
-import net.minecraft.entity.CollisionEvent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityCollisionHandler;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.pathing.PathNodeType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.InsideBlockEffectApplier;
+import net.minecraft.world.entity.InsideBlockEffectType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.GlowLichenBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathType;
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -43,29 +42,29 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
 
     private final int heatLevel;
 
-    public SunLichenBlock(int heatLevel, Settings settings) {
+    public SunLichenBlock(int heatLevel, Properties settings) {
         super(settings);
         this.heatLevel = heatLevel;
         if (heatLevel > COLD_LEVEL) {
-            LandPathNodeTypesRegistry.register(this, PathNodeType.DAMAGE_OTHER, PathNodeType.DAMAGE_OTHER);
+            LandPathNodeTypesRegistry.register(this, PathType.DAMAGE_OTHER, PathType.DAMAGE_OTHER);
         }
     }
 
     @Override
-    protected void onEntityCollision(BlockState state, World world, BlockPos pos, Entity entity, EntityCollisionHandler handler, boolean bl) {
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
         if (this.heatLevel > COLD_LEVEL && entity instanceof LivingEntity livingEntity && this.canBurnEntity(entity)) {
             this.dischargeHeatToEntity(state, world, pos, livingEntity, handler, Frostiful.getConfig());
         }
 
-        super.onEntityCollision(state, world, pos, entity, handler, bl);
+        super.entityInside(state, world, pos, entity, handler, bl);
     }
 
     private void dischargeHeatToEntity(
             BlockState state,
-            World world,
+            Level world,
             BlockPos pos,
             LivingEntity entity,
-            EntityCollisionHandler handler,
+            InsideBlockEffectApplier handler,
             FrostifulConfig config
     ) {
         int heatToDischarge = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
@@ -73,8 +72,8 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         // burn if hot sun lichen and target is warm
         if (entity.thermoo$getTemperature() > 0 && this.heatLevel == HOT_LEVEL) {
             final int fireTicks = config.freezingConfig.getSunLichenBurnTime();
-            handler.addEvent(CollisionEvent.FIRE_IGNITE);
-            handler.addPostCallback(CollisionEvent.FIRE_IGNITE, e -> e.setFireTicks(fireTicks));
+            handler.apply(InsideBlockEffectType.FIRE_IGNITE);
+            handler.runAfter(InsideBlockEffectType.FIRE_IGNITE, e -> e.setRemainingFireTicks(fireTicks));
         } else if (entity.thermoo$isCold()) { // only add heatToDischarge if cold, but always damage
             entity.thermoo$addTemperature(heatToDischarge, HeatingModes.ACTIVE);
 
@@ -84,43 +83,43 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             }
         }
 
-        entity.serverDamage(world.getDamageSources().hotFloor(), 1f);
-        if (entity instanceof ServerPlayerEntity player) {
+        entity.hurt(world.damageSources().hotFloor(), 1f);
+        if (entity instanceof ServerPlayer player) {
             FCriteria.SUN_LICHEN_DISCHARGE.trigger(player, heatToDischarge);
         }
 
         createFireParticles(world, pos);
 
-        BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.getStateWithProperties(state);
-        world.setBlockState(pos, coldSunLichenState);
+        BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.withPropertiesOf(state);
+        world.setBlockAndUpdate(pos, coldSunLichenState);
 
         playSound(world, pos);
     }
 
     @Override
-    protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        int skyLight = world.getLightLevel(LightType.SKY, pos);
-        if ((skyLight > 0 && world.isDay()) && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        int skyLight = world.getBrightness(LightLayer.SKY, pos);
+        if ((skyLight > 0 && world.isBrightOutside()) && world.getRandom().nextFloat() < this.getChargeChance(skyLight)) {
             Optional<BlockState> nextState = Heatable.getNextState(state);
-            nextState.ifPresent(blockState -> world.setBlockState(pos, blockState));
+            nextState.ifPresent(blockState -> world.setBlockAndUpdate(pos, blockState));
         } else if ((skyLight == 0) && world.getRandom().nextFloat() < RANDOM_DISCHARGE_CHANCE) {
             Optional<BlockState> previousState = Heatable.getPreviousState(state);
-            previousState.ifPresent(blockState -> world.setBlockState(pos, blockState));
+            previousState.ifPresent(blockState -> world.setBlockAndUpdate(pos, blockState));
         }
     }
 
     @Override
-    protected boolean canReplace(BlockState state, ItemPlacementContext context) {
+    protected boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
 
-        ItemStack toPlace = context.getStack();
+        ItemStack toPlace = context.getItemInHand();
 
-        boolean isDifferentSunLichen = toPlace.isIn(FItemTags.SUN_LICHENS) && !toPlace.isOf(this.asItem());
+        boolean isDifferentSunLichen = toPlace.is(FItemTags.SUN_LICHENS) && !toPlace.is(this.asItem());
 
         if (isDifferentSunLichen) {
             return false;
         }
 
-        return super.canReplace(state, context);
+        return super.canBeReplaced(state, context);
     }
 
     @Override
@@ -133,25 +132,25 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     }
 
     private boolean canBurnEntity(Entity entity) {
-        if (entity.isSpectator() || (entity instanceof PlayerEntity player && player.isCreative())) {
+        if (entity.isSpectator() || (entity instanceof Player player && player.isCreative())) {
             return false;
-        } else if (entity.isFireImmune()) {
+        } else if (entity.fireImmune()) {
             return false;
         } else {
             return true;
         }
     }
 
-    private static void playSound(World world, BlockPos pos) {
-        if (world.isClient()) {
+    private static void playSound(Level world, BlockPos pos) {
+        if (world.isClientSide()) {
             return;
         }
-        Random random = world.getRandom();
+        RandomSource random = world.getRandom();
         float pitch = 0.8F + (random.nextFloat() - random.nextFloat()) * 0.4F;
-        world.playSound(null, pos, FSoundEvents.FIRE_LICHEN_DISCHARGE, SoundCategory.BLOCKS, 0.7F, pitch);
+        world.playSound(null, pos, FSoundEvents.FIRE_LICHEN_DISCHARGE, SoundSource.BLOCKS, 0.7F, pitch);
     }
 
-    private static void createFireParticles(World world, BlockPos pos) {
+    private static void createFireParticles(Level world, BlockPos pos) {
         final double maxHorizontalOffset = 0.5;
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
@@ -161,7 +160,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             double z = pos.getZ() + 0.5;
             x += random.nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
             z += random.nextDouble(-maxHorizontalOffset, maxHorizontalOffset);
-            world.addParticleClient(ParticleTypes.FLAME, x, y, z, 0.0D, 0.1D, 0.0D);
+            world.addParticle(ParticleTypes.FLAME, x, y, z, 0.0D, 0.1D, 0.0D);
         }
     }
 }

@@ -3,60 +3,61 @@ package com.github.thedeathlycow.frostiful.client.particle;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.Util;
+import net.minecraft.client.Camera;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.render.Camera;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.Util;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.client.renderer.state.QuadParticleRenderState;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 @Environment(EnvType.CLIENT)
-public class WindParticle extends BillboardParticle {
+public class WindParticle extends SingleQuadParticle {
     private static final Vector3f FROM = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
     private static final Vector3f TO = new Vector3f(-1.0F, -1.0F, 0.0F);
 
-    private final SpriteProvider spriteProvider;
+    private final SpriteSet spriteProvider;
 
-    private static final Quaternionf FRONT_ROTATION = new Quaternionf().rotationX(-MathHelper.PI);
-    private static final Quaternionf BACK_ROTATION = new Quaternionf().rotationYXZ(-MathHelper.PI, MathHelper.PI, 0.0f);
+    private static final Quaternionf FRONT_ROTATION = new Quaternionf().rotationX(-Mth.PI);
+    private static final Quaternionf BACK_ROTATION = new Quaternionf().rotationYXZ(-Mth.PI, Mth.PI, 0.0f);
 
-    protected WindParticle(ClientWorld clientWorld, double x, double y, double z, SpriteProvider spriteProvider) {
-        super(clientWorld, x, y, z, spriteProvider.getFirst());
+    protected WindParticle(ClientLevel clientWorld, double x, double y, double z, SpriteSet spriteProvider) {
+        super(clientWorld, x, y, z, spriteProvider.first());
         this.spriteProvider = spriteProvider;
-        this.velocityX *= 2;
-        this.scale *= 3;
+        this.xd *= 2;
+        this.quadSize *= 3;
     }
 
     @Override
     public void tick() {
         super.tick();
-        this.updateSprite(this.spriteProvider);
+        this.setSpriteFromAge(this.spriteProvider);
     }
 
     @Override
-    public void render(BillboardParticleSubmittable submittable, Camera camera, float tickProgress) {
+    public void extract(QuadParticleRenderState submittable, Camera camera, float tickProgress) {
         // flip so that both faces are rendered in the same direction in the absolute position of the world
-        this.scale *= -1;
-        this.render(submittable, camera, FRONT_ROTATION, tickProgress);
+        this.quadSize *= -1;
+        this.extractRotatedQuad(submittable, camera, FRONT_ROTATION, tickProgress);
 
         // flip back to normal
-        this.scale *= -1;
-        this.render(submittable, camera, BACK_ROTATION, tickProgress);
+        this.quadSize *= -1;
+        this.extractRotatedQuad(submittable, camera, BACK_ROTATION, tickProgress);
     }
 
     @Override
-    protected RenderType getRenderType() {
-        return BillboardParticle.RenderType.PARTICLE_ATLAS_OPAQUE;
+    protected Layer getLayer() {
+        return SingleQuadParticle.Layer.OPAQUE;
     }
 
     @Environment(EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<WindParticleEffect> {
-        private final SpriteProvider spriteProvider;
+    public static class Factory implements ParticleProvider<WindParticleEffect> {
+        private final SpriteSet spriteProvider;
 
-        public Factory(SpriteProvider spriteProvider) {
+        public Factory(SpriteSet spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
@@ -64,10 +65,10 @@ public class WindParticle extends BillboardParticle {
         @Nullable
         public Particle createParticle(
                 WindParticleEffect parameters,
-                ClientWorld world,
+                ClientLevel world,
                 double x, double y, double z,
                 double velocityX, double velocityY, double velocityZ,
-                Random random
+                RandomSource random
         ) {
             return new WindParticle(world, x, y, z, this.spriteProvider);
         }

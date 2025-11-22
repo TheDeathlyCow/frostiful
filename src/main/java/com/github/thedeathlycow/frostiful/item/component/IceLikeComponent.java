@@ -6,41 +6,40 @@ import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.component.ComponentsAccess;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipAppender;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.text.Text;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
 
 public record IceLikeComponent(
         TagKey<DamageType> blockedDamageTypes
-) implements TooltipAppender {
+) implements TooltipProvider {
     public static final IceLikeComponent DEFAULT = new IceLikeComponent(DamageTypeTags.IS_FREEZING);
 
     public static final Codec<IceLikeComponent> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    TagKey.codec(RegistryKeys.DAMAGE_TYPE)
+                    TagKey.hashedCodec(Registries.DAMAGE_TYPE)
                             .optionalFieldOf("block_damage_types", DamageTypeTags.IS_FREEZING)
                             .forGetter(IceLikeComponent::blockedDamageTypes)
             ).apply(instance, IceLikeComponent::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, IceLikeComponent> PACKET_CODEC = PacketCodec.tuple(
-            TagKey.packetCodec(RegistryKeys.DAMAGE_TYPE),
+    public static final StreamCodec<RegistryFriendlyByteBuf, IceLikeComponent> PACKET_CODEC = StreamCodec.composite(
+            TagKey.streamCodec(Registries.DAMAGE_TYPE),
             IceLikeComponent::blockedDamageTypes,
             IceLikeComponent::new
     );
@@ -53,7 +52,7 @@ public record IceLikeComponent(
         List<IceLikeComponent> components = new ArrayList<>();
 
         for (EquipmentSlot slot : EquipmentSlot.values()) {
-            ItemStack stack = entity.getEquippedStack(slot);
+            ItemStack stack = entity.getItemBySlot(slot);
             IceLikeComponent component = stack.get(FDataComponentTypes.ICE_LIKE);
             if (!stack.isEmpty() && component != null) {
                 components.add(component);
@@ -64,7 +63,7 @@ public record IceLikeComponent(
             components.addAll(
                     TrinketsIntegration.getEquippedTrinket(entity, FDataComponentTypes.ICE_LIKE)
                             .stream()
-                            .map(p -> p.getRight().get(FDataComponentTypes.ICE_LIKE))
+                            .map(p -> p.getB().get(FDataComponentTypes.ICE_LIKE))
                             .toList()
             );
         }
@@ -73,13 +72,13 @@ public record IceLikeComponent(
     }
 
     public boolean blockDamage(DamageSource source) {
-        return source.isIn(this.blockedDamageTypes);
+        return source.is(this.blockedDamageTypes);
     }
 
     @Override
-    public void appendTooltip(Item.TooltipContext context, Consumer<Text> textConsumer, TooltipType type, ComponentsAccess components) {
+    public void addToTooltip(Item.TooltipContext context, Consumer<Component> textConsumer, TooltipFlag type, DataComponentGetter components) {
         textConsumer.accept(
-                Text.translatable("item.frostiful.frostology_cloak.tooltip")
+                Component.translatable("item.frostiful.frostology_cloak.tooltip")
                         .setStyle(TextStyles.FROSTOLOGY_CLOAK_TOOLTIP)
         );
     }

@@ -2,15 +2,15 @@ package com.github.thedeathlycow.frostiful.item.enchantment;
 
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.enchantment.EnchantmentEffectContext;
-import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.registry.Registries;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.dynamic.Codecs;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.ExtraCodecs;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.enchantment.EnchantedItemInUse;
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
+import net.minecraft.world.phys.Vec3;
 
 public record SetItemCooldownEnchantmentEffect(
         Item item,
@@ -19,24 +19,24 @@ public record SetItemCooldownEnchantmentEffect(
 
     public static final MapCodec<SetItemCooldownEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    Registries.ITEM.getCodec()
+                    BuiltInRegistries.ITEM.byNameCodec()
                             .fieldOf("item")
                             .forGetter(SetItemCooldownEnchantmentEffect::item),
-                    Codecs.NON_NEGATIVE_INT
+                    ExtraCodecs.NON_NEGATIVE_INT
                             .fieldOf("duration_ticks")
                             .forGetter(SetItemCooldownEnchantmentEffect::durationTicks)
             ).apply(instance, SetItemCooldownEnchantmentEffect::new)
     );
 
     @Override
-    public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity user, Vec3d pos) {
-        if (context.owner() instanceof PlayerEntity player) {
-            player.getItemCooldownManager().set(context.stack(), this.durationTicks);
+    public void apply(ServerLevel world, int level, EnchantedItemInUse context, Entity user, Vec3 pos) {
+        if (context.owner() instanceof Player player) {
+            player.getCooldowns().addCooldown(context.itemStack(), this.durationTicks);
         }
     }
 
     @Override
-    public MapCodec<? extends EnchantmentEntityEffect> getCodec() {
+    public MapCodec<? extends EnchantmentEntityEffect> codec() {
         return CODEC;
     }
 }

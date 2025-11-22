@@ -6,106 +6,111 @@ import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.minecraft.client.data.*;
-import net.minecraft.client.render.item.model.ItemModel;
-import net.minecraft.item.Item;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.renderer.item.ItemModel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 
 public class FrostifulModelGenerator extends FabricModelProvider {
-    private static final Identifier HELMET_TRIM_ASSET_ID_PREFIX = ItemModelGenerator.getTrimAssetIdPrefix("helmet");
-    private static final Identifier CHESTPLATE_TRIM_ASSET_ID_PREFIX = ItemModelGenerator.getTrimAssetIdPrefix("chestplate");
-    private static final Identifier LEGGINGS_TRIM_ASSET_ID_PREFIX = ItemModelGenerator.getTrimAssetIdPrefix("leggings");
-    private static final Identifier BOOTS_TRIM_ASSET_ID_PREFIX = ItemModelGenerator.getTrimAssetIdPrefix("boots");
+    private static final ResourceLocation HELMET_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("helmet");
+    private static final ResourceLocation CHESTPLATE_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("chestplate");
+    private static final ResourceLocation LEGGINGS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("leggings");
+    private static final ResourceLocation BOOTS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("boots");
 
     public FrostifulModelGenerator(FabricDataOutput output) {
         super(output);
     }
 
     @Override
-    public void generateBlockStateModels(BlockStateModelGenerator blockStateModelGenerator) {
+    public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
         // not generating block states atm
     }
 
     @Override
-    public void generateItemModels(ItemModelGenerator itemModelGenerator) {
+    public void generateItemModels(ItemModelGenerators itemModelGenerator) {
         this.registerFrostWand(FItems.FROST_WAND, itemModelGenerator);
-        itemModelGenerator.registerArmor(FItems.FUR_HELMET, FArmorMaterials.FUR_ASSET, HELMET_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.FUR_CHESTPLATE, FArmorMaterials.FUR_ASSET, CHESTPLATE_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.FUR_LEGGINGS, FArmorMaterials.FUR_ASSET, LEGGINGS_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.FUR_BOOTS, FArmorMaterials.FUR_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.ICE_SKATES, FArmorMaterials.FUR_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_HELMET, FArmorMaterials.FUR_ASSET, HELMET_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_CHESTPLATE, FArmorMaterials.FUR_ASSET, CHESTPLATE_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_LEGGINGS, FArmorMaterials.FUR_ASSET, LEGGINGS_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_BOOTS, FArmorMaterials.FUR_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.ICE_SKATES, FArmorMaterials.FUR_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
 
-        itemModelGenerator.registerArmor(FItems.FUR_PADDED_CHAINMAIL_HELMET, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, HELMET_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, CHESTPLATE_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, LEGGINGS_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.FUR_PADDED_CHAINMAIL_BOOTS, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
-        itemModelGenerator.registerArmor(FItems.ARMORED_ICE_SKATES, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_PADDED_CHAINMAIL_HELMET, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, HELMET_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, CHESTPLATE_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, LEGGINGS_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.FUR_PADDED_CHAINMAIL_BOOTS, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
+        itemModelGenerator.generateTrimmableItem(FItems.ARMORED_ICE_SKATES, FArmorMaterials.FUR_LINED_CHAINMAIL_ASSET, BOOTS_TRIM_ASSET_ID_PREFIX, false);
 
-        itemModelGenerator.register(FItems.FUR_PADDING);
-        itemModelGenerator.register(FItems.FUR_UPGRADE_TEMPLATE);
-        itemModelGenerator.register(FItems.ICE_SKATE_UPGRADE_TEMPLATE);
-        itemModelGenerator.register(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE);
-        itemModelGenerator.register(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE);
-        itemModelGenerator.register(FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE);
+        itemModelGenerator.declareCustomModelItem(FItems.FUR_PADDING);
+        itemModelGenerator.declareCustomModelItem(FItems.FUR_UPGRADE_TEMPLATE);
+        itemModelGenerator.declareCustomModelItem(FItems.ICE_SKATE_UPGRADE_TEMPLATE);
+        itemModelGenerator.declareCustomModelItem(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE);
+        itemModelGenerator.declareCustomModelItem(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE);
+        itemModelGenerator.declareCustomModelItem(FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE);
 
-        itemModelGenerator.register(FItems.GLACIAL_HEART);
-        itemModelGenerator.register(FItems.INERT_FROSTOLOGY_CLOAK);
-        itemModelGenerator.register(FItems.FROSTOLOGY_CLOAK);
-        itemModelGenerator.register(FItems.FROZEN_ROD);
+        itemModelGenerator.declareCustomModelItem(FItems.GLACIAL_HEART);
+        itemModelGenerator.declareCustomModelItem(FItems.INERT_FROSTOLOGY_CLOAK);
+        itemModelGenerator.declareCustomModelItem(FItems.FROSTOLOGY_CLOAK);
+        itemModelGenerator.declareCustomModelItem(FItems.FROZEN_ROD);
 
-        itemModelGenerator.register(FItems.POLAR_BEAR_FUR_TUFT);
-        itemModelGenerator.register(FItems.WOLF_FUR_TUFT);
-        itemModelGenerator.register(FItems.OCELOT_FUR_TUFT);
+        itemModelGenerator.declareCustomModelItem(FItems.POLAR_BEAR_FUR_TUFT);
+        itemModelGenerator.declareCustomModelItem(FItems.WOLF_FUR_TUFT);
+        itemModelGenerator.declareCustomModelItem(FItems.OCELOT_FUR_TUFT);
 
-        itemModelGenerator.register(FItems.ICICLE);
+        itemModelGenerator.declareCustomModelItem(FItems.ICICLE);
 
-        itemModelGenerator.register(FItems.COLD_SUN_LICHEN);
-        itemModelGenerator.register(FItems.COOL_SUN_LICHEN);
-        itemModelGenerator.register(FItems.WARM_SUN_LICHEN);
-        itemModelGenerator.register(FItems.HOT_SUN_LICHEN);
+        itemModelGenerator.declareCustomModelItem(FItems.COLD_SUN_LICHEN);
+        itemModelGenerator.declareCustomModelItem(FItems.COOL_SUN_LICHEN);
+        itemModelGenerator.declareCustomModelItem(FItems.WARM_SUN_LICHEN);
+        itemModelGenerator.declareCustomModelItem(FItems.HOT_SUN_LICHEN);
 
-        itemModelGenerator.register(FItems.GLACIAL_ARROW);
-        itemModelGenerator.register(FItems.FROZEN_TORCH);
-        itemModelGenerator.register(FItems.PACKED_SNOW);
-        itemModelGenerator.register(FItems.PACKED_SNOWBALL);
+        itemModelGenerator.declareCustomModelItem(FItems.GLACIAL_ARROW);
+        itemModelGenerator.declareCustomModelItem(FItems.FROZEN_TORCH);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOWBALL);
 
-        itemModelGenerator.register(FItems.PACKED_SNOW_BLOCK);
-        itemModelGenerator.register(FItems.PACKED_SNOW_BRICKS);
-        itemModelGenerator.register(FItems.PACKED_SNOW_BRICK_STAIRS);
-        itemModelGenerator.register(FItems.PACKED_SNOW_BRICK_SLAB);
-        itemModelGenerator.register(FItems.PACKED_SNOW_BRICK_WALL);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW_BLOCK);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW_BRICKS);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW_BRICK_STAIRS);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW_BRICK_SLAB);
+        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW_BRICK_WALL);
 
-        itemModelGenerator.register(FItems.ICE_PANE);
-        itemModelGenerator.register(FItems.CUT_PACKED_ICE);
-        itemModelGenerator.register(FItems.CUT_PACKED_ICE_STAIRS);
-        itemModelGenerator.register(FItems.CUT_PACKED_ICE_SLAB);
-        itemModelGenerator.register(FItems.CUT_PACKED_ICE_WALL);
-        itemModelGenerator.register(FItems.CUT_BLUE_ICE);
-        itemModelGenerator.register(FItems.CUT_BLUE_ICE_STAIRS);
-        itemModelGenerator.register(FItems.CUT_BLUE_ICE_SLAB);
-        itemModelGenerator.register(FItems.CUT_BLUE_ICE_WALL);
-        itemModelGenerator.register(FItems.BRITTLE_ICE);
+        itemModelGenerator.declareCustomModelItem(FItems.ICE_PANE);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_PACKED_ICE);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_PACKED_ICE_STAIRS);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_PACKED_ICE_SLAB);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_PACKED_ICE_WALL);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_BLUE_ICE);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_BLUE_ICE_STAIRS);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_BLUE_ICE_SLAB);
+        itemModelGenerator.declareCustomModelItem(FItems.CUT_BLUE_ICE_WALL);
+        itemModelGenerator.declareCustomModelItem(FItems.BRITTLE_ICE);
 
-        itemModelGenerator.register(FItems.SNOWFLAKE_BANNER_PATTERN);
-        itemModelGenerator.register(FItems.ICICLE_BANNER_PATTERN);
-        itemModelGenerator.register(FItems.FROSTOLOGY_BANNER_PATTERN);
-        itemModelGenerator.register(FItems.ICY_TRIAL_SPAWNER);
-        itemModelGenerator.register(FItems.ICY_VAULT);
-        itemModelGenerator.register(FItems.CASTLE_KEY);
-        itemModelGenerator.register(FItems.OMINOUS_CASTLE_KEY);
+        itemModelGenerator.declareCustomModelItem(FItems.SNOWFLAKE_BANNER_PATTERN);
+        itemModelGenerator.declareCustomModelItem(FItems.ICICLE_BANNER_PATTERN);
+        itemModelGenerator.declareCustomModelItem(FItems.FROSTOLOGY_BANNER_PATTERN);
+        itemModelGenerator.declareCustomModelItem(FItems.ICY_TRIAL_SPAWNER);
+        itemModelGenerator.declareCustomModelItem(FItems.ICY_VAULT);
+        itemModelGenerator.declareCustomModelItem(FItems.CASTLE_KEY);
+        itemModelGenerator.declareCustomModelItem(FItems.OMINOUS_CASTLE_KEY);
 
-        itemModelGenerator.register(FItems.FROSTOLOGER_SPAWN_EGG, Models.GENERATED);
-        itemModelGenerator.register(FItems.CHILLAGER_SPAWN_EGG, Models.GENERATED);
-        itemModelGenerator.register(FItems.BITER_SPAWN_EGG, Models.GENERATED);
+        itemModelGenerator.generateFlatItem(FItems.FROSTOLOGER_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(FItems.CHILLAGER_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(FItems.BITER_SPAWN_EGG, ModelTemplates.FLAT_ITEM);
     }
 
-    private void registerFrostWand(Item item, ItemModelGenerator itemModelGenerator) {
-        ItemModel.Unbaked sprite = ItemModels.basic(itemModelGenerator.upload(item, Models.GENERATED));
+    private void registerFrostWand(Item item, ItemModelGenerators itemModelGenerator) {
+        ItemModel.Unbaked sprite = ItemModelUtils.plainModel(itemModelGenerator.createFlatItemModel(item, ModelTemplates.FLAT_ITEM));
 
-        ItemModel.Unbaked inHand = ItemModels.special(
-                ModelIds.getItemSubModelId(item, "_in_hand"),
+        ItemModel.Unbaked inHand = ItemModelUtils.specialModel(
+                ModelLocationUtils.getModelLocation(item, "_in_hand"),
                 new FrostWandItemRenderer.Unbaked()
         );
 
-        itemModelGenerator.output.accept(item, ItemModelGenerator.createModelWithInHandVariant(sprite, inHand));
+        itemModelGenerator.itemModelOutput.accept(item, ItemModelGenerators.createFlatModelDispatch(sprite, inHand));
     }
 }

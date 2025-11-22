@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.frostiful.client.mixin.ice_skate_fx;
 
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.GameRenderer;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.GameRenderer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,15 +18,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class GameRendererMixin {
 
 
-    @Shadow @Final private MinecraftClient client;
+    @Shadow @Final private Minecraft minecraft;
 
     @Inject(
             method = "bobView",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void cancelBobIfSkating(MatrixStack matrices, float tickDelta, CallbackInfo ci) {
-        if (this.client.getCameraEntity() instanceof IceSkater iceSkater) {
+    private void cancelBobIfSkating(PoseStack matrices, float tickDelta, CallbackInfo ci) {
+        if (this.minecraft.getCameraEntity() instanceof IceSkater iceSkater) {
             if (iceSkater.frostiful$isIceSkating()) {
                 ci.cancel();
             }

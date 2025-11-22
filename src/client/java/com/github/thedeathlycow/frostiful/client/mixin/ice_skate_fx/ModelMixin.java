@@ -1,11 +1,11 @@
 package com.github.thedeathlycow.frostiful.client.mixin.ice_skate_fx;
 
-import net.minecraft.client.render.entity.model.BipedEntityModel;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.world.entity.LivingEntity;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(BipedEntityModel.class)
+@Mixin(HumanoidModel.class)
 @Debug(export = true)
 public class ModelMixin<T extends LivingEntity> {
 

@@ -2,10 +2,9 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.google.common.collect.ImmutableBiMap;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-
 import java.util.Optional;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
 public interface Heatable {
 
@@ -32,7 +31,7 @@ public interface Heatable {
     static Optional<BlockState> getNextState(BlockState current) {
         Optional<Block> next = getNextBlock(current.getBlock());
         if (next.isPresent()) {
-            BlockState nextState = next.get().getStateWithProperties(current);
+            BlockState nextState = next.get().withPropertiesOf(current);
             return Optional.of(nextState);
         } else {
             return Optional.empty();
@@ -42,7 +41,7 @@ public interface Heatable {
     static Optional<BlockState> getPreviousState(BlockState current) {
         Optional<Block> previous = getPreviousBlock(current.getBlock());
         if (previous.isPresent()) {
-            BlockState nextState = previous.get().getStateWithProperties(current);
+            BlockState nextState = previous.get().withPropertiesOf(current);
             return Optional.of(nextState);
         } else {
             return Optional.empty();

@@ -3,10 +3,10 @@ package com.github.thedeathlycow.frostiful.entity.frostologer;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import net.minecraft.entity.ai.goal.ProjectileAttackGoal;
-import net.minecraft.util.Hand;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 
-class FrostWandCastGoal extends ProjectileAttackGoal {
+class FrostWandCastGoal extends RangedAttackGoal {
 
     private final FrostologerEntity frostologerEntity;
 
@@ -16,26 +16,26 @@ class FrostWandCastGoal extends ProjectileAttackGoal {
     }
 
     @Override
-    public boolean canStart() {
-        return super.canStart()
+    public boolean canUse() {
+        return super.canUse()
                 && frostologerEntity.hasTarget()
                 && !frostologerEntity.isTargetRooted()
-                && frostologerEntity.getMainHandStack().isOf(FItems.FROST_WAND);
+                && frostologerEntity.getMainHandItem().is(FItems.FROST_WAND);
     }
 
     @Override
     public void start() {
         super.start();
-        frostologerEntity.setAttacking(true);
-        frostologerEntity.setCurrentHand(Hand.MAIN_HAND);
+        frostologerEntity.setAggressive(true);
+        frostologerEntity.startUsingItem(InteractionHand.MAIN_HAND);
         this.startUsingFrostWand();
     }
 
     @Override
     public void stop() {
         super.stop();
-        frostologerEntity.setAttacking(false);
-        frostologerEntity.clearActiveItem();
+        frostologerEntity.setAggressive(false);
+        frostologerEntity.stopUsingItem();
         this.stopUsingFrostWand();
         if (frostologerEntity.isTargetRooted()) {
             int cooling = -Frostiful.getConfig().combatConfig.getFrostologerCoolingFromFrostWandHit();
@@ -48,10 +48,10 @@ class FrostWandCastGoal extends ProjectileAttackGoal {
                 FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
                 1.0f, 1.0f
         );
-        frostologerEntity.getDataTracker().set(FrostologerEntity.IS_USING_FROST_WAND, true);
+        frostologerEntity.getEntityData().set(FrostologerEntity.IS_USING_FROST_WAND, true);
     }
 
     private void stopUsingFrostWand() {
-        frostologerEntity.getDataTracker().set(FrostologerEntity.IS_USING_FROST_WAND, false);
+        frostologerEntity.getEntityData().set(FrostologerEntity.IS_USING_FROST_WAND, false);
     }
 }

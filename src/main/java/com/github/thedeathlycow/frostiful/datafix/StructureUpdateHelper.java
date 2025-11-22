@@ -3,11 +3,10 @@ package com.github.thedeathlycow.frostiful.datafix;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.data.validate.StructureValidatorProvider;
-import net.minecraft.nbt.NbtCompound;
+import net.minecraft.data.structures.StructureUpdater;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.NbtAccounter;
 import net.minecraft.nbt.NbtIo;
-import net.minecraft.nbt.NbtSizeTracker;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -26,7 +25,7 @@ public final class StructureUpdateHelper {
             ServerLifecycleEvents.SERVER_STARTED.register(server -> {
                 updateAllStructures();
                 Frostiful.LOGGER.info("All structures updated! :)");
-                server.stop(false);
+                server.halt(false);
             });
         }
     }
@@ -47,9 +46,9 @@ public final class StructureUpdateHelper {
 
     private static void updateStructureFile(Path path) {
         try (InputStream in = Files.newInputStream(path)) {
-            NbtCompound oldNbt = NbtIo.readCompressed(in, NbtSizeTracker.ofUnlimitedBytes());
+            CompoundTag oldNbt = NbtIo.readCompressed(in, NbtAccounter.unlimitedHeap());
 
-            NbtCompound updatedNbt = StructureValidatorProvider.update(path.toString(), oldNbt);
+            CompoundTag updatedNbt = StructureUpdater.update(path.toString(), oldNbt);
 
             Path outPath = OUT_PATH.resolve(path).normalize();
             Files.createDirectories(outPath.getParent());

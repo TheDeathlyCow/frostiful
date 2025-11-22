@@ -4,10 +4,10 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.server.world.gen.feature.IcicleFeature;
 import com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock.CoveredRockFeature;
 import com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock.CoveredRockFeatureConfig;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 public class FFeatures {
 
@@ -24,8 +24,8 @@ public class FFeatures {
         Frostiful.LOGGER.debug("Initialized Frostiful features");
     }
 
-    private static <C extends FeatureConfig> Feature<C> register(String name, Feature<C> feature) {
-        return Registry.register(Registries.FEATURE, Frostiful.id(name), feature);
+    private static <C extends FeatureConfiguration> Feature<C> register(String name, Feature<C> feature) {
+        return Registry.register(BuiltInRegistries.FEATURE, Frostiful.id(name), feature);
     }
 
     private FFeatures() {

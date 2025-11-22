@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 
 public record SeasonalBiomeTags(
         TagKey<Biome> freezing,

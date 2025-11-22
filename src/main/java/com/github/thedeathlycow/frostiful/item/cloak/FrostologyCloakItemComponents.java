@@ -2,29 +2,29 @@ package com.github.thedeathlycow.frostiful.item.cloak;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.component.type.EquippableComponent;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.equipment.Equippable;
 
 public final class FrostologyCloakItemComponents {
-    public static EquippableComponent createEquippableComponent() {
-        return EquippableComponent.builder(EquipmentSlot.CHEST)
-                .damageOnHurt(false)
+    public static Equippable createEquippableComponent() {
+        return Equippable.builder(EquipmentSlot.CHEST)
+                .setDamageOnHurt(false)
                 .build();
     }
 
-    public static AttributeModifiersComponent createAttributeModifiers() {
-        AttributeModifiersComponent.Builder builder = AttributeModifiersComponent.builder();
+    public static ItemAttributeModifiers createAttributeModifiers() {
+        ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
         builder.add(
                 ThermooAttributes.FROST_RESISTANCE,
-                new EntityAttributeModifier(
+                new AttributeModifier(
                         Frostiful.id("cloak.frost_resistance_penalty"),
                         -3.0,
-                        EntityAttributeModifier.Operation.ADD_VALUE
+                        AttributeModifier.Operation.ADD_VALUE
                 ),
-                AttributeModifierSlot.BODY
+                EquipmentSlotGroup.BODY
         );
         return builder.build();
     }

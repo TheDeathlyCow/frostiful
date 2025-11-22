@@ -7,27 +7,26 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.enchantment.EnchantmentEffectContext;
-import net.minecraft.enchantment.EnchantmentLevelBasedValue;
-import net.minecraft.enchantment.effect.EnchantmentEntityEffect;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
 import java.util.function.Function;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.enchantment.EnchantedItemInUse;
+import net.minecraft.world.item.enchantment.LevelBasedValue;
+import net.minecraft.world.item.enchantment.effects.EnchantmentEntityEffect;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public record HeatDrainEnchantmentEffect(
-        EnchantmentLevelBasedValue heatToDrain,
+        LevelBasedValue heatToDrain,
         float efficiency,
         boolean drainFromEnchanted
 ) implements EnchantmentEntityEffect {
 
     public static final MapCodec<HeatDrainEnchantmentEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                    EnchantmentLevelBasedValue.CODEC
+                    LevelBasedValue.CODEC
                             .fieldOf("heat_to_drain")
                             .forGetter(HeatDrainEnchantmentEffect::heatToDrain),
                     rangedFloat(0.0f, 1f, v -> "Value must be between 0 and 1 (inclusive): " + v)
@@ -41,7 +40,7 @@ public record HeatDrainEnchantmentEffect(
     );
 
     @Override
-    public void apply(ServerWorld world, int level, EnchantmentEffectContext context, Entity user, Vec3d pos) {
+    public void apply(ServerLevel world, int level, EnchantedItemInUse context, Entity user, Vec3 pos) {
         LivingEntity owner = context.owner();
         if (owner != null && user instanceof LivingEntity livingVictim) {
             if (drainFromEnchanted) {
@@ -60,13 +59,13 @@ public record HeatDrainEnchantmentEffect(
             return;
         }
 
-        int heatDrainedFromTarget = MathHelper.floor(this.heatToDrain.getValue(level));
+        int heatDrainedFromTarget = Mth.floor(this.heatToDrain.calculate(level));
         if (source.thermoo$isCold()) {
             source.thermoo$addTemperature(-heatDrainedFromTarget, HeatingModes.ACTIVE);
         }
 
         if (destination.thermoo$isCold()) {
-            int heatAddedToOwner = MathHelper.floor(heatDrainedFromTarget * this.efficiency);
+            int heatAddedToOwner = Mth.floor(heatDrainedFromTarget * this.efficiency);
             destination.thermoo$addTemperature(heatAddedToOwner, HeatingModes.ACTIVE);
         }
 
@@ -76,30 +75,30 @@ public record HeatDrainEnchantmentEffect(
     }
 
     @Override
-    public MapCodec<? extends EnchantmentEntityEffect> getCodec() {
+    public MapCodec<? extends EnchantmentEntityEffect> codec() {
         return CODEC;
     }
 
     public static void addHeatDrainParticles(LivingEntity source, LivingEntity destination, int level) {
-        World world = destination.getEntityWorld();
-        if (world instanceof ServerWorld serverWorld) {
+        Level world = destination.level();
+        if (world instanceof ServerLevel serverWorld) {
             addHeatDrainParticles(serverWorld, source, destination, level, 0.5);
         }
     }
 
     public static void addHeatDrainParticles(
-            ServerWorld serverWorld,
+            ServerLevel serverWorld,
             LivingEntity source, LivingEntity destination,
             int level, double delta
     ) {
-        Vec3d from = FMathHelper.getMidPoint(source.getEyePos(), source.getEntityPos());
+        Vec3 from = FMathHelper.getMidPoint(source.getEyePosition(), source.position());
         final int numParticles = (level * 3) + 15;
 
-        double fromX = from.getX();
-        double fromY = from.getY();
-        double fromZ = from.getZ();
-        var effect = new HeatDrainParticleEffect(destination.getEyePos());
-        serverWorld.spawnParticles(effect, fromX, fromY, fromZ, numParticles, delta, delta, delta, 0.3);
+        double fromX = from.x();
+        double fromY = from.y();
+        double fromZ = from.z();
+        var effect = new HeatDrainParticleEffect(destination.getEyePosition());
+        serverWorld.sendParticles(effect, fromX, fromY, fromZ, numParticles, delta, delta, delta, 0.3);
     }
 
     private static Codec<Float> rangedFloat(float min, float max, Function<Float, String> messageFactory) {

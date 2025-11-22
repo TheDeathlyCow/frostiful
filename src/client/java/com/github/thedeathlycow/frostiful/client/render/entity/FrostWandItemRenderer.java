@@ -2,20 +2,20 @@ package com.github.thedeathlycow.frostiful.client.render.entity;
 
 import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.model.FrostWandItemModel;
+import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.item.model.special.SimpleSpecialModelRenderer;
-import net.minecraft.client.render.item.model.special.SpecialModelRenderer;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemDisplayContext;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Vector3f;
 
 import java.util.Set;
 
 @Environment(EnvType.CLIENT)
-public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
+public class FrostWandItemRenderer implements NoDataSpecialModelRenderer {
     // packed lightmap coordinates are (block << 4) | (sky << 20)
     private static final int FULL_BRIGHTNESS = (15 << 4) | (15 << 20);
 
@@ -26,29 +26,29 @@ public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
     }
 
     @Override
-    public void collectVertices(Set<Vector3f> vertices) {
-        var matrixStack = new MatrixStack();
+    public void getExtents(Set<Vector3f> vertices) {
+        var matrixStack = new PoseStack();
         matrixStack.scale(1.0F, -1.0F, -1.0F);
-        this.model.getRootPart().collectVertices(matrixStack, vertices);
+        this.model.root().getExtentsForGui(matrixStack, vertices);
     }
 
     @Override
-    public void render(
+    public void submit(
             ItemDisplayContext displayContext,
-            MatrixStack matrices,
-            OrderedRenderCommandQueue queue,
+            PoseStack matrices,
+            SubmitNodeCollector queue,
             int light,
             int overlay,
             boolean glint,
             int outlineColor
     ) {
-        matrices.push();
+        matrices.pushPose();
         matrices.scale(1.0F, -1.0F, -1.0F);
 
         queue.submitModelPart(
-                this.model.getRootPart(),
+                this.model.root(),
                 matrices,
-                this.model.getLayer(FrostWandItemModel.TEXTURE),
+                this.model.renderType(FrostWandItemModel.TEXTURE),
                 FULL_BRIGHTNESS,
                 overlay,
                 null,
@@ -59,7 +59,7 @@ public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
                 outlineColor
         );
 
-        matrices.pop();
+        matrices.popPose();
     }
 
     @Environment(EnvType.CLIENT)
@@ -67,14 +67,14 @@ public class FrostWandItemRenderer implements SimpleSpecialModelRenderer {
         public static final MapCodec<FrostWandItemRenderer.Unbaked> CODEC = MapCodec.unit(new FrostWandItemRenderer.Unbaked());
 
         @Override
-        public SpecialModelRenderer<?> bake(BakeContext context) {
+        public SpecialModelRenderer<?> bake(BakingContext context) {
             return new FrostWandItemRenderer(
-                    new FrostWandItemModel(context.entityModelSet().getModelPart(FEntityModelLayers.FROST_WAND))
+                    new FrostWandItemModel(context.entityModelSet().bakeLayer(FEntityModelLayers.FROST_WAND))
             );
         }
 
         @Override
-        public MapCodec<FrostWandItemRenderer.Unbaked> getCodec() {
+        public MapCodec<FrostWandItemRenderer.Unbaked> type() {
             return CODEC;
         }
     }

@@ -3,68 +3,68 @@ package com.github.thedeathlycow.frostiful.client.particle;
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.random.Random;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 @Environment(EnvType.CLIENT)
-public class HeatDrainParticle extends AbstractSlowingParticle {
+public class HeatDrainParticle extends RisingParticle {
     protected HeatDrainParticle(
-            ClientWorld clientWorld,
+            ClientLevel clientWorld,
             double x, double y, double z,
             double vx, double vy, double vz,
-            SpriteProvider spriteProvider,
-            Vec3d destination
+            SpriteSet spriteProvider,
+            Vec3 destination
     ) {
-        super(clientWorld, x, y, z, vx, vy, vz, spriteProvider.getFirst());
+        super(clientWorld, x, y, z, vx, vy, vz, spriteProvider.first());
 
-        this.velocityX = destination.x - this.x;
-        this.velocityY = destination.y - this.y;
-        this.velocityZ = destination.z - this.z;
+        this.xd = destination.x - this.x;
+        this.yd = destination.y - this.y;
+        this.zd = destination.z - this.z;
 
         final double slowFactor = 0.1;
 
-        this.velocityX *= slowFactor * this.velocityMultiplier;
-        this.velocityY *= slowFactor * this.velocityMultiplier;
-        this.velocityZ *= slowFactor * this.velocityMultiplier;
-        this.maxAge = this.random.nextBetween(1, 10);
+        this.xd *= slowFactor * this.friction;
+        this.yd *= slowFactor * this.friction;
+        this.zd *= slowFactor * this.friction;
+        this.lifetime = this.random.nextIntBetweenInclusive(1, 10);
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        this.scale = 0.5f * random.nextFloat();
-        this.green *= random.nextFloat(0.5f, 1.0f);
+        this.quadSize = 0.5f * random.nextFloat();
+        this.gCol *= random.nextFloat(0.5f, 1.0f);
     }
 
     @Override
-    public int getBrightness(float tickDelta) {
-        int brightness = super.getBrightness(tickDelta);
+    public int getLightColor(float tickDelta) {
+        int brightness = super.getLightColor(tickDelta);
         int red = brightness >> 16 & 0xFF;
         return 0x0000F0 | red << 16;
     }
 
     @Override
-    protected RenderType getRenderType() {
-        return BillboardParticle.RenderType.PARTICLE_ATLAS_OPAQUE;
+    protected Layer getLayer() {
+        return SingleQuadParticle.Layer.OPAQUE;
     }
 
     @Environment(EnvType.CLIENT)
-    public static class Factory implements ParticleFactory<HeatDrainParticleEffect> {
-        private final SpriteProvider spriteProvider;
+    public static class Factory implements ParticleProvider<HeatDrainParticleEffect> {
+        private final SpriteSet spriteProvider;
 
-        public Factory(SpriteProvider spriteProvider) {
+        public Factory(SpriteSet spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
         @Override
         public @Nullable Particle createParticle(
                 HeatDrainParticleEffect parameters,
-                ClientWorld world,
+                ClientLevel world,
                 double x, double y, double z,
                 double velocityX, double velocityY, double velocityZ,
-                Random random
+                RandomSource random
         ) {
             return new HeatDrainParticle(
                     world,

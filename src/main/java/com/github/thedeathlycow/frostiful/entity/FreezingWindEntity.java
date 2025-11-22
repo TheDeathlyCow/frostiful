@@ -2,19 +2,19 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.storage.ReadView;
-import net.minecraft.storage.WriteView;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 
 public class FreezingWindEntity extends WindEntity {
 
     private int frost;
 
-    public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, World world) {
+    public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, Level world) {
         super(type, world);
         this.frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
     }
@@ -31,19 +31,19 @@ public class FreezingWindEntity extends WindEntity {
         }
     }
 
-    protected ParticleEffect getDustParticle() {
+    protected ParticleOptions getDustParticle() {
         return ParticleTypes.SNOWFLAKE;
     }
 
     @Override
-    protected void readCustomData(ReadView readView) {
-        super.readCustomData(readView);
-        this.frost = readView.getInt("Frost", Frostiful.getConfig().freezingConfig.getFreezingWindFrost());
+    protected void readAdditionalSaveData(ValueInput readView) {
+        super.readAdditionalSaveData(readView);
+        this.frost = readView.getIntOr("Frost", Frostiful.getConfig().freezingConfig.getFreezingWindFrost());
     }
 
     @Override
-    protected void writeCustomData(WriteView writeView) {
-        super.writeCustomData(writeView);
+    protected void addAdditionalSaveData(ValueOutput writeView) {
+        super.addAdditionalSaveData(writeView);
 
         writeView.putInt("Frost", this.frost);
     }

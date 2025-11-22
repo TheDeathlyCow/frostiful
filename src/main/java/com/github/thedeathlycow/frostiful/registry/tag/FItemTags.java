@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.item.Item;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 
 public final class FItemTags {
 
@@ -23,7 +23,7 @@ public final class FItemTags {
     public static final TagKey<Item> FUR_TUFTS = register("fur_tufts");
 
     private static TagKey<Item> register(String id) {
-        return TagKey.of(RegistryKeys.ITEM, Frostiful.id(id));
+        return TagKey.create(Registries.ITEM, Frostiful.id(id));
     }
 
 }

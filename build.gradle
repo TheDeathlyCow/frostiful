@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.12.0-alpha.25'
+    id 'fabric-loom' version '1.13-SNAPSHOT'
     id 'maven-publish'
     id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 }
@@ -30,6 +30,10 @@ repositories {
     maven {
         name = "Ladysnake Mods"
         url = 'https://maven.ladysnake.org/releases'
+    }
+    maven {
+        name = 'ParchmentMC'
+        url = 'https://maven.parchmentmc.org'
     }
     exclusiveContent {
         forRepository {
@@ -74,7 +78,10 @@ dependencies {
 
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    mappings loom.layered() {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-${project.parchment_version}:${project.parchment_mappings}")
+    }
 
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 

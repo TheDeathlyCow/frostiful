@@ -4,56 +4,56 @@ import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.model.FrostologerCapeModel;
 import com.github.thedeathlycow.frostiful.client.render.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.equipment.EquipmentModelLoader;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.render.entity.model.LoadedEntityModels;
-import net.minecraft.client.util.math.MatrixStack;
+import net.minecraft.client.model.geom.EntityModelSet;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.resources.model.EquipmentAssetManager;
 
 @Environment(EnvType.CLIENT)
-public class FrostologerCloakFeatureRenderer extends FeatureRenderer<FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
+public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
     private final FrostologerCapeModel<FrostologerEntityRenderState> model;
-    private final EquipmentModelLoader equipmentModelLoader;
+    private final EquipmentAssetManager equipmentModelLoader;
 
     public FrostologerCloakFeatureRenderer(
-            FeatureRendererContext<FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> featureRendererContext,
-            LoadedEntityModels modelLoader,
-            EquipmentModelLoader equipmentModelLoader
+            RenderLayerParent<FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> featureRendererContext,
+            EntityModelSet modelLoader,
+            EquipmentAssetManager equipmentModelLoader
     ) {
         super(featureRendererContext);
         this.equipmentModelLoader = equipmentModelLoader;
-        this.model = new FrostologerCapeModel<>(modelLoader.getModelPart(FEntityModelLayers.FROSTOLOGER_CAPE));
+        this.model = new FrostologerCapeModel<>(modelLoader.bakeLayer(FEntityModelLayers.FROSTOLOGER_CAPE));
     }
 
     @Override
-    public void render(
-            MatrixStack matrixStack,
-            OrderedRenderCommandQueue queue,
+    public void submit(
+            PoseStack matrixStack,
+            SubmitNodeCollector queue,
             int light,
             FrostologerEntityRenderState state,
             float limbAngle,
             float limbDistance
     ) {
-        if (!state.invisible && state.capeTexture != null) {
-            matrixStack.push();
+        if (!state.isInvisible && state.capeTexture != null) {
+            matrixStack.pushPose();
             matrixStack.translate(0.0, 0.0, 3f / 16f);
             queue.submitModel(
                     this.model,
                     state,
                     matrixStack,
-                    RenderLayer.getEntitySolid(state.capeTexture.texturePath()),
+                    RenderType.entitySolid(state.capeTexture.texturePath()),
                     light,
-                    OverlayTexture.DEFAULT_UV,
+                    OverlayTexture.NO_OVERLAY,
                     state.outlineColor,
                     null
             );
 
-            matrixStack.pop();
+            matrixStack.popPose();
         }
     }
 }

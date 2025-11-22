@@ -6,26 +6,26 @@ import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.util.AssetInfo;
+import net.minecraft.core.ClientAsset;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.Nullable;
 
 public record CapeComponent(
-        AssetInfo.TextureAssetInfo capeAsset,
+        ClientAsset.ResourceTexture capeAsset,
         boolean overrideAccountCape
 ) {
     public static final CapeComponent FROSTOLOGY_CLOAK = new CapeComponent(
-            new AssetInfo.TextureAssetInfo(Frostiful.id("entity/frostology_cloak")),
+            new ClientAsset.ResourceTexture(Frostiful.id("entity/frostology_cloak")),
             true
     );
 
     public static final Codec<CapeComponent> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    AssetInfo.TextureAssetInfo.CODEC
+                    ClientAsset.ResourceTexture.CODEC
                             .fieldOf("cape_asset")
                             .forGetter(CapeComponent::capeAsset),
                     Codec.BOOL
@@ -34,10 +34,10 @@ public record CapeComponent(
             ).apply(instance, CapeComponent::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, CapeComponent> PACKET_CODEC = PacketCodec.tuple(
-            AssetInfo.TextureAssetInfo.PACKET_CODEC,
+    public static final StreamCodec<RegistryFriendlyByteBuf, CapeComponent> PACKET_CODEC = StreamCodec.composite(
+            ClientAsset.ResourceTexture.STREAM_CODEC,
             CapeComponent::capeAsset,
-            PacketCodecs.BOOLEAN,
+            ByteBufCodecs.BOOL,
             CapeComponent::overrideAccountCape,
             CapeComponent::new
     );
@@ -51,6 +51,6 @@ public record CapeComponent(
             }
         }
 
-        return entity.getEquippedStack(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
+        return entity.getItemBySlot(EquipmentSlot.CHEST).get(FDataComponentTypes.CAPE);
     }
 }

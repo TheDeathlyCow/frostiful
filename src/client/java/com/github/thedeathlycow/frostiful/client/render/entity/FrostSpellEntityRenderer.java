@@ -2,27 +2,27 @@ package com.github.thedeathlycow.frostiful.client.render.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.command.OrderedRenderCommandQueue;
-import net.minecraft.client.render.entity.EntityRenderer;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.state.EntityRenderState;
-import net.minecraft.client.render.state.CameraRenderState;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Colors;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.CommonColors;
 
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, EntityRenderState> {
 
-    private static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
-    private static final RenderLayer LAYER = RenderLayer.getEntityCutoutNoCull(TEXTURE);
+    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
+    private static final RenderType LAYER = RenderType.entityCutoutNoCull(TEXTURE);
 
-    public FrostSpellEntityRenderer(EntityRendererFactory.Context ctx) {
+    public FrostSpellEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);
     }
 
@@ -32,37 +32,37 @@ public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, E
     }
 
     @Override
-    public void render(
+    public void submit(
             EntityRenderState renderState,
-            MatrixStack matrices,
-            OrderedRenderCommandQueue queue,
+            PoseStack matrices,
+            SubmitNodeCollector queue,
             CameraRenderState cameraState
     ) {
-        matrices.push();
+        matrices.pushPose();
         matrices.scale(2.0f, 2.0f, 2.0f);
-        matrices.multiply(cameraState.orientation);
-        queue.submitCustom(matrices, LAYER, (entry, vertexConsumer) -> {
-            produceVertex(vertexConsumer, entry, renderState.light, 0f, 0, 0, 1);
-            produceVertex(vertexConsumer, entry, renderState.light, 1f, 0, 1, 1);
-            produceVertex(vertexConsumer, entry, renderState.light, 1f, 1, 1, 0);
-            produceVertex(vertexConsumer, entry, renderState.light, 0f, 1, 0, 0);
+        matrices.mulPose(cameraState.orientation);
+        queue.submitCustomGeometry(matrices, LAYER, (entry, vertexConsumer) -> {
+            produceVertex(vertexConsumer, entry, renderState.lightCoords, 0f, 0, 0, 1);
+            produceVertex(vertexConsumer, entry, renderState.lightCoords, 1f, 0, 1, 1);
+            produceVertex(vertexConsumer, entry, renderState.lightCoords, 1f, 1, 1, 0);
+            produceVertex(vertexConsumer, entry, renderState.lightCoords, 0f, 1, 0, 0);
         });
-        matrices.pop();
-        super.render(renderState, matrices, queue, cameraState);
+        matrices.popPose();
+        super.submit(renderState, matrices, queue, cameraState);
     }
 
     private static void produceVertex(
             VertexConsumer vertexConsumer,
-            MatrixStack.Entry matrix,
+            PoseStack.Pose matrix,
             int light,
             float x, int z,
             int textureU, int textureV
     ) {
-        vertexConsumer.vertex(matrix, x - 0.5F, z - 0.25F, 0.0F)
-                .color(Colors.WHITE)
-                .texture(textureU, textureV)
-                .overlay(OverlayTexture.DEFAULT_UV)
-                .light(light)
-                .normal(matrix, 0.0F, 1.0F, 0.0F);
+        vertexConsumer.addVertex(matrix, x - 0.5F, z - 0.25F, 0.0F)
+                .setColor(CommonColors.WHITE)
+                .setUv(textureU, textureV)
+                .setOverlay(OverlayTexture.NO_OVERLAY)
+                .setLight(light)
+                .setNormal(matrix, 0.0F, 1.0F, 0.0F);
     }
 }

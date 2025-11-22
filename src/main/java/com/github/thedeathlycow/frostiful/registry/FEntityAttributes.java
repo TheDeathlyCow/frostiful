@@ -2,30 +2,30 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import net.minecraft.entity.attribute.ClampedEntityAttribute;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttribute;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 
 public final class FEntityAttributes {
     public static final double BASE_MIN_TEMPERATURE = 45;
 
-    public static final RegistryEntry<EntityAttribute> ICE_BREAK_DAMAGE = register(
+    public static final Holder<Attribute> ICE_BREAK_DAMAGE = register(
             "ice_breaker_damage",
-            new ClampedEntityAttribute(
+            new RangedAttribute(
                     "attribute.frostiful.ice_break_damage", 3.0, 0, 1024.0
-            ).setTracked(true)
+            ).setSyncable(true)
     );
 
     // called from mixin
-    public static void createLivingAttributes(DefaultAttributeContainer.Builder builder) {
+    public static void createLivingAttributes(AttributeSupplier.Builder builder) {
         builder.add(ICE_BREAK_DAMAGE);
     }
 
-    private static RegistryEntry<EntityAttribute> register(String name, EntityAttribute attribute) {
-        return Registry.registerReference(Registries.ATTRIBUTE, Frostiful.id(name), attribute);
+    private static Holder<Attribute> register(String name, Attribute attribute) {
+        return Registry.registerForHolder(BuiltInRegistries.ATTRIBUTE, Frostiful.id(name), attribute);
     }
 
     public static void initialize() {

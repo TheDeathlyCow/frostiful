@@ -4,27 +4,27 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.GlacialArrowEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.ProjectileEntityRenderer;
-import net.minecraft.client.render.entity.state.ProjectileEntityRenderState;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.client.renderer.entity.state.ArrowRenderState;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class GlacialArrowEntityRenderer extends ProjectileEntityRenderer<GlacialArrowEntity, ProjectileEntityRenderState> {
+public class GlacialArrowEntityRenderer extends ArrowRenderer<GlacialArrowEntity, ArrowRenderState> {
 
-    public static final Identifier TEXTURE = Frostiful.id("textures/entity/projectiles/glacial_arrow.png");
+    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/projectiles/glacial_arrow.png");
 
-    public GlacialArrowEntityRenderer(EntityRendererFactory.Context context) {
+    public GlacialArrowEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public ProjectileEntityRenderState createRenderState() {
-        return new ProjectileEntityRenderState();
+    public ArrowRenderState createRenderState() {
+        return new ArrowRenderState();
     }
 
     @Override
-    public Identifier getTexture(ProjectileEntityRenderState entity) {
+    public ResourceLocation getTextureLocation(ArrowRenderState entity) {
         return TEXTURE;
     }
 }
