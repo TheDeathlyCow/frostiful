@@ -236,8 +236,8 @@ public class FrostologerDestroyHeatSourcesTests {
     public void waterlogged_hot_sun_lichen_becomes_air(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
-                FBlocks.HOT_SUN_LICHEN.getDefaultState()
-                        .with(AmethystClusterBlock.WATERLOGGED, true),
+                FBlocks.HOT_SUN_LICHEN.defaultBlockState()
+                        .setValue(AmethystClusterBlock.WATERLOGGED, true),
                 Blocks.AIR
         );
     }
@@ -306,7 +306,7 @@ public class FrostologerDestroyHeatSourcesTests {
     public void hot_sun_lichen_becomes_air(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
-                FBlocks.HOT_SUN_LICHEN.getDefaultState(),
+                FBlocks.HOT_SUN_LICHEN.defaultBlockState(),
                 Blocks.AIR
         );
     }
@@ -321,7 +321,7 @@ public class FrostologerDestroyHeatSourcesTests {
 
         FrostologerEntity frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
         frostologer.setInvulnerable(true);
-        frostologer.setAiDisabled(true);
+        frostologer.setNoAi(true);
         frostologer.destroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
 
         context.succeedWhenBlockPresent(blockAtEnd, pos);
