@@ -18,7 +18,7 @@ public class GlacialArrowEntityRenderer extends ArrowRenderer<GlacialArrowEntity
     }
 
     @Override
-    public ResourceLocation getTexture(GlacialArrowEntity entity) {
+    public ResourceLocation getTextureLocation(GlacialArrowEntity entity) {
         return TEXTURE;
     }
 }

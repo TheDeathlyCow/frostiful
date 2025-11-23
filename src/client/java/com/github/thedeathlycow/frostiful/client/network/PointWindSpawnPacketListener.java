@@ -29,7 +29,7 @@ public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPa
     @Override
     public void receive(PointWindSpawnPacket payload, ClientPlayNetworking.Context context) {
         context.client().execute(() -> {
-            displayWind(context.client().world, payload.position());
+            displayWind(context.client().level, payload.position());
         });
     }
 

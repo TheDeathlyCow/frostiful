@@ -38,7 +38,7 @@ public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEnti
             float headYaw,
             float headPitch
     ) {
-        ItemStack cloak = frostologer.getEquippedStack(EquipmentSlot.CHEST);
+        ItemStack cloak = frostologer.getItemBySlot(EquipmentSlot.CHEST);
 
         if (!cloak.is(FItems.FROSTOLOGY_CLOAK)) {
             return;
@@ -46,10 +46,10 @@ public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEnti
 
         matrixStack.pushPose();
         matrixStack.translate(0.0, 0.0, 3f / 16f);
-        double capeX = Mth.lerpInt(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerpInt(tickDelta, frostologer.prevX, frostologer.getX());
-        double capeY = Mth.lerpInt(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerpInt(tickDelta, frostologer.prevY, frostologer.getY());
-        double capeZ = Mth.lerpInt(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerpInt(tickDelta, frostologer.prevZ, frostologer.getZ());
-        float yawDelta = frostologer.prevBodyYaw + (frostologer.bodyYaw - frostologer.prevBodyYaw);
+        double capeX = Mth.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerp(tickDelta, frostologer.xo, frostologer.getX());
+        double capeY = Mth.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerp(tickDelta, frostologer.yo, frostologer.getY());
+        double capeZ = Mth.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerp(tickDelta, frostologer.zo, frostologer.getZ());
+        float yawDelta = frostologer.yBodyRotO + (frostologer.yBodyRot - frostologer.yBodyRotO);
         double rotZ = Mth.sin(yawDelta * Mth.PI / 180);
         double rotX = -Mth.cos(yawDelta * Mth.PI / 180);
         float q = Mth.clamp((float) capeY * 10.0F, -6.0F, 32.0F);
@@ -60,9 +60,9 @@ public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEnti
             r = 0.0F;
         }
 
-        float t = Mth.lerpInt(tickDelta, frostologer.prevStrideDistance, frostologer.strideDistance);
-        q += Mth.sin(Mth.lerpInt(tickDelta, frostologer.prevHorizontalSpeed, frostologer.horizontalSpeed) * 6.0F) * 32.0F * t;
-        if (frostologer.isInSneakingPose()) {
+        float t = Mth.lerp(tickDelta, frostologer.prevStrideDistance, frostologer.strideDistance);
+        q += Mth.sin(Mth.lerp(tickDelta, frostologer.walkDistO, frostologer.walkDist) * 6.0F) * 32.0F * t;
+        if (frostologer.isCrouching()) {
             q += 25.0F;
         }
 

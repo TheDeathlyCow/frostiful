@@ -43,7 +43,8 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
         matrixStack.scale(scale, scale, scale);
     }
 
-    public ResourceLocation getTexture(FrostologerEntity pillagerEntity) {
+    @Override
+    public ResourceLocation getTextureLocation(FrostologerEntity pillagerEntity) {
         return TEXTURE;
     }
 }

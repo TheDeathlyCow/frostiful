@@ -60,7 +60,7 @@ public class FrostSpellEntityRenderer extends EntityRenderer<SpellEntity> {
     }
 
     @Override
-    public ResourceLocation getTexture(SpellEntity entity) {
+    public ResourceLocation getTextureLocation(SpellEntity entity) {
         return TEXTURE;
     }
 

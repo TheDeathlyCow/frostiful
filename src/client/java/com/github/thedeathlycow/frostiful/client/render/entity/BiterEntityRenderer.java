@@ -20,7 +20,7 @@ public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityMod
     }
 
     @Override
-    public ResourceLocation getTexture(BiterEntity entity) {
+    public ResourceLocation getTextureLocation(BiterEntity entity) {
         return TEXTURE;
     }
 

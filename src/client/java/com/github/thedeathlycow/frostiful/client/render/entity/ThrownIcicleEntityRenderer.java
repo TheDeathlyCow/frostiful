@@ -19,7 +19,7 @@ public class ThrownIcicleEntityRenderer extends ArrowRenderer<ThrownIcicleEntity
     }
 
     @Override
-    public ResourceLocation getTexture(ThrownIcicleEntity entity) {
+    public ResourceLocation getTextureLocation(ThrownIcicleEntity entity) {
         return TEXTURE;
     }
 }

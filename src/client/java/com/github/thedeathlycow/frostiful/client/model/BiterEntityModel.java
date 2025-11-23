@@ -75,7 +75,7 @@ public class BiterEntityModel extends HierarchicalModel<BiterEntity> {
     }
 
     @Override
-    public void setAngles(
+    public void setupAnim(
             BiterEntity entity,
             float limbAngle,
             float limbDistance,

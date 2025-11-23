@@ -83,7 +83,7 @@ public class FrostologerEntityModel<F extends FrostologerEntity> extends Illager
     }
 
     @Override
-    public void setAngles(
+    public void setupAnim(
             F frostologer,
             float limbAngle,
             float limbDistance,

@@ -28,7 +28,7 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntity, M exten
         if (entity.isAtMaxPower()) {
             VertexConsumer vertexConsumer = vertexConsumers.getBuffer(this.skin);
             this.getParentModel()
-                    .render(
+                    .renderToBuffer(
                             matrices,
                             vertexConsumer,
                             0x00F000F0,

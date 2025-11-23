@@ -25,7 +25,7 @@ public class ChillagerEntityRenderer extends IllagerRenderer<ChillagerEntity> {
     }
 
     @Override
-    public ResourceLocation getTexture(ChillagerEntity entity) {
+    public ResourceLocation getTextureLocation(ChillagerEntity entity) {
         return TEXTURE;
     }
 }
