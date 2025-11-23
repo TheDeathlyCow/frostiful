@@ -2,10 +2,11 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
-import java.util.function.UnaryOperator;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+
+import java.util.function.UnaryOperator;
 
 public final class FDataComponentTypes {
     public static final DataComponentType<FrostResistanceComponent> FROST_RESISTANCE = register(

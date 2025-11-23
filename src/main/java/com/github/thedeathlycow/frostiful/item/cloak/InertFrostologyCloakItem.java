@@ -1,10 +1,11 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
 import com.github.thedeathlycow.frostiful.util.TextStyles;
-import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+
+import java.util.List;
 
 public class InertFrostologyCloakItem extends AbstractFrostologyCloakItem {
     public InertFrostologyCloakItem(Properties settings) {

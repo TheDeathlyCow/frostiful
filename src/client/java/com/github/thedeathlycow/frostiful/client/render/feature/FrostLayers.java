@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.resources.ResourceLocation;
+
 import java.util.Comparator;
 import java.util.stream.Stream;
 

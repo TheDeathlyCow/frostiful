@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
-import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 
 @Config(name = Frostiful.MODID + ".environment_config")
 public class EnvironmentConfigGroup implements ConfigData {

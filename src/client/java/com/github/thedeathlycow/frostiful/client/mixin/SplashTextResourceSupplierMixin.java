@@ -1,13 +1,13 @@
 package com.github.thedeathlycow.frostiful.client.mixin;
 
+import net.minecraft.client.gui.components.SplashRenderer;
+import net.minecraft.client.resources.SplashManager;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.Calendar;
-import net.minecraft.client.gui.components.SplashRenderer;
-import net.minecraft.client.resources.SplashManager;
 
 @Mixin(SplashManager.class)
 public class SplashTextResourceSupplierMixin {

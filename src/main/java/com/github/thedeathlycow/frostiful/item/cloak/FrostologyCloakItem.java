@@ -3,13 +3,14 @@ package com.github.thedeathlycow.frostiful.item.cloak;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import java.util.List;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
+
+import java.util.List;
 
 public class FrostologyCloakItem extends AbstractFrostologyCloakItem {
 

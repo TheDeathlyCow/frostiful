@@ -2,9 +2,6 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.function.Supplier;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -15,6 +12,10 @@ import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 public class FArmorMaterials {
 

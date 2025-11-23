@@ -24,6 +24,7 @@ import net.minecraft.world.level.LightLayer;
 import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
+
 import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 

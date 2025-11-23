@@ -16,6 +16,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.Block;
+
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
