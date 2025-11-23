@@ -3,50 +3,50 @@ package com.github.thedeathlycow.frostiful.test.frostologer;
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.damage.DamageSources;
-import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.test.GameTest;
-import net.minecraft.test.TestContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.village.raid.Raid;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.raid.Raid;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
 @SuppressWarnings("unused")
 public class ChillagerDropTests {
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void regular_chillager_does_not_drop_ominous_bottle(TestContext context) {
-        World world = context.getWorld();
-        DamageSources damageSources = world.getDamageSources();
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void regular_chillager_does_not_drop_ominous_bottle(GameTestHelper context) {
+        Level world = context.getLevel();
+        DamageSources damageSources = world.damageSources();
 
-        ChillagerEntity chillager = context.spawnEntity(FEntityTypes.CHILLAGER, BlockPos.ORIGIN);
+        ChillagerEntity chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
 
         chillager.damage(damageSources.genericKill(), Float.MAX_VALUE);
 
-        context.dontExpectItemAt(Items.OMINOUS_BOTTLE, BlockPos.ORIGIN, 3f);
+        context.assertItemEntityNotPresent(Items.OMINOUS_BOTTLE, BlockPos.ZERO, 3f);
 
-        context.complete();
+        context.succeed();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void chillager_captain_drops_ominous_bottle(TestContext context) {
-        World world = context.getWorld();
-        DamageSources damageSources = world.getDamageSources();
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void chillager_captain_drops_ominous_bottle(GameTestHelper context) {
+        Level world = context.getLevel();
+        DamageSources damageSources = world.damageSources();
 
-        ChillagerEntity chillager = context.spawnEntity(FEntityTypes.CHILLAGER, BlockPos.ORIGIN);
+        ChillagerEntity chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
         chillager.setPatrolLeader(true);
         chillager.equipStack(
                 EquipmentSlot.HEAD,
-                Raid.getOminousBanner(chillager.getRegistryManager().getWrapperOrThrow(RegistryKeys.BANNER_PATTERN))
+                Raid.getLeaderBannerInstance(chillager.getRegistryManager().getWrapperOrThrow(Registries.BANNER_PATTERN))
         );
 
         context.assertTrue(chillager.isCaptain(), "Chillager is not a captain!");
 
         chillager.damage(damageSources.genericKill(), Float.MAX_VALUE);
 
-        context.expectItemAt(Items.OMINOUS_BOTTLE, BlockPos.ORIGIN, 3f);
+        context.assertItemEntityPresent(Items.OMINOUS_BOTTLE, BlockPos.ZERO, 3f);
 
-        context.complete();
+        context.succeed();
     }
 }

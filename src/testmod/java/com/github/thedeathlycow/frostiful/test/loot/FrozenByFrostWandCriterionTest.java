@@ -2,17 +2,17 @@ package com.github.thedeathlycow.frostiful.test.loot;
 
 import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.test.GameTest;
-import net.minecraft.test.TestContext;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.phys.Vec3;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
@@ -24,8 +24,8 @@ public class FrozenByFrostWandCriterionTest {
 
     private static final int NUM_PREDICATES = 3;
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void three_creeper_mobs_to_empty_predicates_is_true(TestContext context) {
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void three_creeper_mobs_to_empty_predicates_is_true(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -36,15 +36,15 @@ public class FrozenByFrostWandCriterionTest {
         FrozenByFrostWandCriterion.Conditions conditions = new FrozenByFrostWandCriterion.Conditions(
                 Optional.empty(),
                 List.of(),
-                NumberRange.IntRange.ANY
+                MinMaxBounds.Ints.ANY
         );
 
         context.assertTrue(conditions.matches(creepers), "Conditions do not match!");
-        context.complete();
+        context.succeed();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void three_creeper_mobs_to_three_creeper_predicates_is_true(TestContext context) {
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void three_creeper_mobs_to_three_creeper_predicates_is_true(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -55,11 +55,11 @@ public class FrozenByFrostWandCriterionTest {
         FrozenByFrostWandCriterion.Conditions conditions = createConditions();
 
         context.assertTrue(conditions.matches(creepers), "Conditions do not match!");
-        context.complete();
+        context.succeed();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void five_creeper_mobs_to_three_creeper_predicates_is_true(TestContext context) {
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void five_creeper_mobs_to_three_creeper_predicates_is_true(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -72,11 +72,11 @@ public class FrozenByFrostWandCriterionTest {
         FrozenByFrostWandCriterion.Conditions conditions = createConditions();
 
         context.assertTrue(conditions.matches(creepers), "Conditions do not match!");
-        context.complete();
+        context.succeed();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void two_creeper_mobs_to_three_creeper_predicates_is_false(TestContext context) {
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void two_creeper_mobs_to_three_creeper_predicates_is_false(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -86,11 +86,11 @@ public class FrozenByFrostWandCriterionTest {
         FrozenByFrostWandCriterion.Conditions conditions = createConditions();
 
         context.assertFalse(conditions.matches(creepers), "Conditions do match, but they should NOT!");
-        context.complete();
+        context.succeed();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void two_creepers_and_one_zombie_to_three_creeper_predicates_is_false(TestContext context) {
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void two_creepers_and_one_zombie_to_three_creeper_predicates_is_false(GameTestHelper context) {
         List<LootContext> creepers = createLootContexts(
                 context,
                 EntityType.CREEPER,
@@ -101,31 +101,31 @@ public class FrozenByFrostWandCriterionTest {
         FrozenByFrostWandCriterion.Conditions conditions = createConditions();
 
         context.assertFalse(conditions.matches(creepers), "Conditions do match, but they should NOT!");
-        context.complete();
+        context.succeed();
     }
 
-    @GameTest(templateName = FabricGameTest.EMPTY_STRUCTURE)
-    public void zero_mobs_to_three_creeper_predicates_is_false(TestContext context) {
+    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    public void zero_mobs_to_three_creeper_predicates_is_false(GameTestHelper context) {
         List<LootContext> creepers = List.of();
 
         FrozenByFrostWandCriterion.Conditions conditions = createConditions();
 
         context.assertFalse(conditions.matches(creepers), "Conditions do match, but they should NOT!");
-        context.complete();
+        context.succeed();
     }
 
     @SafeVarargs
     private static List<LootContext> createLootContexts(
-            TestContext testContext,
-            EntityType<? extends MobEntity>... entityTypes
+            GameTestHelper testContext,
+            EntityType<? extends Mob>... entityTypes
     ) {
-        ServerPlayerEntity mockPlayer = createMockPlayer(testContext);
+        ServerPlayer mockPlayer = createMockPlayer(testContext);
         List<LootContext> contexts = new ArrayList<>();
 
-        for (EntityType<? extends MobEntity> type : entityTypes) {
-            LootContext context = EntityPredicate.createAdvancementEntityLootContext(
+        for (EntityType<? extends Mob> type : entityTypes) {
+            LootContext context = EntityPredicate.createContext(
                     mockPlayer,
-                    testContext.spawnMob(type, BlockPos.ORIGIN)
+                    testContext.spawnWithNoFreeWill(type, BlockPos.ZERO)
             );
             contexts.add(context);
         }
@@ -133,24 +133,24 @@ public class FrozenByFrostWandCriterionTest {
         return contexts;
     }
 
-    private static ServerPlayerEntity createMockPlayer(TestContext context) {
-        ServerPlayerEntity mockPlayer = Mockito.mock(ServerPlayerEntity.class);
+    private static ServerPlayer createMockPlayer(GameTestHelper context) {
+        ServerPlayer mockPlayer = Mockito.mock(ServerPlayer.class);
 
-        Mockito.when(mockPlayer.getServerWorld())
-                .thenReturn(context.getWorld());
-        Mockito.when(mockPlayer.getPos())
-                .thenReturn(Vec3d.ZERO);
+        Mockito.when(mockPlayer.serverLevel())
+                .thenReturn(context.getLevel());
+        Mockito.when(mockPlayer.position())
+                .thenReturn(Vec3.ZERO);
 
         return mockPlayer;
     }
 
     private static FrozenByFrostWandCriterion.Conditions createConditions() {
-        List<LootContextPredicate> predicates = new ArrayList<>();
+        List<ContextAwarePredicate> predicates = new ArrayList<>();
 
         for (int i = 0; i < NUM_PREDICATES; i++) {
-            LootContextPredicate context = EntityPredicate.contextPredicateFromEntityPredicate(
-                    EntityPredicate.Builder.create()
-                            .type(EntityType.CREEPER)
+            ContextAwarePredicate context = EntityPredicate.wrap(
+                    EntityPredicate.Builder.entity()
+                            .of(EntityType.CREEPER)
             );
             predicates.add(context);
         }
@@ -158,7 +158,7 @@ public class FrozenByFrostWandCriterionTest {
         return new FrozenByFrostWandCriterion.Conditions(
                 Optional.empty(),
                 predicates,
-                NumberRange.IntRange.ANY
+                MinMaxBounds.Ints.ANY
         );
     }
 }

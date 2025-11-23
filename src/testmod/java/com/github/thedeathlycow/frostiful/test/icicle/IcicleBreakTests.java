@@ -2,63 +2,63 @@ package com.github.thedeathlycow.frostiful.test.icicle;
 
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.test.GameTest;
-import net.minecraft.test.TestContext;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.block.Blocks;
 
 @SuppressWarnings("unused")
 public final class IcicleBreakTests implements FabricGameTest {
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_arrow(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_arrow(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.ARROW);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_spectral_arrow(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_spectral_arrow(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.SPECTRAL_ARROW);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_glacial_arrow(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_glacial_arrow(GameTestHelper context) {
         strikeIcicleWithProjectile(context, FEntityTypes.GLACIAL_ARROW);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_snowball(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_snowball(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.SNOWBALL);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_trident(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_trident(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.TRIDENT);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_firework(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_firework(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.FIREWORK_ROCKET);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_fireball(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_fireball(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.FIREBALL);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_small_fireball(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_small_fireball(GameTestHelper context) {
         strikeIcicleWithProjectile(context, EntityType.SMALL_FIREBALL);
     }
 
-    @GameTest(templateName = "frostiful-test:icicle_tests.projectile_base")
-    public void icicles_break_when_struck_by_thrown_icicle(TestContext context) {
+    @GameTest(template = "frostiful-test:icicle_tests.projectile_base")
+    public void icicles_break_when_struck_by_thrown_icicle(GameTestHelper context) {
         strikeIcicleWithProjectile(context, FEntityTypes.THROWN_ICICLE);
     }
 
-    private static void strikeIcicleWithProjectile(TestContext context, EntityType<?> type) {
-        Entity entity = context.spawnEntity(type, 0, 7, 0);
-        entity.addVelocity(0.0, 0.0, 5.0);
-        context.expectBlockAtEnd(Blocks.AIR, 0, 7, 3);
+    private static void strikeIcicleWithProjectile(GameTestHelper context, EntityType<?> type) {
+        Entity entity = context.spawn(type, 0, 7, 0);
+        entity.push(0.0, 0.0, 5.0);
+        context.succeedWhenBlockPresent(Blocks.AIR, 0, 7, 3);
     }
 }

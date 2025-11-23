@@ -5,137 +5,136 @@ import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.passive.VillagerEntity;
-import net.minecraft.test.GameTest;
-import net.minecraft.test.TestContext;
-import net.minecraft.util.math.BlockPos;
-
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.npc.Villager;
+import net.minecraft.world.level.block.Block;
 import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public final class SunLichenCollisionTests implements FabricGameTest {
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void cool_lichen_does_not_damage(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void cool_lichen_does_not_damage(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
-        final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        context.assertEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
 
-        context.setBlockState(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
-        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.succeedWhenEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void hot_lichen_damages(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void hot_lichen_damages(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
-        final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
 
-        context.expectEntityWithData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
+        context.assertEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
 
-        context.setBlockState(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
-        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.succeedWhenEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void cold_lichen_does_not_warm(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void cold_lichen_does_not_warm(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
-        final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        final Function<VillagerEntity, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        final Function<Villager, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
 
         entity.thermoo$setTemperature(0);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, frostGetter, 0);
+        context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
 
-        context.setBlockState(pos, FBlocks.COLD_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.COLD_SUN_LICHEN.getDefaultState());
 
-        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, frostGetter, 0);
+        context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void sun_lichen_does_not_overheat(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void sun_lichen_does_not_overheat(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
-        final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        final Function<VillagerEntity, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        final Function<Villager, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
 
         int freezeAmount = -500;
         entity.thermoo$setTemperature(freezeAmount);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, frostGetter, freezeAmount);
+        context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, freezeAmount);
 
-        context.setBlockState(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
 
-        context.expectEntityWithDataEnd(pos, EntityType.VILLAGER, frostGetter, 0);
+        context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void warm_villager_is_burned_by_hot_sun_lichen(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void warm_villager_is_burned_by_hot_sun_lichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
         int temperature = 500;
-        MobEntity entity = setupWarmVillagerTest(context, pos, temperature);
+        Mob entity = setupWarmVillagerTest(context, pos, temperature);
 
-        context.setBlockState(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.getDefaultState());
 
-        context.waitAndRun(1L, () -> {
-            context.expectEntityWithData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
-            context.expectEntityWithData(pos, EntityType.VILLAGER, Entity::isOnFire, true);
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
+            context.assertEntityData(pos, EntityType.VILLAGER, Entity::isOnFire, true);
 
-            context.complete();
+            context.succeed();
         });
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void warm_villager_is_not_burned_by_cool_sun_lichen(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void warm_villager_is_not_burned_by_cool_sun_lichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 2, 1);
         int temperature = 500;
-        MobEntity entity = setupWarmVillagerTest(context, pos, temperature);
+        Mob entity = setupWarmVillagerTest(context, pos, temperature);
 
-        context.setBlockState(pos, FBlocks.COOL_SUN_LICHEN.getDefaultState());
+        context.setBlock(pos, FBlocks.COOL_SUN_LICHEN.getDefaultState());
 
-        context.waitAndRun(1L, () -> {
-            context.expectEntityWithData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
-            context.expectEntityWithData(pos, EntityType.VILLAGER, Entity::isOnFire, false);
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
+            context.assertEntityData(pos, EntityType.VILLAGER, Entity::isOnFire, false);
 
-            context.complete();
+            context.succeed();
         });
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void hot_lichen_warms(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void hot_lichen_warms(GameTestHelper context) {
         expectWarmLichenWarmsVillager(context, FBlocks.HOT_SUN_LICHEN);
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void warm_lichen_warms(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void warm_lichen_warms(GameTestHelper context) {
         expectWarmLichenWarmsVillager(context, FBlocks.WARM_SUN_LICHEN);
     }
 
-    @GameTest(batchId = "sunLichenCollision", templateName = "frostiful-test:sun_lichen_tests.platform")
-    public void cool_lichen_warms(TestContext context) {
+    @GameTest(batch = "sunLichenCollision", template = "frostiful-test:sun_lichen_tests.platform")
+    public void cool_lichen_warms(GameTestHelper context) {
         expectWarmLichenWarmsVillager(context, FBlocks.COOL_SUN_LICHEN);
     }
 
-    private static void expectWarmLichenWarmsVillager(TestContext context, Block warmLichen) {
+    private static void expectWarmLichenWarmsVillager(GameTestHelper context, Block warmLichen) {
         final BlockPos pos = new BlockPos(1, 2, 1);
 
-        final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
-        final Function<VillagerEntity, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        final Function<Villager, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
 
         int initialTemperature = -2000;
         entity.thermoo$setTemperature(initialTemperature);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, frostGetter, initialTemperature);
+        context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, initialTemperature);
 
-        context.setBlockState(pos, warmLichen.getDefaultState());
+        context.setBlock(pos, warmLichen.defaultBlockState());
 
-        context.waitAndRun(10, () -> {
-            context.addInstantFinalTask(() -> {
+        context.runAfterDelay(10, () -> {
+            context.succeedWhen(() -> {
                 context.assertTrue(
                         entity.thermoo$getTemperature() > -2000,
                         String.format(
@@ -148,21 +147,21 @@ public final class SunLichenCollisionTests implements FabricGameTest {
         });
     }
 
-    private static MobEntity setupWarmVillagerTest(TestContext context, BlockPos pos, int temperature) {
-        final MobEntity entity = context.spawnMob(EntityType.VILLAGER, pos);
+    private static Mob setupWarmVillagerTest(GameTestHelper context, BlockPos pos, int temperature) {
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
 
-        EntityAttributeInstance maxTemperature = entity.getAttributeInstance(ThermooAttributes.MAX_TEMPERATURE);
+        AttributeInstance maxTemperature = entity.getAttribute(ThermooAttributes.MAX_TEMPERATURE);
         context.assertFalse(maxTemperature == null, "Villager does not have a max temperature attribute");
-        maxTemperature.addTemporaryModifier(
-                new EntityAttributeModifier(
+        maxTemperature.addTransientModifier(
+                new AttributeModifier(
                         FrostifulGameTest.id("max_temperature"),
                         40,
-                        EntityAttributeModifier.Operation.ADD_VALUE
+                        AttributeModifier.Operation.ADD_VALUE
                 )
         );
 
         entity.thermoo$setTemperature(temperature);
-        context.expectEntityWithData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
+        context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
 
         return entity;
     }
