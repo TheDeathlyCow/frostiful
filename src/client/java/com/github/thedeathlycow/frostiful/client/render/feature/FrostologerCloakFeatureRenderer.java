@@ -4,31 +4,31 @@ import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Axis;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.OverlayTexture;
-import net.minecraft.client.render.RenderLayer;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RotationAxis;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
-public class FrostologerCloakFeatureRenderer extends FeatureRenderer<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> {
+public class FrostologerCloakFeatureRenderer extends RenderLayer<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> {
     public FrostologerCloakFeatureRenderer(
-            FeatureRendererContext<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> featureRendererContext
+            RenderLayerParent<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> featureRendererContext
     ) {
         super(featureRendererContext);
     }
 
     public void render(
-            MatrixStack matrixStack,
-            VertexConsumerProvider vertexConsumerProvider,
+            PoseStack matrixStack,
+            MultiBufferSource vertexConsumerProvider,
             int light,
             FrostologerEntity frostologer,
             float limbAngle,
@@ -40,37 +40,37 @@ public class FrostologerCloakFeatureRenderer extends FeatureRenderer<Frostologer
     ) {
         ItemStack cloak = frostologer.getEquippedStack(EquipmentSlot.CHEST);
 
-        if (!cloak.isOf(FItems.FROSTOLOGY_CLOAK)) {
+        if (!cloak.is(FItems.FROSTOLOGY_CLOAK)) {
             return;
         }
 
-        matrixStack.push();
+        matrixStack.pushPose();
         matrixStack.translate(0.0, 0.0, 3f / 16f);
-        double capeX = MathHelper.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - MathHelper.lerp(tickDelta, frostologer.prevX, frostologer.getX());
-        double capeY = MathHelper.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - MathHelper.lerp(tickDelta, frostologer.prevY, frostologer.getY());
-        double capeZ = MathHelper.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - MathHelper.lerp(tickDelta, frostologer.prevZ, frostologer.getZ());
+        double capeX = Mth.lerpInt(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerpInt(tickDelta, frostologer.prevX, frostologer.getX());
+        double capeY = Mth.lerpInt(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerpInt(tickDelta, frostologer.prevY, frostologer.getY());
+        double capeZ = Mth.lerpInt(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerpInt(tickDelta, frostologer.prevZ, frostologer.getZ());
         float yawDelta = frostologer.prevBodyYaw + (frostologer.bodyYaw - frostologer.prevBodyYaw);
-        double rotZ = MathHelper.sin(yawDelta * MathHelper.PI / 180);
-        double rotX = -MathHelper.cos(yawDelta * MathHelper.PI / 180);
-        float q = MathHelper.clamp((float) capeY * 10.0F, -6.0F, 32.0F);
-        float r = MathHelper.clamp((float) (capeX * rotZ + capeZ * rotX) * 100.0F, 0.0F, 150.0F);
-        float s = MathHelper.clamp((float) (capeX * rotX - capeZ * rotZ) * 100.0F, -20.0F, 20.0F);
+        double rotZ = Mth.sin(yawDelta * Mth.PI / 180);
+        double rotX = -Mth.cos(yawDelta * Mth.PI / 180);
+        float q = Mth.clamp((float) capeY * 10.0F, -6.0F, 32.0F);
+        float r = Mth.clamp((float) (capeX * rotZ + capeZ * rotX) * 100.0F, 0.0F, 150.0F);
+        float s = Mth.clamp((float) (capeX * rotX - capeZ * rotZ) * 100.0F, -20.0F, 20.0F);
 
         if (r < 0.0F) {
             r = 0.0F;
         }
 
-        float t = MathHelper.lerp(tickDelta, frostologer.prevStrideDistance, frostologer.strideDistance);
-        q += MathHelper.sin(MathHelper.lerp(tickDelta, frostologer.prevHorizontalSpeed, frostologer.horizontalSpeed) * 6.0F) * 32.0F * t;
+        float t = Mth.lerpInt(tickDelta, frostologer.prevStrideDistance, frostologer.strideDistance);
+        q += Mth.sin(Mth.lerpInt(tickDelta, frostologer.prevHorizontalSpeed, frostologer.horizontalSpeed) * 6.0F) * 32.0F * t;
         if (frostologer.isInSneakingPose()) {
             q += 25.0F;
         }
 
-        matrixStack.multiply(RotationAxis.POSITIVE_X.rotationDegrees(6.0F + r / 2.0F + q));
-        matrixStack.multiply(RotationAxis.POSITIVE_Z.rotationDegrees(s / 2.0F));
-        matrixStack.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(180.0F - s / 2.0F));
-        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderLayer.getEntitySolid(AbstractFrostologyCloakItem.MODEL_TEXTURE_ID));
-        this.getContextModel().forceRenderCloak(matrixStack, vertexConsumer, light, OverlayTexture.DEFAULT_UV);
-        matrixStack.pop();
+        matrixStack.mulPose(Axis.XP.rotationDegrees(6.0F + r / 2.0F + q));
+        matrixStack.mulPose(Axis.ZP.rotationDegrees(s / 2.0F));
+        matrixStack.mulPose(Axis.YP.rotationDegrees(180.0F - s / 2.0F));
+        VertexConsumer vertexConsumer = vertexConsumerProvider.getBuffer(RenderType.entitySolid(AbstractFrostologyCloakItem.MODEL_TEXTURE_ID));
+        this.getParentModel().forceRenderCloak(matrixStack, vertexConsumer, light, OverlayTexture.NO_OVERLAY);
+        matrixStack.popPose();
     }
 }

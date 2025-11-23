@@ -4,8 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.util.Identifier;
-
+import net.minecraft.resources.ResourceLocation;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
@@ -23,9 +22,9 @@ public enum FrostLayers {
             .toArray(FrostLayers[]::new);
 
     private final float maximumTemperatureScale;
-    private final Identifier texture;
+    private final ResourceLocation texture;
 
-    FrostLayers(float maximumTemperatureScale, Identifier texture) {
+    FrostLayers(float maximumTemperatureScale, ResourceLocation texture) {
         this.maximumTemperatureScale = maximumTemperatureScale;
         this.texture = texture;
     }
@@ -40,7 +39,7 @@ public enum FrostLayers {
         return NONE;
     }
 
-    public Identifier getTexture() {
+    public ResourceLocation getTexture() {
         return texture;
     }
 }

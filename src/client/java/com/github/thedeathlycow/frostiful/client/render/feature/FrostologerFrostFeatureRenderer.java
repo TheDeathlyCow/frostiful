@@ -2,27 +2,27 @@ package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.client.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
+import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.feature.FeatureRenderer;
-import net.minecraft.client.render.entity.feature.FeatureRendererContext;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class FrostologerFrostFeatureRenderer extends FeatureRenderer<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> {
+public class FrostologerFrostFeatureRenderer extends RenderLayer<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> {
 
     public FrostologerFrostFeatureRenderer(
-            FeatureRendererContext<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> context
+            RenderLayerParent<FrostologerEntity, FrostologerEntityModel<FrostologerEntity>> context
     ) {
         super(context);
     }
 
     @Override
     public void render(
-            MatrixStack matrices,
-            VertexConsumerProvider vertexConsumers,
+            PoseStack matrices,
+            MultiBufferSource vertexConsumers,
             int light,
             FrostologerEntity frostologer,
             float limbAngle, float limbDistance,
@@ -39,9 +39,9 @@ public class FrostologerFrostFeatureRenderer extends FeatureRenderer<Frostologer
             return;
         }
 
-        Identifier identifier = layer.getTexture();
-        FeatureRenderer.renderModel(
-                this.getContextModel(),
+        ResourceLocation identifier = layer.getTexture();
+        RenderLayer.renderColoredCutoutModel(
+                this.getParentModel(),
                 identifier,
                 matrices,
                 vertexConsumers,

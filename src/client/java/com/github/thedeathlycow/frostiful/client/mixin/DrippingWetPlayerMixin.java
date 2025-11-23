@@ -4,13 +4,13 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.Direction;
-import net.minecraft.world.World;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -19,17 +19,17 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.concurrent.ThreadLocalRandom;
 
-@Mixin(PlayerEntity.class)
+@Mixin(Player.class)
 @Environment(EnvType.CLIENT)
 public abstract class DrippingWetPlayerMixin extends LivingEntity {
 
     private static final float SLOW_DRIP_MULTIPLIER = 2.0f;
 
-    @Shadow protected boolean isSubmergedInWater;
+    @Shadow protected boolean wasUnderwater;
 
     @Shadow public abstract boolean isSpectator();
 
-    protected DrippingWetPlayerMixin(EntityType<? extends LivingEntity> entityType, World world) {
+    protected DrippingWetPlayerMixin(EntityType<? extends LivingEntity> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -45,8 +45,8 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             at = @At("TAIL")
     )
     private void dripParticles(CallbackInfo ci) {
-        World world = this.getWorld();
-        if (world.isClient) { // only show particles on client to save bandwidth
+        Level world = this.level();
+        if (world.isClientSide) { // only show particles on client to save bandwidth
 
             // Scorchful does the same thing - let it handle this
             if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID)) {
@@ -64,7 +64,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             }
 
             // only spawn particles when out of water
-            if (this.isSubmergedInWater || this.isWet()) {
+            if (this.wasUnderwater || this.isInWaterRainOrBubble()) {
                 return;
             }
 
@@ -79,12 +79,12 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             // Spawn drip with probability proportional to wetness scale
             if (SLOW_DRIP_MULTIPLIER * random.nextFloat() < this.thermoo$getSoakedScale()) {
 
-                Box boundingBox = this.getBoundingBox();
+                AABB boundingBox = this.getBoundingBox();
 
                 // pick random pos in player bounding box
-                double x = boundingBox.getMin(Direction.Axis.X) + random.nextDouble(boundingBox.getLengthX());
-                double y = boundingBox.getMin(Direction.Axis.Y) + random.nextDouble(boundingBox.getLengthY());
-                double z = boundingBox.getMin(Direction.Axis.Z) + random.nextDouble(boundingBox.getLengthZ());
+                double x = boundingBox.min(Direction.Axis.X) + random.nextDouble(boundingBox.getXsize());
+                double y = boundingBox.min(Direction.Axis.Y) + random.nextDouble(boundingBox.getYsize());
+                double z = boundingBox.min(Direction.Axis.Z) + random.nextDouble(boundingBox.getZsize());
 
                 world.addParticle(
                         ParticleTypes.FALLING_DRIPSTONE_WATER,

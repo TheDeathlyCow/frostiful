@@ -2,25 +2,25 @@ package com.github.thedeathlycow.frostiful.client;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector2i;
 
 public class FrozenHeartsOverlay {
 
-    public static final Identifier HEART_OVERLAY_TEXTURE = Frostiful.id("textures/gui/cold_heart_overlay.png");
+    public static final ResourceLocation HEART_OVERLAY_TEXTURE = Frostiful.id("textures/gui/cold_heart_overlay.png");
 
     private static final int TEXTURE_WIDTH = 18;
 
     private static final int TEXTURE_HEIGHT = 10;
 
     public static void afterHealthBar(
-            DrawContext context,
-            PlayerEntity player,
+            GuiGraphics context,
+            Player player,
             Vector2i[] heartPositions,
             int displayHealth,
             int maxDisplayHealth
@@ -42,7 +42,7 @@ public class FrozenHeartsOverlay {
             boolean isHalfHeart = i + 1 >= frozenHealthHearts && (frozenHealthPoints & 1) == 1; // is odd check
 
             int u = isHalfHeart ? 9 : 0;
-            context.drawTexture(
+            context.blit(
                     HEART_OVERLAY_TEXTURE,
                     pos.x, pos.y,
                     u, 0,
@@ -53,8 +53,8 @@ public class FrozenHeartsOverlay {
     }
 
     public static void afterMountHealthBar(
-            DrawContext context,
-            PlayerEntity player,
+            GuiGraphics context,
+            Player player,
             LivingEntity mount,
             Vector2i[] mountHeartPositions,
             int displayMountHealth,
@@ -76,7 +76,7 @@ public class FrozenHeartsOverlay {
 
             if (isHalfHeart) {
                 // flips the half heart around, since animal hearts are backwards
-                context.drawTexture(
+                context.blit(
                         HEART_OVERLAY_TEXTURE,
                         pos.x + 4, pos.y,
                         4, 0,
@@ -84,7 +84,7 @@ public class FrozenHeartsOverlay {
                         TEXTURE_WIDTH, TEXTURE_HEIGHT
                 );
             } else {
-                context.drawTexture(
+                context.blit(
                         HEART_OVERLAY_TEXTURE,
                         pos.x, pos.y,
                         0, 0,
@@ -102,7 +102,7 @@ public class FrozenHeartsOverlay {
 
     private static int getNumColdHeartsFromPoints(int frozenHealthPoints) {
         // number of whole hearts
-        return MathHelper.ceil(frozenHealthPoints / 2.0f);
+        return Mth.ceil(frozenHealthPoints / 2.0f);
     }
 
     private FrozenHeartsOverlay() {

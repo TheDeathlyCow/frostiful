@@ -4,22 +4,22 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.render.entity.EntityRendererFactory;
-import net.minecraft.client.render.entity.ProjectileEntityRenderer;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.renderer.entity.ArrowRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 
 @Environment(EnvType.CLIENT)
-public class ThrownIcicleEntityRenderer extends ProjectileEntityRenderer<ThrownIcicleEntity> {
+public class ThrownIcicleEntityRenderer extends ArrowRenderer<ThrownIcicleEntity> {
 
-    public static final Identifier TEXTURE = Frostiful.id("textures/entity/projectiles/thrown_icicle.png");
+    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/projectiles/thrown_icicle.png");
 
 
-    public ThrownIcicleEntityRenderer(EntityRendererFactory.Context context) {
+    public ThrownIcicleEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
     }
 
     @Override
-    public Identifier getTexture(ThrownIcicleEntity entity) {
+    public ResourceLocation getTexture(ThrownIcicleEntity entity) {
         return TEXTURE;
     }
 }

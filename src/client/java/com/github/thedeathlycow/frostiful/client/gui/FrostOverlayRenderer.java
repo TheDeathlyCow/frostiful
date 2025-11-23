@@ -5,15 +5,15 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.network.ClientPlayerEntity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlot;
 
 @Environment(EnvType.CLIENT)
 public final class FrostOverlayRenderer {
 
-    private static final Identifier POWDER_SNOW_OUTLINE = Identifier.ofVanilla("textures/misc/powder_snow_outline.png");
+    private static final ResourceLocation POWDER_SNOW_OUTLINE = ResourceLocation.withDefaultNamespace("textures/misc/powder_snow_outline.png");
 
     private FrostOverlayRenderer() {
     }
@@ -25,8 +25,8 @@ public final class FrostOverlayRenderer {
      * @param renderCallback A callback that renders the frost overlay texture
      */
     public static void renderFrostOverlay(
-            DrawContext context,
-            ClientPlayerEntity player,
+            GuiGraphics context,
+            LocalPlayer player,
             OverlayRenderCallback renderCallback
     ) {
         float freezeScale = player.thermoo$getTemperatureScale();
@@ -40,7 +40,7 @@ public final class FrostOverlayRenderer {
 
         // disable frost overlay when wearing frostology cloak
         boolean isOverlayDisabled = config.clientConfig.isDisableFrostOverlayWhenWearingFrostologyCloak()
-                && player.getEquippedStack(EquipmentSlot.CHEST).isOf(FItems.FROSTOLOGY_CLOAK);
+                && player.getItemBySlot(EquipmentSlot.CHEST).is(FItems.FROSTOLOGY_CLOAK);
 
         if (isOverlayDisabled) {
             return;

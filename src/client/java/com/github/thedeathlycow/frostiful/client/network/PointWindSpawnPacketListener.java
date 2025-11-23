@@ -7,18 +7,18 @@ import com.github.thedeathlycow.frostiful.survival.wind.PointWindSpawnStrategy;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.minecraft.client.world.ClientWorld;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.phys.Vec3;
 
 @Environment(EnvType.CLIENT)
 public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPayloadHandler<PointWindSpawnPacket> {
 
     private static final int PARTICLE_COUNT = 50;
 
-    private static final ParticleEffect[] WIND_PARTICLES = new ParticleEffect[]{
+    private static final ParticleOptions[] WIND_PARTICLES = new ParticleOptions[]{
             new WindParticleEffect(true),
             new WindParticleEffect(false),
             ParticleTypes.SNOWFLAKE,
@@ -33,28 +33,28 @@ public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPa
         });
     }
 
-    private static void displayWind(ClientWorld world, Vec3d pos) {
+    private static void displayWind(ClientLevel world, Vec3 pos) {
         for (int i = 0; i < PARTICLE_COUNT; i++) {
-            for (ParticleEffect particleEffect : WIND_PARTICLES) {
+            for (ParticleOptions particleEffect : WIND_PARTICLES) {
                 addParticle(particleEffect, world, pos);
             }
         }
 
-        world.playSound(
+        world.playLocalSound(
                 pos.x, pos.y, pos.z,
                 FSoundEvents.ENTITY_WIND_BLOW,
-                SoundCategory.AMBIENT,
+                SoundSource.AMBIENT,
                 0.75f,
                 0.9f + world.random.nextFloat() / 3,
                 true
         );
     }
 
-    private static void addParticle(ParticleEffect particleEffect, ClientWorld world, Vec3d origin) {
+    private static void addParticle(ParticleOptions particleEffect, ClientLevel world, Vec3 origin) {
         double vx = world.random.nextGaussian() * 0.02;
         double vy = world.random.nextGaussian() * 0.02;
         double vz = world.random.nextGaussian() * 0.02;
-        Vec3d rPos = PointWindSpawnStrategy.randomParticlePos(origin, world.random);
+        Vec3 rPos = PointWindSpawnStrategy.randomParticlePos(origin, world.random);
         world.addParticle(
                 particleEffect,
                 rPos.x, rPos.y, rPos.z,
