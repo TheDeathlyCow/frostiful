@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.mixins.block;
 
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
-import net.minecraft.block.entity.BannerPattern;
-import net.minecraft.block.entity.BannerPatterns;
-import net.minecraft.registry.Registerable;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.world.level.block.entity.BannerPattern;
+import net.minecraft.world.level.block.entity.BannerPatterns;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -20,7 +20,7 @@ public class BannerPatternsRegistryMixin {
             )
     )
     private static void registerFrostifulBannerPatterns(
-            Registerable<BannerPattern> registry, CallbackInfo ci
+            BootstrapContext<BannerPattern> registry, CallbackInfo ci
     ) {
         FBannerPatterns.bootstrap(registry);
     }

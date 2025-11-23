@@ -1,22 +1,21 @@
 package com.github.thedeathlycow.frostiful.item.attribute;
 
 import com.mojang.serialization.Codec;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.util.StringIdentifiable;
-import net.minecraft.util.Util;
-
 import java.util.EnumMap;
 import java.util.Map;
+import net.minecraft.Util;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ArmorItem;
 
-public enum FArmorType implements StringIdentifiable {
+public enum FArmorType implements StringRepresentable {
     HELMET(EquipmentSlot.HEAD, 1.5, 0.25, "helmet"),
     CHESTPLATE(EquipmentSlot.CHEST, 2.0, 0.5, "chestplate"),
     LEGGINGS(EquipmentSlot.LEGS, 1.0, 0.125, "leggings"),
     BOOTS(EquipmentSlot.FEET, 0.5, 0.125, "boots"),
     BODY(EquipmentSlot.BODY, 4.0, 1.0, "body");
 
-    public static final Codec<FArmorType> CODEC = StringIdentifiable.createBasicCodec(
+    public static final Codec<FArmorType> CODEC = StringRepresentable.fromValues(
             FArmorType::values
     );
 
@@ -64,7 +63,7 @@ public enum FArmorType implements StringIdentifiable {
     }
 
     @Override
-    public String asString() {
+    public String getSerializedName() {
         return this.name;
     }
 }

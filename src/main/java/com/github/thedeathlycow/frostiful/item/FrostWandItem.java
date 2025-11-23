@@ -6,168 +6,167 @@ import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.component.type.AttributeModifierSlot;
-import net.minecraft.component.type.AttributeModifiersComponent;
-import net.minecraft.component.type.ToolComponent;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.stat.Stats;
-import net.minecraft.util.Hand;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.util.UseAction;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-
 import java.util.List;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.stats.Stats;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.item.component.Tool;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 
 public class FrostWandItem extends Item {
 
-    public FrostWandItem(Settings settings) {
+    public FrostWandItem(Properties settings) {
         super(settings);
     }
 
-    public static AttributeModifiersComponent createAttributeModifiers() {
-        return AttributeModifiersComponent.builder()
+    public static ItemAttributeModifiers createAttributeModifiers() {
+        return ItemAttributeModifiers.builder()
                 .add(
-                        EntityAttributes.GENERIC_ATTACK_DAMAGE,
-                        new EntityAttributeModifier(
-                                BASE_ATTACK_DAMAGE_MODIFIER_ID,
+                        Attributes.ATTACK_DAMAGE,
+                        new AttributeModifier(
+                                BASE_ATTACK_DAMAGE_ID,
                                 5.0,
-                                EntityAttributeModifier.Operation.ADD_VALUE
+                                AttributeModifier.Operation.ADD_VALUE
                         ),
-                        AttributeModifierSlot.MAINHAND
+                        EquipmentSlotGroup.MAINHAND
                 )
                 .add(
-                        EntityAttributes.GENERIC_ATTACK_SPEED,
-                        new EntityAttributeModifier(
-                                BASE_ATTACK_SPEED_MODIFIER_ID,
+                        Attributes.ATTACK_SPEED,
+                        new AttributeModifier(
+                                BASE_ATTACK_SPEED_ID,
                                 -2.9f,
-                                EntityAttributeModifier.Operation.ADD_VALUE
+                                AttributeModifier.Operation.ADD_VALUE
                         ),
-                        AttributeModifierSlot.MAINHAND
+                        EquipmentSlotGroup.MAINHAND
                 )
                 .build();
     }
 
-    public static ToolComponent createToolComponent() {
-        return new ToolComponent(List.of(), 1.0f, 2);
+    public static Tool createToolComponent() {
+        return new Tool(List.of(), 1.0f, 2);
     }
 
 
     @Override
-    public boolean postHit(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
         return true;
     }
 
     @Override
-    public void postDamageEntity(ItemStack stack, LivingEntity target, LivingEntity attacker) {
-        stack.damage(1, attacker, EquipmentSlot.MAINHAND);
+    public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+        stack.hurtAndBreak(1, attacker, EquipmentSlot.MAINHAND);
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return ingredient.isOf(FItems.FROZEN_ROD);
+    public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
+        return ingredient.is(FItems.FROZEN_ROD);
     }
 
     @Override
-    public float getBonusAttackDamage(Entity target, float baseAttackDamage, DamageSource damageSource) {
-        Entity attacker = damageSource.getAttacker();
+    public float getAttackDamageBonus(Entity target, float baseAttackDamage, DamageSource damageSource) {
+        Entity attacker = damageSource.getEntity();
         boolean resetCooldown = target instanceof LivingEntity livingEntity
                 && FComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity).isRooted();
-        if (attacker instanceof PlayerEntity player && resetCooldown) {
-            player.getItemCooldownManager().set(this, 0);
+        if (attacker instanceof Player player && resetCooldown) {
+            player.getCooldowns().addCooldown(this, 0);
         }
 
-        return super.getBonusAttackDamage(target, baseAttackDamage, damageSource);
+        return super.getAttackDamageBonus(target, baseAttackDamage, damageSource);
     }
 
     @Override
-    public UseAction getUseAction(ItemStack stack) {
-        return UseAction.BOW;
+    public UseAnim getUseAnimation(ItemStack stack) {
+        return UseAnim.BOW;
     }
 
     @Override
-    public int getMaxUseTime(ItemStack stack, LivingEntity user) {
+    public int getUseDuration(ItemStack stack, LivingEntity user) {
         return 72000;
     }
 
     @Override
-    public boolean canMine(BlockState state, World world, BlockPos pos, PlayerEntity miner) {
+    public boolean canAttackBlock(BlockState state, Level world, BlockPos pos, Player miner) {
         return !miner.isCreative();
     }
 
     @Override
-    public void onStoppedUsing(ItemStack stack, World world, LivingEntity user, int remainingUseTicks) {
-        int useTime = this.getMaxUseTime(stack, user) - remainingUseTicks;
-        if (useTime > 10 && !world.isClient) {
+    public void releaseUsing(ItemStack stack, Level world, LivingEntity user, int remainingUseTicks) {
+        int useTime = this.getUseDuration(stack, user) - remainingUseTicks;
+        if (useTime > 10 && !world.isClientSide) {
             fireFrostSpell(stack, world, user);
         }
     }
 
-    public static void fireFrostSpell(ItemStack frostWandStack, World world, LivingEntity user) {
+    public static void fireFrostSpell(ItemStack frostWandStack, Level world, LivingEntity user) {
         FrostifulConfig config = Frostiful.getConfig();
 
         FrostSpellEntity spell = new FrostSpellEntity(
                 world,
                 user,
-                Vec3d.ZERO,
+                Vec3.ZERO,
                 config.combatConfig.getMaxFrostSpellDistance()
         );
 
-        spell.setVelocity(user, user.getPitch(), user.getHeadYaw(), 0.0f, 2.5f, 1.0f);
+        spell.shootFromRotation(user, user.getXRot(), user.getYHeadRot(), 0.0f, 2.5f, 1.0f);
 
-        world.spawnEntity(spell);
+        world.addFreshEntity(spell);
 
         spell.playSound(FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, 1f, 1f);
 
-        if (user instanceof PlayerEntity player) {
-            frostWandStack.damage(1, player, LivingEntity.getSlotForHand(player.getActiveHand()));
-            player.incrementStat(Stats.USED.getOrCreateStat(frostWandStack.getItem()));
-            player.getItemCooldownManager().set(frostWandStack.getItem(), config.combatConfig.getFrostWandCooldown());
+        if (user instanceof Player player) {
+            frostWandStack.hurtAndBreak(1, player, LivingEntity.getSlotForHand(player.getUsedItemHand()));
+            player.awardStat(Stats.ITEM_USED.get(frostWandStack.getItem()));
+            player.getCooldowns().addCooldown(frostWandStack.getItem(), config.combatConfig.getFrostWandCooldown());
         }
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        if (itemStack.getDamage() >= itemStack.getMaxDamage() - 1) {
-            return TypedActionResult.fail(itemStack);
+    public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+        ItemStack itemStack = user.getItemInHand(hand);
+        if (itemStack.getDamageValue() >= itemStack.getMaxDamage() - 1) {
+            return InteractionResultHolder.fail(itemStack);
         } else {
-            if (!world.isClient) {
+            if (!world.isClientSide) {
                 world.playSound(
                         null,
                         user.getX(), user.getY(), user.getZ(),
                         FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
-                        SoundCategory.PLAYERS,
+                        SoundSource.PLAYERS,
                         1.0f, 1.0f
                 );
             }
-            user.setCurrentHand(hand);
-            return TypedActionResult.consume(itemStack);
+            user.startUsingItem(hand);
+            return InteractionResultHolder.consume(itemStack);
         }
     }
 
     @Override
-    public boolean postMine(ItemStack stack, World world, BlockState state, BlockPos pos, LivingEntity miner) {
-        if (state.getHardness(world, pos) != 0.0f) {
-            stack.damage(2, miner, LivingEntity.getSlotForHand(miner.getActiveHand()));
+    public boolean mineBlock(ItemStack stack, Level world, BlockState state, BlockPos pos, LivingEntity miner) {
+        if (state.getDestroySpeed(world, pos) != 0.0f) {
+            stack.hurtAndBreak(2, miner, LivingEntity.getSlotForHand(miner.getUsedItemHand()));
         }
 
         return true;
     }
 
     @Override
-    public int getEnchantability() {
+    public int getEnchantmentValue() {
         return 15;
     }
 

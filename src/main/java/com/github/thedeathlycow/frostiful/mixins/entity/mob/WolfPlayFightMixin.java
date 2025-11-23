@@ -1,32 +1,32 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
 import com.github.thedeathlycow.frostiful.entity.ai.goal.WolfPlayfightGoal;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.passive.WolfEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.Wolf;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(WolfEntity.class)
-public abstract class WolfPlayFightMixin extends TameableEntity {
+@Mixin(Wolf.class)
+public abstract class WolfPlayFightMixin extends TamableAnimal {
 
 
-    protected WolfPlayFightMixin(EntityType<? extends TameableEntity> entityType, World world) {
+    protected WolfPlayFightMixin(EntityType<? extends TamableAnimal> entityType, Level world) {
         super(entityType, world);
     }
 
     @Inject(
-            method = "initGoals",
+            method = "registerGoals",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/ai/goal/GoalSelector;add(ILnet/minecraft/entity/ai/goal/Goal;)V",
+                    target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V",
                     ordinal = 0
             )
     )
     private void addPlayFightGoal(CallbackInfo ci) {
-        this.goalSelector.add(8, new WolfPlayfightGoal((WolfEntity) (Object) this, 8e-4f, 5e-3f));
+        this.goalSelector.addGoal(8, new WolfPlayfightGoal((Wolf) (Object) this, 8e-4f, 5e-3f));
     }
 }

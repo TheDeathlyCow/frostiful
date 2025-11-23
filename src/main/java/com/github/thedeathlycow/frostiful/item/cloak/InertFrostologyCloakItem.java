@@ -1,22 +1,21 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
 import com.github.thedeathlycow.frostiful.util.TextStyles;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.text.Text;
-
 import java.util.List;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 public class InertFrostologyCloakItem extends AbstractFrostologyCloakItem {
-    public InertFrostologyCloakItem(Settings settings) {
+    public InertFrostologyCloakItem(Properties settings) {
         super(settings);
     }
 
     @Override
-    public void appendTooltip(ItemStack stack, TooltipContext context, List<Text> tooltip, TooltipType type) {
-        super.appendTooltip(stack, context, tooltip, type);
+    public void appendHoverText(ItemStack stack, TooltipContext context, List<Component> tooltip, TooltipFlag type) {
+        super.appendHoverText(stack, context, tooltip, type);
         tooltip.add(
-                Text.translatable("item.frostiful.inert_frostology_cloak.tooltip")
+                Component.translatable("item.frostiful.inert_frostology_cloak.tooltip")
                         .setStyle(TextStyles.INERT_FROSTOLOGY_CLOAK_TOOLTIP)
         );
     }

@@ -8,36 +8,43 @@ import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.block.*;
-import net.minecraft.block.enums.Thickness;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.FallingBlockEntity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.projectile.ProjectileEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.DirectionProperty;
-import net.minecraft.state.property.EnumProperty;
-import net.minecraft.state.property.Properties;
-import net.minecraft.util.hit.BlockHitResult;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.util.shape.VoxelShape;
-import net.minecraft.util.shape.VoxelShapes;
-import net.minecraft.world.BlockView;
-import net.minecraft.world.World;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.item.FallingBlockEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.Fallable;
+import net.minecraft.world.level.block.PointedDripstoneBlock;
+import net.minecraft.world.level.block.SimpleWaterloggedBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.block.state.properties.DripstoneThickness;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -50,46 +57,46 @@ import java.util.function.Predicate;
  * Largely based on code from {@link PointedDripstoneBlock}.
  */
 @SuppressWarnings("deprecation")
-public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
+public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlock {
 
     /**
      * Icicles can point up and down
      */
-    public static final DirectionProperty VERTICAL_DIRECTION = Properties.VERTICAL_DIRECTION;
+    public static final DirectionProperty VERTICAL_DIRECTION = BlockStateProperties.VERTICAL_DIRECTION;
     /**
      * Icicles have varying levels of thickness
      */
-    public static final EnumProperty<Thickness> THICKNESS = Properties.THICKNESS;
+    public static final EnumProperty<DripstoneThickness> THICKNESS = BlockStateProperties.DRIPSTONE_THICKNESS;
     /**
      * Icicles can be waterlogged
      */
-    public static final BooleanProperty WATERLOGGED = Properties.WATERLOGGED;
+    public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
     /**
      * An unstable icicle is about to fall
      */
-    public static final BooleanProperty UNSTABLE = Properties.UNSTABLE;
+    public static final BooleanProperty UNSTABLE = BlockStateProperties.UNSTABLE;
 
-    private static final VoxelShape TIP_MERGE_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
-    private static final VoxelShape UP_TIP_SHAPE = Block.createCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 11.0D, 11.0D);
-    private static final VoxelShape DOWN_TIP_SHAPE = Block.createCuboidShape(5.0D, 5.0D, 5.0D, 11.0D, 16.0D, 11.0D);
-    private static final VoxelShape BASE_SHAPE = Block.createCuboidShape(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
-    private static final VoxelShape FRUSTUM_SHAPE = Block.createCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
-    private static final VoxelShape MIDDLE_SHAPE = Block.createCuboidShape(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
+    private static final VoxelShape TIP_MERGE_SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 16.0D, 11.0D);
+    private static final VoxelShape UP_TIP_SHAPE = Block.box(5.0D, 0.0D, 5.0D, 11.0D, 11.0D, 11.0D);
+    private static final VoxelShape DOWN_TIP_SHAPE = Block.box(5.0D, 5.0D, 5.0D, 11.0D, 16.0D, 11.0D);
+    private static final VoxelShape BASE_SHAPE = Block.box(4.0D, 0.0D, 4.0D, 12.0D, 16.0D, 12.0D);
+    private static final VoxelShape FRUSTUM_SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
+    private static final VoxelShape MIDDLE_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
-    private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformIntProvider.create(40, 80);
+    private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformInt.of(40, 80);
 
-    public IcicleBlock(Settings settings) {
+    public IcicleBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(this.stateManager.getDefaultState()
-                .with(VERTICAL_DIRECTION, Direction.UP)
-                .with(THICKNESS, Thickness.TIP)
-                .with(WATERLOGGED, false)
-                .with(UNSTABLE, false)
+        this.registerDefaultState(this.stateDefinition.any()
+                .setValue(VERTICAL_DIRECTION, Direction.UP)
+                .setValue(THICKNESS, DripstoneThickness.TIP)
+                .setValue(WATERLOGGED, false)
+                .setValue(UNSTABLE, false)
         );
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(VERTICAL_DIRECTION, THICKNESS, WATERLOGGED, UNSTABLE);
     }
 
@@ -102,8 +109,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @return Returns true if the icicle can be placed, false otherwise
      */
     @Override
-    public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
-        return canPlaceAtWithDirection(world, pos, state.get(VERTICAL_DIRECTION));
+    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+        return canPlaceAtWithDirection(world, pos, state.getValue(VERTICAL_DIRECTION));
     }
 
     /**
@@ -115,10 +122,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @param projectile The projectile that hit the icicle
      */
     @Override
-    public void onProjectileHit(World world, BlockState state, BlockHitResult hit, ProjectileEntity projectile) {
+    public void onProjectileHit(Level world, BlockState state, BlockHitResult hit, Projectile projectile) {
         BlockPos blockPos = hit.getBlockPos();
-        if (!world.isClient && projectile.canModifyAt(world, blockPos) && projectile.getVelocity().length() > 0.6D) {
-            world.breakBlock(blockPos, true);
+        if (!world.isClientSide && projectile.mayInteract(world, blockPos) && projectile.getDeltaMovement().length() > 0.6D) {
+            world.destroyBlock(blockPos, true);
         }
     }
 
@@ -132,10 +139,10 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @param fallDistance How far the entity fell
      */
     @Override
-    public void onLandedUpon(World world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
-        if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
+    public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, float fallDistance) {
+        if (state.getValue(VERTICAL_DIRECTION) == Direction.UP) {
             DamageSource damageSource = FDamageSources.getDamageSources(world).frostiful$icicle();
-            boolean tookDamage = entity.handleFallDamage(fallDistance + 2.0F, 2.0F, damageSource);
+            boolean tookDamage = entity.causeFallDamage(fallDistance + 2.0F, 2.0F, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
                 livingEntity.thermoo$addTemperature(
@@ -144,7 +151,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
                 );
             }
         } else {
-            super.onLandedUpon(world, state, pos, entity, fallDistance);
+            super.fallOn(world, state, pos, entity, fallDistance);
         }
     }
 
@@ -156,27 +163,27 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      */
     @Override
     @Nullable
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        WorldAccess worldAccess = ctx.getWorld();
-        BlockPos blockPos = ctx.getBlockPos();
-        Direction lookingDirection = ctx.getVerticalPlayerLookDirection().getOpposite();
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        LevelAccessor worldAccess = ctx.getLevel();
+        BlockPos blockPos = ctx.getClickedPos();
+        Direction lookingDirection = ctx.getNearestLookingVerticalDirection().getOpposite();
         Direction direction = getDirectionToPlaceAt(worldAccess, blockPos, lookingDirection);
         if (direction == null) {
             return null;
         }
 
-        Thickness thickness = getThickness(worldAccess, blockPos, direction, !ctx.shouldCancelInteraction());
+        DripstoneThickness thickness = getThickness(worldAccess, blockPos, direction, !ctx.isSecondaryUseActive());
 
         boolean unstable = false;
         if (direction == Direction.DOWN) {
-            BlockState state = worldAccess.getBlockState(blockPos.up());
+            BlockState state = worldAccess.getBlockState(blockPos.above());
             unstable = isUnstable(state) && isHeldByIcicle(state, worldAccess, blockPos);
         }
-        return thickness == null ? null : this.getDefaultState()
-                .with(VERTICAL_DIRECTION, direction)
-                .with(THICKNESS, thickness)
-                .with(WATERLOGGED, worldAccess.getFluidState(blockPos).getFluid() == Fluids.WATER)
-                .with(UNSTABLE, unstable);
+        return thickness == null ? null : this.defaultBlockState()
+                .setValue(VERTICAL_DIRECTION, direction)
+                .setValue(THICKNESS, thickness)
+                .setValue(WATERLOGGED, worldAccess.getFluidState(blockPos).getType() == Fluids.WATER)
+                .setValue(UNSTABLE, unstable);
     }
 
     /**
@@ -194,50 +201,50 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
      * @return Returns the updated {@link BlockState} of the icicle
      */
     @Override
-    public BlockState getStateForNeighborUpdate(BlockState state, Direction direction, BlockState neighborState, WorldAccess world, BlockPos pos, BlockPos neighborPos) {
-        if (state.get(WATERLOGGED)) {
-            world.scheduleFluidTick(pos, Fluids.WATER, Fluids.WATER.getTickRate(world));
+    public BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor world, BlockPos pos, BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED)) {
+            world.scheduleTick(pos, Fluids.WATER, Fluids.WATER.getTickDelay(world));
         }
 
         if (direction != Direction.UP && direction != Direction.DOWN) {
             return state;
         } else {
-            Direction pointingIn = state.get(VERTICAL_DIRECTION);
-            if (pointingIn == Direction.DOWN && world.getBlockTickScheduler().isQueued(pos, this)) {
+            Direction pointingIn = state.getValue(VERTICAL_DIRECTION);
+            if (pointingIn == Direction.DOWN && world.getBlockTicks().hasScheduledTick(pos, this)) {
                 return state;
-            } else if (direction == pointingIn.getOpposite() && !this.canPlaceAt(state, world, pos)) {
+            } else if (direction == pointingIn.getOpposite() && !this.canSurvive(state, world, pos)) {
                 if (pointingIn == Direction.DOWN) {
-                    world.scheduleBlockTick(pos, this, 2);
+                    world.scheduleTick(pos, this, 2);
                 } else {
-                    world.scheduleBlockTick(pos, this, 1);
+                    world.scheduleTick(pos, this, 1);
                 }
 
                 return state;
             } else {
-                boolean tryMerge = state.get(THICKNESS) == Thickness.TIP_MERGE;
-                Thickness thickness = getThickness(world, pos, pointingIn, tryMerge);
+                boolean tryMerge = state.getValue(THICKNESS) == DripstoneThickness.TIP_MERGE;
+                DripstoneThickness thickness = getThickness(world, pos, pointingIn, tryMerge);
 
                 boolean makeUnstable = isUnstable(state)
                         || (isHeldByIcicle(state, world, pos)
                         && isUnstable(neighborState)
                         && direction == Direction.UP);
 
-                return state.with(THICKNESS, thickness).with(UNSTABLE, makeUnstable);
+                return state.setValue(THICKNESS, thickness).setValue(UNSTABLE, makeUnstable);
             }
         }
     }
 
     @Override
-    public void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (isPointingUp(state) && !this.canPlaceAt(state, world, pos)) {
-            world.breakBlock(pos, true);
+    public void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (isPointingUp(state) && !this.canSurvive(state, world, pos)) {
+            world.destroyBlock(pos, true);
         } else {
             spawnFallingBlock(state, world, pos);
         }
     }
 
     @Override
-    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if (isPointingDown(state)) {
             FrostifulConfig config = Frostiful.getConfig();
             if (random.nextFloat() < config.icicleConfig.getBecomeUnstableChance() && isHeldByIcicleFallable(state, world, pos)) { // fall
@@ -251,64 +258,64 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     @Override
-    public void randomDisplayTick(BlockState state, World world, BlockPos pos, Random random) {
+    public void animateTick(BlockState state, Level world, BlockPos pos, RandomSource random) {
         if (isUnstable(state)) {
             createUnstableParticle(world, pos, state);
         }
     }
 
     @Override
-    public DamageSource getDamageSource(Entity attacker) {
-        return FDamageSources.getDamageSources(attacker.getWorld()).frostiful$fallingIcicle(attacker);
+    public DamageSource getFallDamageSource(Entity attacker) {
+        return FDamageSources.getDamageSources(attacker.level()).frostiful$fallingIcicle(attacker);
     }
 
     @Override
     public FluidState getFluidState(BlockState state) {
-        return Boolean.TRUE.equals(state.get(WATERLOGGED))
-                ? Fluids.WATER.getStill(false)
+        return Boolean.TRUE.equals(state.getValue(WATERLOGGED))
+                ? Fluids.WATER.getSource(false)
                 : super.getFluidState(state);
     }
 
     @Override
-    public VoxelShape getCullingShape(BlockState state, BlockView world, BlockPos pos) {
-        return VoxelShapes.empty();
+    public VoxelShape getOcclusionShape(BlockState state, BlockGetter world, BlockPos pos) {
+        return Shapes.empty();
     }
 
     @Override
-    public VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
-        Thickness thickness = state.get(THICKNESS);
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        DripstoneThickness thickness = state.getValue(THICKNESS);
         VoxelShape voxelShape;
-        if (thickness == Thickness.TIP_MERGE) {
+        if (thickness == DripstoneThickness.TIP_MERGE) {
             voxelShape = TIP_MERGE_SHAPE;
-        } else if (thickness == Thickness.TIP) {
-            if (state.get(VERTICAL_DIRECTION) == Direction.DOWN) {
+        } else if (thickness == DripstoneThickness.TIP) {
+            if (state.getValue(VERTICAL_DIRECTION) == Direction.DOWN) {
                 voxelShape = DOWN_TIP_SHAPE;
             } else {
                 voxelShape = UP_TIP_SHAPE;
             }
-        } else if (thickness == Thickness.FRUSTUM) {
+        } else if (thickness == DripstoneThickness.FRUSTUM) {
             voxelShape = BASE_SHAPE;
-        } else if (thickness == Thickness.MIDDLE) {
+        } else if (thickness == DripstoneThickness.MIDDLE) {
             voxelShape = FRUSTUM_SHAPE;
         } else {
             voxelShape = MIDDLE_SHAPE;
         }
 
-        Vec3d vec3d = state.getModelOffset(world, pos);
-        return voxelShape.offset(vec3d.x, 0.0D, vec3d.z);
+        Vec3 vec3d = state.getOffset(world, pos);
+        return voxelShape.move(vec3d.x, 0.0D, vec3d.z);
     }
 
     @Override
-    public boolean isShapeFullCube(BlockState state, BlockView world, BlockPos pos) {
+    public boolean isCollisionShapeFullBlock(BlockState state, BlockGetter world, BlockPos pos) {
         return false;
     }
 
     @Override
-    public float getMaxHorizontalModelOffset() {
+    public float getMaxHorizontalOffset() {
         return 0.125F;
     }
 
-    private Double getGrowChance(ServerWorld world) {
+    private Double getGrowChance(ServerLevel world) {
         FrostifulConfig config = Frostiful.getConfig();
         if (world.isThundering()) {
             return config.icicleConfig.getGrowChanceDuringThunder();
@@ -319,7 +326,7 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    private void tryFall(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    private void tryFall(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
 
         if (isUnstable(state) || isPointingUp(state)) {
             return;
@@ -327,18 +334,18 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
 
         BlockPos tipPos = getTipPos(state, world, pos, 25, false);
         if (tipPos != null) {
-            world.setBlockState(pos, state.with(UNSTABLE, true));
-            world.scheduleBlockTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL.get(random));
+            world.setBlockAndUpdate(pos, state.setValue(UNSTABLE, true));
+            world.scheduleTick(pos, this, UNSTABLE_TICKS_BEFORE_FALL.sample(random));
         }
     }
 
-    private void tryGrowIcicle(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+    private void tryGrowIcicle(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
 
         if (isUnstable(state) || isPointingUp(state)) {
             return;
         }
 
-        BlockPos anchorPos = pos.up();
+        BlockPos anchorPos = pos.above();
         BlockState anchor = world.getBlockState(anchorPos);
         if (canGrowIcicleOnAnchor(world, anchorPos, anchor)) {
             BlockPos tipPos = getTipPos(state, world, pos, 7, false);
@@ -351,8 +358,8 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    private static void tryGrowGroundIcicle(ServerWorld world, BlockPos pos) {
-        BlockPos.Mutable mutable = pos.mutableCopy();
+    private static void tryGrowGroundIcicle(ServerLevel world, BlockPos pos) {
+        BlockPos.MutableBlockPos mutable = pos.mutable();
 
         for (int i = 0; i < 10; ++i) {
             mutable.move(Direction.DOWN);
@@ -367,65 +374,65 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
             }
 
             if (canPlaceAtWithDirection(world, mutable, Direction.UP)) {
-                tryGrow(world, mutable.down(), Direction.UP);
+                tryGrow(world, mutable.below(), Direction.UP);
                 return;
             }
         }
     }
 
-    private static void tryGrow(ServerWorld world, BlockPos pos, Direction direction) {
-        BlockPos posGrowingInto = pos.offset(direction);
+    private static void tryGrow(ServerLevel world, BlockPos pos, Direction direction) {
+        BlockPos posGrowingInto = pos.relative(direction);
         BlockState stateGrowingInto = world.getBlockState(posGrowingInto);
         if (isTip(stateGrowingInto, direction.getOpposite())) {
             growMerged(stateGrowingInto, world, posGrowingInto);
-        } else if (stateGrowingInto.isAir() || stateGrowingInto.isOf(Blocks.WATER)) {
-            place(world, posGrowingInto, direction, Thickness.TIP);
+        } else if (stateGrowingInto.isAir() || stateGrowingInto.is(Blocks.WATER)) {
+            place(world, posGrowingInto, direction, DripstoneThickness.TIP);
         }
     }
 
-    private static void place(WorldAccess world, BlockPos pos, Direction direction, Thickness thickness) {
-        BlockState blockState = FBlocks.ICICLE.getDefaultState().with(VERTICAL_DIRECTION, direction).with(THICKNESS, thickness).with(WATERLOGGED, world.getFluidState(pos).getFluid() == Fluids.WATER);
-        world.setBlockState(pos, blockState, 3);
+    private static void place(LevelAccessor world, BlockPos pos, Direction direction, DripstoneThickness thickness) {
+        BlockState blockState = FBlocks.ICICLE.defaultBlockState().setValue(VERTICAL_DIRECTION, direction).setValue(THICKNESS, thickness).setValue(WATERLOGGED, world.getFluidState(pos).getType() == Fluids.WATER);
+        world.setBlock(pos, blockState, 3);
     }
 
-    private static void growMerged(BlockState state, WorldAccess world, BlockPos pos) {
+    private static void growMerged(BlockState state, LevelAccessor world, BlockPos pos) {
         BlockPos upperPos;
         BlockPos lowerPos;
-        if (state.get(VERTICAL_DIRECTION) == Direction.UP) {
+        if (state.getValue(VERTICAL_DIRECTION) == Direction.UP) {
             lowerPos = pos;
-            upperPos = pos.up();
+            upperPos = pos.above();
         } else {
             upperPos = pos;
-            lowerPos = pos.down();
+            lowerPos = pos.below();
         }
 
-        place(world, upperPos, Direction.DOWN, Thickness.TIP_MERGE);
-        place(world, lowerPos, Direction.UP, Thickness.TIP_MERGE);
+        place(world, upperPos, Direction.DOWN, DripstoneThickness.TIP_MERGE);
+        place(world, lowerPos, Direction.UP, DripstoneThickness.TIP_MERGE);
     }
 
     @Nullable
-    private static BlockPos getTipPos(BlockState state, WorldAccess world, BlockPos pos, int range, boolean allowMerged) {
+    private static BlockPos getTipPos(BlockState state, LevelAccessor world, BlockPos pos, int range, boolean allowMerged) {
         if (isTip(state, allowMerged)) {
             return pos;
         } else {
-            Direction direction = state.get(VERTICAL_DIRECTION);
+            Direction direction = state.getValue(VERTICAL_DIRECTION);
             BiPredicate<BlockPos, BlockState> continuePredicate = (posx, statex) -> {
-                return statex.isOf(FBlocks.ICICLE) && statex.get(VERTICAL_DIRECTION) == direction;
+                return statex.is(FBlocks.ICICLE) && statex.getValue(VERTICAL_DIRECTION) == direction;
             };
             Predicate<BlockState> stopPredicate = (statex) -> {
                 return isTip(statex, allowMerged);
             };
-            return searchInDirection(world, pos, direction.getDirection(), continuePredicate, stopPredicate, range).orElse(null);
+            return searchInDirection(world, pos, direction.getAxisDirection(), continuePredicate, stopPredicate, range).orElse(null);
         }
     }
 
     public static boolean isTipDown(BlockState state) {
-        return isPointingDown(state) && state.get(THICKNESS) == Thickness.TIP;
+        return isPointingDown(state) && state.getValue(THICKNESS) == DripstoneThickness.TIP;
     }
 
-    private static boolean canGrow(BlockState state, ServerWorld world, BlockPos pos) {
-        Direction direction = state.get(VERTICAL_DIRECTION);
-        BlockPos blockPos = pos.offset(direction);
+    private static boolean canGrow(BlockState state, ServerLevel world, BlockPos pos) {
+        Direction direction = state.getValue(VERTICAL_DIRECTION);
+        BlockPos blockPos = pos.relative(direction);
         BlockState blockState = world.getBlockState(blockPos);
         if (!blockState.getFluidState().isEmpty()) {
             return false;
@@ -434,28 +441,28 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         }
     }
 
-    private static boolean canGrowIcicleOnAnchor(ServerWorld world, BlockPos anchorPos, BlockState anchorState) {
+    private static boolean canGrowIcicleOnAnchor(ServerLevel world, BlockPos anchorPos, BlockState anchorState) {
 
         if (world.isRaining()) {
             Biome biome = world.getBiome(anchorPos).value();
-            return biome.isCold(anchorPos);
+            return biome.coldEnoughToSnow(anchorPos);
         }
 
-        return anchorState.isIn(FBlockTags.ICICLE_GROWABLE);
+        return anchorState.is(FBlockTags.ICICLE_GROWABLE);
     }
 
-    private static Optional<BlockPos> searchInDirection(WorldAccess world, BlockPos pos, Direction.AxisDirection direction, BiPredicate<BlockPos, BlockState> continuePredicate, Predicate<BlockState> stopPredicate, int range) {
+    private static Optional<BlockPos> searchInDirection(LevelAccessor world, BlockPos pos, Direction.AxisDirection direction, BiPredicate<BlockPos, BlockState> continuePredicate, Predicate<BlockState> stopPredicate, int range) {
         Direction toMove = Direction.get(direction, Direction.Axis.Y);
-        BlockPos.Mutable current = pos.mutableCopy();
+        BlockPos.MutableBlockPos current = pos.mutable();
 
         for (int i = 1; i < range; i++) {
             current.move(toMove);
             BlockState blockState = world.getBlockState(current);
             if (stopPredicate.test(blockState)) {
-                return Optional.of(current.toImmutable());
+                return Optional.of(current.immutable());
             }
 
-            if (world.isOutOfHeightLimit(current.getY()) || !continuePredicate.test(current, blockState)) {
+            if (world.isOutsideBuildHeight(current.getY()) || !continuePredicate.test(current, blockState)) {
                 return Optional.empty();
             }
         }
@@ -463,15 +470,15 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         return Optional.empty();
     }
 
-    private static boolean canPlaceAtWithDirection(WorldView world, BlockPos pos, Direction direction) {
-        BlockPos candidateAnchorPos = pos.offset(direction.getOpposite());
+    private static boolean canPlaceAtWithDirection(LevelReader world, BlockPos pos, Direction direction) {
+        BlockPos candidateAnchorPos = pos.relative(direction.getOpposite());
         BlockState candidateAnchorState = world.getBlockState(candidateAnchorPos);
-        return candidateAnchorState.isSideSolidFullSquare(world, candidateAnchorPos, direction)
+        return candidateAnchorState.isFaceSturdy(world, candidateAnchorPos, direction)
                 || isIcicleFacingDirection(candidateAnchorState, direction);
     }
 
     @Nullable
-    private static Direction getDirectionToPlaceAt(WorldView world, BlockPos pos, Direction direction) {
+    private static Direction getDirectionToPlaceAt(LevelReader world, BlockPos pos, Direction direction) {
         Direction toPlace;
         if (canPlaceAtWithDirection(world, pos, direction)) {
             toPlace = direction;
@@ -485,26 +492,26 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
         return toPlace;
     }
 
-    private static Thickness getThickness(WorldView world, BlockPos pos, Direction direction, boolean tryMerge) {
+    private static DripstoneThickness getThickness(LevelReader world, BlockPos pos, Direction direction, boolean tryMerge) {
         Direction direction2 = direction.getOpposite();
-        BlockState blockState = world.getBlockState(pos.offset(direction));
+        BlockState blockState = world.getBlockState(pos.relative(direction));
         if (isIcicleFacingDirection(blockState, direction2)) {
-            return !tryMerge && blockState.get(THICKNESS) != Thickness.TIP_MERGE ? Thickness.TIP : Thickness.TIP_MERGE;
+            return !tryMerge && blockState.getValue(THICKNESS) != DripstoneThickness.TIP_MERGE ? DripstoneThickness.TIP : DripstoneThickness.TIP_MERGE;
         } else if (!isIcicleFacingDirection(blockState, direction)) {
-            return Thickness.TIP;
+            return DripstoneThickness.TIP;
         } else {
-            Thickness thickness = blockState.get(THICKNESS);
-            if (thickness != Thickness.TIP && thickness != Thickness.TIP_MERGE) {
-                BlockState blockState2 = world.getBlockState(pos.offset(direction2));
-                return !isIcicleFacingDirection(blockState2, direction) ? Thickness.BASE : Thickness.MIDDLE;
+            DripstoneThickness thickness = blockState.getValue(THICKNESS);
+            if (thickness != DripstoneThickness.TIP && thickness != DripstoneThickness.TIP_MERGE) {
+                BlockState blockState2 = world.getBlockState(pos.relative(direction2));
+                return !isIcicleFacingDirection(blockState2, direction) ? DripstoneThickness.BASE : DripstoneThickness.MIDDLE;
             } else {
-                return Thickness.FRUSTUM;
+                return DripstoneThickness.FRUSTUM;
             }
         }
     }
 
     private static boolean isUnstable(BlockState state) {
-        return state.isOf(FBlocks.ICICLE) && state.get(UNSTABLE);
+        return state.is(FBlocks.ICICLE) && state.getValue(UNSTABLE);
     }
 
     private static boolean isPointingUp(BlockState state) {
@@ -516,48 +523,48 @@ public class IcicleBlock extends Block implements LandingBlock, Waterloggable {
     }
 
     private static boolean isIcicleFacingDirection(BlockState state, Direction direction) {
-        return state.isOf(FBlocks.ICICLE) && state.get(VERTICAL_DIRECTION) == direction;
+        return state.is(FBlocks.ICICLE) && state.getValue(VERTICAL_DIRECTION) == direction;
     }
 
     private static boolean isTip(BlockState state, Direction direction) {
-        return isTip(state, false) && state.get(VERTICAL_DIRECTION) == direction;
+        return isTip(state, false) && state.getValue(VERTICAL_DIRECTION) == direction;
     }
 
     private static boolean isTip(BlockState state, boolean allowMerged) {
-        if (!state.isOf(FBlocks.ICICLE)) {
+        if (!state.is(FBlocks.ICICLE)) {
             return false;
         } else {
-            Thickness thickness = state.get(THICKNESS);
-            return thickness == Thickness.TIP || (allowMerged && thickness == Thickness.TIP_MERGE);
+            DripstoneThickness thickness = state.getValue(THICKNESS);
+            return thickness == DripstoneThickness.TIP || (allowMerged && thickness == DripstoneThickness.TIP_MERGE);
         }
     }
 
-    private static void spawnFallingBlock(BlockState state, ServerWorld world, BlockPos pos) {
-        BlockPos.Mutable current = pos.mutableCopy();
+    private static void spawnFallingBlock(BlockState state, ServerLevel world, BlockPos pos) {
+        BlockPos.MutableBlockPos current = pos.mutable();
 
         for (BlockState blockState = state; isPointingDown(blockState); blockState = world.getBlockState(current)) {
-            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.spawnFromBlock(world, current, blockState);
+            FallingBlockEntity fallingBlockEntity = FallingBlockEntity.fall(world, current, blockState);
             fallingBlockEntity.dropItem = false;
             ((FallingBlockEntityAccessor) fallingBlockEntity).frostiful$setDestroyOnLanding(true);
             if (isTip(blockState, true)) {
                 float fallHurtAmount = Math.max(1 + pos.getY() - current.getY(), 6);
-                fallingBlockEntity.setHurtEntities(fallHurtAmount, 40);
+                fallingBlockEntity.setHurtsEntities(fallHurtAmount, 40);
             }
 
             current.move(Direction.DOWN);
         }
     }
 
-    private static boolean isHeldByIcicleFallable(BlockState state, WorldView world, BlockPos pos) {
-        return !(world.getBlockState(pos.up()).isIn(FBlockTags.ICICLE_GROWABLE)) || isHeldByIcicle(state, world, pos);
+    private static boolean isHeldByIcicleFallable(BlockState state, LevelReader world, BlockPos pos) {
+        return !(world.getBlockState(pos.above()).is(FBlockTags.ICICLE_GROWABLE)) || isHeldByIcicle(state, world, pos);
     }
 
-    private static boolean isHeldByIcicle(BlockState state, WorldView world, BlockPos pos) {
-        return isPointingDown(state) && world.getBlockState(pos.up()).isOf(FBlocks.ICICLE);
+    private static boolean isHeldByIcicle(BlockState state, LevelReader world, BlockPos pos) {
+        return isPointingDown(state) && world.getBlockState(pos.above()).is(FBlocks.ICICLE);
     }
 
-    private static void createUnstableParticle(World world, BlockPos pos, BlockState state) {
-        Vec3d vec3d = state.getModelOffset(world, pos);
+    private static void createUnstableParticle(Level world, BlockPos pos, BlockState state) {
+        Vec3 vec3d = state.getOffset(world, pos);
         double xOffset = (double) pos.getX() + 0.5D + vec3d.x;
         double yOffset = (double) ((float) (pos.getY() + 1) - 0.6875F) - 0.0625D;
         double zOffset = (double) pos.getZ() + 0.5D + vec3d.z;

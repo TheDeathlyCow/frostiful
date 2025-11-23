@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.item.attribute;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public record FrostResistanceComponent(
     double frostResistanceMultiplier,
@@ -21,10 +21,10 @@ public record FrostResistanceComponent(
             ).apply(instance, FrostResistanceComponent::new)
     );
 
-    public static final PacketCodec<ByteBuf, FrostResistanceComponent> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.DOUBLE,
+    public static final StreamCodec<ByteBuf, FrostResistanceComponent> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.DOUBLE,
             FrostResistanceComponent::frostResistanceMultiplier,
-            PacketCodecs.DOUBLE,
+            ByteBufCodecs.DOUBLE,
             FrostResistanceComponent::environmentFrostResistanceMultiplier,
             FrostResistanceComponent::new
     );

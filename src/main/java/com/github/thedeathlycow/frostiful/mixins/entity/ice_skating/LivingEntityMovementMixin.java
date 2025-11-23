@@ -6,19 +6,19 @@ import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.BlockTags;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.util.profiler.Profiler;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.util.profiling.ProfilerFiller;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Debug;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -36,12 +36,12 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
 
     @Shadow
-    public abstract ItemStack getEquippedStack(EquipmentSlot var1);
+    public abstract ItemStack getItemBySlot(EquipmentSlot var1);
 
     @Shadow
-    protected abstract float getVelocityMultiplier();
+    protected abstract float getBlockSpeedFactor();
 
-    public LivingEntityMovementMixin(EntityType<?> type, World world) {
+    public LivingEntityMovementMixin(EntityType<?> type, Level world) {
         super(type, world);
     }
 
@@ -86,7 +86,7 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     @Override
     @Unique
     public boolean frostiful$isWearingSkates() {
-        return this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES);
+        return this.getItemBySlot(EquipmentSlot.FEET).is(FItemTags.ICE_SKATES);
     }
 
     @Override
@@ -96,19 +96,19 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     }
 
     @Inject(
-            method = "tickMovement",
+            method = "aiStep",
             at = @At("TAIL")
     )
     private void updateIsIceSkating(CallbackInfo ci) {
 
-        World world = this.getWorld();
-        Profiler profiler = world.getProfiler();
+        Level world = this.level();
+        ProfilerFiller profiler = world.getProfiler();
         profiler.push("frostiful.ice_skate_tick");
 
-        BlockState velocityAffectingBlock = world.getBlockState(this.getVelocityAffectingPos());
+        BlockState velocityAffectingBlock = world.getBlockState(this.getBlockPosBelowThatAffectsMyMovement());
 
         this.frostiful$setSkating(
-                velocityAffectingBlock.isIn(BlockTags.ICE)
+                velocityAffectingBlock.is(BlockTags.ICE)
                         && IceSkater.frostiful$isInSkatingPose(this)
                         && this.frostiful$isWearingSkates()
         );
@@ -116,8 +116,8 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
         this.updateSlowness(velocityAffectingBlock);
 
         if (this.frostiful$isIceSkating() && IceSkater.frostiful$isMoving(this)) {
-            this.spawnSprintingParticles();
-            if (this.isSneaking()) {
+            this.spawnSprintParticle();
+            if (this.isShiftKeyDown()) {
                 this.applyStopEffects(velocityAffectingBlock);
             }
         }
@@ -129,12 +129,12 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
             method = "travel",
             at = @At(
                     value = "INVOKE_ASSIGN",
-                    target = "Lnet/minecraft/entity/LivingEntity;isOnGround()Z"
+                    target = "Lnet/minecraft/world/entity/LivingEntity;onGround()Z"
             ),
             slice = @Slice(
                     from = @At(
                             value = "INVOKE",
-                            target = "Lnet/minecraft/block/Block;getSlipperiness()F"
+                            target = "Lnet/minecraft/world/level/block/Block;getFriction()F"
                     )
             )
     )
@@ -146,38 +146,38 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
     }
 
     @Inject(
-            method = "applyMovementInput",
+            method = "handleRelativeFrictionAndCalculateMovement",
             at = @At("HEAD")
     )
-    private void updateGliding(Vec3d movementInput, float slipperiness, CallbackInfoReturnable<Vec3d> cir) {
-        this.frostiful$setSkateFlag(FROSTIFUL_IS_GLIDING_INDEX, movementInput.horizontalLengthSquared() < 1e-3);
+    private void updateGliding(Vec3 movementInput, float slipperiness, CallbackInfoReturnable<Vec3> cir) {
+        this.frostiful$setSkateFlag(FROSTIFUL_IS_GLIDING_INDEX, movementInput.horizontalDistanceSqr() < 1e-3);
     }
 
     @Inject(
-            method = "pushAwayFrom",
+            method = "push(Lnet/minecraft/world/entity/Entity;)V",
             at = @At("HEAD")
     )
     private void damageOnLandingUponEntity(Entity entity, CallbackInfo ci) {
 
-        if (!this.getEquippedStack(EquipmentSlot.FEET).isIn(FItemTags.ICE_SKATES)) {
+        if (!this.getItemBySlot(EquipmentSlot.FEET).is(FItemTags.ICE_SKATES)) {
             return;
         }
 
         if (entity instanceof LivingEntity target) {
-            double attackerHeight = this.getPos().y;
-            double targetEyeHeight = target.getEyePos().y;
+            double attackerHeight = this.position().y;
+            double targetEyeHeight = target.getEyePosition().y;
             if (attackerHeight > targetEyeHeight) {
-                FDamageSources damageSources = FDamageSources.getDamageSources(this.getWorld());
-                target.damage(damageSources.frostiful$iceSkate(this), 1.0f);
+                FDamageSources damageSources = FDamageSources.getDamageSources(this.level());
+                target.hurt(damageSources.frostiful$iceSkate(this), 1.0f);
             }
         }
     }
 
     private void updateSlowness(BlockState velocityAffectingBlock) {
 
-        boolean shouldBeSlowed = this.isOnGround()
+        boolean shouldBeSlowed = this.onGround()
                 && this.frostiful$isWearingSkates()
-                && !velocityAffectingBlock.isIn(BlockTags.ICE);
+                && !velocityAffectingBlock.is(BlockTags.ICE);
 
         if (shouldBeSlowed != frostiful$wasSlowed) {
             IceSkater.frostiful$updateSkateWalkPenalityModifier((LivingEntity) (Object) this, shouldBeSlowed);
@@ -190,15 +190,15 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
         float pitch = this.random.nextFloat() * 0.75f + 0.5f;
         this.playSound(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, 1.0f, pitch);
 
-        World world = this.getWorld();
+        Level world = this.level();
 
-        if (!world.isClient) {
+        if (!world.isClientSide) {
             return;
         }
-        ParticleEffect iceParticles = new BlockStateParticleEffect(ParticleTypes.BLOCK, velocityAffectingBlock);
+        ParticleOptions iceParticles = new BlockParticleOption(ParticleTypes.BLOCK, velocityAffectingBlock);
 
-        Vec3d velocity = this.getVelocity();
-        Vec3d pos = this.getPos();
+        Vec3 velocity = this.getDeltaMovement();
+        Vec3 pos = this.position();
 
         for (int i = 0; i < 25; i++) {
             world.addParticle(

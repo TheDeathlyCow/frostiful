@@ -5,22 +5,21 @@ import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.google.common.base.Suppliers;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffectInstance;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.tooltip.TooltipType;
-import net.minecraft.registry.Registries;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-
 import java.util.List;
 import java.util.function.Supplier;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
 
 public class FoodIntegration {
 
-    private static final Supplier<Text> TOOLTIP = Suppliers.memoize(
-            () -> Text.translatable("item.frostiful.warming.tooltip").setStyle(TextStyles.WARMING_TOOLTIP)
+    private static final Supplier<Component> TOOLTIP = Suppliers.memoize(
+            () -> Component.translatable("item.frostiful.warming.tooltip").setStyle(TextStyles.WARMING_TOOLTIP)
     );
 
     public static void onConsumeFood(ItemStack stack, LivingEntity user) {
@@ -32,8 +31,8 @@ public class FoodIntegration {
     public static void appendWarmthTooltip(
             ItemStack stack,
             Item.TooltipContext context,
-            TooltipType tooltipType,
-            List<Text> tooltip
+            TooltipFlag tooltipType,
+            List<Component> tooltip
     ) {
         if (isWarmingFood(stack)) {
             if (tooltipType.isAdvanced()) {
@@ -45,17 +44,17 @@ public class FoodIntegration {
     }
 
     private static boolean isWarmingFood(ItemStack stack) {
-        return stack.isIn(FItemTags.WARM_FOODS);
+        return stack.is(FItemTags.WARM_FOODS);
     }
 
     private static void applyWarmthFromFood(LivingEntity user) {
         int duration = Frostiful.getConfig().freezingConfig.getWarmFoodWarmthTime();
-        user.addStatusEffect(new StatusEffectInstance(FStatusEffects.WARMTH, duration));
+        user.addEffect(new MobEffectInstance(FStatusEffects.WARMTH, duration));
     }
 
-    private static void addTooltipBeforeAdvanced(ItemStack stack, List<Text> tooltip) {
-        Identifier identifier = Registries.ITEM.getId(stack.getItem());
-        Text idAsText = Text.literal(identifier.toString());
+    private static void addTooltipBeforeAdvanced(ItemStack stack, List<Component> tooltip) {
+        ResourceLocation identifier = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Component idAsText = Component.literal(identifier.toString());
 
         for (int i = tooltip.size() - 1; i >= 0; i--) {
             if (tooltip.get(i).contains(idAsText)) {

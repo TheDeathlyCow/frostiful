@@ -1,17 +1,16 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityPose;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.attribute.EntityAttributeInstance;
-import net.minecraft.entity.attribute.EntityAttributeModifier;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.util.Identifier;
-
 import java.util.EnumSet;
 import java.util.Set;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.level.block.Block;
 
 public interface IceSkater {
 
@@ -28,14 +27,14 @@ public interface IceSkater {
     }
 
     static void frostiful$updateSkateWalkPenalityModifier(LivingEntity entity, boolean shouldBeSlowed) {
-        EntityAttributeInstance movementSpeed = entity.getAttributeInstance(EntityAttributes.GENERIC_MOVEMENT_SPEED);
+        AttributeInstance movementSpeed = entity.getAttribute(Attributes.MOVEMENT_SPEED);
         if (movementSpeed == null) {
             return;
         }
 
         movementSpeed.removeModifier(IceSkaterSettings.SKATE_WALK_PENALITY_ID);
         if (shouldBeSlowed) {
-            movementSpeed.addTemporaryModifier(IceSkaterSettings.SKATE_WALK_PENALTY);
+            movementSpeed.addTransientModifier(IceSkaterSettings.SKATE_WALK_PENALTY);
         }
     }
 
@@ -48,12 +47,12 @@ public interface IceSkater {
      * @return Returns true if the speed of the entity is greater than or equal to {@link IceSkaterSettings#MIN_SPEED}
      */
     static boolean frostiful$isMoving(Entity entity) {
-        return entity.getVelocity().lengthSquared() >= IceSkaterSettings.MIN_SPEED * IceSkaterSettings.MIN_SPEED;
+        return entity.getDeltaMovement().lengthSqr() >= IceSkaterSettings.MIN_SPEED * IceSkaterSettings.MIN_SPEED;
     }
 
     /**
      * Gets the block slipperiness value for an entity that is ice skating. Value is used the same as in
-     * {@link Block#getSlipperiness()}, but for entities that are skating on ice. Entities may have different slipperiness
+     * {@link Block#getFriction()}, but for entities that are skating on ice. Entities may have different slipperiness
      * values depending on what they are doing, such as sneaking or sprinting.
      * <p>
      * Pre-condition: THe given entity is ice skating.
@@ -63,7 +62,7 @@ public interface IceSkater {
      */
     static float frostiful$getSlipperinessForEntity(Entity entity) {
         float slipperiness;
-        if (entity.isSneaking()) {
+        if (entity.isShiftKeyDown()) {
             slipperiness = IceSkaterSettings.BRAKE_SLIPPERINESS;
         } else if (entity.isSprinting()) {
             slipperiness = IceSkaterSettings.SPRINT_SLIPPERINESS;
@@ -81,15 +80,15 @@ public interface IceSkater {
         private static final float SPRINT_SLIPPERINESS = 1.078f;
         private static final float BRAKE_SLIPPERINESS = 1.0f;
 
-        private static final Identifier SKATE_WALK_PENALITY_ID = Frostiful.id("gameplay.skate_walk_penalty");
+        private static final ResourceLocation SKATE_WALK_PENALITY_ID = Frostiful.id("gameplay.skate_walk_penalty");
 
-        private static final EntityAttributeModifier SKATE_WALK_PENALTY = new EntityAttributeModifier(
+        private static final AttributeModifier SKATE_WALK_PENALTY = new AttributeModifier(
                 SKATE_WALK_PENALITY_ID,
                 -0.5,
-                EntityAttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
         );
 
-        private static final Set<EntityPose> VALID_POSES_FOR_SKATING = EnumSet.of(EntityPose.STANDING, EntityPose.CROUCHING);
+        private static final Set<Pose> VALID_POSES_FOR_SKATING = EnumSet.of(Pose.STANDING, Pose.CROUCHING);
 
         private IceSkaterSettings() {
         }

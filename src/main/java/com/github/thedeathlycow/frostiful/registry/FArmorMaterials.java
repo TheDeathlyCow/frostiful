@@ -2,25 +2,24 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.ArmorMaterial;
-import net.minecraft.item.Items;
-import net.minecraft.recipe.Ingredient;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Util;
-
 import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Supplier;
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 
 public class FArmorMaterials {
 
 
-    public static final RegistryEntry<ArmorMaterial> FUR = register(
+    public static final Holder<ArmorMaterial> FUR = register(
             "fur",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 1);
@@ -32,10 +31,10 @@ public class FArmorMaterials {
             FSoundEvents.ITEM_ARMOR_EQUIP_FUR,
             0,
             0,
-            () -> Ingredient.fromTag(FItemTags.FUR)
+            () -> Ingredient.of(FItemTags.FUR)
     );
 
-    public static final RegistryEntry<ArmorMaterial> FUR_LINED_CHAINMAIL = register(
+    public static final Holder<ArmorMaterial> FUR_LINED_CHAINMAIL = register(
             "fur_lined_chainmail",
             Util.make(new EnumMap<>(ArmorItem.Type.class), map -> {
                 map.put(ArmorItem.Type.BOOTS, 2);
@@ -44,10 +43,10 @@ public class FArmorMaterials {
                 map.put(ArmorItem.Type.HELMET, 2);
             }),
             12,
-            SoundEvents.ITEM_ARMOR_EQUIP_CHAIN,
+            SoundEvents.ARMOR_EQUIP_CHAIN,
             0,
             0,
-            () -> Ingredient.ofItems(Items.IRON_INGOT)
+            () -> Ingredient.of(Items.IRON_INGOT)
     );
 
 
@@ -55,11 +54,11 @@ public class FArmorMaterials {
         Frostiful.LOGGER.debug("Initialized Frostiful armor materials");
     }
 
-    private static RegistryEntry<ArmorMaterial> register(
+    private static Holder<ArmorMaterial> register(
             String id,
             EnumMap<ArmorItem.Type, Integer> defense,
             int enchantability,
-            RegistryEntry<SoundEvent> equipSound,
+            Holder<SoundEvent> equipSound,
             float toughness,
             float knockbackResistance,
             Supplier<Ingredient> repairIngredient
@@ -68,11 +67,11 @@ public class FArmorMaterials {
         return register(id, defense, enchantability, equipSound, toughness, knockbackResistance, repairIngredient, list);
     }
 
-    private static RegistryEntry<ArmorMaterial> register(
+    private static Holder<ArmorMaterial> register(
             String id,
             EnumMap<ArmorItem.Type, Integer> defense,
             int enchantability,
-            RegistryEntry<SoundEvent> equipSound,
+            Holder<SoundEvent> equipSound,
             float toughness,
             float knockbackResistance,
             Supplier<Ingredient> repairIngredient,
@@ -84,8 +83,8 @@ public class FArmorMaterials {
             defenses.put(type, defense.get(type));
         }
 
-        return Registry.registerReference(
-                Registries.ARMOR_MATERIAL,
+        return Registry.registerForHolder(
+                BuiltInRegistries.ARMOR_MATERIAL,
                 Frostiful.id(id),
                 new ArmorMaterial(
                         defenses,

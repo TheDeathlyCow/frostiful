@@ -4,31 +4,30 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import dev.emi.trinkets.api.TrinketsApi;
-import net.minecraft.block.DispenserBlock;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ArmorItem;
-import net.minecraft.item.Equipment;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.Hand;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.TypedActionResult;
-import net.minecraft.world.World;
-
 import java.util.function.Predicate;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.Equipable;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.DispenserBlock;
 
-public abstract class AbstractFrostologyCloakItem extends Item implements Equipment {
+public abstract class AbstractFrostologyCloakItem extends Item implements Equipable {
 
-    public static final Identifier MODEL_TEXTURE_ID = Frostiful.id("textures/entity/frostology_cloak.png");
+    public static final ResourceLocation MODEL_TEXTURE_ID = Frostiful.id("textures/entity/frostology_cloak.png");
 
-    public AbstractFrostologyCloakItem(Settings settings) {
+    public AbstractFrostologyCloakItem(Properties settings) {
         super(settings);
-        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSER_BEHAVIOR);
+        DispenserBlock.registerBehavior(this, ArmorItem.DISPENSE_ITEM_BEHAVIOR);
     }
 
-    public static boolean isWearing(PlayerEntity player, Predicate<ItemStack> isCloak) {
+    public static boolean isWearing(Player player, Predicate<ItemStack> isCloak) {
         if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
             boolean trinket = TrinketsApi.getTrinketComponent(player)
                     .map(trinketComponent -> trinketComponent.isEquipped(isCloak))
@@ -40,7 +39,7 @@ public abstract class AbstractFrostologyCloakItem extends Item implements Equipm
         }
 
         ItemStack chestStack = player.getInventory()
-                .getArmorStack(EquipmentSlot.CHEST.getEntitySlotId());
+                .getArmor(EquipmentSlot.CHEST.getIndex());
         return isCloak.test(chestStack);
     }
 
@@ -49,17 +48,17 @@ public abstract class AbstractFrostologyCloakItem extends Item implements Equipm
     }
 
     @Override
-    public boolean canRepair(ItemStack stack, ItemStack ingredient) {
-        return ingredient.isIn(FItemTags.FUR);
+    public boolean isValidRepairItem(ItemStack stack, ItemStack ingredient) {
+        return ingredient.is(FItemTags.FUR);
     }
 
     @Override
-    public TypedActionResult<ItemStack> use(World world, PlayerEntity user, Hand hand) {
-        return this.equipAndSwap(this, world, user, hand);
+    public InteractionResultHolder<ItemStack> use(Level world, Player user, InteractionHand hand) {
+        return this.swapWithEquipmentSlot(this, world, user, hand);
     }
 
     @Override
-    public EquipmentSlot getSlotType() {
+    public EquipmentSlot getEquipmentSlot() {
         return EquipmentSlot.CHEST;
     }
 }

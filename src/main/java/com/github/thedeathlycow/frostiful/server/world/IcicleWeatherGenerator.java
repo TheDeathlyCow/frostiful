@@ -5,24 +5,23 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.ChunkPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.Heightmap;
-import net.minecraft.world.LightType;
-import net.minecraft.world.chunk.WorldChunk;
-
 import java.util.function.Predicate;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.level.ChunkPos;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.levelgen.Heightmap;
 
 public final class IcicleWeatherGenerator {
 
-    public static void tickIciclesForChunk(ServerWorld world, WorldChunk chunk, int randomTickSpeed) {
+    public static void tickIciclesForChunk(ServerLevel world, LevelChunk chunk, int randomTickSpeed) {
 
-        final Random random = world.random;
+        final RandomSource random = world.random;
 
         IcicleConfigGroup icicleConfig = Frostiful.getConfig().icicleConfig;
         if (!icicleConfig.iciclesFormInWeather()) {
@@ -39,34 +38,34 @@ public final class IcicleWeatherGenerator {
         }
 
         final ChunkPos chunkPos = chunk.getPos();
-        final BlockPos startPos = world.getTopPosition(
-                Heightmap.Type.WORLD_SURFACE,
-                world.getRandomPosInChunk(chunkPos.getStartX(), 0, chunkPos.getStartZ(), 15)
+        final BlockPos startPos = world.getHeightmapPos(
+                Heightmap.Types.WORLD_SURFACE,
+                world.getBlockRandomPos(chunkPos.getMinBlockX(), 0, chunkPos.getMinBlockZ(), 15)
         );
 
-        if (world.getBiome(startPos).value().doesNotSnow(startPos)) {
+        if (world.getBiome(startPos).value().warmEnoughToRain(startPos)) {
             return;
         }
 
-        final BlockState downwardIcicle = FBlocks.ICICLE.getDefaultState()
-                .with(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
+        final BlockState downwardIcicle = FBlocks.ICICLE.defaultBlockState()
+                .setValue(IcicleBlock.VERTICAL_DIRECTION, Direction.DOWN);
 
         Predicate<BlockPos> validCondition = (testPos) -> {
             BlockState at = world.getBlockState(testPos);
 
             // testing for sky light helps increase the chance that icicles will only ever form outside
             return at.isAir()
-                    && world.getLightLevel(LightType.SKY, testPos) >= icicleConfig.getMinSkylightLevelToForm()
-                    && downwardIcicle.canPlaceAt(world, testPos);
+                    && world.getBrightness(LightLayer.SKY, testPos) >= icicleConfig.getMinSkylightLevelToForm()
+                    && downwardIcicle.canSurvive(world, testPos);
         };
 
-        BlockPos.Mutable placePos = startPos.mutableCopy();
+        BlockPos.MutableBlockPos placePos = startPos.mutable();
         for (int i = 0; i < 5; i++) {
 
             if (validCondition.test(placePos)) {
                 // only place if can place and light is not blocking it
-                if (world.getLightLevel(LightType.BLOCK, placePos) < icicleConfig.getMaxLightLevelToForm()) {
-                    world.setBlockState(placePos, downwardIcicle, Block.NOTIFY_ALL);
+                if (world.getBrightness(LightLayer.BLOCK, placePos) < icicleConfig.getMaxLightLevelToForm()) {
+                    world.setBlock(placePos, downwardIcicle, Block.UPDATE_ALL);
                 }
 
                 // if can place but there is light blocking - stop looking

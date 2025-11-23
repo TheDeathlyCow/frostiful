@@ -1,22 +1,22 @@
 package com.github.thedeathlycow.frostiful.server.world;
 
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
-import net.minecraft.block.BlockState;
-import net.minecraft.entity.SpawnReason;
-import net.minecraft.entity.mob.PatrolEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.SpawnHelper;
-import net.minecraft.world.spawner.PatrolSpawner;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.monster.PatrollingMonster;
+import net.minecraft.world.level.NaturalSpawner;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.PatrolSpawner;
 
 public class ChillagerPatrolSpawner {
 
 
     /**
-     * Essentially a rewrite of {@link PatrolSpawner#spawnPillager(ServerWorld, BlockPos, Random, boolean)}, except
+     * Essentially a rewrite of {@link PatrolSpawner#spawnPatrolMember(ServerLevel, BlockPos, RandomSource, boolean)}, except
      * that it spawns a {@link com.github.thedeathlycow.frostiful.entity.ChillagerEntity} instead of a
-     * {@link net.minecraft.entity.mob.PillagerEntity}. Called via mixin as method is private.
+     * {@link net.minecraft.world.entity.monster.Pillager}. Called via mixin as method is private.
      *
      * @param world world to spawn chillager in
      * @param pos position to spawn chillager at
@@ -24,25 +24,25 @@ public class ChillagerPatrolSpawner {
      * @param captain whether the chillager should be a captain
      * @return Returns true if the chillager was spawned
      */
-    public static boolean spawnChillagerPatrol(ServerWorld world, BlockPos pos, Random random, boolean captain) {
+    public static boolean spawnChillagerPatrol(ServerLevel world, BlockPos pos, RandomSource random, boolean captain) {
         BlockState state = world.getBlockState(pos);
 
-        if (!SpawnHelper.isClearForSpawn(world, pos, state, state.getFluidState(), FEntityTypes.CHILLAGER)) {
+        if (!NaturalSpawner.isValidEmptySpawnBlock(world, pos, state, state.getFluidState(), FEntityTypes.CHILLAGER)) {
             return false;
-        } else if (!PatrolEntity.canSpawn(FEntityTypes.CHILLAGER, world, SpawnReason.PATROL, pos, random)) {
+        } else if (!PatrollingMonster.checkPatrollingMonsterSpawnRules(FEntityTypes.CHILLAGER, world, MobSpawnType.PATROL, pos, random)) {
             return false;
         } else {
-            PatrolEntity patroller = FEntityTypes.CHILLAGER.create(world);
+            PatrollingMonster patroller = FEntityTypes.CHILLAGER.create(world);
             if (patroller != null) {
                 if (captain) {
                     patroller.setPatrolLeader(true);
-                    patroller.setRandomPatrolTarget();
+                    patroller.findPatrolTarget();
                 }
 
-                patroller.setPosition(pos.getX(), pos.getY(), pos.getZ());
-                patroller.initialize(world, world.getLocalDifficulty(pos), SpawnReason.PATROL, null);
+                patroller.setPos(pos.getX(), pos.getY(), pos.getZ());
+                patroller.finalizeSpawn(world, world.getCurrentDifficultyAt(pos), MobSpawnType.PATROL, null);
 
-                world.spawnEntityAndPassengers(patroller);
+                world.addFreshEntityWithPassengers(patroller);
                 return true;
             } else {
                 return false;

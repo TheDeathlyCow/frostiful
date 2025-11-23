@@ -21,7 +21,7 @@ import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
-import net.minecraft.util.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
@@ -97,13 +97,13 @@ public class Frostiful implements ModInitializer {
     }
 
     /**
-     * Creates a new {@link Identifier} in the namespace {@value MODID}.
+     * Creates a new {@link ResourceLocation} in the namespace {@value MODID}.
      *
      * @param path The path of the uuid
-     * @return Returns a new {@link Identifier}
+     * @return Returns a new {@link ResourceLocation}
      */
     @Contract("_->new")
-    public static Identifier id(String path) {
-        return Identifier.of(MODID, path);
+    public static ResourceLocation id(String path) {
+        return ResourceLocation.fromNamespaceAndPath(MODID, path);
     }
 }

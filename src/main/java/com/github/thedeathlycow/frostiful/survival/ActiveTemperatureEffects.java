@@ -7,10 +7,10 @@ import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.ThermooTags;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentTickContext;
 import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntityTemperatureTickEvents;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.effect.StatusEffects;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 
 public final class ActiveTemperatureEffects {
     public static void initialize() {
@@ -57,8 +57,8 @@ public final class ActiveTemperatureEffects {
     }
 
     private static int getConduitPowerTemperatureChange(LivingEntity entity, FrostifulConfig config) {
-        boolean applyConduitPowerWarmth = entity.isSubmergedInWater()
-                && entity.hasStatusEffect(StatusEffects.CONDUIT_POWER);
+        boolean applyConduitPowerWarmth = entity.isUnderWater()
+                && entity.hasEffect(MobEffects.CONDUIT_POWER);
 
         if (applyConduitPowerWarmth) {
             return config.freezingConfig.getConduitWarmthPerTick();
@@ -71,20 +71,20 @@ public final class ActiveTemperatureEffects {
             return 0;
         }
 
-        boolean benefitsFromCold = entity.getType().isIn(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)
-                || entity.getEquippedStack(EquipmentSlot.CHEST).isOf(FItems.FROSTOLOGY_CLOAK);
+        boolean benefitsFromCold = entity.getType().is(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)
+                || entity.getItemBySlot(EquipmentSlot.CHEST).is(FItems.FROSTOLOGY_CLOAK);
 
         if (benefitsFromCold) {
             return 0;
         }
 
         int shiverWarmth = config.freezingConfig.getShiverWarmth();
-        if (entity instanceof PlayerEntity player) {
-            if (player.getHungerManager().getFoodLevel() <= config.freezingConfig.getStopShiverWarmingBelowFoodLevel()) {
+        if (entity instanceof Player player) {
+            if (player.getFoodData().getFoodLevel() <= config.freezingConfig.getStopShiverWarmingBelowFoodLevel()) {
                 return 0;
             }
 
-            player.addExhaustion(0.04f * shiverWarmth);
+            player.causeFoodExhaustion(0.04f * shiverWarmth);
         }
 
         return shiverWarmth;

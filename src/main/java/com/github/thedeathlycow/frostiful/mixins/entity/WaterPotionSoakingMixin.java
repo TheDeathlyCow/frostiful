@@ -3,12 +3,6 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.projectile.thrown.PotionEntity;
-import net.minecraft.entity.projectile.thrown.ThrownItemEntity;
-import net.minecraft.util.math.Box;
-import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -16,12 +10,18 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 
 import java.util.List;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableItemProjectile;
+import net.minecraft.world.entity.projectile.ThrownPotion;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.AABB;
 
-@Mixin(PotionEntity.class)
-public abstract class WaterPotionSoakingMixin extends ThrownItemEntity {
+@Mixin(ThrownPotion.class)
+public abstract class WaterPotionSoakingMixin extends ThrowableItemProjectile {
 
 
-    public WaterPotionSoakingMixin(EntityType<? extends ThrownItemEntity> entityType, World world) {
+    public WaterPotionSoakingMixin(EntityType<? extends ThrowableItemProjectile> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -29,8 +29,8 @@ public abstract class WaterPotionSoakingMixin extends ThrownItemEntity {
             method = "applyWater",
             at = @At("TAIL")
     )
-    private void soakEntitiesWithWaterbottle(CallbackInfo ci, @Local Box box) {
-        List<PlayerEntity> players = getWorld().getNonSpectatingEntities(PlayerEntity.class, box);
+    private void soakEntitiesWithWaterbottle(CallbackInfo ci, @Local AABB box) {
+        List<Player> players = level().getEntitiesOfClass(Player.class, box);
         FrostifulConfig config = Frostiful.getConfig();
         float soakPercent = config.freezingConfig.getSoakPercentFromWaterPotion();
 
