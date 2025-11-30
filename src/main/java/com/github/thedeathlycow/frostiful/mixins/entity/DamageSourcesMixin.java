@@ -2,12 +2,12 @@ package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageTypes;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.damage.DamageSources;
-import net.minecraft.entity.damage.DamageType;
-import net.minecraft.registry.DynamicRegistryManager;
-import net.minecraft.registry.RegistryKey;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -20,10 +20,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class DamageSourcesMixin implements FDamageSources {
 
     @Shadow
-    protected abstract DamageSource create(RegistryKey<DamageType> key, @Nullable Entity attacker);
+    protected abstract DamageSource source(ResourceKey<DamageType> key, @Nullable Entity attacker);
 
     @Shadow
-    protected abstract DamageSource create(RegistryKey<DamageType> key);
+    protected abstract DamageSource source(ResourceKey<DamageType> key);
 
     @Unique
     private DamageSource frostiful$icicle;
@@ -32,14 +32,14 @@ public abstract class DamageSourcesMixin implements FDamageSources {
             method = "<init>",
             at = @At("TAIL")
     )
-    private void init(DynamicRegistryManager registryManager, CallbackInfo ci) {
-        this.frostiful$icicle = this.create(FDamageTypes.ICICLE);
+    private void init(RegistryAccess registryManager, CallbackInfo ci) {
+        this.frostiful$icicle = this.source(FDamageTypes.ICICLE);
     }
 
     @Override
     @Unique
     public DamageSource frostiful$fallingIcicle(Entity attacker) {
-        return this.create(FDamageTypes.FALLING_ICICLE, attacker);
+        return this.source(FDamageTypes.FALLING_ICICLE, attacker);
     }
 
     @Override
@@ -51,12 +51,12 @@ public abstract class DamageSourcesMixin implements FDamageSources {
     @Override
     @Unique
     public DamageSource frostiful$iceSkate(Entity attacker) {
-        return this.create(FDamageTypes.ICE_SKATE, attacker);
+        return this.source(FDamageTypes.ICE_SKATE, attacker);
     }
 
     @Override
     @Unique
     public DamageSource frostiful$brokenIce(Entity attacker) {
-        return this.create(FDamageTypes.BROKEN_ICE, attacker);
+        return this.source(FDamageTypes.BROKEN_ICE, attacker);
     }
 }

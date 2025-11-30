@@ -4,35 +4,35 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.util.FPacketCodecs;
 import net.fabricmc.fabric.api.networking.v1.PlayerLookup;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.packet.CustomPayload;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.phys.Vec3;
 
 public record PointWindSpawnPacket(
-        Vec3d position
-) implements CustomPayload {
+        Vec3 position
+) implements CustomPacketPayload {
 
-    public static final CustomPayload.Id<PointWindSpawnPacket> PACKET_ID = new CustomPayload.Id<>(
+    public static final CustomPacketPayload.Type<PointWindSpawnPacket> PACKET_ID = new CustomPacketPayload.Type<>(
             Frostiful.id("point_wind_spawn")
     );
 
-    public static final PacketCodec<RegistryByteBuf, PointWindSpawnPacket> PACKET_CODEC = FPacketCodecs.VEC3D
-            .xmap(PointWindSpawnPacket::new, PointWindSpawnPacket::position)
+    public static final StreamCodec<RegistryFriendlyByteBuf, PointWindSpawnPacket> PACKET_CODEC = FPacketCodecs.VEC3D
+            .map(PointWindSpawnPacket::new, PointWindSpawnPacket::position)
             .cast();
 
-    public static void sendToNearbyPlayersFromServer(ServerWorld world, BlockPos spawnPos, Vec3d center) {
+    public static void sendToNearbyPlayersFromServer(ServerLevel world, BlockPos spawnPos, Vec3 center) {
         var packet = new PointWindSpawnPacket(center);
-        for (ServerPlayerEntity player : PlayerLookup.tracking(world, spawnPos)) {
+        for (ServerPlayer player : PlayerLookup.tracking(world, spawnPos)) {
             ServerPlayNetworking.send(player, packet);
         }
     }
 
     @Override
-    public Id<? extends CustomPayload> getId() {
+    public Type<? extends CustomPacketPayload> type() {
         return PACKET_ID;
     }
 }

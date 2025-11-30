@@ -8,14 +8,14 @@ import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentTickContext;
 import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntityTemperatureTickEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.EquipmentSlot;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.LightType;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.state.BlockState;
 
 public final class PassiveTemperatureEffects {
     public static void initialize() {
@@ -41,14 +41,14 @@ public final class PassiveTemperatureEffects {
 
     private static int getHotFloorTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context, FrostifulConfig config) {
         LivingEntity entity = context.affected();
-        BlockState steppingState = entity.getSteppingBlockState();
+        BlockState steppingState = entity.getBlockStateOn();
 
-        if (steppingState.isIn(FBlockTags.HOT_FLOOR)) {
-            ItemStack footStack = entity.getEquippedStack(EquipmentSlot.FEET);
+        if (steppingState.is(FBlockTags.HOT_FLOOR)) {
+            ItemStack footStack = entity.getItemBySlot(EquipmentSlot.FEET);
 
-            if (!EnchantmentHelper.hasAnyEnchantmentsIn(footStack, FEnchantmentTags.IS_FROSTY)) {
+            if (!EnchantmentHelper.hasTag(footStack, FEnchantmentTags.IS_FROSTY)) {
                 // TODO: fix fire particles
-                SunLichenBlock.createFireParticles(context.world(), entity.getBlockPos());
+                SunLichenBlock.createFireParticles(context.world(), entity.blockPosition());
                 return config.freezingConfig.getHeatFromHotFloor();
             }
         }
@@ -69,10 +69,10 @@ public final class PassiveTemperatureEffects {
      * Gets the temperature change from block light in the surrounding area. Exposed as public for the location_warmth
      * loot condition.
      */
-    public static int getBlockLightTemperatureChange(World world, BlockPos pos) {
+    public static int getBlockLightTemperatureChange(Level world, BlockPos pos) {
         FrostifulConfig config = Frostiful.getConfig();
 
-        int lightLevel = world.getLightLevel(LightType.BLOCK, pos);
+        int lightLevel = world.getBrightness(LightLayer.BLOCK, pos);
         int minLightLevel = config.environmentConfig.getMinLightForWarmth();
 
         int warmth = 0;

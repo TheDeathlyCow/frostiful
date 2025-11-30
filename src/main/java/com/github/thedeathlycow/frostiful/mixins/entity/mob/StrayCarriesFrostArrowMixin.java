@@ -2,12 +2,12 @@ package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.RangedWeaponItem;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ProjectileWeaponItem;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -15,15 +15,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Predicate;
 
-@Mixin(HostileEntity.class)
-public abstract class StrayCarriesFrostArrowMixin extends PathAwareEntity {
+@Mixin(Monster.class)
+public abstract class StrayCarriesFrostArrowMixin extends PathfinderMob {
 
-    protected StrayCarriesFrostArrowMixin(EntityType<? extends PathAwareEntity> entityType, World world) {
+    protected StrayCarriesFrostArrowMixin(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
 
     @Inject(
-            method = "getProjectileType",
+            method = "getProjectile",
             at = @At("HEAD"),
             cancellable = true
     )
@@ -33,9 +33,9 @@ public abstract class StrayCarriesFrostArrowMixin extends PathAwareEntity {
             return;
         }
 
-        if (this.getType() == EntityType.STRAY && stack.getItem() instanceof RangedWeaponItem rangedWeaponItem) {
-            Predicate<ItemStack> isItemAmmoTest = rangedWeaponItem.getHeldProjectiles();
-            ItemStack heldStack = RangedWeaponItem.getHeldProjectile(this, isItemAmmoTest);
+        if (this.getType() == EntityType.STRAY && stack.getItem() instanceof ProjectileWeaponItem rangedWeaponItem) {
+            Predicate<ItemStack> isItemAmmoTest = rangedWeaponItem.getSupportedHeldProjectiles();
+            ItemStack heldStack = ProjectileWeaponItem.getHeldProjectile(this, isItemAmmoTest);
             if (heldStack.isEmpty()) {
                 cir.setReturnValue(new ItemStack(FItems.GLACIAL_ARROW));
             }

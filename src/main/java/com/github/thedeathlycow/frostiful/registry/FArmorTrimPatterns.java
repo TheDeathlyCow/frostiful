@@ -1,41 +1,41 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.item.Item;
-import net.minecraft.item.trim.ArmorTrimPattern;
-import net.minecraft.registry.Registerable;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.text.Text;
-import net.minecraft.util.Util;
+import net.minecraft.Util;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.armortrim.TrimPattern;
 
 public class FArmorTrimPatterns {
 
-    public static final RegistryKey<ArmorTrimPattern> FROSTY = of("frosty");
+    public static final ResourceKey<TrimPattern> FROSTY = of("frosty");
 
-    public static final RegistryKey<ArmorTrimPattern> GLACIAL = of("glacial");
+    public static final ResourceKey<TrimPattern> GLACIAL = of("glacial");
 
-    public static final RegistryKey<ArmorTrimPattern> SNOW_MAN = of("snow_man");
+    public static final ResourceKey<TrimPattern> SNOW_MAN = of("snow_man");
 
-    public static void bootstrap(Registerable<ArmorTrimPattern> registry) {
+    public static void bootstrap(BootstrapContext<TrimPattern> registry) {
         Frostiful.LOGGER.debug("Bootstrap Frostiful armor trim patterns");
         register(registry, FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE, FROSTY);
         register(registry, FItems.GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE, GLACIAL);
         register(registry, FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE, SNOW_MAN);
     }
 
-    private static void register(Registerable<ArmorTrimPattern> registry, Item template, RegistryKey<ArmorTrimPattern> key) {
-        ArmorTrimPattern armorTrimPattern = new ArmorTrimPattern(
-                key.getValue(),
-                Registries.ITEM.getEntry(template),
-                Text.translatable(Util.createTranslationKey("trim_pattern", key.getValue())),
+    private static void register(BootstrapContext<TrimPattern> registry, Item template, ResourceKey<TrimPattern> key) {
+        TrimPattern armorTrimPattern = new TrimPattern(
+                key.location(),
+                BuiltInRegistries.ITEM.wrapAsHolder(template),
+                Component.translatable(Util.makeDescriptionId("trim_pattern", key.location())),
                 false
         );
         registry.register(key, armorTrimPattern);
     }
-    private static RegistryKey<ArmorTrimPattern> of(String id) {
-        return RegistryKey.of(RegistryKeys.TRIM_PATTERN, Frostiful.id(id));
+    private static ResourceKey<TrimPattern> of(String id) {
+        return ResourceKey.create(Registries.TRIM_PATTERN, Frostiful.id(id));
     }
 
     private FArmorTrimPatterns() {

@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
 import me.shedaniel.autoconfig.ConfigData;
 import me.shedaniel.autoconfig.annotation.Config;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.Mth;
 
 @Config(name = Frostiful.MODID + ".freezing")
 public class FreezingConfigGroup implements ConfigData {
@@ -79,7 +79,7 @@ public class FreezingConfigGroup implements ConfigData {
     }
 
     public float getSoakPercentFromWaterPotion() {
-        return MathHelper.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
+        return Mth.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
     }
 
     public int getSunLichenHeatPerLevel() {
@@ -111,7 +111,7 @@ public class FreezingConfigGroup implements ConfigData {
     }
 
     public float getShiverBelow() {
-        return MathHelper.clamp(shiverBelow, -1.0f, 1.0f);
+        return Mth.clamp(shiverBelow, -1.0f, 1.0f);
     }
 
     public int getShiverWarmth() {

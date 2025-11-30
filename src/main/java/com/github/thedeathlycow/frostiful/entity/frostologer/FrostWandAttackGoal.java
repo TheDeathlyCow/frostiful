@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.entity.frostologer;
 
-import net.minecraft.entity.ai.goal.AttackGoal;
+import net.minecraft.world.entity.ai.goal.OcelotAttackGoal;
 
-class FrostWandAttackGoal extends AttackGoal {
+class FrostWandAttackGoal extends OcelotAttackGoal {
     private final FrostologerEntity frostologerEntity;
 
     public FrostWandAttackGoal(FrostologerEntity frostologerEntity) {
@@ -11,9 +11,9 @@ class FrostWandAttackGoal extends AttackGoal {
     }
 
     @Override
-    public boolean canStart() {
+    public boolean canUse() {
         return frostologerEntity.isTargetRooted()
-                && super.canStart();
+                && super.canUse();
     }
 
 }

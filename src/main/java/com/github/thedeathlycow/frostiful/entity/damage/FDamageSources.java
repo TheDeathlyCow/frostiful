@@ -1,12 +1,12 @@
 package com.github.thedeathlycow.frostiful.entity.damage;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.world.World;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.Level;
 
 
 /**
- * Extension of {@link net.minecraft.entity.damage.DamageSources}. Interface-injected into that class
+ * Extension of {@link net.minecraft.world.damagesource.DamageSources}. Interface-injected into that class
  * so that it can be used along-side it.
  */
 public interface FDamageSources {
@@ -19,8 +19,8 @@ public interface FDamageSources {
 
     DamageSource frostiful$brokenIce(Entity attacker);
 
-    static FDamageSources getDamageSources(World world) {
-        return (FDamageSources) world.getDamageSources();
+    static FDamageSources getDamageSources(Level world) {
+        return (FDamageSources) world.damageSources();
     }
 
 }

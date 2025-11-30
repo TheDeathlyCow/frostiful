@@ -2,60 +2,60 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.registry.FBlockProperties;
 import com.mojang.serialization.MapCodec;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.TranslucentBlock;
-import net.minecraft.entity.Entity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemPlacementContext;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.state.StateManager;
-import net.minecraft.state.property.BooleanProperty;
-import net.minecraft.state.property.IntProperty;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.World;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HalfTransparentBlock;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
+import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
 import org.jetbrains.annotations.Nullable;
 
-public class BrittleIceBlock extends TranslucentBlock {
+public class BrittleIceBlock extends HalfTransparentBlock {
 
-    public static final MapCodec<BrittleIceBlock> CODEC = createCodec(BrittleIceBlock::new);
+    public static final MapCodec<BrittleIceBlock> CODEC = simpleCodec(BrittleIceBlock::new);
 
-    public static final IntProperty CRACKING = FBlockProperties.CRACKING;
+    public static final IntegerProperty CRACKING = FBlockProperties.CRACKING;
 
     public static final BooleanProperty FROZEN = FBlockProperties.FROZEN;
 
-    public BrittleIceBlock(Settings settings) {
+    public BrittleIceBlock(Properties settings) {
         super(settings);
-        this.setDefaultState(
-                this.getDefaultState()
-                        .with(CRACKING, 0)
-                        .with(FROZEN, false)
+        this.registerDefaultState(
+                this.defaultBlockState()
+                        .setValue(CRACKING, 0)
+                        .setValue(FROZEN, false)
         );
     }
 
     @Override
-    public MapCodec<BrittleIceBlock> getCodec() {
+    public MapCodec<BrittleIceBlock> codec() {
         return CODEC;
     }
 
     @Override
-    protected void appendProperties(StateManager.Builder<Block, BlockState> builder) {
-        super.appendProperties(builder);
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        super.createBlockStateDefinition(builder);
         builder.add(CRACKING, FROZEN);
     }
 
     @Override
-    public void onSteppedOn(World world, BlockPos pos, BlockState state, Entity entity) {
-        if (!world.isClient() && BrittleIce.canCrackIce(entity)) {
-            world.scheduleBlockTick(pos, this, BrittleIce.getCrackDelay(world.getRandom()));
+    public void stepOn(Level world, BlockPos pos, BlockState state, Entity entity) {
+        if (!world.isClientSide() && BrittleIce.canCrackIce(entity)) {
+            world.scheduleTick(pos, this, BrittleIce.getCrackDelay(world.getRandom()));
         }
     }
 
     @Override
-    protected void scheduledTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
-        if (!state.isOf(this)) {
+    protected void tick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+        if (!state.is(this)) {
             return;
         }
         BrittleIce.crack(this, state, world, pos, random);
@@ -63,14 +63,14 @@ public class BrittleIceBlock extends TranslucentBlock {
 
     @Nullable
     @Override
-    public BlockState getPlacementState(ItemPlacementContext ctx) {
-        BlockState base = super.getPlacementState(ctx);
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState base = super.getStateForPlacement(ctx);
 
         if (base == null) {
             return null;
         }
 
-        FluidState fluidState = ctx.getWorld().getFluidState(ctx.getBlockPos());
-        return base.with(FROZEN, fluidState.isOf(Fluids.WATER));
+        FluidState fluidState = ctx.getLevel().getFluidState(ctx.getClickedPos());
+        return base.setValue(FROZEN, fluidState.is(Fluids.WATER));
     }
 }

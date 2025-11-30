@@ -9,7 +9,8 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
-import net.minecraft.client.render.entity.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.player.PlayerRenderer;
 
 @Environment(EnvType.CLIENT)
 public class FEntityRenderers {
@@ -21,39 +22,39 @@ public class FEntityRenderers {
         EntityRendererRegistry.register(FEntityTypes.FROSTOLOGER, FrostologerEntityRenderer::new);
         EntityRendererRegistry.register(FEntityTypes.CHILLAGER, ChillagerEntityRenderer::new);
         EntityRendererRegistry.register(FEntityTypes.BITER, BiterEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.PACKED_SNOWBALL, FlyingItemEntityRenderer::new);
+        EntityRendererRegistry.register(FEntityTypes.PACKED_SNOWBALL, ThrownItemRenderer::new);
         EntityRendererRegistry.register(FEntityTypes.THROWN_ICICLE, ThrownIcicleEntityRenderer::new);
-        EntityRendererRegistry.register(FEntityTypes.FREEZING_WIND, EmptyEntityRenderer::new);
+        EntityRendererRegistry.register(FEntityTypes.FREEZING_WIND, NoopRenderer::new);
 
 
         LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
                 (entityType, entityRenderer, registrationHelper, context) -> {
-                    if (entityRenderer instanceof BipedEntityRenderer<?, ?> bipedEntityRenderer) {
+                    if (entityRenderer instanceof HumanoidMobRenderer<?, ?> bipedEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         bipedEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        new IceSkateModel<>(context.bakeLayer(FEntityModelLayers.ICE_SKATES))
                                 )
                         );
-                    } else if (entityRenderer instanceof PlayerEntityRenderer playerEntityRenderer) {
+                    } else if (entityRenderer instanceof PlayerRenderer playerEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         playerEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        new IceSkateModel<>(context.bakeLayer(FEntityModelLayers.ICE_SKATES))
                                 )
                         );
-                    } else if (entityRenderer instanceof ArmorStandEntityRenderer armorStandEntityRenderer) {
+                    } else if (entityRenderer instanceof ArmorStandRenderer armorStandEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         armorStandEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        new IceSkateModel<>(context.bakeLayer(FEntityModelLayers.ICE_SKATES))
                                 )
                         );
-                    } else if (entityRenderer instanceof GiantEntityRenderer giantEntityRenderer) {
+                    } else if (entityRenderer instanceof GiantMobRenderer giantEntityRenderer) {
                         registrationHelper.register(
                                 new IceSkateFeatureRenderer<>(
                                         giantEntityRenderer,
-                                        new IceSkateModel<>(context.getPart(FEntityModelLayers.ICE_SKATES))
+                                        new IceSkateModel<>(context.bakeLayer(FEntityModelLayers.ICE_SKATES))
                                 )
                         );
                     }

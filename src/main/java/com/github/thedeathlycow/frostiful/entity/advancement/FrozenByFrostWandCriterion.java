@@ -2,50 +2,46 @@ package com.github.thedeathlycow.frostiful.entity.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.loot.context.LootContext;
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.predicate.entity.LootContextPredicateValidator;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.storage.loot.LootContext;
 
 import java.util.*;
 
-public class FrozenByFrostWandCriterion extends AbstractCriterion<FrozenByFrostWandCriterion.Conditions> {
+public class FrozenByFrostWandCriterion extends SimpleCriterionTrigger<FrozenByFrostWandCriterion.Conditions> {
 
     @Override
-    public Codec<Conditions> getConditionsCodec() {
+    public Codec<Conditions> codec() {
         return Conditions.CODEC;
     }
 
-    public void trigger(ServerPlayerEntity player, Collection<LivingEntity> frozenEntities) {
+    public void trigger(ServerPlayer player, Collection<LivingEntity> frozenEntities) {
         List<LootContext> victimContexts = new ArrayList<>(frozenEntities.size());
 
         for (LivingEntity frozenEntity : frozenEntities) {
-            victimContexts.add(EntityPredicate.createAdvancementEntityLootContext(player, frozenEntity));
+            victimContexts.add(EntityPredicate.createContext(player, frozenEntity));
         }
 
         this.trigger(player, conditions -> conditions.matches(victimContexts));
     }
 
     public record Conditions(
-            Optional<LootContextPredicate> player,
-            List<LootContextPredicate> victims,
-            NumberRange.IntRange entitiesFrozen
-    ) implements AbstractCriterion.Conditions {
+            Optional<ContextAwarePredicate> player,
+            List<ContextAwarePredicate> victims,
+            MinMaxBounds.Ints entitiesFrozen
+    ) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                                EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC
+                                EntityPredicate.ADVANCEMENT_CODEC
                                         .optionalFieldOf("player")
                                         .forGetter(Conditions::player),
-                                EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC
+                                EntityPredicate.ADVANCEMENT_CODEC
                                         .listOf()
                                         .optionalFieldOf("victims", List.of())
                                         .forGetter(Conditions::victims),
-                                NumberRange.IntRange.CODEC
-                                        .optionalFieldOf("entities_frozen", NumberRange.IntRange.ANY)
+                                MinMaxBounds.Ints.CODEC
+                                        .optionalFieldOf("entities_frozen", MinMaxBounds.Ints.ANY)
                                         .forGetter(Conditions::entitiesFrozen)
                         )
                         .apply(instance, Conditions::new)
@@ -63,13 +59,13 @@ public class FrozenByFrostWandCriterion extends AbstractCriterion<FrozenByFrostW
             if (!this.victims.isEmpty()) {
                 List<LootContext> unmatchedVictims = new ArrayList<>(victims);
 
-                for (LootContextPredicate predicate : this.victims) {
+                for (ContextAwarePredicate predicate : this.victims) {
                     boolean matched = false;
 
                     Iterator<LootContext> iterator = unmatchedVictims.iterator();
                     while (iterator.hasNext()) {
                         LootContext lootContext = iterator.next();
-                        if (predicate.test(lootContext)) {
+                        if (predicate.matches(lootContext)) {
                             iterator.remove();
                             matched = true;
                             break;
@@ -81,13 +77,13 @@ public class FrozenByFrostWandCriterion extends AbstractCriterion<FrozenByFrostW
                     }
                 }
             }
-            return this.entitiesFrozen.test(victims.size());
+            return this.entitiesFrozen.matches(victims.size());
         }
 
         @Override
-        public void validate(LootContextPredicateValidator validator) {
-            AbstractCriterion.Conditions.super.validate(validator);
-            validator.validateEntityPredicates(this.victims, ".victims");
+        public void validate(CriterionValidator validator) {
+            SimpleCriterionTrigger.SimpleInstance.super.validate(validator);
+            validator.validateEntities(this.victims, ".victims");
         }
     }
 }

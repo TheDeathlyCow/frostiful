@@ -5,12 +5,12 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.thermoo.api.ThermooTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.entity.LivingEntity;
+import net.minecraft.world.entity.LivingEntity;
 
 public class SurvivalUtils {
 
     public static boolean isShivering(LivingEntity entity) {
-        if (entity.getType().isIn(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
+        if (entity.getType().is(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
             return false;
         }
 
@@ -20,7 +20,7 @@ public class SurvivalUtils {
 
     @Environment(EnvType.CLIENT)
     public static boolean isShiveringRender(LivingEntity entity) {
-        if (entity.getType().isIn(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
+        if (entity.getType().is(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
             return false;
         }
 

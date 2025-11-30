@@ -4,12 +4,12 @@ import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import net.minecraft.client.network.AbstractClientPlayerEntity;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.feature.CapeFeatureRenderer;
-import net.minecraft.client.util.SkinTextures;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.util.Identifier;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.layers.CapeLayer;
+import net.minecraft.client.resources.PlayerSkin;
+import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -17,22 +17,22 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(CapeFeatureRenderer.class)
+@Mixin(CapeLayer.class)
 public class CapeFeatureRendererMixin {
 
     @Unique
     @Nullable
-    private AbstractClientPlayerEntity scorchful$renderedPlayer = null;
+    private AbstractClientPlayer scorchful$renderedPlayer = null;
 
     @Inject(
-            method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/client/network/AbstractClientPlayerEntity;FFFFFF)V",
+            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/player/AbstractClientPlayer;FFFFFF)V",
             at = @At("HEAD")
     )
     private void capturePlayer(
-            MatrixStack matrixStack,
-            VertexConsumerProvider vertexConsumerProvider,
+            PoseStack matrixStack,
+            MultiBufferSource vertexConsumerProvider,
             int i,
-            AbstractClientPlayerEntity player,
+            AbstractClientPlayer player,
             float f, float g, float h, float j, float k, float l,
             CallbackInfo ci
     ) {
@@ -40,16 +40,16 @@ public class CapeFeatureRendererMixin {
     }
 
     @WrapOperation(
-            method = "render(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;ILnet/minecraft/client/network/AbstractClientPlayerEntity;FFFFFF)V",
+            method = "render(Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;ILnet/minecraft/client/player/AbstractClientPlayer;FFFFFF)V",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/util/SkinTextures;capeTexture()Lnet/minecraft/util/Identifier;"
+                    target = "Lnet/minecraft/client/resources/PlayerSkin;capeTexture()Lnet/minecraft/resources/ResourceLocation;"
             )
     )
-    private Identifier getFrostologyCloakTexture(SkinTextures instance, Operation<Identifier> original) {
+    private ResourceLocation getFrostologyCloakTexture(PlayerSkin instance, Operation<ResourceLocation> original) {
 
         boolean renderFrostologyCloak = this.scorchful$renderedPlayer != null
-                && AbstractFrostologyCloakItem.isWearing(this.scorchful$renderedPlayer, stack -> stack.isIn(FItemTags.FROSTOLOGY_CLOAKS));
+                && AbstractFrostologyCloakItem.isWearing(this.scorchful$renderedPlayer, stack -> stack.is(FItemTags.FROSTOLOGY_CLOAKS));
 
         if (renderFrostologyCloak) {
             return AbstractFrostologyCloakItem.MODEL_TEXTURE_ID;

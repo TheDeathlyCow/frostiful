@@ -2,34 +2,34 @@ package com.github.thedeathlycow.frostiful.client.render;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.model.FrostWandItemModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.render.VertexConsumer;
-import net.minecraft.client.render.VertexConsumerProvider;
-import net.minecraft.client.render.entity.model.EntityModelLayer;
-import net.minecraft.client.render.item.ItemRenderer;
-import net.minecraft.client.render.model.BakedModel;
-import net.minecraft.client.render.model.json.ModelTransformationMode;
-import net.minecraft.client.util.math.MatrixStack;
-import net.minecraft.item.ItemStack;
-import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.Identifier;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.ItemRenderer;
+import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.ResourceManager;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
 
 @Environment(EnvType.CLIENT)
 public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer, SimpleSynchronousResourceReloadListener {
 
-    public static final Identifier ID = Frostiful.id("frost_wand_renderer");
-    public static final Identifier INVENTORY_MODEL_ID = Frostiful.id("item/frost_wand_in_inventory");
+    public static final ResourceLocation ID = Frostiful.id("frost_wand_renderer");
+    public static final ResourceLocation INVENTORY_MODEL_ID = Frostiful.id("item/frost_wand_in_inventory");
 
-    private final EntityModelLayer modelLayer;
+    private final ModelLayerLocation modelLayer;
     private FrostWandItemModel model;
     private ItemRenderer itemRenderer;
     private BakedModel inventoryModel;
 
-    public FrostWandItemRenderer(EntityModelLayer modelLayer) {
+    public FrostWandItemRenderer(ModelLayerLocation modelLayer) {
         this.modelLayer = modelLayer;
     }
 
@@ -42,41 +42,41 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
      * @param matrices        the matrix stack
      * @param vertexConsumers the vertex consumer provider
      * @param light           packed lightmap coordinates
-     * @param overlay         the overlay UV passed to {@link VertexConsumer#overlay(int)}
+     * @param overlay         the overlay UV passed to {@link VertexConsumer#setOverlay(int)}
      */
     @Override
-    public void render(ItemStack stack, ModelTransformationMode mode, MatrixStack matrices, VertexConsumerProvider vertexConsumers, int light, int overlay) {
-        boolean renderAsItem = mode == ModelTransformationMode.GUI
-                || mode == ModelTransformationMode.GROUND
-                || mode == ModelTransformationMode.FIXED;
+    public void render(ItemStack stack, ItemDisplayContext mode, PoseStack matrices, MultiBufferSource vertexConsumers, int light, int overlay) {
+        boolean renderAsItem = mode == ItemDisplayContext.GUI
+                || mode == ItemDisplayContext.GROUND
+                || mode == ItemDisplayContext.FIXED;
 
         if (renderAsItem) {
-            matrices.pop();
-            matrices.push();
-            itemRenderer.renderItem(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryModel);
+            matrices.popPose();
+            matrices.pushPose();
+            itemRenderer.render(stack, mode, false, matrices, vertexConsumers, light, overlay, this.inventoryModel);
         } else {
-            matrices.push();
+            matrices.pushPose();
             matrices.scale(0.6F, -0.6F, -0.6F);
             matrices.translate(0f, 1f, 0f);
-            VertexConsumer vertexConsumer = ItemRenderer.getDirectItemGlintConsumer(
-                    vertexConsumers, this.model.getLayer(FrostWandItemModel.TEXTURE), false, stack.hasGlint()
+            VertexConsumer vertexConsumer = ItemRenderer.getFoilBufferDirect(
+                    vertexConsumers, this.model.renderType(FrostWandItemModel.TEXTURE), false, stack.hasFoil()
             );
 
-            this.model.render(matrices, vertexConsumer, light, overlay);
-            matrices.pop();
+            this.model.renderToBuffer(matrices, vertexConsumer, light, overlay);
+            matrices.popPose();
         }
     }
 
     @Override
-    public Identifier getFabricId() {
+    public ResourceLocation getFabricId() {
         return ID;
     }
 
     @Override
-    public void reload(ResourceManager manager) {
-        MinecraftClient client = MinecraftClient.getInstance();
-        this.model = new FrostWandItemModel(client.getEntityModelLoader().getModelPart(this.modelLayer));
+    public void onResourceManagerReload(ResourceManager manager) {
+        Minecraft client = Minecraft.getInstance();
+        this.model = new FrostWandItemModel(client.getEntityModels().bakeLayer(this.modelLayer));
         this.itemRenderer = client.getItemRenderer();
-        this.inventoryModel = client.getBakedModelManager().getModel(INVENTORY_MODEL_ID);
+        this.inventoryModel = client.getModelManager().getModel(INVENTORY_MODEL_ID);
     }
 }

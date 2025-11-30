@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.mixins.powder_snow_effects;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
-import net.minecraft.entity.Entity;
+import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -18,15 +18,15 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Entity.class)
 public abstract class EntityPowderSnowRedirect {
 
-    @Shadow public abstract int getFrozenTicks();
+    @Shadow public abstract int getTicksFrozen();
 
     @Inject(
-            method = "setFrozenTicks",
+            method = "setTicksFrozen",
             at = @At("HEAD"),
             cancellable = true
     )
     private void redirectPowderSnowTicksToTemperature(int frozenTicks, CallbackInfo ci) {
-        int frozenTicksChange = frozenTicks - this.getFrozenTicks();
+        int frozenTicksChange = frozenTicks - this.getTicksFrozen();
 
         if (frozenTicksChange == 0) {
             return;

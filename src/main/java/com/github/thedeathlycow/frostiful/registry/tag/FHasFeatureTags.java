@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.world.biome.Biome;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
 
 public class FHasFeatureTags {
 

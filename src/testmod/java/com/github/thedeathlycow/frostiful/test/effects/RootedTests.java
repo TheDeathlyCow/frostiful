@@ -2,44 +2,44 @@ package com.github.thedeathlycow.frostiful.test.effects;
 
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.test.GameTest;
-import net.minecraft.test.TestContext;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.core.BlockPos;
+import net.minecraft.gametest.framework.GameTest;
+import net.minecraft.gametest.framework.GameTestHelper;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 
 @SuppressWarnings("unused")
 public class RootedTests {
 
-    @GameTest(templateName = "frostiful-test:effects.platform")
-    public void villager_stops_walking_when_rooted(TestContext context) {
+    @GameTest(template = "frostiful-test:effects.platform")
+    public void villager_stops_walking_when_rooted(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 2, 1);
-        BlockPos end = start.add(2, 0, 2);
+        BlockPos end = start.offset(2, 0, 2);
 
-        MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, start);
         FrostWandRootComponent rootComponent = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
         rootComponent.tryRootFromFrostWand(null);
 
-        context.startMovingTowards(entity, end, 1.0f);
-        context.expectEntityAtEnd(EntityType.VILLAGER, start);
+        context.walkTo(entity, end, 1.0f);
+        context.succeedWhenEntityPresent(EntityType.VILLAGER, start);
     }
 
-    @GameTest(templateName = "frostiful-test:effects.platform")
-    public void villager_can_walk_when_not_rooted(TestContext context) {
+    @GameTest(template = "frostiful-test:effects.platform")
+    public void villager_can_walk_when_not_rooted(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 2, 1);
-        BlockPos end = start.add(2, 0, 2);
+        BlockPos end = start.offset(2, 0, 2);
 
-        MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, start);
 
-        context.startMovingTowards(entity, end, 1.0f);
-        context.expectEntityAtEnd(EntityType.VILLAGER, end);
+        context.walkTo(entity, end, 1.0f);
+        context.succeedWhenEntityPresent(EntityType.VILLAGER, end);
     }
 
-    @GameTest(templateName = "frostiful-test:effects.platform")
-    public void villager_root_is_not_reset(TestContext context) {
+    @GameTest(template = "frostiful-test:effects.platform")
+    public void villager_root_is_not_reset(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 2, 1);
 
-        MobEntity entity = context.spawnMob(EntityType.VILLAGER, start);
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, start);
         FrostWandRootComponent rootComponent = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
 
         // initial root
@@ -48,7 +48,7 @@ public class RootedTests {
         int initialRootTicks = rootComponent.getRootedTicks();
         context.assertTrue(rootComponent.isRooted(), "Villager is not rooted");
 
-        context.waitAndRun(
+        context.runAfterDelay(
                 10L,
                 () -> {
                     context.assertTrue(rootComponent.isRooted(), "Villager is not rooted for re-apply");
@@ -61,7 +61,7 @@ public class RootedTests {
                             "Villager root ticks were not reset"
                     );
 
-                    context.complete();
+                    context.succeed();
                 }
         );
     }

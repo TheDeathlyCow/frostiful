@@ -6,41 +6,41 @@ import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.projectile.PersistentProjectileEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.util.hit.EntityHitResult;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.EntityHitResult;
 
-public class ThrownIcicleEntity extends PersistentProjectileEntity {
+public class ThrownIcicleEntity extends AbstractArrow {
 
-    public ThrownIcicleEntity(EntityType<? extends ThrownIcicleEntity> entityType, World world) {
+    public ThrownIcicleEntity(EntityType<? extends ThrownIcicleEntity> entityType, Level world) {
         super(entityType, world);
     }
 
-    public ThrownIcicleEntity(World world, double x, double y, double z, ItemStack stack) {
+    public ThrownIcicleEntity(Level world, double x, double y, double z, ItemStack stack) {
         super(FEntityTypes.THROWN_ICICLE, x, y, z, world, stack, stack);
     }
 
-    public ThrownIcicleEntity(World world, LivingEntity owner, ItemStack stack) {
+    public ThrownIcicleEntity(Level world, LivingEntity owner, ItemStack stack) {
         super(FEntityTypes.THROWN_ICICLE, owner, world, stack, null);
     }
 
     @Override
     public void tick() {
         super.tick();
-        World world = getWorld();
-        if (world.isClient && !this.inGround) {
+        Level world = level();
+        if (world.isClientSide && !this.inGround) {
             world.addParticle(ParticleTypes.SNOWFLAKE, this.getX(), this.getY(), this.getZ(), 0.0D, 0.0D, 0.0D);
         }
     }
 
     @Override
-    protected void onEntityHit(EntityHitResult entityHitResult) {
+    protected void onHitEntity(EntityHitResult entityHitResult) {
 
         if (entityHitResult.getEntity().getType() == FEntityTypes.FROSTOLOGER) {
             return;
@@ -48,17 +48,17 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
 
         IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
 
-        float damage = entityHitResult.getEntity().getType().isIn(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
+        float damage = entityHitResult.getEntity().getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
                 ? config.getThrownIcicleExtraDamage()
                 : config.getThrownIcicleDamage();
-        this.setDamage(damage);
+        this.setBaseDamage(damage);
 
-        super.onEntityHit(entityHitResult);
+        super.onHitEntity(entityHitResult);
     }
 
     @Override
-    protected void onHit(LivingEntity target) {
-        super.onHit(target);
+    protected void doPostHurtEffects(LivingEntity target) {
+        super.doPostHurtEffects(target);
         IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
         int freezeAmount = config.getThrownIcicleFreezeAmount();
 
@@ -66,12 +66,12 @@ public class ThrownIcicleEntity extends PersistentProjectileEntity {
     }
 
     @Override
-    protected SoundEvent getHitSound() {
+    protected SoundEvent getDefaultHitGroundSoundEvent() {
         return FSoundEvents.ENTITY_THROWN_ICICLE_HIT;
     }
 
     @Override
-    protected ItemStack getDefaultItemStack() {
+    protected ItemStack getDefaultPickupItem() {
         return new ItemStack(FItems.ICICLE);
     }
 }

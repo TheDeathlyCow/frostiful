@@ -5,29 +5,29 @@ import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
-import net.minecraft.command.argument.EntityArgumentType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.text.Text;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.Collection;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class RootCommand {
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
         var rootTarget =
-                argument("targets", EntityArgumentType.entities())
+                argument("targets", EntityArgument.entities())
                         .then(
                                 argument("duration", IntegerArgumentType.integer(0))
                                         .executes(
                                                 (context) -> {
                                                     return runRoot(context.getSource(),
-                                                            EntityArgumentType.getEntities(context, "targets"),
+                                                            EntityArgument.getEntities(context, "targets"),
                                                             IntegerArgumentType.getInteger(context, "duration"));
                                                 }
                                         )
@@ -35,14 +35,14 @@ public class RootCommand {
 
 
         dispatcher.register(
-                literal("root").requires(src -> src.hasPermissionLevel(2))
+                literal("root").requires(src -> src.hasPermission(2))
                         .then(
                                 rootTarget
                         )
         );
     }
 
-    private static int runRoot(ServerCommandSource source, Collection<? extends Entity> targets, int duration) throws CommandSyntaxException {
+    private static int runRoot(CommandSourceStack source, Collection<? extends Entity> targets, int duration) throws CommandSyntaxException {
 
         int sum = 0;
         for (Entity entity : targets) {
@@ -54,14 +54,14 @@ public class RootCommand {
         }
 
         String key = "commands.frostiful.root.set.success." + (targets.size() == 1 ? "single" : "multiple");
-        Text msg;
+        Component msg;
         if (targets.size() == 1) {
-            msg = Text.translatable(key, targets.iterator().next().getDisplayName(), duration);
+            msg = Component.translatable(key, targets.iterator().next().getDisplayName(), duration);
         } else {
-            msg = Text.translatable(key, targets.size(), duration);
+            msg = Component.translatable(key, targets.size(), duration);
         }
 
-        source.sendFeedback(() -> msg, true);
+        source.sendSuccess(() -> msg, true);
 
         return sum;
     }

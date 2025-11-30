@@ -3,27 +3,27 @@ package com.github.thedeathlycow.frostiful.server.command;
 import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
-import net.minecraft.command.argument.BlockPosArgumentType;
-import net.minecraft.server.command.ServerCommandSource;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.util.math.BlockPos;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.arguments.coordinates.BlockPosArgument;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 
-import static net.minecraft.server.command.CommandManager.argument;
-import static net.minecraft.server.command.CommandManager.literal;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.literal;
 
 public class WindCommand {
 
-    public static void register(CommandDispatcher<ServerCommandSource> dispatcher) {
+    public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
 
         var blow =
-                argument("pos", BlockPosArgumentType.blockPos())
+                argument("pos", BlockPosArgument.blockPos())
                         .then(
                                 argument("inAir", BoolArgumentType.bool())
                                         .executes(
                                                 context -> {
                                                     return run(
-                                                            context.getSource().getWorld(),
-                                                            BlockPosArgumentType.getBlockPos(context, "pos"),
+                                                            context.getSource().getLevel(),
+                                                            BlockPosArgument.getBlockPos(context, "pos"),
                                                             BoolArgumentType.getBool(context, "inAir")
                                                     );
                                                 }
@@ -32,8 +32,8 @@ public class WindCommand {
                         .executes(
                                 context -> {
                                     return run(
-                                            context.getSource().getWorld(),
-                                            BlockPosArgumentType.getBlockPos(context, "pos"),
+                                            context.getSource().getLevel(),
+                                            BlockPosArgument.getBlockPos(context, "pos"),
                                             false
                                     );
                                 }
@@ -41,14 +41,14 @@ public class WindCommand {
 
 
         dispatcher.register(
-                literal("blow").requires(src -> src.hasPermissionLevel(2))
+                literal("blow").requires(src -> src.hasPermission(2))
                         .then(
                                 blow
                         )
         );
     }
 
-    private static int run(ServerWorld world, BlockPos pos, boolean isInAir) {
+    private static int run(ServerLevel world, BlockPos pos, boolean isInAir) {
         WindSpawnStrategies.POINT.getStrategy().spawn(
                 world, pos, isInAir
         );

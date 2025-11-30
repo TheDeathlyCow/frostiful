@@ -1,31 +1,31 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
 import com.github.thedeathlycow.frostiful.entity.ai.goal.PolarBearPlayFightGoal;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.PolarBearEntity;
-import net.minecraft.world.World;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.PolarBear;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-@Mixin(PolarBearEntity.class)
-public abstract class PolarBearPlayFightMixin extends AnimalEntity {
+@Mixin(PolarBear.class)
+public abstract class PolarBearPlayFightMixin extends Animal {
 
-    protected PolarBearPlayFightMixin(EntityType<? extends AnimalEntity> entityType, World world) {
+    protected PolarBearPlayFightMixin(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
 
     @Inject(
-            method = "initGoals",
+            method = "registerGoals",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/entity/ai/goal/GoalSelector;add(ILnet/minecraft/entity/ai/goal/Goal;)V",
+                    target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V",
                     ordinal = 0
             )
     )
     private void addPlayFightGoal(CallbackInfo ci) {
-        this.goalSelector.add(8, new PolarBearPlayFightGoal((PolarBearEntity) (Object) this, 8e-4f, 4e-3f));
+        this.goalSelector.addGoal(8, new PolarBearPlayFightGoal((PolarBear) (Object) this, 8e-4f, 4e-3f));
     }
 }

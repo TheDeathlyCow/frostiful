@@ -2,39 +2,39 @@ package com.github.thedeathlycow.frostiful.entity.loot;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.loot.v3.LootTableSource;
-import net.minecraft.entity.EntityType;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.entry.ItemEntry;
-import net.minecraft.loot.function.EnchantedCountIncreaseLootFunction;
-import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
-import net.minecraft.loot.provider.number.UniformLootNumberProvider;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 public class StrayLootTableModifier {
 
-    private static final RegistryKey<LootTable> STRAY_LOOT_TABLE_ID = EntityType.STRAY.getLootTableId();
+    private static final ResourceKey<LootTable> STRAY_LOOT_TABLE_ID = EntityType.STRAY.getDefaultLootTable();
 
     public static void addFrostTippedArrows(
-            RegistryKey<LootTable> key,
+            ResourceKey<LootTable> key,
             LootTable.Builder tableBuilder,
             LootTableSource source,
-            RegistryWrapper.WrapperLookup registries
+            HolderLookup.Provider registries
     ) {
         if (source.isBuiltin() && key.equals(STRAY_LOOT_TABLE_ID)) {
-            LootPool.Builder builder = LootPool.builder()
-                    .rolls(ConstantLootNumberProvider.create(1))
-                    .with(
-                            ItemEntry.builder(FItems.GLACIAL_ARROW)
+            LootPool.Builder builder = LootPool.lootPool()
+                    .setRolls(ConstantValue.exactly(1))
+                    .add(
+                            LootItem.lootTableItem(FItems.GLACIAL_ARROW)
                                     .apply(
-                                            EnchantedCountIncreaseLootFunction.builder(
+                                            EnchantedCountIncreaseFunction.lootingMultiplier(
                                                     registries,
-                                                    UniformLootNumberProvider.create(0.0f, 1.0f)
+                                                    UniformGenerator.between(0.0f, 1.0f)
                                             )
                                     )
                     );
-            tableBuilder.pool(builder);
+            tableBuilder.withPool(builder);
         }
     }
 

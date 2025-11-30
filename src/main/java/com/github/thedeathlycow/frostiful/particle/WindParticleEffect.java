@@ -4,15 +4,15 @@ import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.network.codec.PacketCodec;
-import net.minecraft.network.codec.PacketCodecs;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleType;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
 
 public record WindParticleEffect(
         boolean flipped
-) implements ParticleEffect {
+) implements ParticleOptions {
 
     public static final MapCodec<WindParticleEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
@@ -23,8 +23,8 @@ public record WindParticleEffect(
                     .apply(instance, WindParticleEffect::new)
     );
 
-    public static final PacketCodec<RegistryByteBuf, WindParticleEffect> PACKET_CODEC = PacketCodec.tuple(
-            PacketCodecs.BOOL,
+    public static final StreamCodec<RegistryFriendlyByteBuf, WindParticleEffect> PACKET_CODEC = StreamCodec.composite(
+            ByteBufCodecs.BOOL,
             WindParticleEffect::flipped,
             WindParticleEffect::new
     );

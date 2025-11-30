@@ -7,23 +7,23 @@ import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.MovementType;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.particle.BlockStateParticleEffect;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.particles.BlockParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -50,16 +50,16 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
         FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(provider);
         boolean breakRoot = !blocked
                 && damageTaken > 0f
-                && !source.isIn(FDamageTypeTags.DOES_NOT_BREAK_ROOT)
+                && !source.is(FDamageTypeTags.DOES_NOT_BREAK_ROOT)
                 && component.isRooted();
 
         if (breakRoot) {
-            component.breakRoot(source.getAttacker());
+            component.breakRoot(source.getEntity());
         }
     }
 
     @Nullable
-    public static Vec3d adjustMovementForRoot(MovementType type, Vec3d movement, Entity entity) {
+    public static Vec3 adjustMovementForRoot(MoverType type, Vec3 movement, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
             FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity);
             return component.adjustMovementForRoot(type, movement);
@@ -77,7 +77,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
             if (provider.isOnFire()) {
                 this.breakRoot(null);
-                provider.extinguish();
+                provider.clearFire();
                 ((EntityInvoker) provider).frostiful$invokePlayExtinguishSound();
             }
         }
@@ -88,7 +88,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     public void breakRoot(@Nullable Entity attacker) {
-        if (this.isRooted() && provider.getWorld() instanceof ServerWorld serverWorld) {
+        if (this.isRooted() && provider.level() instanceof ServerLevel serverWorld) {
             this.setRootedTicks(1); // set to 1 so the icebreaker enchantment can detect it
             spawnShatterParticlesAndSound(provider, serverWorld);
         }
@@ -97,9 +97,9 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
                 ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
                 : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
 
-        DamageSource source = FDamageSources.getDamageSources(provider.getWorld())
+        DamageSource source = FDamageSources.getDamageSources(provider.level())
                 .frostiful$brokenIce(attacker);
-        provider.damage(source, (float) damage);
+        provider.hurt(source, (float) damage);
     }
 
     public boolean tryRootFromFrostWand(@Nullable Entity originalCaster) {
@@ -111,24 +111,24 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     @Override
-    public void writeSyncPacket(RegistryByteBuf buf, ServerPlayerEntity recipient) {
+    public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer recipient) {
         buf.writeVarInt(this.rootedTicks);
     }
 
     @Override
-    public void applySyncPacket(RegistryByteBuf buf) {
+    public void applySyncPacket(RegistryFriendlyByteBuf buf) {
         this.rootedTicks = buf.readVarInt();
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        this.rootedTicks = tag.contains(ROOTED_TICKS_KEY, NbtElement.INT_TYPE)
+    public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
+        this.rootedTicks = tag.contains(ROOTED_TICKS_KEY, Tag.TAG_INT)
                 ? tag.getInt(ROOTED_TICKS_KEY)
                 : 0;
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+    public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         if (this.rootedTicks != 0) {
             tag.putInt(ROOTED_TICKS_KEY, this.rootedTicks);
         }
@@ -154,11 +154,11 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             return false;
         }
 
-        if (provider.getType().isIn(FEntityTypeTags.ROOT_IMMUNE)) {
+        if (provider.getType().is(FEntityTypeTags.ROOT_IMMUNE)) {
             return false;
         }
 
-        if (originalCaster != null && provider.isTeammate(originalCaster)) {
+        if (originalCaster != null && provider.isAlliedTo(originalCaster)) {
             return false;
         }
 
@@ -166,21 +166,21 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     @Nullable
-    private Vec3d adjustMovementForRoot(MovementType type, Vec3d movement) {
+    private Vec3 adjustMovementForRoot(MoverType type, Vec3 movement) {
         if (!this.isRooted()) {
             return null;
         }
 
         return switch (type) {
-            case SELF, PLAYER -> Vec3d.ZERO.add(0, movement.y < 0 && !provider.hasNoGravity() ? movement.y : 0, 0);
+            case SELF, PLAYER -> Vec3.ZERO.add(0, movement.y < 0 && !provider.isNoGravity() ? movement.y : 0, 0);
             default -> null;
         };
     }
 
-    private static void spawnShatterParticlesAndSound(LivingEntity victim, ServerWorld serverWorld) {
-        ParticleEffect shatteredIce = new BlockStateParticleEffect(ParticleTypes.BLOCK, Blocks.BLUE_ICE.getDefaultState());
+    private static void spawnShatterParticlesAndSound(LivingEntity victim, ServerLevel serverWorld) {
+        ParticleOptions shatteredIce = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.BLUE_ICE.defaultBlockState());
 
-        serverWorld.spawnParticles(
+        serverWorld.sendParticles(
                 shatteredIce,
                 victim.getX(), victim.getY(), victim.getZ(),
                 500,
@@ -188,11 +188,11 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
                 1.0
         );
 
-        victim.getWorld().playSound(
+        victim.level().playSound(
                 null,
-                victim.getBlockPos(),
-                SoundEvents.BLOCK_GLASS_BREAK,
-                SoundCategory.AMBIENT,
+                victim.blockPosition(),
+                SoundEvents.GLASS_BREAK,
+                SoundSource.AMBIENT,
                 1.0f, 0.75f
         );
     }

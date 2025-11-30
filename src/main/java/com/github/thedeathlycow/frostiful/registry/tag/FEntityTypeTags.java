@@ -1,10 +1,10 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.entity.EntityType;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.tag.TagKey;
-import net.minecraft.util.Identifier;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 
 public class FEntityTypeTags {
 
@@ -23,11 +23,11 @@ public class FEntityTypeTags {
     public static final TagKey<EntityType<?>> BRUSHING_DROPS_OCELOT_FUR = register("brushing/drops_ocelot_fur");
 
     private static TagKey<EntityType<?>> register(String id) {
-        return TagKey.of(RegistryKeys.ENTITY_TYPE, Frostiful.id(id));
+        return TagKey.create(Registries.ENTITY_TYPE, Frostiful.id(id));
     }
 
     private static TagKey<EntityType<?>> registerCommon(String id) {
-        return TagKey.of(RegistryKeys.ENTITY_TYPE, Identifier.of("c", id));
+        return TagKey.create(Registries.ENTITY_TYPE, ResourceLocation.fromNamespaceAndPath("c", id));
     }
 
     private FEntityTypeTags() {

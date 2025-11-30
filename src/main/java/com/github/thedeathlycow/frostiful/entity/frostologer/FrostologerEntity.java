@@ -15,63 +15,71 @@ import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.block.AbstractTorchBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.*;
-import net.minecraft.entity.ai.RangedAttackMob;
-import net.minecraft.entity.ai.goal.*;
-import net.minecraft.entity.attribute.DefaultAttributeContainer;
-import net.minecraft.entity.attribute.EntityAttributes;
-import net.minecraft.entity.damage.DamageSource;
-import net.minecraft.entity.data.DataTracker;
-import net.minecraft.entity.data.TrackedData;
-import net.minecraft.entity.data.TrackedDataHandlerRegistry;
-import net.minecraft.entity.mob.HostileEntity;
-import net.minecraft.entity.mob.IllagerEntity;
-import net.minecraft.entity.mob.MobEntity;
-import net.minecraft.entity.mob.SpellcastingIllagerEntity;
-import net.minecraft.entity.passive.IronGolemEntity;
-import net.minecraft.entity.passive.MerchantEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.raid.RaiderEntity;
-import net.minecraft.fluid.FluidState;
-import net.minecraft.fluid.Fluids;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.EntityTypeTags;
-import net.minecraft.server.world.ServerWorld;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvent;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.Hand;
-import net.minecraft.util.math.*;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.GameRules;
-import net.minecraft.world.LocalDifficulty;
-import net.minecraft.world.ServerWorldAccess;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Vec3i;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.tags.DamageTypeTags;
+import net.minecraft.tags.EntityTypeTags;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.IntProvider;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.DifficultyInstance;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.AvoidEntityGoal;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.IronGolem;
+import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.Monster;
+import net.minecraft.world.entity.monster.RangedAttackMob;
+import net.minecraft.world.entity.monster.SpellcasterIllager;
+import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.raid.Raider;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
+import net.minecraft.world.level.block.BaseTorchBlock;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.material.FluidState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * By remapping {@link SpellcastingIllagerEntity.Spell}s, the Frostologer has the following spells:
+ * By remapping {@link SpellcasterIllager.IllagerSpell}s, the Frostologer has the following spells:
  * <p>
  * SUMMON_VEX = SUMMON_MINIONS
  * DISAPPEAR = DESTROY_HEAT_SOURCES
  */
-public class FrostologerEntity extends SpellcastingIllagerEntity implements RangedAttackMob {
+public class FrostologerEntity extends SpellcasterIllager implements RangedAttackMob {
 
-    static final TrackedData<Boolean> IS_USING_FROST_WAND = DataTracker.registerData(
-            FrostologerEntity.class, TrackedDataHandlerRegistry.BOOLEAN
+    static final EntityDataAccessor<Boolean> IS_USING_FROST_WAND = SynchedEntityData.defineId(
+            FrostologerEntity.class, EntityDataSerializers.BOOLEAN
     );
 
     public static final float MAX_POWER_SCALE_START = -0.75f;
@@ -91,16 +99,16 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
-    public FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, World world) {
+    public FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, Level world) {
         super(entityType, world);
-        this.experiencePoints = 20;
+        this.xpReward = 20;
     }
 
-    public static DefaultAttributeContainer.Builder createFrostologerAttributes() {
-        return HostileEntity.createHostileAttributes()
-                .add(EntityAttributes.GENERIC_MOVEMENT_SPEED, 0.5)
-                .add(EntityAttributes.GENERIC_FOLLOW_RANGE, 32.0)
-                .add(EntityAttributes.GENERIC_MAX_HEALTH, 150.0)
+    public static AttributeSupplier.Builder createFrostologerAttributes() {
+        return Monster.createMonsterAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.5)
+                .add(Attributes.FOLLOW_RANGE, 32.0)
+                .add(Attributes.MAX_HEALTH, 150.0)
                 .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
                 .add(ThermooAttributes.MAX_TEMPERATURE, 0.0)
                 .add(FEntityAttributes.ICE_BREAK_DAMAGE, 5.0);
@@ -125,46 +133,46 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
      * @param state    The state to transform
      * @param blockPos The position of `state` in `world`.
      */
-    public void destroyHeatSource(ServerWorld world, BlockState state, BlockPos blockPos) {
+    public void destroyHeatSource(ServerLevel world, BlockState state, BlockPos blockPos) {
 
         BlockState frozenState;
         Block heatedBlock = state.getBlock();
         FluidState fluidState = state.getFluidState();
 
-        if (state.isIn(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
+        if (state.is(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
             frozenState = state;
-        } else if (blockPos.equals(this.getBlockPos())) {
-            frozenState = Blocks.AIR.getDefaultState();
-        } else if (state.isIn(FBlockTags.HOT_FLOOR)) {
-            frozenState = Blocks.COBBLESTONE.getDefaultState();
-        } else if (state.isFullCube(world, blockPos)) {
-            frozenState = Blocks.ICE.getDefaultState();
-        } else if (fluidState.isOf(Fluids.LAVA) && fluidState.getLevel() == 8) {
-            frozenState = Blocks.OBSIDIAN.getDefaultState();
-        } else if (heatedBlock instanceof AbstractTorchBlock) {
+        } else if (blockPos.equals(this.blockPosition())) {
+            frozenState = Blocks.AIR.defaultBlockState();
+        } else if (state.is(FBlockTags.HOT_FLOOR)) {
+            frozenState = Blocks.COBBLESTONE.defaultBlockState();
+        } else if (state.isCollisionShapeFullBlock(world, blockPos)) {
+            frozenState = Blocks.ICE.defaultBlockState();
+        } else if (fluidState.is(Fluids.LAVA) && fluidState.getAmount() == 8) {
+            frozenState = Blocks.OBSIDIAN.defaultBlockState();
+        } else if (heatedBlock instanceof BaseTorchBlock) {
             BlockState torch = FrozenTorchBlock.freezeTorch(state);
-            frozenState = torch != null ? torch : Blocks.AIR.getDefaultState();
+            frozenState = torch != null ? torch : Blocks.AIR.defaultBlockState();
         } else {
-            frozenState = Blocks.AIR.getDefaultState();
+            frozenState = Blocks.AIR.defaultBlockState();
         }
 
         if (!frozenState.isAir()) {
-            world.setBlockState(blockPos, frozenState);
+            world.setBlockAndUpdate(blockPos, frozenState);
         } else {
-            world.breakBlock(blockPos, true);
+            world.destroyBlock(blockPos, true);
         }
 
         world.playSound(
                 null,
                 blockPos,
-                SoundEvents.BLOCK_FIRE_EXTINGUISH,
-                SoundCategory.HOSTILE,
+                SoundEvents.FIRE_EXTINGUISH,
+                SoundSource.HOSTILE,
                 0.5f, 1.0f + ((this.random.nextFloat() % 0.2f) - 0.1f)
         );
 
-        Vec3d centeredPos = Vec3d.ofCenter(blockPos);
+        Vec3 centeredPos = Vec3.atCenterOf(blockPos);
 
-        world.spawnParticles(
+        world.sendParticles(
                 ParticleTypes.SMOKE,
                 centeredPos.x, centeredPos.y, centeredPos.z,
                 12,
@@ -175,102 +183,102 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     @Override
     public boolean isInvulnerableTo(DamageSource damageSource) {
-        if (damageSource.isIn(DamageTypeTags.IS_PROJECTILE) && this.isChanneling()) {
+        if (damageSource.is(DamageTypeTags.IS_PROJECTILE) && this.isChanneling()) {
             return true;
         }
 
-        return damageSource.isIn(DamageTypeTags.IS_FREEZING)
-                || damageSource.isIn(FDamageTypeTags.IS_ICICLE)
+        return damageSource.is(DamageTypeTags.IS_FREEZING)
+                || damageSource.is(FDamageTypeTags.IS_ICICLE)
                 || super.isInvulnerableTo(damageSource);
     }
 
     @Override
-    protected void initGoals() {
-        super.initGoals();
-        this.goalSelector.add(0, new SwimGoal(this));
-        this.goalSelector.add(1, new SpellcastingIllagerEntity.LookAtTargetGoal());
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(0, new FloatGoal(this));
+        this.goalSelector.addGoal(1, new SpellcasterIllager.SpellcasterCastingSpellGoal());
 
-        this.goalSelector.add(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
+        this.goalSelector.addGoal(2, new FrostWandCastGoal(this, 1.0, 40, 10f));
 
-        this.goalSelector.add(2, new FleeEntityGoal<>(this, IronGolemEntity.class, 8.0F, 1.2, 1.5));
+        this.goalSelector.addGoal(2, new AvoidEntityGoal<>(this, IronGolem.class, 8.0F, 1.2, 1.5));
 
-        this.goalSelector.add(3, new IcicleAttackGoal(UniformIntProvider.create(20, 30), UniformIntProvider.create(10, 15)));
-        this.goalSelector.add(4, new FrostWandAttackGoal(this));
+        this.goalSelector.addGoal(3, new IcicleAttackGoal(UniformInt.of(20, 30), UniformInt.of(10, 15)));
+        this.goalSelector.addGoal(4, new FrostWandAttackGoal(this));
 
-        this.goalSelector.add(6, new DestroyHeatSourcesGoal(15));
+        this.goalSelector.addGoal(6, new DestroyHeatSourcesGoal(15));
 
-        this.goalSelector.add(8, new WanderAroundGoal(this, 0.6));
-        this.goalSelector.add(9, new LookAtEntityGoal(this, PlayerEntity.class, 3.0F, 1.0F));
-        this.goalSelector.add(10, new LookAtEntityGoal(this, MobEntity.class, 8.0F));
+        this.goalSelector.addGoal(8, new RandomStrollGoal(this, 0.6));
+        this.goalSelector.addGoal(9, new LookAtPlayerGoal(this, Player.class, 3.0F, 1.0F));
+        this.goalSelector.addGoal(10, new LookAtPlayerGoal(this, Mob.class, 8.0F));
 
-        this.targetSelector.add(
+        this.targetSelector.addGoal(
                 1,
-                new RevengeGoal(this, RaiderEntity.class)
-                        .setGroupRevenge()
+                new HurtByTargetGoal(this, Raider.class)
+                        .setAlertOthers()
         );
-        this.targetSelector.add(
+        this.targetSelector.addGoal(
                 2,
-                new ActiveTargetGoal<>(this, PlayerEntity.class, true)
-                        .setMaxTimeWithoutVisibility(300)
+                new NearestAttackableTargetGoal<>(this, Player.class, true)
+                        .setUnseenMemoryTicks(300)
         );
-        this.targetSelector.add(
+        this.targetSelector.addGoal(
                 3,
-                new ActiveTargetGoal<>(this, MerchantEntity.class, false)
-                        .setMaxTimeWithoutVisibility(300)
+                new NearestAttackableTargetGoal<>(this, AbstractVillager.class, false)
+                        .setUnseenMemoryTicks(300)
         );
-        this.targetSelector.add(
+        this.targetSelector.addGoal(
                 3,
-                new ActiveTargetGoal<>(this, IronGolemEntity.class, false)
+                new NearestAttackableTargetGoal<>(this, IronGolem.class, false)
         );
     }
 
     @Override
-    public boolean isFireImmune() {
-        return this.isChanneling() || super.isFireImmune();
+    public boolean fireImmune() {
+        return this.isChanneling() || super.fireImmune();
     }
 
     @Nullable
     @Override
-    public EntityData initialize(
-            ServerWorldAccess world,
-            LocalDifficulty difficulty,
-            SpawnReason spawnReason,
-            @Nullable EntityData entityData
+    public SpawnGroupData finalizeSpawn(
+            ServerLevelAccessor world,
+            DifficultyInstance difficulty,
+            MobSpawnType spawnReason,
+            @Nullable SpawnGroupData entityData
     ) {
-        this.initEquipment(world.getRandom(), difficulty);
-        this.updateEnchantments(world, random, difficulty);
-        return super.initialize(world, difficulty, spawnReason, entityData);
+        this.populateDefaultEquipmentSlots(world.getRandom(), difficulty);
+        this.populateDefaultEquipmentEnchantments(world, random, difficulty);
+        return super.finalizeSpawn(world, difficulty, spawnReason, entityData);
     }
 
     @Override
-    protected void enchantMainHandItem(ServerWorldAccess world, Random random, LocalDifficulty localDifficulty) {
-        ItemStack stack = this.getEquippedStack(EquipmentSlot.MAINHAND);
+    protected void enchantSpawnedWeapon(ServerLevelAccessor world, RandomSource random, DifficultyInstance localDifficulty) {
+        ItemStack stack = this.getItemBySlot(EquipmentSlot.MAINHAND);
         if (!stack.isEmpty()) {
-            EnchantmentHelper.applyEnchantmentProvider(
+            EnchantmentHelper.enchantItemFromProvider(
                     stack,
-                    world.getRegistryManager(),
+                    world.registryAccess(),
                     FEnchantmentProviders.FROSTOLOGER_SPAWN_FROST_WAND,
                     localDifficulty,
                     random
             );
-            this.equipStack(EquipmentSlot.MAINHAND, stack);
+            this.setItemSlot(EquipmentSlot.MAINHAND, stack);
         }
     }
 
     @Override
-    public void initEquipment(Random random, LocalDifficulty difficulty) {
-        this.setStackInHand(Hand.MAIN_HAND, new ItemStack(FItems.FROST_WAND));
-        this.equipStack(EquipmentSlot.CHEST, new ItemStack(FItems.FROSTOLOGY_CLOAK));
+    public void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
+        this.setItemInHand(InteractionHand.MAIN_HAND, new ItemStack(FItems.FROST_WAND));
+        this.setItemSlot(EquipmentSlot.CHEST, new ItemStack(FItems.FROSTOLOGY_CLOAK));
 
         // equipment drops handled with loot table
-        this.setEquipmentDropChance(EquipmentSlot.MAINHAND, 0.0f);
-        this.setEquipmentDropChance(EquipmentSlot.CHEST, 0.0f);
+        this.setDropChance(EquipmentSlot.MAINHAND, 0.0f);
+        this.setDropChance(EquipmentSlot.CHEST, 0.0f);
     }
 
     @Override
-    protected void initDataTracker(DataTracker.Builder builder) {
-        super.initDataTracker(builder);
-        builder.add(IS_USING_FROST_WAND, false);
+    protected void defineSynchedData(SynchedEntityData.Builder builder) {
+        super.defineSynchedData(builder);
+        builder.define(IS_USING_FROST_WAND, false);
     }
 
     @Override
@@ -279,68 +287,68 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         this.updateCapeAngles();
 
-        World world = this.getWorld();
-        if (world.isClient() && this.isAtMaxPower()) {
+        Level world = this.level();
+        if (world.isClientSide() && this.isAtMaxPower()) {
             this.spawnPowerParticles();
         }
 
-        if (!world.isClient() && this.isOnFire()) {
-            int fireTicks = this.getFireTicks();
-            this.setFireTicks(Math.min(10, fireTicks));
+        if (!world.isClientSide() && this.isOnFire()) {
+            int fireTicks = this.getRemainingFireTicks();
+            this.setRemainingFireTicks(Math.min(10, fireTicks));
         }
     }
 
     @Override
-    public boolean damage(DamageSource source, float amount) {
-        if (source.isIn(DamageTypeTags.IS_FIRE)) {
+    public boolean hurt(DamageSource source, float amount) {
+        if (source.is(DamageTypeTags.IS_FIRE)) {
             FrostifulConfig config = Frostiful.getConfig();
             amount *= config.combatConfig.getFrostologerFireDamageMultiplier();
         }
 
-        return super.damage(source, amount);
+        return super.hurt(source, amount);
     }
 
     @Override
-    public void tickRiding() {
-        super.tickRiding();
+    public void rideTick() {
+        super.rideTick();
         this.prevStrideDistance = this.strideDistance;
         this.strideDistance = 0.0F;
     }
 
     @Override
-    public void tickMovement() {
-        super.tickMovement();
+    public void aiStep() {
+        super.aiStep();
 
         this.prevStrideDistance = this.strideDistance;
 
         float walkSpeed;
-        if (this.isOnGround() && !this.isDead() && !this.isSwimming()) {
-            walkSpeed = Math.min(0.1F, (float) this.getVelocity().horizontalLength());
+        if (this.onGround() && !this.isDeadOrDying() && !this.isSwimming()) {
+            walkSpeed = Math.min(0.1F, (float) this.getDeltaMovement().horizontalDistance());
         } else {
             walkSpeed = 0.0F;
         }
         this.strideDistance += (walkSpeed - this.strideDistance) * 0.4f;
 
-        World world = this.getWorld();
-        if (world.isClient) {
+        Level world = this.level();
+        if (world.isClientSide) {
             // dont place snow if client
             return;
         }
 
         // do not place snow/destroy heat sources unless mobGriefing is on
-        if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+        if (!world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
 
 
-        ServerWorld serverWorld = (ServerWorld) world; // covered by isClient check above
+        ServerLevel serverWorld = (ServerLevel) world; // covered by isClient check above
 
-        BlockPos frostologerPos = this.getBlockPos();
-        BlockState snow = Blocks.SNOW.getDefaultState();
+        BlockPos frostologerPos = this.blockPosition();
+        BlockState snow = Blocks.SNOW.defaultBlockState();
 
         boolean canPlaceSnow;
         stepPositionsPool[0] = frostologerPos;
-        stepPositionsPool[1] = frostologerPos.down();
+        stepPositionsPool[1] = frostologerPos.below();
         for (BlockPos blockPos : stepPositionsPool) {
             BlockState blockState = world.getBlockState(blockPos);
             if (EnvironmentManager.INSTANCE.getController().isHeatSource(blockState)) {
@@ -349,13 +357,13 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
             canPlaceSnow = blockState.isAir()
                     && this.thermoo$getTemperatureScale() <= START_PLACING_SNOW_TEMP
-                    && snow.canPlaceAt(world, blockPos);
+                    && snow.canSurvive(world, blockPos);
             if (canPlaceSnow) {
-                world.setBlockState(blockPos, snow);
-                world.emitGameEvent(
+                world.setBlockAndUpdate(blockPos, snow);
+                world.gameEvent(
                         GameEvent.BLOCK_PLACE,
                         blockPos,
-                        GameEvent.Emitter.of(this, blockState)
+                        GameEvent.Context.of(this, blockState)
                 );
             }
         }
@@ -366,15 +374,15 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
         ThreadLocalRandom random = ThreadLocalRandom.current();
 
-        Box box = this.getBoundingBox();
+        AABB box = this.getBoundingBox();
 
         for (int i = 0; i < NUM_POWER_PARTICLES; i++) {
             // pick random pos in bounding box
-            double x = box.getMin(Direction.Axis.X) + random.nextDouble(box.getLengthX());
-            double y = box.getMin(Direction.Axis.Y) + random.nextDouble(box.getLengthY());
-            double z = box.getMin(Direction.Axis.Z) + random.nextDouble(box.getLengthZ());
+            double x = box.min(Direction.Axis.X) + random.nextDouble(box.getXsize());
+            double y = box.min(Direction.Axis.Y) + random.nextDouble(box.getYsize());
+            double z = box.min(Direction.Axis.Z) + random.nextDouble(box.getZsize());
 
-            getWorld().addParticle(
+            level().addParticle(
                     ParticleTypes.SNOWFLAKE,
                     x, y, z,
                     0, 0, 0
@@ -383,19 +391,19 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public IllagerEntity.State getState() {
-        if (this.isSpellcasting()) {
-            return State.SPELLCASTING;
+    public AbstractIllager.IllagerArmPose getArmPose() {
+        if (this.isCastingSpell()) {
+            return IllagerArmPose.SPELLCASTING;
         } else {
-            return this.isCelebrating() ? State.CELEBRATING : State.NEUTRAL;
+            return this.isCelebrating() ? IllagerArmPose.CELEBRATING : IllagerArmPose.NEUTRAL;
         }
     }
 
     @Override
-    public void shootAt(LivingEntity target, float pullProgress) {
-        if (this.activeItemStack.isOf(FItems.FROST_WAND)) {
-            this.getLookControl().lookAt(target);
-            FrostWandItem.fireFrostSpell(this.activeItemStack.copy(), this.getWorld(), this);
+    public void performRangedAttack(LivingEntity target, float pullProgress) {
+        if (this.useItem.is(FItems.FROST_WAND)) {
+            this.getLookControl().setLookAt(target);
+            FrostWandItem.fireFrostSpell(this.useItem.copy(), this.level(), this);
         }
     }
 
@@ -406,7 +414,7 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
 
     public boolean isTargetPlayer() {
         LivingEntity target = this.getTarget();
-        return target != null && target.isAlive() && target.isPlayer();
+        return target != null && target.isAlive() && target.isAlwaysTicking();
     }
 
     public boolean isTargetRooted() {
@@ -416,11 +424,11 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     public boolean isUsingFrostWand() {
-        return this.dataTracker.get(IS_USING_FROST_WAND);
+        return this.entityData.get(IS_USING_FROST_WAND);
     }
 
     @Override
-    public void addBonusForWave(ServerWorld world, int wave, boolean unused) {
+    public void applyRaidBuffs(ServerLevel world, int wave, boolean unused) {
 
     }
 
@@ -468,17 +476,17 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public boolean isTeammate(@Nullable Entity other) {
+    public boolean isAlliedTo(@Nullable Entity other) {
         if (other == null) {
             return false;
         } else if (other == this) {
             return true;
-        } else if (super.isTeammate(other)) {
+        } else if (super.isAlliedTo(other)) {
             return true;
         } else if (other.getType() == FEntityTypes.BITER) {
-            return this.isTeammate(((BiterEntity) other).getOwner());
-        } else if (other instanceof LivingEntity otherEntity && otherEntity.getType().isIn(EntityTypeTags.ILLAGER_FRIENDS)) {
-            return this.getScoreboardTeam() == null && other.getScoreboardTeam() == null;
+            return this.isAlliedTo(((BiterEntity) other).getOwner());
+        } else if (other instanceof LivingEntity otherEntity && otherEntity.getType().is(EntityTypeTags.ILLAGER_FRIENDS)) {
+            return this.getTeam() == null && other.getTeam() == null;
         } else {
             return false;
         }
@@ -500,12 +508,12 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public SoundEvent getCelebratingSound() {
+    public SoundEvent getCelebrateSound() {
         return FSoundEvents.ENTITY_FROSTOLOGER_CELEBRATE;
     }
 
     @Override
-    protected SoundEvent getCastSpellSound() {
+    protected SoundEvent getCastingSoundEvent() {
         return FSoundEvents.ENTITY_FROSTOLOGER_CAST_SPELL;
     }
 
@@ -514,18 +522,18 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
     }
 
     @Override
-    public void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        this.dataTracker.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
+    public void readAdditionalSaveData(CompoundTag nbt) {
+        super.readAdditionalSaveData(nbt);
+        this.entityData.set(IS_USING_FROST_WAND, nbt.getBoolean("IsUsingFrostWand"));
     }
 
     @Override
-    public void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
-        nbt.putBoolean("IsUsingFrostWand", this.dataTracker.get(IS_USING_FROST_WAND));
+    public void addAdditionalSaveData(CompoundTag nbt) {
+        super.addAdditionalSaveData(nbt);
+        nbt.putBoolean("IsUsingFrostWand", this.entityData.get(IS_USING_FROST_WAND));
     }
 
-    protected class DestroyHeatSourcesGoal extends SpellcastingIllagerEntity.CastSpellGoal {
+    protected class DestroyHeatSourcesGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
 
         private final int range;
 
@@ -541,26 +549,26 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         @Override
-        public boolean canStart() {
+        public boolean canUse() {
             FrostologerEntity frostologer = FrostologerEntity.this;
-            return super.canStart() && frostologer.thermoo$getTemperatureScale() <= -0.9f;
+            return super.canUse() && frostologer.thermoo$getTemperatureScale() <= -0.9f;
         }
 
         @Override
         public void tick() {
             FrostologerEntity frostologer = FrostologerEntity.this;
 
-            Box box = frostologer.getBoundingBox().expand(this.range);
+            AABB box = frostologer.getBoundingBox().inflate(this.range);
 
-            World world = frostologer.getWorld();
+            Level world = frostologer.level();
 
             int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
             frostologer.thermoo$addTemperature(heatDrain);
 
-            for (LivingEntity victim : world.getEntitiesByClass(LivingEntity.class, box, entity -> entity != frostologer)) {
+            for (LivingEntity victim : world.getEntitiesOfClass(LivingEntity.class, box, entity -> entity != frostologer)) {
                 victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
 
-                if (world instanceof ServerWorld serverWorld) {
+                if (world instanceof ServerLevel serverWorld) {
                     HeatDrainEnchantmentEffect.addHeatDrainParticles(serverWorld, victim, frostologer, 5, 0.08);
                 }
             }
@@ -569,18 +577,18 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         @Override
-        protected void castSpell() {
-            World world = getWorld();
-            if (!world.getGameRules().getBoolean(GameRules.DO_MOB_GRIEFING)) {
+        protected void performSpellCasting() {
+            Level world = level();
+            if (!world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
                 return;
             }
 
-            BlockPos origin = FrostologerEntity.this.getBlockPos();
+            BlockPos origin = FrostologerEntity.this.blockPosition();
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
 
-            for (BlockPos pos : BlockPos.iterate(origin.subtract(distance), origin.add(distance))) {
+            for (BlockPos pos : BlockPos.betweenClosed(origin.subtract(distance), origin.offset(distance))) {
                 BlockState state = world.getBlockState(pos);
-                if (EnvironmentManager.INSTANCE.getController().isHeatSource(state) && world instanceof ServerWorld serverWorld) {
+                if (EnvironmentManager.INSTANCE.getController().isHeatSource(state) && world instanceof ServerLevel serverWorld) {
                     FrostologerEntity.this.destroyHeatSource(serverWorld, state, pos);
                 }
             }
@@ -589,34 +597,34 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         @Override
-        protected int getInitialCooldown() {
+        protected int getCastWarmupTime() {
             return 60;
         }
 
         @Override
-        protected int getSpellTicks() {
+        protected int getCastingTime() {
             return 60;
         }
 
         @Override
-        protected int startTimeDelay() {
+        protected int getCastingInterval() {
             return 140;
         }
 
         @Nullable
         @Override
-        protected SoundEvent getSoundPrepare() {
+        protected SoundEvent getSpellPrepareSound() {
             return FSoundEvents.ENTITY_FROSTOLOGER_PREPARE_CAST_BLIZZARD;
         }
 
         @Override
-        protected Spell getSpell() {
-            return Spell.DISAPPEAR;
+        protected IllagerSpell getSpell() {
+            return IllagerSpell.DISAPPEAR;
         }
 
     }
 
-    protected class IcicleAttackGoal extends SpellcastingIllagerEntity.CastSpellGoal {
+    protected class IcicleAttackGoal extends SpellcasterIllager.SpellcasterUseSpellGoal {
 
         private final IntProvider numIciclesProvider;
 
@@ -633,16 +641,16 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         public void start() {
             super.start();
             if (FrostologerEntity.this.isOnFire()) {
-                FrostologerEntity.this.extinguish();
-                FrostologerEntity.this.playExtinguishSound();
+                FrostologerEntity.this.clearFire();
+                FrostologerEntity.this.playEntityOnFireExtinguishedSound();
             }
         }
 
         @Override
-        public boolean canStart() {
-            if (FrostologerEntity.this.age <= nextStartTime) {
+        public boolean canUse() {
+            if (FrostologerEntity.this.tickCount <= nextStartTime) {
                 return false;
-            } else if (!super.canStart()) {
+            } else if (!super.canUse()) {
                 return false;
             } else {
                 return FrostologerEntity.this.isTargetRooted();
@@ -650,14 +658,14 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
         }
 
         @Override
-        protected void castSpell() {
-            ServerWorld serverWorld = (ServerWorld) getWorld();
+        protected void performSpellCasting() {
+            ServerLevel serverWorld = (ServerLevel) level();
 
-            int numIcicles = this.numIciclesProvider.get(random);
-            nextStartTime = FrostologerEntity.this.age + cooldownProvider.get(random) * 20;
+            int numIcicles = this.numIciclesProvider.sample(random);
+            nextStartTime = FrostologerEntity.this.tickCount + cooldownProvider.sample(random) * 20;
             for (int i = 0; i < numIcicles; ++i) {
-                BlockPos blockPos = FrostologerEntity.this.getBlockPos()
-                        .add(
+                BlockPos blockPos = FrostologerEntity.this.blockPosition()
+                        .offset(
                                 -2 + FrostologerEntity.this.random.nextInt(5),
                                 2,
                                 -2 + FrostologerEntity.this.random.nextInt(5)
@@ -669,39 +677,39 @@ public class FrostologerEntity extends SpellcastingIllagerEntity implements Rang
                     return;
                 }
 
-                icicle.refreshPositionAndAngles(blockPos, 0.0F, 0.0F);
+                icicle.moveTo(blockPos, 0.0F, 0.0F);
                 icicle.setOwner(FrostologerEntity.this);
 
-                icicle.setVelocity(
+                icicle.shootFromRotation(
                         FrostologerEntity.this,
-                        FrostologerEntity.this.getPitch() + FrostologerEntity.this.random.nextFloat(),
-                        FrostologerEntity.this.getHeadYaw() + FrostologerEntity.this.random.nextFloat(),
+                        FrostologerEntity.this.getXRot() + FrostologerEntity.this.random.nextFloat(),
+                        FrostologerEntity.this.getYHeadRot() + FrostologerEntity.this.random.nextFloat(),
                         0.0f, 3.0f, 1.0f
                 );
 
-                serverWorld.spawnEntityAndPassengers(icicle);
+                serverWorld.addFreshEntityWithPassengers(icicle);
             }
         }
 
         @Override
-        protected int getSpellTicks() {
+        protected int getCastingTime() {
             return 20;
         }
 
         @Override
-        protected int startTimeDelay() {
+        protected int getCastingInterval() {
             return 20;
         }
 
         @Nullable
         @Override
-        protected SoundEvent getSoundPrepare() {
-            return SoundEvents.ENTITY_EVOKER_PREPARE_SUMMON;
+        protected SoundEvent getSpellPrepareSound() {
+            return SoundEvents.EVOKER_PREPARE_SUMMON;
         }
 
         @Override
-        protected Spell getSpell() {
-            return Spell.SUMMON_VEX;
+        protected IllagerSpell getSpell() {
+            return IllagerSpell.SUMMON_VEX;
         }
     }
 }

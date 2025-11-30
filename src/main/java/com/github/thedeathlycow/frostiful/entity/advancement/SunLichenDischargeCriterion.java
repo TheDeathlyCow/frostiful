@@ -2,37 +2,37 @@ package com.github.thedeathlycow.frostiful.entity.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancement.criterion.AbstractCriterion;
-import net.minecraft.predicate.NumberRange;
-import net.minecraft.predicate.entity.EntityPredicate;
-import net.minecraft.predicate.entity.LootContextPredicate;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.advancements.critereon.ContextAwarePredicate;
+import net.minecraft.advancements.critereon.EntityPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.critereon.SimpleCriterionTrigger;
+import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Optional;
 
-public class SunLichenDischargeCriterion extends AbstractCriterion<SunLichenDischargeCriterion.Conditions> {
+public class SunLichenDischargeCriterion extends SimpleCriterionTrigger<SunLichenDischargeCriterion.Conditions> {
 
-    public void trigger(ServerPlayerEntity player, int temperatureImparted) {
-        this.trigger(player, conditions -> conditions.temperatureImparted.test(temperatureImparted));
+    public void trigger(ServerPlayer player, int temperatureImparted) {
+        this.trigger(player, conditions -> conditions.temperatureImparted.matches(temperatureImparted));
     }
 
     @Override
-    public Codec<Conditions> getConditionsCodec() {
+    public Codec<Conditions> codec() {
         return Conditions.CODEC;
     }
 
     public record Conditions(
-            Optional<LootContextPredicate> player,
-            NumberRange.IntRange temperatureImparted
-    ) implements AbstractCriterion.Conditions {
+            Optional<ContextAwarePredicate> player,
+            MinMaxBounds.Ints temperatureImparted
+    ) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                        EntityPredicate.LOOT_CONTEXT_PREDICATE_CODEC
+                        EntityPredicate.ADVANCEMENT_CODEC
                                 .optionalFieldOf("player")
                                 .forGetter(Conditions::player),
-                        NumberRange.IntRange.CODEC
+                        MinMaxBounds.Ints.CODEC
                                 .fieldOf("temperature_imparted")
-                                .orElse(NumberRange.IntRange.ANY)
+                                .orElse(MinMaxBounds.Ints.ANY)
                                 .forGetter(Conditions::temperatureImparted)
                 ).apply(instance, Conditions::new)
         );

@@ -2,10 +2,10 @@ package com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.registry.entry.RegistryEntry;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.feature.PlacedFeature;
-import net.minecraft.world.gen.stateprovider.BlockStateProvider;
+import net.minecraft.core.Holder;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 
 /**
  * The config for covered rock features
@@ -17,15 +17,15 @@ import net.minecraft.world.gen.stateprovider.BlockStateProvider;
 public record CoveredRockFeatureConfig(
         BlockStateProvider base,
         CoveredRockSizeConfig size,
-        RegistryEntry<PlacedFeature> coveringFeature,
+        Holder<PlacedFeature> coveringFeature,
         float placeCoveringChance
-) implements FeatureConfig {
+) implements FeatureConfiguration {
 
     public static final Codec<CoveredRockFeatureConfig> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
-                    BlockStateProvider.TYPE_CODEC.fieldOf("base").forGetter(CoveredRockFeatureConfig::base),
+                    BlockStateProvider.CODEC.fieldOf("base").forGetter(CoveredRockFeatureConfig::base),
                     CoveredRockSizeConfig.CODEC.fieldOf("size").forGetter(CoveredRockFeatureConfig::size),
-                    PlacedFeature.REGISTRY_CODEC.fieldOf("covering_feature").forGetter(CoveredRockFeatureConfig::coveringFeature),
+                    PlacedFeature.CODEC.fieldOf("covering_feature").forGetter(CoveredRockFeatureConfig::coveringFeature),
                     Codec.floatRange(0.0f, 1.0f).fieldOf("place_covering_chance").forGetter(CoveredRockFeatureConfig::placeCoveringChance)
             ).apply(instance, instance.stable(CoveredRockFeatureConfig::new))
     );

@@ -3,23 +3,19 @@ package com.github.thedeathlycow.frostiful.server.world.gen.feature;
 import com.github.thedeathlycow.frostiful.block.IcicleHelper;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.block.Blocks;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Direction;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.floatprovider.ClampedNormalFloatProvider;
-import net.minecraft.util.math.floatprovider.FloatProvider;
-import net.minecraft.util.math.floatprovider.UniformFloatProvider;
-import net.minecraft.util.math.intprovider.IntProvider;
-import net.minecraft.util.math.intprovider.UniformIntProvider;
-import net.minecraft.util.math.random.Random;
-import net.minecraft.world.StructureWorldAccess;
-import net.minecraft.world.WorldAccess;
-import net.minecraft.world.WorldView;
-import net.minecraft.world.gen.feature.Feature;
-import net.minecraft.world.gen.feature.FeatureConfig;
-import net.minecraft.world.gen.feature.util.CaveSurface;
-import net.minecraft.world.gen.feature.util.FeatureContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
+import net.minecraft.util.valueproviders.*;
+import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.WorldGenLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.levelgen.Column;
+import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 
 import java.util.Optional;
 import java.util.OptionalInt;
@@ -31,20 +27,20 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
     }
 
     @Override
-    public boolean generate(FeatureContext<IcicleFeatureConfig> context) {
+    public boolean place(FeaturePlaceContext<IcicleFeatureConfig> context) {
 
         // set up variables
-        StructureWorldAccess worldAccess = context.getWorld();
-        BlockPos origin = context.getOrigin();
-        Random random = context.getRandom();
-        IcicleFeatureConfig config = context.getConfig();
+        WorldGenLevel worldAccess = context.level();
+        BlockPos origin = context.origin();
+        RandomSource random = context.random();
+        IcicleFeatureConfig config = context.config();
 
         // read radii from config
-        int xRadius = config.radius.get(random);
-        int zRadius = config.radius.get(random);
+        int xRadius = config.radius.sample(random);
+        int zRadius = config.radius.sample(random);
 
-        float density = config.density.get(random);
-        int icicleHeight = config.icicleHeight.get(random);
+        float density = config.density.sample(random);
+        int icicleHeight = config.icicleHeight.sample(random);
 
         // generate
         generate(worldAccess, random, origin, xRadius, zRadius, density, icicleHeight, config);
@@ -53,8 +49,8 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
     }
 
     private void generate(
-            WorldAccess world,
-            Random random,
+            LevelAccessor world,
+            RandomSource random,
             BlockPos origin,
             int xRadius,
             int zRadius,
@@ -66,7 +62,7 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
 
         for (int x = -xRadius; x < xRadius; x++) {
             for (int z = -zRadius; z < zRadius; z++) {
-                pos = origin.add(x, 0, z);
+                pos = origin.offset(x, 0, z);
                 double icicleChance = this.icicleChance(xRadius, zRadius, x, z, config);
                 generateColumn(world, random, pos, x, z, density, icicleChance, icicleHeight, config);
             }
@@ -74,8 +70,8 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
     }
 
     private void generateColumn(
-            WorldAccess world,
-            Random random,
+            LevelAccessor world,
+            RandomSource random,
             BlockPos position,
             int localX, int localZ,
             float density,
@@ -85,7 +81,7 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
     ) {
 
         // get surface heights
-        Optional<CaveSurface> caveSurfaceResult = CaveSurface.create(
+        Optional<Column> caveSurfaceResult = Column.scan(
                 world,
                 position,
                 config.floorToCeilingSearchRange,
@@ -95,9 +91,9 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         if (caveSurfaceResult.isEmpty()) {
             return;
         }
-        CaveSurface surface = caveSurfaceResult.get();
-        OptionalInt ceilingHeight = surface.getCeilingHeight();
-        OptionalInt floorHeight = surface.getFloorHeight();
+        Column surface = caveSurfaceResult.get();
+        OptionalInt ceilingHeight = surface.getCeiling();
+        OptionalInt floorHeight = surface.getFloor();
         if (ceilingHeight.isEmpty() && floorHeight.isEmpty()) {
             return;
         }
@@ -111,9 +107,9 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
 
 
         // build ice layers
-        if (ceilingHeight.isPresent() && shouldGenerateCeiling && !this.isLava(world, position.withY(ceilingHeight.getAsInt()))) {
-            int thickness = config.packedIceBlockLayerThickness.get(random);
-            this.placePackedIceBlocks(world, position.withY(ceilingHeight.getAsInt()), thickness, Direction.UP);
+        if (ceilingHeight.isPresent() && shouldGenerateCeiling && !this.isLava(world, position.atY(ceilingHeight.getAsInt()))) {
+            int thickness = config.packedIceBlockLayerThickness.sample(random);
+            this.placePackedIceBlocks(world, position.atY(ceilingHeight.getAsInt()), thickness, Direction.UP);
             ceilingIcicleLength = getHeight(
                     random,
                     localX, localZ,
@@ -123,9 +119,9 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
             );
         }
 
-        if (floorHeight.isPresent() && shouldGenerateFloor && !this.isLava(world, position.withY(floorHeight.getAsInt()))) {
-            int thickness = config.packedIceBlockLayerThickness.get(random);
-            this.placePackedIceBlocks(world, position.withY(floorHeight.getAsInt()), thickness, Direction.DOWN);
+        if (floorHeight.isPresent() && shouldGenerateFloor && !this.isLava(world, position.atY(floorHeight.getAsInt()))) {
+            int thickness = config.packedIceBlockLayerThickness.sample(random);
+            this.placePackedIceBlocks(world, position.atY(floorHeight.getAsInt()), thickness, Direction.DOWN);
             floorIcicleLength = getHeight(
                     random,
                     localX, localZ,
@@ -160,7 +156,7 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         if (ceilingHeight.isPresent() && shouldGenerateCeiling && ceilingIcicleLength > 0) {
             IcicleHelper.generateIcicle(
                     world,
-                    position.withY(ceilingHeight.getAsInt() - 1),
+                    position.atY(ceilingHeight.getAsInt() - 1),
                     Direction.DOWN,
                     ceilingIcicleLength,
                     merge
@@ -169,7 +165,7 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         if (floorHeight.isPresent() && shouldGenerateFloor && floorIcicleLength > 0) {
             IcicleHelper.generateIcicle(
                     world,
-                    position.withY(floorHeight.getAsInt() + 1),
+                    position.atY(floorHeight.getAsInt() + 1),
                     Direction.UP,
                     floorIcicleLength,
                     merge
@@ -177,12 +173,12 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         }
     }
 
-    private boolean isLava(WorldView world, BlockPos pos) {
-        return world.getBlockState(pos).isOf(Blocks.LAVA);
+    private boolean isLava(LevelReader world, BlockPos pos) {
+        return world.getBlockState(pos).is(Blocks.LAVA);
     }
 
-    private void placePackedIceBlocks(WorldAccess world, BlockPos pos, int thickness, Direction direction) {
-        BlockPos.Mutable position = pos.mutableCopy();
+    private void placePackedIceBlocks(LevelAccessor world, BlockPos pos, int thickness, Direction direction) {
+        BlockPos.MutableBlockPos position = pos.mutable();
         for (int i = 0; i < thickness; i++) {
             if (!IcicleHelper.generateIceBaseBlock(world, position)) {
                 return;
@@ -191,12 +187,12 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         }
     }
 
-    private int getHeight(Random random, int localX, int localZ, float density, int maxHeight, IcicleFeatureConfig config) {
+    private int getHeight(RandomSource random, int localX, int localZ, float density, int maxHeight, IcicleFeatureConfig config) {
         if (random.nextFloat() > density) {
             return 0;
         }
         int absoluteDistanceManhattan = Math.abs(localX) + Math.abs(localZ);
-        float mean = MathHelper.clampedMap(
+        float mean = Mth.clampedMap(
                 absoluteDistanceManhattan,
                 1.0f,
                 config.maxDistanceFromCenterAffectingHeightBias,
@@ -206,15 +202,15 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
         return (int) clampedGaussian(random, 1.0f, maxHeight, mean, config.heightDeviation);
     }
 
-    private static float clampedGaussian(Random random, float min, float max, float mean, float deviation) {
-        return ClampedNormalFloatProvider.get(random, mean, deviation, min, max);
+    private static float clampedGaussian(RandomSource random, float min, float max, float mean, float deviation) {
+        return ClampedNormalFloat.sample(random, mean, deviation, min, max);
     }
 
     private double icicleChance(int radiusX, int radiusZ, int localX, int localZ, IcicleFeatureConfig config) {
         int distanceToEdgeX = radiusX - Math.abs(localX);
         int distanceToEdgeZ = radiusZ - Math.abs(localZ);
         int minDistanceToEdge = Math.min(distanceToEdgeX, distanceToEdgeZ);
-        return MathHelper.clampedMap(
+        return Mth.clampedMap(
                 minDistanceToEdge,
                 0.0, IcicleFeatureConfig.MAX_DIST_FROM_CENTER_AFFECTING_COLUMN_CHANCE,
                 IcicleFeatureConfig.CHANCE_OF_COLUMN_AT_MAX_DISTANCE, 1.0
@@ -229,32 +225,32 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
             IntProvider packedIceBlockLayerThickness,
             int heightDeviation,
             int maxDistanceFromCenterAffectingHeightBias
-    ) implements FeatureConfig {
+    ) implements FeatureConfiguration {
 
         private static final double MAX_DIST_FROM_CENTER_AFFECTING_COLUMN_CHANCE = 3.0;
         private static final double CHANCE_OF_COLUMN_AT_MAX_DISTANCE = 0.1;
 
         public static final Codec<IcicleFeatureConfig> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                        IntProvider.createValidatingCodec(0, 10)
+                        IntProvider.codec(0, 10)
                                 .fieldOf("icicle_height")
-                                .orElse(UniformIntProvider.create(1, 6))
+                                .orElse(UniformInt.of(1, 6))
                                 .forGetter(config -> config.icicleHeight),
-                        IntProvider.createValidatingCodec(1, 32)
+                        IntProvider.codec(1, 32)
                                 .fieldOf("radius")
-                                .orElse(UniformIntProvider.create(2, 8))
+                                .orElse(UniformInt.of(2, 8))
                                 .forGetter(config -> config.radius),
-                        FloatProvider.createValidatedCodec(0f, 1f)
+                        FloatProvider.codec(0f, 1f)
                                 .fieldOf("density")
-                                .orElse(UniformFloatProvider.create(0.1f, 0.4f))
+                                .orElse(UniformFloat.of(0.1f, 0.4f))
                                 .forGetter(config -> config.density),
                         Codec.intRange(1, 32)
                                 .fieldOf("floor_to_ceiling_search_range")
                                 .orElse(12)
                                 .forGetter(config -> config.floorToCeilingSearchRange),
-                        IntProvider.createValidatingCodec(1, 32)
+                        IntProvider.codec(1, 32)
                                 .fieldOf("packed_ice_layer_thickness")
-                                .orElse(UniformIntProvider.create(1, 4))
+                                .orElse(UniformInt.of(1, 4))
                                 .forGetter(config -> config.packedIceBlockLayerThickness),
                         Codec.intRange(1, 64)
                                 .fieldOf("height_deviation")

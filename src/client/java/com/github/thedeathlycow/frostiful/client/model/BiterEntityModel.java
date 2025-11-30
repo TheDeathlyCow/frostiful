@@ -4,12 +4,14 @@ import com.github.thedeathlycow.frostiful.client.anim.BiterAnimations;
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.*;
-import net.minecraft.client.render.entity.model.SinglePartEntityModel;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.client.model.HierarchicalModel;
+import net.minecraft.client.model.geom.ModelPart;
+import net.minecraft.client.model.geom.PartPose;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 
 @Environment(EnvType.CLIENT)
-public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
+public class BiterEntityModel extends HierarchicalModel<BiterEntity> {
 
 
     private final ModelPart modelPart;
@@ -36,44 +38,44 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
 
     }
 
-    public static TexturedModelData getTexturedModelData() {
-        ModelData modelData = new ModelData();
-        ModelPartData modelPartData = modelData.getRoot();
-        ModelPartData root = modelPartData.addChild("root", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
-        ModelPartData head = root.addChild("head", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 21.0F, 0.0F));
+    public static LayerDefinition getTexturedModelData() {
+        MeshDefinition modelData = new MeshDefinition();
+        PartDefinition modelPartData = modelData.getRoot();
+        PartDefinition root = modelPartData.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
+        PartDefinition head = root.addOrReplaceChild("head", CubeListBuilder.create(), PartPose.offset(0.0F, 21.0F, 0.0F));
 
-        ModelPartData mouth = head.addChild("mouth", ModelPartBuilder.create(), ModelTransform.pivot(0.0F, 0.0F, 0.0F));
+        PartDefinition mouth = head.addOrReplaceChild("mouth", CubeListBuilder.create(), PartPose.offset(0.0F, 0.0F, 0.0F));
 
-        ModelPartData bottom = mouth.addChild("bottom", ModelPartBuilder.create().uv(54, 28).cuboid(-6.0F, 0.0F, 0.0F, 12.0F, 4.0F, 0.0F, new Dilation(0.0F))
-                .uv(50, 0).cuboid(-6.0F, 0.0F, -12.0F, 12.0F, 4.0F, 0.0F, new Dilation(0.0F))
-                .uv(40, 20).cuboid(6.0F, 0.0F, -12.0F, 0.0F, 4.0F, 12.0F, new Dilation(0.0F))
-                .uv(30, 16).cuboid(-6.0F, 0.0F, -12.0F, 0.0F, 4.0F, 12.0F, new Dilation(0.0F))
-                .uv(0, 12).cuboid(-6.0F, 4.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -18.0F, 6.0F));
+        PartDefinition bottom = mouth.addOrReplaceChild("bottom", CubeListBuilder.create().texOffs(54, 28).addBox(-6.0F, 0.0F, 0.0F, 12.0F, 4.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(50, 0).addBox(-6.0F, 0.0F, -12.0F, 12.0F, 4.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(40, 20).addBox(6.0F, 0.0F, -12.0F, 0.0F, 4.0F, 12.0F, new CubeDeformation(0.0F))
+                .texOffs(30, 16).addBox(-6.0F, 0.0F, -12.0F, 0.0F, 4.0F, 12.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 12).addBox(-6.0F, 4.0F, -12.0F, 12.0F, 0.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -18.0F, 6.0F));
 
-        ModelPartData top = mouth.addChild("top", ModelPartBuilder.create().uv(54, 44).cuboid(-6.0F, -8.0F, 0.0F, 12.0F, 8.0F, 0.0F, new Dilation(0.0F))
-                .uv(48, 36).cuboid(-6.0F, -8.0F, -12.0F, 12.0F, 8.0F, 0.0F, new Dilation(0.0F))
-                .uv(0, 40).cuboid(6.0F, -8.0F, -12.0F, 0.0F, 8.0F, 12.0F, new Dilation(0.0F))
-                .uv(0, 32).cuboid(-6.0F, -8.0F, -12.0F, 0.0F, 8.0F, 12.0F, new Dilation(0.0F))
-                .uv(0, 0).cuboid(-6.0F, -8.0F, -12.0F, 12.0F, 0.0F, 12.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, -18.0F, 6.0F));
+        PartDefinition top = mouth.addOrReplaceChild("top", CubeListBuilder.create().texOffs(54, 44).addBox(-6.0F, -8.0F, 0.0F, 12.0F, 8.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(48, 36).addBox(-6.0F, -8.0F, -12.0F, 12.0F, 8.0F, 0.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 40).addBox(6.0F, -8.0F, -12.0F, 0.0F, 8.0F, 12.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 32).addBox(-6.0F, -8.0F, -12.0F, 0.0F, 8.0F, 12.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 0).addBox(-6.0F, -8.0F, -12.0F, 12.0F, 0.0F, 12.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, -18.0F, 6.0F));
 
-        ModelPartData nose = top.addChild("nose", ModelPartBuilder.create().uv(0, 0).cuboid(-1.0F, -22.0F, -8.0F, 2.0F, 6.0F, 2.0F, new Dilation(0.0F))
-                .uv(0, 8).cuboid(-1.0F, -16.0F, -8.0F, 2.0F, 4.0F, 0.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 18.0F, -6.0F));
+        PartDefinition nose = top.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(0, 0).addBox(-1.0F, -22.0F, -8.0F, 2.0F, 6.0F, 2.0F, new CubeDeformation(0.0F))
+                .texOffs(0, 8).addBox(-1.0F, -16.0F, -8.0F, 2.0F, 4.0F, 0.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 18.0F, -6.0F));
 
-        ModelPartData body = root.addChild("body", ModelPartBuilder.create().uv(0, 24).cuboid(-5.0F, -14.0F, -5.0F, 10.0F, 10.0F, 10.0F, new Dilation(0.0F)), ModelTransform.pivot(0.0F, 21.0F, 0.0F));
+        PartDefinition body = root.addOrReplaceChild("body", CubeListBuilder.create().texOffs(0, 24).addBox(-5.0F, -14.0F, -5.0F, 10.0F, 10.0F, 10.0F, new CubeDeformation(0.0F)), PartPose.offset(0.0F, 21.0F, 0.0F));
 
-        ModelPartData leftArm = root.addChild("leftArm", ModelPartBuilder.create().uv(36, 0).cuboid(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(8.0F, -1.0F, 0.0F));
+        PartDefinition leftArm = root.addOrReplaceChild("leftArm", CubeListBuilder.create().texOffs(36, 0).addBox(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(8.0F, -1.0F, 0.0F));
 
-        ModelPartData rightArm = root.addChild("rightArm", ModelPartBuilder.create().uv(36, 0).mirrored().cuboid(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new Dilation(0.0F)), ModelTransform.pivot(-8.0F, -1.0F, 0.0F));
-        return TexturedModelData.of(modelData, 128, 128);
+        PartDefinition rightArm = root.addOrReplaceChild("rightArm", CubeListBuilder.create().texOffs(36, 0).mirror().addBox(-2.0F, 3.0F, -3.0F, 4.0F, 22.0F, 6.0F, new CubeDeformation(0.0F)), PartPose.offset(-8.0F, -1.0F, 0.0F));
+        return LayerDefinition.create(modelData, 128, 128);
     }
 
     @Override
-    public ModelPart getPart() {
+    public ModelPart root() {
         return this.modelPart;
     }
 
     @Override
-    public void setAngles(
+    public void setupAnim(
             BiterEntity entity,
             float limbAngle,
             float limbDistance,
@@ -81,12 +83,12 @@ public class BiterEntityModel extends SinglePartEntityModel<BiterEntity> {
             float headYaw,
             float headPitch
     ) {
-        this.getPart().traverse().forEach(ModelPart::resetTransform);
-        this.rightArm.pitch = -1.5F * MathHelper.wrap(limbAngle, 10.0F) * limbDistance;
-        this.leftArm.pitch = 1.5F * MathHelper.wrap(limbAngle, 10.0F) * limbDistance;
-        this.rightArm.yaw = 0.0F;
-        this.leftArm.yaw = 0.0F;
+        this.root().getAllParts().forEach(ModelPart::resetPose);
+        this.rightArm.xRot = -1.5F * Mth.triangleWave(limbAngle, 10.0F) * limbDistance;
+        this.leftArm.xRot = 1.5F * Mth.triangleWave(limbAngle, 10.0F) * limbDistance;
+        this.rightArm.yRot = 0.0F;
+        this.leftArm.yRot = 0.0F;
 
-        this.updateAnimation(entity.bitingAnimation, BiterAnimations.BITE, animationProgress);
+        this.animate(entity.bitingAnimation, BiterAnimations.BITE, animationProgress);
     }
 }

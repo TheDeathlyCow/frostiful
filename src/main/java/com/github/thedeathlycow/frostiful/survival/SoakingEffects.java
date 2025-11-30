@@ -6,9 +6,9 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentTickContext;
 import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntitySoakingTickEvents;
-import net.minecraft.block.Blocks;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.world.LightType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.Blocks;
 
 public final class SoakingEffects {
     public static void initialize() {
@@ -49,20 +49,20 @@ public final class SoakingEffects {
 
     private static int getTouchingWaterChange(EnvironmentTickContext<? extends LivingEntity> context, FrostifulConfig config) {
         LivingEntity entity = context.affected();
-        return entity.isTouchingWater() || entity.getBlockStateAtPos().isOf(Blocks.WATER_CAULDRON)
+        return entity.isInWater() || entity.getInBlockState().is(Blocks.WATER_CAULDRON)
                 ? config.environmentConfig.getTouchingWaterWetnessIncrease()
                 : 0;
     }
 
     private static int getSubmerged(EnvironmentTickContext<? extends LivingEntity> context, EntityInvoker invoker) {
         LivingEntity entity = context.affected();
-        return entity.isSubmergedInWater() || invoker.frostiful$invokeIsInsideBubbleColumn()
+        return entity.isUnderWater() || invoker.frostiful$invokeIsInsideBubbleColumn()
                 ? entity.thermoo$getMaxWetTicks()
                 : 0;
     }
 
     private static int getLightDrying(EnvironmentTickContext<? extends LivingEntity> context) {
-        int blockLightLevel = context.world().getLightLevel(LightType.BLOCK, context.pos());
+        int blockLightLevel = context.world().getBrightness(LightLayer.BLOCK, context.pos());
         return blockLightLevel / 4;
     }
 

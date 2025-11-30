@@ -2,19 +2,19 @@ package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.particle.ParticleEffect;
-import net.minecraft.particle.ParticleTypes;
-import net.minecraft.world.World;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.Level;
 
 public class FreezingWindEntity extends WindEntity {
 
     private int frost;
 
-    public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, World world) {
+    public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, Level world) {
         super(type, world);
         this.frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
     }
@@ -31,21 +31,21 @@ public class FreezingWindEntity extends WindEntity {
         }
     }
 
-    protected ParticleEffect getDustParticle() {
+    protected ParticleOptions getDustParticle() {
         return ParticleTypes.SNOWFLAKE;
     }
 
     @Override
-    protected void readCustomDataFromNbt(NbtCompound nbt) {
-        super.readCustomDataFromNbt(nbt);
-        if (nbt.contains("Frost", NbtElement.INT_TYPE)) {
+    protected void readAdditionalSaveData(CompoundTag nbt) {
+        super.readAdditionalSaveData(nbt);
+        if (nbt.contains("Frost", Tag.TAG_INT)) {
             this.frost = nbt.getInt("Frost");
         }
     }
 
     @Override
-    protected void writeCustomDataToNbt(NbtCompound nbt) {
-        super.writeCustomDataToNbt(nbt);
+    protected void addAdditionalSaveData(CompoundTag nbt) {
+        super.addAdditionalSaveData(nbt);
 
         nbt.putInt("Frost", this.frost);
     }

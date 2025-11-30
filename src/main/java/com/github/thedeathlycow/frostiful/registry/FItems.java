@@ -8,14 +8,12 @@ import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.cloak.InertFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
-import net.minecraft.block.Block;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.item.*;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Rarity;
-import net.minecraft.util.math.Direction;
+import net.minecraft.core.Direction;
+import net.minecraft.core.Registry;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.Block;
 
 import java.util.function.Function;
 
@@ -26,7 +24,7 @@ public final class FItems {
                     FArmorMaterials.FUR,
                     ArmorItem.Type.HELMET,
                     settings
-                            .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(5))
+                            .durability(ArmorItem.Type.HELMET.getDurability(5))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -36,7 +34,7 @@ public final class FItems {
                     FArmorMaterials.FUR,
                     ArmorItem.Type.CHESTPLATE,
                     settings
-                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(5))
+                            .durability(ArmorItem.Type.CHESTPLATE.getDurability(5))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -46,7 +44,7 @@ public final class FItems {
                     FArmorMaterials.FUR,
                     ArmorItem.Type.LEGGINGS,
                     settings
-                            .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(5))
+                            .durability(ArmorItem.Type.LEGGINGS.getDurability(5))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -56,7 +54,7 @@ public final class FItems {
                     FArmorMaterials.FUR,
                     ArmorItem.Type.BOOTS,
                     settings
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(5))
+                            .durability(ArmorItem.Type.BOOTS.getDurability(5))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -76,7 +74,7 @@ public final class FItems {
 
     public static final Item FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE = register(
             "frosty_armor_trim_smithing_template",
-            settings -> SmithingTemplateItem.of(FArmorTrimPatterns.FROSTY)
+            settings -> SmithingTemplateItem.createArmorTrimTemplate(FArmorTrimPatterns.FROSTY)
     );
 
     public static final Item FUR_PADDED_CHAINMAIL_HELMET = register(
@@ -85,7 +83,7 @@ public final class FItems {
                     FArmorMaterials.FUR_LINED_CHAINMAIL,
                     ArmorItem.Type.HELMET,
                     settings
-                            .maxDamage(ArmorItem.Type.HELMET.getMaxDamage(15))
+                            .durability(ArmorItem.Type.HELMET.getDurability(15))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -95,7 +93,7 @@ public final class FItems {
                     FArmorMaterials.FUR_LINED_CHAINMAIL,
                     ArmorItem.Type.CHESTPLATE,
                     settings
-                            .maxDamage(ArmorItem.Type.CHESTPLATE.getMaxDamage(15))
+                            .durability(ArmorItem.Type.CHESTPLATE.getDurability(15))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -105,7 +103,7 @@ public final class FItems {
                     FArmorMaterials.FUR_LINED_CHAINMAIL,
                     ArmorItem.Type.LEGGINGS,
                     settings
-                            .maxDamage(ArmorItem.Type.LEGGINGS.getMaxDamage(15))
+                            .durability(ArmorItem.Type.LEGGINGS.getDurability(15))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -115,7 +113,7 @@ public final class FItems {
                     FArmorMaterials.FUR_LINED_CHAINMAIL,
                     ArmorItem.Type.BOOTS,
                     settings
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))
+                            .durability(ArmorItem.Type.BOOTS.getDurability(15))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -133,7 +131,7 @@ public final class FItems {
             settings -> new InertFrostologyCloakItem(
                     settings
                             .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
-                            .maxCount(1)
+                            .stacksTo(1)
                             .rarity(Rarity.UNCOMMON)
             )
     );
@@ -143,9 +141,9 @@ public final class FItems {
             settings -> new FrostologyCloakItem(
                     settings
                             .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
-                            .attributeModifiers(FrostologyCloakItem.createAttributeModifiers())
+                            .attributes(FrostologyCloakItem.createAttributeModifiers())
                             .rarity(Rarity.EPIC)
-                            .maxCount(1)
+                            .stacksTo(1)
             )
     );
 
@@ -155,7 +153,7 @@ public final class FItems {
                     FArmorMaterials.FUR,
                     ArmorItem.Type.BOOTS,
                     settings
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(5))
+                            .durability(ArmorItem.Type.BOOTS.getDurability(5))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -166,7 +164,7 @@ public final class FItems {
                     FArmorMaterials.FUR_LINED_CHAINMAIL,
                     ArmorItem.Type.BOOTS,
                     settings
-                            .maxDamage(ArmorItem.Type.BOOTS.getMaxDamage(15))
+                            .durability(ArmorItem.Type.BOOTS.getDurability(15))
                             .component(FDataComponentTypes.FROST_RESISTANCE, FrostResistanceComponent.VERY_PROTECTIVE)
             )
     );
@@ -187,10 +185,10 @@ public final class FItems {
             "frost_wand",
             settings -> new FrostWandItem(
                     settings
-                            .maxCount(1)
-                            .maxDamage(250)
-                            .attributeModifiers(FrostWandItem.createAttributeModifiers())
-                            .component(DataComponentTypes.TOOL, FrostWandItem.createToolComponent())
+                            .stacksTo(1)
+                            .durability(250)
+                            .attributes(FrostWandItem.createAttributeModifiers())
+                            .component(DataComponents.TOOL, FrostWandItem.createToolComponent())
                             .rarity(Rarity.RARE)
             )
     );
@@ -228,7 +226,7 @@ public final class FItems {
 
     public static final Item FROZEN_TORCH = register(
             "frozen_torch",
-            settings -> new VerticallyAttachableBlockItem(
+            settings -> new StandingAndWallBlockItem(
                     FBlocks.FROZEN_TORCH,
                     FBlocks.FROZEN_WALL_TORCH,
                     settings,
@@ -241,7 +239,7 @@ public final class FItems {
     );
     public static final Item PACKED_SNOWBALL = register(
             "packed_snowball",
-            settings -> new PackedSnowBallItem(settings.maxCount(16))
+            settings -> new PackedSnowBallItem(settings.stacksTo(16))
     );
     public static final Item PACKED_SNOW_BLOCK = register(
             "packed_snow_block", FBlocks.PACKED_SNOW_BLOCK
@@ -273,7 +271,7 @@ public final class FItems {
             "snowflake_banner_pattern",
             settings -> new BannerPatternItem(
                     FBannerPatternTags.SNOWFLAKE_PATTERN_ITEM,
-                    settings.maxCount(1)
+                    settings.stacksTo(1)
             )
     );
 
@@ -281,7 +279,7 @@ public final class FItems {
             "icicle_banner_pattern",
             settings -> new BannerPatternItem(
                     FBannerPatternTags.ICICLE_PATTERN_ITEM,
-                    settings.maxCount(1)
+                    settings.stacksTo(1)
             )
     );
 
@@ -289,7 +287,7 @@ public final class FItems {
             "frostology_banner_pattern",
             settings -> new BannerPatternItem(
                     FBannerPatternTags.FROSTOLOGY_PATTERN_ITEM,
-                    settings.maxCount(1)
+                    settings.stacksTo(1)
             )
     );
 
@@ -307,12 +305,12 @@ public final class FItems {
 
     public static final Item GLACIAL_ARMOR_TRIM_SMITHING_TEMPLATE = register(
             "glacial_armor_trim_smithing_template",
-            settings -> SmithingTemplateItem.of(FArmorTrimPatterns.GLACIAL)
+            settings -> SmithingTemplateItem.createArmorTrimTemplate(FArmorTrimPatterns.GLACIAL)
     );
 
     public static final Item SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE = register(
             "snow_man_armor_trim_smithing_template",
-            settings -> SmithingTemplateItem.of(FArmorTrimPatterns.SNOW_MAN)
+            settings -> SmithingTemplateItem.createArmorTrimTemplate(FArmorTrimPatterns.SNOW_MAN)
     );
 
     public static void initialize() {
@@ -326,16 +324,16 @@ public final class FItems {
     }
 
     private static Item register(String id) {
-        return register(id, Item::new, new Item.Settings());
+        return register(id, Item::new, new Item.Properties());
     }
 
-    private static Item register(String id, Function<Item.Settings, Item> itemFactory) {
-        return register(id, itemFactory, new Item.Settings());
+    private static Item register(String id, Function<Item.Properties, Item> itemFactory) {
+        return register(id, itemFactory, new Item.Properties());
     }
 
-    private static Item register(String id, Function<Item.Settings, Item> itemFactory, Item.Settings settings) {
+    private static Item register(String id, Function<Item.Properties, Item> itemFactory, Item.Properties settings) {
         Item item = itemFactory.apply(settings);
-        return Registry.register(Registries.ITEM, Frostiful.id(id), item);
+        return Registry.register(BuiltInRegistries.ITEM, Frostiful.id(id), item);
     }
 
     private FItems() {

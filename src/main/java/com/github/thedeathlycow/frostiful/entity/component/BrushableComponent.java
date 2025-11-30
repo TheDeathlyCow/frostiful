@@ -6,26 +6,26 @@ import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.mob.Angerable;
-import net.minecraft.entity.passive.AnimalEntity;
-import net.minecraft.entity.passive.TameableEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.ItemStack;
-import net.minecraft.loot.LootTable;
-import net.minecraft.nbt.NbtCompound;
-import net.minecraft.nbt.NbtElement;
-import net.minecraft.network.RegistryByteBuf;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.server.network.ServerPlayerEntity;
-import net.minecraft.sound.SoundCategory;
-import net.minecraft.sound.SoundEvents;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
-import net.minecraft.world.event.GameEvent;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.NeutralMob;
+import net.minecraft.world.entity.TamableAnimal;
+import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -36,9 +36,9 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
     private static final int BRUSH_COOLDOWN = 20 * 300;
     private long lastBrushTime = -1;
 
-    private final AnimalEntity provider;
+    private final Animal provider;
 
-    public BrushableComponent(AnimalEntity provider) {
+    public BrushableComponent(Animal provider) {
         this.provider = provider;
     }
 
@@ -48,43 +48,43 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
      * @param hand   The hand they used to interact
      * @param base   Original action result for the interaction
      */
-    public static ActionResult interactWithMob(AnimalEntity animal, PlayerEntity player, Hand hand, ActionResult base) {
-        if (player.isSpectator() || base != ActionResult.PASS) {
+    public static InteractionResult interactWithMob(Animal animal, Player player, InteractionHand hand, InteractionResult base) {
+        if (player.isSpectator() || base != InteractionResult.PASS) {
             return base;
         }
 
-        ItemStack heldItem = player.getStackInHand(hand);
+        ItemStack heldItem = player.getItemInHand(hand);
         BrushableComponent component = FComponents.BRUSHABLE_COMPONENT.getNullable(animal);
-        if (component != null && component.isBrushable() && heldItem.isIn(ConventionalItemTags.BRUSH_TOOLS)) {
+        if (component != null && component.isBrushable() && heldItem.is(ConventionalItemTags.BRUSH_TOOLS)) {
             component.brush(player);
-            if (!animal.getWorld().isClient) {
-                heldItem.damage(16, player, LivingEntity.getSlotForHand(hand));
+            if (!animal.level().isClientSide) {
+                heldItem.hurtAndBreak(16, player, LivingEntity.getSlotForHand(hand));
             }
-            return ActionResult.success(animal.getWorld().isClient);
+            return InteractionResult.sidedSuccess(animal.level().isClientSide);
         }
 
-        return ActionResult.PASS;
+        return InteractionResult.PASS;
     }
 
     @Override
-    public void writeSyncPacket(RegistryByteBuf buf, ServerPlayerEntity recipient) {
+    public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer recipient) {
         buf.writeLong(this.lastBrushTime);
     }
 
     @Override
-    public void applySyncPacket(RegistryByteBuf buf) {
+    public void applySyncPacket(RegistryFriendlyByteBuf buf) {
         this.lastBrushTime = buf.readLong();
     }
 
     @Override
-    public void readFromNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
-        if (tag.contains(LAST_BRUSHED_TIME_KEY, NbtElement.LONG_TYPE)) {
+    public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
+        if (tag.contains(LAST_BRUSHED_TIME_KEY, Tag.TAG_LONG)) {
             this.lastBrushTime = tag.getLong(LAST_BRUSHED_TIME_KEY);
         }
     }
 
     @Override
-    public void writeToNbt(NbtCompound tag, RegistryWrapper.WrapperLookup registryLookup) {
+    public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         if (this.wasBrushed()) {
             tag.putLong(LAST_BRUSHED_TIME_KEY, this.getLastBrushTime());
         }
@@ -105,50 +105,50 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         return this.provider.isAlive()
                 && !this.provider.isBaby()
                 && !this.wasBrushed()
-                && this.provider.getType().isIn(FEntityTypeTags.IS_BRUSHABLE);
+                && this.provider.getType().is(FEntityTypeTags.IS_BRUSHABLE);
     }
 
     public boolean wasBrushed() {
         return lastBrushTime >= 0L
-                && this.provider.getWorld().getTimeOfDay() - lastBrushTime <= BRUSH_COOLDOWN;
+                && this.provider.level().getDayTime() - lastBrushTime <= BRUSH_COOLDOWN;
     }
 
-    private void brush(PlayerEntity brusher) {
-        World world = provider.getWorld();
-        world.playSoundFromEntity(
+    private void brush(Player brusher) {
+        Level world = provider.level();
+        world.playSound(
                 null,
                 provider,
-                SoundEvents.ITEM_BRUSH_BRUSHING_GENERIC,
-                SoundCategory.PLAYERS,
+                SoundEvents.BRUSH_GENERIC,
+                SoundSource.PLAYERS,
                 1.0f, 1.0f
         );
-        provider.emitGameEvent(GameEvent.SHEAR, brusher);
+        provider.gameEvent(GameEvent.SHEAR, brusher);
 
-        if (!world.isClient) {
-            RegistryKey<LootTable> furLootTable = getLootTableForAnimal(provider);
+        if (!world.isClientSide) {
+            ResourceKey<LootTable> furLootTable = getLootTableForAnimal(provider);
 
             if (furLootTable != null) {
                 FLootHelper.dropLootFromEntity(provider, furLootTable);
             } else {
                 Frostiful.LOGGER.warn(
                         "Attempted to brush an animal type {} that does not drop fur!",
-                        provider.getType().getRegistryEntry().toString()
+                        provider.getType().builtInRegistryHolder().toString()
                 );
             }
 
-            this.setLastBrushTime(world.getTime());
+            this.setLastBrushTime(world.getGameTime());
             this.setAngryAt(brusher);
         }
     }
 
     @Nullable
-    private static RegistryKey<LootTable> getLootTableForAnimal(AnimalEntity animal) {
+    private static ResourceKey<LootTable> getLootTableForAnimal(Animal animal) {
         EntityType<?> type = animal.getType();
-        if (type.isIn(FEntityTypeTags.BRUSHING_DROPS_POLAR_BEAR_FUR)) {
+        if (type.is(FEntityTypeTags.BRUSHING_DROPS_POLAR_BEAR_FUR)) {
             return FLootTables.POLAR_BEAR_BRUSHING_GAMEPLAY;
-        } else if (type.isIn(FEntityTypeTags.BRUSHING_DROPS_WOLF_FUR)) {
+        } else if (type.is(FEntityTypeTags.BRUSHING_DROPS_WOLF_FUR)) {
             return FLootTables.WOLF_BRUSHING_GAMEPLAY;
-        } else if (type.isIn(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)) {
+        } else if (type.is(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)) {
             return FLootTables.OCELOT_BRUSHING_GAMEPLAY;
         } else {
             return null;
@@ -160,18 +160,18 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
      *
      * @param brusher the player who brushed the provider
      */
-    private void setAngryAt(PlayerEntity brusher) {
+    private void setAngryAt(Player brusher) {
         if (brusher.isCreative()) {
             return;
         }
 
-        if (provider instanceof TameableEntity tameable && tameable.isTamed()) {
+        if (provider instanceof TamableAnimal tameable && tameable.isTame()) {
             return;
         }
 
-        if (provider instanceof Angerable angerable) {
-            angerable.chooseRandomAngerTime();
-            angerable.setAngryAt(brusher.getUuid());
+        if (provider instanceof NeutralMob angerable) {
+            angerable.startPersistentAngerTimer();
+            angerable.setPersistentAngerTarget(brusher.getUUID());
         }
     }
 }

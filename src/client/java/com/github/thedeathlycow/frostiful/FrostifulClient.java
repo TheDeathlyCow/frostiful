@@ -20,7 +20,7 @@ import net.fabricmc.fabric.api.client.model.loading.v1.ModelLoadingPlugin;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
-import net.minecraft.resource.ResourceType;
+import net.minecraft.server.packs.PackType;
 
 @Environment(EnvType.CLIENT)
 public class FrostifulClient implements ClientModInitializer {
@@ -32,7 +32,7 @@ public class FrostifulClient implements ClientModInitializer {
         FEntityRenderers.initialize();
 
         FrostWandItemRenderer frostWandRenderer = new FrostWandItemRenderer(FEntityModelLayers.FROST_WAND);
-        ResourceManagerHelper.get(ResourceType.CLIENT_RESOURCES).registerReloadListener(frostWandRenderer);
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(frostWandRenderer);
         BuiltinItemRendererRegistry.INSTANCE.register(() -> FItems.FROST_WAND, frostWandRenderer);
         ModelLoadingPlugin.register(new FrostifulModelLoadingPlugin());
 

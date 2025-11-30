@@ -3,22 +3,22 @@ package com.github.thedeathlycow.frostiful.entity.ai.goal;
 import com.github.thedeathlycow.frostiful.entity.component.BrushableComponent;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
-import net.minecraft.entity.ai.TargetPredicate;
-import net.minecraft.entity.ai.goal.Goal;
-import net.minecraft.entity.mob.PathAwareEntity;
-import net.minecraft.loot.LootTable;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.util.Hand;
-import net.minecraft.world.World;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
+public class PlayFightGoal<T extends PathfinderMob> extends Goal {
 
-    private static final TargetPredicate VALID_PLAYFIGHT_PREDICATE = TargetPredicate.createAttackable()
-            .setBaseMaxDistance(8.0D)
-            .ignoreVisibility();
+    private static final TargetingConditions VALID_PLAYFIGHT_PREDICATE = TargetingConditions.forCombat()
+            .range(8.0D)
+            .ignoreLineOfSight();
 
     private static final int MAX_FIGHT_TIME = 30;
 
@@ -27,13 +27,13 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
     @Nullable
     protected T target;
     @Nullable
-    protected final RegistryKey<LootTable> furLootTable;
+    protected final ResourceKey<LootTable> furLootTable;
     private final float adultChance;
     private final float babyChance;
     private int timer;
     private boolean droppedFur = false;
 
-    public PlayFightGoal(T mob, Class<T> type, float adultChance, float babyChance, @Nullable RegistryKey<LootTable> furLootTable) {
+    public PlayFightGoal(T mob, Class<T> type, float adultChance, float babyChance, @Nullable ResourceKey<LootTable> furLootTable) {
         this.mob = mob;
         this.type = type;
         this.adultChance = adultChance;
@@ -44,7 +44,7 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
     }
 
     @Override
-    public boolean canStart() {
+    public boolean canUse() {
 
         float chance = this.mob.isBaby() ? this.babyChance : this.adultChance;
 
@@ -57,7 +57,7 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
     }
 
     @Override
-    public boolean shouldContinue() {
+    public boolean canContinueToUse() {
         return this.target != null
                 && this.target.isAlive()
                 && this.timer < MAX_FIGHT_TIME;
@@ -76,24 +76,24 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
             return;
         }
 
-        this.mob.getLookControl().lookAt(this.target, 30.0F, 30.0F);
-        this.mob.getNavigation().startMovingTo(this.target, 1.0f);
+        this.mob.getLookControl().setLookAt(this.target, 30.0F, 30.0F);
+        this.mob.getNavigation().moveTo(this.target, 1.0f);
 
         this.timer++;
-        if (this.timer >= this.getTickCount(MAX_FIGHT_TIME) && this.mob.squaredDistanceTo(this.target) < 9.0D) {
+        if (this.timer >= this.adjustedTickDelay(MAX_FIGHT_TIME) && this.mob.distanceToSqr(this.target) < 9.0D) {
             this.playFight();
         }
     }
 
     protected void playFight() {
         if (target != null) {
-            this.mob.swingHand(Hand.MAIN_HAND);
-            this.target.lookAtEntity(this.mob, 30f, 30f);
-            this.target.swingHand(Hand.MAIN_HAND);
+            this.mob.swing(InteractionHand.MAIN_HAND);
+            this.target.lookAt(this.mob, 30f, 30f);
+            this.target.swing(InteractionHand.MAIN_HAND);
 
-            if (this.timer == this.getTickCount(MAX_FIGHT_TIME)) {
-                this.mob.damage(this.mob.getDamageSources().generic(), 0.0f);
-                this.target.damage(this.target.getDamageSources().generic(), 0.0f);
+            if (this.timer == this.adjustedTickDelay(MAX_FIGHT_TIME)) {
+                this.mob.hurt(this.mob.damageSources().generic(), 0.0f);
+                this.target.hurt(this.target.damageSources().generic(), 0.0f);
             }
 
             this.dropFur();
@@ -122,13 +122,13 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
      */
     @Nullable
     private T findTarget() {
-        World world = this.mob.getWorld();
-        List<? extends T> candidates = world.getTargets(this.type, VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().expand(8.0));
+        Level world = this.mob.level();
+        List<? extends T> candidates = world.getNearbyEntities(this.type, VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().inflate(8.0));
         double closestEntityDistance = Double.POSITIVE_INFINITY;
 
         T closestTargetSoFar = null;
         for (T candidate : candidates) {
-            double distance = this.mob.squaredDistanceTo(candidate);
+            double distance = this.mob.distanceToSqr(candidate);
             if (this.canPlayFightWith(candidate) && distance < closestEntityDistance) {
                 closestTargetSoFar = candidate;
                 closestEntityDistance = distance;
@@ -137,7 +137,7 @@ public class PlayFightGoal<T extends PathAwareEntity> extends Goal {
         return closestTargetSoFar;
     }
 
-    private boolean canPlayFightWith(PathAwareEntity candidate) {
+    private boolean canPlayFightWith(PathfinderMob candidate) {
         return candidate.getType() == this.mob.getType() && this.mob.isBaby() == candidate.isBaby();
     }
 }

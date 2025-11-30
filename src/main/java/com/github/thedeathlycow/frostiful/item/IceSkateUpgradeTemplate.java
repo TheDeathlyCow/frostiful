@@ -1,46 +1,46 @@
 package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.minecraft.item.SmithingTemplateItem;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.Util;
+import net.minecraft.Util;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.SmithingTemplateItem;
 
 import java.util.List;
 
 public class IceSkateUpgradeTemplate {
 
     /// Text ///
-    private static final Text ICE_SKATE_UPGRADE_TEXT = Text.translatable(
-            Util.createTranslationKey(
+    private static final Component ICE_SKATE_UPGRADE_TEXT = Component.translatable(
+            Util.makeDescriptionId(
                     "upgrade",
                     Frostiful.id("ice_skate_upgrade")
             )
-    ).formatted(FSmithingTemplateItem.TITLE_FORMATTING);
-    private static final Text ICE_SKATE_UPGRADE_APPLIES_TO_TEXT = Text.translatable(
-            Util.createTranslationKey(
+    ).withStyle(FSmithingTemplateItem.TITLE_FORMATTING);
+    private static final Component ICE_SKATE_UPGRADE_APPLIES_TO_TEXT = Component.translatable(
+            Util.makeDescriptionId(
                     "item",
                     Frostiful.id("smithing_template.ice_skate_upgrade.applies_to")
-            )).formatted(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
-    private static final Text ICE_SKATE_UPGRADE_INGREDIENTS_TEXT = Text.translatable(
-            Util.createTranslationKey(
+            )).withStyle(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
+    private static final Component ICE_SKATE_UPGRADE_INGREDIENTS_TEXT = Component.translatable(
+            Util.makeDescriptionId(
                     "item",
                     Frostiful.id("smithing_template.ice_skate_upgrade.ingredients")
             )
-    ).formatted(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
-    private static final Text ICE_SKATE_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Text.translatable(
-            Util.createTranslationKey(
+    ).withStyle(FSmithingTemplateItem.DESCRIPTION_FORMATTING);
+    private static final Component ICE_SKATE_UPGRADE_BASE_SLOT_DESCRIPTION_TEXT = Component.translatable(
+            Util.makeDescriptionId(
                     "item", Frostiful.id("smithing_template.ice_skate_upgrade.base_slot_description")
             )
     );
-    private static final Text ICE_SKATE_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Text.translatable(
-            Util.createTranslationKey(
+    private static final Component ICE_SKATE_UPGRADE_ADDITIONS_SLOT_DESCRIPTION_TEXT = Component.translatable(
+            Util.makeDescriptionId(
                     "item",
                     Frostiful.id("smithing_template.ice_skate_upgrade.additions_slot_description")
             )
     );
 
-    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE = Identifier.ofVanilla("item/empty_slot_sword");
+    private static final ResourceLocation EMPTY_SLOT_SWORD_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_slot_sword");
 
     public static SmithingTemplateItem createItem() {
         return new SmithingTemplateItem(
@@ -54,11 +54,11 @@ public class IceSkateUpgradeTemplate {
         );
     }
 
-    private static List<Identifier> getIceSkateUpgradeEmptyBaseSlotTextures() {
+    private static List<ResourceLocation> getIceSkateUpgradeEmptyBaseSlotTextures() {
         return List.of(FSmithingTemplateItem.EMPTY_ARMOR_SLOT_BOOTS_TEXTURE);
     }
 
-    private static List<Identifier> getIceSkateUpgradeEmptyAdditionsSlotTextures() {
+    private static List<ResourceLocation> getIceSkateUpgradeEmptyAdditionsSlotTextures() {
         return List.of(EMPTY_SLOT_SWORD_TEXTURE);
     }
 
