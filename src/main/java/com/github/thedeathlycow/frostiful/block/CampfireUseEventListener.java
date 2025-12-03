@@ -41,7 +41,7 @@ public class CampfireUseEventListener implements UseBlockCallback {
         BlockPos pos = hitResult.getBlockPos();
         BlockState state = world.getBlockState(pos);
 
-        if (state.is(BlockTags.CAMPFIRES) && Boolean.TRUE.equals(state.getValue(CampfireBlock.LIT))) {
+        if (CampfireBlock.isLitCampfire(state)) {
             ItemStack stack = player.getItemInHand(hand);
             stack = player.isCreative() ? stack.copy() : stack;
 
