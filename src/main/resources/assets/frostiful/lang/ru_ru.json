@@ -243,6 +243,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Отключить покрывание сердец льдом при экипированной Мантии метели",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Дрожь в руках при замерзании",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Сила дрожи в руках",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
   "text.autoconfig.frostiful.option.updateConfig": "Обновление конфигурации",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Версия конфигурации",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Включить автообновление конфигурации",

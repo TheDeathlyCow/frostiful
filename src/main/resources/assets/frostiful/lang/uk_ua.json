@@ -243,6 +243,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Вимкнути накладання морозу під час носіння плаща морозолога",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Тремтіння рук під час замерзання",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Інтенсивність тремтіння рук",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
   "text.autoconfig.frostiful.option.updateConfig": "Конфігурація оновлення",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Поточна версія конфігурації",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Увімкнути автооновлення конфігурацій",
