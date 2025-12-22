@@ -1,39 +1,31 @@
 plugins {
-    id 'fabric-loom' version '1.13-SNAPSHOT'
+    id 'java-library'
     id 'maven-publish'
-    id "me.modmuss50.mod-publish-plugin" version "0.8.4"
+    id 'net.neoforged.moddev' version '2.0.134'
+    id 'idea'
 }
 
-sourceCompatibility = JavaVersion.VERSION_21
-targetCompatibility = JavaVersion.VERSION_21
-
-archivesBaseName = project.archives_base_name
-version = project.mod_version
-group = project.maven_group
-
-allprojects {
-    repositories {
-        maven { url 'https://jitpack.io' }
-    }
+tasks.named('wrapper', Wrapper).configure {
+    // Define wrapper values here so as to not have to always do so when updating gradlew.properties.
+    // Switching this to Wrapper.DistributionType.ALL will download the full gradle sources that comes with
+    // documentation attached on cursor hover of gradle classes and methods. However, this comes with increased
+    // file size for Gradle. If you do switch this to ALL, run the Gradle wrapper task twice afterwards.
+    // (Verify by checking gradle/wrapper/gradle-wrapper.properties to see if distributionUrl now points to `-all`)
+    distributionType = Wrapper.DistributionType.BIN
 }
+
+version = mod_version
+group = mod_group_id
 
 repositories {
-    // Add repositories to retrieve artifacts from in here.
-    // You should only use this when depending on other mods because
-    // Loom adds the essential maven repositories to download Minecraft and libraries from automatically.
-    // See https://docs.gradle.org/current/userguide/declaring_repositories.html
-    // for more information about repositories.
-    mavenCentral()
-    maven { url "https://maven.terraformersmc.com/" }
-    maven { url "https://maven.shedaniel.me/" }
-    maven { url "https://jitpack.io/" }
     maven {
-        name = "Ladysnake Mods"
-        url = 'https://maven.ladysnake.org/releases'
+        url "https://maven.su5ed.dev/releases"
     }
     maven {
-        name = 'ParchmentMC'
-        url = 'https://maven.parchmentmc.org'
+        url "https://maven.shedaniel.me/"
+    }
+    maven {
+        url layout.projectDirectory.dir("..").dir("thermoo-1.21.1-neoforge").dir("repo").asFile.toURI()
     }
     exclusiveContent {
         forRepository {
@@ -46,122 +38,18 @@ repositories {
             includeGroup "maven.modrinth"
         }
     }
-
-    flatDir {
-        dirs 'libs'
-    }
 }
 
-dependencies {
-
-    //// Required Dependencies ////
-
-    // To change the versions see the gradle.properties file
-    minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.layered() {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${project.parchment_version}:${project.parchment_mappings}")
-    }
-
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-
-    // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
-
-    modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
-
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-
-    modImplementation "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
-
-    //// Optional Dependencies ////
-    modCompileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
-
-
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
-
-    // Trinkets https://github.com/emilyploszaj/trinkets
-    modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
-
-    testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
-    testImplementation "org.junit.jupiter:junit-jupiter"
-    testImplementation "org.mockito:mockito-core:3.+"
-
-    //// Bring depends into testmod ////
-
-    afterEvaluate {
-        subprojects.each {
-            api project(path: ":${it.name}", configuration: "namedElements")
-
-            if (!(it.name in devOnlyModules)) {
-                include project("${it.name}:")
-            }
-
-            testmodImplementation project("${it.name}:").sourceSets.testmod.output
-        }
-
-        testmodImplementation "org.mockito:mockito-core:3.+"
-    }
+base {
+    archivesName = mod_id
 }
 
-processResources {
-    inputs.property "version", project.version
-
-    filesMatching("fabric.mod.json") {
-        expand "version": project.version
-    }
-}
-
-tasks.withType(JavaCompile).configureEach {
-    // Minecraft 1.21 upwards uses Java 21.
-    it.options.release = 21
-}
-
-java {
-    // Loom will automatically attach sourcesJar to a RemapSourcesJar task and to the "build" task
-    // if it is present.
-    // If you remove this line, sources will not be generated.
-    withSourcesJar()
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}" }
-    }
-}
-
-// configure the maven publication
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            from components.java
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-        // Notice: This block does NOT have the same function as the block in the top level.
-        // The repositories here will be used for publishing your artifact, not for
-        // retrieving dependencies.
-    }
-}
-
-loom {
-    splitEnvironmentSourceSets()
-}
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets {
     test {
         compileClasspath += main.compileClasspath
         runtimeClasspath += main.runtimeClasspath
-        compileClasspath += client.compileClasspath
-        runtimeClasspath += client.runtimeClasspath
     }
     testmod {
         compileClasspath += main.compileClasspath
@@ -169,108 +57,148 @@ sourceSets {
         compileClasspath += main.output
         runtimeClasspath += main.output
     }
-
-    testmodClient {
-        compileClasspath += main.compileClasspath
-        runtimeClasspath += main.runtimeClasspath
-        compileClasspath += client.compileClasspath
-        runtimeClasspath += client.runtimeClasspath
-        compileClasspath += main.output
-        runtimeClasspath += main.output
-        compileClasspath += client.output
-        runtimeClasspath += client.output
-
-        compileClasspath += testmod.compileClasspath
-        runtimeClasspath += testmod.runtimeClasspath
-        compileClasspath += testmod.output
-        runtimeClasspath += testmod.output
-    }
 }
 
-subprojects {
-    dependencies {
-        testmodImplementation sourceSets.main.output
-        testmodImplementation project(path: ':', configuration: 'namedElements')
-    }
-}
+neoForge {
+    version = project.neo_version
 
-loom {
-    mods {
-        "frostiful" {
-            sourceSet sourceSets.main
-            sourceSet sourceSets.client
-        }
-
-        "frostiful-test" {
-            sourceSet sourceSets.testmod
-            sourceSet sourceSets.testmodClient
-        }
+    parchment {
+        mappingsVersion = project.parchment_mappings_version
+        minecraftVersion = project.parchment_minecraft_version
     }
 
-    accessWidenerPath = file("src/main/resources/frostiful.accesswidener")
+    // This line is optional. Access Transformers are automatically detected
+    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+
     runs {
-        testmodClient {
+        client {
             client()
-            ideConfigGenerated project.rootProject == project
-            name = "Testmod Client"
-            source sourceSets.testmodClient
+
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-        testmodServer {
+
+        server {
             server()
-            ideConfigGenerated project.rootProject == project
-            name = "Testmod Server"
-            source sourceSets.testmod
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
         }
-        gametest {
-            inherit testmodServer
 
-            name "Game Test"
+        gameTestServer {
+            type = "gameTestServer"
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
 
-            // Enable the gametest runner
-            vmArg "-Dfabric-api.gametest"
-            vmArg "-Dfabric-api.gametest.report-file=${project.buildDir}/junit.xml"
-            runDir "build/gametest"
+        data {
+            data()
+
+            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
+            // gameDirectory = project.file('run-data')
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        // applies to all the run configs above
+        configureEach {
+            // Recommended logging data for a userdev environment
+            // The markers can be added/remove as needed separated by commas.
+            // "SCAN": For mods scan.
+            // "REGISTRIES": For firing of registry events.
+            // "REGISTRYDUMP": For getting the contents of all registries.
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+
+            logLevel = org.slf4j.event.Level.INFO
+        }
+    }
+
+    mods {
+        // define mod <-> source bindings
+        // these are used to tell the game which sources are for which mod
+        // multi mod projects should define one per mod
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+
+        "${mod_id}_test" {
+            sourceSet(sourceSets.testmod)
         }
     }
 }
 
-test {
-    useJUnitPlatform()
+// Include resources generated by data generators.
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+// Sets up a dependency configuration called 'localRuntime'.
+// This configuration should be used instead of 'runtimeOnly' to declare
+// a dependency that will be present for runtime testing but that is
+// "optional", meaning it will not be pulled by dependents of this mod.
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
 }
 
-publishMods {
-    changelog = file("changelogs/${mod_version}.md").text
-    type = STABLE
+dependencies {
+    api "org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}"
+    api "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
+    api "com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}"
+    interfaceInjectionData "com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}"
 
-    file = remapJar.archiveFile
-    additionalFiles.from(remapSourcesJar.archiveFile)
-    displayName = "Frostiful ${mod_version}"
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
+    testImplementation "net.neoforged:testframework:${project.neo_version}"
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation "org.mockito:mockito-core:3.+"
+}
 
-    modLoaders.add("fabric")
-    modLoaders.add("quilt")
+// This block of code expands all declared replace properties in the specified resource targets.
+// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
+            ffapi_version          : ffapi_version,
+            cloth_config_version   : cloth_config_version,
+            thermoo_version        : thermoo_version
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+// Include the output of "generateModMetadata" as an input directory for the build
+// this works with both building through Gradle and the IDE.
+sourceSets.main.resources.srcDir generateModMetadata
+// To avoid having to run "generateModMetadata" manually, make it run on every project reload
+neoForge.ideSyncTask generateModMetadata
 
-    curseforge {
-        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
-        projectId = "715248"
-        minecraftVersions.addAll("1.21.1")
-
-        javaVersions.add(JavaVersion.VERSION_21)
-
-        clientRequired = true
-        serverRequired = true
-
-        requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
-
-        optional("thermoo-patches", "scorchful", "modmenu")
+// Example configuration to allow publishing using the maven-publish plugin
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
     }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/repo"
+        }
+    }
+}
 
-    modrinth {
-        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
-        projectId = "Ae6qoBj3"
-        minecraftVersions.addAll("1.21.1")
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+}
 
-        requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
-
-        optional("thermoo-patches", "scorchful", "modmenu")
+// IDEA no longer automatically downloads sources/javadoc jars for dependencies, so we need to explicitly enable the behavior.
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
     }
 }
