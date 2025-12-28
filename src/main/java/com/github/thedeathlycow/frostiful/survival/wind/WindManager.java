@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.survival.wind;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
 import com.github.thedeathlycow.frostiful.registry.tag.FBiomeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.environment.EnvironmentLookup;
@@ -36,41 +37,43 @@ public final class WindManager {
         this.windSpawnCount = 0;
     }
 
-    public void trySpawnFreezingWind(Level world, LevelChunk chunk) {
+    public void trySpawnFreezingWind(Level level, LevelChunk chunk) {
         FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
 
-        if (!world.dimensionType().natural() || this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
+        if (this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
             return;
         }
 
-        int chanceBound = world.isThundering()
+        int chanceBound = level.isThundering()
                 ? config.getWindSpawnRarityThunder()
                 : config.getWindSpawnRarity();
 
-        if (world.random.nextInt(chanceBound) != 0) {
+        if (level.random.nextInt(chanceBound) != 0) {
             return;
         }
 
         BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos();
-        boolean spawnInAir = this.setSpawnPosition(world, chunk, spawnPos);
+        boolean spawnInAir = this.setSpawnPosition(level, chunk, spawnPos);
+        boolean isAreaNotWindy = !level.environmentAttributes()
+                .getValue(FEnvironmentAttributes.IS_WINDY, spawnPos);
 
-        if (spawnInAir && !config.spawnWindInAir()) {
+        if (isAreaNotWindy || (spawnInAir && !config.spawnWindInAir())) {
             return;
         }
 
-        Holder<Biome> biome = world.getBiomeManager().getNoiseBiomeAtPosition(spawnPos);
+        Holder<Biome> biome = level.getBiomeManager().getNoiseBiomeAtPosition(spawnPos);
         if (biome.is(FBiomeTags.FREEZING_WIND_NEVER_SPAWNS)) {
             return;
         }
 
-        double temperatureC = EnvironmentLookup.getInstance().findEnvironmentComponents(world, spawnPos)
+        double temperatureC = EnvironmentLookup.getInstance().findEnvironmentComponents(level, spawnPos)
                 .getOrDefault(EnvironmentComponentTypes.TEMPERATURE, TemperatureRecordComponent.DEFAULT)
                 .valueInUnit(TemperatureUnit.CELSIUS);
         if (temperatureC > 0) {
             return;
         }
 
-        boolean canSpawnOnGround = (world.isRaining() && biome.is(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
+        boolean canSpawnOnGround = (level.isRaining() && biome.is(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
                 || biome.is(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
 
         WindSpawnStrategy strategy = config.getWindSpawnStrategy().getStrategy();
@@ -78,7 +81,7 @@ public final class WindManager {
             return;
         }
 
-        if ((canSpawnOnGround || spawnInAir) && strategy.spawn(world, spawnPos, spawnInAir)) {
+        if ((canSpawnOnGround || spawnInAir) && strategy.spawn(level, spawnPos, spawnInAir)) {
             this.windSpawnCount++;
         }
     }
@@ -122,7 +125,7 @@ public final class WindManager {
      * Sets the spawn position for the wind. Returns if the spawn was spawned in the air.
      *
      * @param world    World/level access object
-     * @param chunk    The chunk of world this is happening in
+     * @param chunk    The chunk of level this is happening in
      * @param blockPos The mutable blockpos to set the spawn position into
      * @return Returns true if the blockpos is an air blockpos
      */
