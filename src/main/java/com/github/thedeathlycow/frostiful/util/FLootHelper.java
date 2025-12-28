@@ -6,8 +6,8 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
@@ -17,7 +17,7 @@ public class FLootHelper {
 
     public static <E extends LivingEntity> void dropLootFromEntity(E entity, ResourceKey<LootTable> lootTableId) {
         Level world = entity.level();
-        if (world instanceof ServerLevel serverWorld && serverWorld.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
+        if (world instanceof ServerLevel serverWorld && serverWorld.getGameRules().get(GameRules.MOB_DROPS)) {
             LootTable lootTable = Objects.requireNonNull(world.getServer())
                     .reloadableRegistries().getLootTable(lootTableId);
             List<ItemStack> generatedItems = lootTable.getRandomItems(new LootParams.Builder(serverWorld)
