@@ -22,7 +22,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.item.CrossbowItem;
 
 @Environment(EnvType.CLIENT)
@@ -55,7 +55,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
     @Override
     public void extractRenderState(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
         super.extractRenderState(frostologer, state, tickDelta);
-        ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver);
+        ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver, tickDelta);
         state.isRiding = frostologer.isPassenger();
         state.mainArm = frostologer.getMainArm();
         state.armPose = frostologer.getArmPose();

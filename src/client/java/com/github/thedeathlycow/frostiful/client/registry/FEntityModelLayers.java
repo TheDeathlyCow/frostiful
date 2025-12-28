@@ -5,8 +5,8 @@ import com.github.thedeathlycow.frostiful.client.render.model.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
-import net.minecraft.client.model.IllagerModel;
 import net.minecraft.client.model.geom.ModelLayerLocation;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 
 @Environment(EnvType.CLIENT)
 public class FEntityModelLayers {

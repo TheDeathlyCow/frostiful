@@ -9,7 +9,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.renderer.entity.PolarBearRenderer;
 import net.minecraft.client.renderer.entity.state.PolarBearRenderState;
 import net.minecraft.resources.Identifier;
-import net.minecraft.world.entity.animal.PolarBear;
+import net.minecraft.world.entity.animal.polarbear.PolarBear;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

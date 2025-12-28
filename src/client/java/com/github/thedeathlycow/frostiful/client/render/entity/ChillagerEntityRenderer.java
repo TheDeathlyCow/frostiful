@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.IllagerModel;
+import net.minecraft.client.model.monster.illager.IllagerModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
