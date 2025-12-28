@@ -7,7 +7,7 @@ import com.github.thedeathlycow.thermoo.api.item.ModifyItemAttributeModifiersCal
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
@@ -18,8 +18,8 @@ import java.util.List;
 import java.util.Map;
 
 public final class ResistanceComponentBuilder {
-    private static final Map<EquipmentSlot, ResourceLocation> SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
-    private static final Map<EquipmentSlot, ResourceLocation> ENVIRONMENT_SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
+    private static final Map<EquipmentSlot, Identifier> SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
+    private static final Map<EquipmentSlot, Identifier> ENVIRONMENT_SLOT_IDS = new EnumMap<>(EquipmentSlot.class);
 
     public static void initialize() {
         initializeComponentModifiers();

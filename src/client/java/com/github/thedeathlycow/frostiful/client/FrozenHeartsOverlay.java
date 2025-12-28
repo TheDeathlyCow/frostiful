@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.thermoo.api.client.HeartBarContext;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -14,7 +14,7 @@ import org.joml.Vector2i;
 
 public class FrozenHeartsOverlay {
 
-    public static final ResourceLocation HEART_OVERLAY_TEXTURE = Frostiful.id("textures/gui/cold_heart_overlay.png");
+    public static final Identifier HEART_OVERLAY_TEXTURE = Frostiful.id("textures/gui/cold_heart_overlay.png");
 
     private static final int TEXTURE_WIDTH = 18;
 

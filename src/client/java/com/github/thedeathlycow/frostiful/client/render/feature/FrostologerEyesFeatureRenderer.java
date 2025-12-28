@@ -9,14 +9,14 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderState, M extends FrostologerEntityModel<T>> extends RenderLayer<T, M> {
     private final RenderType skin;
-    private final ResourceLocation texture;
+    private final Identifier texture;
 
-    public FrostologerEyesFeatureRenderer(RenderLayerParent<T, M> context, ResourceLocation texture) {
+    public FrostologerEyesFeatureRenderer(RenderLayerParent<T, M> context, Identifier texture) {
         super(context);
         this.skin = RenderType.entityTranslucentEmissive(texture);
         this.texture = texture;

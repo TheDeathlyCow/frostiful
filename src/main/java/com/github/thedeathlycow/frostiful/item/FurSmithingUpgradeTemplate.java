@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import java.util.List;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SmithingTemplateItem;
 
@@ -35,7 +35,7 @@ public class FurSmithingUpgradeTemplate {
             )
     );
 
-    private static final ResourceLocation EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("item/empty/fur_padding");
+    private static final Identifier EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("item/empty/fur_padding");
 
 
     public static SmithingTemplateItem createItem(Item.Properties settings) {
@@ -50,7 +50,7 @@ public class FurSmithingUpgradeTemplate {
         );
     }
 
-    private static List<ResourceLocation> getFurUpgradeEmptyBaseSlotTextures() {
+    private static List<Identifier> getFurUpgradeEmptyBaseSlotTextures() {
         return List.of(
                 FSmithingTemplateItem.EMPTY_ARMOR_SLOT_HELMET_TEXTURE,
                 FSmithingTemplateItem.EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE,
@@ -59,7 +59,7 @@ public class FurSmithingUpgradeTemplate {
         );
     }
 
-    private static List<ResourceLocation> getFurUpgradeEmptyAdditionsSlotTextures() {
+    private static List<Identifier> getFurUpgradeEmptyAdditionsSlotTextures() {
         return List.of(EMPTY_SLOT_FUR_PADDING_TEXTURE);
     }
 

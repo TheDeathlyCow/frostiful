@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import java.util.List;
 import net.minecraft.Util;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SmithingTemplateItem;
 
@@ -34,7 +34,7 @@ public class IceSkateUpgradeTemplate {
             )
     );
 
-    private static final ResourceLocation EMPTY_SLOT_SWORD_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_slot_sword");
+    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE = Identifier.withDefaultNamespace("item/empty_slot_sword");
 
     public static SmithingTemplateItem createItem(Item.Properties settings) {
         return new SmithingTemplateItem(
@@ -48,11 +48,11 @@ public class IceSkateUpgradeTemplate {
         );
     }
 
-    private static List<ResourceLocation> getIceSkateUpgradeEmptyBaseSlotTextures() {
+    private static List<Identifier> getIceSkateUpgradeEmptyBaseSlotTextures() {
         return List.of(FSmithingTemplateItem.EMPTY_ARMOR_SLOT_BOOTS_TEXTURE);
     }
 
-    private static List<ResourceLocation> getIceSkateUpgradeEmptyAdditionsSlotTextures() {
+    private static List<Identifier> getIceSkateUpgradeEmptyAdditionsSlotTextures() {
         return List.of(EMPTY_SLOT_SWORD_TEXTURE);
     }
 

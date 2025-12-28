@@ -8,7 +8,7 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerFrostFeatureRenderer extends RenderLayer<FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
@@ -28,7 +28,7 @@ public class FrostologerFrostFeatureRenderer extends RenderLayer<FrostologerEnti
             float limbAngle,
             float limbDistance
     ) {
-        ResourceLocation texture = state.frostLayer.getTexture();
+        Identifier texture = state.frostLayer.getTexture();
         if (texture != null) {
             RenderLayer.renderColoredCutoutModel(
                     this.getParentModel(),

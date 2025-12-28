@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 
 public class FSoundEvents {
@@ -59,7 +59,7 @@ public class FSoundEvents {
     }
 
     private static Holder.Reference<SoundEvent> registerReference(String name) {
-        ResourceLocation id = Frostiful.id(name);
+        Identifier id = Frostiful.id(name);
         return Registry.registerForHolder(BuiltInRegistries.SOUND_EVENT, id, SoundEvent.createVariableRangeEvent(id));
     }
 

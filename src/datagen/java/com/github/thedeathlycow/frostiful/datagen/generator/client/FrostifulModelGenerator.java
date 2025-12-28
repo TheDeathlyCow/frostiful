@@ -12,14 +12,14 @@ import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.renderer.item.ItemModel;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 
 public class FrostifulModelGenerator extends FabricModelProvider {
-    private static final ResourceLocation HELMET_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("helmet");
-    private static final ResourceLocation CHESTPLATE_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("chestplate");
-    private static final ResourceLocation LEGGINGS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("leggings");
-    private static final ResourceLocation BOOTS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("boots");
+    private static final Identifier HELMET_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("helmet");
+    private static final Identifier CHESTPLATE_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("chestplate");
+    private static final Identifier LEGGINGS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("leggings");
+    private static final Identifier BOOTS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("boots");
 
     public FrostifulModelGenerator(FabricDataOutput output) {
         super(output);

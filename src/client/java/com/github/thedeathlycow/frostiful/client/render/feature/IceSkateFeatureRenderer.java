@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public class IceSkateFeatureRenderer<
         S extends HumanoidRenderState,
@@ -21,7 +21,7 @@ public class IceSkateFeatureRenderer<
     private final IceSkateModel<S> model;
     private final IceSkateModel<S> babyModel;
 
-    private static final ResourceLocation SKATE_TEXTURE = Frostiful.id("textures/entity/skates.png");
+    private static final Identifier SKATE_TEXTURE = Frostiful.id("textures/entity/skates.png");
 
     public IceSkateFeatureRenderer(
             RenderLayerParent<S, M> context,

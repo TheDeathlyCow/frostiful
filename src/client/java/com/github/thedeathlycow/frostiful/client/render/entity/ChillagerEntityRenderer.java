@@ -10,12 +10,12 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.IllagerRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.IllagerRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class ChillagerEntityRenderer extends IllagerRenderer<ChillagerEntity, IllagerRenderState> {
 
-    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/illager/chillager.png");
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/chillager.png");
 
 
     public ChillagerEntityRenderer(EntityRendererProvider.Context context) {
@@ -31,7 +31,7 @@ public class ChillagerEntityRenderer extends IllagerRenderer<ChillagerEntity, Il
     }
 
     @Override
-    public ResourceLocation getTextureLocation(IllagerRenderState state) {
+    public Identifier getTextureLocation(IllagerRenderState state) {
         return TEXTURE;
     }
 }

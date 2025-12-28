@@ -1,12 +1,12 @@
 package com.github.thedeathlycow.frostiful.test;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 public final class FrostifulGameTest {
     public static final String MODID = "frostiful-test";
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MODID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MODID, path);
     }
 
     private FrostifulGameTest() {

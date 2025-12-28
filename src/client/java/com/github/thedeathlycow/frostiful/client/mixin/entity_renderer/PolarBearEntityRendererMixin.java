@@ -8,7 +8,7 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.renderer.entity.PolarBearRenderer;
 import net.minecraft.client.renderer.entity.state.PolarBearRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.animal.PolarBear;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -26,9 +26,9 @@ public class PolarBearEntityRendererMixin {
     }
 
     @WrapMethod(
-            method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/PolarBearRenderState;)Lnet/minecraft/resources/ResourceLocation;"
+            method = "getTextureLocation(Lnet/minecraft/client/renderer/entity/state/PolarBearRenderState;)Lnet/minecraft/resources/Identifier;"
     )
-    private ResourceLocation setPolarBearHurtTexture(PolarBearRenderState state, Operation<ResourceLocation> original) {
+    private Identifier setPolarBearHurtTexture(PolarBearRenderState state, Operation<Identifier> original) {
         if (!Frostiful.getConfig().clientConfig.isDisableHurtPolarBearSkin() && ((FPolarBearEntityRenderState) state).frostiful$wasSheared()) {
             return BrushableTextures.POLAR_BEAR;
         }

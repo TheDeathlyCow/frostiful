@@ -13,13 +13,13 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, EntityRenderState> {
 
-    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
     private static final RenderType LAYER = RenderType.entityCutoutNoCull(TEXTURE);
 
     public FrostSpellEntityRenderer(EntityRendererProvider.Context ctx) {

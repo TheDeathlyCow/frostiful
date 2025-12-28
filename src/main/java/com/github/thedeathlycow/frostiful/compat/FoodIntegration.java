@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.function.Supplier;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
@@ -53,7 +53,7 @@ public class FoodIntegration {
     }
 
     private static void addTooltipBeforeAdvanced(ItemStack stack, List<Component> tooltip) {
-        ResourceLocation identifier = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Identifier identifier = BuiltInRegistries.ITEM.getKey(stack.getItem());
         Component idAsText = Component.literal(identifier.toString());
 
         for (int i = tooltip.size() - 1; i >= 0; i--) {

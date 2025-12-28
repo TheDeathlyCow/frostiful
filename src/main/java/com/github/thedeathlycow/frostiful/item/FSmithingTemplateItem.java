@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.ChatFormatting;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -18,21 +18,21 @@ public class FSmithingTemplateItem {
     public static final ChatFormatting DESCRIPTION_FORMATTING = ChatFormatting.BLUE;
 
     /// Texture IDs ///
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_HELMET_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_helmet");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_chestplate");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_leggings");
-    public static final ResourceLocation EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_armor_slot_boots");
+    public static final Identifier EMPTY_ARMOR_SLOT_HELMET_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_helmet");
+    public static final Identifier EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_chestplate");
+    public static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_leggings");
+    public static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_boots");
 
     public static void addTemplatesToLoot() {
         FrostifulConfig config = Frostiful.getConfig();
         addTemplateToLoot(
                 FItems.ICE_SKATE_UPGRADE_TEMPLATE,
-                ResourceLocation.withDefaultNamespace("chests/igloo_chest"),
+                Identifier.withDefaultNamespace("chests/igloo_chest"),
                 config.combatConfig.getSkateUpgradeTemplateIglooGenerateChance()
         );
     }
 
-    private static void addTemplateToLoot(Item template, ResourceLocation lootTableId, float chance) {
+    private static void addTemplateToLoot(Item template, Identifier lootTableId, float chance) {
         LootTableEvents.MODIFY.register(
                 (key, tableBuilder, source, registries) -> {
                     if (source.isBuiltin() && lootTableId.equals(key.location())) {
