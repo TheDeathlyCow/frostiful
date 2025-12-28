@@ -6,7 +6,6 @@ import net.fabricmc.fabric.api.gamerule.v1.CustomGameRuleCategory;
 import net.fabricmc.fabric.api.gamerule.v1.GameRuleBuilder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.gamerules.GameRule;
-import net.minecraft.world.level.gamerules.GameRules;
 
 /**
  * Custom game rules for Lost in the Cold
