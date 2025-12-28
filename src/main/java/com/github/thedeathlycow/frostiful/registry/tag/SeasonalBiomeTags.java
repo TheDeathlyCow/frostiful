@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
+import com.github.thedeathlycow.thermoo.api.season.TemperateSeason;
 import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
@@ -42,7 +43,7 @@ public record SeasonalBiomeTags(
      * @param season The season
      * @return The tags of that season, or spring if no season is given
      */
-    public static SeasonalBiomeTags forSeason(ThermooSeason season) {
+    public static SeasonalBiomeTags forSeason(TemperateSeason season) {
         return switch (season) {
             case SUMMER -> SUMMER_TAGS;
             case WINTER -> WINTER_TAGS;

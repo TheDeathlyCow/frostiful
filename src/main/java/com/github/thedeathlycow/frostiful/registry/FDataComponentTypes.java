@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
 import net.minecraft.core.Registry;
@@ -27,7 +28,7 @@ public final class FDataComponentTypes {
     public static final DataComponentType<InertTooltipComponent> INERT_TOOLTIP = register(
             "inert_tooltip",
             builder -> builder
-                    .persistent(Codec.unit(InertTooltipComponent.INSTANCE))
+                    .persistent(MapCodec.unit(InertTooltipComponent.INSTANCE).codec())
                     .networkSynchronized(StreamCodec.unit(InertTooltipComponent.INSTANCE))
                     .cacheEncoding()
     );

@@ -35,7 +35,7 @@ public class FSmithingTemplateItem {
     private static void addTemplateToLoot(Item template, Identifier lootTableId, float chance) {
         LootTableEvents.MODIFY.register(
                 (key, tableBuilder, source, registries) -> {
-                    if (source.isBuiltin() && lootTableId.equals(key.location())) {
+                    if (source.isBuiltin() && lootTableId.equals(key.identifier())) {
                         LootPool.Builder builder = LootPool.lootPool()
                                 .setRolls(ConstantValue.exactly(1f))
                                 .when(LootItemRandomChanceCondition.randomChance(chance))

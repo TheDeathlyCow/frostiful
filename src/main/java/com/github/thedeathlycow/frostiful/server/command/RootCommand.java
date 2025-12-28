@@ -5,10 +5,14 @@ import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
+
 import java.util.Collection;
+
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.permissions.PermissionLevel;
+import net.minecraft.server.permissions.Permissions;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -34,7 +38,10 @@ public class RootCommand {
 
 
         dispatcher.register(
-                literal("root").requires(src -> src.hasPermission(2))
+                literal("root").requires(
+                                src -> src.permissions()
+                                        .hasPermission(Permissions.COMMANDS_GAMEMASTER)
+                        )
                         .then(
                                 rootTarget
                         )
