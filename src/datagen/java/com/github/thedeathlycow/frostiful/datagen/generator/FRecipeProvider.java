@@ -32,11 +32,11 @@ public class FRecipeProvider extends FabricRecipeProvider {
             @Override
             public void buildRecipes() {
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.BRITTLE_ICE)
-                        .criterion(getHasName(FItems.ICICLE), has(FItemTags.ICICLES))
+                        .unlockedBy(getHasName(FItems.ICICLE), has(FItemTags.ICICLES))
                         .pattern("##")
                         .pattern("##")
-                        .input('#', FItems.ICICLE)
-                        .offerTo(output);
+                        .define('#', FItems.ICICLE)
+                        .save(output);
 
                 offerCutBlueIceRecipes();
                 offerCutPackedIceRecipes();
@@ -44,14 +44,14 @@ public class FRecipeProvider extends FabricRecipeProvider {
                 offerPackedSnowRecipes();
 
                 shaped(RecipeCategory.COMBAT, FItems.FROST_WAND)
-                        .criterion(getHasName(FItems.GLACIAL_HEART), has(FItems.GLACIAL_HEART))
+                        .unlockedBy(getHasName(FItems.GLACIAL_HEART), has(FItems.GLACIAL_HEART))
                         .pattern("I#I")
                         .pattern(" R ")
                         .pattern(" R ")
-                        .input('#', FItems.GLACIAL_HEART)
-                        .input('I', FItems.ICICLE)
-                        .input('R', FItems.FROZEN_ROD)
-                        .offerTo(output);
+                        .define('#', FItems.GLACIAL_HEART)
+                        .define('I', FItems.ICICLE)
+                        .define('R', FItems.FROZEN_ROD)
+                        .save(output);
 
                 trimSmithing(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE, FArmorTrimPatterns.SNOW_MAN, upgradeRecipeKey(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE));
                 trimSmithing(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE, FArmorTrimPatterns.FROSTY, upgradeRecipeKey(FItems.FROSTY_ARMOR_TRIM_SMITHING_TEMPLATE));
@@ -72,12 +72,12 @@ public class FRecipeProvider extends FabricRecipeProvider {
                 copySmithingTemplate(FItems.ICE_SKATE_UPGRADE_TEMPLATE, FItems.PACKED_SNOW_BLOCK);
 
                 shaped(RecipeCategory.MISC, FItems.FROZEN_ROD)
-                        .criterion(getHasName(Items.BLUE_ICE), has(Items.BLUE_ICE))
+                        .unlockedBy(getHasName(Items.BLUE_ICE), has(Items.BLUE_ICE))
                         .pattern("#")
                         .pattern("#")
                         .pattern("#")
-                        .input('#', Items.BLUE_ICE)
-                        .offerTo(output);
+                        .define('#', Items.BLUE_ICE)
+                        .save(output);
 
                 offerFurArmorRecipes();
 
@@ -87,39 +87,39 @@ public class FRecipeProvider extends FabricRecipeProvider {
                 offerFurPaddingRecipe(Items.RABBIT_HIDE, 9);
 
                 shaped(RecipeCategory.DECORATIONS, FItems.ICE_PANE, 16)
-                        .criterion(getHasName(Items.ICE), has(Items.ICE))
+                        .unlockedBy(getHasName(Items.ICE), has(Items.ICE))
                         .pattern("###")
                         .pattern("###")
-                        .input('#', Items.ICE)
-                        .offerTo(this.output);
+                        .define('#', Items.ICE)
+                        .save(this.output);
 
                 shapeless(RecipeCategory.COMBAT, FItems.GLACIAL_ARROW)
-                        .criterion(getHasName(FItems.ICICLE), has(FItemTags.ICICLES))
-                        .input(FItemTags.ICICLES)
-                        .input(Items.ARROW)
-                        .offerTo(output);
+                        .unlockedBy(getHasName(FItems.ICICLE), has(FItemTags.ICICLES))
+                        .requires(FItemTags.ICICLES)
+                        .requires(Items.ARROW)
+                        .save(output);
 
                 shapeless(RecipeCategory.DECORATIONS, FItems.SNOWFLAKE_BANNER_PATTERN)
-                        .criterion(getHasName(FItems.PACKED_SNOWBALL), has(FItems.PACKED_SNOWBALL))
-                        .input(FItems.PACKED_SNOWBALL)
-                        .input(Items.PAPER)
-                        .offerTo(output);
+                        .unlockedBy(getHasName(FItems.PACKED_SNOWBALL), has(FItems.PACKED_SNOWBALL))
+                        .requires(FItems.PACKED_SNOWBALL)
+                        .requires(Items.PAPER)
+                        .save(output);
             }
 
             // <editor-fold desc="Long form recipe generators">
 
             private void offerCutBlueIceRecipes() {
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_BLUE_ICE, 4)
-                        .criterion(getHasName(Items.BLUE_ICE), has(Items.BLUE_ICE))
+                        .unlockedBy(getHasName(Items.BLUE_ICE), has(Items.BLUE_ICE))
                         .pattern("##")
                         .pattern("##")
-                        .input('#', Items.BLUE_ICE)
-                        .offerTo(output);
+                        .define('#', Items.BLUE_ICE)
+                        .save(output);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_BLUE_ICE, Items.BLUE_ICE, 4);
 
                 stairBuilder(FItems.CUT_BLUE_ICE_STAIRS, Ingredient.of(FItems.CUT_BLUE_ICE))
-                        .criterion(getHasName(FItems.CUT_BLUE_ICE), has(FItems.CUT_BLUE_ICE))
-                        .offerTo(output);
+                        .unlockedBy(getHasName(FItems.CUT_BLUE_ICE), has(FItems.CUT_BLUE_ICE))
+                        .save(output);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_BLUE_ICE_STAIRS, FItems.CUT_BLUE_ICE);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_BLUE_ICE_STAIRS, Items.BLUE_ICE, 4);
 
@@ -134,16 +134,16 @@ public class FRecipeProvider extends FabricRecipeProvider {
 
             private void offerCutPackedIceRecipes() {
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_PACKED_ICE, 4)
-                        .criterion(getHasName(Items.PACKED_ICE), has(Items.PACKED_ICE))
+                        .unlockedBy(getHasName(Items.PACKED_ICE), has(Items.PACKED_ICE))
                         .pattern("##")
                         .pattern("##")
-                        .input('#', Items.PACKED_ICE)
-                        .offerTo(output);
+                        .define('#', Items.PACKED_ICE)
+                        .save(output);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_PACKED_ICE, Items.PACKED_ICE, 4);
 
                 stairBuilder(FItems.CUT_PACKED_ICE_STAIRS, Ingredient.of(FItems.CUT_PACKED_ICE))
-                        .criterion(getHasName(FItems.CUT_PACKED_ICE), has(FItems.CUT_PACKED_ICE))
-                        .offerTo(output);
+                        .unlockedBy(getHasName(FItems.CUT_PACKED_ICE), has(FItems.CUT_PACKED_ICE))
+                        .save(output);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_PACKED_ICE_STAIRS, FItems.CUT_PACKED_ICE);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.CUT_PACKED_ICE_STAIRS, Items.PACKED_ICE, 4);
 
@@ -158,16 +158,16 @@ public class FRecipeProvider extends FabricRecipeProvider {
 
             private void offerPackedSnowBrickRecipes() {
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW_BRICKS, 4)
-                        .criterion(getHasName(FItems.PACKED_SNOW_BLOCK), has(FItems.PACKED_SNOW_BLOCK))
+                        .unlockedBy(getHasName(FItems.PACKED_SNOW_BLOCK), has(FItems.PACKED_SNOW_BLOCK))
                         .pattern("##")
                         .pattern("##")
-                        .input('#', FItems.PACKED_SNOW_BLOCK)
-                        .offerTo(output);
+                        .define('#', FItems.PACKED_SNOW_BLOCK)
+                        .save(output);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW_BRICKS, FItems.PACKED_SNOW_BLOCK);
 
                 stairBuilder(FItems.PACKED_SNOW_BRICK_STAIRS, Ingredient.of(FItems.PACKED_SNOW_BRICKS))
-                        .criterion(getHasName(FItems.PACKED_SNOW_BRICKS), has(FItems.PACKED_SNOW_BRICKS))
-                        .offerTo(output);
+                        .unlockedBy(getHasName(FItems.PACKED_SNOW_BRICKS), has(FItems.PACKED_SNOW_BRICKS))
+                        .save(output);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW_BRICK_STAIRS, FItems.PACKED_SNOW_BRICKS);
                 stonecutterResultFromBase(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW_BRICK_STAIRS, FItems.PACKED_SNOW_BLOCK);
 
@@ -182,91 +182,91 @@ public class FRecipeProvider extends FabricRecipeProvider {
 
             private void offerPackedSnowRecipes() {
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW, 12)
-                        .criterion(getHasName(FItems.PACKED_SNOW_BLOCK), has(FItems.PACKED_SNOW_BLOCK))
+                        .unlockedBy(getHasName(FItems.PACKED_SNOW_BLOCK), has(FItems.PACKED_SNOW_BLOCK))
                         .pattern("###")
-                        .input('#', FItems.PACKED_SNOW_BLOCK)
-                        .offerTo(output);
+                        .define('#', FItems.PACKED_SNOW_BLOCK)
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW_BLOCK, 4)
-                        .criterion(getHasName(Items.SNOW_BLOCK), has(Items.SNOW_BLOCK))
+                        .unlockedBy(getHasName(Items.SNOW_BLOCK), has(Items.SNOW_BLOCK))
                         .pattern("###")
                         .pattern("###")
                         .pattern("###")
-                        .input('#', Items.SNOW_BLOCK)
-                        .offerTo(output);
+                        .define('#', Items.SNOW_BLOCK)
+                        .save(output);
 
                 shaped(RecipeCategory.BUILDING_BLOCKS, FItems.PACKED_SNOW_BLOCK, 1)
-                        .criterion(getHasName(FItems.PACKED_SNOWBALL), has(FItems.PACKED_SNOWBALL))
+                        .unlockedBy(getHasName(FItems.PACKED_SNOWBALL), has(FItems.PACKED_SNOWBALL))
                         .pattern("##")
                         .pattern("##")
-                        .input('#', FItems.PACKED_SNOWBALL)
-                        .offerTo(output, "packed_snow_block_from_packed_snowball");
+                        .define('#', FItems.PACKED_SNOWBALL)
+                        .save(output, "packed_snow_block_from_packed_snowball");
             }
 
-            private void offerFurUpgradeRecipe(Item input, Item result) {
+            private void offerFurUpgradeRecipe(Item define, Item result) {
                 SmithingTransformRecipeBuilder.smithing(
                                 Ingredient.of(FItems.FUR_UPGRADE_TEMPLATE),
-                                Ingredient.of(input),
+                                Ingredient.of(define),
                                 Ingredient.of(FItems.FUR_PADDING),
                                 RecipeCategory.COMBAT,
                                 result
                         )
-                        .criterion("has_fur_padding", this.has(FItems.FUR_PADDING))
-                        .offerTo(this.output, getItemId(result) + "_smithing");
+                        .unlocks("has_fur_padding", this.has(FItems.FUR_PADDING))
+                        .save(this.output, getItemId(result) + "_smithing");
             }
 
-            private void offerSkateUpgradeRecipe(Item input, Item result) {
+            private void offerSkateUpgradeRecipe(Item define, Item result) {
                 SmithingTransformRecipeBuilder.smithing(
                                 Ingredient.of(FItems.ICE_SKATE_UPGRADE_TEMPLATE),
-                                Ingredient.of(input),
+                                Ingredient.of(define),
                                 Ingredient.of(Items.IRON_SWORD),
                                 RecipeCategory.TRANSPORTATION,
                                 result
                         )
-                        .criterion("has_iron_sword", this.has(Items.IRON_SWORD))
-                        .offerTo(this.output, getItemId(result) + "_smithing");
+                        .unlocks("has_iron_sword", this.has(Items.IRON_SWORD))
+                        .save(this.output, getItemId(result) + "_smithing");
             }
 
             private void offerFurArmorRecipes() {
                 final String key = "has_fur_tuft";
 
                 shaped(RecipeCategory.COMBAT, FItems.FUR_HELMET)
-                        .criterion(key, has(FItemTags.FUR_TUFTS))
+                        .unlockedBy(key, has(FItemTags.FUR_TUFTS))
                         .pattern("###")
                         .pattern("# #")
-                        .input('#', FItemTags.FUR_TUFTS)
-                        .offerTo(output);
+                        .define('#', FItemTags.FUR_TUFTS)
+                        .save(output);
 
                 shaped(RecipeCategory.COMBAT, FItems.FUR_CHESTPLATE)
-                        .criterion(key, has(FItemTags.FUR_TUFTS))
+                        .unlockedBy(key, has(FItemTags.FUR_TUFTS))
                         .pattern("# #")
                         .pattern("###")
                         .pattern("###")
-                        .input('#', FItemTags.FUR_TUFTS)
-                        .offerTo(output);
+                        .define('#', FItemTags.FUR_TUFTS)
+                        .save(output);
 
                 shaped(RecipeCategory.COMBAT, FItems.FUR_LEGGINGS)
-                        .criterion(key, has(FItemTags.FUR_TUFTS))
+                        .unlockedBy(key, has(FItemTags.FUR_TUFTS))
                         .pattern("###")
                         .pattern("# #")
                         .pattern("# #")
-                        .input('#', FItemTags.FUR_TUFTS)
-                        .offerTo(output);
+                        .define('#', FItemTags.FUR_TUFTS)
+                        .save(output);
 
                 shaped(RecipeCategory.COMBAT, FItems.FUR_BOOTS)
-                        .criterion(key, has(FItemTags.FUR_TUFTS))
+                        .unlockedBy(key, has(FItemTags.FUR_TUFTS))
                         .pattern("# #")
                         .pattern("# #")
-                        .input('#', FItemTags.FUR_TUFTS)
-                        .offerTo(output);
+                        .define('#', FItemTags.FUR_TUFTS)
+                        .save(output);
             }
 
-            private void offerFurPaddingRecipe(ItemLike input, int amount) {
+            private void offerFurPaddingRecipe(ItemLike define, int amount) {
                 shapeless(RecipeCategory.MISC, FItems.FUR_PADDING)
                         .group(Frostiful.id("fur_padding").toString())
-                        .criterion(getHasName(input), has(input))
-                        .input(input, amount)
-                        .offerTo(output, furPaddingFrom(input));
+                        .unlockedBy(getHasName(define), has(define))
+                        .requires(define, amount)
+                        .save(output, furPaddingFrom(define));
             }
 
             // </editor-fold>
