@@ -48,17 +48,17 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.IronGolem;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.animal.golem.IronGolem;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.entity.monster.Monster;
 import net.minecraft.world.entity.monster.RangedAttackMob;
-import net.minecraft.world.entity.monster.SpellcasterIllager;
-import net.minecraft.world.entity.npc.AbstractVillager;
+import net.minecraft.world.entity.monster.illager.SpellcasterIllager;
+import net.minecraft.world.entity.npc.villager.AbstractVillager;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.raid.Raider;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.BaseTorchBlock;
@@ -342,7 +342,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         ServerLevel serverWorld = (ServerLevel) world; // covered by isClient check above
 
         // do not place snow/destroy heat sources unless mobGriefing is on
-        if (!serverWorld.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        if (!serverWorld.getGameRules().get(GameRules.MOB_GRIEFING)) {
             return;
         }
 
@@ -579,7 +579,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         @Override
         protected void performSpellCasting() {
             ServerLevel world = getServerLevel(level());
-            if (!world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+            if (!world.getGameRules().get(GameRules.MOB_GRIEFING)) {
                 return;
             }
 
