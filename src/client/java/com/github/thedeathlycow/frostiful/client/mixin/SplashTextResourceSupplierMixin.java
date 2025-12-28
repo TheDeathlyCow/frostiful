@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.mixin;
 
+import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,7 +13,7 @@ import net.minecraft.client.resources.SplashManager;
 @Mixin(SplashManager.class)
 public class SplashTextResourceSupplierMixin {
 
-    private static final SplashRenderer frostiful_DOWNLOAD_MUSESWIPR = new SplashRenderer("Download MuseSwipr on Steam!");
+    private static final SplashRenderer frostiful_DOWNLOAD_MUSESWIPR = new SplashRenderer(Component.translatable("frostiful.splash.download_museswipr"));
 
     @Inject(
             method = "getSplash",

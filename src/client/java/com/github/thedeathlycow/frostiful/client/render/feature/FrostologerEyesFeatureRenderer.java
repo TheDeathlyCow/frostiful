@@ -5,10 +5,11 @@ import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityR
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
@@ -18,7 +19,7 @@ public class FrostologerEyesFeatureRenderer<T extends FrostologerEntityRenderSta
 
     public FrostologerEyesFeatureRenderer(RenderLayerParent<T, M> context, Identifier texture) {
         super(context);
-        this.skin = RenderType.entityTranslucentEmissive(texture);
+        this.skin = RenderTypes.entityTranslucentEmissive(texture);
         this.texture = texture;
     }
 

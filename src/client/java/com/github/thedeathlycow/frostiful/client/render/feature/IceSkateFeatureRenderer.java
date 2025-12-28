@@ -7,12 +7,12 @@ import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.client.renderer.entity.RenderLayerParent;
 import net.minecraft.client.renderer.entity.layers.RenderLayer;
 import net.minecraft.client.renderer.entity.state.HumanoidRenderState;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
 public class IceSkateFeatureRenderer<
@@ -52,7 +52,7 @@ public class IceSkateFeatureRenderer<
                             model,
                             state,
                             matrices,
-                            RenderType.armorCutoutNoCull(SKATE_TEXTURE),
+                            RenderTypes.armorCutoutNoCull(SKATE_TEXTURE),
                             light,
                             LivingEntityRenderer.getOverlayCoords(state, 0.0f),
                             -1,

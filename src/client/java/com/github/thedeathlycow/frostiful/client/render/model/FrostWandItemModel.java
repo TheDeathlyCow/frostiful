@@ -4,15 +4,11 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.model.*;
+import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
-import net.minecraft.client.model.geom.builders.CubeDeformation;
-import net.minecraft.client.model.geom.builders.CubeListBuilder;
-import net.minecraft.client.model.geom.builders.LayerDefinition;
-import net.minecraft.client.model.geom.builders.MeshDefinition;
-import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.resources.Identifier;
 
 /**
@@ -23,7 +19,7 @@ public class FrostWandItemModel extends EntityModel<FrostologerEntityRenderState
     public static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_wand.png");
 
     public FrostWandItemModel(ModelPart root) {
-        super(root, RenderType::entityTranslucent);
+        super(root, RenderTypes::entityTranslucent);
     }
 
     public static LayerDefinition getTexturedModelData() {
