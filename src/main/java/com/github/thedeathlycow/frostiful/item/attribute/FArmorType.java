@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.item.attribute;
 import com.mojang.serialization.Codec;
 import java.util.EnumMap;
 import java.util.Map;
-import net.minecraft.Util;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.util.Util;
 import net.minecraft.world.entity.EquipmentSlot;
 
 public enum FArmorType implements StringRepresentable {

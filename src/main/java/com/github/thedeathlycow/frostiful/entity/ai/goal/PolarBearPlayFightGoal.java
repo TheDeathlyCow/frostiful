@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
-import net.minecraft.world.entity.animal.PolarBear;
+import net.minecraft.world.entity.animal.polarbear.PolarBear;
 
 public class PolarBearPlayFightGoal extends PlayFightGoal<PolarBear> {
 

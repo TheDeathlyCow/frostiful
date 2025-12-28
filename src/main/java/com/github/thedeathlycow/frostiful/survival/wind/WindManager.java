@@ -13,12 +13,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.Nullable;
 
@@ -88,7 +88,7 @@ public final class WindManager {
             return;
         }
 
-        if (!(world instanceof ServerLevel serverWorld) || !serverWorld.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        if (!(world instanceof ServerLevel serverWorld) || !serverWorld.getGameRules().get(GameRules.MOB_GRIEFING)) {
             return;
         }
 

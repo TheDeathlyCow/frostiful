@@ -9,12 +9,12 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.InsideBlockEffectApplier;
-import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gamerules.GameRules;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -32,7 +32,7 @@ public abstract class SnowPackingMixin {
                 && entity.getType().is(FEntityTypeTags.HEAVY_ENTITY_TYPES)
                 && !world.isClientSide()
                 && Frostiful.getConfig().freezingConfig.doSnowPacking()
-                && ((ServerLevel) world).getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)
+                && ((ServerLevel) world).getGameRules().get(GameRules.MOB_GRIEFING)
                 && isEntityWalkingOn(pos, entity);
 
         if (maySmushSnow) {
