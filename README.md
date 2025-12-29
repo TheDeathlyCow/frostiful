@@ -43,21 +43,25 @@ Many other patches that are also relevant for Frostiful are provided by the stan
 Thanks to everyone who has contributed to Frostiful, no matter how big or small! See the [Credits](./CREDITS.md) for the full list of contributors.
 
 # LTS Policy
-This is the current support status for each version of Minecraft that Frostiful is available for. The current Long-Term Support (LTS) policy for Frostiful versions is to support 1.21.1 and the latest game drop. Version 1.21.1 will be supported until *at least* the release of the Vibrant Visuals update for Java Edition.
 
-Supported versions will receive all new features, fixes, and updates (where possible).
+This is my current intended support status for each version of Minecraft that Frostiful is available for. The current Long-Term Support (LTS) policy for Frostiful versions is to fully support only the latest game drop.
+
+Supported versions will receive all new features, fixes, and updates.
+
+Version 1.21.1 will receive limited fixes only support (for things such as minor changes and bug fixes), but no new major features.
 
 Unsupported versions version will receive no future updates, except for critical security fixes.
 
 | Minecraft Version | Support Status |
 |-------------------|----------------|
-| 1.21.10           | ✅ Supported    |
+| 1.21.11           | ✅ Supported    | 
+| 1.21.10           | ❌ Unsupported  |
 | 1.21.9            | ❌ Unsupported  |
 | 1.21.6-8          | ❌ Unsupported  |
 | 1.21.5            | ❌ Unsupported  |
 | 1.21.4            | ❌ Unsupported  |
 | 1.21.2-3          | ❌ Unsupported  |
-| 1.21.1            | ✅ Supported    | 
+| 1.21.1            | ⚠️ Fixes only  | 
 | 1.20.4            | ❌ Unsupported  | 
 | 1.20.2            | ❌ Unsupported  | 
 | 1.20.1            | ❌ Unsupported  |
