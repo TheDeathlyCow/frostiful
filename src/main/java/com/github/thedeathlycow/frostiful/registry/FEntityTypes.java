@@ -9,7 +9,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
@@ -110,7 +110,7 @@ public class FEntityTypes {
         return register(Frostiful.id(id), builder);
     }
 
-    private static <T extends Entity> EntityType<T> register(ResourceLocation id, EntityType.Builder<T> builder)  {
+    private static <T extends Entity> EntityType<T> register(Identifier id, EntityType.Builder<T> builder)  {
         ResourceKey<EntityType<?>> key = ResourceKey.create(Registries.ENTITY_TYPE, id);
         return register(key, builder);
     }

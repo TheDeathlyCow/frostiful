@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 import com.github.thedeathlycow.frostiful.entity.ai.goal.PolarBearPlayFightGoal;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.PolarBear;
+import net.minecraft.world.entity.animal.polarbear.PolarBear;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

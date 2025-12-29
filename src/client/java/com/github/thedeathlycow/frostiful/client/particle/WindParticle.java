@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.client.particle;
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
@@ -39,13 +39,12 @@ public class WindParticle extends SingleQuadParticle {
 
     @Override
     public void extract(QuadParticleRenderState submittable, Camera camera, float tickProgress) {
-        // flip so that both faces are rendered in the same direction in the absolute position of the world
-        this.quadSize *= -1;
         this.extractRotatedQuad(submittable, camera, FRONT_ROTATION, tickProgress);
 
-        // flip back to normal
+        // flip so that both faces are rendered in the same direction in the absolute position of the world
         this.quadSize *= -1;
         this.extractRotatedQuad(submittable, camera, BACK_ROTATION, tickProgress);
+        this.quadSize *= -1;
     }
 
     @Override

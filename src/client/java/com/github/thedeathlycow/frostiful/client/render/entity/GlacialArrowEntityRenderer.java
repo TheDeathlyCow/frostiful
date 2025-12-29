@@ -7,12 +7,12 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ArrowRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class GlacialArrowEntityRenderer extends ArrowRenderer<GlacialArrowEntity, ArrowRenderState> {
 
-    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/projectiles/glacial_arrow.png");
+    public static final Identifier TEXTURE = Frostiful.id("textures/entity/projectiles/glacial_arrow.png");
 
     public GlacialArrowEntityRenderer(EntityRendererProvider.Context context) {
         super(context);
@@ -24,7 +24,7 @@ public class GlacialArrowEntityRenderer extends ArrowRenderer<GlacialArrowEntity
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ArrowRenderState entity) {
+    public Identifier getTextureLocation(ArrowRenderState entity) {
         return TEXTURE;
     }
 }

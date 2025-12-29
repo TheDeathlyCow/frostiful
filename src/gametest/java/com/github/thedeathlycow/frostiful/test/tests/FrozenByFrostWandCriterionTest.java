@@ -2,10 +2,10 @@ package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
-import net.minecraft.advancements.critereon.ContextAwarePredicate;
-import net.minecraft.advancements.critereon.EntityPredicate;
-import net.minecraft.advancements.critereon.EntityTypePredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.EntityTypePredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;

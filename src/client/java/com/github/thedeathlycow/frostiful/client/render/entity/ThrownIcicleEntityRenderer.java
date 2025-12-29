@@ -7,12 +7,12 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.ArrowRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
 public class ThrownIcicleEntityRenderer extends ArrowRenderer<ThrownIcicleEntity, ArrowRenderState> {
 
-    public static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/projectiles/thrown_icicle.png");
+    public static final Identifier TEXTURE = Frostiful.id("textures/entity/projectiles/thrown_icicle.png");
 
 
     public ThrownIcicleEntityRenderer(EntityRendererProvider.Context context) {
@@ -26,7 +26,7 @@ public class ThrownIcicleEntityRenderer extends ArrowRenderer<ThrownIcicleEntity
 
 
     @Override
-    public ResourceLocation getTextureLocation(ArrowRenderState entity) {
+    public Identifier getTextureLocation(ArrowRenderState entity) {
         return TEXTURE;
     }
 }

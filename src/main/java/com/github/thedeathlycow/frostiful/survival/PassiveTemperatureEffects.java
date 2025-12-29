@@ -49,7 +49,7 @@ public final class PassiveTemperatureEffects {
 
         if (applyHeat) {
             if (entity.getRandom().nextInt(10) == 0) {
-                context.world().sendParticles(
+                context.level().sendParticles(
                         ParticleTypes.FLAME,
                         entity.getX(),
                         entity.getY() + 0.3,
@@ -68,7 +68,7 @@ public final class PassiveTemperatureEffects {
     }
 
     private static int getAndUpdateBlockLightTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context) {
-        int warmthFromLight = getBlockLightTemperatureChange(context.world(), context.pos());
+        int warmthFromLight = getBlockLightTemperatureChange(context.level(), context.pos());
         if (warmthFromLight > 0) {
             SnowAccumulationComponent.get(context.affected()).meltSnowAccumulation();
         }

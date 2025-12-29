@@ -4,13 +4,13 @@ import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponen
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.LivingEntity;
 
 public class RootedOverlayRenderer {
 
 
-    private static final ResourceLocation FROSTIFUL_ROOTED_OVERLAY = ResourceLocation.withDefaultNamespace("textures/block/ice.png");
+    private static final Identifier FROSTIFUL_ROOTED_OVERLAY = Identifier.withDefaultNamespace("textures/block/ice.png");
 
     public static void render(
             LivingEntity entity,

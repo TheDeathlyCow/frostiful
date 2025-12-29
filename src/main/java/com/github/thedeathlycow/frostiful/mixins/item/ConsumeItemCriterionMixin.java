@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.item;
 
 import com.github.thedeathlycow.frostiful.compat.FoodIntegration;
-import net.minecraft.advancements.critereon.ConsumeItemTrigger;
+import net.minecraft.advancements.criterion.ConsumeItemTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

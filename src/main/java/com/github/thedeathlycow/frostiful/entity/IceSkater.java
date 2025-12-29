@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import java.util.EnumSet;
 import java.util.Set;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Pose;
@@ -80,7 +80,7 @@ public interface IceSkater {
         private static final float SPRINT_SLIPPERINESS = 1.078f;
         private static final float BRAKE_SLIPPERINESS = 1.0f;
 
-        private static final ResourceLocation SKATE_WALK_PENALITY_ID = Frostiful.id("gameplay.skate_walk_penalty");
+        private static final Identifier SKATE_WALK_PENALITY_ID = Frostiful.id("gameplay.skate_walk_penalty");
 
         private static final AttributeModifier SKATE_WALK_PENALTY = new AttributeModifier(
                 SKATE_WALK_PENALITY_ID,

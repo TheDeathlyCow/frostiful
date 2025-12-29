@@ -18,18 +18,18 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;
 import net.minecraft.client.renderer.entity.state.ArmedEntityRenderState;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.monster.AbstractIllager;
+import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.item.CrossbowItem;
 
 @Environment(EnvType.CLIENT)
 public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
 
 
-    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
 
     public FrostologerEntityRenderer(EntityRendererProvider.Context context) {
         super(context, new FrostologerEntityModel<>(context.bakeLayer(FEntityModelLayers.FROSTOLOGER)), 0.5F);
@@ -55,7 +55,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
     @Override
     public void extractRenderState(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
         super.extractRenderState(frostologer, state, tickDelta);
-        ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver);
+        ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver, tickDelta);
         state.isRiding = frostologer.isPassenger();
         state.mainArm = frostologer.getMainArm();
         state.armPose = frostologer.getArmPose();
@@ -96,7 +96,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
 //    }
 
     @Override
-    public ResourceLocation getTextureLocation(FrostologerEntityRenderState pillagerEntity) {
+    public Identifier getTextureLocation(FrostologerEntityRenderState pillagerEntity) {
         return TEXTURE;
     }
 

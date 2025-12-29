@@ -15,7 +15,7 @@ import net.minecraft.world.entity.ConversionParams;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.monster.Pillager;
+import net.minecraft.world.entity.monster.illager.Pillager;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;

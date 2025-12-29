@@ -13,6 +13,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.EntityReference;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
@@ -167,7 +168,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
 
         if (provider instanceof NeutralMob angerable) {
             angerable.startPersistentAngerTimer();
-            angerable.setPersistentAngerTarget(brusher.getUUID());
+            angerable.setPersistentAngerTarget(EntityReference.of(brusher));
         }
     }
 }

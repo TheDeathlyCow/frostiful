@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
-import net.minecraft.world.entity.animal.Ocelot;
+import net.minecraft.world.entity.animal.feline.Ocelot;
 
 public class OcelotPlayFightGoal extends PlayFightGoal<Ocelot> {
 

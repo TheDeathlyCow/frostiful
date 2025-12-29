@@ -3,10 +3,9 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import net.fabricmc.fabric.api.gamerule.v1.CustomGameRuleCategory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleFactory;
-import net.fabricmc.fabric.api.gamerule.v1.GameRuleRegistry;
+import net.fabricmc.fabric.api.gamerule.v1.GameRuleBuilder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.level.GameRules;
+import net.minecraft.world.level.gamerules.GameRule;
 
 /**
  * Custom game rules for Lost in the Cold
@@ -27,12 +26,10 @@ public class FGameRules {
      * to vanilla, except for the increased frost resistance provided by their
      * frost resistance attribute.
      */
-    public static final GameRules.Key<GameRules.BooleanValue> DO_PASSIVE_FREEZING =
-            GameRuleRegistry.register(
-                    Frostiful.MODID + ".doPassiveFreezing",
-                    CATEGORY,
-                    GameRuleFactory.createBooleanRule(true)
-            );
+    public static final GameRule<Boolean> DO_PASSIVE_FREEZING =
+            GameRuleBuilder.forBoolean(true)
+                    .category(CATEGORY)
+                    .buildAndRegister(Frostiful.id("do_passive_freezing"));
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful game rules");

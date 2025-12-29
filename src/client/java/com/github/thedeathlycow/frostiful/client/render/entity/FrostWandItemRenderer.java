@@ -11,8 +11,10 @@ import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
 import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Vector3f;
+import org.joml.Vector3fc;
 
 import java.util.Set;
+import java.util.function.Consumer;
 
 @Environment(EnvType.CLIENT)
 public class FrostWandItemRenderer implements NoDataSpecialModelRenderer {
@@ -26,7 +28,7 @@ public class FrostWandItemRenderer implements NoDataSpecialModelRenderer {
     }
 
     @Override
-    public void getExtents(Set<Vector3f> vertices) {
+    public void getExtents(Consumer<Vector3fc> vertices) {
         var matrixStack = new PoseStack();
         matrixStack.scale(1.0F, -1.0F, -1.0F);
         this.model.root().getExtentsForGui(matrixStack, vertices);

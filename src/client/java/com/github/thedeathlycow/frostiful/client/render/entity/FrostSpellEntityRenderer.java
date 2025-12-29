@@ -6,21 +6,23 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.entity.DragonFireballRenderer;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
+import net.minecraft.client.renderer.rendertype.RenderType;
+import net.minecraft.client.renderer.rendertype.RenderTypes;
 import net.minecraft.client.renderer.state.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 
 @Environment(EnvType.CLIENT)
 public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, EntityRenderState> {
 
-    private static final ResourceLocation TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
-    private static final RenderType LAYER = RenderType.entityCutoutNoCull(TEXTURE);
+    private static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
+    private static final RenderType LAYER = RenderTypes.entityCutoutNoCull(TEXTURE);
 
     public FrostSpellEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);

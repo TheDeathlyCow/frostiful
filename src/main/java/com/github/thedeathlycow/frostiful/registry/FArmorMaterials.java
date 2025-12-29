@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import java.util.EnumMap;
-import net.minecraft.Util;
+import net.minecraft.util.Util;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.equipment.ArmorMaterial;
