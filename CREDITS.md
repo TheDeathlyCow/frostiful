@@ -20,6 +20,7 @@
 * [TheLegendofSaram](https://github.com/TheLegendofSaram) - Spanish (Mexico)
 * [MaroonLuv](https://github.com/MaroonLuv) - Russian
 * [Usia](https://crowdin.com/profile/usia) - Ukrainian
+* [aiocringe](https://github.com/aiocringe) - Russian
 
 # Sound Effects
 
