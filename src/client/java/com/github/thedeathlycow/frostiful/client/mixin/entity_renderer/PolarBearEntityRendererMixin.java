@@ -18,7 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(PolarBearRenderer.class)
 public class PolarBearEntityRendererMixin {
     @Inject(
-            method = "extractRenderState(Lnet/minecraft/world/entity/animal/PolarBear;Lnet/minecraft/client/renderer/entity/state/PolarBearRenderState;F)V",
+            method = "extractRenderState(Lnet/minecraft/world/entity/animal/polarbear/PolarBear;Lnet/minecraft/client/renderer/entity/state/PolarBearRenderState;F)V",
             at = @At("TAIL")
     )
     private void updateRenderState(PolarBear entity, PolarBearRenderState state, float tickDelta, CallbackInfo ci) {
