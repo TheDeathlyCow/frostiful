@@ -4,18 +4,15 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
-import com.github.thedeathlycow.frostiful.registry.tag.FBiomeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.environment.EnvironmentLookup;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
 import com.github.thedeathlycow.thermoo.api.environment.component.TemperatureRecordComponent;
 import com.github.thedeathlycow.thermoo.api.util.TemperatureUnit;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -54,15 +51,9 @@ public final class WindManager {
 
         BlockPos.MutableBlockPos spawnPos = new BlockPos.MutableBlockPos();
         boolean spawnInAir = this.setSpawnPosition(level, chunk, spawnPos);
-        boolean isAreaNotWindy = !level.environmentAttributes()
-                .getValue(FEnvironmentAttributes.IS_WINDY, spawnPos);
+        WindBehavior windBehavior = level.environmentAttributes().getValue(FEnvironmentAttributes.WIND_BEHAVIOR, spawnPos);
 
-        if (isAreaNotWindy || (spawnInAir && !config.spawnWindInAir())) {
-            return;
-        }
-
-        Holder<Biome> biome = level.getBiomeManager().getNoiseBiomeAtPosition(spawnPos);
-        if (biome.is(FBiomeTags.FREEZING_WIND_NEVER_SPAWNS)) {
+        if (windBehavior == WindBehavior.NEVER || (spawnInAir && !config.spawnWindInAir())) {
             return;
         }
 
@@ -73,8 +64,8 @@ public final class WindManager {
             return;
         }
 
-        boolean canSpawnOnGround = (level.isRaining() && biome.is(FBiomeTags.FREEZING_WIND_SPAWNS_IN_STORMS))
-                || biome.is(FBiomeTags.FREEZING_WIND_ALWAYS_SPAWNS);
+        boolean canSpawnOnGround = (level.isRaining() && windBehavior == WindBehavior.DURING_RAIN)
+                || windBehavior == WindBehavior.ALWAYS;
 
         WindSpawnStrategy strategy = config.getWindSpawnStrategy().getStrategy();
         if (strategy == null) {
