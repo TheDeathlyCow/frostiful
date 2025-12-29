@@ -243,6 +243,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Desactivar superposición de escarcha al usar la Capa de Fríología",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Temblar de la mano al tiritar",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Intensidad del temblor de mano",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Desactivar textura de oso polar dañado",
   "text.autoconfig.frostiful.option.updateConfig": "Actualizar configuración",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Versión actual de configuración",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Activar actualizaciones automáticas de la configuración",

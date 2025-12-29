@@ -243,6 +243,7 @@
   "text.autoconfig.frostiful.option.clientConfig.disableFrostOverlayWhenWearingFrostologyCloak": "Vô hiệu hóa phủ băng khi đang mặc Áo choàng Học Thuật Băng",
   "text.autoconfig.frostiful.option.clientConfig.shakeHandWhenShivering": "Rung tay khi run rẩy",
   "text.autoconfig.frostiful.option.clientConfig.handShakeIntensity": "Cường độ rung tay",
+  "text.autoconfig.frostiful.option.clientConfig.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
   "text.autoconfig.frostiful.option.updateConfig": "Cập nhật Cấu hình",
   "text.autoconfig.frostiful.option.updateConfig.currentConfigVersion": "Phiên bản cấu hình hiện tại",
   "text.autoconfig.frostiful.option.updateConfig.enableConfigUpdates": "Bật tự động cập nhật cấu hình",
