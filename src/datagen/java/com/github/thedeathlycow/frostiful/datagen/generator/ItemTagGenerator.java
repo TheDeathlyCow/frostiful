@@ -25,6 +25,7 @@ public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
     protected void addTags(HolderLookup.Provider wrapperLookup) {
         generateFrostifulTags(wrapperLookup);
         generateConventionalTags(wrapperLookup);
+        generateMinecraftTags(wrapperLookup);
     }
 
     private void generateFrostifulTags(HolderLookup.Provider wrapperLookup) {
@@ -120,6 +121,60 @@ public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
         valueLookupBuilder(ConventionalItemTags.RODS)
                 .add(FItems.FROZEN_ROD);
+    }
+
+    private void generateMinecraftTags(HolderLookup.Provider wrapperLookup) {
+        valueLookupBuilder(ItemTags.EQUIPPABLE_ENCHANTABLE)
+                .add(FItems.FROSTOLOGY_CLOAK);
+
+        valueLookupBuilder(ItemTags.WEAPON_ENCHANTABLE)
+                .add(FItems.FROST_WAND);
+
+        valueLookupBuilder(ItemTags.ARROWS)
+                .add(FItems.GLACIAL_ARROW);
+
+        valueLookupBuilder(ItemTags.CHEST_ARMOR)
+                .add(FItems.FUR_CHESTPLATE)
+                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE);
+
+        valueLookupBuilder(ItemTags.FOOT_ARMOR)
+                .addOptionalTag(FItemTags.FUR_BOOTS)
+                .addOptionalTag(FItemTags.ICE_SKATES);
+
+        valueLookupBuilder(ItemTags.HEAD_ARMOR)
+                .add(FItems.FUR_HELMET)
+                .add(FItems.FUR_PADDED_CHAINMAIL_HELMET);
+
+        valueLookupBuilder(ItemTags.LEG_ARMOR)
+                .add(FItems.FUR_BOOTS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS);
+
+        valueLookupBuilder(ItemTags.SLABS)
+                .add(FItems.PACKED_SNOW_BRICK_SLAB)
+                .add(FItems.CUT_BLUE_ICE_SLAB)
+                .add(FItems.CUT_PACKED_ICE_SLAB);
+
+        valueLookupBuilder(ItemTags.SLABS)
+                .add(FItems.PACKED_SNOW_BRICK_STAIRS)
+                .add(FItems.CUT_BLUE_ICE_STAIRS)
+                .add(FItems.CUT_PACKED_ICE_STAIRS);
+
+        valueLookupBuilder(ItemTags.WALLS)
+                .add(FItems.PACKED_SNOW_BRICK_WALL)
+                .add(FItems.CUT_BLUE_ICE_WALL)
+                .add(FItems.CUT_PACKED_ICE_WALL);
+
+        valueLookupBuilder(ItemTags.TRIMMABLE_ARMOR)
+                .add(FItems.FUR_HELMET)
+                .add(FItems.FUR_CHESTPLATE)
+                .add(FItems.FUR_LEGGINGS)
+                .add(FItems.FUR_BOOTS)
+                .add(FItems.ICE_SKATES)
+                .add(FItems.FUR_PADDED_CHAINMAIL_HELMET)
+                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE)
+                .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS)
+                .add(FItems.ARMORED_ICE_SKATES);
     }
 
     private static TagKey<Item> commonKey(String path) {

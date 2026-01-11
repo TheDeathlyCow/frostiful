@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#frostiful:fur_boots",
+      "required": false
+    },
+    {
+      "id": "#frostiful:ice_skates",
+      "required": false
+    }
+  ]
+}
