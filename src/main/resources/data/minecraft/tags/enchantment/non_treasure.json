@@ -2,6 +2,7 @@
     "replace": false,
     "values": [
         "frostiful:enervation",
-        "frostiful:ice_breaker"
+        "frostiful:ice_breaker",
+        "frostiful:ice_speed"
     ]
 }
