@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
@@ -19,6 +20,8 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -97,7 +100,9 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
             DamageSource source = FDamageSources.getDamageSources(provider.level())
                     .frostiful$brokenIce(attacker);
-            provider.hurtServer(serverWorld, source, (float) damage);
+            if (provider.hurtServer(serverWorld, source, (float) damage)) {
+                dropAllBindingItems(provider);
+            }
         }
     }
 
@@ -172,6 +177,15 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             case SELF, PLAYER -> Vec3.ZERO.add(0, movement.y < 0 && !provider.isNoGravity() ? movement.y : 0, 0);
             default -> null;
         };
+    }
+
+    private static void dropAllBindingItems(LivingEntity victim) {
+        TrinketsIntegration.getAllEquipped(victim).forEach(stack -> {
+            if (EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
+                victim.drop(stack.copy(), true, true);
+                stack.setCount(0);
+            }
+        });
     }
 
     private static void spawnShatterParticlesAndSound(LivingEntity victim, ServerLevel serverWorld) {
