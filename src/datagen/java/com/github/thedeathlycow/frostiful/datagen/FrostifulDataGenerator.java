@@ -26,7 +26,7 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         LOGGER.info("Running Frostiful datagen");
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-
+        pack.addProvider(FLootTableGenerator::new);
         pack.addProvider(FRecipeProvider::new);
         pack.addProvider(FrostifulModelGenerator::new);
 
