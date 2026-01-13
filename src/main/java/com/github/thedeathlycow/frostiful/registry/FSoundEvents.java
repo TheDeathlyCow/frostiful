@@ -51,6 +51,7 @@ public class FSoundEvents {
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_SKATE = register("entity.generic.ice_skate.skate");
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_GLIDE = register("entity.generic.ice_skate.glide");
     public static final SoundEvent ENTITY_GENERIC_ICE_SKATE_STOP = register("entity.generic.ice_skate.stop");
+    public static final SoundEvent ENTITY_BREAK_BINDING_CURSE = register("entity.generic.break_binding_curse");
 
     public static final Holder<SoundEvent> ITEM_ARMOR_EQUIP_FUR = registerReference("item.armor.equip_fur");
 
