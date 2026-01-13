@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -20,12 +21,14 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -184,6 +187,14 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             if (EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
                 victim.drop(stack.copy(), true, true);
                 stack.setCount(0);
+                victim.level().playSound(
+                        null,
+                        victim.getX(),
+                        victim.getY(),
+                        victim.getZ(),
+                        FSoundEvents.ENTITY_BREAK_BINDING_CURSE,
+                        victim.getSoundSource()
+                );
             }
         });
     }
@@ -193,7 +204,9 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
         serverWorld.sendParticles(
                 shatteredIce,
-                victim.getX(), victim.getY(), victim.getZ(),
+                victim.getX(),
+                victim.getY(),
+                victim.getZ(),
                 500,
                 0.5, 1.0, 0.5,
                 1.0
@@ -201,7 +214,9 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
         victim.level().playSound(
                 null,
-                victim.blockPosition(),
+                victim.getX(),
+                victim.getY(),
+                victim.getZ(),
                 SoundEvents.GLASS_BREAK,
                 SoundSource.AMBIENT,
                 1.0f, 0.75f
