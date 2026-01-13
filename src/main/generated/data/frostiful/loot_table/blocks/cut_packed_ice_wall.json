@@ -16,5 +16,6 @@
       ],
       "rolls": 1.0
     }
-  ]
+  ],
+  "random_sequence": "frostiful:blocks/cut_packed_ice_wall"
 }

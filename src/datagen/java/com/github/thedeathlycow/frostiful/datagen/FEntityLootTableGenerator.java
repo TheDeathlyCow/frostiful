@@ -9,6 +9,7 @@ import net.minecraft.advancements.criterion.RaiderPredicate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
@@ -25,6 +26,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.function.BiConsumer;
 
 public class FEntityLootTableGenerator extends FabricEntityLootTableProvider {
     protected FEntityLootTableGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
@@ -79,5 +81,14 @@ public class FEntityLootTableGenerator extends FabricEntityLootTableProvider {
                                         .when(LootItemKilledByPlayerCondition.killedByPlayer())
                         )
         );
+    }
+
+    @Override
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
+        BiConsumer<ResourceKey<LootTable>, LootTable.Builder> sequenceAppender = (key, builder) -> {
+            builder.setRandomSequence(key.identifier());
+        };
+
+        super.generate(sequenceAppender.andThen(biConsumer));
     }
 }

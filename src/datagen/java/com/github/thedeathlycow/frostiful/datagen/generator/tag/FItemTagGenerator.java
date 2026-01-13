@@ -13,7 +13,6 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
-import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
