@@ -104,9 +104,11 @@ dependencies {
     modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
 
     // Trinkets https://github.com/emilyploszaj/trinkets
-    modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
+    // temporarily replaced with canary until updated
+//    modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {
+//        exclude(group: "net.fabricmc.fabric-api")
+//    }
+    modImplementation "maven.modrinth:trinkets-canary:${project.trinkets_version}"
 
     testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
     testImplementation "org.junit.jupiter:junit-jupiter"
@@ -220,7 +222,7 @@ publishMods {
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
 
-        optional("thermoo-patches", "scorchful", "modmenu")
+        optional("thermoo-patches", "scorchful", "modmenu", "trinkets")
     }
 
     modrinth {
@@ -230,6 +232,6 @@ publishMods {
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
 
-        optional("thermoo-patches", "scorchful", "modmenu")
+        optional("thermoo-patches", "scorchful", "modmenu", "trinkets-canary")
     }
 }
