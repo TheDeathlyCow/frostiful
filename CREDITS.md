@@ -24,5 +24,9 @@
 
 # Sound Effects
 
+* Pixabay Sound Effects: https://pixabay.com/
+* Crack 2 by JustInvoke -- https://freesound.org/s/446119/ -- License: Attribution 4.0
 * Knuckle_Cracking_Fx.wav by YMB -- https://freesound.org/s/325949/ -- License: Attribution 3.0
 * snap 3.wav by theplax -- https://freesound.org/s/614741/ -- License: Attribution 4.0
+* Bite (Cartoon Style) by Jofae -- https://freesound.org/s/353067/ -- License: Creative Commons 0
+* woosh.wav by freakinbehemoth -- https://freesound.org/s/243400/ -- License: Creative Commons 0
