@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.server.world.gen.feature.coveredrock;
 
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.mojang.serialization.Codec;
-import java.util.Optional;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -11,6 +10,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
+
+import java.util.Optional;
 
 
 public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
