@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.datagen.generator;
+package com.github.thedeathlycow.frostiful.datagen.generator.tag;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
