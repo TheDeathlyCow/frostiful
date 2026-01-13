@@ -1,0 +1,13 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:portals",
+      "required": false
+    },
+    "minecraft:beacon",
+    "minecraft:vault",
+    "minecraft:trial_spawner",
+    "frostiful:icy_vault",
+    "frostiful:icy_trial_spawner"
+  ]
+}

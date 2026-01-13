@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.tag;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
@@ -12,13 +13,19 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import org.jspecify.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
-public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
+public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
-    public ItemTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture);
+
+    public FItemTagGenerator(
+            FabricDataOutput output,
+            CompletableFuture<HolderLookup.Provider> registriesFuture,
+            BlockTagProvider blockTagProvider
+    ) {
+        super(output, registriesFuture, blockTagProvider);
     }
 
     @Override
@@ -82,11 +89,7 @@ public class ItemTagGenerator extends FabricTagProvider.ItemTagProvider {
                 .add(Items.IRON_INGOT)
                 .addOptionalTag(ConventionalItemTags.IRON_INGOTS);
 
-        valueLookupBuilder(FItemTags.SUN_LICHENS)
-                .add(FItems.COLD_SUN_LICHEN)
-                .add(FItems.COOL_SUN_LICHEN)
-                .add(FItems.WARM_SUN_LICHEN)
-                .add(FItems.HOT_SUN_LICHEN);
+        copy(FBlockTags.SUN_LICHENS, FItemTags.SUN_LICHENS);
 
         valueLookupBuilder(FItemTags.SUPPORTS_HEAT_DRAIN)
                 .addOptionalTag(FItemTags.ENCHANTABLE_FROST_WAND)
