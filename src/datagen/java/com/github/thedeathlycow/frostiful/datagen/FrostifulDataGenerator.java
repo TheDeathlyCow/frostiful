@@ -9,7 +9,6 @@ import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import org.jetbrains.annotations.Nullable;
@@ -26,7 +25,8 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         LOGGER.info("Running Frostiful datagen");
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        pack.addProvider(FLootTableGenerator::new);
+        pack.addProvider(FBlockLootTableGenerator::new);
+        pack.addProvider(FEntityLootTableGenerator::new);
         pack.addProvider(FRecipeProvider::new);
         pack.addProvider(FrostifulModelGenerator::new);
 
