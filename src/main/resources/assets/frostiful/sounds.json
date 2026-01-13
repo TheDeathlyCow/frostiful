@@ -272,7 +272,7 @@
 	"entity.frostiful.biter.burp": {
 		"sounds": [
 			{
-				"name": "random/burp",
+				"name": "frostiful:mob/biter/burp",
 				"pitch": 0.4
 			}
 		],
