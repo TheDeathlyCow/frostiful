@@ -15,6 +15,7 @@ import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -71,7 +72,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
- * By remapping {@link SpellcasterIllager.IllagerArmPose}s, the Frostologer has the following spells:
+ * By reinterpreting the Illager spells, the Frostologer has the following spells:
  * <p>
  * SUMMON_VEX = SUMMON_MINIONS
  * DISAPPEAR = DESTROY_HEAT_SOURCES
@@ -133,21 +134,25 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
      * @param state    The state to transform
      * @param blockPos The position of `state` in `world`.
      */
-    public void destroyHeatSource(ServerLevel world, BlockState state, BlockPos blockPos) {
+    public void tryDestroyHeatSource(ServerLevel world, BlockState state, BlockPos blockPos) {
+        if (state.getLightEmission() == 0) {
+            return;
+        }
+
         BlockState frozenState;
         Block heatedBlock = state.getBlock();
         FluidState fluidState = state.getFluidState();
 
         if (state.is(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
-            frozenState = state;
+            return;
         } else if (blockPos.equals(this.blockPosition())) {
             frozenState = Blocks.AIR.defaultBlockState();
         } else if (state.is(FBlockTags.HOT_FLOOR)) {
             frozenState = Blocks.COBBLESTONE.defaultBlockState();
+        } else if (state.is(ConventionalBlockTags.OBSIDIANS) || fluidState.is(Fluids.LAVA) && fluidState.getAmount() == 8) {
+            frozenState = Blocks.OBSIDIAN.defaultBlockState();
         } else if (state.isCollisionShapeFullBlock(world, blockPos)) {
             frozenState = Blocks.ICE.defaultBlockState();
-        } else if (fluidState.is(Fluids.LAVA) && fluidState.getAmount() == 8) {
-            frozenState = Blocks.OBSIDIAN.defaultBlockState();
         } else if (heatedBlock instanceof BaseTorchBlock) {
             BlockState torch = FrozenTorchBlock.freezeTorch(state);
             frozenState = torch != null ? torch : Blocks.AIR.defaultBlockState();
@@ -348,9 +353,8 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         stepPositionsPool[1] = frostologerPos.below();
         for (BlockPos blockPos : stepPositionsPool) {
             BlockState blockState = world.getBlockState(blockPos);
-            if (PassiveTemperatureEffects.getBlockLightTemperatureChange(world, blockPos) > 0) {
-                this.destroyHeatSource(serverWorld, blockState, blockPos);
-            }
+
+            this.tryDestroyHeatSource(serverWorld, blockState, blockPos);
 
             canPlaceSnow = blockState.isAir()
                     && this.thermoo$getTemperatureScale() <= START_PLACING_SNOW_TEMP
@@ -581,8 +585,8 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
 
             for (BlockPos pos : BlockPos.betweenClosed(origin.subtract(distance), origin.offset(distance))) {
-                if (world instanceof ServerLevel serverWorld && PassiveTemperatureEffects.getBlockLightTemperatureChange(world, pos) > 0) {
-                    FrostologerEntity.this.destroyHeatSource(serverWorld, world.getBlockState(pos), pos);
+                if (world instanceof ServerLevel serverWorld) {
+                    FrostologerEntity.this.tryDestroyHeatSource(serverWorld, world.getBlockState(pos), pos);
                 }
             }
 

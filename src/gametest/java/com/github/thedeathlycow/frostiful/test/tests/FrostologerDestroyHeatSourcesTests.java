@@ -42,6 +42,16 @@ public class FrostologerDestroyHeatSourcesTests {
     public void wallSoulTorchIsFrozen(GameTestHelper context) {
         runDestroyHeatSourceTest(context, Blocks.SOUL_WALL_TORCH.defaultBlockState(), FBlocks.FROZEN_WALL_TORCH);
     }
+
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void groundCopperTorchIsFrozen(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.COPPER_TORCH.defaultBlockState(), FBlocks.FROZEN_TORCH);
+    }
+
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void wallCopperTorchIsFrozen(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.COPPER_WALL_TORCH.defaultBlockState(), FBlocks.FROZEN_WALL_TORCH);
+    }
     //endregion
 
     //region lava tests
@@ -311,18 +321,27 @@ public class FrostologerDestroyHeatSourcesTests {
         );
     }
 
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void cryingObsidianBecomesObsidian(GameTestHelper context) {
+        runDestroyHeatSourceTest(
+                context,
+                Blocks.CRYING_OBSIDIAN.defaultBlockState(),
+                Blocks.OBSIDIAN
+        );
+    }
+
     //endregion
 
     private static void runDestroyHeatSourceTest(GameTestHelper context, BlockState toPlace, Block blockAtEnd) {
         ServerLevel serverWorld = context.getLevel();
         BlockPos pos = new BlockPos(1, 1, 1);
 
-        serverWorld.setBlockAndUpdate(pos, toPlace);
+        serverWorld.setBlockAndUpdate(context.absolutePos(pos), toPlace);
 
         FrostologerEntity frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
         frostologer.setInvulnerable(true);
         frostologer.setNoAi(true);
-        frostologer.destroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
+        frostologer.tryDestroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
 
         context.succeedWhenBlockPresent(blockAtEnd, pos);
     }
