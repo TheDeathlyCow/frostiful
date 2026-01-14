@@ -1,11 +1,12 @@
 package com.github.thedeathlycow.frostiful.item.attribute;
 
 import com.mojang.serialization.Codec;
-import java.util.EnumMap;
-import java.util.Map;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.Util;
 import net.minecraft.world.entity.EquipmentSlot;
+
+import java.util.EnumMap;
+import java.util.Map;
 
 public enum FArmorType implements StringRepresentable {
     HELMET(EquipmentSlot.HEAD, 1.5, 0.25, "helmet"),

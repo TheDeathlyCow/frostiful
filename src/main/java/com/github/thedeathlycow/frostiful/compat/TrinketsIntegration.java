@@ -1,24 +1,36 @@
 package com.github.thedeathlycow.frostiful.compat;
 
-import dev.emi.trinkets.api.SlotReference;
 import dev.emi.trinkets.api.TrinketComponent;
 import dev.emi.trinkets.api.TrinketInventory;
 import dev.emi.trinkets.api.TrinketsApi;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 import net.minecraft.core.component.DataComponentType;
-import net.minecraft.util.Tuple;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public final class TrinketsIntegration {
-    public static <T> List<Tuple<SlotReference, ItemStack>> getEquippedTrinket(LivingEntity entity, DataComponentType<T> type) {
-        return TrinketsApi.getTrinketComponent(entity)
-                .map(trinketComponent -> trinketComponent.getEquipped(s -> s.has(type)))
-                .orElse(Collections.emptyList());
+    public static List<ItemStack> getAllEquipped(LivingEntity entity) {
+        List<ItemStack> items = new ArrayList<>();
+
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack stack = entity.getItemBySlot(slot);
+            if (!stack.isEmpty()) {
+                items.add(stack);
+            }
+        }
+
+        if (FrostifulIntegrations.isTrinketsLoaded()) {
+            TrinketsApi.getTrinketComponent(entity).ifPresent(component -> {
+                component.forEach((ref, stack) -> items.add(stack));
+            });
+        }
+
+        return items;
     }
 
     @Nullable

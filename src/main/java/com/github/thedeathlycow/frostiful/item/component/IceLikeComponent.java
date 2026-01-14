@@ -1,14 +1,10 @@
 package com.github.thedeathlycow.frostiful.item.component;
 
-import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.function.Consumer;
 import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -18,12 +14,14 @@ import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public record IceLikeComponent(
         TagKey<DamageType> blockedDamageTypes
@@ -49,26 +47,10 @@ public record IceLikeComponent(
     }
 
     public static List<IceLikeComponent> getAllEquipped(LivingEntity entity) {
-        List<IceLikeComponent> components = new ArrayList<>();
-
-        for (EquipmentSlot slot : EquipmentSlot.values()) {
-            ItemStack stack = entity.getItemBySlot(slot);
-            IceLikeComponent component = stack.get(FDataComponentTypes.ICE_LIKE);
-            if (!stack.isEmpty() && component != null) {
-                components.add(component);
-            }
-        }
-
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
-            components.addAll(
-                    TrinketsIntegration.getEquippedTrinket(entity, FDataComponentTypes.ICE_LIKE)
-                            .stream()
-                            .map(p -> p.getB().get(FDataComponentTypes.ICE_LIKE))
-                            .toList()
-            );
-        }
-
-        return components;
+        return TrinketsIntegration.getAllEquipped(entity).stream()
+                .map(stack -> stack.get(FDataComponentTypes.ICE_LIKE))
+                .filter(Objects::nonNull)
+                .toList();
     }
 
     public boolean blockDamage(DamageSource source) {

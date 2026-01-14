@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.thermoo.api.season.TemperateSeason;
-import com.github.thedeathlycow.thermoo.api.season.ThermooSeason;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.biome.Biome;
 

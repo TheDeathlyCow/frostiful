@@ -2,9 +2,10 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.google.common.collect.ImmutableBiMap;
-import java.util.Optional;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+
+import java.util.Optional;
 
 public interface Heatable {
 
