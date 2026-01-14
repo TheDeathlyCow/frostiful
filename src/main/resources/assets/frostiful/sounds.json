@@ -194,86 +194,89 @@
 	},
 	"entity.frostiful.biter.ambient": {
 		"sounds": [
-			{
-				"name": "mob/strider/idle1",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/idle2",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/idle3",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/idle4",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/idle5",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/idle6",
-				"pitch": 0.4
-			}
+            {
+                "name": "frostiful:mob/biter/idle1",
+                "pitch": 1
+            },
+            {
+                "name": "frostiful:mob/biter/idle2",
+                "pitch": 1
+            },
+            {
+                "name": "frostiful:mob/biter/idle3",
+                "pitch": 1
+            },
+            {
+                "name": "frostiful:mob/biter/idle4",
+                "pitch": 1
+            },
+            {
+                "name": "frostiful:mob/biter/idle5",
+                "pitch": 1
+            },
+            {
+                "name": "frostiful:mob/biter/idle6",
+                "pitch": 1
+            }
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.ambient"
 	},
 	"entity.frostiful.biter.death": {
 		"sounds": [
-			{
-				"name": "mob/strider/death1",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/death2",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/death3",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/death4",
-				"pitch": 0.4
-			}
+            {
+                "name": "frostiful:mob/biter/hurt1",
+                "pitch": 0.4
+            },
+            {
+                "name": "frostiful:mob/biter/hurt2",
+                "pitch": 0.4
+            },
+            {
+                "name": "frostiful:mob/biter/hurt3",
+                "pitch": 0.4
+            },
+            {
+                "name": "frostiful:mob/biter/hurt4",
+                "pitch": 0.4
+            }
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.death"
 	},
 	"entity.frostiful.biter.hurt": {
 		"sounds": [
 			{
-				"name": "mob/strider/hurt1",
-				"pitch": 0.4
+				"name": "frostiful:mob/biter/hurt1",
+				"pitch": 1
 			},
 			{
-				"name": "mob/strider/hurt2",
-				"pitch": 0.4
+				"name": "frostiful:mob/biter/hurt2",
+				"pitch": 1
 			},
-			{
-				"name": "mob/strider/hurt3",
-				"pitch": 0.4
-			},
-			{
-				"name": "mob/strider/hurt4",
-				"pitch": 0.4
-			}
+            {
+                "name": "frostiful:mob/biter/hurt3",
+                "pitch": 1
+            },
+            {
+                "name": "frostiful:mob/biter/hurt4",
+                "pitch": 1
+            }
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.hurt"
 	},
 	"entity.frostiful.biter.bite": {
 		"sounds": [
-			"frostiful:mob/biter/bite"
+            {
+                "name": "frostiful:mob/biter/bite",
+                "pitch": 1.2
+            }
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.bite"
 	},
 	"entity.frostiful.biter.burp": {
 		"sounds": [
 			{
-				"name": "random/burp",
-				"pitch": 0.4
+				"name": "frostiful:mob/biter/burp",
+				"pitch": 0.8
 			}
 		],
 		"subtitle": "subtitles.entity.frostiful.biter.burp"
