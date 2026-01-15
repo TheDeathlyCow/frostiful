@@ -55,7 +55,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         ItemStack heldItem = player.getItemInHand(hand);
         BrushableComponent component = FComponents.BRUSHABLE_COMPONENT.getNullable(animal);
         if (component != null && component.isBrushable() && heldItem.is(ConventionalItemTags.BRUSH_TOOLS)) {
-            component.brush(player);
+            component.brush(player, heldItem);
             if (!animal.level().isClientSide()) {
                 heldItem.hurtAndBreak(16, player, hand);
             }
@@ -110,7 +110,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
                 && this.provider.level().getDayTime() - lastBrushTime <= BRUSH_COOLDOWN;
     }
 
-    private void brush(Player brusher) {
+    private void brush(Player brusher, ItemStack tool) {
         Level world = provider.level();
         world.playSound(
                 null,
@@ -125,7 +125,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
             ResourceKey<LootTable> furLootTable = getLootTableForAnimal(provider);
 
             if (furLootTable != null) {
-                FLootHelper.dropLootFromEntity(provider, furLootTable);
+                FLootHelper.dropBrushingLoot(provider, tool, furLootTable);
             } else {
                 Frostiful.LOGGER.warn(
                         "Attempted to brush an animal type {} that does not drop fur!",

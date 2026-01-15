@@ -109,7 +109,7 @@ public class PlayFightGoal<T extends PathfinderMob> extends Goal {
 
         BrushableComponent brushableComponent = FComponents.BRUSHABLE_COMPONENT.getNullable(this.mob);
         if (brushableComponent == null || !brushableComponent.wasBrushed()) {
-            FLootHelper.dropLootFromEntity(this.mob, this.furLootTable);
+            FLootHelper.dropPlayfightLoot(this.mob, this.furLootTable);
         }
 
         this.droppedFur = true;

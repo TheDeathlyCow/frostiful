@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.datagen;
+package com.github.thedeathlycow.frostiful.datagen.generator.loot;
 
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
@@ -28,8 +28,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class FEntityLootTableGenerator extends FabricEntityLootTableProvider {
-    protected FEntityLootTableGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+public class FEntityLootGenerator extends FabricEntityLootTableProvider {
+    public FEntityLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup);
     }
 

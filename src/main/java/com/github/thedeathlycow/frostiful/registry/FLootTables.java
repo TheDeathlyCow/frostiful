@@ -5,9 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootTable;
 
-public class FLootTables {
-
-
+public final class FLootTables {
     public static final ResourceKey<LootTable> POLAR_BEAR_BRUSHING_GAMEPLAY = createKey("gameplay/polar_bear_brushing");
     public static final ResourceKey<LootTable> OCELOT_BRUSHING_GAMEPLAY = createKey("gameplay/ocelot_brushing");
     public static final ResourceKey<LootTable> WOLF_BRUSHING_GAMEPLAY = createKey("gameplay/wolf_brushing");

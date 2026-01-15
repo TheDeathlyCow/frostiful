@@ -2,6 +2,10 @@ package com.github.thedeathlycow.frostiful.datagen;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.datagen.generator.FRecipeProvider;
+import com.github.thedeathlycow.frostiful.datagen.generator.loot.FBlockLootGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.loot.FEntityLootGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.loot.FBrushingLootGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.loot.FPlayfightLootGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FBlockTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FItemTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.FrostifulModelGenerator;
@@ -25,8 +29,10 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         LOGGER.info("Running Frostiful datagen");
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        pack.addProvider(FBlockLootTableGenerator::new);
-        pack.addProvider(FEntityLootTableGenerator::new);
+        pack.addProvider(FBlockLootGenerator::new);
+        pack.addProvider(FEntityLootGenerator::new);
+        pack.addProvider(FBrushingLootGenerator::new);
+        pack.addProvider(FPlayfightLootGenerator::new);
         pack.addProvider(FRecipeProvider::new);
         pack.addProvider(FrostifulModelGenerator::new);
 
