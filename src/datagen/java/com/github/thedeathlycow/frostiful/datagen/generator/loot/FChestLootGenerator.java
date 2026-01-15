@@ -2,17 +2,26 @@ package com.github.thedeathlycow.frostiful.datagen.generator.loot;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
+import com.github.thedeathlycow.frostiful.registry.tag.FStructureTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.FontDescription;
+import net.minecraft.network.chat.Style;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.InstrumentTags;
 import net.minecraft.world.item.Instruments;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.component.MapDecorations;
+import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetInstrumentFunction;
+import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
@@ -31,6 +40,11 @@ public class FChestLootGenerator extends SimpleFabricLootTableProvider {
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
         output = FrostifulLootUtils.withSequenceId(output);
 
+        generateChillagerOutpostChests(output);
+    }
+
+
+    private void generateChillagerOutpostChests(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
         output.accept(
                 FLootTables.CHILLAGER_OUTPOST_FLETCHER,
                 LootTable.lootTable()
@@ -57,7 +71,39 @@ public class FChestLootGenerator extends SimpleFabricLootTableProvider {
                                         .add(LootItem.lootTableItem(FItems.FUR_UPGRADE_TEMPLATE))
                         )
         );
-    }
 
+        output.accept(
+                FLootTables.CHILLAGER_OUTPOST_MAP,
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(7))
+                                        .add(uniformItem(Items.PAPER, 1f, 7f).setWeight(2))
+                                        .add(LootItem.lootTableItem(Items.COMPASS))
+                                        .add(LootItem.lootTableItem(Items.EXPERIENCE_BOTTLE))
+                                        .add(uniformItem(Items.STRING, 1f, 3f))
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(Items.MAP)
+                                                        .apply(
+                                                                ExplorationMapFunction.makeExplorationMap()
+                                                                        .setDestination(FStructureTags.CHILLAGER_MAP_LOCATABLE)
+                                                                        .setMapDecoration(MapDecorationTypes.TARGET_X)
+                                                                        .setSkipKnownStructures(false)
+                                                        )
+                                                        .apply(
+                                                                SetNameFunction.setName(
+                                                                        Component.translatable("filled_map.frostiful.frostologer_castle")
+                                                                                .withStyle(Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("illageralt")))),
+                                                                        SetNameFunction.Target.ITEM_NAME
+                                                                )
+                                                        )
+                                        )
+                        )
+        );
+    }
 
 }
