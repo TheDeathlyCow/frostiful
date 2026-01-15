@@ -1,24 +1,27 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.loot;
 
+import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import com.github.thedeathlycow.frostiful.registry.tag.FStructureTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FontDescription;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.InstrumentTags;
-import net.minecraft.world.item.Instruments;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.component.MapDecorations;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetInstrumentFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
@@ -32,19 +35,21 @@ import java.util.function.BiConsumer;
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.*;
 
 public class FChestLootGenerator extends SimpleFabricLootTableProvider {
-    public FChestLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
-        super(output, registryLookup, LootContextParamSets.CHEST);
+    private final CompletableFuture<HolderLookup.Provider> registriesFuture;
+    public FChestLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture, LootContextParamSets.CHEST);
+        this.registriesFuture = registriesFuture;
     }
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
-        output = FrostifulLootUtils.withSequenceId(output);
-
-        generateChillagerOutpostChests(output);
+        BiConsumer<ResourceKey<LootTable>, LootTable.Builder> sequencedOutput = FrostifulLootUtils.withSequenceId(output);
+        this.generateChillagerOutpostChests(sequencedOutput, this.registriesFuture.join());
     }
 
+    private void generateChillagerOutpostChests(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output, HolderLookup.Provider lookup) {
+        HolderLookup.RegistryLookup<Enchantment> enchantmentRegistry = lookup.lookupOrThrow(Registries.ENCHANTMENT);
 
-    private void generateChillagerOutpostChests(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
         output.accept(
                 FLootTables.CHILLAGER_OUTPOST_FLETCHER,
                 LootTable.lootTable()
@@ -103,7 +108,14 @@ public class FChestLootGenerator extends SimpleFabricLootTableProvider {
                                                         )
                                         )
                         )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1))
+                                        .add(
+                                                LootItem.lootTableItem(Items.BOOK)
+                                                        .apply(EnchantRandomlyFunction.randomEnchantment().withEnchantment(enchantmentRegistry.getOrThrow(FEnchantments.FROZEN_TOUCH_CURSE)))
+                                        )
+                        )
         );
     }
-
 }
