@@ -7,14 +7,13 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;
+
+import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonItemKey;
 
 public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
@@ -67,7 +66,7 @@ public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
 
         valueLookupBuilder(FItemTags.ICICLES)
                 .add(FItems.ICICLE)
-                .addOptionalTag(commonKey("icicles"));
+                .addOptionalTag(commonItemKey("icicles"));
 
         getOrCreateRawBuilder(FItemTags.ICICLES)
                 .addOptionalElement(Identifier.fromNamespaceAndPath("immersive_weathering", "icicle"));
@@ -111,7 +110,7 @@ public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
         valueLookupBuilder(ConventionalItemTags.GLASS_BLOCKS_COLORLESS)
                 .add(FItems.ICE_PANE);
 
-        valueLookupBuilder(commonKey("icicles"))
+        valueLookupBuilder(commonItemKey("icicles"))
                 .add(FItems.ICICLE);
 
         valueLookupBuilder(ConventionalItemTags.HUMANOID_ARMORS)
@@ -177,13 +176,5 @@ public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
                 .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS)
                 .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS)
                 .add(FItems.ARMORED_ICE_SKATES);
-    }
-
-    private static TagKey<Item> commonKey(String path) {
-        return key("c", path);
-    }
-
-    private static TagKey<Item> key(String id, String path) {
-        return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(id, path));
     }
 }

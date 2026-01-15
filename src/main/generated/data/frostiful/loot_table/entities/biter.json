@@ -6,14 +6,14 @@
       "entries": [
         {
           "type": "minecraft:tag",
-          "expand": true,
+          "expand": false,
           "functions": [
             {
               "add": false,
               "count": {
                 "type": "minecraft:uniform",
-                "max": 2.0,
-                "min": 0.0
+                "max": 5.0,
+                "min": 1.0
               },
               "function": "minecraft:set_count"
             }

@@ -6,14 +6,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
+
+import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonBlockKey;
 
 public class FBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
     public FBlockTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
@@ -95,7 +93,7 @@ public class FBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         valueLookupBuilder(ConventionalBlockTags.GLASS_BLOCKS_COLORLESS)
                 .add(FBlocks.ICE_PANE);
 
-        valueLookupBuilder(commonKey("icicles"))
+        valueLookupBuilder(commonBlockKey("icicles"))
                 .add(FBlocks.ICICLE);
     }
 
@@ -148,13 +146,5 @@ public class FBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
                 .add(FBlocks.COOL_SUN_LICHEN)
                 .add(FBlocks.WARM_SUN_LICHEN)
                 .add(FBlocks.HOT_SUN_LICHEN);
-    }
-
-    private static TagKey<Block> commonKey(String path) {
-        return key("c", path);
-    }
-
-    private static TagKey<Block> key(String id, String path) {
-        return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(id, path));
     }
 }

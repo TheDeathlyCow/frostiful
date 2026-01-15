@@ -25,6 +25,8 @@ public class FBrushingLootGenerator extends SimpleFabricLootTableProvider {
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+        output = FrostifulLootUtils.withSequenceId(output);
+        
         output.accept(FLootTables.POLAR_BEAR_BRUSHING_GAMEPLAY, brushingLoot(FItems.POLAR_BEAR_FUR_TUFT));
         output.accept(FLootTables.OCELOT_BRUSHING_GAMEPLAY, brushingLoot(FItems.OCELOT_FUR_TUFT));
         output.accept(FLootTables.WOLF_BRUSHING_GAMEPLAY, brushingLoot(FItems.WOLF_FUR_TUFT));

@@ -7,16 +7,12 @@ import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.RaiderPredicate;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
-import net.minecraft.world.level.storage.loot.entries.TagEntry;
 import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.functions.SetOminousBottleAmplifierFunction;
@@ -27,6 +23,9 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
+
+import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonItemKey;
+import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.uniformItemTag;
 
 public class FEntityLootGenerator extends FabricEntityLootTableProvider {
     public FEntityLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
@@ -41,10 +40,7 @@ public class FEntityLootGenerator extends FabricEntityLootTableProvider {
                         .withPool(
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1f))
-                                        .add(
-                                                TagEntry.expandTag(TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath("c", "icicles")))
-                                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(0f, 2f)))
-                                        )
+                                        .add(uniformItemTag(commonItemKey("icicles"), 1f, 5f))
                         )
         );
 
@@ -84,11 +80,7 @@ public class FEntityLootGenerator extends FabricEntityLootTableProvider {
     }
 
     @Override
-    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
-        BiConsumer<ResourceKey<LootTable>, LootTable.Builder> sequenceAppender = (key, builder) -> {
-            builder.setRandomSequence(key.identifier());
-        };
-
-        super.generate(sequenceAppender.andThen(biConsumer));
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+        super.generate(FrostifulLootUtils.withSequenceId(output));
     }
 }

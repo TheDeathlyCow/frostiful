@@ -26,6 +26,8 @@ public class FPlayfightLootGenerator extends SimpleFabricLootTableProvider {
 
     @Override
     public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+        output = FrostifulLootUtils.withSequenceId(output);
+
         output.accept(FLootTables.POLAR_BEAR_PLAYFIGHT_GAMEPLAY, bigAnimal(FItems.POLAR_BEAR_FUR_TUFT));
         output.accept(FLootTables.WOLF_PLAYFIGHT_GAMEPLAY, mediumAnimal(FItems.WOLF_FUR_TUFT));
         output.accept(FLootTables.OCELOT_PLAYFIGHT_GAMEPLAY, mediumAnimal(FItems.OCELOT_FUR_TUFT));

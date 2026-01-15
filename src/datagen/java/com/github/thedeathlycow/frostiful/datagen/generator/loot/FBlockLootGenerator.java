@@ -100,11 +100,7 @@ public class FBlockLootGenerator extends FabricBlockLootTableProvider {
 
 
     @Override
-    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> biConsumer) {
-        BiConsumer<ResourceKey<LootTable>, LootTable.Builder> sequenceAppender = (key, builder) -> {
-            builder.setRandomSequence(key.identifier());
-        };
-
-        super.generate(sequenceAppender.andThen(biConsumer));
+    public void generate(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
+        super.generate(FrostifulLootUtils.withSequenceId(output));
     }
 }
