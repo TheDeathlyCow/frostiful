@@ -8,6 +8,8 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 
+import java.util.Optional;
+
 public record SimpleBlockTransformer(
         BlockStateProvider state
 ) implements BlockTransformer{
@@ -20,8 +22,8 @@ public record SimpleBlockTransformer(
     );
 
     @Override
-    public BlockState transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
-        return this.state.getState(level.getRandom(), pos);
+    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+        return Optional.of(this.state.getState(level.getRandom(), pos));
     }
 
     @Override

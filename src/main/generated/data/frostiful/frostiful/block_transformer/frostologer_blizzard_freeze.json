@@ -4,7 +4,7 @@
     "blocks": "#frostiful:frostologer_cannot_freeze"
   },
   "when_false": {
-    "type": "frostiful:sequence",
+    "type": "frostiful:first_of",
     "transformers": [
       {
         "type": "frostiful:if_block",
@@ -68,6 +68,9 @@
       },
       {
         "type": "frostiful:freeze_torch"
+      },
+      {
+        "type": "frostiful:identity"
       }
     ]
   },

@@ -12,13 +12,15 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.WallTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Optional;
+
 public final class FreezeTorchTransformer implements BlockTransformer {
     private static final FreezeTorchTransformer INSTANCE = new FreezeTorchTransformer();
 
     public static final MapCodec<FreezeTorchTransformer> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
-    public BlockState transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         Block block = original.getBlock();
 
         if (block instanceof BaseTorchBlock && !original.is(FBlockTags.FROZEN_TORCHES)) {
@@ -30,13 +32,13 @@ public final class FreezeTorchTransformer implements BlockTransformer {
                     || !original.is(BlockTags.WALL_POST_OVERRIDE);
 
             if (isWallTorch) {
-                return FBlocks.FROZEN_WALL_TORCH.withPropertiesOf(original);
+                return Optional.of(FBlocks.FROZEN_WALL_TORCH.withPropertiesOf(original));
             } else {
-                return FBlocks.FROZEN_TORCH.withPropertiesOf(original);
+                return Optional.of(FBlocks.FROZEN_TORCH.withPropertiesOf(original));
             }
         }
 
-        return original;
+        return Optional.empty();
     }
 
     public static FreezeTorchTransformer of() {

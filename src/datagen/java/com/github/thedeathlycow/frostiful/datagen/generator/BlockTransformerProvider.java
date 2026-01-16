@@ -33,12 +33,16 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
 
         entries.add(
                 FBlockTransformers.BLOW_OUT_FROM_WIND,
-                blowOutFromWind(blockLookup)
+                blowOutFromWind()
         );
     }
 
-    private static BlockTransformer blowOutFromWind(HolderLookup<Block> blockLookup) {
-        return ExtinguishFlameIfFireTransformer.of(FreezeTorchTransformer.of());
+    private static BlockTransformer blowOutFromWind() {
+        return FirstOfBlockTransformer.of(
+                ExtinguishFlameIfFireTransformer.of(),
+                FreezeTorchTransformer.of(),
+                BlockTransformer.identity()
+        );
     }
 
     private static BlockTransformer frostologerBlizzardFreeze(HolderLookup<Block> blockLookup) {
@@ -59,14 +63,15 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
                         FluidPredicate.Builder.fluid().of(Fluids.FLOWING_LAVA),
                         BlockTransformer.simple(Blocks.STONE)
                 ),
-                FreezeTorchTransformer.of()
+                FreezeTorchTransformer.of(),
+                BlockTransformer.identity()
         );
 
         return IfBlockTransformer.ifBlockOrElse(
                 BlockPredicate.Builder.block()
                         .of(blockLookup, FBlockTags.FROSTOLOGER_CANNOT_FREEZE),
                 BlockTransformer.identity(),
-                SequenceBlockTransformer.of(sequence)
+                FirstOfBlockTransformer.of(sequence)
         );
     }
 
