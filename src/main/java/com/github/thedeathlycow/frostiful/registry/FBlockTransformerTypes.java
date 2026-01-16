@@ -11,6 +11,7 @@ public final class FBlockTransformerTypes {
     public static final BlockTransformer.Type<IfFluidTransformer> IF_FLUID = register("if_fluid", new BlockTransformer.Type<>(IfFluidTransformer.CODEC));
     public static final BlockTransformer.Type<SimpleBlockTransformer> SIMPLE_BLOCK = register("simple_block", new BlockTransformer.Type<>(SimpleBlockTransformer.CODEC));
     public static final BlockTransformer.Type<FreezeTorchTransformer> FREEZE_TORCH = register("freeze_torch", new BlockTransformer.Type<>(FreezeTorchTransformer.CODEC));
+    public static final BlockTransformer.Type<ExtinguishFlameIfFireTransformer> EXTINGUISH_FLAME_IF_FIRE = register("extinguish_flame_if_fire", new BlockTransformer.Type<>(ExtinguishFlameIfFireTransformer.CODEC));
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized frostiful block transformers");

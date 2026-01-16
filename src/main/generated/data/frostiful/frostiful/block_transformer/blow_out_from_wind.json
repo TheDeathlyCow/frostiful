@@ -1,0 +1,6 @@
+{
+  "type": "frostiful:extinguish_flame_if_fire",
+  "not_fire": {
+    "type": "frostiful:freeze_torch"
+  }
+}

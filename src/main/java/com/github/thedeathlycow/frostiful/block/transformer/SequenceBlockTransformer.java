@@ -21,6 +21,10 @@ public record SequenceBlockTransformer(
             ).apply(instance, SequenceBlockTransformer::new)
     );
 
+    public static SequenceBlockTransformer of(List<BlockTransformer> transformers) {
+        return new SequenceBlockTransformer(transformers);
+    }
+
     @Override
     public BlockState transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         BlockState transformed = original;
