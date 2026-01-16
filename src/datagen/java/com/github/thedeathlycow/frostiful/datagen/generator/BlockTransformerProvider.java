@@ -1,0 +1,66 @@
+package com.github.thedeathlycow.frostiful.datagen.generator;
+
+import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
+import com.github.thedeathlycow.frostiful.block.transformer.IfBlockTransformer;
+import com.github.thedeathlycow.frostiful.block.transformer.IfFluidTransformer;
+import com.github.thedeathlycow.frostiful.block.transformer.SequenceBlockTransformer;
+import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
+import net.minecraft.advancements.criterion.BlockPredicate;
+import net.minecraft.advancements.criterion.FluidPredicate;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.material.Fluids;
+
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
+    public BlockTransformerProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, registriesFuture);
+    }
+
+    @Override
+    protected void configure(HolderLookup.Provider registries, Entries entries) {
+        HolderLookup<Block> blockLookup = registries.lookupOrThrow(Registries.BLOCK);
+
+        List<BlockTransformer> sequence = List.of(
+                IfBlockTransformer.ifBlock(
+                        BlockPredicate.Builder.block().of(blockLookup, FBlockTags.HOT_FLOOR),
+                        BlockTransformer.simple(Blocks.COBBLESTONE)
+                ),
+                IfBlockTransformer.ifBlock(
+                        BlockPredicate.Builder.block().of(blockLookup, ConventionalBlockTags.OBSIDIANS),
+                        BlockTransformer.simple(Blocks.OBSIDIAN)
+                ),
+                IfFluidTransformer.ifFluid(
+                        FluidPredicate.Builder.fluid().of(Fluids.LAVA),
+                        BlockTransformer.simple(Blocks.OBSIDIAN)
+                ),
+                IfFluidTransformer.ifFluid(
+                        FluidPredicate.Builder.fluid().of(Fluids.FLOWING_LAVA),
+                        BlockTransformer.simple(Blocks.STONE)
+                )
+        );
+
+        entries.add(
+                FBlockTransformers.FROSTOLOGER_BLIZZARD_FREEZE,
+                IfBlockTransformer.ifBlockOrElse(
+                        BlockPredicate.Builder.block()
+                                .of(blockLookup, FBlockTags.FROSTOLOGER_CANNOT_FREEZE),
+                        BlockTransformer.identity(),
+                        new SequenceBlockTransformer(sequence)
+                )
+        );
+    }
+
+    @Override
+    public String getName() {
+        return "Frostiful/BlockTransformer";
+    }
+}

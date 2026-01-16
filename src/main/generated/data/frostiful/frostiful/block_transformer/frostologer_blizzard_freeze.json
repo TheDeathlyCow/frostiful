@@ -1,0 +1,74 @@
+{
+  "type": "frostiful:if_block",
+  "predicate": {
+    "blocks": "#frostiful:frostologer_cannot_freeze"
+  },
+  "when_false": {
+    "type": "frostiful:sequence",
+    "transformers": [
+      {
+        "type": "frostiful:if_block",
+        "predicate": {
+          "blocks": "#frostiful:hot_floor"
+        },
+        "when_true": {
+          "type": "frostiful:simple_block",
+          "state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:cobblestone"
+            }
+          }
+        }
+      },
+      {
+        "type": "frostiful:if_block",
+        "predicate": {
+          "blocks": "#c:obsidians"
+        },
+        "when_true": {
+          "type": "frostiful:simple_block",
+          "state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:obsidian"
+            }
+          }
+        }
+      },
+      {
+        "type": "frostiful:if_fluid",
+        "predicate": {
+          "fluids": "minecraft:lava"
+        },
+        "when_true": {
+          "type": "frostiful:simple_block",
+          "state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:obsidian"
+            }
+          }
+        }
+      },
+      {
+        "type": "frostiful:if_fluid",
+        "predicate": {
+          "fluids": "minecraft:flowing_lava"
+        },
+        "when_true": {
+          "type": "frostiful:simple_block",
+          "state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:stone"
+            }
+          }
+        }
+      }
+    ]
+  },
+  "when_true": {
+    "type": "frostiful:identity"
+  }
+}

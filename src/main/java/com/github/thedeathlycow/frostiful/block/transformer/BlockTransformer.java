@@ -7,7 +7,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.RegistryFileCodec;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import org.jetbrains.annotations.NotNull;
 
 public interface BlockTransformer {
@@ -22,6 +24,14 @@ public interface BlockTransformer {
     BlockState transformBlockState(ServerLevel level, BlockPos pos, BlockState original);
 
     Type<? extends BlockTransformer> getType();
+
+    static BlockTransformer identity() {
+        return IdentityBlockTransformer.INSTANCE;
+    }
+
+    static BlockTransformer simple(Block block) {
+        return new SimpleBlockTransformer(BlockStateProvider.simple(block));
+    }
 
     record Type<T extends BlockTransformer>(MapCodec<T> codec) {
 

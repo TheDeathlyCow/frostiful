@@ -1,13 +1,14 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.block.transformer.SequenceBlockTransformer;
-import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
-import com.github.thedeathlycow.frostiful.block.transformer.SimpleBlockTransformer;
+import com.github.thedeathlycow.frostiful.block.transformer.*;
 import net.minecraft.core.Registry;
 
 public final class FBlockTransformerTypes {
     public static final BlockTransformer.Type<SequenceBlockTransformer> SEQUENCE = register("sequence", new BlockTransformer.Type<>(SequenceBlockTransformer.CODEC));
+    public static final BlockTransformer.Type<IdentityBlockTransformer> IDENTITY = register("identity", new BlockTransformer.Type<>(IdentityBlockTransformer.CODEC));
+    public static final BlockTransformer.Type<IfBlockTransformer> IF_BLOCK = register("if_block", new BlockTransformer.Type<>(IfBlockTransformer.CODEC));
+    public static final BlockTransformer.Type<IfFluidTransformer> IF_FLUID = register("if_fluid", new BlockTransformer.Type<>(IfFluidTransformer.CODEC));
     public static final BlockTransformer.Type<SimpleBlockTransformer> SIMPLE_BLOCK = register("simple_block", new BlockTransformer.Type<>(SimpleBlockTransformer.CODEC));
 
     public static void initialize() {
