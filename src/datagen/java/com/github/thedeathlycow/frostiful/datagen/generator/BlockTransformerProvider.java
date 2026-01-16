@@ -1,9 +1,6 @@
 package com.github.thedeathlycow.frostiful.datagen.generator;
 
-import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
-import com.github.thedeathlycow.frostiful.block.transformer.IfBlockTransformer;
-import com.github.thedeathlycow.frostiful.block.transformer.IfFluidTransformer;
-import com.github.thedeathlycow.frostiful.block.transformer.SequenceBlockTransformer;
+import com.github.thedeathlycow.frostiful.block.transformer.*;
 import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
@@ -29,6 +26,13 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
     protected void configure(HolderLookup.Provider registries, Entries entries) {
         HolderLookup<Block> blockLookup = registries.lookupOrThrow(Registries.BLOCK);
 
+        entries.add(
+                FBlockTransformers.FROSTOLOGER_BLIZZARD_FREEZE,
+                frostologerBlizzardFreeze(blockLookup)
+        );
+    }
+
+    private static BlockTransformer frostologerBlizzardFreeze(HolderLookup<Block> blockLookup) {
         List<BlockTransformer> sequence = List.of(
                 IfBlockTransformer.ifBlock(
                         BlockPredicate.Builder.block().of(blockLookup, FBlockTags.HOT_FLOOR),
@@ -45,17 +49,15 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
                 IfFluidTransformer.ifFluid(
                         FluidPredicate.Builder.fluid().of(Fluids.FLOWING_LAVA),
                         BlockTransformer.simple(Blocks.STONE)
-                )
+                ),
+                FreezeTorchTransformer.of()
         );
 
-        entries.add(
-                FBlockTransformers.FROSTOLOGER_BLIZZARD_FREEZE,
-                IfBlockTransformer.ifBlockOrElse(
-                        BlockPredicate.Builder.block()
-                                .of(blockLookup, FBlockTags.FROSTOLOGER_CANNOT_FREEZE),
-                        BlockTransformer.identity(),
-                        new SequenceBlockTransformer(sequence)
-                )
+        return IfBlockTransformer.ifBlockOrElse(
+                BlockPredicate.Builder.block()
+                        .of(blockLookup, FBlockTags.FROSTOLOGER_CANNOT_FREEZE),
+                BlockTransformer.identity(),
+                new SequenceBlockTransformer(sequence)
         );
     }
 

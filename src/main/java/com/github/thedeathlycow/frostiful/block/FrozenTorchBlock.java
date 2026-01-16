@@ -25,6 +25,7 @@ public class FrozenTorchBlock extends TorchBlock {
     }
 
     @Nullable
+    @Deprecated
     public static BlockState freezeTorch(BlockState state) {
         Block block = state.getBlock();
         if (block instanceof BaseTorchBlock && !state.is(FBlockTags.FROZEN_TORCHES)) {

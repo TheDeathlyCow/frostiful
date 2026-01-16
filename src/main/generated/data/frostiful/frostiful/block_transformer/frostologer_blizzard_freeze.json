@@ -65,6 +65,9 @@
             }
           }
         }
+      },
+      {
+        "type": "frostiful:freeze_torch"
       }
     ]
   },

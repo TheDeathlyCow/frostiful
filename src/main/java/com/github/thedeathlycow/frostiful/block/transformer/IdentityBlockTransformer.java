@@ -7,7 +7,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
 public final class IdentityBlockTransformer implements BlockTransformer {
-    public static final IdentityBlockTransformer INSTANCE = new IdentityBlockTransformer();
+    static final IdentityBlockTransformer INSTANCE = new IdentityBlockTransformer();
 
     public static final MapCodec<IdentityBlockTransformer> CODEC = MapCodec.unit(() -> INSTANCE);
 
