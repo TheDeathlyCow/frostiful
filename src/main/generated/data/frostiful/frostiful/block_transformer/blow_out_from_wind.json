@@ -6,9 +6,6 @@
     },
     {
       "type": "frostiful:freeze_torch"
-    },
-    {
-      "type": "frostiful:identity"
     }
   ]
 }

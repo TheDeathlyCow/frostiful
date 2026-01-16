@@ -40,8 +40,7 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
     private static BlockTransformer blowOutFromWind() {
         return FirstOfBlockTransformer.of(
                 ExtinguishFlameIfFireTransformer.of(),
-                FreezeTorchTransformer.of(),
-                BlockTransformer.identity()
+                FreezeTorchTransformer.of()
         );
     }
 
@@ -63,8 +62,7 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
                         FluidPredicate.Builder.fluid().of(Fluids.FLOWING_LAVA),
                         BlockTransformer.simple(Blocks.STONE)
                 ),
-                FreezeTorchTransformer.of(),
-                BlockTransformer.identity()
+                FreezeTorchTransformer.of()
         );
 
         return IfBlockTransformer.ifBlockOrElse(

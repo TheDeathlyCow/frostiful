@@ -10,7 +10,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
@@ -24,12 +23,7 @@ public interface BlockTransformer {
             ELEMENT_CODEC
     );
 
-    @ApiStatus.NonExtendable
-    default BlockState transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
-        return this.tryTransformBlockState(level, pos, original).orElse(original);
-    }
-
-    Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original);
+    Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original);
 
     Type<? extends BlockTransformer> getType();
 

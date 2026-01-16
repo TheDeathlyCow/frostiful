@@ -32,9 +32,9 @@ public record FirstOfBlockTransformer(
     }
 
     @Override
-    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+    public Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         for (BlockTransformer transformer : transformers) {
-            Optional<BlockState> result = transformer.tryTransformBlockState(level, pos, original);
+            Optional<BlockState> result = transformer.transformBlockState(level, pos, original);
             if (result.isPresent()) {
                 return result;
             }

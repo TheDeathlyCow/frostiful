@@ -20,7 +20,7 @@ public final class FreezeTorchTransformer implements BlockTransformer {
     public static final MapCodec<FreezeTorchTransformer> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
-    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+    public Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         Block block = original.getBlock();
 
         if (block instanceof BaseTorchBlock && !original.is(FBlockTags.FROZEN_TORCHES)) {

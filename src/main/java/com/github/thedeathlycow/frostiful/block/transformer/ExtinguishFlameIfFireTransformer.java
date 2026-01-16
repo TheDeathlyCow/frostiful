@@ -20,7 +20,7 @@ public final class ExtinguishFlameIfFireTransformer implements BlockTransformer 
     }
 
     @Override
-    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+    public Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         if (original.is(FBlockTags.IS_OPEN_FLAME)) {
             return Optional.of(original.getFluidState().createLegacyBlock());
         } else if (

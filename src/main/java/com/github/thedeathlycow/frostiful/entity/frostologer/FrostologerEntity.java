@@ -1,21 +1,18 @@
 package com.github.thedeathlycow.frostiful.entity.frostologer;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
+import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.*;
-import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
-import com.github.thedeathlycow.frostiful.survival.PassiveTemperatureEffects;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
@@ -55,14 +52,11 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.BaseTorchBlock;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
-import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
@@ -70,6 +64,7 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -131,49 +126,45 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
      * <li> everything else -> air </li>
      * </ul>
      *
-     * @param world    The server world
-     * @param state    The state to transform
-     * @param blockPos The position of `state` in `world`.
+     * @param serverLevel The server serverLevel
+     * @param state       The state to transform
+     * @param blockPos    The position of `state` in `serverLevel`.
      */
-    public void tryDestroyHeatSource(ServerLevel world, BlockState state, BlockPos blockPos) {
+    public void tryDestroyHeatSource(ServerLevel serverLevel, BlockState state, BlockPos blockPos) {
         if (state.getLightEmission() == 0) {
             return;
         }
 
-        BlockState frozenState;
-        Block heatedBlock = state.getBlock();
-        FluidState fluidState = state.getFluidState();
+        Optional<BlockTransformer> transformer = serverLevel.registryAccess()
+                .lookupOrThrow(FrostifulRegistries.BLOCK_TRANSFORMER_KEY)
+                .getOptional(FBlockTransformers.FROSTOLOGER_BLIZZARD_FREEZE);
 
-        if (state.is(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)) {
+        if (transformer.isEmpty()) {
+            Frostiful.LOGGER.warn("Frostologer block transformer missing!");
             return;
-        } else if (blockPos.equals(this.blockPosition())) {
-            frozenState = Blocks.AIR.defaultBlockState();
-        } else if (state.is(FBlockTags.HOT_FLOOR)) {
-            frozenState = Blocks.COBBLESTONE.defaultBlockState();
-        } else if (state.is(ConventionalBlockTags.OBSIDIANS) || (fluidState.is(Fluids.LAVA) && fluidState.getAmount() == 8)) {
-            frozenState = Blocks.OBSIDIAN.defaultBlockState();
-        } else if (fluidState.is(Fluids.FLOWING_LAVA)) {
-            frozenState = Blocks.STONE.defaultBlockState();
-        } else if (heatedBlock instanceof BaseTorchBlock) {
-            BlockState torch = FrozenTorchBlock.freezeTorch(state);
-            frozenState = torch != null ? torch : Blocks.AIR.defaultBlockState();
-        } else {
-            frozenState = Blocks.AIR.defaultBlockState();
         }
 
-        if (!frozenState.isAir()) {
-            world.setBlockAndUpdate(blockPos, frozenState);
-        } else {
-            world.destroyBlock(blockPos, true);
+        BlockState frozenState = transformer.orElseThrow()
+                .transformBlockState(serverLevel, blockPos, state)
+                .orElse(Blocks.AIR.defaultBlockState());
+
+        if (frozenState == state) {
+            return;
+        }
+
+        if (frozenState.isAir()) {
+            serverLevel.destroyBlock(blockPos, true);
 
             boolean waterlogged = state.getValueOrElse(BlockStateProperties.WATERLOGGED, false);
 
-            if (waterlogged || (fluidState.is(Fluids.WATER) && fluidState.getAmount() == 8)) {
-                world.setBlockAndUpdate(blockPos, Blocks.ICE.defaultBlockState());
+            if (waterlogged || state.getFluidState().is(Fluids.WATER)) {
+                serverLevel.setBlockAndUpdate(blockPos, Blocks.ICE.defaultBlockState());
             }
+        } else {
+            serverLevel.setBlockAndUpdate(blockPos, frozenState);
         }
 
-        world.playSound(
+        serverLevel.playSound(
                 null,
                 blockPos,
                 SoundEvents.FIRE_EXTINGUISH,
@@ -183,7 +174,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
 
         Vec3 centeredPos = Vec3.atCenterOf(blockPos);
 
-        world.sendParticles(
+        serverLevel.sendParticles(
                 ParticleTypes.SMOKE,
                 centeredPos.x, centeredPos.y, centeredPos.z,
                 12,

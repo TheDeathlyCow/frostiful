@@ -14,7 +14,7 @@ public final class IdentityBlockTransformer implements BlockTransformer {
     public static final MapCodec<IdentityBlockTransformer> CODEC = MapCodec.unit(() -> INSTANCE);
 
     @Override
-    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+    public Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         return Optional.of(original);
     }
 

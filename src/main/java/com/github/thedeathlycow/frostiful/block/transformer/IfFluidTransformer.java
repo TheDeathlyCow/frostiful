@@ -30,11 +30,11 @@ public record IfFluidTransformer(
     );
 
     @Override
-    public Optional<BlockState> tryTransformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
+    public Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
         if (this.predicate.matches(level, pos)) {
-            return this.whenTrue.tryTransformBlockState(level, pos, original);
+            return this.whenTrue.transformBlockState(level, pos, original);
         } else if (this.whenFalse.isPresent()) {
-            return this.whenFalse.orElseThrow().tryTransformBlockState(level, pos, original);
+            return this.whenFalse.orElseThrow().transformBlockState(level, pos, original);
         } else {
             return Optional.empty();
         }
