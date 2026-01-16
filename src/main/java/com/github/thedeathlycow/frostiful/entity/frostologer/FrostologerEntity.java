@@ -8,6 +8,7 @@ import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.*;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
@@ -144,7 +145,9 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
             return;
         }
 
-        BlockState frozenState = transformer.orElseThrow()
+        BlockState frozenState = !state.is(FBlockTags.FROSTOLOGER_CANNOT_FREEZE) && blockPos.equals(this.blockPosition())
+                ? Blocks.AIR.defaultBlockState()
+                : transformer.orElseThrow()
                 .transformBlockState(serverLevel, blockPos, state)
                 .orElse(Blocks.AIR.defaultBlockState());
 

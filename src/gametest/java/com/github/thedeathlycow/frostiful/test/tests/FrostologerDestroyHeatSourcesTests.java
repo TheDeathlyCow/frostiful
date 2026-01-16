@@ -121,11 +121,11 @@ public class FrostologerDestroyHeatSourcesTests {
     }
 
     @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
-    public void jackOLanternBecomesAir(GameTestHelper context) {
+    public void jackOLanternBecomesCarvedPumpkin(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.JACK_O_LANTERN.defaultBlockState(),
-                Blocks.AIR
+                Blocks.CARVED_PUMPKIN
         );
     }
 
@@ -142,6 +142,11 @@ public class FrostologerDestroyHeatSourcesTests {
     //endregion
 
     //region protected blocks tests
+
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void pinkConcreteIsUnaffectedByFrostologer(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.PINK_CONCRETE.defaultBlockState(), Blocks.PINK_CONCRETE);
+    }
 
     @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
     public void netherPortalIsUnaffectedByFrostologer(GameTestHelper context) {

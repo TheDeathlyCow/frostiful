@@ -68,6 +68,24 @@
       },
       {
         "type": "frostiful:freeze_torch"
+      },
+      {
+        "type": "frostiful:if_block",
+        "predicate": {
+          "blocks": "minecraft:jack_o_lantern"
+        },
+        "when_true": {
+          "type": "frostiful:simple_block",
+          "state": {
+            "type": "minecraft:simple_state_provider",
+            "state": {
+              "Name": "minecraft:carved_pumpkin",
+              "Properties": {
+                "facing": "north"
+              }
+            }
+          }
+        }
       }
     ]
   },

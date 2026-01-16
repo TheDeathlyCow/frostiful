@@ -62,7 +62,11 @@ public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
                         FluidPredicate.Builder.fluid().of(Fluids.FLOWING_LAVA),
                         BlockTransformer.simple(Blocks.STONE)
                 ),
-                FreezeTorchTransformer.of()
+                FreezeTorchTransformer.of(),
+                IfBlockTransformer.ifBlock(
+                        BlockPredicate.Builder.block().of(blockLookup, Blocks.JACK_O_LANTERN),
+                        BlockTransformer.simple(Blocks.CARVED_PUMPKIN)
+                )
         );
 
         return IfBlockTransformer.ifBlockOrElse(
