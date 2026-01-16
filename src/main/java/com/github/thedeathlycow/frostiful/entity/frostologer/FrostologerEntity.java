@@ -59,6 +59,7 @@ import net.minecraft.world.level.block.BaseTorchBlock;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.FluidState;
@@ -149,10 +150,10 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
             frozenState = Blocks.AIR.defaultBlockState();
         } else if (state.is(FBlockTags.HOT_FLOOR)) {
             frozenState = Blocks.COBBLESTONE.defaultBlockState();
-        } else if (state.is(ConventionalBlockTags.OBSIDIANS) || fluidState.is(Fluids.LAVA) && fluidState.getAmount() == 8) {
+        } else if (state.is(ConventionalBlockTags.OBSIDIANS) || (fluidState.is(Fluids.LAVA) && fluidState.getAmount() == 8)) {
             frozenState = Blocks.OBSIDIAN.defaultBlockState();
-        } else if (state.isCollisionShapeFullBlock(world, blockPos)) {
-            frozenState = Blocks.ICE.defaultBlockState();
+        } else if (fluidState.is(Fluids.FLOWING_LAVA)) {
+            frozenState = Blocks.STONE.defaultBlockState();
         } else if (heatedBlock instanceof BaseTorchBlock) {
             BlockState torch = FrozenTorchBlock.freezeTorch(state);
             frozenState = torch != null ? torch : Blocks.AIR.defaultBlockState();
@@ -164,6 +165,12 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
             world.setBlockAndUpdate(blockPos, frozenState);
         } else {
             world.destroyBlock(blockPos, true);
+
+            boolean waterlogged = state.getValueOrElse(BlockStateProperties.WATERLOGGED, false);
+
+            if (waterlogged || (fluidState.is(Fluids.WATER) && fluidState.getAmount() == 8)) {
+                world.setBlockAndUpdate(blockPos, Blocks.ICE.defaultBlockState());
+            }
         }
 
         world.playSound(
