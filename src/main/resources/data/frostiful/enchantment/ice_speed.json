@@ -22,27 +22,15 @@
         "minecraft:location_changed": [
             {
                 "effect": {
-                    "type": "minecraft:all_of",
-                    "effects": [
-                        {
-                            "type": "minecraft:attribute",
-                            "amount": {
-                                "type": "minecraft:linear",
-                                "base": 0.0405,
-                                "per_level_above_first": 0.0105
-                            },
-                            "attribute": "minecraft:movement_speed",
-                            "id": "frostiful:enchantment.ice_speed",
-                            "operation": "add_value"
-                        },
-                        {
-                            "type": "minecraft:attribute",
-                            "amount": 1,
-                            "attribute": "minecraft:movement_efficiency",
-                            "id": "frostiful:enchantment.ice_speed",
-                            "operation": "add_value"
-                        }
-                    ]
+                    "type": "minecraft:attribute",
+                    "amount": {
+                        "type": "minecraft:linear",
+                        "base": 0.0405,
+                        "per_level_above_first": 0.0105
+                    },
+                    "attribute": "minecraft:generic.movement_speed",
+                    "id": "frostiful:enchantment.ice_speed",
+                    "operation": "add_value"
                 },
                 "requirements": {
                     "condition": "minecraft:all_of",
@@ -133,7 +121,27 @@
             },
             {
                 "effect": {
-                    "type": "minecraft:change_item_damage",
+                    "type": "minecraft:attribute",
+                    "amount": 1,
+                    "attribute": "minecraft:generic.movement_efficiency",
+                    "id": "frostiful:enchantment.ice_speed",
+                    "operation": "add_value"
+                },
+                "requirements": {
+                    "condition": "minecraft:entity_properties",
+                    "entity": "this",
+                    "predicate": {
+                        "movement_affected_by": {
+                            "block": {
+                                "blocks": "#frostiful:ice_speed_blocks"
+                            }
+                        }
+                    }
+                }
+            },
+            {
+                "effect": {
+                    "type": "minecraft:damage_item",
                     "amount": 1
                 },
                 "requirements": {
