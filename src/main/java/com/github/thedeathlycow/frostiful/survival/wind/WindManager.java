@@ -1,9 +1,11 @@
 package com.github.thedeathlycow.frostiful.survival.wind;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
+import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
 import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
+import com.github.thedeathlycow.frostiful.registry.FrostifulRegistries;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.environment.EnvironmentLookup;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
@@ -14,11 +16,11 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.levelgen.Heightmap;
-import org.jetbrains.annotations.Nullable;
+
+import java.util.Optional;
 
 public final class WindManager {
 
@@ -77,12 +79,12 @@ public final class WindManager {
         }
     }
 
-    public void extinguishBlock(BlockState state, Level world, BlockPos pos, Runnable playSoundCallback) {
+    public void extinguishBlock(BlockState state, Level level, BlockPos pos, Runnable playSoundCallback) {
         if (!Frostiful.getConfig().freezingConfig.isWindDestroysTorches()) {
             return;
         }
 
-        if (!(world instanceof ServerLevel serverWorld) || !serverWorld.getGameRules().get(GameRules.MOB_GRIEFING)) {
+        if (!(level instanceof ServerLevel serverLevel) || !serverLevel.getGameRules().get(GameRules.MOB_GRIEFING)) {
             return;
         }
 
@@ -90,25 +92,21 @@ public final class WindManager {
             return;
         }
 
-        @Nullable
-        BlockState blownOutResult;
+        Optional<BlockTransformer> transformer = level.registryAccess()
+                .lookupOrThrow(FrostifulRegistries.BLOCK_TRANSFORMER_KEY)
+                .getOptional(FBlockTransformers.BLOW_OUT_FROM_WIND);
 
-        if (state.is(FBlockTags.IS_OPEN_FLAME)) {
-            blownOutResult = state.getFluidState().createLegacyBlock();
-        } else if (
-                state.is(FBlockTags.HAS_OPEN_FLAME)
-                        && state.hasProperty(BlockStateProperties.LIT)
-                        && state.getValue(BlockStateProperties.LIT)
-        ) {
-            blownOutResult = state.setValue(BlockStateProperties.LIT, false);
-        } else {
-            blownOutResult = FrozenTorchBlock.freezeTorch(state);
+        if (transformer.isEmpty()) {
+            Frostiful.LOGGER.warn("Blow out from wind block transformer missing!");
+            return;
         }
 
-        if (blownOutResult != null) {
-            world.setBlockAndUpdate(pos, blownOutResult);
-            playSoundCallback.run();
-        }
+        transformer.orElseThrow()
+                .transformBlockState(serverLevel, pos, state)
+                .ifPresent(blownOutResult -> {
+                    level.setBlockAndUpdate(pos, blownOutResult);
+                    playSoundCallback.run();
+                });
     }
 
 
