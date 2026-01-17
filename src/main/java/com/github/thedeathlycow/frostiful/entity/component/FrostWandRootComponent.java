@@ -29,7 +29,6 @@ import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.mutable.MutableBoolean;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -104,7 +103,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
             DamageSource source = FDamageSources.getDamageSources(provider.level())
                     .frostiful$brokenIce(attacker);
-            if (provider.hurtServer(serverWorld, source, (float) damage)) {
+            if (provider.hurt(source, (float) damage)) {
                 dropAllBindingItems(provider);
             }
         }
@@ -187,8 +186,8 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
     private static void dropAllBindingItems(LivingEntity victim) {
         TrinketsIntegration.getAllEquipped(victim).forEach(stack -> {
-            if (EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
-                victim.drop(stack.copy(), true, true);
+            if (victim instanceof Player player && EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
+                player.drop(stack.copy(), true, true);
                 stack.setCount(0);
                 victim.level().playSound(
                         null,
