@@ -42,6 +42,16 @@ public class FrostologerDestroyHeatSourcesTests {
     public void wall_soul_torch_is_frozen(GameTestHelper context) {
         runDestroyHeatSourceTest(context, Blocks.SOUL_WALL_TORCH.defaultBlockState(), FBlocks.FROZEN_WALL_TORCH);
     }
+
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void groundCopperTorchIsFrozen(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.COPPER_TORCH.defaultBlockState(), FBlocks.FROZEN_TORCH);
+    }
+
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void wallCopperTorchIsFrozen(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.COPPER_WALL_TORCH.defaultBlockState(), FBlocks.FROZEN_WALL_TORCH);
+    }
     //endregion
 
     //region lava tests
@@ -52,12 +62,12 @@ public class FrostologerDestroyHeatSourcesTests {
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void flowing_lava_becomes_air(GameTestHelper context) {
+    public void flowing_lava_becomes_stone(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.LAVA.defaultBlockState()
-                        .setValue(LiquidBlock.LEVEL, 10),
-                Blocks.AIR
+                        .setValue(LiquidBlock.LEVEL, 7),
+                Blocks.STONE
         );
     }
 
@@ -81,7 +91,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.REDSTONE_LAMP.defaultBlockState()
                         .setValue(RedstoneLampBlock.LIT, true),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
@@ -96,7 +106,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.FURNACE.defaultBlockState()
                         .setValue(FurnaceBlock.LIT, true),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
@@ -106,7 +116,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.RESPAWN_ANCHOR.defaultBlockState()
                         .setValue(RespawnAnchorBlock.CHARGE, 4),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
@@ -115,7 +125,7 @@ public class FrostologerDestroyHeatSourcesTests {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.JACK_O_LANTERN.defaultBlockState(),
-                Blocks.ICE
+                Blocks.CARVED_PUMPKIN
         );
     }
 
@@ -125,7 +135,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.REDSTONE_ORE.defaultBlockState()
                         .setValue(RedStoneOreBlock.LIT, true),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
@@ -174,7 +184,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 Blocks.SEA_PICKLE.defaultBlockState()
                         .setValue(SeaPickleBlock.WATERLOGGED, true)
                         .setValue(SeaPickleBlock.PICKLES, 4),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -184,7 +194,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.ENDER_CHEST.defaultBlockState()
                         .setValue(EnderChestBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -194,7 +204,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.LANTERN.defaultBlockState()
                         .setValue(EnderChestBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -204,7 +214,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 Blocks.AMETHYST_CLUSTER.defaultBlockState()
                         .setValue(AmethystClusterBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -216,7 +226,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 Blocks.CANDLE.defaultBlockState()
                         .setValue(CandleBlock.WATERLOGGED, true)
                         .setValue(CandleBlock.LIT, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -228,7 +238,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 Blocks.CAMPFIRE.defaultBlockState()
                         .setValue(CampfireBlock.WATERLOGGED, true)
                         .setValue(CampfireBlock.LIT, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -238,7 +248,7 @@ public class FrostologerDestroyHeatSourcesTests {
                 context,
                 FBlocks.HOT_SUN_LICHEN.defaultBlockState()
                         .setValue(AmethystClusterBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -311,18 +321,27 @@ public class FrostologerDestroyHeatSourcesTests {
         );
     }
 
+    @GameTest(structure = "frostiful-test:frostologer_heat_source_test_template")
+    public void cryingObsidianBecomesObsidian(GameTestHelper context) {
+        runDestroyHeatSourceTest(
+                context,
+                Blocks.CRYING_OBSIDIAN.defaultBlockState(),
+                Blocks.OBSIDIAN
+        );
+    }
+
     //endregion
 
     private static void runDestroyHeatSourceTest(GameTestHelper context, BlockState toPlace, Block blockAtEnd) {
         ServerLevel serverWorld = context.getLevel();
         BlockPos pos = new BlockPos(1, 2, 1);
 
-        serverWorld.setBlockAndUpdate(pos, toPlace);
+        serverWorld.setBlockAndUpdate(context.absolutePos(pos), toPlace);
 
         FrostologerEntity frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
         frostologer.setInvulnerable(true);
         frostologer.setNoAi(true);
-        frostologer.destroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
+        frostologer.tryDestroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
 
         context.succeedWhenBlockPresent(blockAtEnd, pos);
     }
