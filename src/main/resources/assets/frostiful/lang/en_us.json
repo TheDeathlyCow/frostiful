@@ -265,9 +265,11 @@
   "enchantment.frostiful.enervation": "Enervation",
   "enchantment.frostiful.enervation.desc": "Steals heat from cold enemies when attacking",
   "enchantment.frostiful.ice_breaker": "Ice Breaker",
-  "enchantment.frostiful.ice_breaker.desc": "Increases the damage from attacking enemies frozen in Ice",
+  "enchantment.frostiful.ice_breaker.desc": "Increases the damage from attacking enemies frozen in ice",
   "enchantment.frostiful.frozen_touch_curse": "Curse of Frozen Touch",
   "enchantment.frostiful.frozen_touch_curse.desc": "Transfers heat from you to your enemies when attacking",
+  "enchantment.frostiful.ice_speed": "Ice Speed",
+  "enchantment.frostiful.ice_speed.desc": "Increases skating speed on ice",
   
   
   "frostiful.tip.freezing_wind_extinguishes_fire": "Freezing Wind will blow out open flames",
