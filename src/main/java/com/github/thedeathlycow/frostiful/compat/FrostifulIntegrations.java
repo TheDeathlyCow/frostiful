@@ -20,6 +20,10 @@ public class FrostifulIntegrations {
         return isModLoaded(COLORFUL_HEARTS_ID) || isModLoaded(OVERFLOWING_BARS_ID);
     }
 
+    public static boolean isTrinketsLoaded() {
+        return isModLoaded(TRINKETS_ID);
+    }
+
     public static boolean isModLoaded(String id) {
         return FabricLoader.getInstance().isModLoaded(id);
     }

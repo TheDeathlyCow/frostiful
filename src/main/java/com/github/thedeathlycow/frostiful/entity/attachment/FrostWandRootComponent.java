@@ -1,10 +1,12 @@
 package com.github.thedeathlycow.frostiful.entity.attachment;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import com.google.common.base.Preconditions;
@@ -22,6 +24,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -105,16 +110,18 @@ public class FrostWandRootComponent implements INBTSerializable<CompoundTag> {
 
         if (this.isRooted() && providerEntity.level() instanceof ServerLevel serverWorld) {
             this.setRootedTicks(1); // set to 1 so the icebreaker enchantment can detect it
-            spawnShatterParticlesAndSound(providerEntity, serverWorld);
+            spawnShatterParticlesAndSound(provider, serverWorld);
+
+            double damage = attacker instanceof LivingEntity livingAttacker
+                    ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
+                    : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
+
+            DamageSource source = FDamageSources.getDamageSources(provider.level())
+                    .frostiful$brokenIce(attacker);
+            if (provider.hurt(source, (float) damage)) {
+                dropAllBindingItems(provider);
+            }
         }
-
-        double damage = attacker instanceof LivingEntity livingAttacker
-                ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
-                : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
-
-        DamageSource source = FDamageSources.getDamageSources(providerEntity.level())
-                .frostiful$brokenIce(attacker);
-        providerEntity.hurt(source, (float) damage);
     }
 
     public boolean tryRootFromFrostWand(@Nullable Entity originalCaster) {
@@ -190,12 +197,31 @@ public class FrostWandRootComponent implements INBTSerializable<CompoundTag> {
         };
     }
 
+    private static void dropAllBindingItems(LivingEntity victim) {
+        TrinketsIntegration.getAllEquipped(victim).forEach(stack -> {
+            if (victim instanceof Player player && EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
+                player.drop(stack.copy(), true, true);
+                stack.setCount(0);
+                victim.level().playSound(
+                        null,
+                        victim.getX(),
+                        victim.getY(),
+                        victim.getZ(),
+                        FSoundEvents.ENTITY_BREAK_BINDING_CURSE,
+                        victim.getSoundSource()
+                );
+            }
+        });
+    }
+
     private static void spawnShatterParticlesAndSound(LivingEntity victim, ServerLevel serverWorld) {
         ParticleOptions shatteredIce = new BlockParticleOption(ParticleTypes.BLOCK, Blocks.BLUE_ICE.defaultBlockState());
 
         serverWorld.sendParticles(
                 shatteredIce,
-                victim.getX(), victim.getY(), victim.getZ(),
+                victim.getX(),
+                victim.getY(),
+                victim.getZ(),
                 500,
                 0.5, 1.0, 0.5,
                 1.0
@@ -203,7 +229,9 @@ public class FrostWandRootComponent implements INBTSerializable<CompoundTag> {
 
         victim.level().playSound(
                 null,
-                victim.blockPosition(),
+                victim.getX(),
+                victim.getY(),
+                victim.getZ(),
                 SoundEvents.GLASS_BREAK,
                 SoundSource.AMBIENT,
                 1.0f, 0.75f
