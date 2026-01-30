@@ -160,7 +160,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         }
 
         if (frozenState.isAir()) {
-            serverLevel.destroyBlock(blockPos, true);
+            serverLevel.destroyBlock(blockPos, true, this);
 
             boolean waterlogged = state.hasProperty(BlockStateProperties.WATERLOGGED)
                     && state.getValue(BlockStateProperties.WATERLOGGED);
