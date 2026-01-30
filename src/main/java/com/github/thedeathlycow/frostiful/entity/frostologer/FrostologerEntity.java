@@ -17,6 +17,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.Holder;
 import net.minecraft.core.Vec3i;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -62,7 +63,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
-import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -139,9 +139,9 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
             return;
         }
 
-        Optional<BlockTransformer> transformer = serverLevel.registryAccess()
+        Optional<Holder.Reference<BlockTransformer>> transformer = serverLevel.registryAccess()
                 .lookupOrThrow(FrostifulRegistries.BLOCK_TRANSFORMER_KEY)
-                .getOptional(FBlockTransformers.FROSTOLOGER_BLIZZARD_FREEZE);
+                .get(FBlockTransformers.FROSTOLOGER_BLIZZARD_FREEZE);
 
         if (transformer.isEmpty()) {
             Frostiful.LOGGER.warn("Frostologer block transformer missing!");
@@ -151,6 +151,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         BlockState frozenState = !state.is(FBlockTags.FROSTOLOGER_CANNOT_FREEZE) && blockPos.equals(this.blockPosition())
                 ? Blocks.AIR.defaultBlockState()
                 : transformer.orElseThrow()
+                .value()
                 .transformBlockState(serverLevel, blockPos, state)
                 .orElse(Blocks.AIR.defaultBlockState());
 
@@ -161,7 +162,8 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         if (frozenState.isAir()) {
             serverLevel.destroyBlock(blockPos, true);
 
-            boolean waterlogged = state.getValueOrElse(BlockStateProperties.WATERLOGGED, false);
+            boolean waterlogged = state.hasProperty(BlockStateProperties.WATERLOGGED)
+                    && state.getValue(BlockStateProperties.WATERLOGGED);
 
             if (waterlogged || state.getFluidState().is(Fluids.WATER)) {
                 serverLevel.setBlockAndUpdate(blockPos, Blocks.ICE.defaultBlockState());

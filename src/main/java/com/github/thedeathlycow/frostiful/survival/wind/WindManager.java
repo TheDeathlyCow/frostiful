@@ -4,12 +4,13 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
 import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
 import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
-import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
 import com.github.thedeathlycow.frostiful.registry.FrostifulRegistries;
+import com.github.thedeathlycow.frostiful.registry.tag.FBiomeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.thermoo.api.temperature.EnvironmentManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
@@ -80,11 +81,15 @@ public final class WindManager {
     }
 
     public void extinguishBlock(BlockState state, Level level, BlockPos pos, Runnable playSoundCallback) {
+        if (!(level instanceof ServerLevel serverLevel)) {
+            return;
+        }
+
         if (!Frostiful.getConfig().freezingConfig.isWindDestroysTorches()) {
             return;
         }
 
-        if (!world.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+        if (!level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
 
@@ -92,9 +97,9 @@ public final class WindManager {
             return;
         }
 
-        Optional<BlockTransformer> transformer = level.registryAccess()
+        Optional<Holder.Reference<BlockTransformer>> transformer = level.registryAccess()
                 .lookupOrThrow(FrostifulRegistries.BLOCK_TRANSFORMER_KEY)
-                .getOptional(FBlockTransformers.BLOW_OUT_FROM_WIND);
+                .get(FBlockTransformers.BLOW_OUT_FROM_WIND);
 
         if (transformer.isEmpty()) {
             Frostiful.LOGGER.warn("Blow out from wind block transformer missing!");
@@ -102,6 +107,7 @@ public final class WindManager {
         }
 
         transformer.orElseThrow()
+                .value()
                 .transformBlockState(serverLevel, pos, state)
                 .ifPresent(blownOutResult -> {
                     level.setBlockAndUpdate(pos, blownOutResult);
