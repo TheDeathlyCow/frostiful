@@ -52,12 +52,12 @@ public class FrostologerDestroyHeatSourcesTests {
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void flowing_lava_becomes_air(GameTestHelper context) {
+    public void flowing_lava_becomes_stone(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.LAVA.defaultBlockState()
-                        .setValue(LiquidBlock.LEVEL, 10),
-                Blocks.AIR
+                        .setValue(LiquidBlock.LEVEL, 7),
+                Blocks.STONE
         );
     }
 
@@ -66,72 +66,76 @@ public class FrostologerDestroyHeatSourcesTests {
     //region full block tests
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void glowstone_becomes_ice(GameTestHelper context) {
-        runDestroyHeatSourceTest(context, Blocks.GLOWSTONE.defaultBlockState(), Blocks.ICE);
+    public void glowstone_becomes_air(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.GLOWSTONE.defaultBlockState(), Blocks.AIR);
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void shroomlight_becomes_ice(GameTestHelper context) {
-        runDestroyHeatSourceTest(context, Blocks.SHROOMLIGHT.defaultBlockState(), Blocks.ICE);
+    public void shroomlight_becomes_air(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.SHROOMLIGHT.defaultBlockState(), Blocks.AIR);
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void redstone_lamp_becomes_ice(GameTestHelper context) {
+    public void redstone_lamp_becomes_air(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.REDSTONE_LAMP.defaultBlockState()
                         .setValue(RedstoneLampBlock.LIT, true),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void sea_lantern_becomes_ice(GameTestHelper context) {
-        runDestroyHeatSourceTest(context, Blocks.SEA_LANTERN.defaultBlockState(), Blocks.ICE);
+    public void sea_lantern_becomes_air(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.SEA_LANTERN.defaultBlockState(), Blocks.AIR);
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void furnace_becomes_ice(GameTestHelper context) {
+    public void furnace_becomes_air(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.FURNACE.defaultBlockState()
                         .setValue(FurnaceBlock.LIT, true),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void respawn_anchor_becomes_ice(GameTestHelper context) {
+    public void respawn_anchor_becomes_air(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.RESPAWN_ANCHOR.defaultBlockState()
                         .setValue(RespawnAnchorBlock.CHARGE, 4),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void jack_o_lantern_becomes_ice(GameTestHelper context) {
+    public void jack_o_lantern_becomes_carved_pumpkin(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.JACK_O_LANTERN.defaultBlockState(),
-                Blocks.ICE
+                Blocks.CARVED_PUMPKIN
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void redstone_ore_becomes_ice(GameTestHelper context) {
+    public void redstone_ore_becomes_air(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.REDSTONE_ORE.defaultBlockState()
                         .setValue(RedStoneOreBlock.LIT, true),
-                Blocks.ICE
+                Blocks.AIR
         );
     }
 
     //endregion
 
     //region protected blocks tests
+    @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
+    public void pink_concrete_is_unaffected_by_frostologer(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, Blocks.PINK_CONCRETE.defaultBlockState(), Blocks.PINK_CONCRETE);
+    }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
     public void nether_portal_is_unaffected_by_frostologer(GameTestHelper context) {
@@ -159,8 +163,18 @@ public class FrostologerDestroyHeatSourcesTests {
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
+    public void icy_vault_is_unaffected_by_frostologer(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, FBlocks.ICY_VAULT.defaultBlockState(), FBlocks.ICY_VAULT);
+    }
+
+    @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
     public void trial_spawner_is_unaffected_by_frostologer(GameTestHelper context) {
         runDestroyHeatSourceTest(context, Blocks.TRIAL_SPAWNER.defaultBlockState(), Blocks.TRIAL_SPAWNER);
+    }
+
+    @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
+    public void icy_trial_spawner_is_unaffected_by_frostologer(GameTestHelper context) {
+        runDestroyHeatSourceTest(context, FBlocks.ICY_TRIAL_SPAWNER.defaultBlockState(), FBlocks.ICY_TRIAL_SPAWNER);
     }
 
     //endregion
@@ -168,77 +182,77 @@ public class FrostologerDestroyHeatSourcesTests {
     //region water logged tests
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_sea_pickle_becomes_air(GameTestHelper context) {
+    public void waterlogged_sea_pickle_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.SEA_PICKLE.defaultBlockState()
                         .setValue(SeaPickleBlock.WATERLOGGED, true)
                         .setValue(SeaPickleBlock.PICKLES, 4),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_ender_chest_becomes_air(GameTestHelper context) {
+    public void waterlogged_ender_chest_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.ENDER_CHEST.defaultBlockState()
                         .setValue(EnderChestBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_lantern_becomes_air(GameTestHelper context) {
+    public void waterlogged_lantern_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.LANTERN.defaultBlockState()
                         .setValue(EnderChestBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_amethyst_cluster_becomes_air(GameTestHelper context) {
+    public void waterlogged_amethyst_cluster_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.AMETHYST_CLUSTER.defaultBlockState()
                         .setValue(AmethystClusterBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
     // yes this is technically a possible block state
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_lit_candle_becomes_air(GameTestHelper context) {
+    public void waterlogged_lit_candle_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.CANDLE.defaultBlockState()
                         .setValue(CandleBlock.WATERLOGGED, true)
                         .setValue(CandleBlock.LIT, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
     // yes this is technically a possible block state
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_lit_campfire_becomes_air(GameTestHelper context) {
+    public void waterlogged_lit_campfire_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 Blocks.CAMPFIRE.defaultBlockState()
                         .setValue(CampfireBlock.WATERLOGGED, true)
                         .setValue(CampfireBlock.LIT, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
     @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
-    public void waterlogged_hot_sun_lichen_becomes_air(GameTestHelper context) {
+    public void waterlogged_hot_sun_lichen_becomes_ice(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
                 FBlocks.HOT_SUN_LICHEN.defaultBlockState()
                         .setValue(AmethystClusterBlock.WATERLOGGED, true),
-                Blocks.AIR
+                Blocks.ICE
         );
     }
 
@@ -311,18 +325,27 @@ public class FrostologerDestroyHeatSourcesTests {
         );
     }
 
+    @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
+    public void crying_obisidan_becomes_obsidian(GameTestHelper context) {
+        runDestroyHeatSourceTest(
+                context,
+                Blocks.CRYING_OBSIDIAN.defaultBlockState(),
+                Blocks.OBSIDIAN
+        );
+    }
+
     //endregion
 
     private static void runDestroyHeatSourceTest(GameTestHelper context, BlockState toPlace, Block blockAtEnd) {
         ServerLevel serverWorld = context.getLevel();
         BlockPos pos = new BlockPos(1, 2, 1);
 
-        serverWorld.setBlockAndUpdate(pos, toPlace);
+        serverWorld.setBlockAndUpdate(context.absolutePos(pos), toPlace);
 
         FrostologerEntity frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
         frostologer.setInvulnerable(true);
         frostologer.setNoAi(true);
-        frostologer.destroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
+        frostologer.tryDestroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));
 
         context.succeedWhenBlockPresent(blockAtEnd, pos);
     }
