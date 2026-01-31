@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.item.*;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuilder;
@@ -9,10 +10,12 @@ import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.cloak.InertFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import net.fabricmc.fabric.api.item.v1.FabricItem;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.Block;
 
@@ -326,6 +329,20 @@ public final class FItems {
         Frostiful.LOGGER.debug("Initialized Frostiful items");
         FSmithingTemplateItem.addTemplatesToLoot();
         ResistanceComponentBuilder.initialize();
+
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
+            if (!source.is(DamageTypeTags.IS_FREEZING)) {
+                return true;
+            }
+
+            for (ItemStack stack : TrinketsIntegration.getAllEquipped(entity)) {
+                if (stack.is(FItems.FROSTOLOGY_CLOAK)) {
+                    return false;
+                }
+            }
+
+            return true;
+        });
     }
 
     private static Item register(String id, Block block) {
