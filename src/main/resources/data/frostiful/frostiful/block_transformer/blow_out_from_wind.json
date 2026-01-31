@@ -1,0 +1,11 @@
+{
+  "type": "frostiful:first_of",
+  "transformers": [
+    {
+      "type": "frostiful:extinguish_flame_if_fire"
+    },
+    {
+      "type": "frostiful:freeze_torch"
+    }
+  ]
+}
