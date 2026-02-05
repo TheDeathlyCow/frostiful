@@ -3,6 +3,7 @@
     "exclude_biomes": "#frostiful:is_not_climate/temperate",
     "provider": {
         "type": "thermoo:seasonal/temperate",
+        "fallback_season": "spring",
         "seasons": {
             "winter": {
                 "type": "thermoo:modify",
@@ -11,6 +12,19 @@
                     "type": "thermoo:constant",
                     "components": {
                         "thermoo:temperature": 5.0
+                    }
+                }
+            },
+            "spring": {
+                "type": "frostiful:if_snowy",
+                "when_true": {
+                    "type": "thermoo:modify",
+                    "modifiers": [
+                        "frostiful:modifier/sun_light"
+                    ],
+                    "base": {
+                        "type": "frostiful:ensure_temperature_below",
+                        "value": -5
                     }
                 }
             }
