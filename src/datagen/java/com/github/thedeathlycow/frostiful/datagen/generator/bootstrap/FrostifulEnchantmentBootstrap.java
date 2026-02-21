@@ -5,9 +5,10 @@ import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
 import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.criterion.*;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -19,15 +20,14 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentEffectComponents;
-import net.minecraft.world.item.enchantment.EnchantmentTarget;
-import net.minecraft.world.item.enchantment.LevelBasedValue;
-import net.minecraft.world.item.enchantment.effects.ApplyMobEffect;
-import net.minecraft.world.item.enchantment.effects.EnchantmentAttributeEffect;
+import net.minecraft.world.item.enchantment.*;
+import net.minecraft.world.item.enchantment.effects.*;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.predicates.*;
+import net.minecraft.world.level.storage.loot.providers.number.EnchantmentLevelProvider;
 
 public final class FrostifulEnchantmentBootstrap {
     public static void bootstrap(BootstrapContext<Enchantment> context) {
@@ -132,6 +132,55 @@ public final class FrostifulEnchantmentBootstrap {
                                         .atLeast(1)
                         )
         );
+
+        register(
+                context,
+                FEnchantments.ICE_SPEED,
+                Enchantment.enchantment(
+                                Enchantment.definition(
+                                        items.getOrThrow(FItemTags.ENCHANTABLE_ICE_SKATES),
+                                        items.getOrThrow(FItemTags.ENCHANTABLE_ICE_SKATES),
+                                        2,
+                                        3,
+                                        Enchantment.dynamicCost(10, 10),
+                                        Enchantment.dynamicCost(25, 10),
+                                        8,
+                                        EquipmentSlotGroup.FEET
+                                )
+                        )
+                        .withEffect(
+                                EnchantmentEffectComponents.LOCATION_CHANGED,
+                                AllOf.locationBasedEffects(
+                                        new EnchantmentAttributeEffect(
+                                                Frostiful.id("enchantment.ice_speed"),
+                                                Attributes.MOVEMENT_SPEED,
+                                                LevelBasedValue.perLevel(0.0405f, 0.0105f),
+                                                AttributeModifier.Operation.ADD_VALUE
+                                        )
+                                ),
+                                applyMovementSpeedRequirements(blocks)
+                        )
+                        .withEffect(
+                                EnchantmentEffectComponents.LOCATION_CHANGED,
+                                new ChangeItemDamage(LevelBasedValue.constant(1.0f)),
+                                AllOfCondition.allOf(
+                                        LootItemRandomChanceCondition.randomChance(
+                                                EnchantmentLevelProvider.forEnchantmentLevel(
+                                                        LevelBasedValue.constant(0.04f)
+                                                )
+                                        ),
+                                        LootItemEntityPropertyCondition.hasProperties(
+                                                LootContext.EntityTarget.THIS,
+                                                EntityPredicate.Builder.entity()
+                                                        .flags(EntityFlagsPredicate.Builder.flags().setOnGround(true))
+                                                        .movementAffectedBy(
+                                                                LocationPredicate.Builder.location()
+                                                                        .setBlock(BlockPredicate.Builder.block().of(blocks, FBlockTags.ICE_SPEED_BLOCKS))
+                                                        )
+                                        )
+                                )
+                        )
+        );
     }
 
     private static void register(
@@ -140,6 +189,55 @@ public final class FrostifulEnchantmentBootstrap {
             Enchantment.Builder builder
     ) {
         context.register(key, builder.build(key.identifier()));
+    }
+
+    private static AllOfCondition.Builder applyMovementSpeedRequirements(HolderGetter<Block> blocks) {
+        var notFlying = EntityFlagsPredicate.Builder.flags().setIsFlying(false);
+
+        var isIceSpeedBlock = LocationPredicate.Builder.location()
+                .setBlock(
+                        BlockPredicate.Builder.block().of(blocks, FBlockTags.ICE_SPEED_BLOCKS)
+                );
+
+        var notInVehicle = InvertedLootItemCondition.invert(
+                LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS,
+                        EntityPredicate.Builder.entity().vehicle(EntityPredicate.Builder.entity())
+                )
+        );
+
+        var activeOnIce = AllOfCondition.allOf(
+                EnchantmentActiveCheck.enchantmentActiveCheck(),
+                LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS,
+                        EntityPredicate.Builder.entity().flags(notFlying)
+                ),
+                AnyOfCondition.anyOf(
+                        LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.THIS,
+                                EntityPredicate.Builder.entity()
+                                        .movementAffectedBy(isIceSpeedBlock)
+                        ),
+                        LootItemEntityPropertyCondition.hasProperties(
+                                LootContext.EntityTarget.THIS,
+                                EntityPredicate.Builder.entity().flags(notFlying).build()
+                        )
+                )
+        );
+
+        var inactiveOnIce = AllOfCondition.allOf(
+                EnchantmentActiveCheck.enchantmentInactiveCheck(),
+                LootItemEntityPropertyCondition.hasProperties(
+                        LootContext.EntityTarget.THIS,
+                        EntityPredicate.Builder.entity()
+                                .movementAffectedBy(isIceSpeedBlock)
+                                .flags(notFlying)
+                )
+        );
+
+        var onIce = AnyOfCondition.anyOf(activeOnIce, inactiveOnIce);
+
+        return AllOfCondition.allOf(notInVehicle, onIce);
     }
 
     private FrostifulEnchantmentBootstrap() {
