@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.datagen;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.datagen.generator.FRecipeProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.*;
-import com.github.thedeathlycow.frostiful.datagen.generator.bootstrap.FrostifulEnchantmentBootstrap;
-import com.github.thedeathlycow.frostiful.datagen.generator.registry.FEnchantmentGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.registry.FrostifulEnchantmentBootstrap;
+import com.github.thedeathlycow.frostiful.datagen.generator.BootstrappedRegistryGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FBlockTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FEnchantmentTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FItemTagGenerator;
@@ -29,7 +29,7 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         LOGGER.info("Running Frostiful datagen");
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
-        pack.addProvider(FEnchantmentGenerator::new);
+        pack.addProvider(BootstrappedRegistryGenerator::new);
 
         pack.addProvider(FBlockLootGenerator::new);
         pack.addProvider(FEntityLootGenerator::new);

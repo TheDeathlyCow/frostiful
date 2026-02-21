@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.datagen.generator.bootstrap;
+package com.github.thedeathlycow.frostiful.datagen.generator.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
