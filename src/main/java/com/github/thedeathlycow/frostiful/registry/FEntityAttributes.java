@@ -12,7 +12,7 @@ import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 public final class FEntityAttributes {
     public static final double BASE_MIN_TEMPERATURE = 45;
 
-    public static final Holder<Attribute> ICE_BREAK_DAMAGE = register(
+    public static final Holder<Attribute> ICE_BREAKER_DAMAGE = register(
             "ice_breaker_damage",
             new RangedAttribute(
                     "attribute.frostiful.ice_break_damage", 3.0, 0, 1024.0
@@ -21,7 +21,7 @@ public final class FEntityAttributes {
 
     // called from mixin
     public static void createLivingAttributes(AttributeSupplier.Builder builder) {
-        builder.add(ICE_BREAK_DAMAGE);
+        builder.add(ICE_BREAKER_DAMAGE);
     }
 
     private static Holder<Attribute> register(String name, Attribute attribute) {

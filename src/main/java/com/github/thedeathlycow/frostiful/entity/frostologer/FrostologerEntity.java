@@ -117,7 +117,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
                 .add(Attributes.MAX_HEALTH, 150.0)
                 .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
                 .add(ThermooAttributes.MAX_TEMPERATURE, 0.0)
-                .add(FEntityAttributes.ICE_BREAK_DAMAGE, 5.0);
+                .add(FEntityAttributes.ICE_BREAKER_DAMAGE, 5.0);
     }
 
     public boolean isAtMaxPower() {

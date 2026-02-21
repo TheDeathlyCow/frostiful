@@ -92,7 +92,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             spawnShatterParticlesAndSound(provider, serverWorld);
 
             double damage = attacker instanceof LivingEntity livingAttacker
-                    ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
+                    ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAKER_DAMAGE)
                     : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
 
             DamageSource source = FDamageSources.getDamageSources(provider.level())

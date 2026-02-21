@@ -65,7 +65,7 @@ public class BiterEntity extends Monster {
                 .add(Attributes.MAX_HEALTH, 14.0)
                 .add(Attributes.ATTACK_DAMAGE, 7.0)
                 .add(ThermooAttributes.MIN_TEMPERATURE, 45.0)
-                .add(FEntityAttributes.ICE_BREAK_DAMAGE, 5.0);
+                .add(FEntityAttributes.ICE_BREAKER_DAMAGE, 5.0);
     }
 
     @Override
