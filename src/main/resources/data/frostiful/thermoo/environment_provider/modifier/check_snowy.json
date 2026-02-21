@@ -1,0 +1,7 @@
+{
+    "type": "frostiful:if_snowy",
+    "when_true": {
+        "type": "frostiful:ensure_temperature_below",
+        "value": -5
+    }
+}

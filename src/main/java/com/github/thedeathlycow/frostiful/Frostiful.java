@@ -75,6 +75,7 @@ public class Frostiful implements ModInitializer {
         FAttributeTypes.initialize();
         FEnvironmentAttributes.initialize();
         FBlockTransformerTypes.initialize();
+        FEnvironmentProviderTypes.initialize();
 
         ServerLivingEntityEvents.AFTER_DAMAGE.register(FrostWandRootComponent::afterDamage);
 
