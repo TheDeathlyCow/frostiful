@@ -1,0 +1,16 @@
+{
+    "biomes": "#c:is_overworld",
+    "exclude_biomes": "#frostiful:is_not_climate/temperate",
+    "priority": 900,
+    "provider": {
+        "type": "frostiful:if_snowy",
+        "when_true": {
+            "type": "thermoo:modify",
+            "modifiers": "#frostiful:te mperature_modifiers",
+            "base": {
+                "type": "thermoo:constant",
+                "components": {}
+            }
+        }
+    }
+}
