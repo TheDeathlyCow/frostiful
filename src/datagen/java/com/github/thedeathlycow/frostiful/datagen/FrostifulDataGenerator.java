@@ -39,13 +39,13 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(FChestLootGenerator::new);
 
         pack.addProvider(FRecipeProvider::new);
+        pack.addProvider(BlockTransformerProvider::new);
 
         pack.addProvider(FrostifulModelGenerator::new);
 
         FBlockTagGenerator blockTagProvider = pack.addProvider(FBlockTagGenerator::new);
         pack.addProvider((output, registriesFuture) -> new FItemTagGenerator(output, registriesFuture, blockTagProvider));
         pack.addProvider(FEnchantmentTagGenerator::new);
-        pack.addProvider(BlockTransformerProvider::new);
     }
 
     @Override

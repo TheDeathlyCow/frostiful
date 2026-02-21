@@ -1,8 +1,5 @@
 package com.github.thedeathlycow.frostiful.util;
 
-import java.util.List;
-import java.util.Objects;
-
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
