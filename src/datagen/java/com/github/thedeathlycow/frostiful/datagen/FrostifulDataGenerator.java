@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.datagen.generator.loot.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.bootstrap.FrostifulEnchantmentBootstrap;
 import com.github.thedeathlycow.frostiful.datagen.generator.registry.FEnchantmentGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FBlockTagGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.tag.FEnchantmentTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.tag.FItemTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.FrostifulModelGenerator;
 import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
@@ -42,6 +43,7 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
 
         FBlockTagGenerator blockTagProvider = pack.addProvider(FBlockTagGenerator::new);
         pack.addProvider((output, registriesFuture) -> new FItemTagGenerator(output, registriesFuture, blockTagProvider));
+        pack.addProvider(FEnchantmentTagGenerator::new);
     }
 
     @Override

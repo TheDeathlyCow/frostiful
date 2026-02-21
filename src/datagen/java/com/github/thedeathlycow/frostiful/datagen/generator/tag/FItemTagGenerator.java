@@ -16,8 +16,6 @@ import java.util.concurrent.CompletableFuture;
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonItemKey;
 
 public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
-
-
     public FItemTagGenerator(
             FabricDataOutput output,
             CompletableFuture<HolderLookup.Provider> registriesFuture,
