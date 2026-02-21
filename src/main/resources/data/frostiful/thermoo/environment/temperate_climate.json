@@ -19,12 +19,10 @@
                 "type": "frostiful:if_snowy",
                 "when_true": {
                     "type": "thermoo:modify",
-                    "modifiers": [
-                        "frostiful:modifier/sun_light"
-                    ],
+                    "modifiers": "#frostiful:temperature_modifiers",
                     "base": {
-                        "type": "frostiful:ensure_temperature_below",
-                        "value": -5
+                        "type": "thermoo:constant",
+                        "components": {}
                     }
                 }
             }
