@@ -5,7 +5,6 @@ import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import com.github.thedeathlycow.frostiful.registry.tag.FStructureTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -36,6 +35,7 @@ import static com.github.thedeathlycow.frostiful.datagen.generator.loot.Frostifu
 
 public class FChestLootGenerator extends SimpleFabricLootTableProvider {
     private final CompletableFuture<HolderLookup.Provider> registriesFuture;
+
     public FChestLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture, LootContextParamSets.CHEST);
         this.registriesFuture = registriesFuture;
