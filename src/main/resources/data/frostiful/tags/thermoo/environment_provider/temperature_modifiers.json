@@ -1,6 +1,7 @@
 {
     "replace": false,
     "values": [
+        "frostiful:modifier/check_snowy",
         "frostiful:modifier/sun_light"
     ]
 }
