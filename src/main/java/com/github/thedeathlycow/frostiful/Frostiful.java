@@ -55,6 +55,7 @@ public class Frostiful implements ModInitializer {
 
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
 
+        FrostifulRegistries.initialize();
         FBlocks.initialize();
         FDataComponentTypes.initialize();
         FItems.initialize();
@@ -73,6 +74,8 @@ public class Frostiful implements ModInitializer {
         StructureUpdateHelper.initialize();
         FAttributeTypes.initialize();
         FEnvironmentAttributes.initialize();
+        FBlockTransformerTypes.initialize();
+        FEnvironmentProviderTypes.initialize();
 
         ServerLivingEntityEvents.AFTER_DAMAGE.register(FrostWandRootComponent::afterDamage);
 

@@ -5,7 +5,6 @@ import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponen
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
-import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
@@ -13,6 +12,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.StreamCodec;
+
 import java.util.List;
 import java.util.function.UnaryOperator;
 

@@ -239,7 +239,7 @@
   "subtitles.entity.frostiful.chillager.hurt": "Chillager hurts",
   "subtitles.entity.frostiful.thrown_icicle.hit": "Icicle hits",
   "subtitles.entity.frostiful.thrown_icicle.throw": "Icicle flies",
-  "subtitles.entity.frostiful.biter.ambient": "Biter rumbles",
+  "subtitles.entity.frostiful.biter.ambient": "Biter stomach rumbles",
   "subtitles.entity.frostiful.biter.death": "Biter dies",
   "subtitles.entity.frostiful.biter.hurt": "Biter hurts",
   "subtitles.entity.frostiful.biter.bite": "Biter chomps",
@@ -252,6 +252,7 @@
   "subtitles.entity.frostiful.generic.ice_skate.stop": "Skates stop",
   "subtitles.item.frostiful.armor.equip_leather": "Fur armor rustles",
   "subtitles.block.frostiful.brittle_ice.crack": "Ice cracks",
+  "subtitles.item.frostiful.entity.generic.break_binding_curse": "Curse of Binding breaks",
   
   "effect.frostiful.frost_bite": "Frost Bite",
   "effect.frostiful.warmth": "Warmth",

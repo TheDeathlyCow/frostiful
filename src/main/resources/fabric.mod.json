@@ -26,7 +26,8 @@
         "TheLegendofSaram (Mexican Spanish Translation)",
         "MaroonLuv (Russian Translation)",
         "Usia (Ukrainian Translation)",
-        "aiocringe (Russian Translation)"
+        "aiocringe (Russian Translation)",
+        "Artemis Ribeiro (Brazilian Portuguese Translation)"
     ],
     "contact": {
         "homepage": "https://frostiful.thedeathlycow.com",
@@ -67,7 +68,7 @@
         "fabricloader": ">=0.18.4",
         "fabric-api": ">=0.140.2",
         "minecraft": ">=1.21.11",
-        "thermoo": ">=9.0.0",
+        "thermoo": ">=9.1.0",
         "java": ">=21",
         "cloth-config": ">=21.11.153",
         "cardinal-components-base": ">=7.3.0"

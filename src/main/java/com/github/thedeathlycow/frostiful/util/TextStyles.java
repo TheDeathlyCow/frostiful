@@ -1,10 +1,11 @@
 package com.github.thedeathlycow.frostiful.util;
 
-import java.net.URI;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.network.chat.TextColor;
+
+import java.net.URI;
 
 public class TextStyles {
 

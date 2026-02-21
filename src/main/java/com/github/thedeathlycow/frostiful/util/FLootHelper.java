@@ -14,6 +14,9 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 
+import java.util.List;
+import java.util.Objects;
+
 public class FLootHelper {
     public static <E extends LivingEntity> void dropPlayfightLoot(E entity, ResourceKey<LootTable> lootTableId) {
         Level level = entity.level();
