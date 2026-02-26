@@ -521,6 +521,150 @@
                     }
                   ],
                   "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "9"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 9.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "10"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 10.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "11"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 11.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "12"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 12.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "13"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 13.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "14"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 14.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "conditions": [
+                    {
+                      "block": "frostiful:packed_snow",
+                      "condition": "minecraft:block_state_property",
+                      "properties": {
+                        "layers": "15"
+                      }
+                    }
+                  ],
+                  "functions": [
+                    {
+                      "add": false,
+                      "count": 15.0,
+                      "function": "minecraft:set_count"
+                    }
+                  ],
+                  "name": "frostiful:packed_snow"
+                },
+                {
+                  "type": "minecraft:item",
+                  "name": "frostiful:packed_snow_block"
                 }
               ]
             }

@@ -10,7 +10,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SnowLayerBlock;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -82,7 +81,7 @@ public class FBlockLootGenerator extends FabricBlockLootTableProvider {
                                                         )
                                                         .when(this.doesNotHaveSilkTouch()),
                                                 AlternativesEntry.alternatives(
-                                                        SnowLayerBlock.LAYERS.getPossibleValues(),
+                                                        PackedSnowBlock.LAYERS.getPossibleValues(),
                                                         numLayers -> numLayers == PackedSnowBlock.MAX_LAYERS
                                                                 ? LootItem.lootTableItem(FBlocks.PACKED_SNOW_BLOCK)
                                                                 : LootItem.lootTableItem(FBlocks.PACKED_SNOW)
