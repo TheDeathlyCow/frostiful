@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.root;
 
-import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
+import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.phys.Vec3;

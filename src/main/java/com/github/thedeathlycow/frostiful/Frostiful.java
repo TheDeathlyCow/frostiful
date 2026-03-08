@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
+import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.registry.*;

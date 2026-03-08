@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
@@ -77,7 +77,7 @@ public class BiterEntity extends Monster {
         this.attackTicks = ATTACK_TIME;
         this.level().broadcastEntityEvent(this, EntityEvent.START_ATTACKING);
         this.playAttackSound();
-        if (target instanceof LivingEntity livingTarget && FComponents.FROST_WAND_ROOT_COMPONENT.get(livingTarget).isRooted()) {
+        if (target instanceof LivingEntity livingTarget && FrostWandRootComponent.get(livingTarget).isRooted()) {
             int maxAmplifier = Frostiful.getConfig().combatConfig.getBiterFrostBiteMaxAmplifier() + 1;
 
             livingTarget.addEffect(

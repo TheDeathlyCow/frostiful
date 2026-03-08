@@ -1,8 +1,9 @@
-package com.github.thedeathlycow.frostiful.entity.component;
+package com.github.thedeathlycow.frostiful.entity.attachment;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.google.common.base.Preconditions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
@@ -12,10 +13,11 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
-import org.ladysnake.cca.api.v3.component.Component;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 
-public class SnowAccumulationComponent implements Component, ServerTickingComponent {
+public class SnowAccumulationComponent implements INBTSerializable<CompoundTag> {
     private static final AttributeModifier SOAKED_MODIFIER = new AttributeModifier(
             Frostiful.id("soaked_cold_vulnerability"),
             -1,
@@ -24,50 +26,57 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
 
     private static final String KEY = "snow_accumulation";
 
-    private final LivingEntity provider;
+    private final IAttachmentHolder provider;
 
     private int snowAccumulation = 0;
 
     private boolean appliedSoakedModifiers = false;
 
-    public SnowAccumulationComponent(LivingEntity provider) {
+    public SnowAccumulationComponent(IAttachmentHolder provider) {
         this.provider = provider;
     }
 
     public static SnowAccumulationComponent get(LivingEntity provider) {
-        return FComponents.SNOW_ACCUMULATION.get(provider);
+        return provider.getData(FrostifulEntityAttachments.SNOW_ACCUMULATION);
     }
 
-    @Override
-    public void serverTick() {
-        if (this.isBeingSnowedOn()) {
+    public void serverTick(LivingEntity providerEntity) {
+        if (!FMLEnvironment.production) {
+            Preconditions.checkArgument(this.provider == providerEntity, "Provided entity is not the attachment holder!");
+        }
+
+        if (this.isBeingSnowedOn(providerEntity)) {
             this.addSnowAccumulation();
         } else {
-            this.meltSnowAccumulation();
+            this.meltSnowAccumulation(providerEntity);
         }
 
         if (Frostiful.getConfig().environmentConfig.applyEnvironmentPenaltyWhenWet()) {
-            this.applySoakedEnvironmentFrostResistancePenalty();
+            this.applySoakedEnvironmentFrostResistancePenalty(providerEntity);
         }
     }
 
     @Override
-    public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
-        this.snowAccumulation = tag.contains(KEY, Tag.TAG_INT) ? tag.getInt(KEY) : 0;
-    }
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        var tag = new CompoundTag();
 
-    @Override
-    public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         if (this.snowAccumulation > 0) {
             tag.putInt(KEY, this.snowAccumulation);
         }
+
+        return tag;
     }
 
-    public boolean isBeingSnowedOn() {
-        Level world = this.provider.level();
-        BlockPos pos = this.provider.blockPosition();
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
+        this.snowAccumulation = tag.contains(KEY, Tag.TAG_INT) ? tag.getInt(KEY) : 0;
+    }
+
+    public boolean isBeingSnowedOn(LivingEntity providerEntity) {
+        Level world = providerEntity.level();
+        BlockPos pos = providerEntity.blockPosition();
         return hasSnow(world, pos)
-                || hasSnow(world, BlockPos.containing(pos.getX(), this.provider.getBoundingBox().maxY, pos.getZ()));
+                || hasSnow(world, BlockPos.containing(pos.getX(), providerEntity.getBoundingBox().maxY, pos.getZ()));
     }
 
     public static boolean hasSnow(Level world, BlockPos pos) {
@@ -83,10 +92,10 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
         }
     }
 
-    public void meltSnowAccumulation() {
+    public void meltSnowAccumulation(LivingEntity providerEntity) {
         if (this.snowAccumulation > 0) {
             this.snowAccumulation--;
-            this.provider.thermoo$addWetTicks(2);
+            providerEntity.thermoo$addWetTicks(2);
         }
     }
 
@@ -96,11 +105,11 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
         }
     }
 
-    private void applySoakedEnvironmentFrostResistancePenalty() {
+    private void applySoakedEnvironmentFrostResistancePenalty(LivingEntity providerEntity) {
         // this probably doesnt belong in this component but oh well i dont feel like making another one
-        boolean wet = provider.thermoo$isWet();
-        if (wet && !this.appliedSoakedModifiers && !provider.thermoo$ignoresFrigidWater()) {
-            var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
+        boolean wet = providerEntity.thermoo$isWet();
+        if (wet && !this.appliedSoakedModifiers && !providerEntity.thermoo$ignoresFrigidWater()) {
+            var envFrostResistance = providerEntity.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
 
             if (envFrostResistance != null) {
                 envFrostResistance.addTransientModifier(SOAKED_MODIFIER);
@@ -108,7 +117,7 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
                 Frostiful.LOGGER.debug("Applied soaked env frost resistance penalty");
             }
         } else if (!wet && this.appliedSoakedModifiers) {
-            var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
+            var envFrostResistance = providerEntity.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
 
             if (envFrostResistance != null) {
                 envFrostResistance.removeModifier(SOAKED_MODIFIER);

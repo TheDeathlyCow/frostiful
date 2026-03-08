@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.block.FrozenTorchBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
+import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.*;
@@ -420,7 +421,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
     public boolean isTargetRooted() {
         LivingEntity target = this.getTarget();
         return target != null
-                && FComponents.FROST_WAND_ROOT_COMPONENT.get(target).isRooted();
+                && FrostWandRootComponent.get(target).isRooted();
     }
 
     public boolean isUsingFrostWand() {

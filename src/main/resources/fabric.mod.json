@@ -49,7 +49,7 @@
             "com.github.thedeathlycow.frostiful.FrostifulModMenu"
         ],
         "cardinal-components-entity": [
-            "com.github.thedeathlycow.frostiful.registry.FComponents"
+            "com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments"
         ],
         "colorfulhearts": [
             "com.github.thedeathlycow.frostiful.client.compat.ColorfulHeartsIntegration"

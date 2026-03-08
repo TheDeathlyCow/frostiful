@@ -1,12 +1,13 @@
-package com.github.thedeathlycow.frostiful.entity.component;
+package com.github.thedeathlycow.frostiful.entity.attachment;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
+import com.google.common.base.Preconditions;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -15,7 +16,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,21 +24,29 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.attachment.AttachmentSyncHandler;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
+import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.Component;
-import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
-import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 
-public class FrostWandRootComponent implements Component, AutoSyncedComponent, ServerTickingComponent {
-
+public class FrostWandRootComponent implements INBTSerializable<CompoundTag> {
     private static final String ROOTED_TICKS_KEY = "rooted_ticks";
 
-    private final LivingEntity provider;
-
+    private final IAttachmentHolder provider;
     private int rootedTicks;
 
-    public FrostWandRootComponent(LivingEntity provider) {
+    public FrostWandRootComponent(IAttachmentHolder provider) {
+        this(provider, 0);
+    }
+
+    private FrostWandRootComponent(IAttachmentHolder provider, int rootedTicks) {
         this.provider = provider;
+        this.rootedTicks = rootedTicks;
+    }
+
+    public static FrostWandRootComponent get(LivingEntity entity) {
+        return entity.getData(FrostifulEntityAttachments.FROST_WAND_ROOT_COMPONENT);
     }
 
     public static void afterDamage(
@@ -47,7 +55,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             float baseDamageTaken, float damageTaken,
             boolean blocked
     ) {
-        FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(provider);
+        FrostWandRootComponent component = get(provider);
         boolean breakRoot = !blocked
                 && damageTaken > 0f
                 && !source.is(FDamageTypeTags.DOES_NOT_BREAK_ROOT)
@@ -61,24 +69,27 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     @Nullable
     public static Vec3 adjustMovementForRoot(MoverType type, Vec3 movement, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity);
-            return component.adjustMovementForRoot(type, movement);
+            FrostWandRootComponent component = get(livingEntity);
+            return component.adjustMovementForRoot(livingEntity, type, movement);
         }
 
         return null;
     }
 
-    @Override
-    public void serverTick() {
-        if (provider.isSpectator()) {
+    public void serverTick(LivingEntity providerEntity) {
+        if (!FMLEnvironment.production) {
+            Preconditions.checkArgument(this.provider == providerEntity, "Provided entity is not the attachment holder!");
+        }
+
+        if (providerEntity.isSpectator()) {
             this.setRootedTicks(0);
         } else if (this.isRooted()) {
             this.setRootedTicks(this.getRootedTicks() - 1);
 
-            if (provider.isOnFire()) {
+            if (providerEntity.isOnFire()) {
                 this.breakRoot(null);
-                provider.clearFire();
-                ((EntityInvoker) provider).frostiful$invokePlayExtinguishSound();
+                providerEntity.clearFire();
+                ((EntityInvoker) providerEntity).frostiful$invokePlayExtinguishSound();
             }
         }
     }
@@ -88,18 +99,22 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     public void breakRoot(@Nullable Entity attacker) {
-        if (this.isRooted() && provider.level() instanceof ServerLevel serverWorld) {
+        if (!(this.provider instanceof LivingEntity providerEntity)) {
+            return;
+        }
+
+        if (this.isRooted() && providerEntity.level() instanceof ServerLevel serverWorld) {
             this.setRootedTicks(1); // set to 1 so the icebreaker enchantment can detect it
-            spawnShatterParticlesAndSound(provider, serverWorld);
+            spawnShatterParticlesAndSound(providerEntity, serverWorld);
         }
 
         double damage = attacker instanceof LivingEntity livingAttacker
                 ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
                 : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
 
-        DamageSource source = FDamageSources.getDamageSources(provider.level())
+        DamageSource source = FDamageSources.getDamageSources(providerEntity.level())
                 .frostiful$brokenIce(attacker);
-        provider.hurt(source, (float) damage);
+        providerEntity.hurt(source, (float) damage);
     }
 
     public boolean tryRootFromFrostWand(@Nullable Entity originalCaster) {
@@ -111,27 +126,21 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     @Override
-    public void writeSyncPacket(RegistryFriendlyByteBuf buf, ServerPlayer recipient) {
-        buf.writeVarInt(this.rootedTicks);
-    }
+    public CompoundTag serializeNBT(HolderLookup.Provider provider) {
+        var tag = new CompoundTag();
 
-    @Override
-    public void applySyncPacket(RegistryFriendlyByteBuf buf) {
-        this.rootedTicks = buf.readVarInt();
-    }
-
-    @Override
-    public void readFromNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
-        this.rootedTicks = tag.contains(ROOTED_TICKS_KEY, Tag.TAG_INT)
-                ? tag.getInt(ROOTED_TICKS_KEY)
-                : 0;
-    }
-
-    @Override
-    public void writeToNbt(CompoundTag tag, HolderLookup.Provider registryLookup) {
         if (this.rootedTicks != 0) {
             tag.putInt(ROOTED_TICKS_KEY, this.rootedTicks);
         }
+
+        return tag;
+    }
+
+    @Override
+    public void deserializeNBT(HolderLookup.Provider provider, CompoundTag tag) {
+        this.rootedTicks = tag.contains(ROOTED_TICKS_KEY, Tag.TAG_INT)
+                ? tag.getInt(ROOTED_TICKS_KEY)
+                : 0;
     }
 
     public boolean isRooted() {
@@ -145,7 +154,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     public void setRootedTicks(int rootedTicks) {
         if (this.rootedTicks != rootedTicks) {
             this.rootedTicks = rootedTicks;
-            FComponents.FROST_WAND_ROOT_COMPONENT.sync(this.provider);
+            this.provider.syncData(FrostifulEntityAttachments.FROST_WAND_ROOT_COMPONENT);
         }
     }
 
@@ -154,25 +163,29 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             return false;
         }
 
-        if (provider.getType().is(FEntityTypeTags.ROOT_IMMUNE)) {
+        if (!(this.provider instanceof LivingEntity providerEntity)) {
             return false;
         }
 
-        if (originalCaster != null && provider.isAlliedTo(originalCaster)) {
+        if (providerEntity.getType().is(FEntityTypeTags.ROOT_IMMUNE)) {
             return false;
         }
 
-        return provider.thermoo$canFreeze();
+        if (originalCaster != null && providerEntity.isAlliedTo(originalCaster)) {
+            return false;
+        }
+
+        return providerEntity.thermoo$canFreeze();
     }
 
     @Nullable
-    private Vec3 adjustMovementForRoot(MoverType type, Vec3 movement) {
+    private Vec3 adjustMovementForRoot(LivingEntity providerEntity, MoverType type, Vec3 movement) {
         if (!this.isRooted()) {
             return null;
         }
 
         return switch (type) {
-            case SELF, PLAYER -> Vec3.ZERO.add(0, movement.y < 0 && !provider.isNoGravity() ? movement.y : 0, 0);
+            case SELF, PLAYER -> Vec3.ZERO.add(0, movement.y < 0 && !providerEntity.isNoGravity() ? movement.y : 0, 0);
             default -> null;
         };
     }
@@ -195,5 +208,17 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
                 SoundSource.AMBIENT,
                 1.0f, 0.75f
         );
+    }
+
+    public static final class SyncHandler implements AttachmentSyncHandler<FrostWandRootComponent> {
+        @Override
+        public void write(RegistryFriendlyByteBuf buf, FrostWandRootComponent attachment, boolean initialSync) {
+            buf.writeVarInt(attachment.getRootedTicks());
+        }
+
+        @Override
+        public FrostWandRootComponent read(IAttachmentHolder holder, RegistryFriendlyByteBuf buf, @Nullable FrostWandRootComponent previousValue) {
+            return new FrostWandRootComponent(holder, buf.readVarInt());
+        }
     }
 }

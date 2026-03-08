@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.entity.component.BrushableComponent;
+import com.github.thedeathlycow.frostiful.entity.attachment.BrushableComponent;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;

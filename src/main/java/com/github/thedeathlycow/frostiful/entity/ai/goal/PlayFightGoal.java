@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import com.github.thedeathlycow.frostiful.entity.component.BrushableComponent;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.entity.attachment.BrushableComponent;
+import com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.InteractionHand;
@@ -106,8 +106,8 @@ public class PlayFightGoal<T extends PathfinderMob> extends Goal {
             return;
         }
 
-        BrushableComponent brushableComponent = FComponents.BRUSHABLE_COMPONENT.getNullable(this.mob);
-        if (brushableComponent == null || !brushableComponent.wasBrushed()) {
+        BrushableComponent brushableComponent = this.mob.getData(FrostifulEntityAttachments.BRUSHABLE_COMPONENT);
+        if (!brushableComponent.wasBrushed()) {
             FLootHelper.dropLootFromEntity(this.mob, this.furLootTable);
         }
 

@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.effects;
 
-import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -17,7 +16,7 @@ public class RootedTests {
         BlockPos end = start.offset(2, 0, 2);
 
         Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, start);
-        FrostWandRootComponent rootComponent = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
+        FrostWandRootComponent rootComponent = FrostWandRootComponent.get(entity);
         rootComponent.tryRootFromFrostWand(null);
 
         context.walkTo(entity, end, 1.0f);
@@ -40,7 +39,7 @@ public class RootedTests {
         BlockPos start = new BlockPos(1, 2, 1);
 
         Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, start);
-        FrostWandRootComponent rootComponent = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
+        FrostWandRootComponent rootComponent = FrostWandRootComponent.get(entity);
 
         // initial root
         rootComponent.tryRootFromFrostWand(null);

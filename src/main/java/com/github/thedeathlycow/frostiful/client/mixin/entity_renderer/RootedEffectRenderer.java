@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
 
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -45,7 +45,7 @@ public class RootedEffectRenderer<T extends LivingEntity, M extends EntityModel<
             )
     )
     private void renderIceOnEntity(T livingEntity, float f, float g, PoseStack matrixStack, MultiBufferSource vertexConsumerProvider, int i, CallbackInfo ci) {
-        if (FComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity).isRooted()) {
+        if (FrostWandRootComponent.get(livingEntity).isRooted()) {
             matrixStack.pushPose();
             float blockSize = 1.75f;
             AABB boundingBox = livingEntity.getBoundingBox();
