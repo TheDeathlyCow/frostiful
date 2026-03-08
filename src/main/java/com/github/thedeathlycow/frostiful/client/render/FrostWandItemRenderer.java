@@ -13,6 +13,7 @@ import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.world.item.ItemDisplayContext;
@@ -22,7 +23,10 @@ import net.minecraft.world.item.ItemStack;
 public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.DynamicItemRenderer, SimpleSynchronousResourceReloadListener {
 
     public static final ResourceLocation ID = Frostiful.id("frost_wand_renderer");
-    public static final ResourceLocation INVENTORY_MODEL_ID = Frostiful.id("item/frost_wand_in_inventory");
+    public static final ModelResourceLocation INVENTORY_MODEL_ID = new ModelResourceLocation(
+            Frostiful.id("item/frost_wand_in_inventory"),
+            "main"
+    );
 
     private final ModelLayerLocation modelLayer;
     private FrostWandItemModel model;

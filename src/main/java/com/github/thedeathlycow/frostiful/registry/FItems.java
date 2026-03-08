@@ -8,6 +8,7 @@ import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.cloak.InertFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
+import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -128,23 +129,31 @@ public final class FItems {
 
     public static final Item INERT_FROSTOLOGY_CLOAK = register(
             "inert_frostology_cloak",
-            settings -> new InertFrostologyCloakItem(
-                    settings
-                            .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
-                            .stacksTo(1)
-                            .rarity(Rarity.UNCOMMON)
-            )
+            settings -> {
+                ((FabricItem.Settings) settings)
+                        .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot);
+
+                return new InertFrostologyCloakItem(
+                        settings
+                                .stacksTo(1)
+                                .rarity(Rarity.UNCOMMON)
+                );
+            }
     );
 
     public static final Item FROSTOLOGY_CLOAK = register(
             "frostology_cloak",
-            settings -> new FrostologyCloakItem(
-                    settings
-                            .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot)
-                            .attributes(FrostologyCloakItem.createAttributeModifiers())
-                            .rarity(Rarity.EPIC)
-                            .stacksTo(1)
-            )
+            settings -> {
+                ((FabricItem.Settings) settings)
+                        .equipmentSlot(AbstractFrostologyCloakItem::getPreferredEquipmentSlot);
+
+                return new FrostologyCloakItem(
+                        settings
+                                .attributes(FrostologyCloakItem.createAttributeModifiers())
+                                .rarity(Rarity.EPIC)
+                                .stacksTo(1)
+                );
+            }
     );
 
     public static final Item ICE_SKATES = register(

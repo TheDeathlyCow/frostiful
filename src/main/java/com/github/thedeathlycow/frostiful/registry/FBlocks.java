@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.*;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
+import net.fabricmc.fabric.api.object.builder.v1.block.entity.FabricBlockEntityType;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.block.*;
@@ -268,7 +269,7 @@ public class FBlocks {
                             .lightLevel(state -> state.getValue(TrialSpawnerBlock.STATE).lightLevel())
                             .strength(50.0f)
                             .sound(SoundType.TRIAL_SPAWNER)
-                            .isViewBlocking(Blocks::never)
+                            .isViewBlocking((state, level, pos) -> false)
                             .noOcclusion()
             )
     );
@@ -282,7 +283,7 @@ public class FBlocks {
                             .sound(SoundType.VAULT)
                             .lightLevel(state -> state.getValue(VaultBlock.STATE).lightLevel() * 5 / 6)
                             .strength(50.0f)
-                            .isViewBlocking(Blocks::never)
+                            .isViewBlocking((state, level, pos) -> false)
             )
     );
 
@@ -296,7 +297,7 @@ public class FBlocks {
                             .strength(0.5f)
                             .sound(SoundType.GLASS)
                             .noOcclusion()
-                            .isRedstoneConductor(Blocks::never)
+                            .isRedstoneConductor((state, level, pos) -> false)
             )
     );
 
@@ -305,8 +306,8 @@ public class FBlocks {
         DispenserBlock.registerProjectileBehavior(FItems.GLACIAL_ARROW);
         DispenserBlock.registerProjectileBehavior(FItems.PACKED_SNOWBALL);
         UseBlockCallback.EVENT.register(new CampfireUseEventListener());
-        BlockEntityType.TRIAL_SPAWNER.addSupportedBlock(ICY_TRIAL_SPAWNER);
-        BlockEntityType.VAULT.addSupportedBlock(ICY_VAULT);
+        ((FabricBlockEntityType)BlockEntityType.TRIAL_SPAWNER).addSupportedBlock(ICY_TRIAL_SPAWNER);
+        ((FabricBlockEntityType)BlockEntityType.VAULT).addSupportedBlock(ICY_VAULT);
     }
 
     private static Block register(String id, Function<BlockBehaviour.Properties, Block> blockFactory) {

@@ -6,6 +6,7 @@ import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import com.github.thedeathlycow.thermoo.api.armor.material.ArmorMaterialTags;
 import com.github.thedeathlycow.thermoo.api.item.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
+import net.fabricmc.fabric.api.item.v1.FabricComponentMapBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponents;
@@ -113,7 +114,7 @@ public final class ResistanceComponentBuilder {
     }
 
     private static ItemAttributeModifiers getOrDefault(DataComponentMap.Builder builder, Item item) {
-        ItemAttributeModifiers component = builder.getOrDefault(
+        ItemAttributeModifiers component = ((FabricComponentMapBuilder) builder).getOrDefault(
                 DataComponents.ATTRIBUTE_MODIFIERS,
                 ItemAttributeModifiers.EMPTY
         );

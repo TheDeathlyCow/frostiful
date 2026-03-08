@@ -48,7 +48,7 @@ public final class PassiveTemperatureEffects {
 
             if (!EnchantmentHelper.hasTag(footStack, FEnchantmentTags.IS_FROSTY)) {
                 // TODO: fix fire particles
-                SunLichenBlock.createFireParticles(context.world(), entity.blockPosition());
+                SunLichenBlock.createFireParticles(context.level(), entity.blockPosition());
                 return config.freezingConfig.getHeatFromHotFloor();
             }
         }
@@ -57,9 +57,9 @@ public final class PassiveTemperatureEffects {
     }
 
     private static int getAndUpdateBlockLightTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context) {
-        int warmthFromLight = getBlockLightTemperatureChange(context.world(), context.pos());
+        int warmthFromLight = getBlockLightTemperatureChange(context.level(), context.pos());
         if (warmthFromLight > 0) {
-            SnowAccumulationComponent.get(context.affected()).meltSnowAccumulation();
+            SnowAccumulationComponent.get(context.affected()).meltSnowAccumulation(context.affected());
         }
 
         return warmthFromLight;

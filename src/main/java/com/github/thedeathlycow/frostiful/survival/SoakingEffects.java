@@ -62,7 +62,7 @@ public final class SoakingEffects {
     }
 
     private static int getLightDrying(EnvironmentTickContext<? extends LivingEntity> context) {
-        int blockLightLevel = context.world().getBrightness(LightLayer.BLOCK, context.pos());
+        int blockLightLevel = context.level().getBrightness(LightLayer.BLOCK, context.pos());
         return blockLightLevel / 4;
     }
 

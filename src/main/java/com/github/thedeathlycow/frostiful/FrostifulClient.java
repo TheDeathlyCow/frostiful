@@ -38,7 +38,7 @@ public class FrostifulClient {
         ModelLoadingPlugin.register(new FrostifulModelLoadingPlugin());
 
         if (LoadingModList.get().getModFileById("colorfulhearts") != null) {
-            ColorfulHeartsIntegration.initialize();
+            ColorfulHeartsIntegration.initialize(modBus);
         }
 
         ClientPlayNetworking.registerGlobalReceiver(

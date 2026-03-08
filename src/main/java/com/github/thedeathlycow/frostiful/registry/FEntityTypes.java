@@ -113,7 +113,7 @@ public class FEntityTypes {
     }
 
     private static <T extends Entity> EntityType<T> register(String id, EntityType.Builder<T> builder) {
-        return Registry.register(BuiltInRegistries.ENTITY_TYPE, Frostiful.id(id), builder.build());
+        return Registry.register(BuiltInRegistries.ENTITY_TYPE, Frostiful.id(id), builder.build(id));
     }
 
     private FEntityTypes() {
