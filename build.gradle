@@ -145,7 +145,7 @@ dependencies {
     interfaceInjectionData "com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}"
 //    interfaceInjectionData "org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}"
 
-    implementation("io.wispforest:accessories-neoforge:${project.accessories_version}")
+    compileOnly("io.wispforest:accessories-neoforge:${project.accessories_version}")
     compileOnly "maven.modrinth:colorful-hearts:${project.colorful_hearts_version}"
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'

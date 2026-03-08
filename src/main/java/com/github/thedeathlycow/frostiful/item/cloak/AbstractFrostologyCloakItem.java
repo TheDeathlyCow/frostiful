@@ -1,9 +1,7 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import dev.emi.trinkets.api.TrinketsApi;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -29,15 +27,20 @@ public abstract class AbstractFrostologyCloakItem extends Item implements Equipa
     }
 
     public static boolean isWearing(Player player, Predicate<ItemStack> isCloak) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
-            boolean trinket = TrinketsApi.getTrinketComponent(player)
-                    .map(trinketComponent -> trinketComponent.isEquipped(isCloak))
-                    .orElse(false);
-
-            if (trinket) {
-                return true;
-            }
-        }
+        // TODO: accessories compat
+//        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.ACCESSORIES_ID)) {
+//            AccessoriesCapability capability = AccessoriesCapability.get(player);
+//
+//            if (capability != null && capability.isAnotherEquipped())
+//
+//            boolean trinket = TrinketsApi.getTrinketComponent(player)
+//                    .map(trinketComponent -> trinketComponent.isEquipped(isCloak))
+//                    .orElse(false);
+//
+//            if (trinket) {
+//                return true;
+//            }
+//        }
 
         ItemStack chestStack = player.getInventory()
                 .getArmor(EquipmentSlot.CHEST.getIndex());

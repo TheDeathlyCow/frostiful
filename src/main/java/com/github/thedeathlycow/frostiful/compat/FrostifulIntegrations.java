@@ -10,7 +10,7 @@ public class FrostifulIntegrations {
 
     public static final String OVERFLOWING_BARS_ID = "overflowingbars";
 
-    public static final String TRINKETS_ID = "trinkets";
+    public static final String ACCESSORIES_ID = "accessories";
 
     public static final String FABRIC_SEASONS_ID = "seasons";
 
