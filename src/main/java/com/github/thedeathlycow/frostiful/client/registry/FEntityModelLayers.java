@@ -23,7 +23,7 @@ public class FEntityModelLayers {
     public static final ModelLayerLocation ICE_SKATES = new ModelLayerLocation(Frostiful.id("ice_skates"), "main");
 
     public static void initialize() {
-        Frostiful.LOGGER.debug("Initialized Frostiful entity model layers");
+        Frostiful.LOGGER.info("Initialized Frostiful entity model layers");
         EntityModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
         EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::createBodyLayer);
         EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerModel::createBodyLayer);

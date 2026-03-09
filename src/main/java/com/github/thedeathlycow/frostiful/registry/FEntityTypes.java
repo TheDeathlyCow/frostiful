@@ -99,10 +99,6 @@ public class FEntityTypes {
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity types");
 
-        FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
-        FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());
-        FabricDefaultAttributeRegistry.register(BITER, BiterEntity.createBiterAttributes());
-
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(
                 ((world, entity, killedEntity) -> {
                     if (entity.getType() == BITER) {

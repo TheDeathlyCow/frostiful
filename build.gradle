@@ -150,20 +150,19 @@ configurations {
 }
 
 dependencies {
-    api ("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}")
+    api("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}")
     api "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
-    api ("com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}")
+    api("com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}")
     interfaceInjectionData "com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}"
-//    interfaceInjectionData "org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}"
 
     compileOnly("io.wispforest:accessories-neoforge:${project.accessories_version}")
     compileOnly "maven.modrinth:colorful-hearts:${project.colorful_hearts_version}"
 
-    implementation("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_version}") {
+    jarJar(implementation("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_version}") {
         attributes {
             attribute(Attribute.of("net.minecraft.mappings", String), "mojmap")
         }
-    }
+    })
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.7.1'
     testImplementation "net.neoforged:testframework:${project.neo_version}"
