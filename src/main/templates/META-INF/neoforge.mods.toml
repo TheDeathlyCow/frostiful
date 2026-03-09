@@ -29,6 +29,10 @@ authors="${mod_authors}"
 
 description='''${mod_description}'''
 
+[modproperties.${mod_id}."yumi:entrypoints"]
+"yumi:init" = "com.github.thedeathlycow.frostiful.Frostiful"
+"yumi:client_init" = "com.github.thedeathlycow.frostiful.FrostifulClient"
+
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
 [[mixins]]
 config="${mod_id}.mixins.json"

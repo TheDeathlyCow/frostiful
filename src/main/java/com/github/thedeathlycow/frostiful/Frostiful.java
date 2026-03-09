@@ -12,6 +12,8 @@ import com.github.thedeathlycow.frostiful.survival.ActiveTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.PassiveTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.ServerPlayerEnvironmentTickListeners;
 import com.github.thedeathlycow.frostiful.survival.SoakingEffects;
+import dev.yumi.mc.core.api.ModContainer;
+import dev.yumi.mc.core.api.entrypoint.ModInitializer;
 import me.shedaniel.autoconfig.AutoConfig;
 import me.shedaniel.autoconfig.ConfigHolder;
 import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
@@ -21,16 +23,12 @@ import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.common.Mod;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Mod(Frostiful.MODID)
-public class Frostiful {
-
+public class Frostiful implements ModInitializer {
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
@@ -39,7 +37,7 @@ public class Frostiful {
     @Nullable
     private static ConfigHolder<FrostifulConfig> configHolder = null;
 
-    public Frostiful(IEventBus modBus) {
+    public void onInitialize(ModContainer mod) {
         AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
         configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class); //NOSONAR this is fine
         FrostifulConfig.updateConfig(configHolder);
