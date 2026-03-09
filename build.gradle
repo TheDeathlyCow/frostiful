@@ -19,6 +19,7 @@ group = mod_group_id
 
 repositories {
     mavenCentral()
+    mavenLocal()
 
     maven {
         url "https://maven.su5ed.dev/releases"
@@ -26,11 +27,9 @@ repositories {
     maven {
         url "https://maven.shedaniel.me/"
     }
-    maven {
-        url layout.projectDirectory.dir("..").dir("thermoo-1.21.1-neoforge").dir("repo").asFile.toURI()
-    }
     maven { url 'https://maven.fabricmc.net' }
     maven { url 'https://maven.wispforest.io/releases' }
+    maven { url "https://jitpack.io/" }
     exclusiveContent {
         forRepository {
             maven {
@@ -157,8 +156,8 @@ dependencies {
     api "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
 
     // thermoo temperature lib
-    api("com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}")
-    interfaceInjectionData "com.github.thedeathlycow.thermoo:thermoo-1.21.1-neoforge:${project.thermoo_version}"
+    api("com.github.thedeathlycow:thermoo:v${project.thermoo_version}")
+    interfaceInjectionData "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
 
     compileOnly("io.wispforest:accessories-neoforge:${project.accessories_version}")
     compileOnly "maven.modrinth:colorful-hearts:${project.colorful_hearts_version}"
