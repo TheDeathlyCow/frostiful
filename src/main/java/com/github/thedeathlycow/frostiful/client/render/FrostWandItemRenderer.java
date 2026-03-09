@@ -25,7 +25,7 @@ public class FrostWandItemRenderer implements BuiltinItemRendererRegistry.Dynami
     public static final ResourceLocation ID = Frostiful.id("frost_wand_renderer");
     public static final ModelResourceLocation INVENTORY_MODEL_ID = new ModelResourceLocation(
             Frostiful.id("item/frost_wand_in_inventory"),
-            "main"
+            "standalone"
     );
 
     private final ModelLayerLocation modelLayer;
