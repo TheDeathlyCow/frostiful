@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.attachment;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
+import com.github.thedeathlycow.frostiful.compat.AccessoriesIntegration;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments;
@@ -110,16 +110,16 @@ public class FrostWandRootComponent implements INBTSerializable<CompoundTag> {
 
         if (this.isRooted() && providerEntity.level() instanceof ServerLevel serverWorld) {
             this.setRootedTicks(1); // set to 1 so the icebreaker enchantment can detect it
-            spawnShatterParticlesAndSound(provider, serverWorld);
+            spawnShatterParticlesAndSound(providerEntity, serverWorld);
 
             double damage = attacker instanceof LivingEntity livingAttacker
                     ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAK_DAMAGE)
                     : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
 
-            DamageSource source = FDamageSources.getDamageSources(provider.level())
+            DamageSource source = FDamageSources.getDamageSources(providerEntity.level())
                     .frostiful$brokenIce(attacker);
-            if (provider.hurt(source, (float) damage)) {
-                dropAllBindingItems(provider);
+            if (providerEntity.hurt(source, (float) damage)) {
+                dropAllBindingItems(providerEntity);
             }
         }
     }
@@ -198,7 +198,7 @@ public class FrostWandRootComponent implements INBTSerializable<CompoundTag> {
     }
 
     private static void dropAllBindingItems(LivingEntity victim) {
-        TrinketsIntegration.getAllEquipped(victim).forEach(stack -> {
+        AccessoriesIntegration.getAllEquipped(victim).forEach(stack -> {
             if (victim instanceof Player player && EnchantmentHelper.has(stack, EnchantmentEffectComponents.PREVENT_ARMOR_CHANGE)) {
                 player.drop(stack.copy(), true, true);
                 stack.setCount(0);

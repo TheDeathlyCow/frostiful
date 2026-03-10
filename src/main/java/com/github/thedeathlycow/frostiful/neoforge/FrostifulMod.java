@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.neoforge;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.AccessoriesIntegration;
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
@@ -15,6 +16,7 @@ public class FrostifulMod {
     public FrostifulMod(IEventBus modBus) {
         modBus.addListener(FrostifulMod::createDefaultAttributes);
         FrostifulEntityAttachments.REGISTRY.register(modBus);
+        AccessoriesIntegration.removeAccessoriesRenderer();
     }
 
     private static void createDefaultAttributes(EntityAttributeCreationEvent event) {

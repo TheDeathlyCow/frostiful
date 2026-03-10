@@ -168,8 +168,8 @@ dependencies {
     // i hate neoforge
 //    interfaceInjectionData "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
 
-    compileOnly("io.wispforest:accessories-neoforge:${project.accessories_version}")
-    compileOnly "maven.modrinth:colorful-hearts:${project.colorful_hearts_version}"
+    implementation("io.wispforest:accessories-neoforge:${project.accessories_version}")
+    compileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}")
 
     // fabric-style registries and init
     jarJar(implementation("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_version}") {
