@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
+import com.github.thedeathlycow.frostiful.compat.AccessoriesIntegration;
 import com.github.thedeathlycow.frostiful.item.*;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuilder;
@@ -9,8 +9,8 @@ import com.github.thedeathlycow.frostiful.item.cloak.AbstractFrostologyCloakItem
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.item.cloak.InertFrostologyCloakItem;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
-import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.item.v1.FabricItem;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -335,7 +335,7 @@ public final class FItems {
                 return true;
             }
 
-            for (ItemStack stack : TrinketsIntegration.getAllEquipped(entity)) {
+            for (ItemStack stack : AccessoriesIntegration.getAllEquipped(entity)) {
                 if (stack.is(FItems.FROSTOLOGY_CLOAK)) {
                     return false;
                 }
