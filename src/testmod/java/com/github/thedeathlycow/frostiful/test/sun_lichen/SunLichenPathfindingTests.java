@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.sun_lichen;
 
+import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
@@ -8,26 +9,30 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
+@GameTestHolder(FrostifulGameTest.MODID)
+@PrefixGameTestTemplate(false)
 public final class SunLichenPathfindingTests {
 
-    @GameTest(template = "frostiful-test:sun_lichen_tests.pathfinding.hot_sun_lichen")
+    @GameTest(template = "sun_lichen_tests.pathfinding.hot_sun_lichen")
     public void villager_avoids_hot_sun_lichen(GameTestHelper context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.EMERALD_BLOCK);
     }
 
-    @GameTest(template = "frostiful-test:sun_lichen_tests.pathfinding.warm_sun_lichen")
+    @GameTest(template = "sun_lichen_tests.pathfinding.warm_sun_lichen")
     public void villager_avoids_warm_sun_lichen(GameTestHelper context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.EMERALD_BLOCK);
     }
 
-    @GameTest(template = "frostiful-test:sun_lichen_tests.pathfinding.cool_sun_lichen")
+    @GameTest(template = "sun_lichen_tests.pathfinding.cool_sun_lichen")
     public void villager_avoids_cool_sun_lichen(GameTestHelper context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.EMERALD_BLOCK);
     }
 
-    @GameTest(template = "frostiful-test:sun_lichen_tests.pathfinding.cold_sun_lichen")
+    @GameTest(template = "sun_lichen_tests.pathfinding.cold_sun_lichen")
     public void villager_does_not_avoid_cold_sun_lichen(GameTestHelper context) {
         runAvoidanceTest(context, EntityType.VILLAGER, Blocks.GOLD_BLOCK);
     }

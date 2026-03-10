@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.effects;
 
+import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -7,10 +8,14 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
+@GameTestHolder(FrostifulGameTest.MODID)
+@PrefixGameTestTemplate(false)
 public class BlockLightTemperatureTests {
-    @GameTest(template = "frostiful-test:effects.local_temperature")
+    @GameTest(template = "effects.local_temperature")
     public void villager_is_warmed_by_torch(GameTestHelper context) {
         BlockPos pos = new BlockPos(1, 2, 1);
         int temperature = -2000;
@@ -43,7 +48,7 @@ public class BlockLightTemperatureTests {
         );
     }
 
-    @GameTest(template = "frostiful-test:effects.local_temperature")
+    @GameTest(template = "effects.local_temperature")
     public void villager_in_boat_is_warmed_by_torch(GameTestHelper context) {
         BlockPos pos = new BlockPos(1, 2, 1);
         int temperature = -2000;
@@ -91,7 +96,7 @@ public class BlockLightTemperatureTests {
     }
 
 
-    @GameTest(template = "frostiful-test:effects.local_temperature")
+    @GameTest(template = "effects.local_temperature")
     public void villager_is_not_warmed(GameTestHelper context) {
         BlockPos pos = new BlockPos(1, 2, 1);
         int temperature = -2000;

@@ -1,16 +1,21 @@
 package com.github.thedeathlycow.frostiful.test.damage;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.npc.Villager;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
+@GameTestHolder(FrostifulGameTest.MODID)
+@PrefixGameTestTemplate(false)
 public class HotFloorTests {
-    @GameTest(template = "frostiful-test:magma_block_test")
+    @GameTest(template = "magma_block_test")
     public void villager_on_magma_heated_more_than_villager_on_stone(GameTestHelper context) {
         int temperatureChange = Frostiful.getConfig().freezingConfig.getHeatFromHotFloor();
 

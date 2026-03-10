@@ -92,7 +92,8 @@ neoForge {
 
         gameTestServer {
             type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+            systemProperty 'neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test"
+            logLevel = org.slf4j.event.Level.INFO
         }
 
         data {
@@ -134,6 +135,7 @@ neoForge {
     unitTest {
         enable()
         testedMod = mods.frostiful
+        loadedMods = [testedMod.get()]
     }
 
     interfaceInjectionData.from file('src/main/resources/interfaces.json').absolutePath

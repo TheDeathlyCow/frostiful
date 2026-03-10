@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.test.frostologer;
 
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import net.fabricmc.fabric.api.gametest.v1.FabricGameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.Registries;
@@ -12,10 +13,14 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.raid.Raid;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
+@GameTestHolder(FrostifulGameTest.MODID)
+@PrefixGameTestTemplate(false)
 public class ChillagerDropTests {
-    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest(template = FrostifulGameTest.EMPTY_STRUCTURE)
     public void regular_chillager_does_not_drop_ominous_bottle(GameTestHelper context) {
         Level world = context.getLevel();
         DamageSources damageSources = world.damageSources();
@@ -29,7 +34,7 @@ public class ChillagerDropTests {
         context.succeed();
     }
 
-    @GameTest(template = FabricGameTest.EMPTY_STRUCTURE)
+    @GameTest(template = FrostifulGameTest.EMPTY_STRUCTURE)
     public void chillager_captain_drops_ominous_bottle(GameTestHelper context) {
         Level world = context.getLevel();
         DamageSources damageSources = world.damageSources();

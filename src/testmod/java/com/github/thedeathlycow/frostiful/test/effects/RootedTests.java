@@ -1,16 +1,21 @@
 package com.github.thedeathlycow.frostiful.test.effects;
 
 import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
+import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
+@GameTestHolder(FrostifulGameTest.MODID)
+@PrefixGameTestTemplate(false)
 public class RootedTests {
 
-    @GameTest(template = "frostiful-test:effects.platform")
+    @GameTest(template = "effects.platform")
     public void villager_stops_walking_when_rooted(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 2, 1);
         BlockPos end = start.offset(2, 0, 2);
@@ -23,7 +28,7 @@ public class RootedTests {
         context.succeedWhenEntityPresent(EntityType.VILLAGER, start);
     }
 
-    @GameTest(template = "frostiful-test:effects.platform")
+    @GameTest(template = "effects.platform")
     public void villager_can_walk_when_not_rooted(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 2, 1);
         BlockPos end = start.offset(2, 0, 2);
@@ -34,7 +39,7 @@ public class RootedTests {
         context.succeedWhenEntityPresent(EntityType.VILLAGER, end);
     }
 
-    @GameTest(template = "frostiful-test:effects.platform")
+    @GameTest(template = "effects.platform")
     public void villager_root_is_not_reset(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 2, 1);
 

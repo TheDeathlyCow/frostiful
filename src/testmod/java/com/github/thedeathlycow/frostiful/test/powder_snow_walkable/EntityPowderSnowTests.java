@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.powder_snow_walkable;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTest;
 import net.minecraft.gametest.framework.GameTestHelper;
@@ -11,11 +12,15 @@ import net.minecraft.world.entity.animal.Rabbit;
 import net.minecraft.world.entity.monster.Zombie;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.neoforged.neoforge.gametest.GameTestHolder;
+import net.neoforged.neoforge.gametest.PrefixGameTestTemplate;
 
 @SuppressWarnings("unused")
+@GameTestHolder(FrostifulGameTest.MODID)
+@PrefixGameTestTemplate(false)
 public class EntityPowderSnowTests {
 
-    @GameTest(template = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(template = "powder_snow_walkable_test")
     public void zombie_wearing_fur_boots_does_not_fall(GameTestHelper context) {
         context.setDayTime(18000);
         BlockPos spawnPos = new BlockPos(1, 3, 1);
@@ -32,7 +37,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(template = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(template = "powder_snow_walkable_test")
     public void zombie_wearing_chainmail_fur_boots_does_not_fall(GameTestHelper context) {
         context.setDayTime(18000);
         BlockPos spawnPos = new BlockPos(1, 3, 1);
@@ -48,7 +53,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(template = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(template = "powder_snow_walkable_test")
     public void zombie_wearing_leather_boots_does_not_fall(GameTestHelper context) {
         context.setDayTime(18000);
         BlockPos spawnPos = new BlockPos(1, 3, 1);
@@ -65,7 +70,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(template = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(template = "powder_snow_walkable_test")
     public void zombie_wearing_no_boots_falls(GameTestHelper context) {
         context.setDayTime(18000);
         BlockPos spawnPos = new BlockPos(1, 3, 1);
@@ -80,7 +85,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(template = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(template = "powder_snow_walkable_test")
     public void rabbit_does_not_fall(GameTestHelper context) {
         BlockPos spawnPos = new BlockPos(1, 3, 1);
 
