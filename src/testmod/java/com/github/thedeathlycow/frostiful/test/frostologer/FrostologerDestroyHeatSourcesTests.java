@@ -137,7 +137,7 @@ public class FrostologerDestroyHeatSourcesTests {
     //endregion
 
     //region protected blocks tests
-    @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
+    @GameTest(template = "frostologer_heat_source_test_template")
     public void pink_concrete_is_unaffected_by_frostologer(GameTestHelper context) {
         runDestroyHeatSourceTest(context, Blocks.PINK_CONCRETE.defaultBlockState(), Blocks.PINK_CONCRETE);
     }
@@ -330,7 +330,7 @@ public class FrostologerDestroyHeatSourcesTests {
         );
     }
 
-    @GameTest(template = "frostiful-test:frostologer_heat_source_test_template")
+    @GameTest(template = "frostologer_heat_source_test_template")
     public void crying_obisidan_becomes_obsidian(GameTestHelper context) {
         runDestroyHeatSourceTest(
                 context,
