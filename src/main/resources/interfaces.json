@@ -1,0 +1,6 @@
+{
+    "net/minecraft/world/entity/LivingEntity": [
+        "com/github/thedeathlycow/thermoo/api/temperature/TemperatureAware",
+        "com/github/thedeathlycow/thermoo/api/temperature/Soakable"
+    ]
+}
