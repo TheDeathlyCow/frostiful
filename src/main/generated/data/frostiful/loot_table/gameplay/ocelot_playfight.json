@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:selector",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "chance": 0.67,
+              "condition": "minecraft:random_chance"
+            }
+          ],
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "frostiful:ocelot_fur_tuft"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "frostiful:gameplay/ocelot_playfight"
+}

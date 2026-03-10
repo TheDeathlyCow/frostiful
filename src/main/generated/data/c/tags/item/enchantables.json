@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "id": "#frostiful:enchantable/frost_wand",
+      "required": false
+    },
+    {
+      "id": "#frostiful:enchantable/ice_skates",
+      "required": false
+    }
+  ]
+}

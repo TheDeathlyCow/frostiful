@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:features_cannot_replace",
+      "required": false
+    },
+    {
+      "id": "#minecraft:logs",
+      "required": false
+    },
+    {
+      "id": "#minecraft:leaves",
+      "required": false
+    }
+  ]
+}

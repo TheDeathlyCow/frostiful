@@ -3,6 +3,12 @@ package com.github.thedeathlycow.frostiful.datagen;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.datagen.generator.BlockTransformerProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.FRecipeProvider;
+import com.github.thedeathlycow.frostiful.datagen.generator.loot.*;
+import com.github.thedeathlycow.frostiful.datagen.generator.registry.FrostifulEnchantmentBootstrap;
+import com.github.thedeathlycow.frostiful.datagen.generator.BootstrappedRegistryGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.tag.FBlockTagGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.tag.FEnchantmentTagGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.tag.FItemTagGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.FrostifulModelGenerator;
 import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
@@ -24,10 +30,22 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         LOGGER.info("Running Frostiful datagen");
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
+        pack.addProvider(BootstrappedRegistryGenerator::new);
+
+        pack.addProvider(FBlockLootGenerator::new);
+        pack.addProvider(FEntityLootGenerator::new);
+        pack.addProvider(FBrushingLootGenerator::new);
+        pack.addProvider(FPlayfightLootGenerator::new);
+        pack.addProvider(FChestLootGenerator::new);
 
         pack.addProvider(FRecipeProvider::new);
-        pack.addProvider(FrostifulModelGenerator::new);
         pack.addProvider(BlockTransformerProvider::new);
+
+        pack.addProvider(FrostifulModelGenerator::new);
+
+        FBlockTagGenerator blockTagProvider = pack.addProvider(FBlockTagGenerator::new);
+        pack.addProvider((output, registriesFuture) -> new FItemTagGenerator(output, registriesFuture, blockTagProvider));
+        pack.addProvider(FEnchantmentTagGenerator::new);
     }
 
     @Override
@@ -40,6 +58,10 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         registryBuilder.add(
                 Registries.BANNER_PATTERN,
                 FBannerPatterns::bootstrap
+        );
+        registryBuilder.add(
+                Registries.ENCHANTMENT,
+                FrostifulEnchantmentBootstrap::bootstrap
         );
     }
 

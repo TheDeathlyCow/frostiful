@@ -15,16 +15,37 @@ import java.util.List;
 import java.util.Objects;
 
 public class FLootHelper {
+    public static <E extends LivingEntity> void dropPlayfightLoot(E entity, ResourceKey<LootTable> lootTableId) {
+        Level level = entity.level();
+        if (level instanceof ServerLevel serverLevel && Boolean.TRUE.equals(serverLevel.getGameRules().get(GameRules.MOB_DROPS))) {
+            LootTable lootTable = Objects.requireNonNull(serverLevel.getServer())
+                    .reloadableRegistries()
+                    .getLootTable(lootTableId);
 
-    public static <E extends LivingEntity> void dropLootFromEntity(E entity, ResourceKey<LootTable> lootTableId) {
-        Level world = entity.level();
-        if (world instanceof ServerLevel serverWorld && serverWorld.getGameRules().get(GameRules.MOB_DROPS)) {
-            LootTable lootTable = Objects.requireNonNull(world.getServer())
-                    .reloadableRegistries().getLootTable(lootTableId);
-            List<ItemStack> generatedItems = lootTable.getRandomItems(new LootParams.Builder(serverWorld)
+            List<ItemStack> generatedItems = lootTable.getRandomItems(new LootParams.Builder(serverLevel)
                     .withParameter(LootContextParams.THIS_ENTITY, entity)
                     .withParameter(LootContextParams.ORIGIN, entity.position())
                     .create(LootContextParamSets.SELECTOR));
+
+            for (ItemStack stack : generatedItems) {
+                entity.spawnAtLocation(serverLevel, stack);
+            }
+        }
+    }
+
+
+    public static <E extends LivingEntity> void dropBrushingLoot(E entity, ItemStack tool, ResourceKey<LootTable> lootTableId) {
+        Level world = entity.level();
+        if (world instanceof ServerLevel serverWorld && Boolean.TRUE.equals(serverWorld.getGameRules().get(GameRules.MOB_DROPS))) {
+            LootTable lootTable = Objects.requireNonNull(world.getServer())
+                    .reloadableRegistries()
+                    .getLootTable(lootTableId);
+
+            List<ItemStack> generatedItems = lootTable.getRandomItems(new LootParams.Builder(serverWorld)
+                    .withParameter(LootContextParams.THIS_ENTITY, entity)
+                    .withParameter(LootContextParams.ORIGIN, entity.position())
+                    .withParameter(LootContextParams.TOOL, tool)
+                    .create(LootContextParamSets.SHEARING));
 
             for (ItemStack stack : generatedItems) {
                 entity.spawnAtLocation(serverWorld, stack);

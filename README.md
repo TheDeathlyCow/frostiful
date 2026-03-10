@@ -52,21 +52,23 @@ Version 1.21.1 will receive limited fixes only support (for things such as minor
 
 Unsupported versions version will receive no future updates, except for critical security fixes.
 
-| Minecraft Version | Support Status |
-|-------------------|----------------|
-| 1.21.11           | ✅ Supported    | 
-| 1.21.10           | ❌ Unsupported  |
-| 1.21.9            | ❌ Unsupported  |
-| 1.21.6-8          | ❌ Unsupported  |
-| 1.21.5            | ❌ Unsupported  |
-| 1.21.4            | ❌ Unsupported  |
-| 1.21.2-3          | ❌ Unsupported  |
-| 1.21.1            | ⚠️ Fixes only  | 
-| 1.20.4            | ❌ Unsupported  | 
-| 1.20.2            | ❌ Unsupported  | 
-| 1.20.1            | ❌ Unsupported  |
-| 1.19.4            | ❌ Unsupported  |
-| 1.19.2            | ❌ Unsupported  | 
+| Minecraft Version | Support Status                        |
+|-------------------|---------------------------------------|
+| 1.21.11           | ✅ Supported                           | 
+| 1.21.10           | ❌ Unsupported                         |
+| 1.21.9            | ❌ Unsupported                         |
+| 1.21.6-8          | ❌ Unsupported                         |
+| 1.21.5            | ❌ Unsupported                         |
+| 1.21.4            | ❌ Unsupported                         |
+| 1.21.2-3          | ❌ Unsupported                         |
+| 1.21.1            | ⚠️ Fixes only (includes Neoforge[^1]) | 
+| 1.20.4            | ❌ Unsupported                         | 
+| 1.20.2            | ❌ Unsupported                         | 
+| 1.20.1            | ❌ Unsupported                         |
+| 1.19.4            | ❌ Unsupported                         |
+| 1.19.2            | ❌ Unsupported                         | 
+
+[^1]: Frostiful's Neoforge port is very experimental. It is still in alpha, and therefore may contain bugs and cause crashes. The port has also been created in a 'Fabric-like' manner using Forgified Fabric API and custom entry points to minimize the changes needed from the original version, which means that it may not work very well with the Neoforge ecosystem. Proceed with mild caution and please feel free to report issues to the [issue tracker](https://github.com/TheDeathlyCow/frostiful/issues). **Frostiful remains a Fabric-first mod and the Neoforge port is not likely to be updated to new Minecraft versions regularly.**
 
 # Build and Run
 
