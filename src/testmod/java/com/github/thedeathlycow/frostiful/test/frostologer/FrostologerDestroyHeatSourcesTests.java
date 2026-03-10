@@ -72,12 +72,12 @@ public class FrostologerDestroyHeatSourcesTests {
 
     @GameTest(template = "frostologer_heat_source_test_template")
     public void glowstone_becomes_air(GameTestHelper context) {
-        runDestroyHeatSourceTest(context, Blocks.GLOWSTONE.defaultBlockState(), Blocks.ICE);
+        runDestroyHeatSourceTest(context, Blocks.GLOWSTONE.defaultBlockState(), Blocks.AIR);
     }
 
     @GameTest(template = "frostologer_heat_source_test_template")
     public void shroomlight_becomes_air(GameTestHelper context) {
-        runDestroyHeatSourceTest(context, Blocks.SHROOMLIGHT.defaultBlockState(), Blocks.ICE);
+        runDestroyHeatSourceTest(context, Blocks.SHROOMLIGHT.defaultBlockState(), Blocks.AIR);
     }
 
     @GameTest(template = "frostologer_heat_source_test_template")
@@ -92,7 +92,7 @@ public class FrostologerDestroyHeatSourcesTests {
 
     @GameTest(template = "frostologer_heat_source_test_template")
     public void sea_lantern_becomes_air(GameTestHelper context) {
-        runDestroyHeatSourceTest(context, Blocks.SEA_LANTERN.defaultBlockState(), Blocks.ICE);
+        runDestroyHeatSourceTest(context, Blocks.SEA_LANTERN.defaultBlockState(), Blocks.AIR);
     }
 
     @GameTest(template = "frostologer_heat_source_test_template")
