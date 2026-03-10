@@ -4,9 +4,6 @@ on: [workflow_dispatch] # Manual trigger
 jobs:
   curseforge:
     runs-on: ubuntu-22.04
-    container:
-      image: mcr.microsoft.com/openjdk/jdk:21-ubuntu
-      options: --user root
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
@@ -20,9 +17,6 @@ jobs:
           CURSEFORGE_API_KEY: ${{ secrets.CURSEFORGE_API_KEY }}
   modrinth:
     runs-on: ubuntu-22.04
-    container:
-      image: mcr.microsoft.com/openjdk/jdk:21-ubuntu
-      options: --user root
     steps:
       - name: checkout repository
         uses: actions/checkout@v4
