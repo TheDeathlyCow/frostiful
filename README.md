@@ -2,6 +2,9 @@
 
 A Vanilla+ Freezing Temperature Mod. Also try [Scorchful](https://github.com/TheDeathlyCow/scorchful/)!
 
+> [!WARNING]
+> This is an experimental Neoforge port of Frostiful. It is still in alpha, and therefore may contain bugs and cause crashes. This port has also been created in a 'Fabric-like' manner using Forgified Fabric API and custom entry points to minimize the changes needed from the original version, which means that it may not work very well with the Neoforge ecosystem. Proceed with mild caution and please feel free to report issues to the [issue tracker](https://github.com/TheDeathlyCow/frostiful/issues). Frostiful remains a Fabric-first mod and this port is not likely to be updated to new Minecraft versions regularly.
+
 # Download Pages
 
 * Modrinth: https://modrinth.com/mod/frostiful
@@ -31,7 +34,7 @@ Many other patches that are also relevant for Frostiful are provided by the stan
 
 * [Tips](https://modrinth.com/mod/tips): Added some Frostiful-specific tips
 * [Enchantment Descriptions](https://modrinth.com/mod/enchantment-descriptions): Descriptions are provided for Frostiful's enchantments
-* [Trinkets](https://modrinth.com/mod/trinkets): The Cloaks of Frostology can be equipped in the Trinkets Cape slot (also works with Accessories with the Trinkets compat layer)
+* [Accessories](https://modrinth.com/mod/accessories): The Cloaks of Frostology can be equipped in the Accessories Cape slot
 * [Farmer's Delight](https://modrinth.com/mod/farmers-delight-fabric): Hot Cocoa provides the Warmth effect
 * [Farmer's Respite](https://www.curseforge.com/minecraft/mc-mods/farmers-respite): Teas and warm foods provide the Warmth effect
 * [Festive Delight](https://www.curseforge.com/minecraft/mc-mods/festive-delight): Christmas Tea provides the Warmth effect

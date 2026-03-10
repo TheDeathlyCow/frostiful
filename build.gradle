@@ -3,6 +3,7 @@ plugins {
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.134'
     id 'idea'
+    id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 }
 
 tasks.named('wrapper', Wrapper).configure {
@@ -60,6 +61,10 @@ sourceSets {
         compileClasspath += main.output
         runtimeClasspath += main.output
     }
+}
+
+java {
+    withSourcesJar()
 }
 
 test {
@@ -238,5 +243,41 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+publishMods {
+    changelog = file("changelogs/${mod_version}.md").text
+    type = ALPHA
+
+    file = jar.archiveFile
+    additionalFiles.from(sourcesJar.archiveFile)
+    displayName = "Frostiful Neoforge ${mod_version}"
+
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+        projectId = "715248"
+        minecraftVersions.addAll("1.21.1")
+
+        javaVersions.add(JavaVersion.VERSION_21)
+
+        clientRequired = true
+        serverRequired = true
+
+        requires("forgified-fabric-api", "thermoo", "cloth-config")
+
+        optional("accessories")
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "Ae6qoBj3"
+        minecraftVersions.addAll("1.21.1")
+
+        requires("forgified-fabric-api", "thermoo", "cloth-config")
+
+        optional("accessories")
     }
 }
