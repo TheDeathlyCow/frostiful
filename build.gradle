@@ -94,6 +94,10 @@ neoForge {
             type = "gameTestServer"
             systemProperty 'neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test"
             logLevel = org.slf4j.event.Level.INFO
+
+            dependencies {
+                additionalRuntimeClasspath("org.mockito:mockito-core:3.+")
+            }
         }
 
         data {
