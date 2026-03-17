@@ -16,7 +16,7 @@ public class FItemGroups {
             Frostiful.id("main"),
             FabricItemGroup.builder()
                     .icon(() -> new ItemStack(FItems.FROST_WAND))
-                    .title(Component.translatable("itemGroup.frostiful.frostiful"))
+                    .title(Component.translatable("itemGroup.frostiful"))
                     .displayItems((context, entries) -> {
                         entries.accept(new ItemStack(FItems.FROST_WAND));
                         entries.accept(new ItemStack(FItems.INERT_FROSTOLOGY_CLOAK));

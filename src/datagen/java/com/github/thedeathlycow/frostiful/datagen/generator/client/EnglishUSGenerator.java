@@ -52,7 +52,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder builder) {
         HolderLookup<BannerPattern> bannerPatterns = provider.lookupOrThrow(Registries.BANNER_PATTERN);
 
-        builder.add("itemGroup.frostiful.frostiful", "Frostiful");
+        builder.add("itemGroup.frostiful", "Frostiful");
 
         builder.add(FItems.FROST_WAND, "Frost Wand");
         builder.add(FItems.FUR_HELMET, "Fur Hood");

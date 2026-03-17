@@ -166,7 +166,7 @@
   "item.minecraft.potion.effect.frostiful.freezing": "Potion of Freezing",
   "item.minecraft.splash_potion.effect.frostiful.freezing": "Splash Potion of Freezing",
   "item.minecraft.tipped_arrow.effect.frostiful.freezing": "Arrow of Freezing",
-  "itemGroup.frostiful.frostiful": "Frostiful",
+  "itemGroup.frostiful": "Frostiful",
   "tag.block.c.icicles": "Icicles",
   "tag.item.c.icicles": "Icicles",
   "tag.item.frostiful.enchantable.frost_wand": "Enchantable Frost Wand",
