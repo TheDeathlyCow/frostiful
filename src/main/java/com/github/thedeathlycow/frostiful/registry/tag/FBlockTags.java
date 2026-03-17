@@ -2,10 +2,12 @@ package com.github.thedeathlycow.frostiful.registry.tag;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
 
 public class FBlockTags {
+    public static final TagKey<Block> C_ICICLES = convention("icicles");
     public static final TagKey<Block> COVERED_ROCK_COVERING_REPLACEABLE = register("covered_rock_covering_replaceable");
     public static final TagKey<Block> COVERED_ROCKS_CANNOT_REPLACE = register("covered_rocks_cannot_replace");
     public static final TagKey<Block> FROSTOLOGER_CANNOT_FREEZE = register("frostologer_cannot_freeze");
@@ -20,5 +22,9 @@ public class FBlockTags {
 
     private static TagKey<Block> register(String id) {
         return TagKey.create(Registries.BLOCK, Frostiful.id(id));
+    }
+
+    private static TagKey<Block> convention(String id) {
+        return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", id));
     }
 }

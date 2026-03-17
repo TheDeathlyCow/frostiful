@@ -93,7 +93,7 @@ public class FBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
         valueLookupBuilder(ConventionalBlockTags.GLASS_BLOCKS_COLORLESS)
                 .add(FBlocks.ICE_PANE);
 
-        valueLookupBuilder(commonBlockKey("icicles"))
+        valueLookupBuilder(FBlockTags.C_ICICLES)
                 .add(FBlocks.ICICLE);
     }
 

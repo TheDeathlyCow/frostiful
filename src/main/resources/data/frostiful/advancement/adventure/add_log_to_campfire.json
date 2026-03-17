@@ -5,10 +5,10 @@
             "id": "minecraft:spruce_sapling"
         },
         "title": {
-            "translate": "advancements.frostiful.adventure.add_log_to_fire.title"
+            "translate": "advancements.frostiful.adventure.add_log_to_campfire.title"
         },
         "description": {
-            "translate": "advancements.frostiful.adventure.add_log_to_fire.description"
+            "translate": "advancements.frostiful.adventure.add_log_to_campfire.description"
         }
     },
     "criteria": {

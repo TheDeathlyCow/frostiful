@@ -34,6 +34,8 @@ import java.util.function.BiConsumer;
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.*;
 
 public class FChestLootGenerator extends SimpleFabricLootTableProvider {
+    public static final String FILLED_MAP_TRANSLATION_KEY = "filled_map.frostiful.frostologer_castle";
+
     private final CompletableFuture<HolderLookup.Provider> registriesFuture;
 
     public FChestLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
@@ -101,7 +103,7 @@ public class FChestLootGenerator extends SimpleFabricLootTableProvider {
                                                         )
                                                         .apply(
                                                                 SetNameFunction.setName(
-                                                                        Component.translatable("filled_map.frostiful.frostologer_castle")
+                                                                        Component.translatable(FILLED_MAP_TRANSLATION_KEY)
                                                                                 .withStyle(Style.EMPTY.withFont(new FontDescription.Resource(Identifier.withDefaultNamespace("illageralt")))),
                                                                         SetNameFunction.Target.ITEM_NAME
                                                                 )

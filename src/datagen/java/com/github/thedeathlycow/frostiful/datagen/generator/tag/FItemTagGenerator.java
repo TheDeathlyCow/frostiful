@@ -108,7 +108,7 @@ public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
         valueLookupBuilder(ConventionalItemTags.GLASS_BLOCKS_COLORLESS)
                 .add(FItems.ICE_PANE);
 
-        valueLookupBuilder(commonItemKey("icicles"))
+        valueLookupBuilder(FItemTags.C_ICICLES)
                 .add(FItems.ICICLE);
 
         valueLookupBuilder(ConventionalItemTags.HUMANOID_ARMORS)

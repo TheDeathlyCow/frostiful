@@ -21,8 +21,8 @@ import net.minecraft.world.level.block.entity.BannerPatterns;
 import static net.minecraft.commands.Commands.literal;
 
 public final class FrostedBanner {
-
-    private static final Component FROSTED_BANNER_NAME = Component.translatable("block.frostiful.frosted_banner")
+    public static final String FROSTED_BANNER_TRANSLATION_KEY = "block.frostiful.frosted_banner";
+    private static final Component FROSTED_BANNER_NAME = Component.translatable(FROSTED_BANNER_TRANSLATION_KEY)
             .withStyle(ChatFormatting.DARK_PURPLE);
 
 
