@@ -13,6 +13,7 @@ import com.github.thedeathlycow.frostiful.datagen.generator.tag.FItemTagGenerato
 import com.github.thedeathlycow.frostiful.datagen.generator.client.FrostifulModelGenerator;
 import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
+import com.github.thedeathlycow.frostiful.registry.FDamageTypes;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.core.RegistrySetBuilder;
@@ -65,6 +66,10 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         registryBuilder.add(
                 Registries.ENCHANTMENT,
                 FrostifulEnchantmentBootstrap::bootstrap
+        );
+        registryBuilder.add(
+                Registries.DAMAGE_TYPE,
+                FDamageTypes::bootstrap
         );
     }
 

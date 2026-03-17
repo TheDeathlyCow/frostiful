@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
-import com.github.thedeathlycow.frostiful.entity.damage.FDamageTypes;
+import com.github.thedeathlycow.frostiful.registry.FDamageTypes;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageSource;

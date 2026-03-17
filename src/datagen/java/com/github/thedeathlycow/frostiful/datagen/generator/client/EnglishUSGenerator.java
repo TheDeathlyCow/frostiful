@@ -13,6 +13,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -51,6 +52,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
     @Override
     public void generateTranslations(HolderLookup.Provider provider, TranslationBuilder builder) {
         HolderLookup<BannerPattern> bannerPatterns = provider.lookupOrThrow(Registries.BANNER_PATTERN);
+        HolderLookup<DamageType> damageTypes = provider.lookupOrThrow(Registries.DAMAGE_TYPE);
 
         builder.add("itemGroup.frostiful", "Frostiful");
 
@@ -221,6 +223,37 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         addAdvancement(builder, FAdvancements.WARM_BY_LIGHT, "A Warm and Beautiful Light", "Use light to keep warm");
         addAdvancement(builder, FAdvancements.ADD_LOG_TO_CAMPFIRE, "Timber Hearth", "Add a log to a campfire");
         addAdvancement(builder, FAdvancements.STEP_ON_SUN_LICHEN, "Ouch! That Burns!", "Use Sun Lichen to warm yourself");
+
+        addDamageType(
+                builder,
+                damageTypes.getOrThrow(FDamageTypes.ICICLE),
+                "%1$s was impaled on an icicle",
+                "%1$s was impaled on an icicle whilst fighting %2$s"
+        );
+        addDamageType(
+                builder,
+                damageTypes.getOrThrow(FDamageTypes.FALLING_ICICLE),
+                "%1$s was skewered by a falling icicle",
+                "%1$s was skewered by a falling icicle whilst fighting %2$s"
+        );
+        addDamageType(
+                builder,
+                damageTypes.getOrThrow(FDamageTypes.ICE_SKATE),
+                "%1$s got a skate to the face",
+                "%1$s got a skate to the face from %2$s"
+        );
+        addDamageType(
+                builder,
+                damageTypes.getOrThrow(FDamageTypes.MELT),
+                "%1$s melted",
+                "%1$s was turned into a puddle by %2$s"
+        );
+        addDamageType(
+                builder,
+                damageTypes.getOrThrow(FDamageTypes.BROKEN_ICE),
+                "%1$s was shattered into a million pieces",
+                "%1$s was shattered into a million pieces by %2$s"
+        );
     }
 
     private String itemSuffix(Item item, String suffix) {
@@ -285,5 +318,17 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(translationKey + ".title", title);
         builder.add(translationKey + ".description", desc);
+    }
+
+    private void addDamageType(
+            TranslationBuilder builder,
+            Holder<DamageType> damageType,
+            String deathMessage,
+            String playerDeathMessage
+    ) {
+        String translationKey = "death.attack." + damageType.value().msgId();
+
+        builder.add(translationKey, deathMessage);
+        builder.add(translationKey + ".player", playerDeathMessage);
     }
 }
