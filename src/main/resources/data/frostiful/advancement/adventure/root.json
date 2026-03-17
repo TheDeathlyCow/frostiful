@@ -5,10 +5,10 @@
             "id": "frostiful:frost_wand"
         },
         "title": {
-            "translate": "advancements.frostiful.root.title"
+            "translate": "advancements.frostiful.adventure.root.title"
         },
         "description": {
-            "translate": "advancements.frostiful.root.description"
+            "translate": "advancements.frostiful.adventure.root.description"
         },
         "announce_to_chat": false,
         "show_toast": true,
