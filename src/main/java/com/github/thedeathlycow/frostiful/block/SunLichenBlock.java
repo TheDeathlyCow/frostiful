@@ -148,7 +148,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         }
         RandomSource random = world.getRandom();
         float pitch = 0.8F + (random.nextFloat() - random.nextFloat()) * 0.4F;
-        world.playSound(null, pos, FSoundEvents.FIRE_LICHEN_DISCHARGE, SoundSource.BLOCKS, 0.7F, pitch);
+        world.playSound(null, pos, FSoundEvents.SUN_LICHEN_DISCHARGE, SoundSource.BLOCKS, 0.7F, pitch);
     }
 
     private static void createFireParticles(Level world, BlockPos pos) {

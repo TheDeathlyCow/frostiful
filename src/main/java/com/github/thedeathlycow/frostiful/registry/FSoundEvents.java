@@ -9,7 +9,7 @@ import net.minecraft.sounds.SoundEvent;
 
 public class FSoundEvents {
 
-    public static final SoundEvent FIRE_LICHEN_DISCHARGE = register("block.frostiful.sun_lichen.discharge");
+    public static final SoundEvent SUN_LICHEN_DISCHARGE = register("block.frostiful.sun_lichen.discharge");
     public static final SoundEvent CAMPFIRE_HISS = register("block.frostiful.campfire.hiss");
     public static final SoundEvent ITEM_FROST_WAND_CAST_SPELL = register("item.frostiful.frost_wand.cast_spell");
     public static final SoundEvent ITEM_FROST_WAND_PREPARE_CAST = register("item.frostiful.frost_wand.prepare_cast");

@@ -254,6 +254,38 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
                 "%1$s was shattered into a million pieces",
                 "%1$s was shattered into a million pieces by %2$s"
         );
+
+        builder.add(FSoundEvents.SUN_LICHEN_DISCHARGE, "Sun lichen discharges heat");
+        builder.add(FSoundEvents.CAMPFIRE_HISS, "Campfire hisses");
+        builder.add(FSoundEvents.ITEM_FROST_WAND_CAST_SPELL, "Frost wand fires spell");
+        builder.add(FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST, "Frost wand charges spell");
+        builder.add(FSoundEvents.ENTITY_FROST_SPELL_FREEZE, "Entity freezes");
+        builder.add(FSoundEvents.ENTITY_FROSTOLOGER_AMBIENT, "Frostologer murmurs");
+        builder.add(FSoundEvents.ENTITY_FROSTOLOGER_CAST_SPELL, "Frostologer casts spell");
+        builder.add(FSoundEvents.ENTITY_FROSTOLOGER_PREPARE_CAST_BLIZZARD, "Frostologer channels blizzard");
+        builder.add(FSoundEvents.ENTITY_FROSTOLOGER_CELEBRATE, "Frostologer cheers");
+        builder.add(FSoundEvents.ENTITY_FROSTOLOGER_DEATH, "Frostologer dies");
+        builder.add(FSoundEvents.ENTITY_FROSTOLOGER_HURT, "Frostologer hurts");
+        builder.add(FSoundEvents.ENTITY_CHILLAGER_AMBIENT, "Chillager chills");
+        builder.add(FSoundEvents.ENTITY_CHILLAGER_CELEBRATE, "Chillager cheers");
+        builder.add(FSoundEvents.ENTITY_CHILLAGER_DEATH, "Chillager dies");
+        builder.add(FSoundEvents.ENTITY_CHILLAGER_HURT, "Chillager hurts");
+        builder.add(FSoundEvents.ENTITY_THROWN_ICICLE_HIT, "Icicle hits");
+        builder.add(FSoundEvents.ENTITY_THROWN_ICICLE_THROW, "Icicle flies");
+        builder.add(FSoundEvents.ENTITY_BITER_AMBIENT, "Biter stomach rumbles");
+        builder.add(FSoundEvents.ENTITY_BITER_DEATH, "Biter dies");
+        builder.add(FSoundEvents.ENTITY_BITER_HURT, "Biter hurts");
+        builder.add(FSoundEvents.ENTITY_BITER_BITE, "Biter chomps");
+        builder.add(FSoundEvents.ENTITY_BITER_BURP, "Biter burps");
+        builder.add(FSoundEvents.ENTITY_WIND_BLOW, "Wind rustles");
+        builder.add(FSoundEvents.ENTITY_WIND_HOWL, "Wind howls");
+        builder.add(FSoundEvents.ENTITY_FREEZING_WIND_BLOWOUT, "Fire blows out");
+        builder.add(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_SKATE, "Skates push");
+        builder.add(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_GLIDE, "Skates glide");
+        builder.add(FSoundEvents.ENTITY_GENERIC_ICE_SKATE_STOP, "Skates stop");
+        builder.add(FSoundEvents.BLOCK_BRITTLE_ICE_CRACK, "Ice cracks");
+        builder.add(FSoundEvents.ENTITY_BREAK_BINDING_CURSE, "Curse of Binding breaks");
+        builder.add(FSoundEvents.ITEM_ARMOR_EQUIP_FUR.value(), "Fur armor rustles");
     }
 
     private String itemSuffix(Item item, String suffix) {

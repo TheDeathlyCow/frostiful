@@ -3,13 +3,13 @@
 		"sounds": [
 			"minecraft:random/fizz"
 		],
-		"subtitle": "subtitles.frostiful.block.sun_lichen.discharge"
+		"subtitle": "subtitles.frostiful.block.frostiful.sun_lichen.discharge"
 	},
 	"block.frostiful.campfire.hiss": {
 		"sounds": [
 			"minecraft:random/fizz"
 		],
-		"subtitle": "subtitles.frostiful.block.campfire.hiss"
+		"subtitle": "subtitles.frostiful.block.frostiful.campfire.hiss"
 	},
 	"block.frostiful.packed_snow.break": {
 		"sounds": [
@@ -18,7 +18,7 @@
 			"frostiful:block/packed_snow/break3",
 			"frostiful:block/packed_snow/break4"
 		],
-		"subtitle": "subtitles.block.generic.break"
+		"subtitle": "subtitles.frostiful.block.generic.break"
 	},
 	"block.frostiful.packed_snow.fall": {
 		"sounds": [
@@ -35,7 +35,7 @@
 			"frostiful:block/packed_snow/step3",
 			"frostiful:block/packed_snow/step4"
 		],
-		"subtitle": "subtitles.block.generic.hit"
+		"subtitle": "subtitles.frostiful.block.generic.hit"
 	},
 	"block.frostiful.packed_snow.place": {
 		"sounds": [
@@ -44,7 +44,7 @@
 			"frostiful:block/packed_snow/break3",
 			"frostiful:block/packed_snow/break4"
 		],
-		"subtitle": "subtitles.block.generic.place"
+		"subtitle": "subtitles.frostiful.block.generic.place"
 	},
 	"block.frostiful.packed_snow.step": {
 		"sounds": [
@@ -53,7 +53,7 @@
 			"frostiful:block/packed_snow/step3",
 			"frostiful:block/packed_snow/step4"
 		],
-		"subtitle": "subtitles.block.generic.footsteps"
+		"subtitle": "subtitles.frostiful.block.generic.footsteps"
 	},
 	"block.frostiful.brittle_ice.crack": {
 		"sounds": [
@@ -61,26 +61,26 @@
 			"frostiful:block/brittle_ice/crack2",
 			"frostiful:block/brittle_ice/snap1"
 		],
-		"subtitle": "subtitles.block.frostiful.brittle_ice.crack"
+		"subtitle": "subtitles.frostiful.block.frostiful.brittle_ice.crack"
 	},
 	"item.frostiful.frost_wand.cast_spell": {
 		"sounds": [
 			"mob/evocation_illager/cast1",
 			"mob/evocation_illager/cast2"
 		],
-		"subtitle": "subtitles.item.frostiful.frost_wand.cast_spell"
+		"subtitle": "subtitles.frostiful.item.frostiful.frost_wand.cast_spell"
 	},
 	"item.frostiful.frost_wand.prepare_cast": {
 		"sounds": [
 			"mob/illusion_illager/prepare_blind"
 		],
-		"subtitle": "subtitles.item.frostiful.frost_wand.prepare_cast"
+		"subtitle": "subtitles.frostiful.item.frostiful.frost_wand.prepare_cast"
 	},
 	"entity.frostiful.frost_spell.freeze": {
 		"sounds": [
 			"frostiful:entity/frost_spell/freeze"
 		],
-		"subtitle": "subtitles.entity.frostiful.frost_spell.freeze"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frost_spell.freeze"
 	},
 	"entity.frostiful.frostologer.ambient": {
 		"sounds": [
@@ -101,7 +101,7 @@
 				"pitch": 0.1
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.frostologer.ambient"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frostologer.ambient"
 	},
 	"entity.frostiful.frostologer.celebrate": {
 		"sounds": [
@@ -110,27 +110,27 @@
 				"pitch": 0.75
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.frostologer.celebrate"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frostologer.celebrate"
 	},
 	"entity.frostiful.frostologer.cast_spell": {
 		"sounds": [
 			"mob/evocation_illager/cast1",
 			"mob/evocation_illager/cast2"
 		],
-		"subtitle": "subtitles.entity.frostiful.frostologer.cast_spell"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frostologer.cast_spell"
 	},
 	"entity.frostiful.frostologer.prepare_cast.blizzard": {
 		"sounds": [
 			"frostiful:mob/frostologer/blow"
 		],
-		"subtitle": "subtitles.entity.frostiful.frostologer.prepare_cast.blizzard"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frostologer.prepare_cast.blizzard"
 	},
 	"entity.frostiful.frostologer.death": {
 		"sounds": [
 			"mob/illusion_illager/death1",
 			"mob/illusion_illager/death2"
 		],
-		"subtitle": "subtitles.entity.frostiful.frostologer.death"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frostologer.death"
 	},
 	"entity.frostiful.frostologer.hurt": {
 		"sounds": [
@@ -138,7 +138,7 @@
 			"mob/illusion_illager/hurt2",
 			"mob/illusion_illager/hurt3"
 		],
-		"subtitle": "subtitles.entity.frostiful.frostologer.hurt"
+		"subtitle": "subtitles.frostiful.entity.frostiful.frostologer.hurt"
 	},
 	"entity.frostiful.chillager.ambient": {
 		"sounds": [
@@ -147,7 +147,7 @@
 			"mob/pillager/idle3",
 			"mob/pillager/idle4"
 		],
-		"subtitle": "subtitles.entity.frostiful.chillager.ambient"
+		"subtitle": "subtitles.frostiful.entity.frostiful.chillager.ambient"
 	},
 	"entity.frostiful.chillager.celebrate": {
 		"sounds": [
@@ -157,14 +157,14 @@
 			"mob/pillager/celebrate4",
 			"mob/pillager/horn_celebrate"
 		],
-		"subtitle": "subtitles.entity.frostiful.chillager.celebrate"
+		"subtitle": "subtitles.frostiful.entity.frostiful.chillager.celebrate"
 	},
 	"entity.frostiful.chillager.death": {
 		"sounds": [
 			"mob/pillager/death1",
 			"mob/pillager/death2"
 		],
-		"subtitle": "subtitles.entity.frostiful.chillager.death"
+		"subtitle": "subtitles.frostiful.entity.frostiful.chillager.death"
 	},
 	"entity.frostiful.chillager.hurt": {
 		"sounds": [
@@ -172,7 +172,7 @@
 			"mob/pillager/hurt2",
 			"mob/pillager/hurt3"
 		],
-		"subtitle": "subtitles.entity.frostiful.chillager.hurt"
+		"subtitle": "subtitles.frostiful.entity.frostiful.chillager.hurt"
 	},
 	"entity.frostiful.thrown_icicle.hit": {
 		"sounds": [
@@ -184,13 +184,13 @@
 			"block/powder_snow/break6",
 			"block/powder_snow/break7"
 		],
-		"subtitle": "subtitles.entity.frostiful.thrown_icicle.hit"
+		"subtitle": "subtitles.frostiful.entity.frostiful.thrown_icicle.hit"
 	},
 	"entity.frostiful.thrown_icicle.throw": {
 		"sounds": [
 			"random/bow"
 		],
-		"subtitle": "subtitles.entity.frostiful.thrown_icicle.throw"
+		"subtitle": "subtitles.frostiful.entity.frostiful.thrown_icicle.throw"
 	},
 	"entity.frostiful.biter.ambient": {
 		"sounds": [
@@ -219,7 +219,7 @@
                 "pitch": 1
             }
 		],
-		"subtitle": "subtitles.entity.frostiful.biter.ambient"
+		"subtitle": "subtitles.frostiful.entity.frostiful.biter.ambient"
 	},
 	"entity.frostiful.biter.death": {
 		"sounds": [
@@ -240,7 +240,7 @@
                 "pitch": 0.4
             }
 		],
-		"subtitle": "subtitles.entity.frostiful.biter.death"
+		"subtitle": "subtitles.frostiful.entity.frostiful.biter.death"
 	},
 	"entity.frostiful.biter.hurt": {
 		"sounds": [
@@ -261,7 +261,7 @@
                 "pitch": 1
             }
 		],
-		"subtitle": "subtitles.entity.frostiful.biter.hurt"
+		"subtitle": "subtitles.frostiful.entity.frostiful.biter.hurt"
 	},
 	"entity.frostiful.biter.bite": {
 		"sounds": [
@@ -270,7 +270,7 @@
                 "pitch": 1.2
             }
 		],
-		"subtitle": "subtitles.entity.frostiful.biter.bite"
+		"subtitle": "subtitles.frostiful.entity.frostiful.biter.bite"
 	},
 	"entity.frostiful.biter.burp": {
 		"sounds": [
@@ -279,7 +279,7 @@
 				"pitch": 0.8
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.biter.burp"
+		"subtitle": "subtitles.frostiful.entity.frostiful.biter.burp"
 	},
 	"entity.frostiful.wind.generic.blow": {
 		"sounds": [
@@ -312,7 +312,7 @@
 				"volume": 0.5
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.wind.generic.blow"
+		"subtitle": "subtitles.frostiful.entity.frostiful.wind.generic.blow"
 	},
 	"entity.frostiful.wind.generic.howl": {
 		"sounds": [
@@ -324,7 +324,7 @@
 			"frostiful:entity/wind/howl6",
 			"frostiful:entity/wind/howl7"
 		],
-		"subtitle": "subtitles.entity.frostiful.wind.generic.howl"
+		"subtitle": "subtitles.frostiful.entity.frostiful.wind.generic.howl"
 	},
 	"entity.frostiful.wind.generic.woosh": {
 		"sounds": [
@@ -338,7 +338,7 @@
 				"volume": 0.5
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.freezing_wind.blowout"
+		"subtitle": "subtitles.frostiful.entity.frostiful.freezing_wind.blowout"
 	},
 	"entity.generic.ice_skate.skate": {
 		"sounds": [
@@ -349,7 +349,7 @@
 				"name": "frostiful:entity/ice_skating/skate2"
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.skate"
+		"subtitle": "subtitles.frostiful.entity.generic.ice_skate.skate"
 	},
 	"entity.generic.ice_skate.glide": {
 		"sounds": [
@@ -363,7 +363,7 @@
 				"name": "frostiful:entity/ice_skating/glide3"
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.glide"
+		"subtitle": "subtitles.frostiful.entity.generic.ice_skate.glide"
 	},
 	"entity.generic.ice_skate.stop": {
 		"sounds": [
@@ -377,7 +377,7 @@
 				"name": "frostiful:entity/ice_skating/stop3"
 			}
 		],
-		"subtitle": "subtitles.entity.frostiful.generic.ice_skate.stop"
+		"subtitle": "subtitles.frostiful.entity.generic.ice_skate.stop"
 	},
 	"item.armor.equip_fur": {
 		"sounds": [
@@ -388,12 +388,12 @@
 			"item/armor/equip_leather5",
 			"item/armor/equip_leather6"
 		],
-		"subtitle": "subtitles.item.frostiful.armor.equip_leather"
+		"subtitle": "subtitles.frostiful.item.armor.equip_fur"
 	},
     "entity.generic.break_binding_curse": {
         "sounds": [
             "frostiful:entity/break_binding_curse"
         ],
-        "subtitle": "subtitles.item.frostiful.entity.generic.break_binding_curse"
+        "subtitle": "subtitles.frostiful.entity.generic.break_binding_curse"
     }
 }
