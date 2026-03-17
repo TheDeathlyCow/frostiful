@@ -71,6 +71,7 @@
         "thermoo": ">=9.1.0",
         "java": ">=21",
         "cloth-config": ">=21.11.153",
+        "yet_another_config_lib_v3": ">=3.8.2",
         "cardinal-components-base": ">=7.3.0"
     },
     "suggests": {
