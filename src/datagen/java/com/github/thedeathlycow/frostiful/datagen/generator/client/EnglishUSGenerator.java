@@ -14,10 +14,12 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.Util;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.gamerules.GameRule;
@@ -286,6 +288,14 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FSoundEvents.BLOCK_BRITTLE_ICE_CRACK, "Ice cracks");
         builder.add(FSoundEvents.ENTITY_BREAK_BINDING_CURSE, "Curse of Binding breaks");
         builder.add(FSoundEvents.ITEM_ARMOR_EQUIP_FUR.value(), "Fur armor rustles");
+
+        effect(builder, FStatusEffects.FROST_BITE, "Frost Bite");
+        effect(builder, FStatusEffects.WARMTH, "Warmth");
+
+        enchantment(builder, FEnchantments.ENERVATION, "Enervation", "Steals heat from cold enemies when attacking");
+        enchantment(builder, FEnchantments.ICE_BREAKER, "Ice Breaker", "Increases the damage from attacking enemies frozen in ice");
+        enchantment(builder, FEnchantments.FROZEN_TOUCH_CURSE, "Curse of Frozen Touch", "Transfers heat from you to your enemies when attacking");
+        enchantment(builder, FEnchantments.ICE_SPEED, "Ice Speed", "Increases skating speed on ice");
     }
 
     private String itemSuffix(Item item, String suffix) {
@@ -362,5 +372,19 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(translationKey, deathMessage);
         builder.add(translationKey + ".player", playerDeathMessage);
+    }
+
+    private void effect(TranslationBuilder builder, Holder<MobEffect> effect, String value) {
+        builder.add(Util.makeDescriptionId("effect", effect.unwrapKey().orElseThrow().identifier()), value);
+    }
+
+    private void enchantment(
+            TranslationBuilder builder,
+            ResourceKey<Enchantment> enchantment,
+            String title,
+            String description
+    ) {
+        builder.addEnchantment(enchantment, title);
+        builder.add(Util.makeDescriptionId("enchantment", enchantment.identifier()) + ".desc", description);
     }
 }

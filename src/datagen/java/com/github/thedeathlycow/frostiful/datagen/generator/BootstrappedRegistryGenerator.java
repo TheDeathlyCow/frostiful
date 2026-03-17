@@ -14,9 +14,9 @@ public class BootstrappedRegistryGenerator extends FabricDynamicRegistryProvider
 
     @Override
     protected void configure(HolderLookup.Provider registries, Entries entries) {
-        entries.addAll(registries.lookupOrThrow(Registries.ENCHANTMENT));
         entries.addAll(registries.lookupOrThrow(Registries.TRIM_PATTERN));
         entries.addAll(registries.lookupOrThrow(Registries.BANNER_PATTERN));
+        entries.addAll(registries.lookupOrThrow(Registries.ENCHANTMENT));
         entries.addAll(registries.lookupOrThrow(Registries.DAMAGE_TYPE));
     }
 
