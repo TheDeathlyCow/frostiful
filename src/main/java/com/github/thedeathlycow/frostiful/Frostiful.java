@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.datafix.StructureUpdateHelper;
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
@@ -28,6 +29,8 @@ import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.nio.file.Path;
+
 public class Frostiful implements ModInitializer {
 
     public static final String MODID = "frostiful";
@@ -40,6 +43,7 @@ public class Frostiful implements ModInitializer {
 
     @Override
     public void onInitialize() {
+        FrostifulConfigYACL.initialize();
         AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
         configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class); //NOSONAR this is fine
         FrostifulConfig.updateConfig(configHolder);
@@ -101,6 +105,10 @@ public class Frostiful implements ModInitializer {
         }
 
         return configHolder.getConfig();
+    }
+
+    public static Path getConfigDir() {
+        return FabricLoader.getInstance().getConfigDir();
     }
 
     /**

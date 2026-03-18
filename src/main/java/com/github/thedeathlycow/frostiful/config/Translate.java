@@ -22,7 +22,7 @@ public final class Translate {
     }
 
     public static String mainCategoryKey(ConfigClassHandler<?> handler) {
-        return categoryKey(handler, "main");
+        return categoryKey(handler, FrostifulConfigYACL.MAIN_CATEGORY_NAME);
     }
 
     @Retention(RetentionPolicy.RUNTIME)

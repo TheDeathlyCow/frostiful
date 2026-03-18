@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin.gui;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.group.ClientConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -50,7 +50,7 @@ public abstract class ShiveringRenderer {
             Operation<Void> original
     ) {
         if (this.minecraft.getCameraEntity() instanceof LivingEntity livingEntity && SurvivalUtils.isShiveringRender(livingEntity)) {
-            ClientConfigGroup config = Frostiful.getConfig().clientConfig;
+            ClientConfig config = FrostifulConfigYACL.clientConfig();
             if (config.isShakeCameraWhenShiveringEnabled()) {
 
                 final float intensity = config.getHandShakeIntensity();

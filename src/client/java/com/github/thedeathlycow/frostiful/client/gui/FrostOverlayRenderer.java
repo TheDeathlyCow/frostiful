@@ -1,13 +1,14 @@
 package com.github.thedeathlycow.frostiful.client.gui;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.Identifier;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EquipmentSlot;
 
 @Environment(EnvType.CLIENT)
@@ -29,30 +30,26 @@ public final class FrostOverlayRenderer {
             LocalPlayer player,
             OverlayRenderCallback renderCallback
     ) {
-        float freezeScale = player.thermoo$getTemperatureScale();
-        if (freezeScale > 0) {
+        float temperatureScale = player.thermoo$getTemperatureScale();
+        if (temperatureScale > 0) {
             return;
         }
-        freezeScale = -freezeScale;
 
-
-        FrostifulConfig config = Frostiful.getConfig();
+        ClientConfig config = FrostifulConfigYACL.clientConfig();
 
         // disable frost overlay when wearing frostology cloak
-        boolean isOverlayDisabled = config.clientConfig.isDisableFrostOverlayWhenWearingFrostologyCloak()
+        boolean isOverlayDisabled = config.isDisableFrostOverlayWhenWearingFrostologyCloak()
                 && player.getItemBySlot(EquipmentSlot.CHEST).has(FDataComponentTypes.ICE_LIKE);
 
         if (isOverlayDisabled) {
             return;
         }
 
-        float renderThreshold = config.clientConfig.getFrostOverlayStart();
+        float renderThreshold = config.getFrostOverlayStart();
 
-        if (freezeScale >= renderThreshold) {
+        if (temperatureScale <= renderThreshold) {
             // scale opacity to temp scale
-            float opacity = renderThreshold >= 1.0f
-                    ? 0.0f
-                    : (freezeScale - renderThreshold) / (1.0f - renderThreshold);
+            float opacity = Mth.clamp((temperatureScale + renderThreshold + 1) / renderThreshold, 0f, 1f);
             renderCallback.renderOverlay(context, POWDER_SNOW_OUTLINE, opacity);
         }
     }

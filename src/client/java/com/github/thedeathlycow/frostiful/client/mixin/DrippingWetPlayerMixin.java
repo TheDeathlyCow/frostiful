@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.client.mixin;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Direction;
@@ -59,7 +60,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             }
 
             // allow config to disable particles
-            if (!Frostiful.getConfig().clientConfig.renderDripParticles()) {
+            if (!FrostifulConfigYACL.clientConfig().renderDripParticles()) {
                 return;
             }
 

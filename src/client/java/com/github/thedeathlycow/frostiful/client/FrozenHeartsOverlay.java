@@ -1,7 +1,8 @@
 package com.github.thedeathlycow.frostiful.client;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
 import com.github.thedeathlycow.thermoo.api.client.HeartBarContext;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -25,8 +26,8 @@ public class FrozenHeartsOverlay {
             Player player,
             HeartBarContext heartBarContext
     ) {
-        FrostifulConfig config = Frostiful.getConfig();
-        if (!config.clientConfig.doColdHeartOverlay() || player.thermoo$isWarm()) {
+        ClientConfig config = FrostifulConfigYACL.clientConfig();
+        if (!config.doColdHeartOverlay() || player.thermoo$isWarm()) {
             return;
         }
 
@@ -62,8 +63,8 @@ public class FrozenHeartsOverlay {
             LivingEntity mount,
             HeartBarContext heartBarContext
     ) {
-        FrostifulConfig config = Frostiful.getConfig();
-        if (!config.clientConfig.doColdHeartOverlay() || mount.thermoo$isWarm()) {
+        ClientConfig config = FrostifulConfigYACL.clientConfig();
+        if (!config.doColdHeartOverlay() || mount.thermoo$isWarm()) {
             return;
         }
 

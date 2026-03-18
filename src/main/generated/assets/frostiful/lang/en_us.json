@@ -241,5 +241,18 @@
   "tag.item.frostiful.warm_foods": "Warm Foods",
   "trim_pattern.frostiful.frosty": "Frosty Armor Trim",
   "trim_pattern.frostiful.glacial": "Glacial Armor Trim",
-  "trim_pattern.frostiful.snow_man": "Snow Man Armor Trim"
+  "trim_pattern.frostiful.snow_man": "Snow Man Armor Trim",
+  "yacl3.config.frostiful:common/client.disableFrostOverlayWhenWearingFrostologyCloak": "Disable frost overlay when wearing Cloak of Frostology",
+  "yacl3.config.frostiful:common/client.disableHurtPolarBearSkin": "Disable hurt Polar Bear skin",
+  "yacl3.config.frostiful:common/client.disableHurtPolarBearSkin.desc": "When Polar Bears have been recently brushed, they show a hurt skin. Disable this feature if the texture is not compatible with your resource pack.",
+  "yacl3.config.frostiful:common/client.doColdHeartOverlay": "Render cold heart overlay",
+  "yacl3.config.frostiful:common/client.doColdHeartOverlay.desc": "Toggles the temperature display over the player health.",
+  "yacl3.config.frostiful:common/client.frostOverlayStart": "Frost overlay start",
+  "yacl3.config.frostiful:common/client.frostOverlayStart.desc": "The temperature scale below which the frosty overlay will begin to appear. Must be between -1 and 1 (inclusive).",
+  "yacl3.config.frostiful:common/client.handShakeIntensity": "Hand shake intensity",
+  "yacl3.config.frostiful:common/client.handShakeIntensity.desc": "How intense the hand shaking should be when shivering.",
+  "yacl3.config.frostiful:common/client.renderDripParticles": "Render water drip particles when wet",
+  "yacl3.config.frostiful:common/client.renderDripParticles.desc": "Toggles the water drip particles when wet. Has no effect if Scorchful is installed.",
+  "yacl3.config.frostiful:common/client.shakeHandWhenShivering": "Shake hand when shivering",
+  "yacl3.config.frostiful:common/client.shakeHandWhenShivering.desc": "Whether to shake the player's hand in first person when cold."
 }
