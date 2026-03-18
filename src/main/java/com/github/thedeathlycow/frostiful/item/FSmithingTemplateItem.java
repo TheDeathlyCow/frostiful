@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
 import net.minecraft.ChatFormatting;
@@ -24,11 +23,10 @@ public class FSmithingTemplateItem {
     public static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_boots");
 
     public static void addTemplatesToLoot() {
-        FrostifulConfig config = Frostiful.getConfig();
         addTemplateToLoot(
                 FItems.ICE_SKATE_UPGRADE_TEMPLATE,
                 Identifier.withDefaultNamespace("chests/igloo_chest"),
-                config.combatConfig.getSkateUpgradeTemplateIglooGenerateChance()
+                FrostifulConfigYACL.combatConfig().getSkateUpgradeTemplateIglooGenerateChance()
         );
     }
 

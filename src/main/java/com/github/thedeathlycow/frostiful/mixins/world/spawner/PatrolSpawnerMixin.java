@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.world.spawner;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.server.world.ChillagerPatrolSpawner;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -21,7 +21,7 @@ public class PatrolSpawnerMixin {
             cancellable = true
     )
     private void spawnChillagerInColdBiomes(ServerLevel world, BlockPos pos, RandomSource random, boolean captain, CallbackInfoReturnable<Boolean> cir) {
-        if (!Frostiful.getConfig().combatConfig.doChillagerPatrols()) {
+        if (!FrostifulConfigYACL.combatConfig().doChillagerPatrols()) {
             return;
         }
 

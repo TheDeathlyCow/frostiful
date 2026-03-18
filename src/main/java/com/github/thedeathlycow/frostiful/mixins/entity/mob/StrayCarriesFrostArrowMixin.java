@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.PathfinderMob;
@@ -28,8 +28,7 @@ public abstract class StrayCarriesFrostArrowMixin extends PathfinderMob {
             cancellable = true
     )
     private void straysHaveFrostArrows(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
-
-        if (!Frostiful.getConfig().combatConfig.straysCarryFrostArrows()) {
+        if (!FrostifulConfigYACL.combatConfig().straysCarryFrostArrows()) {
             return;
         }
 

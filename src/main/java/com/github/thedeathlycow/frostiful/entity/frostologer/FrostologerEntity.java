@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.entity.frostologer;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
@@ -306,8 +306,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
     @Override
     public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
-            FrostifulConfig config = Frostiful.getConfig();
-            amount *= config.combatConfig.getFrostologerFireDamageMultiplier();
+            amount *= FrostifulConfigYACL.combatConfig().getFrostologerFireDamageMultiplier();
         }
 
         return super.hurtServer(world, source, amount);
@@ -561,7 +560,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
 
             Level world = frostologer.level();
 
-            int heatDrain = Frostiful.getConfig().combatConfig.getFrostologerHeatDrainPerTick();
+            int heatDrain = FrostifulConfigYACL.combatConfig().getFrostologerHeatDrainPerTick();
             frostologer.thermoo$addTemperature(heatDrain);
 
             for (LivingEntity victim : world.getEntitiesOfClass(LivingEntity.class, box, entity -> entity != frostologer)) {

@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.frostologer;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -38,7 +39,7 @@ class FrostWandCastGoal extends RangedAttackGoal {
         frostologerEntity.stopUsingItem();
         this.stopUsingFrostWand();
         if (frostologerEntity.isTargetRooted()) {
-            int cooling = -Frostiful.getConfig().combatConfig.getFrostologerCoolingFromFrostWandHit();
+            int cooling = -FrostifulConfigYACL.combatConfig().getFrostologerCoolingFromFrostWandHit();
             frostologerEntity.thermoo$addTemperature(cooling);
         }
     }

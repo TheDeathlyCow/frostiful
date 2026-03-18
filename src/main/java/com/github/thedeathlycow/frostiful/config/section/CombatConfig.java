@@ -7,7 +7,6 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import net.minecraft.util.Mth;
 
 import java.nio.file.Path;
@@ -46,13 +45,13 @@ public class CombatConfig {
     double maxFrostSpellDistance = 25;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Maximum Frost Spell distance")
+    @Translate.Name("Frost Wand cooldown")
     @SerialEntry(comment = "The cooldown time (in ticks) of the Frost Wand after casting a spell. Must be at least 0.")
     @IntField(min = 0)
     int frostWandCooldown = 120;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Maximum Frost Spell distance")
+    @Translate.Name("Frost Wand root time")
     @SerialEntry(comment = "The time (in ticks) that an entity struct by a Frost Wand is rooted. Must be at least 1.")
     @IntField(min = 1)
     int frostWandRootTime = 100;
@@ -82,7 +81,7 @@ public class CombatConfig {
     float packedSnowballDamage = 2.0f;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Packed Snowball Damage")
+    @Translate.Name("Packed Snowball vulnerable type damage")
     @SerialEntry(comment = "How much damage a Packed Snowball applies to a target that is a vulnerable type (Strider, Blaze, Magma Cube) when hit. Must be at least 0.")
     @FloatField(min = 0)
     float packedSnowballVulnerableTypesDamage = 5.0f;
@@ -114,7 +113,7 @@ public class CombatConfig {
     @AutoGen(category = CATEGORY)
     @Translate.Name("Ice Break fallback damage")
     @SerialEntry(comment = "The fallback damage amount to use when breaking a Frost Wand spell if the attacker does not have the Ice Break damage attribute.")
-    @DoubleField(format = "%.2f")
+    @DoubleField
     double iceBreakFallbackDamage = 3.0;
 
 

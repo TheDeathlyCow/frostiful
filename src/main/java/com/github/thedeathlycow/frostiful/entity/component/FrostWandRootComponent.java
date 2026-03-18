@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.component;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
@@ -87,7 +87,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     }
 
     public float getRootProgress() {
-        return (float) this.rootedTicks / Frostiful.getConfig().combatConfig.getFrostWandRootTime();
+        return (float) this.rootedTicks / FrostifulConfigYACL.combatConfig().getFrostWandRootTime();
     }
 
     public void breakRoot(@Nullable Entity attacker) {
@@ -97,7 +97,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
             double damage = attacker instanceof LivingEntity livingAttacker
                     ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAKER_DAMAGE)
-                    : Frostiful.getConfig().combatConfig.getIceBreakFallbackDamage();
+                    : FrostifulConfigYACL.combatConfig().getIceBreakFallbackDamage();
 
             DamageSource source = FDamageSources.getDamageSources(provider.level())
                     .frostiful$brokenIce(attacker);
@@ -109,7 +109,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
 
     public boolean tryRootFromFrostWand(@Nullable Entity originalCaster) {
         if (this.canBeRootedBy(originalCaster)) {
-            this.setRootedTicks(Frostiful.getConfig().combatConfig.getFrostWandRootTime());
+            this.setRootedTicks(FrostifulConfigYACL.combatConfig().getFrostWandRootTime());
             return true;
         }
         return false;

@@ -2,6 +2,8 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
 import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -100,13 +102,13 @@ public class FrostWandItem extends Item {
     }
 
     public static void fireFrostSpell(ItemStack frostWandStack, Level world, LivingEntity user) {
-        FrostifulConfig config = Frostiful.getConfig();
+        CombatConfig config = FrostifulConfigYACL.combatConfig();
 
         FrostSpellEntity spell = new FrostSpellEntity(
                 world,
                 user,
                 Vec3.ZERO,
-                config.combatConfig.getMaxFrostSpellDistance()
+                config.getMaxFrostSpellDistance()
         );
 
         spell.shootFromRotation(user, user.getXRot(), user.getYHeadRot(), 0.0f, 2.5f, 1.0f);
@@ -118,7 +120,7 @@ public class FrostWandItem extends Item {
         if (user instanceof Player player) {
             frostWandStack.hurtWithoutBreaking(1, player);
             player.awardStat(Stats.ITEM_USED.get(frostWandStack.getItem()));
-            player.getCooldowns().addCooldown(frostWandStack, config.combatConfig.getFrostWandCooldown());
+            player.getCooldowns().addCooldown(frostWandStack, config.getFrostWandCooldown());
         }
     }
 

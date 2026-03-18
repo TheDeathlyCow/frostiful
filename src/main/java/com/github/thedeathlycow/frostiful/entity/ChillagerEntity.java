@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -34,8 +34,7 @@ public class ChillagerEntity extends Pillager {
     @Override
     public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
-            FrostifulConfig config = Frostiful.getConfig();
-            amount *= config.combatConfig.getChillagerFireDamageMultiplier();
+            amount *= FrostifulConfigYACL.combatConfig().getChillagerFireDamageMultiplier();
         }
 
         return super.hurtServer(world, source, amount);
