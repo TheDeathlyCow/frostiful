@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.datagen.generator.client;
 import com.github.thedeathlycow.frostiful.client.mixin.SplashTextResourceSupplierMixin;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
+import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.registry.*;
@@ -312,6 +313,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add("frostiful.splash.download_museswipr", "Download Museswipr on Steam!");
 
         generateConfigOptionTranslations(ClientConfig.HANDLER, builder);
+        generateConfigOptionTranslations(CombatConfig.HANDLER, builder);
     }
 
     private String itemSuffix(Item item, String suffix) {
