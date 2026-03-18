@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
+import com.github.thedeathlycow.frostiful.client.mixin.SplashTextResourceSupplierMixin;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.registry.*;
@@ -296,6 +297,13 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         enchantment(builder, FEnchantments.ICE_BREAKER, "Ice Breaker", "Increases the damage from attacking enemies frozen in ice");
         enchantment(builder, FEnchantments.FROZEN_TOUCH_CURSE, "Curse of Frozen Touch", "Transfers heat from you to your enemies when attacking");
         enchantment(builder, FEnchantments.ICE_SPEED, "Ice Speed", "Increases skating speed on ice");
+
+        builder.add(tip("freezing_wind_extinguishes_fire"), "Freezing Wind will blow out open flames");
+        builder.add(tip("stay_warm_near_light"), "Keep warm by staying near artificial light (torches, glowstone)");
+        builder.add(tip("frostologer_benefits_from_being_cold"), "The Frostologer is powered by the Cold, warm them up!");
+        builder.add(tip("walk_on_sun_lichen"), "Walk on Sun Lichen to warm up in a pinch");
+
+        builder.add("frostiful.splash.download_museswipr", "Download Museswipr on Steam!");
     }
 
     private String itemSuffix(Item item, String suffix) {
@@ -386,5 +394,9 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
     ) {
         builder.addEnchantment(enchantment, title);
         builder.add(Util.makeDescriptionId("enchantment", enchantment.identifier()) + ".desc", description);
+    }
+
+    private String tip(String key) {
+        return "frostiful.tip." + key;
     }
 }
