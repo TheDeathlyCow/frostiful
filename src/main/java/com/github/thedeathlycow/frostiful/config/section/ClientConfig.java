@@ -14,10 +14,10 @@ import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import java.nio.file.Path;
 
 public class ClientConfig {
-    public static final Path PATH = Frostiful.getConfigDir().resolve("common").resolve("client.json5");
+    public static final Path PATH = Frostiful.getConfigDir().resolve("client.json5");
 
     public static final ConfigClassHandler<ClientConfig> HANDLER = ConfigClassHandler.createBuilder(ClientConfig.class)
-            .id(Frostiful.id("common/client"))
+            .id(Frostiful.id("client"))
             .serializer(
                     config -> GsonConfigSerializerBuilder.create(config)
                             .setPath(PATH)

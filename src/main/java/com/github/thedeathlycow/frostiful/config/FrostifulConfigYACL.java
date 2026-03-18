@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.config;
 
 import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
 import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";
@@ -14,12 +15,19 @@ public final class FrostifulConfigYACL {
         return CombatConfig.HANDLER.instance();
     }
 
+    public static EnvironmentConfig environmentConfig() {
+        return EnvironmentConfig.HANDLER.instance();
+    }
+
     public static void initialize() {
         ClientConfig.HANDLER.load();
         ClientConfig.HANDLER.save();
 
         CombatConfig.HANDLER.load();
         CombatConfig.HANDLER.save();
+
+        EnvironmentConfig.HANDLER.load();
+        EnvironmentConfig.HANDLER.save();
     }
 
     private FrostifulConfigYACL() {
