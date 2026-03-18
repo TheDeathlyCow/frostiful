@@ -1,11 +1,14 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
 import com.github.thedeathlycow.frostiful.client.mixin.SplashTextResourceSupplierMixin;
+import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
+import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
+import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricLanguageProvider;
 import net.minecraft.advancements.Advancement;
@@ -13,6 +16,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.Util;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffect;
@@ -25,6 +29,7 @@ import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.gamerules.GameRule;
 
+import java.lang.reflect.Field;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
@@ -398,5 +403,64 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
     private String tip(String key) {
         return "frostiful.tip." + key;
+    }
+
+    private <T> void generateConfigOptionTranslations(
+            ConfigClassHandler<T> handler,
+            TranslationBuilder builder
+    ) {
+        final String prefix = Translate.prefixKey(handler);
+
+        for (Field field : handler.configClass().getDeclaredFields()) {
+            SerialEntry entry = field.getAnnotation(SerialEntry.class);
+            if (entry == null) {
+                continue;
+            }
+
+            Translate.Name nameData = field.getAnnotation(Translate.Name.class);
+            String nameKey = configOption(prefix, field.getName());
+
+            if (nameData != null) {
+                builder.add(nameKey, nameData.value());
+            } else {
+                throw new IllegalStateException("Option name missing for" + nameKey);
+            }
+
+            String comment = entry.comment();
+            String commentKey = commentKey(prefix, field.getName());
+
+            if (comment != null && !comment.isEmpty()) {
+                builder.add(commentKey, comment);
+            } else if (field.getAnnotation(Translate.NoComment.class) == null) {
+                throw new IllegalStateException("Missing comment or @NoComment marker for " + commentKey);
+            }
+        }
+    }
+
+    private <E extends Enum<E> & StringRepresentable> void generateConfigEnumTranslations(
+            TranslationBuilder builder,
+            Class<E> enumClass,
+            String... names
+    ) {
+        E[] entries = enumClass.getEnumConstants();
+        if (entries.length != names.length) {
+            throw new IllegalStateException(
+                    "Names array length %d is different from enums array length %d"
+                            .formatted(names.length, entries.length)
+            );
+        }
+
+        for (E entry : enumClass.getEnumConstants()) {
+            String key = "yacl3.config.enum.%s.%s".formatted(enumClass.getSimpleName(), entry.getSerializedName());
+            builder.add(key, names[entry.ordinal()]);
+        }
+    }
+
+    private static String configOption(String prefix, String name) {
+        return prefix + "." + name;
+    }
+
+    private static String commentKey(String prefix, String name) {
+        return configOption(prefix, name) + ".desc";
     }
 }
