@@ -2,7 +2,8 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
-import com.github.thedeathlycow.frostiful.config.group.EnvironmentConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
@@ -14,6 +15,7 @@ import com.github.thedeathlycow.thermoo.api.util.TemperatureUnit;
 import net.fabricmc.fabric.api.util.TriState;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
+import org.jetbrains.annotations.VisibleForTesting;
 
 public final class ServerPlayerEnvironmentTickListeners {
 
@@ -30,11 +32,11 @@ public final class ServerPlayerEnvironmentTickListeners {
         TemperatureRecord temperature = context.components()
                 .getOrDefault(EnvironmentComponentTypes.TEMPERATURE, TemperatureRecordComponent.DEFAULT);
 
-        EnvironmentConfigGroup config = Frostiful.getConfig().environmentConfig;
+        EnvironmentConfig config = FrostifulConfigYACL.environmentConfig();
         int total = envTemperatureToTemperaturePoint(temperature, config);
 
         if (total < 0 && context.affected().thermoo$isWet()) {
-            total = (int) (total * Frostiful.getConfig().environmentConfig.getEnvironmentFreezingSoakedMultiplier());
+            total = (int) (total * config.getEnvironmentFreezingSoakedMultiplier());
         }
 
         if (context.affected().tickCount % 20 == 0 && Frostiful.LOGGER.isDebugEnabled()) {
@@ -73,23 +75,24 @@ public final class ServerPlayerEnvironmentTickListeners {
         }
     }
 
+    @VisibleForTesting
     public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature) {
-        return envTemperatureToTemperaturePoint(temperature, new EnvironmentConfigGroup());
+        return envTemperatureToTemperaturePoint(temperature, new EnvironmentConfig());
     }
 
-    public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature, EnvironmentConfigGroup configGroup) {
+    public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature, EnvironmentConfig config) {
         double temperatureC = temperature
                 .valueInUnit(TemperatureUnit.CELSIUS);
 
-        double thresholdC = configGroup.getMaxTemperatureForColdC();
-        double degreesPerTemperatureDecrease = configGroup.getDegreesCPerTemperatureDecrease();
+        double thresholdC = config.getMaxTemperatureForColdC();
+        double degreesPerTemperatureDecrease = config.getDegreesCPerTemperatureDecrease();
 
         if (temperatureC > thresholdC) {
             return 0;
         }
         // Graphical proof: https://www.desmos.com/calculator/01nd0aidxh
         double base = (temperatureC - thresholdC - degreesPerTemperatureDecrease) / degreesPerTemperatureDecrease;
-        return Mth.ceil(configGroup.getEnvironmentTemperatureMultiplier() * base);
+        return Mth.ceil(config.getEnvironmentTemperatureMultiplier() * base);
     }
 
     private ServerPlayerEnvironmentTickListeners() {

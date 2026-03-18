@@ -2,6 +2,8 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.ThermooTags;
@@ -27,18 +29,19 @@ public final class ActiveTemperatureEffects {
 
         int total = 0;
         FrostifulConfig config = Frostiful.getConfig();
+        EnvironmentConfig environmentConfig = FrostifulConfigYACL.environmentConfig();
 
-        total += getOnFireTemperatureChange(entity, config);
-        total += getPowderSnowTemperatureChange(entity, config);
+        total += getOnFireTemperatureChange(entity, environmentConfig);
+        total += getPowderSnowTemperatureChange(entity, environmentConfig);
         total += getConduitPowerTemperatureChange(entity, config);
         total += getShiveringTemperatureChange(entity, config);
 
         return total;
     }
 
-    private static int getOnFireTemperatureChange(LivingEntity entity, FrostifulConfig config) {
+    private static int getOnFireTemperatureChange(LivingEntity entity, EnvironmentConfig config) {
         if (entity.isOnFire()) {
-            int onFireRate = config.environmentConfig.getOnFireWarmRate();
+            int onFireRate = config.getOnFireWarmRate();
 
             if (entity.getType() == FEntityTypes.FROSTOLOGER) {
                 onFireRate /= 2;
@@ -49,9 +52,9 @@ public final class ActiveTemperatureEffects {
         return 0;
     }
 
-    private static int getPowderSnowTemperatureChange(LivingEntity entity, FrostifulConfig config) {
+    private static int getPowderSnowTemperatureChange(LivingEntity entity, EnvironmentConfig config) {
         if (entity.wasInPowderSnow) {
-            return -config.environmentConfig.getPowderSnowFreezeRate();
+            return -config.getPowderSnowFreezeRate();
         }
         return 0;
     }

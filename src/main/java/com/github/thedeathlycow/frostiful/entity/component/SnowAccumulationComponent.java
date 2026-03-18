@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
 import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
 import net.minecraft.core.BlockPos;
@@ -45,7 +46,7 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
             this.meltSnowAccumulation();
         }
 
-        if (Frostiful.getConfig().environmentConfig.applyEnvironmentPenaltyWhenWet()) {
+        if (FrostifulConfigYACL.environmentConfig().applyEnvironmentPenaltyWhenWet()) {
             this.applySoakedEnvironmentFrostResistancePenalty();
         }
     }
@@ -90,7 +91,7 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
     }
 
     private void addSnowAccumulation() {
-        if (this.snowAccumulation < Frostiful.getConfig().environmentConfig.getMaxSnowAccumulationTicks()) {
+        if (this.snowAccumulation < FrostifulConfigYACL.environmentConfig().getMaxSnowAccumulationTicks()) {
             this.snowAccumulation++;
         }
     }
