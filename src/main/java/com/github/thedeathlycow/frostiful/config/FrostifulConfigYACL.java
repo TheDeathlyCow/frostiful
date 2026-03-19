@@ -19,6 +19,10 @@ public final class FrostifulConfigYACL {
         return EnvironmentConfig.HANDLER.instance();
     }
 
+    public static FreezingConfig freezingConfig() {
+        return FreezingConfig.HANDLER.instance();
+    }
+
     public static void initialize() {
         ClientConfig.HANDLER.load();
         ClientConfig.HANDLER.save();
@@ -28,6 +32,9 @@ public final class FrostifulConfigYACL {
 
         EnvironmentConfig.HANDLER.load();
         EnvironmentConfig.HANDLER.save();
+
+        FreezingConfig.HANDLER.load();
+        FreezingConfig.HANDLER.save();
     }
 
     private FrostifulConfigYACL() {
