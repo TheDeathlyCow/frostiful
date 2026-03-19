@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.server.world;
 
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
-import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -24,7 +24,7 @@ public final class IcicleWeatherGenerator {
 
         final RandomSource random = world.random;
 
-        IcicleConfigGroup icicleConfig = Frostiful.getConfig().icicleConfig;
+        IcicleConfig icicleConfig = FrostifulConfigYACL.icicleConfig();
         if (!icicleConfig.iciclesFormInWeather()) {
             return;
         }

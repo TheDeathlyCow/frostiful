@@ -2,6 +2,8 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
@@ -134,9 +136,8 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
             DamageSource damageSource = FDamageSources.getDamageSources(world).frostiful$icicle();
             boolean tookDamage = entity.causeFallDamage(fallDistance + 2.0, 2.0f, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
-                FrostifulConfig config = Frostiful.getConfig();
                 livingEntity.thermoo$addTemperature(
-                        -config.icicleConfig.getIcicleCollisionFreezeAmount(),
+                        -FrostifulConfigYACL.icicleConfig().getIcicleCollisionFreezeAmount(),
                         HeatingModes.ACTIVE
                 );
             }
@@ -245,8 +246,7 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
     @Override
     protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if (isPointingDown(state)) {
-            FrostifulConfig config = Frostiful.getConfig();
-            if (random.nextFloat() < config.icicleConfig.getBecomeUnstableChance() && isHeldByIcicleFallable(state, world, pos)) { // fall
+            if (random.nextFloat() < FrostifulConfigYACL.icicleConfig().getBecomeUnstableChance() && isHeldByIcicleFallable(state, world, pos)) { // fall
                 this.tryFall(state, world, pos, random);
             }
             final double growChance = this.getGrowChance(world);
@@ -315,13 +315,13 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
     }
 
     private Double getGrowChance(ServerLevel world) {
-        FrostifulConfig config = Frostiful.getConfig();
+        IcicleConfig config = FrostifulConfigYACL.icicleConfig();
         if (world.isThundering()) {
-            return config.icicleConfig.getGrowChanceDuringThunder();
+            return config.getGrowChanceDuringThunder();
         } else if (world.isRaining()) {
-            return config.icicleConfig.getGrowChanceDuringRain();
+            return config.getGrowChanceDuringRain();
         } else {
-            return config.icicleConfig.getGrowChance();
+            return config.getGrowChance();
         }
     }
 

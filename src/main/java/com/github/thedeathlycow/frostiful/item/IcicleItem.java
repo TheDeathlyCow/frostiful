@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import net.minecraft.core.Direction;
@@ -52,7 +52,7 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
 
         user.awardStat(Stats.ITEM_USED.get(this));
         itemStack.consume(1, user);
-        user.getCooldowns().addCooldown(itemStack, Frostiful.getConfig().icicleConfig.getThrownIcicleCooldown());
+        user.getCooldowns().addCooldown(itemStack, FrostifulConfigYACL.icicleConfig().getThrownIcicleCooldown());
 
         return InteractionResult.SUCCESS;
     }

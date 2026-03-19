@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.group.IcicleConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -46,7 +46,7 @@ public class ThrownIcicleEntity extends AbstractArrow {
             return;
         }
 
-        IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
+        IcicleConfig config = FrostifulConfigYACL.icicleConfig();
 
         float damage = entityHitResult.getEntity().getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
                 ? config.getThrownIcicleExtraDamage()
@@ -59,8 +59,7 @@ public class ThrownIcicleEntity extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity target) {
         super.doPostHurtEffects(target);
-        IcicleConfigGroup config = Frostiful.getConfig().icicleConfig;
-        int freezeAmount = config.getThrownIcicleFreezeAmount();
+        int freezeAmount = FrostifulConfigYACL.icicleConfig().getThrownIcicleFreezeAmount();
 
         target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
     }
