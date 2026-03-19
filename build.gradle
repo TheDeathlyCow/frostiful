@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.14-SNAPSHOT'
+    id 'net.fabricmc.fabric-loom' version '1.15-SNAPSHOT'
     id 'maven-publish'
     id "me.modmuss50.mod-publish-plugin" version "0.8.4"
 }
@@ -30,10 +30,6 @@ repositories {
     maven {
         name = "Ladysnake Mods"
         url = 'https://maven.ladysnake.org/releases'
-    }
-    maven {
-        name = 'ParchmentMC'
-        url = 'https://maven.parchmentmc.org'
     }
     maven {
         name 'Xander Maven'
@@ -82,35 +78,30 @@ dependencies {
 
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-    mappings loom.layered() {
-        officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${project.parchment_version}:${project.parchment_mappings}")
-    }
 
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
     // Fabric API. This is technically optional, but you probably want it anyway.
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-    modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
+    implementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
-    modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
+    implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
-    modImplementation "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
+    implementation "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
+
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
+    implementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
 
     //// Optional Dependencies ////
-    modCompileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
-
-
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
-    modImplementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"
+    compileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
 
     // Trinkets https://github.com/emilyploszaj/trinkets
     // temporarily replaced with canary until updated
-//    modCompileOnlyApi("dev.emi:trinkets:${project.trinkets_version}") {
+//    implementation("dev.emi:trinkets:${project.trinkets_version}") {
 //        exclude(group: "net.fabricmc.fabric-api")
 //    }
-    modImplementation "maven.modrinth:trinkets-canary:${project.trinkets_version}"
+//    implementation "maven.modrinth:trinkets-canary:${project.trinkets_version}"
 
     testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
     testImplementation "org.junit.jupiter:junit-jupiter"
@@ -127,8 +118,8 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-    // Minecraft 1.21 upwards uses Java 21.
-    it.options.release = 21
+    // Minecraft 26.1 upwards uses Java 25.
+    it.options.release = 25
 }
 
 java {
@@ -137,8 +128,8 @@ java {
     // If you remove this line, sources will not be generated.
     withSourcesJar()
 
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {
@@ -207,8 +198,8 @@ publishMods {
     changelog = file("changelogs/${mod_version}.md").text
     type = BETA
 
-    file = remapJar.archiveFile
-    additionalFiles.from(remapSourcesJar.archiveFile)
+    file = jar.archiveFile
+    additionalFiles.from(sourcesJar.archiveFile)
     displayName = "Frostiful ${mod_version}"
 
     modLoaders.add("fabric")
@@ -219,7 +210,7 @@ publishMods {
         projectId = "715248"
         minecraftVersions.addAll("1.21.11")
 
-        javaVersions.add(JavaVersion.VERSION_21)
+        javaVersions.add(JavaVersion.VERSION_25)
 
         clientRequired = true
         serverRequired = true

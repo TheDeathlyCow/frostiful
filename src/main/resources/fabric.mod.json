@@ -66,12 +66,13 @@
     ],
     "depends": {
         "fabricloader": ">=0.18.4",
-        "fabric-api": ">=0.140.2",
-        "minecraft": ">=1.21.11",
-        "thermoo": ">=9.1.0",
-        "java": ">=21",
-        "yet_another_config_lib_v3": ">=3.8.2",
-        "cardinal-components-base": ">=7.3.0"
+        "fabric-api": ">=0.143.14",
+        "minecraft": "~26.1-",
+        "thermoo": "~10.0-",
+        "java": ">=25",
+        "yet_another_config_lib_v3": "~3.9-",
+        "cardinal-components-base": "~8.0-",
+        "cardinal-components-entity": "~8.0-"
     },
     "suggests": {
         "scorchful": "*",
