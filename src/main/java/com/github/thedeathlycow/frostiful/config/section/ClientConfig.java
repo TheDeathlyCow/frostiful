@@ -68,6 +68,7 @@ public class ClientConfig {
     @AutoGen(category = CATEGORY)
     @Translate.Name("Disable hurt Polar Bear skin")
     @SerialEntry(comment = "When Polar Bears have been recently brushed, they show a hurt skin. Disable this feature if the texture is not compatible with your resource pack.")
+    @TickBox
     boolean disableHurtPolarBearSkin = false;
 
     public float getFrostOverlayStart() {

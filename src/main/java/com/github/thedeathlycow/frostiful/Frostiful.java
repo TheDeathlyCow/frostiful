@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.datafix.StructureUpdateHelper;
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
@@ -14,9 +13,6 @@ import com.github.thedeathlycow.frostiful.survival.ActiveTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.PassiveTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.ServerPlayerEnvironmentTickListeners;
 import com.github.thedeathlycow.frostiful.survival.SoakingEffects;
-import me.shedaniel.autoconfig.AutoConfig;
-import me.shedaniel.autoconfig.ConfigHolder;
-import me.shedaniel.autoconfig.serializer.GsonConfigSerializer;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -25,7 +21,6 @@ import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.resources.Identifier;
 import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,15 +33,8 @@ public class Frostiful implements ModInitializer {
 
     public static final int CONFIG_VERSION = 3;
 
-    @Nullable
-    private static ConfigHolder<FrostifulConfig> configHolder = null;
-
     @Override
     public void onInitialize() {
-        FrostifulConfigYACL.initialize();
-        AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
-        configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class); //NOSONAR this is fine
-        FrostifulConfig.updateConfig(configHolder);
         FrostifulConfigYACL.initialize();
 
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
@@ -98,14 +86,6 @@ public class Frostiful implements ModInitializer {
         PassiveTemperatureEffects.initialize();
         ActiveTemperatureEffects.initialize();
         SoakingEffects.initialize();
-    }
-
-    public static FrostifulConfig getConfig() {
-        if (configHolder == null) {
-            configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class);
-        }
-
-        return configHolder.getConfig();
     }
 
     public static Path getConfigDir() {
