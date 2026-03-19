@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.EntityTypeTags;
@@ -61,7 +61,13 @@ public class ThrownIcicleEntity extends AbstractArrow {
         super.doPostHurtEffects(target);
         int freezeAmount = FrostifulConfigYACL.icicleConfig().getThrownIcicleFreezeAmount();
 
-        target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
+        target.thermoo$addTemperature(
+                -freezeAmount,
+                target.level().thermoo$temperatureSources().create(
+                        TemperatureSources.ACTIVE,
+                        this
+                )
+        );
     }
 
     @Override

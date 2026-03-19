@@ -6,7 +6,8 @@ import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureChange;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -122,25 +123,25 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
     /**
      * Hurt entities when they fall on icicles
      *
-     * @param world        The world the icicle is in
+     * @param level        The world the icicle is in
      * @param state        The state of the icicle
      * @param pos          The position of the icicle
      * @param entity       The entity that fell
      * @param fallDistance How far the entity fell
      */
     @Override
-    public void fallOn(Level world, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
+    public void fallOn(Level level, BlockState state, BlockPos pos, Entity entity, double fallDistance) {
         if (state.getValue(VERTICAL_DIRECTION) == Direction.UP) {
-            DamageSource damageSource = FDamageSources.getDamageSources(world).frostiful$icicle();
+            DamageSource damageSource = FDamageSources.getDamageSources(level).frostiful$icicle();
             boolean tookDamage = entity.causeFallDamage(fallDistance + 2.0, 2.0f, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 livingEntity.thermoo$addTemperature(
                         -FrostifulConfigYACL.icicleConfig().getIcicleCollisionFreezeAmount(),
-                        HeatingModes.ACTIVE
+                        level.thermoo$temperatureSources().create(TemperatureSources.ACTIVE, pos.getCenter())
                 );
             }
         } else {
-            super.fallOn(world, state, pos, entity, fallDistance);
+            super.fallOn(level, state, pos, entity, fallDistance);
         }
     }
 

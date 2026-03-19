@@ -54,7 +54,8 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
                     WindEntity.pushEntity(entity, world, center, POWER_SCALE);
                     FreezingWindEntity.freezeEntity(
                             entity,
-                            FrostifulConfigYACL.freezingConfig().getFreezingWindFrost() * POWER_SCALE
+                            FrostifulConfigYACL.freezingConfig().getFreezingWindFrost() * POWER_SCALE,
+                            null
                     );
                 });
 

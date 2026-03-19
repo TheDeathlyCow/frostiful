@@ -1,11 +1,9 @@
 package com.github.thedeathlycow.frostiful.survival.environment;
 
-import com.github.thedeathlycow.frostiful.registry.FEnvironmentProviderTypes;
-import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
-import com.github.thedeathlycow.thermoo.api.environment.component.TemperatureRecordComponent;
-import com.github.thedeathlycow.thermoo.api.environment.provider.EnvironmentProvider;
-import com.github.thedeathlycow.thermoo.api.environment.provider.EnvironmentProviderType;
-import com.github.thedeathlycow.thermoo.api.util.TemperatureRecord;
+import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureRecord;
+import com.github.thedeathlycow.thermoo.api.environment.v2.component.EnvironmentComponentTypes;
+import com.github.thedeathlycow.thermoo.api.environment.v2.component.TemperatureRecordComponent;
+import com.github.thedeathlycow.thermoo.api.environment.v2.provider.EnvironmentProvider;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -38,7 +36,7 @@ public record EnsureTemperatureBelow(
     }
 
     @Override
-    public EnvironmentProviderType<EnsureTemperatureBelow> getType() {
-        return FEnvironmentProviderTypes.ENSURE_TEMPERATURE_BELOW;
+    public MapCodec<EnsureTemperatureBelow> codec() {
+        return CODEC;
     }
 }

@@ -1,8 +1,7 @@
 package com.github.thedeathlycow.frostiful.survival.environment;
 
 import com.github.thedeathlycow.frostiful.registry.FEnvironmentProviderTypes;
-import com.github.thedeathlycow.thermoo.api.environment.provider.EnvironmentProvider;
-import com.github.thedeathlycow.thermoo.api.environment.provider.EnvironmentProviderType;
+import com.github.thedeathlycow.thermoo.api.environment.v2.provider.EnvironmentProvider;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
@@ -30,8 +29,8 @@ public record IfSnowy(
     }
 
     @Override
-    public EnvironmentProviderType<IfSnowy> getType() {
-        return FEnvironmentProviderTypes.IF_SNOWY;
+    public MapCodec<IfSnowy> codec() {
+        return CODEC;
     }
 
     private static boolean isSnowy(Level level, BlockPos pos, Holder<Biome> biomeHolder) {

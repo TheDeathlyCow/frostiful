@@ -10,8 +10,8 @@ import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentE
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
-import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
+import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.BlockPos;
@@ -558,15 +558,18 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
 
             AABB box = frostologer.getBoundingBox().inflate(this.range);
 
-            Level world = frostologer.level();
+            Level level = frostologer.level();
 
             int heatDrain = FrostifulConfigYACL.combatConfig().getFrostologerHeatDrainPerTick();
             frostologer.thermoo$addTemperature(heatDrain);
 
-            for (LivingEntity victim : world.getEntitiesOfClass(LivingEntity.class, box, entity -> entity != frostologer)) {
-                victim.thermoo$addTemperature(-heatDrain, HeatingModes.ACTIVE);
+            for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, box, entity -> entity != frostologer)) {
+                victim.thermoo$addTemperature(
+                        -heatDrain,
+                        level.thermoo$temperatureSources().create(TemperatureSources.ACTIVE, frostologer)
+                );
 
-                if (world instanceof ServerLevel serverWorld) {
+                if (level instanceof ServerLevel serverWorld) {
                     HeatDrainEnchantmentEffect.addHeatDrainParticles(serverWorld, victim, frostologer, 5, 0.08);
                 }
             }

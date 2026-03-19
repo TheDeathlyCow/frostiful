@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -59,7 +59,10 @@ public class GlacialArrowEntity extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity target) {
         super.doPostHurtEffects(target);
-        target.thermoo$addTemperature(-freezeAmount, HeatingModes.ACTIVE);
+        target.thermoo$addTemperature(-freezeAmount, target.level().thermoo$temperatureSources().create(
+                TemperatureSources.ACTIVE,
+                this
+        ));
     }
 
     @Override

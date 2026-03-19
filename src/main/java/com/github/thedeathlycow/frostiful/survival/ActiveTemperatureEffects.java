@@ -5,9 +5,10 @@ import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import com.github.thedeathlycow.thermoo.api.ThermooTags;
-import com.github.thedeathlycow.thermoo.api.temperature.event.EnvironmentTickContext;
-import com.github.thedeathlycow.thermoo.api.temperature.event.LivingEntityTemperatureTickEvents;
+import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
+import com.github.thedeathlycow.thermoo.api.core.v2.event.LivingEntityTemperatureTickEvents;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
+import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooEntityTypeTags;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +16,7 @@ import net.minecraft.world.entity.player.Player;
 
 public final class ActiveTemperatureEffects {
     public static void initialize() {
-        LivingEntityTemperatureTickEvents.GET_ACTIVE_TEMPERATURE_CHANGE.register(ActiveTemperatureEffects::getActiveChange);
+        LivingEntityTemperatureTickEvents.getTemperatureChange(TemperatureSources.ACTIVE).register(ActiveTemperatureEffects::getActiveChange);
     }
 
     private static int getActiveChange(EnvironmentTickContext<? extends LivingEntity> context) {
@@ -73,7 +74,7 @@ public final class ActiveTemperatureEffects {
             return 0;
         }
 
-        boolean benefitsFromCold = entity.getType().is(ThermooTags.BENEFITS_FROM_COLD_ENTITY_TYPE)
+        boolean benefitsFromCold = entity.getType().is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(FItems.FROSTOLOGY_CLOAK);
 
         if (benefitsFromCold) {

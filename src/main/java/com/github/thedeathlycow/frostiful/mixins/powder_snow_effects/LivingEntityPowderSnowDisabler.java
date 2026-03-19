@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.powder_snow_effects;
 
-import com.github.thedeathlycow.thermoo.api.temperature.TemperatureAware;
+import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureAware;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;

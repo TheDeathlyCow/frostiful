@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.item.enchantment;
 
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
 import com.github.thedeathlycow.frostiful.util.FMathHelper;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
@@ -62,12 +62,21 @@ public record HeatDrainEnchantmentEffect(
 
         int heatDrainedFromTarget = Mth.floor(this.heatToDrain.calculate(level));
         if (source.thermoo$isCold()) {
-            source.thermoo$addTemperature(-heatDrainedFromTarget, HeatingModes.ACTIVE);
+            source.thermoo$addTemperature(
+                    -heatDrainedFromTarget,
+                    source.level().thermoo$temperatureSources().create(
+                            TemperatureSources.ACTIVE,
+                            source
+                    )
+            );
         }
 
         if (destination.thermoo$isCold()) {
             int heatAddedToOwner = Mth.floor(heatDrainedFromTarget * this.efficiency);
-            destination.thermoo$addTemperature(heatAddedToOwner, HeatingModes.ACTIVE);
+            destination.thermoo$addTemperature(heatAddedToOwner, source.level().thermoo$temperatureSources().create(
+                    TemperatureSources.ACTIVE,
+                    source
+            ));
         }
 
         if (heatDrainedFromTarget != 0) {

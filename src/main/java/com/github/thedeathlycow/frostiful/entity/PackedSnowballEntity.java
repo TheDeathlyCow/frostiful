@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -69,7 +69,10 @@ public class PackedSnowballEntity extends ThrowableItemProjectile {
         if (target instanceof LivingEntity livingTarget) {
             livingTarget.thermoo$addTemperature(
                     -config.getPackedSnowballFreezeAmount(),
-                    HeatingModes.ACTIVE
+                    target.level().thermoo$temperatureSources().create(
+                            TemperatureSources.ACTIVE,
+                            this
+                    )
             );
         }
     }

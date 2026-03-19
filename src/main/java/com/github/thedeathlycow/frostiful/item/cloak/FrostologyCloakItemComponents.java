@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.item.cloak;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
+import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;

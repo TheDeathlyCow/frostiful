@@ -6,7 +6,7 @@ import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FCriteria;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
@@ -62,7 +62,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
 
     private void dischargeHeatToEntity(
             BlockState state,
-            Level world,
+            Level level,
             BlockPos pos,
             LivingEntity entity,
             InsideBlockEffectApplier handler,
@@ -76,7 +76,10 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             handler.apply(InsideBlockEffectType.FIRE_IGNITE);
             handler.runAfter(InsideBlockEffectType.FIRE_IGNITE, e -> e.setRemainingFireTicks(fireTicks));
         } else if (entity.thermoo$isCold()) { // only add heatToDischarge if cold, but always damage
-            entity.thermoo$addTemperature(heatToDischarge, HeatingModes.ACTIVE);
+            entity.thermoo$addTemperature(
+                    heatToDischarge,
+                    level.thermoo$temperatureSources().create(TemperatureSources.ACTIVE, pos.getCenter())
+            );
 
             // reset temperature if temp change overheated
             if (entity.thermoo$isWarm()) {
@@ -84,17 +87,17 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             }
         }
 
-        entity.hurt(world.damageSources().hotFloor(), 1f);
+        entity.hurt(level.damageSources().hotFloor(), 1f);
         if (entity instanceof ServerPlayer player) {
             FCriteria.SUN_LICHEN_DISCHARGE.trigger(player, heatToDischarge);
         }
 
-        createFireParticles(world, pos);
+        createFireParticles(level, pos);
 
         BlockState coldSunLichenState = FBlocks.COLD_SUN_LICHEN.withPropertiesOf(state);
-        world.setBlockAndUpdate(pos, coldSunLichenState);
+        level.setBlockAndUpdate(pos, coldSunLichenState);
 
-        playSound(world, pos);
+        playSound(level, pos);
     }
 
     @Override

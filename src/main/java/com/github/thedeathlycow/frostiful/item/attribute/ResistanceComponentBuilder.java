@@ -2,8 +2,8 @@ package com.github.thedeathlycow.frostiful.item.attribute;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
-import com.github.thedeathlycow.thermoo.api.ThermooAttributes;
-import com.github.thedeathlycow.thermoo.api.item.ModifyItemAttributeModifiersCallback;
+import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
+import com.github.thedeathlycow.thermoo.api.item.v2.ModifyItemAttributeModifiersCallback;
 import net.fabricmc.fabric.api.item.v1.DefaultItemComponentEvents;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.component.DataComponents;
