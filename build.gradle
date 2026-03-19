@@ -224,7 +224,7 @@ publishMods {
         clientRequired = true
         serverRequired = true
 
-        requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
+        requires("fabric-api", "cardinal-components-api", "thermoo", "yacl")
 
         optional("thermoo-patches", "scorchful", "modmenu", "trinkets")
     }
@@ -234,7 +234,7 @@ publishMods {
         projectId = "Ae6qoBj3"
         minecraftVersions.addAll("1.21.11")
 
-        requires("fabric-api", "cardinal-components-api", "thermoo", "cloth-config")
+        requires("fabric-api", "cardinal-components-api", "thermoo", "yacl")
 
         optional("thermoo-patches", "scorchful", "modmenu", "trinkets-canary")
     }
