@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.compat;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
@@ -49,7 +49,7 @@ public class FoodIntegration {
     }
 
     private static void applyWarmthFromFood(LivingEntity user) {
-        int duration = Frostiful.getConfig().freezingConfig.getWarmFoodWarmthTime();
+        int duration = FrostifulConfigYACL.freezingConfig().getWarmFoodWarmthTime();
         user.addEffect(new MobEffectInstance(FStatusEffects.WARMTH, duration));
     }
 

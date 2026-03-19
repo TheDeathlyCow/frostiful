@@ -1,9 +1,8 @@
 package com.github.thedeathlycow.frostiful.survival;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.entity.component.SnowAccumulationComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;
@@ -34,14 +33,13 @@ public final class PassiveTemperatureEffects {
 
         int total = 0;
 
-        FrostifulConfig config = Frostiful.getConfig();
-        total += getHotFloorTemperatureChange(context, config);
+        total += getHotFloorTemperatureChange(context, FrostifulConfigYACL.freezingConfig());
         total += getAndUpdateBlockLightTemperatureChange(context);
 
         return total;
     }
 
-    private static int getHotFloorTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context, FrostifulConfig config) {
+    private static int getHotFloorTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context, FreezingConfig config) {
         LivingEntity entity = context.affected();
         BlockState steppingState = entity.getBlockStateOn();
         ItemStack footStack = entity.getItemBySlot(EquipmentSlot.FEET);
@@ -60,9 +58,9 @@ public final class PassiveTemperatureEffects {
                         0.2, 0.7, 0.2,
                         1e-2
                 );
-                return config.freezingConfig.getHeatFromHotFloor();
+                return config.getHeatFromHotFloor();
             } else {
-                return config.freezingConfig.getHeatFromHotFloor() / 10;
+                return config.getHeatFromHotFloor() / 10;
             }
         }
 

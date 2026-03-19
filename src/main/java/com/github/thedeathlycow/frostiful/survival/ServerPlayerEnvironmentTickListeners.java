@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.thermoo.api.environment.component.EnvironmentComponentTypes;
@@ -51,19 +51,19 @@ public final class ServerPlayerEnvironmentTickListeners {
             return TriState.DEFAULT;
         }
 
-        FrostifulConfig config = Frostiful.getConfig();
+        FreezingConfig config = FrostifulConfigYACL.freezingConfig();
         ServerPlayer player = context.affected();
 
-        int tickInterval = config.freezingConfig.getPassiveFreezingTickInterval();
+        int tickInterval = config.getPassiveFreezingTickInterval();
         if (tickInterval > 1 && player.tickCount % tickInterval != 0) {
             return TriState.FALSE;
         }
 
-        if (player.thermoo$getTemperatureScale() < -config.freezingConfig.getMaxPassiveFreezingPercent()) {
+        if (player.thermoo$getTemperatureScale() < -config.getMaxPassiveFreezingPercent()) {
             return TriState.FALSE;
         }
 
-        boolean doPassiveFreezing = config.freezingConfig.doPassiveFreezing()
+        boolean doPassiveFreezing = config.doPassiveFreezing()
                 && context.level().getGameRules().get(FGameRules.DO_PASSIVE_FREEZING);
 
         if (IceLikeComponent.isWearing(player)) {

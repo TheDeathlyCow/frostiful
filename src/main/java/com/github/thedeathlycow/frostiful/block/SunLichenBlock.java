@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FCriteria;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -54,7 +54,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
     @Override
     protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
         if (this.heatLevel > COLD_LEVEL && entity instanceof LivingEntity livingEntity && this.canBurnEntity(entity)) {
-            this.dischargeHeatToEntity(state, world, pos, livingEntity, handler, Frostiful.getConfig());
+            this.dischargeHeatToEntity(state, world, pos, livingEntity, handler, FrostifulConfigYACL.freezingConfig());
         }
 
         super.entityInside(state, world, pos, entity, handler, bl);
@@ -66,13 +66,13 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             BlockPos pos,
             LivingEntity entity,
             InsideBlockEffectApplier handler,
-            FrostifulConfig config
+            FreezingConfig config
     ) {
-        int heatToDischarge = config.freezingConfig.getSunLichenHeatPerLevel() * this.heatLevel;
+        int heatToDischarge = config.getSunLichenHeatPerLevel() * this.heatLevel;
 
         // burn if hot sun lichen and target is warm
         if (entity.thermoo$getTemperature() > 0 && this.heatLevel == HOT_LEVEL) {
-            final int fireTicks = config.freezingConfig.getSunLichenBurnTime();
+            final int fireTicks = config.getSunLichenBurnTime();
             handler.apply(InsideBlockEffectType.FIRE_IGNITE);
             handler.runAfter(InsideBlockEffectType.FIRE_IGNITE, e -> e.setRemainingFireTicks(fireTicks));
         } else if (entity.thermoo$isCold()) { // only add heatToDischarge if cold, but always damage

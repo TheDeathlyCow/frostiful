@@ -1,6 +1,8 @@
-package com.github.thedeathlycow.frostiful.config;
+package com.github.thedeathlycow.frostiful.config.section;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;

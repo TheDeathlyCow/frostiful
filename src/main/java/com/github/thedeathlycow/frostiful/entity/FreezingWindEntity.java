@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.thermoo.api.temperature.HeatingModes;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -16,7 +16,7 @@ public class FreezingWindEntity extends WindEntity {
 
     public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, Level world) {
         super(type, world);
-        this.frost = Frostiful.getConfig().freezingConfig.getFreezingWindFrost();
+        this.frost = FrostifulConfigYACL.freezingConfig().getFreezingWindFrost();
     }
 
     @Override
@@ -38,7 +38,7 @@ public class FreezingWindEntity extends WindEntity {
     @Override
     protected void readAdditionalSaveData(ValueInput readView) {
         super.readAdditionalSaveData(readView);
-        this.frost = readView.getIntOr("Frost", Frostiful.getConfig().freezingConfig.getFreezingWindFrost());
+        this.frost = readView.getIntOr("Frost", FrostifulConfigYACL.freezingConfig().getFreezingWindFrost());
     }
 
     @Override

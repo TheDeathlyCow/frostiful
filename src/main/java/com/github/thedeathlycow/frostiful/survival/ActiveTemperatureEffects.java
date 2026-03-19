@@ -1,9 +1,8 @@
 package com.github.thedeathlycow.frostiful.survival;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.ThermooTags;
@@ -28,13 +27,13 @@ public final class ActiveTemperatureEffects {
         }
 
         int total = 0;
-        FrostifulConfig config = Frostiful.getConfig();
+        FreezingConfig freezingConfig = FrostifulConfigYACL.freezingConfig();
         EnvironmentConfig environmentConfig = FrostifulConfigYACL.environmentConfig();
 
         total += getOnFireTemperatureChange(entity, environmentConfig);
         total += getPowderSnowTemperatureChange(entity, environmentConfig);
-        total += getConduitPowerTemperatureChange(entity, config);
-        total += getShiveringTemperatureChange(entity, config);
+        total += getConduitPowerTemperatureChange(entity, freezingConfig);
+        total += getShiveringTemperatureChange(entity, freezingConfig);
 
         return total;
     }
@@ -59,17 +58,17 @@ public final class ActiveTemperatureEffects {
         return 0;
     }
 
-    private static int getConduitPowerTemperatureChange(LivingEntity entity, FrostifulConfig config) {
+    private static int getConduitPowerTemperatureChange(LivingEntity entity, FreezingConfig config) {
         boolean applyConduitPowerWarmth = entity.isUnderWater()
                 && entity.hasEffect(MobEffects.CONDUIT_POWER);
 
         if (applyConduitPowerWarmth) {
-            return config.freezingConfig.getConduitWarmthPerTick();
+            return config.getConduitWarmthPerTick();
         }
         return 0;
     }
 
-    private static int getShiveringTemperatureChange(LivingEntity entity, FrostifulConfig config) {
+    private static int getShiveringTemperatureChange(LivingEntity entity, FreezingConfig config) {
         if (!SurvivalUtils.isShivering(entity)) {
             return 0;
         }
@@ -81,9 +80,9 @@ public final class ActiveTemperatureEffects {
             return 0;
         }
 
-        int shiverWarmth = config.freezingConfig.getShiverWarmth();
+        int shiverWarmth = config.getShiverWarmth();
         if (entity instanceof Player player) {
-            if (player.getFoodData().getFoodLevel() <= config.freezingConfig.getStopShiverWarmingBelowFoodLevel()) {
+            if (player.getFoodData().getFoodLevel() <= config.getStopShiverWarmingBelowFoodLevel()) {
                 return 0;
             }
 

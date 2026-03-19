@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -29,8 +28,7 @@ public abstract class WaterPotionSoakingMixin extends ThrowableItemProjectile {
     )
     private void soakEntitiesWithWaterbottle(ServerLevel world, CallbackInfo ci, @Local AABB box) {
         List<Player> players = level().getEntitiesOfClass(Player.class, box);
-        FrostifulConfig config = Frostiful.getConfig();
-        float soakPercent = config.freezingConfig.getSoakPercentFromWaterPotion();
+        float soakPercent = FrostifulConfigYACL.freezingConfig().getSoakPercentFromWaterPotion();
 
         for (var player : players) {
             int soakAmount = (int) (player.thermoo$getMaxWetTicks() * soakPercent);

@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.config;
 import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
 import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";

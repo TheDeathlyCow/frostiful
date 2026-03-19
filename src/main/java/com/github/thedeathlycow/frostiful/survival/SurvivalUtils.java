@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.survival;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfig;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.thermoo.api.ThermooTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -14,8 +13,7 @@ public class SurvivalUtils {
             return false;
         }
 
-        FrostifulConfig config = Frostiful.getConfig();
-        return entity.thermoo$getTemperatureScale() < config.freezingConfig.getShiverBelow();
+        return entity.thermoo$getTemperatureScale() < FrostifulConfigYACL.freezingConfig().getShiverBelow();
     }
 
     @Environment(EnvType.CLIENT)
@@ -24,9 +22,8 @@ public class SurvivalUtils {
             return false;
         }
 
-        FrostifulConfig config = Frostiful.getConfig();
         // start showing shivering slightly before actually applying it
-        return entity.thermoo$getTemperatureScale() <= config.freezingConfig.getShiverBelow();
+        return entity.thermoo$getTemperatureScale() <= FrostifulConfigYACL.freezingConfig().getShiverBelow();
     }
 
     private SurvivalUtils() {

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.survival.wind;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.FreezingWindEntity;
 import com.github.thedeathlycow.frostiful.entity.WindEntity;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -54,7 +54,7 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
                     WindEntity.pushEntity(entity, world, center, POWER_SCALE);
                     FreezingWindEntity.freezeEntity(
                             entity,
-                            Frostiful.getConfig().freezingConfig.getFreezingWindFrost() * POWER_SCALE
+                            FrostifulConfigYACL.freezingConfig().getFreezingWindFrost() * POWER_SCALE
                     );
                 });
 

@@ -2,7 +2,8 @@ package com.github.thedeathlycow.frostiful.survival.wind;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
-import com.github.thedeathlycow.frostiful.config.group.FreezingConfigGroup;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
 import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
 import com.github.thedeathlycow.frostiful.registry.FrostifulRegistries;
@@ -37,7 +38,7 @@ public final class WindManager {
     }
 
     public void trySpawnFreezingWind(Level level, LevelChunk chunk) {
-        FreezingConfigGroup config = Frostiful.getConfig().freezingConfig;
+        FreezingConfig config = FrostifulConfigYACL.freezingConfig();
 
         if (this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
             return;
@@ -80,7 +81,7 @@ public final class WindManager {
     }
 
     public void extinguishBlock(BlockState state, Level level, BlockPos pos, Runnable playSoundCallback) {
-        if (!Frostiful.getConfig().freezingConfig.isWindDestroysTorches()) {
+        if (!FrostifulConfigYACL.freezingConfig().isWindDestroysTorches()) {
             return;
         }
 
