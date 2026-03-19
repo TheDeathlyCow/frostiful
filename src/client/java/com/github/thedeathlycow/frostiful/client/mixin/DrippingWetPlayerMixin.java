@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.client.mixin;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import net.fabricmc.api.EnvType;

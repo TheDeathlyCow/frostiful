@@ -11,8 +11,6 @@ import net.minecraft.world.level.block.Blocks;
 
 import java.util.concurrent.CompletableFuture;
 
-import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonBlockKey;
-
 public class FBlockTagGenerator extends FabricTagProvider.BlockTagProvider {
     public FBlockTagGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);

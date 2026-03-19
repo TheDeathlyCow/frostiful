@@ -9,12 +9,9 @@ import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
-import net.minecraft.world.level.storage.loot.predicates.AllOfCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.OptionalInt;
 
 public record RootedLootCondition(
         MinMaxBounds.Ints rootTicksRemaining
