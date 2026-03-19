@@ -9,7 +9,7 @@ import com.github.thedeathlycow.frostiful.client.registry.FParticleFactoryRegist
 import com.github.thedeathlycow.frostiful.client.render.entity.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.compat.FoodIntegration;
 import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
-import com.github.thedeathlycow.thermoo.api.client.StatusBarOverlayRenderEvents;
+import com.github.thedeathlycow.thermoo.api.client.v1.StatusBarOverlayRenderEvents;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
