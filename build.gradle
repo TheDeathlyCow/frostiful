@@ -95,9 +95,6 @@ dependencies {
     modImplementation "com.terraformersmc:modmenu:${project.mod_menu_version}"
 
     modImplementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
-        exclude(group: "net.fabricmc.fabric-api")
-    }
 
     modImplementation "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
 
