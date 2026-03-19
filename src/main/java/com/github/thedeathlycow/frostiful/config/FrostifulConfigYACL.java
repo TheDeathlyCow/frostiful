@@ -1,9 +1,6 @@
 package com.github.thedeathlycow.frostiful.config;
 
-import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
-import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.*;
 
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";
@@ -24,6 +21,10 @@ public final class FrostifulConfigYACL {
         return FreezingConfig.HANDLER.instance();
     }
 
+    public static IcicleConfig icicleConfig() {
+        return IcicleConfig.HANDLER.instance();
+    }
+
     public static void initialize() {
         ClientConfig.HANDLER.load();
         ClientConfig.HANDLER.save();
@@ -36,6 +37,9 @@ public final class FrostifulConfigYACL {
 
         FreezingConfig.HANDLER.load();
         FreezingConfig.HANDLER.save();
+
+        IcicleConfig.HANDLER.load();
+        IcicleConfig.HANDLER.save();
     }
 
     private FrostifulConfigYACL() {

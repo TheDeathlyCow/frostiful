@@ -16,7 +16,7 @@ public class FreezingConfig {
     public static final Path PATH = Frostiful.getConfigDir().resolve("common").resolve("freezing.json5");
 
     public static final ConfigClassHandler<FreezingConfig> HANDLER = ConfigClassHandler.createBuilder(FreezingConfig.class)
-            .id(Frostiful.id("common/environment"))
+            .id(Frostiful.id("common/freezing"))
             .serializer(
                     config -> GsonConfigSerializerBuilder.create(config)
                             .setPath(PATH)
