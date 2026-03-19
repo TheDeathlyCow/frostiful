@@ -47,6 +47,7 @@ public class Frostiful implements ModInitializer {
         AutoConfig.register(FrostifulConfig.class, GsonConfigSerializer::new);
         configHolder = AutoConfig.getConfigHolder(FrostifulConfig.class); //NOSONAR this is fine
         FrostifulConfig.updateConfig(configHolder);
+        FrostifulConfigYACL.initialize();
 
         if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
             CommandRegistrationCallback.EVENT.register(
