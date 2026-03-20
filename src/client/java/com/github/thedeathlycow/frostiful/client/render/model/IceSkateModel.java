@@ -12,7 +12,11 @@ public class IceSkateModel<T extends HumanoidRenderState> extends HumanoidModel<
 
     public IceSkateModel(ModelPart root) {
         super(root);
-        this.setAllVisible(false);
+
+        for (ModelPart part : this.allParts()) {
+            part.visible = false;
+        }
+
         this.leftLeg.visible = true;
         this.rightLeg.visible = true;
     }
@@ -60,10 +64,4 @@ public class IceSkateModel<T extends HumanoidRenderState> extends HumanoidModel<
     public static LayerDefinition getBabyTexturedModelData() {
         return getTexturedModelData().apply(BABY_TRANSFORMER);
     }
-
-//    @Override
-//    public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, float red, float green, float blue, float alpha) {
-//        leftLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-//        rightLeg.render(matrices, vertexConsumer, light, overlay, red, green, blue, alpha);
-//    }
 }

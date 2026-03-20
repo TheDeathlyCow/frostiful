@@ -4,6 +4,7 @@ import net.minecraft.client.gui.components.SplashRenderer;
 import net.minecraft.client.resources.SplashManager;
 import net.minecraft.network.chat.Component;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -12,7 +13,7 @@ import java.util.Calendar;
 
 @Mixin(SplashManager.class)
 public class SplashTextResourceSupplierMixin {
-
+    @Unique
     private static final SplashRenderer frostiful_DOWNLOAD_MUSESWIPR = new SplashRenderer(Component.translatable("frostiful.splash.download_museswipr"));
 
     @Inject(

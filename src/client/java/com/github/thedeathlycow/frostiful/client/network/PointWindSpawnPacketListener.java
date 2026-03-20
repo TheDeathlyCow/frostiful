@@ -45,16 +45,16 @@ public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPa
                 FSoundEvents.ENTITY_WIND_BLOW,
                 SoundSource.AMBIENT,
                 0.75f,
-                0.9f + world.random.nextFloat() / 3,
+                0.9f + world.getRandom().nextFloat() / 3,
                 true
         );
     }
 
     private static void addParticle(ParticleOptions particleEffect, ClientLevel world, Vec3 origin) {
-        double vx = world.random.nextGaussian() * 0.02;
-        double vy = world.random.nextGaussian() * 0.02;
-        double vz = world.random.nextGaussian() * 0.02;
-        Vec3 rPos = PointWindSpawnStrategy.randomParticlePos(origin, world.random);
+        double vx = world.getRandom().nextGaussian() * 0.02;
+        double vy = world.getRandom().nextGaussian() * 0.02;
+        double vz = world.getRandom().nextGaussian() * 0.02;
+        Vec3 rPos = PointWindSpawnStrategy.randomParticlePos(origin, world.getRandom());
         world.addParticle(
                 particleEffect,
                 rPos.x, rPos.y, rPos.z,

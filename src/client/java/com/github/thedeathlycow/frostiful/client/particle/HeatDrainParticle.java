@@ -39,8 +39,8 @@ public class HeatDrainParticle extends RisingParticle {
     }
 
     @Override
-    public int getLightColor(float tickDelta) {
-        int brightness = super.getLightColor(tickDelta);
+    protected int getLightCoords(float a) {
+        int brightness = super.getLightCoords(a);
         int red = brightness >> 16 & 0xFF;
         return 0x0000F0 | red << 16;
     }

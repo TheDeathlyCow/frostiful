@@ -15,7 +15,7 @@ public class GameRuleRegistryFixMixin {
     }
 
     @ModifyReturnValue(
-            method = "method_76071",
+            method = "lambda$makeRule$2",
             at = @At("TAIL")
     )
     private static Dynamic<?> fixDoPassiveFreezingGameRule(Dynamic<?> original) {

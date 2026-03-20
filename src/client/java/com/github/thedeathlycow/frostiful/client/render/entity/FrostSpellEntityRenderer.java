@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.state.EntityRenderState;
 import net.minecraft.client.renderer.rendertype.RenderType;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
@@ -21,7 +21,7 @@ import net.minecraft.util.CommonColors;
 public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, EntityRenderState> {
 
     private static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
-    private static final RenderType LAYER = RenderTypes.entityCutoutNoCull(TEXTURE);
+    private static final RenderType LAYER = RenderTypes.entityCutout(TEXTURE);
 
     public FrostSpellEntityRenderer(EntityRendererProvider.Context ctx) {
         super(ctx);

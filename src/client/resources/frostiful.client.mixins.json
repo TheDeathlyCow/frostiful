@@ -18,8 +18,7 @@
         "gui.HeartTypeMixin",
         "gui.InGameHudMixin",
         "gui.ShiveringRenderer",
-        "ice_skate_fx.GameRendererMixin",
-        "ice_skate_fx.ModelMixin"
+        "GameRendererMixin"
     ],
     "injectors": {
         "defaultRequire": 1

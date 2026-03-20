@@ -5,7 +5,7 @@ import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.Mth;
@@ -26,7 +26,7 @@ public final class FrostOverlayRenderer {
      * @param renderCallback A callback that renders the frost overlay texture
      */
     public static void renderFrostOverlay(
-            GuiGraphics context,
+            GuiGraphicsExtractor context,
             LocalPlayer player,
             OverlayRenderCallback renderCallback
     ) {

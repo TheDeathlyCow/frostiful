@@ -9,8 +9,8 @@ import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
 import net.minecraft.client.renderer.special.SpecialModelRenderer;
-import net.minecraft.world.item.ItemDisplayContext;
 import org.joml.Vector3fc;
+import org.jspecify.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -34,40 +34,39 @@ public class FrostWandItemRenderer implements NoDataSpecialModelRenderer {
 
     @Override
     public void submit(
-            ItemDisplayContext displayContext,
-            PoseStack matrices,
-            SubmitNodeCollector queue,
-            int light,
-            int overlay,
-            boolean glint,
+            PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector,
+            int lightCoords,
+            int overlayCoords,
+            boolean hasFoil,
             int outlineColor
     ) {
-        matrices.pushPose();
-        matrices.scale(1.0F, -1.0F, -1.0F);
+        poseStack.pushPose();
+        poseStack.scale(1.0F, -1.0F, -1.0F);
 
-        queue.submitModelPart(
+        submitNodeCollector.submitModelPart(
                 this.model.root(),
-                matrices,
+                poseStack,
                 this.model.renderType(FrostWandItemModel.TEXTURE),
                 FULL_BRIGHTNESS,
-                overlay,
+                overlayCoords,
                 null,
                 false,
-                glint,
+                hasFoil,
                 -1,
                 null,
                 outlineColor
         );
 
-        matrices.popPose();
+        poseStack.popPose();
     }
 
     @Environment(EnvType.CLIENT)
-    public record Unbaked() implements SpecialModelRenderer.Unbaked {
+    public record Unbaked() implements NoDataSpecialModelRenderer.Unbaked {
         public static final MapCodec<FrostWandItemRenderer.Unbaked> CODEC = MapCodec.unit(new FrostWandItemRenderer.Unbaked());
 
         @Override
-        public SpecialModelRenderer<?> bake(BakingContext context) {
+        public SpecialModelRenderer<Void> bake(BakingContext context) {
             return new FrostWandItemRenderer(
                     new FrostWandItemModel(context.entityModelSet().bakeLayer(FEntityModelLayers.FROST_WAND))
             );

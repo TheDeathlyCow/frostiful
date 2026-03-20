@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer.state;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FLivingEntityRenderState;
+import net.minecraft.client.renderer.block.BlockModelRenderState;
 import net.minecraft.client.renderer.entity.state.LivingEntityRenderState;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -9,6 +10,9 @@ import org.spongepowered.asm.mixin.Unique;
 public class LivingEntityRenderStateMixin implements FLivingEntityRenderState {
     @Unique
     private boolean frostiful$isRooted = false;
+
+    @Unique
+    private BlockModelRenderState frostiful$blockModel = new BlockModelRenderState();
 
     @Override
     @Unique
@@ -19,5 +23,10 @@ public class LivingEntityRenderStateMixin implements FLivingEntityRenderState {
     @Override
     public void frostiful$isRooted(boolean value) {
         this.frostiful$isRooted = value;
+    }
+
+    @Override
+    public BlockModelRenderState frostiful$blockModel() {
+        return this.frostiful$blockModel;
     }
 }
