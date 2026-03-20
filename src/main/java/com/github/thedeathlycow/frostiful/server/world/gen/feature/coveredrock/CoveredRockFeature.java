@@ -36,7 +36,7 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
     }
 
     private void placeRock(FeaturePlaceContext<CoveredRockFeatureConfig> context, BlockPos origin) {
-        WorldGenLevel world = context.level();
+        WorldGenLevel level = context.level();
         RandomSource random = context.random();
         CoveredRockFeatureConfig config = context.config();
 
@@ -49,10 +49,11 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
         BlockPos to = origin.offset(dx, dy == 0 ? 1 : dy, dz);
 
         for (BlockPos pos : BlockPos.betweenClosed(from, to)) {
-            BlockState current = world.getBlockState(pos);
+            BlockState current = level.getBlockState(pos);
+
             if (pos.distSqr(origin) < maxSquareDistance && !current.is(FBlockTags.COVERED_ROCKS_CANNOT_REPLACE)) {
-                BlockState baseState = config.base().getState(random, pos);
-                world.setBlock(pos, baseState, Block.UPDATE_ALL);
+                BlockState baseState = config.base().getState(level, random, pos);
+                level.setBlock(pos, baseState, Block.UPDATE_ALL);
             }
         }
 
@@ -61,7 +62,8 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
         to = to.offset(1, 1, 1);
 
         for (BlockPos pos : BlockPos.betweenClosed(from, to)) {
-            BlockState current = world.getBlockState(pos);
+            BlockState current = level.getBlockState(pos);
+
             if (this.isCoveringReplaceable(current) && random.nextFloat() < config.placeCoveringChance()) {
                 this.tryPlaceCovering(context, pos);
             }
@@ -83,18 +85,15 @@ public class CoveredRockFeature extends Feature<CoveredRockFeatureConfig> {
     }
 
     private Optional<BlockPos> lookForGround(FeaturePlaceContext<CoveredRockFeatureConfig> context) {
-        WorldGenLevel world = context.level();
-        for (BlockPos current = context.origin(); current.getY() > world.getMinY() + 3; current = current.below()) {
-            if (!world.isEmptyBlock(current.below()) && canPlaceAtPos(world, current)) {
+        WorldGenLevel level = context.level();
+
+        for (BlockPos current = context.origin(); current.getY() > level.getMinY() + 3; current = current.below()) {
+            if (!level.isEmptyBlock(current.below()) && context.config().canPlaceOn().test(level, current)) {
                 return Optional.of(current);
             }
         }
-        return Optional.empty();
-    }
 
-    private boolean canPlaceAtPos(WorldGenLevel world, BlockPos pos) {
-        BlockState below = world.getBlockState(pos);
-        return isDirt(below) || isStone(below);
+        return Optional.empty();
     }
 
     private boolean isCoveringReplaceable(BlockState state) {

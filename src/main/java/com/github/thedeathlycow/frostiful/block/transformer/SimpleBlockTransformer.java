@@ -23,7 +23,7 @@ public record SimpleBlockTransformer(
 
     @Override
     public Optional<BlockState> transformBlockState(ServerLevel level, BlockPos pos, BlockState original) {
-        return Optional.of(this.state.getState(level.getRandom(), pos));
+        return Optional.of(this.state.getState(level, level.getRandom(), pos));
     }
 
     @Override

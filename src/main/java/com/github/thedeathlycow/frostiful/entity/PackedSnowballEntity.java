@@ -60,7 +60,7 @@ public class PackedSnowballEntity extends ThrowableItemProjectile {
 
         CombatConfig config = FrostifulConfigYACL.combatConfig();
 
-        float damage = target.getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
+        float damage = target.is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
                 ? config.getPackedSnowballVulnerableTypesDamage()
                 : config.getPackedSnowballDamage();
 
@@ -91,7 +91,7 @@ public class PackedSnowballEntity extends ThrowableItemProjectile {
         ItemStack itemStack = this.getItem();
         return itemStack.isEmpty()
                 ? ParticleTypes.ITEM_SNOWBALL
-                : new ItemParticleOption(ParticleTypes.ITEM, itemStack);
+                : new ItemParticleOption(ParticleTypes.ITEM, itemStack.getItem());
     }
 
 }

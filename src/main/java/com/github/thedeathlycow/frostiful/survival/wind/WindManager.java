@@ -48,7 +48,7 @@ public final class WindManager {
                 ? config.getWindSpawnRarityThunder()
                 : config.getWindSpawnRarity();
 
-        if (level.random.nextInt(chanceBound) != 0) {
+        if (level.getRandom().nextInt(chanceBound) != 0) {
             return;
         }
 
@@ -127,11 +127,11 @@ public final class WindManager {
         );
         blockPos.set(spawnPos);
 
-        boolean spawnInAir = world.random.nextBoolean();
+        boolean spawnInAir = world.getRandom().nextBoolean();
         if (spawnInAir) {
             int topY = world.getMaxY();
             blockPos.setY(
-                    spawnPos.getY() + (int) world.random.triangle(
+                    spawnPos.getY() + (int) world.getRandom().triangle(
                             topY,
                             ((double) topY) - spawnPos.getY()
                     )

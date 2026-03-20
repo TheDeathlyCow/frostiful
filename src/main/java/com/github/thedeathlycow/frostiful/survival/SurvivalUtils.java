@@ -9,7 +9,7 @@ import net.minecraft.world.entity.LivingEntity;
 public class SurvivalUtils {
 
     public static boolean isShivering(LivingEntity entity) {
-        if (entity.getType().is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
+        if (entity.is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
             return false;
         }
 
@@ -18,7 +18,7 @@ public class SurvivalUtils {
 
     @Environment(EnvType.CLIENT)
     public static boolean isShiveringRender(LivingEntity entity) {
-        if (entity.getType().is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
+        if (entity.is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)) {
             return false;
         }
 

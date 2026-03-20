@@ -41,18 +41,18 @@ public class ChillagerEntity extends Pillager {
     }
 
     @Override
-    public void thunderHit(ServerLevel world, LightningBolt lightning) {
-        if (world.getDifficulty() != Difficulty.PEACEFUL) {
+    public void thunderHit(ServerLevel level, LightningBolt lightning) {
+        if (level.getDifficulty() != Difficulty.PEACEFUL) {
             Frostiful.LOGGER.info("Chillager {} was struck by lightning {}.", this, lightning);
             this.convertTo(
                     FEntityTypes.FROSTOLOGER,
                     ConversionParams.single(this, false, true) ,
                     frostologer -> {
-                        frostologer.populateDefaultEquipmentSlots(world.random, world.getCurrentDifficultyAt(frostologer.blockPosition()));
+                        frostologer.populateDefaultEquipmentSlots(level.getRandom(), level.getCurrentDifficultyAt(frostologer.blockPosition()));
                     }
             );
         } else {
-            super.thunderHit(world, lightning);
+            super.thunderHit(level, lightning);
         }
     }
 

@@ -22,7 +22,7 @@ public final class IcicleWeatherGenerator {
 
     public static void tickIciclesForChunk(ServerLevel world, LevelChunk chunk, int randomTickSpeed) {
 
-        final RandomSource random = world.random;
+        final RandomSource random = world.getRandom();
 
         IcicleConfig icicleConfig = FrostifulConfigYACL.icicleConfig();
         if (!icicleConfig.iciclesFormInWeather()) {

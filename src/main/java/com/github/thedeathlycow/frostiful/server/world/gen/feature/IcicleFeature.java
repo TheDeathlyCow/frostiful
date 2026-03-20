@@ -232,15 +232,15 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
 
         public static final Codec<IcicleFeatureConfig> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
-                        IntProvider.codec(0, 10)
+                        IntProviders.codec(0, 10)
                                 .fieldOf("icicle_height")
                                 .orElse(UniformInt.of(1, 6))
                                 .forGetter(config -> config.icicleHeight),
-                        IntProvider.codec(1, 32)
+                        IntProviders.codec(1, 32)
                                 .fieldOf("radius")
                                 .orElse(UniformInt.of(2, 8))
                                 .forGetter(config -> config.radius),
-                        FloatProvider.codec(0f, 1f)
+                        FloatProviders.codec(0f, 1f)
                                 .fieldOf("density")
                                 .orElse(UniformFloat.of(0.1f, 0.4f))
                                 .forGetter(config -> config.density),
@@ -248,7 +248,7 @@ public class IcicleFeature extends Feature<IcicleFeature.IcicleFeatureConfig> {
                                 .fieldOf("floor_to_ceiling_search_range")
                                 .orElse(12)
                                 .forGetter(config -> config.floorToCeilingSearchRange),
-                        IntProvider.codec(1, 32)
+                        IntProviders.codec(1, 32)
                                 .fieldOf("packed_ice_layer_thickness")
                                 .orElse(UniformInt.of(1, 4))
                                 .forGetter(config -> config.packedIceBlockLayerThickness),

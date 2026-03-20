@@ -14,7 +14,6 @@ import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityReference;
-import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.NeutralMob;
 import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
@@ -102,12 +101,12 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         return this.provider.isAlive()
                 && !this.provider.isBaby()
                 && !this.wasBrushed()
-                && this.provider.getType().is(FEntityTypeTags.IS_BRUSHABLE);
+                && this.provider.is(FEntityTypeTags.IS_BRUSHABLE);
     }
 
     public boolean wasBrushed() {
         return lastBrushTime >= 0L
-                && this.provider.level().getDayTime() - lastBrushTime <= BRUSH_COOLDOWN;
+                && this.provider.level().getGameTime() - lastBrushTime <= BRUSH_COOLDOWN;
     }
 
     private void brush(Player brusher, ItemStack tool) {
@@ -140,12 +139,11 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
 
     @Nullable
     private static ResourceKey<LootTable> getLootTableForAnimal(Animal animal) {
-        EntityType<?> type = animal.getType();
-        if (type.is(FEntityTypeTags.BRUSHING_DROPS_POLAR_BEAR_FUR)) {
+        if (animal.is(FEntityTypeTags.BRUSHING_DROPS_POLAR_BEAR_FUR)) {
             return FLootTables.POLAR_BEAR_BRUSHING_GAMEPLAY;
-        } else if (type.is(FEntityTypeTags.BRUSHING_DROPS_WOLF_FUR)) {
+        } else if (animal.is(FEntityTypeTags.BRUSHING_DROPS_WOLF_FUR)) {
             return FLootTables.WOLF_BRUSHING_GAMEPLAY;
-        } else if (type.is(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)) {
+        } else if (animal.is(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)) {
             return FLootTables.OCELOT_BRUSHING_GAMEPLAY;
         } else {
             return null;

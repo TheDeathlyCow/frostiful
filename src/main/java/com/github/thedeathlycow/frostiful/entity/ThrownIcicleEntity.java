@@ -48,7 +48,7 @@ public class ThrownIcicleEntity extends AbstractArrow {
 
         IcicleConfig config = FrostifulConfigYACL.icicleConfig();
 
-        float damage = entityHitResult.getEntity().getType().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
+        float damage = entityHitResult.getEntity().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
                 ? config.getThrownIcicleExtraDamage()
                 : config.getThrownIcicleDamage();
         this.setBaseDamage(damage);

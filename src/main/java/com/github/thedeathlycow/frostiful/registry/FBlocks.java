@@ -304,8 +304,8 @@ public class FBlocks {
         DispenserBlock.registerProjectileBehavior(FItems.GLACIAL_ARROW);
         DispenserBlock.registerProjectileBehavior(FItems.PACKED_SNOWBALL);
         UseBlockCallback.EVENT.register(new CampfireUseEventListener());
-        BlockEntityType.TRIAL_SPAWNER.addSupportedBlock(ICY_TRIAL_SPAWNER);
-        BlockEntityType.VAULT.addSupportedBlock(ICY_VAULT);
+        BlockEntityType.TRIAL_SPAWNER.addValidBlock(ICY_TRIAL_SPAWNER);
+        BlockEntityType.VAULT.addValidBlock(ICY_VAULT);
     }
 
     private static Block register(String id, Function<BlockBehaviour.Properties, Block> blockFactory) {

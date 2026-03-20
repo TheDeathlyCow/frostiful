@@ -157,7 +157,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             return false;
         }
 
-        if (provider.getType().is(FEntityTypeTags.ROOT_IMMUNE)) {
+        if (provider.is(FEntityTypeTags.ROOT_IMMUNE)) {
             return false;
         }
 

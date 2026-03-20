@@ -9,8 +9,10 @@ import net.minecraft.resources.ResourceKey;
 
 public final class FrostifulRegistries {
     public static final ResourceKey<Registry<BlockTransformer>> BLOCK_TRANSFORMER_KEY = ResourceKey.createRegistryKey(Frostiful.id("block_transformer"));
+
     public static final ResourceKey<Registry<BlockTransformer.Type<?>>> BLOCK_TRANSFORMER_TYPE_KEY = ResourceKey.createRegistryKey(Frostiful.id("block_transformer_type"));
-    public static final Registry<BlockTransformer.Type<?>> BLOCK_TRANSFORMER_TYPE = FabricRegistryBuilder.createSimple(BLOCK_TRANSFORMER_TYPE_KEY).buildAndRegister();
+
+    public static final Registry<BlockTransformer.Type<?>> BLOCK_TRANSFORMER_TYPE = FabricRegistryBuilder.create(BLOCK_TRANSFORMER_TYPE_KEY).buildAndRegister();
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful registries");

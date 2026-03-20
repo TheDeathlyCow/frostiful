@@ -74,7 +74,7 @@ public final class ActiveTemperatureEffects {
             return 0;
         }
 
-        boolean benefitsFromCold = entity.getType().is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)
+        boolean benefitsFromCold = entity.is(ThermooEntityTypeTags.BENEFITS_FROM_COLD_ENTITY_TYPE)
                 || entity.getItemBySlot(EquipmentSlot.CHEST).is(FItems.FROSTOLOGY_CLOAK);
 
         if (benefitsFromCold) {

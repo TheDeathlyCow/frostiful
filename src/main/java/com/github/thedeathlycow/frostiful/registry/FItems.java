@@ -259,7 +259,10 @@ public final class FItems {
             settings -> new Item(
                     settings
                             .stacksTo(1)
-                            .component(DataComponents.PROVIDES_BANNER_PATTERNS, FBannerPatternTags.SNOWFLAKE_PATTERN_ITEM)
+                            .delayedComponent(
+                                    DataComponents.PROVIDES_BANNER_PATTERNS,
+                                    context -> context.getOrThrow(FBannerPatternTags.SNOWFLAKE_PATTERN_ITEM)
+                            )
             )
     );
 
@@ -269,7 +272,10 @@ public final class FItems {
                     settings
                             .stacksTo(1)
                             .rarity(Rarity.UNCOMMON)
-                            .component(DataComponents.PROVIDES_BANNER_PATTERNS, FBannerPatternTags.ICICLE_PATTERN_ITEM)
+                            .delayedComponent(
+                                    DataComponents.PROVIDES_BANNER_PATTERNS,
+                                    context -> context.getOrThrow(FBannerPatternTags.ICICLE_PATTERN_ITEM)
+                            )
             )
     );
 
@@ -279,7 +285,10 @@ public final class FItems {
                     settings
                             .stacksTo(1)
                             .rarity(Rarity.RARE)
-                            .component(DataComponents.PROVIDES_BANNER_PATTERNS, FBannerPatternTags.FROSTOLOGY_PATTERN_ITEM)
+                            .delayedComponent(
+                                    DataComponents.PROVIDES_BANNER_PATTERNS,
+                                    context -> context.getOrThrow(FBannerPatternTags.FROSTOLOGY_PATTERN_ITEM)
+                            )
             )
     );
 

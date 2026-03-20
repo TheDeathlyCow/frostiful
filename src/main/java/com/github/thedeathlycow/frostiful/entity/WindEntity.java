@@ -32,7 +32,7 @@ public class WindEntity extends Entity {
 
     public static final Predicate<Entity> CAN_BE_BLOWN = EntitySelector.NO_SPECTATORS
             .and(EntitySelector.ENTITY_STILL_ALIVE)
-            .and(entity -> !entity.getType().is(FEntityTypeTags.HEAVY_ENTITY_TYPES));
+            .and(entity -> !entity.is(FEntityTypeTags.HEAVY_ENTITY_TYPES));
 
     private float windSpeed = 1.0f;
 
@@ -40,11 +40,11 @@ public class WindEntity extends Entity {
 
     private final int moveTickOffset;
 
-    public WindEntity(EntityType<? extends WindEntity> type, Level world) {
-        super(type, world);
+    public WindEntity(EntityType<? extends WindEntity> type, Level level) {
+        super(type, level);
         this.setNoGravity(true);
         this.setLifeTicks(LIFE_TICKS_PROVIDER.sample(this.random));
-        this.moveTickOffset = world.random.nextIntBetweenInclusive(1, 10) - 1;
+        this.moveTickOffset = level.getRandom().nextIntBetweenInclusive(1, 10) - 1;
     }
 
     @Override
@@ -54,8 +54,8 @@ public class WindEntity extends Entity {
 
 //    @Override
 //    public void baseTick() {
-//        World world = getWorld();
-//        Profiler profiler = world.getProfiler();
+//        World level = getWorld();
+//        Profiler profiler = level.getProfiler();
 //        profiler.push("entityBaseTick");
 //
 //        this.attemptTickInVoid();

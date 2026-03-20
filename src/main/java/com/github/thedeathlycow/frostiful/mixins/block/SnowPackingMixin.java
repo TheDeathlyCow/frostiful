@@ -29,7 +29,7 @@ public abstract class SnowPackingMixin {
     )
     private void smushSnowWhenSteppedOnByHeavyEntity(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl, CallbackInfo ci) {
         boolean maySmushSnow = state.getBlock() == Blocks.SNOW
-                && entity.getType().is(FEntityTypeTags.HEAVY_ENTITY_TYPES)
+                && entity.is(FEntityTypeTags.HEAVY_ENTITY_TYPES)
                 && !world.isClientSide()
                 && FrostifulConfigYACL.freezingConfig().doSnowPacking()
                 && ((ServerLevel) world).getGameRules().get(GameRules.MOB_GRIEFING)

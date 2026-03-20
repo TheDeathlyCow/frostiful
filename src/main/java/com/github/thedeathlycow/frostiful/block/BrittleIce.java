@@ -22,7 +22,7 @@ public final class BrittleIce {
     public static final int MAX_CRACKING = FBlockProperties.MAX_CRACKING;
 
     public static boolean canCrackIce(Entity entity) {
-        return !entity.getType().is(FEntityTypeTags.DOES_NOT_BREAK_BRITTLE_ICE);
+        return !entity.is(FEntityTypeTags.DOES_NOT_BREAK_BRITTLE_ICE);
     }
 
     public static void crack(Block block, BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {

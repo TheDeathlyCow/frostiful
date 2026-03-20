@@ -6,20 +6,9 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.level.gamerules.GameRule;
 import net.minecraft.world.level.gamerules.GameRuleCategory;
 
-/**
- * Custom game rules for Frostiful
- */
 public class FGameRules {
-    /**
-     * Mod's dedicated category for game rules
-     */
     public static final GameRuleCategory SURVIVAL_CATEGORY = GameRuleCategory.register(Frostiful.id("survival"));
 
-    /**
-     * Whether to apply passive freezing. When false, player freezing will revert
-     * to vanilla, except for the increased frost resistance provided by their
-     * frost resistance attribute.
-     */
     public static final GameRule<Boolean> ENABLE_ENVIRONMENT_FREEZING =
             GameRuleBuilder.forBoolean(true)
                     .category(SURVIVAL_CATEGORY)
@@ -32,7 +21,7 @@ public class FGameRules {
                 Frostiful.id("enable_environment_freezing")
         );
     }
-    
+
     private FGameRules() {
 
     }

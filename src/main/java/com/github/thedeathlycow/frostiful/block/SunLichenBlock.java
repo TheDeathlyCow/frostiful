@@ -23,6 +23,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
+import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -47,7 +48,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         super(settings);
         this.heatLevel = heatLevel;
         if (heatLevel > COLD_LEVEL) {
-            LandPathTypeRegistry.register(this, PathType.DAMAGE_OTHER, PathType.DAMAGE_OTHER);
+            LandPathTypeRegistry.register(this, PathType.FIRE, PathType.FIRE);
         }
     }
 

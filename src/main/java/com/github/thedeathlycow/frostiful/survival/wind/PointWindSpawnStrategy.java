@@ -43,7 +43,7 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
                                 FSoundEvents.ENTITY_FREEZING_WIND_BLOWOUT,
                                 SoundSource.AMBIENT,
                                 0.75f,
-                                0.9f + serverWorld.random.nextFloat() / 3
+                                0.9f + serverWorld.getRandom().nextFloat() / 3
                         );
                     }
             );

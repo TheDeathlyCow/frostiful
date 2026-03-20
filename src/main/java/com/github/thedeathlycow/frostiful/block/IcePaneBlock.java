@@ -15,7 +15,7 @@ public class IcePaneBlock extends IronBarsBlock {
     }
 
     public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
-        if (world.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock()) {
+        if (world.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightEmission()) {
             world.removeBlock(pos, false);
         }
     }

@@ -25,7 +25,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-@SuppressWarnings("deprecation")
 public class PackedSnowBlock extends Block {
 
     public static final int MAX_LAYERS = 16;
@@ -59,6 +58,17 @@ public class PackedSnowBlock extends Block {
     }
 
     @Override
+    @Nullable
+    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
+        BlockState previousState = ctx.getLevel().getBlockState(ctx.getClickedPos());
+        if (previousState.is(this)) {
+            return previousState.setValue(LAYERS, Math.min(MAX_LAYERS, previousState.getValue(LAYERS) + 1));
+        } else {
+            return super.getStateForPlacement(ctx);
+        }
+    }
+
+    @Override
     protected boolean isPathfindable(BlockState state, PathComputationType type) {
         if (type == PathComputationType.LAND) {
             return state.getValue(LAYERS) <= MAX_LAYERS / 2;
@@ -68,41 +78,42 @@ public class PackedSnowBlock extends Block {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return LAYERS_TO_SHAPE[state.getValue(LAYERS)];
     }
 
     @Override
-    public VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return LAYERS_TO_SHAPE[state.getValue(LAYERS) - 1];
     }
 
     @Override
-    public VoxelShape getBlockSupportShape(BlockState state, BlockGetter world, BlockPos pos) {
+    protected VoxelShape getBlockSupportShape(BlockState state, BlockGetter world, BlockPos pos) {
         return LAYERS_TO_SHAPE[state.getValue(LAYERS)];
     }
 
     @Override
-    public VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+    protected VoxelShape getVisualShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return LAYERS_TO_SHAPE[state.getValue(LAYERS)];
     }
 
     @Override
-    public boolean useShapeForLightOcclusion(BlockState state) {
+    protected boolean useShapeForLightOcclusion(BlockState state) {
         return true;
     }
 
     @Override
-    public float getShadeBrightness(BlockState state, BlockGetter world, BlockPos pos) {
+    protected float getShadeBrightness(BlockState state, BlockGetter world, BlockPos pos) {
         return state.getValue(LAYERS) == MAX_LAYERS ? 0.2f : 1.0f;
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
+    protected boolean canSurvive(BlockState state, LevelReader world, BlockPos pos) {
         BlockState blockState = world.getBlockState(pos.below());
-        if (blockState.is(BlockTags.SNOW_LAYER_CANNOT_SURVIVE_ON)) {
+
+        if (blockState.is(BlockTags.CANNOT_SUPPORT_SNOW_LAYER)) {
             return false;
-        } else if (blockState.is(BlockTags.SNOW_LAYER_CAN_SURVIVE_ON)) {
+        } else if (blockState.is(BlockTags.SUPPORT_OVERRIDE_SNOW_LAYER)) {
             return true;
         } else {
             return Block.isFaceFull(blockState.getCollisionShape(world, pos.below()), Direction.UP)
@@ -112,12 +123,12 @@ public class PackedSnowBlock extends Block {
     }
 
     @Override
-    public boolean isRandomlyTicking(BlockState state) {
+    protected boolean isRandomlyTicking(BlockState state) {
         return super.isRandomlyTicking(state) && state.getValue(LAYERS) <= 2;
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
+    protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         super.randomTick(state, world, pos, random);
 
         TemperatureRecord temperature = EnvironmentLookup.getInstance()
@@ -134,7 +145,7 @@ public class PackedSnowBlock extends Block {
     }
 
     @Override
-    public BlockState updateShape(
+    protected BlockState updateShape(
             BlockState state,
             LevelReader world,
             ScheduledTickAccess tickView,
@@ -150,7 +161,7 @@ public class PackedSnowBlock extends Block {
     }
 
     @Override
-    public boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
+    protected boolean canBeReplaced(BlockState state, BlockPlaceContext context) {
         int layers = state.getValue(LAYERS);
         if (context.getItemInHand().is(this.asItem()) && layers < MAX_LAYERS) {
             if (context.replacingClickedOnBlock()) {
@@ -160,17 +171,6 @@ public class PackedSnowBlock extends Block {
             }
         } else {
             return layers == 1;
-        }
-    }
-
-    @Override
-    @Nullable
-    public BlockState getStateForPlacement(BlockPlaceContext ctx) {
-        BlockState previousState = ctx.getLevel().getBlockState(ctx.getClickedPos());
-        if (previousState.is(this)) {
-            return previousState.setValue(LAYERS, Math.min(MAX_LAYERS, previousState.getValue(LAYERS) + 1));
-        } else {
-            return super.getStateForPlacement(ctx);
         }
     }
 
