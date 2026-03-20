@@ -16,6 +16,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.util.Util;
@@ -29,6 +30,7 @@ import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.equipment.trim.TrimPattern;
 import net.minecraft.world.level.block.entity.BannerPattern;
 import net.minecraft.world.level.gamerules.GameRule;
+import net.minecraft.world.level.gamerules.GameRuleCategory;
 
 import java.lang.reflect.Field;
 import java.util.EnumMap;
@@ -214,8 +216,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(rootCommand("single"), "Rooted %s for %s ticks");
         builder.add(rootCommand("multiple"), "Rooted %s targets for %s ticks");
 
-        builder.add("gamerule.category.frostiful", "Frostiful");
-        gameRule(builder, FGameRules.ENABLE_ENVIRONMENT_FREEZING, "Do environmental freezing", "If enabled, players will be slowly frozen by the environment over time. Players wearing a Cloak of Frostology are unaffected by this.");
+        builder.add(gameruleCategory(FGameRules.SURVIVAL_CATEGORY), "Frostiful");
+        gameRule(builder, FGameRules.ENABLE_ENVIRONMENT_FREEZING, "Enable environmental freezing", "If enabled, players will be slowly frozen by the environment over time. Players wearing a Cloak of Frostology are unaffected by this.");
 
         addAdvancement(builder, FAdvancements.ROOT, "Frostiful", "A freezing temperature mod");
         addAdvancement(builder, FAdvancements.FIND_CHILLAGER_OUTPOST, "Making Camp", "Find a Chillager Outpost");
@@ -375,6 +377,10 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
     private String rootCommand(String suffix) {
         return "commands.frostiful.root.set.success." + suffix;
+    }
+
+    private String gameruleCategory(GameRuleCategory category) {
+        return category.id().toLanguageKey("gamerule.category");
     }
 
     private void gameRule(
