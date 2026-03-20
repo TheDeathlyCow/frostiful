@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.datagen.generator;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.registry.FDamageTypes;
 import com.github.thedeathlycow.frostiful.registry.FTemperatureStatuses;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
@@ -56,7 +57,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
         entries.add(
                 FTemperatureStatuses.PLAYER_CHILLY,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.99, -0.5))
-                        .withInterval(1)
+                        .withInterval(60)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).ambient())
@@ -68,7 +69,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
         entries.add(
                 FTemperatureStatuses.PLAYER_COLD,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.99, -0.75))
-                        .withInterval(1)
+                        .withInterval(60)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.MINING_FATIGUE).ambient())
@@ -80,11 +81,80 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
         entries.add(
                 FTemperatureStatuses.PLAYER_FREEZING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.99))
-                        .withInterval(1)
+                        .withInterval(60)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).withAmplifier(1).ambient())
                                         .addEffect(MobEffectEffect.effect(MobEffects.MINING_FATIGUE).withAmplifier(1).ambient())
+                                        .build()
+                        )
+                        .build()
+        );
+
+        entries.add(
+                FTemperatureStatuses.FROSTOLOGY_CLOAK_MOVEMENT_SPEED,
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(0))
+                        .disabledByDefault()
+                        .withInterval(1)
+                        .addEffect(AttributeModifierEffect.createScaled(
+                                Attributes.MOVEMENT_SPEED,
+                                -0.04,
+                                Frostiful.id("temperature_effect.freezing_speed"),
+                                AttributeModifier.Operation.ADD_VALUE
+                        ))
+                        .build()
+        );
+
+        entries.add(
+                FTemperatureStatuses.FROSTOLOGY_CLOAK_MELTING,
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtLeast(0))
+                        .disabledByDefault()
+                        .withInterval(20)
+                        .addEffect(DamageEffect.create(4.0f, FDamageTypes.MELT))
+                        .addEffect(
+                                MobEffectEffect.builder()
+                                        .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).withAmplifier(1).ambient())
+                                        .addEffect(MobEffectEffect.effect(MobEffects.MINING_FATIGUE).withAmplifier(1).ambient())
+                                        .build()
+                        )
+                        .build()
+        );
+
+        entries.add(
+                FTemperatureStatuses.FROSTOLOGY_CLOAK_WARM,
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.25, 0))
+                        .disabledByDefault()
+                        .withInterval(60)
+                        .addEffect(
+                                MobEffectEffect.builder()
+                                        .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).ambient())
+                                        .addEffect(MobEffectEffect.effect(MobEffects.MINING_FATIGUE).ambient())
+                                        .build()
+                        )
+                        .build()
+        );
+
+        entries.add(
+                FTemperatureStatuses.FROSTOLOGY_CLOAK_COLD,
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.75))
+                        .disabledByDefault()
+                        .withInterval(60)
+                        .addEffect(
+                                MobEffectEffect.builder()
+                                        .addEffect(MobEffectEffect.effect(MobEffects.RESISTANCE).ambient())
+                                        .build()
+                        )
+                        .build()
+        );
+
+        entries.add(
+                FTemperatureStatuses.FROSTOLOGY_CLOAK_FREEZING,
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-1.0))
+                        .disabledByDefault()
+                        .withInterval(60)
+                        .addEffect(
+                                MobEffectEffect.builder()
+                                        .addEffect(MobEffectEffect.effect(MobEffects.HASTE).ambient())
                                         .build()
                         )
                         .build()

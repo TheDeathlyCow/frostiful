@@ -5,15 +5,20 @@
       "effects": [
         {
           "ambient": true,
+          "effect": "minecraft:weakness"
+        },
+        {
+          "ambient": true,
           "effect": "minecraft:mining_fatigue"
         }
       ]
     }
   ],
+  "enabled_by_default": false,
   "entity_type": "#frostiful:has_player_temperature_statuses",
   "interval": 60,
   "temperature_scale_range": {
-    "max": -0.75,
-    "min": -0.99
+    "max": 0.0,
+    "min": -0.25
   }
 }

@@ -1,0 +1,18 @@
+{
+  "effects": [
+    {
+      "type": "thermoo:attribute_modifier",
+      "attribute_type": "minecraft:movement_speed",
+      "id": "frostiful:temperature_effect.freezing_speed",
+      "operation": "add_value",
+      "scale_with_temperature": true,
+      "value": -0.04
+    }
+  ],
+  "enabled_by_default": false,
+  "entity_type": "#frostiful:has_player_temperature_statuses",
+  "interval": 1,
+  "temperature_scale_range": {
+    "max": 0.0
+  }
+}

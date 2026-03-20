@@ -1,6 +1,11 @@
 {
   "effects": [
     {
+      "type": "thermoo:damage",
+      "amount": 4.0,
+      "damage_type": "frostiful:melt"
+    },
+    {
       "type": "thermoo:mob_effect",
       "effects": [
         {
@@ -16,9 +21,9 @@
       ]
     }
   ],
+  "enabled_by_default": false,
   "entity_type": "#frostiful:has_player_temperature_statuses",
-  "interval": 60,
   "temperature_scale_range": {
-    "max": -0.99
+    "min": 0.0
   }
 }
