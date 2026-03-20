@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.entity.loot;
 
-import com.github.thedeathlycow.frostiful.registry.FLootConditionTypes;
 import com.github.thedeathlycow.frostiful.survival.PassiveTemperatureEffects;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
@@ -10,7 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 
 import java.util.Objects;
 
@@ -28,8 +26,8 @@ public record LocationWarmthLootCondition(
     );
 
     @Override
-    public LootItemConditionType getType() {
-        return FLootConditionTypes.LOCATION_WARMTH;
+    public MapCodec<LocationWarmthLootCondition> codec() {
+        return CODEC;
     }
 
     @Override

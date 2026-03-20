@@ -64,7 +64,7 @@ public final class ServerPlayerEnvironmentTickListeners {
         }
 
         boolean doPassiveFreezing = config.doPassiveFreezing()
-                && context.level().getGameRules().get(FGameRules.DO_PASSIVE_FREEZING);
+                && context.level().getGameRules().get(FGameRules.ENABLE_ENVIRONMENT_FREEZING);
 
         if (IceLikeComponent.isWearing(player)) {
             return TriState.TRUE;

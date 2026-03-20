@@ -215,7 +215,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(rootCommand("multiple"), "Rooted %s targets for %s ticks");
 
         builder.add("gamerule.category.frostiful", "Frostiful");
-        gameRule(builder, FGameRules.DO_PASSIVE_FREEZING, "Do environmental freezing", "If enabled, players will be slowly frozen by the environment over time. Players wearing a Cloak of Frostology are unaffected by this.");
+        gameRule(builder, FGameRules.ENABLE_ENVIRONMENT_FREEZING, "Do environmental freezing", "If enabled, players will be slowly frozen by the environment over time. Players wearing a Cloak of Frostology are unaffected by this.");
 
         addAdvancement(builder, FAdvancements.ROOT, "Frostiful", "A freezing temperature mod");
         addAdvancement(builder, FAdvancements.FIND_CHILLAGER_OUTPOST, "Making Camp", "Find a Chillager Outpost");

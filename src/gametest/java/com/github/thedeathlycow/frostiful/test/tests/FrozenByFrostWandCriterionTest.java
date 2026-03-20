@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.tests;
 
-import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
+import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandTrigger;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.advancements.criterion.ContextAwarePredicate;
 import net.minecraft.advancements.criterion.EntityPredicate;
@@ -39,13 +39,13 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = new FrozenByFrostWandCriterion.Conditions(
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = new FrozenByFrostWandTrigger.TriggerInstance(
                 Optional.empty(),
                 List.of(),
                 MinMaxBounds.Ints.ANY
         );
 
-        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.assertTrue(triggerInstance.matches(creepers), Component.literal("Conditions do not match!"));
         context.succeed();
     }
 
@@ -58,9 +58,9 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = createConditions(context.getLevel());
 
-        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.assertTrue(triggerInstance.matches(creepers), Component.literal("Conditions do not match!"));
         context.succeed();
     }
 
@@ -75,9 +75,9 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.ZOMBIE
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = createConditions(context.getLevel());
 
-        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.assertTrue(triggerInstance.matches(creepers), Component.literal("Conditions do not match!"));
         context.succeed();
     }
 
@@ -92,9 +92,9 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = createConditions(context.getLevel());
 
-        context.assertTrue(conditions.matches(creepers), Component.literal("Conditions do not match!"));
+        context.assertTrue(triggerInstance.matches(creepers), Component.literal("Conditions do not match!"));
         context.succeed();
     }
 
@@ -106,9 +106,9 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.CREEPER
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = createConditions(context.getLevel());
 
-        context.assertFalse(conditions.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
+        context.assertFalse(triggerInstance.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
         context.succeed();
     }
 
@@ -121,9 +121,9 @@ public class FrozenByFrostWandCriterionTest {
                 EntityType.ZOMBIE
         );
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = createConditions(context.getLevel());
 
-        context.assertFalse(conditions.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
+        context.assertFalse(triggerInstance.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
         context.succeed();
     }
 
@@ -131,9 +131,9 @@ public class FrozenByFrostWandCriterionTest {
     public void zeroMobsToThreeCreeperPredicatesIsFalse(GameTestHelper context) {
         List<LootContext> creepers = List.of();
 
-        FrozenByFrostWandCriterion.Conditions conditions = createConditions(context.getLevel());
+        FrozenByFrostWandTrigger.TriggerInstance triggerInstance = createConditions(context.getLevel());
 
-        context.assertFalse(conditions.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
+        context.assertFalse(triggerInstance.matches(creepers), Component.literal("Conditions do match, but they should NOT!"));
         context.succeed();
     }
 
@@ -164,7 +164,7 @@ public class FrozenByFrostWandCriterionTest {
         return new LootContext.Builder(lootWorldContext).create(Optional.empty());
     }
 
-    private static FrozenByFrostWandCriterion.Conditions createConditions(ServerLevel world) {
+    private static FrozenByFrostWandTrigger.TriggerInstance createConditions(ServerLevel world) {
         List<ContextAwarePredicate> predicates = new ArrayList<>();
         HolderGetter<EntityType<?>> lookup = world.registryAccess().lookupOrThrow(Registries.ENTITY_TYPE);
 
@@ -176,7 +176,7 @@ public class FrozenByFrostWandCriterionTest {
             predicates.add(context);
         }
 
-        return new FrozenByFrostWandCriterion.Conditions(
+        return new FrozenByFrostWandTrigger.TriggerInstance(
                 Optional.empty(),
                 predicates,
                 MinMaxBounds.Ints.ANY

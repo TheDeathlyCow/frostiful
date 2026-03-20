@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.entity.loot;
 
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.registry.FComponents;
-import com.github.thedeathlycow.frostiful.registry.FLootConditionTypes;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.criterion.MinMaxBounds;
@@ -10,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
 import org.jetbrains.annotations.NotNull;
 
 public record RootedLootCondition(
@@ -26,8 +24,8 @@ public record RootedLootCondition(
     );
 
     @Override
-    public LootItemConditionType getType() {
-        return FLootConditionTypes.ROOTED;
+    public MapCodec<RootedLootCondition> codec() {
+        return CODEC;
     }
 
     @Override

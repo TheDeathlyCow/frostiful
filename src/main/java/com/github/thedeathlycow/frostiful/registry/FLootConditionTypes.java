@@ -4,32 +4,22 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.loot.LocationWarmthLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.WearingIceLikeItem;
+import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.level.storage.loot.predicates.LootItemConditionType;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 public class FLootConditionTypes {
-
-
-    public static final LootItemConditionType ROOTED = register(
-            "rooted",
-            new LootItemConditionType(RootedLootCondition.CODEC)
-    );
-    public static final LootItemConditionType CHEST_EQUPPED_WITH_TRINKET = register(
-            "wearing_ice_like_item",
-            new LootItemConditionType(WearingIceLikeItem.CODEC)
-    );
-    public static final LootItemConditionType LOCATION_WARMTH = register(
-            "location_warmth",
-            new LootItemConditionType(LocationWarmthLootCondition.CODEC)
-    );
-
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful loot condition types");
+
+        register("rooted", RootedLootCondition.CODEC);
+        register("wearing_ice_like_item", WearingIceLikeItem.CODEC);
+        register("location_warmth", LocationWarmthLootCondition.CODEC);
     }
 
-    private static LootItemConditionType register(String name, LootItemConditionType lootCondition) {
-        return Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, Frostiful.id(name), lootCondition);
+    private static void register(String name, MapCodec<? extends LootItemCondition> codec) {
+        Registry.register(BuiltInRegistries.LOOT_CONDITION_TYPE, Frostiful.id(name), codec);
     }
 
     private FLootConditionTypes() {

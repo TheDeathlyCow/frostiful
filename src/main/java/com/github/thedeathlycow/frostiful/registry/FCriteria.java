@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandCriterion;
+import com.github.thedeathlycow.frostiful.entity.advancement.FrozenByFrostWandTrigger;
 import com.github.thedeathlycow.frostiful.entity.advancement.SunLichenDischargeCriterion;
 import net.minecraft.advancements.CriterionTrigger;
 import net.minecraft.core.Registry;
@@ -13,9 +13,9 @@ public final class FCriteria {
             new SunLichenDischargeCriterion()
     );
 
-    public static final FrozenByFrostWandCriterion FROZEN_BY_FROST_WAND = register(
+    public static final FrozenByFrostWandTrigger FROZEN_BY_FROST_WAND = register(
             "frozen_by_frost_wand",
-            new FrozenByFrostWandCriterion()
+            new FrozenByFrostWandTrigger()
     );
 
     public static void initialize() {

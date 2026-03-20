@@ -2,18 +2,23 @@ package com.github.thedeathlycow.frostiful.entity.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.criterion.*;
+import net.minecraft.advancements.criterion.ContextAwarePredicate;
+import net.minecraft.advancements.criterion.EntityPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.Validatable;
+import net.minecraft.world.level.storage.loot.ValidationContextSource;
 
 import java.util.*;
 
-public class FrozenByFrostWandCriterion extends SimpleCriterionTrigger<FrozenByFrostWandCriterion.Conditions> {
+public class FrozenByFrostWandTrigger extends SimpleCriterionTrigger<FrozenByFrostWandTrigger.TriggerInstance> {
 
     @Override
-    public Codec<Conditions> codec() {
-        return Conditions.CODEC;
+    public Codec<TriggerInstance> codec() {
+        return TriggerInstance.CODEC;
     }
 
     public void trigger(ServerPlayer player, Collection<LivingEntity> frozenEntities) {
@@ -23,28 +28,28 @@ public class FrozenByFrostWandCriterion extends SimpleCriterionTrigger<FrozenByF
             victimContexts.add(EntityPredicate.createContext(player, frozenEntity));
         }
 
-        this.trigger(player, conditions -> conditions.matches(victimContexts));
+        this.trigger(player, triggerInstance -> triggerInstance.matches(victimContexts));
     }
 
-    public record Conditions(
+    public record TriggerInstance(
             Optional<ContextAwarePredicate> player,
             List<ContextAwarePredicate> victims,
             MinMaxBounds.Ints entitiesFrozen
     ) implements SimpleCriterionTrigger.SimpleInstance {
-        public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(
+        public static final Codec<TriggerInstance> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                                 EntityPredicate.ADVANCEMENT_CODEC
                                         .optionalFieldOf("player")
-                                        .forGetter(Conditions::player),
+                                        .forGetter(TriggerInstance::player),
                                 EntityPredicate.ADVANCEMENT_CODEC
                                         .listOf()
                                         .optionalFieldOf("victims", List.of())
-                                        .forGetter(Conditions::victims),
+                                        .forGetter(TriggerInstance::victims),
                                 MinMaxBounds.Ints.CODEC
                                         .optionalFieldOf("entities_frozen", MinMaxBounds.Ints.ANY)
-                                        .forGetter(Conditions::entitiesFrozen)
+                                        .forGetter(TriggerInstance::entitiesFrozen)
                         )
-                        .apply(instance, Conditions::new)
+                        .apply(instance, TriggerInstance::new)
         );
 
         /**
@@ -81,9 +86,9 @@ public class FrozenByFrostWandCriterion extends SimpleCriterionTrigger<FrozenByF
         }
 
         @Override
-        public void validate(CriterionValidator validator) {
+        public void validate(ValidationContextSource validator) {
             SimpleCriterionTrigger.SimpleInstance.super.validate(validator);
-            validator.validateEntities(this.victims, ".victims");
+            Validatable.validate(validator.entityContext(), "victims", this.victims);
         }
     }
 }
