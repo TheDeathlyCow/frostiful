@@ -1,0 +1,17 @@
+{
+  "effects": [
+    {
+      "type": "thermoo:attribute_modifier",
+      "attribute_type": "minecraft:attack_damage",
+      "id": "frostiful:temperature_effect.frostologer_attack_damage",
+      "operation": "add_value",
+      "scale_with_temperature": true,
+      "value": -0.1
+    }
+  ],
+  "entity_type": "frostiful:frostologer",
+  "interval": 1,
+  "temperature_scale_range": {
+    "max": 0.0
+  }
+}

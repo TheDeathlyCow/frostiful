@@ -1,37 +1,29 @@
-package com.github.thedeathlycow.frostiful.datagen.generator;
+package com.github.thedeathlycow.frostiful.datagen.generator.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FDamageTypes;
+import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FTemperatureStatuses;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.effect.AttributeModifierEffect;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.effect.DamageEffect;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.effect.MobEffectEffect;
-import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.minecraft.core.HolderGetter;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-import java.util.concurrent.CompletableFuture;
+public final class FrostifulTemperatureStatusBootstrap {
+    public static void bootstrap(BootstrapContext<TemperatureStatus> context) {
+        HolderGetter<EntityType<?>> entityTypes = context.lookup(Registries.ENTITY_TYPE);
 
-public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
-    public TemperatureStatusProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture);
-    }
-
-    @Override
-    protected void configure(HolderLookup.Provider registries, Entries entries) {
-        HolderGetter<EntityType<?>> entityTypes = registries.lookupOrThrow(Registries.ENTITY_TYPE);
-
-        entries.add(
+        context.register(
                 FTemperatureStatuses.FREEZE_DAMAGE,
                 TemperatureStatus.builder(TemperatureStatus.selectAllEntities().temperatureIsAtMost(-1.0))
                         .withInterval(20)
@@ -39,9 +31,11 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
+        // players
+
         HolderSet<EntityType<?>> playerEffects = entityTypes.getOrThrow(FEntityTypeTags.HAS_PLAYER_TEMPERATURE_STATUSES);
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.PLAYER_MOVEMENT_SPEED,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(0))
                         .withInterval(1)
@@ -54,7 +48,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.PLAYER_CHILLY,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.99, -0.5))
                         .withInterval(60)
@@ -66,7 +60,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.PLAYER_COLD,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.99, -0.75))
                         .withInterval(60)
@@ -78,7 +72,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.PLAYER_FREEZING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.99))
                         .withInterval(60)
@@ -91,7 +85,9 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        // players with frostologer cloak
+
+        context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_MOVEMENT_SPEED,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(0))
                         .disabledByDefault()
@@ -105,7 +101,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_MELTING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtLeast(0))
                         .disabledByDefault()
@@ -120,7 +116,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_WARM,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.25, 0))
                         .disabledByDefault()
@@ -134,7 +130,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_COLD,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.75))
                         .disabledByDefault()
@@ -147,7 +143,7 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         .build()
         );
 
-        entries.add(
+        context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_FREEZING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-1.0))
                         .disabledByDefault()
@@ -159,10 +155,53 @@ public class TemperatureStatusProvider extends FabricDynamicRegistryProvider {
                         )
                         .build()
         );
+
+        // frostologers
+        HolderSet<EntityType<?>> frostologer = HolderSet.direct(FEntityTypes.FROSTOLOGER.builtInRegistryHolder());
+
+        context.register(
+                FTemperatureStatuses.FROSTOLOGER_ATTACK_DAMAGE,
+                TemperatureStatus.builder(TemperatureStatus.selector(frostologer).temperatureIsAtMost(0))
+                        .withInterval(1)
+                        .addEffect(AttributeModifierEffect.createScaled(
+                                Attributes.ATTACK_DAMAGE,
+                                -0.1,
+                                Frostiful.id("temperature_effect.frostologer_attack_damage"),
+                                AttributeModifier.Operation.ADD_VALUE
+                        ))
+                        .build()
+        );
+
+        context.register(
+                FTemperatureStatuses.FROSTOLOGER_CHILLY,
+                TemperatureStatus.builder(TemperatureStatus.selector(frostologer).temperatureIsBetween(-0.95, -0.5))
+                        .withInterval(60)
+                        .addEffect(
+                                MobEffectEffect.builder()
+                                        .addEffect(MobEffectEffect.effect(MobEffects.RESISTANCE))
+                                        .addEffect(MobEffectEffect.effect(MobEffects.STRENGTH))
+                                        .build()
+                        )
+                        .build()
+        );
+
+        context.register(
+                FTemperatureStatuses.FROSTOLOGER_FREEZING,
+                TemperatureStatus.builder(TemperatureStatus.selector(frostologer).temperatureIsAtMost(-0.95))
+                        .withInterval(60)
+                        .addEffect(
+                                MobEffectEffect.builder()
+                                        .addEffect(MobEffectEffect.effect(MobEffects.SPEED).withAmplifier(1).ambient())
+                                        .addEffect(MobEffectEffect.effect(MobEffects.RESISTANCE).withAmplifier(2).ambient())
+                                        .addEffect(MobEffectEffect.effect(MobEffects.REGENERATION).withAmplifier(2).ambient())
+                                        .addEffect(MobEffectEffect.effect(MobEffects.STRENGTH).withAmplifier(1).ambient())
+                                        .build()
+                        )
+                        .build()
+        );
     }
 
-    @Override
-    public String getName() {
-        return "FrostifulTemperatureStatusProvider";
+    private FrostifulTemperatureStatusBootstrap() {
+
     }
 }

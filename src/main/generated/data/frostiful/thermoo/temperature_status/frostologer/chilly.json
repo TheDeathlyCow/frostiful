@@ -1,0 +1,21 @@
+{
+  "effects": [
+    {
+      "type": "thermoo:mob_effect",
+      "effects": [
+        {
+          "effect": "minecraft:resistance"
+        },
+        {
+          "effect": "minecraft:strength"
+        }
+      ]
+    }
+  ],
+  "entity_type": "frostiful:frostologer",
+  "interval": 60,
+  "temperature_scale_range": {
+    "max": -0.5,
+    "min": -0.95
+  }
+}

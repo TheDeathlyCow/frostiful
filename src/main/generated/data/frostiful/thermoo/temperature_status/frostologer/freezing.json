@@ -1,0 +1,34 @@
+{
+  "effects": [
+    {
+      "type": "thermoo:mob_effect",
+      "effects": [
+        {
+          "ambient": true,
+          "amplifier": 1,
+          "effect": "minecraft:speed"
+        },
+        {
+          "ambient": true,
+          "amplifier": 2,
+          "effect": "minecraft:resistance"
+        },
+        {
+          "ambient": true,
+          "amplifier": 2,
+          "effect": "minecraft:regeneration"
+        },
+        {
+          "ambient": true,
+          "amplifier": 1,
+          "effect": "minecraft:strength"
+        }
+      ]
+    }
+  ],
+  "entity_type": "frostiful:frostologer",
+  "interval": 60,
+  "temperature_scale_range": {
+    "max": -0.95
+  }
+}

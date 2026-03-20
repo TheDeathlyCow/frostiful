@@ -1,0 +1,8 @@
+{
+  "values": [
+    "frostiful:player/movement_speed",
+    "frostiful:player/chilly",
+    "frostiful:player/cold",
+    "frostiful:player/freezing"
+  ]
+}

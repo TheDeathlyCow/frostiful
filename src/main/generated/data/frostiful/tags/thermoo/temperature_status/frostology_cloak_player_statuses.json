@@ -1,0 +1,9 @@
+{
+  "values": [
+    "frostiful:player/frostology_cloak/movement_speed",
+    "frostiful:player/frostology_cloak/melting",
+    "frostiful:player/frostology_cloak/warm",
+    "frostiful:player/frostology_cloak/cold",
+    "frostiful:player/frostology_cloak/freezing"
+  ]
+}

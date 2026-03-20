@@ -19,6 +19,10 @@ public final class FTemperatureStatuses {
     public static final ResourceKey<TemperatureStatus> FROSTOLOGY_CLOAK_COLD = key("player/frostology_cloak/cold");
     public static final ResourceKey<TemperatureStatus> FROSTOLOGY_CLOAK_FREEZING = key("player/frostology_cloak/freezing");
 
+    public static final ResourceKey<TemperatureStatus> FROSTOLOGER_ATTACK_DAMAGE = key("frostologer/attack_damage");
+    public static final ResourceKey<TemperatureStatus> FROSTOLOGER_CHILLY = key("frostologer/chilly");
+    public static final ResourceKey<TemperatureStatus> FROSTOLOGER_FREEZING = key("frostologer/freezing");
+
     private static ResourceKey<TemperatureStatus> key(String name) {
         return ResourceKey.create(ThermooRegistryKeys.TEMPERATURE_STATUS, Frostiful.id(name));
     }

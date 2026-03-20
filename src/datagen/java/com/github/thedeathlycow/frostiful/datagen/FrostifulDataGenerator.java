@@ -4,18 +4,16 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.datagen.generator.BlockTransformerProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.BootstrappedRegistryGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.FRecipeProvider;
-import com.github.thedeathlycow.frostiful.datagen.generator.TemperatureStatusProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.EnglishUSGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.FrostifulModelGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.registry.FrostifulEnchantmentBootstrap;
-import com.github.thedeathlycow.frostiful.datagen.generator.tag.FBlockTagGenerator;
-import com.github.thedeathlycow.frostiful.datagen.generator.tag.FEnchantmentTagGenerator;
-import com.github.thedeathlycow.frostiful.datagen.generator.tag.FEntityTypeTagGenerator;
-import com.github.thedeathlycow.frostiful.datagen.generator.tag.FItemTagGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.registry.FrostifulTemperatureStatusBootstrap;
+import com.github.thedeathlycow.frostiful.datagen.generator.tag.*;
 import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
 import com.github.thedeathlycow.frostiful.registry.FDamageTypes;
+import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.core.RegistrySetBuilder;
@@ -46,7 +44,6 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
 
         pack.addProvider(FRecipeProvider::new);
         pack.addProvider(BlockTransformerProvider::new);
-        pack.addProvider(TemperatureStatusProvider::new);
 
         pack.addProvider(FrostifulModelGenerator::new);
 
@@ -54,6 +51,7 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider((output, registriesFuture) -> new FItemTagGenerator(output, registriesFuture, blockTagProvider));
         pack.addProvider(FEntityTypeTagGenerator::new);
         pack.addProvider(FEnchantmentTagGenerator::new);
+        pack.addProvider(FTemperatureStatusTagGenerator::new);
     }
 
     @Override
@@ -74,6 +72,10 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         registryBuilder.add(
                 Registries.DAMAGE_TYPE,
                 FDamageTypes::bootstrap
+        );
+        registryBuilder.add(
+                ThermooRegistryKeys.TEMPERATURE_STATUS,
+                FrostifulTemperatureStatusBootstrap::bootstrap
         );
     }
 
