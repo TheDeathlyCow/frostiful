@@ -7,7 +7,7 @@ import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuil
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItemComponents;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
-import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
+import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.frostiful.item.component.TemperatureStatusEquipment;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
@@ -129,7 +129,7 @@ public final class FItems {
             "inert_frostology_cloak",
             settings -> new Item(
                     settings
-                            .component(FDataComponentTypes.INERT_TOOLTIP, InertTooltipComponent.INSTANCE)
+                            .component(FDataComponentTypes.SIMPLE_TOOLTIP, new SimpleTooltipComponent(SimpleTooltipComponent.INERT_TEXT))
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
                             .component(DataComponents.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
                             .rarity(Rarity.UNCOMMON)
@@ -143,6 +143,7 @@ public final class FItems {
                     settings
                             .attributes(FrostologyCloakItemComponents.createAttributeModifiers())
                             .component(FDataComponentTypes.ICE_LIKE, IceLikeComponent.DEFAULT)
+                            .component(FDataComponentTypes.SIMPLE_TOOLTIP, new SimpleTooltipComponent(SimpleTooltipComponent.ICE_LIKE_TEXT))
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
                             .component(DataComponents.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
                             .delayedComponent(FDataComponentTypes.DISABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES))

@@ -4,10 +4,9 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
-import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
+import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
-import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.HolderSet;
@@ -16,7 +15,6 @@ import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
 import java.util.function.UnaryOperator;
@@ -27,14 +25,6 @@ public final class FDataComponentTypes {
             builder -> builder
                     .persistent(FrostResistanceComponent.CODEC)
                     .networkSynchronized(FrostResistanceComponent.PACKET_CODEC)
-                    .cacheEncoding()
-    );
-
-    public static final DataComponentType<InertTooltipComponent> INERT_TOOLTIP = register(
-            "inert_tooltip",
-            builder -> builder
-                    .persistent(MapCodec.unit(InertTooltipComponent.INSTANCE).codec())
-                    .networkSynchronized(StreamCodec.unit(InertTooltipComponent.INSTANCE))
                     .cacheEncoding()
     );
 
@@ -70,11 +60,18 @@ public final class FDataComponentTypes {
                     .cacheEncoding()
     );
 
+    public static final DataComponentType<SimpleTooltipComponent> SIMPLE_TOOLTIP = register(
+            "simple_tooltip",
+            builder -> builder
+                    .persistent(SimpleTooltipComponent.CODEC)
+                    .networkSynchronized(SimpleTooltipComponent.STREAM_CODEC)
+                    .cacheEncoding()
+    );
+
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful item components");
 
-        ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.INERT_TOOLTIP);
-        ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.ICE_LIKE);
+        ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.SIMPLE_TOOLTIP);
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             List<IceLikeComponent> components = IceLikeComponent.getAllEquipped(entity);

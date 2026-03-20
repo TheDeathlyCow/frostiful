@@ -25,7 +25,7 @@ import java.util.function.Consumer;
 
 public record IceLikeComponent(
         TagKey<DamageType> blockedDamageTypes
-) implements TooltipProvider {
+) {
     public static final IceLikeComponent DEFAULT = new IceLikeComponent(DamageTypeTags.IS_FREEZING);
 
     public static final Codec<IceLikeComponent> CODEC = RecordCodecBuilder.create(
@@ -55,13 +55,5 @@ public record IceLikeComponent(
 
     public boolean blockDamage(DamageSource source) {
         return source.is(this.blockedDamageTypes);
-    }
-
-    @Override
-    public void addToTooltip(Item.TooltipContext context, Consumer<Component> textConsumer, TooltipFlag type, DataComponentGetter components) {
-        textConsumer.accept(
-                Component.translatable("item.frostiful.frostology_cloak.tooltip")
-                        .setStyle(TextStyles.FROSTOLOGY_CLOAK_TOOLTIP)
-        );
     }
 }

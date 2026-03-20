@@ -5,6 +5,7 @@ import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.config.section.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
+import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
@@ -91,9 +92,9 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(FItems.GLACIAL_HEART, "Glacial Heart");
         builder.add(FItems.INERT_FROSTOLOGY_CLOAK, "Inert Cloak of Frostology");
-        builder.add(tooltip(FItems.INERT_FROSTOLOGY_CLOAK), "Inert");
+        builder.add(SimpleTooltipComponent.INERT_KEY, "Inert");
         builder.add(FItems.FROSTOLOGY_CLOAK, "Cloak of Frostology");
-        builder.add(tooltip(FItems.FROSTOLOGY_CLOAK), "Reborn in Ice");
+        builder.add(SimpleTooltipComponent.ICE_LIKE_KEY, "Reborn in Ice");
         builder.add(FItems.FROZEN_ROD, "Frozen Rod");
 
         builder.add(FItems.ICE_SKATES, "Ice Skates");
@@ -340,10 +341,6 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
     private String itemSuffix(Item item, String suffix) {
         return item.getDescriptionId() + "." + suffix;
-    }
-
-    private String tooltip(Item item) {
-        return itemSuffix(item, "tooltip");
     }
 
     private String potionItem(Item item, Holder<Potion> potion) {
