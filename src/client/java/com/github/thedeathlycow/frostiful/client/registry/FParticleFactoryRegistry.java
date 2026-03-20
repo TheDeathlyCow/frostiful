@@ -6,7 +6,7 @@ import com.github.thedeathlycow.frostiful.client.particle.WindParticle;
 import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.particle.v1.ParticleFactoryRegistry;
+import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 
@@ -20,8 +20,8 @@ public class FParticleFactoryRegistry {
         registerFactory(FParticleTypes.WIND_FLIPPED, WindParticle.Factory::new);
     }
 
-    private static <T extends ParticleOptions> void registerFactory(ParticleType<T> particle, ParticleFactoryRegistry.PendingParticleFactory<T> factory) {
-        ParticleFactoryRegistry.getInstance().register(particle, factory);
+    private static <T extends ParticleOptions> void registerFactory(ParticleType<T> particle, ParticleProviderRegistry.PendingParticleProvider<T> factory) {
+        ParticleProviderRegistry.getInstance().register(particle, factory);
     }
 
     private FParticleFactoryRegistry() {

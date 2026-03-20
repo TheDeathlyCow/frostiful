@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.model.*;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.EntityModelLayerRegistry;
+import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.monster.illager.IllagerModel;
 
@@ -23,13 +23,13 @@ public class FEntityModelLayers {
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity model layers");
-        EntityModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(FROSTOLOGER_CAPE, FrostologerCapeModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerModel::createBodyLayer);
-        EntityModelLayerRegistry.registerModelLayer(BITER, BiterEntityModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ICE_SKATES, IceSkateModel::getTexturedModelData);
-        EntityModelLayerRegistry.registerModelLayer(ICE_SKATES_BABY, IceSkateModel::getBabyTexturedModelData);
+        ModelLayerRegistry.registerModelLayer(FROST_WAND, FrostWandItemModel::getTexturedModelData);
+        ModelLayerRegistry.registerModelLayer(FROSTOLOGER, FrostologerEntityModel::createBodyLayer);
+        ModelLayerRegistry.registerModelLayer(FROSTOLOGER_CAPE, FrostologerCapeModel::createBodyLayer);
+        ModelLayerRegistry.registerModelLayer(CHILLAGER, IllagerModel::createBodyLayer);
+        ModelLayerRegistry.registerModelLayer(BITER, BiterEntityModel::getTexturedModelData);
+        ModelLayerRegistry.registerModelLayer(ICE_SKATES, IceSkateModel::getTexturedModelData);
+        ModelLayerRegistry.registerModelLayer(ICE_SKATES_BABY, IceSkateModel::getBabyTexturedModelData);
     }
 
     private FEntityModelLayers() {

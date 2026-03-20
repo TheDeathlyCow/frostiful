@@ -7,7 +7,7 @@ import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
-import net.fabricmc.fabric.api.item.v1.ComponentTooltipAppenderRegistry;
+import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -52,8 +52,8 @@ public final class FDataComponentTypes {
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful item components");
 
-        ComponentTooltipAppenderRegistry.addLast(FDataComponentTypes.INERT_TOOLTIP);
-        ComponentTooltipAppenderRegistry.addLast(FDataComponentTypes.ICE_LIKE);
+        ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.INERT_TOOLTIP);
+        ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.ICE_LIKE);
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
             List<IceLikeComponent> components = IceLikeComponent.getAllEquipped(entity);

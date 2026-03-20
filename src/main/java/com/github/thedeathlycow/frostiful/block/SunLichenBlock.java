@@ -7,7 +7,7 @@ import com.github.thedeathlycow.frostiful.registry.FCriteria;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
-import net.fabricmc.fabric.api.registry.LandPathNodeTypesRegistry;
+import net.fabricmc.fabric.api.registry.LandPathTypeRegistry;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
@@ -47,7 +47,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         super(settings);
         this.heatLevel = heatLevel;
         if (heatLevel > COLD_LEVEL) {
-            LandPathNodeTypesRegistry.register(this, PathType.DAMAGE_OTHER, PathType.DAMAGE_OTHER);
+            LandPathTypeRegistry.register(this, PathType.DAMAGE_OTHER, PathType.DAMAGE_OTHER);
         }
     }
 

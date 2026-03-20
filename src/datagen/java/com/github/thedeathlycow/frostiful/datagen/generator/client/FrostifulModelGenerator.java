@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.client.render.entity.FrostWandItemRend
 import com.github.thedeathlycow.frostiful.registry.FArmorMaterials;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.model.ItemModelUtils;
@@ -20,7 +20,7 @@ public class FrostifulModelGenerator extends FabricModelProvider {
     private static final Identifier LEGGINGS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("leggings");
     private static final Identifier BOOTS_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("boots");
 
-    public FrostifulModelGenerator(FabricDataOutput output) {
+    public FrostifulModelGenerator(FabricPackOutput output) {
         super(output);
     }
 

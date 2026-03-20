@@ -4,8 +4,8 @@ import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import com.github.thedeathlycow.frostiful.registry.tag.FStructureTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
@@ -33,12 +33,12 @@ import java.util.function.BiConsumer;
 
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.*;
 
-public class FChestLootGenerator extends SimpleFabricLootTableProvider {
+public class FChestLootGenerator extends SimpleFabricLootTableSubProvider {
     public static final String FILLED_MAP_TRANSLATION_KEY = "filled_map.frostiful.frostologer_castle";
 
     private final CompletableFuture<HolderLookup.Provider> registriesFuture;
 
-    public FChestLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public FChestLootGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture, LootContextParamSets.CHEST);
         this.registriesFuture = registriesFuture;
     }

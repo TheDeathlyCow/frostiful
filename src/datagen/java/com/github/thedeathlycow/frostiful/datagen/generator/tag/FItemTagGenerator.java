@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.datagen.generator.tag;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.Identifier;
@@ -15,9 +15,9 @@ import java.util.concurrent.CompletableFuture;
 
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonItemKey;
 
-public class FItemTagGenerator extends FabricTagProvider.ItemTagProvider {
+public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
     public FItemTagGenerator(
-            FabricDataOutput output,
+            FabricPackOutput output,
             CompletableFuture<HolderLookup.Provider> registriesFuture,
             BlockTagProvider blockTagProvider
     ) {

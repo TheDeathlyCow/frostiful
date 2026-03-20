@@ -2,8 +2,8 @@ package com.github.thedeathlycow.frostiful.datagen.generator.loot;
 
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricEntityLootSubProvider;
 import net.minecraft.advancements.criterion.EntityPredicate;
 import net.minecraft.advancements.criterion.RaiderPredicate;
 import net.minecraft.core.HolderLookup;
@@ -27,8 +27,8 @@ import java.util.function.BiConsumer;
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonItemKey;
 import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.uniformItemTag;
 
-public class FEntityLootGenerator extends FabricEntityLootTableProvider {
-    public FEntityLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+public class FEntityLootGenerator extends FabricEntityLootSubProvider {
+    public FEntityLootGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup);
     }
 

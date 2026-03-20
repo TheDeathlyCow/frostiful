@@ -2,8 +2,8 @@ package com.github.thedeathlycow.frostiful.datagen.generator.loot;
 
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
-import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableProvider;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.ItemLike;
@@ -19,8 +19,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class FPlayfightLootGenerator extends SimpleFabricLootTableProvider {
-    public FPlayfightLootGenerator(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
+public class FPlayfightLootGenerator extends SimpleFabricLootTableSubProvider {
+    public FPlayfightLootGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookup) {
         super(output, registryLookup, LootContextParamSets.SELECTOR);
     }
 

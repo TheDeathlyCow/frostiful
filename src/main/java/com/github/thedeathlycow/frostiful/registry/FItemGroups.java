@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
+import net.fabricmc.fabric.api.creativetab.v1.FabricCreativeModeTab;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -14,7 +14,7 @@ public class FItemGroups {
     public static final CreativeModeTab FROSTIFUL = Registry.register(
             BuiltInRegistries.CREATIVE_MODE_TAB,
             Frostiful.id("main"),
-            FabricItemGroup.builder()
+            FabricCreativeModeTab.builder()
                     .icon(() -> new ItemStack(FItems.FROST_WAND))
                     .title(Component.translatable("itemGroup.frostiful"))
                     .displayItems((context, entries) -> {

@@ -73,7 +73,7 @@ public class Frostiful implements ModInitializer {
         ServerLivingEntityEvents.AFTER_DAMAGE.register(FrostWandRootComponent::afterDamage);
 
         this.registerThermooEventListeners();
-        PayloadTypeRegistry.playS2C().register(
+        PayloadTypeRegistry.clientboundPlay().register(
                 PointWindSpawnPacket.PACKET_ID,
                 PointWindSpawnPacket.PACKET_CODEC
         );

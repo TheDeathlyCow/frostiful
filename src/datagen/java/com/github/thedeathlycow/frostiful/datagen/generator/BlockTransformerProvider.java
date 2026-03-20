@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.datagen.generator;
 import com.github.thedeathlycow.frostiful.block.transformer.*;
 import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
-import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricDynamicRegistryProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalBlockTags;
 import net.minecraft.advancements.criterion.BlockPredicate;
@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class BlockTransformerProvider extends FabricDynamicRegistryProvider {
-    public BlockTransformerProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+    public BlockTransformerProvider(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, registriesFuture);
     }
 

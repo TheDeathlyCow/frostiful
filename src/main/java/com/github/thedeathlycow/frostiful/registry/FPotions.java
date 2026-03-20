@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.fabricmc.fabric.api.registry.FabricBrewingRecipeRegistryBuilder;
+import net.fabricmc.fabric.api.registry.FabricPotionBrewingBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -27,7 +27,7 @@ public class FPotions {
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful potions");
-        FabricBrewingRecipeRegistryBuilder.BUILD.register(
+        FabricPotionBrewingBuilder.BUILD.register(
                 builder -> {
                     builder.addMix(Potions.AWKWARD, FItems.FROZEN_ROD, FPotions.FREEZING);
                     builder.addMix(FPotions.FREEZING, Items.REDSTONE, FPotions.FREEZING_LONG);

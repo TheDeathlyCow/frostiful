@@ -6,7 +6,7 @@ import com.github.thedeathlycow.frostiful.client.render.feature.IceSkateFeatureR
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
-import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityFeatureRendererRegistrationCallback;
+import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;
 
@@ -24,7 +24,7 @@ public class FEntityRenderers {
         EntityRenderers.register(FEntityTypes.THROWN_ICICLE, ThrownIcicleEntityRenderer::new);
         EntityRenderers.register(FEntityTypes.FREEZING_WIND, NoopRenderer::new);
 
-        LivingEntityFeatureRendererRegistrationCallback.EVENT.register(
+        LivingEntityRenderLayerRegistrationCallback.EVENT.register(
                 (entityType, entityRenderer, registrationHelper, context) -> {
                     if (entityRenderer instanceof HumanoidMobRenderer<?, ?, ?> bipedEntityRenderer) {
                         registrationHelper.register(
