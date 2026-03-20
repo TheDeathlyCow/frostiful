@@ -22,6 +22,8 @@ public class FEntityTypeTags {
 
     public static final TagKey<EntityType<?>> BRUSHING_DROPS_OCELOT_FUR = register("brushing/drops_ocelot_fur");
 
+    public static final TagKey<EntityType<?>> HAS_PLAYER_TEMPERATURE_STATUSES = register("has_player_temperature_statuses");
+
     private static TagKey<EntityType<?>> register(String id) {
         return TagKey.create(Registries.ENTITY_TYPE, Frostiful.id(id));
     }

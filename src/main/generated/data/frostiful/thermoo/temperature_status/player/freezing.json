@@ -1,0 +1,24 @@
+{
+  "effects": [
+    {
+      "type": "thermoo:mob_effect",
+      "effects": [
+        {
+          "ambient": true,
+          "amplifier": 1,
+          "effect": "minecraft:weakness"
+        },
+        {
+          "ambient": true,
+          "amplifier": 1,
+          "effect": "minecraft:mining_fatigue"
+        }
+      ]
+    }
+  ],
+  "entity_type": "#frostiful:has_player_temperature_statuses",
+  "interval": 1,
+  "temperature_scale_range": {
+    "max": -0.99
+  }
+}

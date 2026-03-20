@@ -1,0 +1,12 @@
+{
+  "effects": [
+    {
+      "type": "thermoo:damage",
+      "amount": 1.0,
+      "damage_type": "minecraft:freeze"
+    }
+  ],
+  "temperature_scale_range": {
+    "max": -1.0
+  }
+}
