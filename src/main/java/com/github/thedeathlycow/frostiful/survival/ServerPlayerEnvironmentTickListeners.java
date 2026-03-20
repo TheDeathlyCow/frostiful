@@ -13,7 +13,7 @@ import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext
 import com.github.thedeathlycow.thermoo.api.environment.v2.component.EnvironmentComponentTypes;
 import com.github.thedeathlycow.thermoo.api.environment.v2.component.TemperatureRecordComponent;
 import com.github.thedeathlycow.thermoo.api.environment.v2.event.ServerPlayerEnvironmentTickEvents;
-import net.fabricmc.fabric.api.util.TriState;
+import dev.yumi.commons.TriState;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.VisibleForTesting;
