@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.registry;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.loot.LocationWarmthLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
-import com.github.thedeathlycow.frostiful.entity.loot.WearingIceLikeItem;
+import com.github.thedeathlycow.frostiful.entity.loot.IsChillagerLord;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,7 +14,7 @@ public class FLootConditionTypes {
         Frostiful.LOGGER.debug("Initialized Frostiful loot condition types");
 
         register("rooted", RootedLootCondition.CODEC);
-        register("wearing_ice_like_item", WearingIceLikeItem.CODEC);
+        register("wearing_ice_like_item", IsChillagerLord.CODEC);
         register("location_warmth", LocationWarmthLootCondition.CODEC);
     }
 

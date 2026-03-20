@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 public final class TrinketsIntegration {
     public static List<ItemStack> getAllEquipped(LivingEntity entity) {
@@ -27,6 +28,23 @@ public final class TrinketsIntegration {
 //        }
 
         return items;
+    }
+
+    public static boolean hasAnyEquipped(LivingEntity entity, Predicate<ItemStack> predicate) {
+        for (EquipmentSlot slot : EquipmentSlot.values()) {
+            ItemStack stack = entity.getItemBySlot(slot);
+            if (predicate.test(stack)) {
+                return true;
+            }
+        }
+
+//        if (FrostifulIntegrations.isTrinketsLoaded()) {
+//            TrinketsApi.getTrinketComponent(entity).ifPresent(component -> {
+//                component.forEach((ref, stack) -> items.add(stack));
+//            });
+//        }
+
+        return false;
     }
 
     @Nullable

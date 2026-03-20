@@ -32,6 +32,9 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
     }
 
     private void generateFrostifulTags(HolderLookup.Provider wrapperLookup) {
+        valueLookupBuilder(FItemTags.CHILLAGER_LORD_CLOAK)
+                .add(FItems.FROSTOLOGY_CLOAK);
+
         valueLookupBuilder(FItemTags.ENCHANTABLE_ICE_SKATES)
                 .addOptionalTag(FItemTags.ICE_SKATES);
 

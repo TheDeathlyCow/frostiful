@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.client.gui;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
-import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
@@ -39,7 +39,7 @@ public final class FrostOverlayRenderer {
 
         // disable frost overlay when wearing frostology cloak
         boolean isOverlayDisabled = config.isDisableFrostOverlayWhenWearingFrostologyCloak()
-                && player.getItemBySlot(EquipmentSlot.CHEST).has(FDataComponentTypes.ICE_LIKE);
+                && player.getItemBySlot(EquipmentSlot.CHEST).is(FItemTags.CHILLAGER_LORD_CLOAK);
 
         if (isOverlayDisabled) {
             return;

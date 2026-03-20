@@ -6,7 +6,6 @@ import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponen
 import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuilder;
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItemComponents;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
-import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.frostiful.item.component.TemperatureStatusEquipment;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
@@ -19,6 +18,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.item.*;
 import net.minecraft.world.item.equipment.ArmorType;
 import net.minecraft.world.level.block.Block;
@@ -142,10 +142,10 @@ public final class FItems {
             settings -> new Item(
                     settings
                             .attributes(FrostologyCloakItemComponents.createAttributeModifiers())
-                            .component(FDataComponentTypes.ICE_LIKE, IceLikeComponent.DEFAULT)
                             .component(FDataComponentTypes.SIMPLE_TOOLTIP, new SimpleTooltipComponent(SimpleTooltipComponent.ICE_LIKE_TEXT))
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
                             .component(DataComponents.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
+                            .delayedComponent(FDataComponentTypes.BLOCKS_DAMAGE, context -> context.getOrThrow(DamageTypeTags.IS_FREEZING))
                             .delayedComponent(FDataComponentTypes.DISABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES))
                             .delayedComponent(FDataComponentTypes.ENABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.FROSTOLOGY_CLOAK_PLAYER_STATUSES))
                             .rarity(Rarity.EPIC)

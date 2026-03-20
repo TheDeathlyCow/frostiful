@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
-import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
@@ -14,9 +14,11 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.item.ItemStack;
 
-import java.util.List;
 import java.util.function.UnaryOperator;
 
 public final class FDataComponentTypes {
@@ -36,11 +38,11 @@ public final class FDataComponentTypes {
                     .cacheEncoding()
     );
 
-    public static final DataComponentType<IceLikeComponent> ICE_LIKE = register(
-            "ice_like",
+    public static final DataComponentType<HolderSet<DamageType>> BLOCKS_DAMAGE = register(
+            "blocks_damage",
             builder -> builder
-                    .persistent(IceLikeComponent.CODEC)
-                    .networkSynchronized(IceLikeComponent.PACKET_CODEC)
+                    .persistent(RegistryCodecs.homogeneousList(Registries.DAMAGE_TYPE))
+                    .networkSynchronized(ByteBufCodecs.holderSet(Registries.DAMAGE_TYPE))
                     .cacheEncoding()
     );
 
@@ -73,10 +75,11 @@ public final class FDataComponentTypes {
 
         ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.SIMPLE_TOOLTIP);
 
-        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, amount) -> {
-            List<IceLikeComponent> components = IceLikeComponent.getAllEquipped(entity);
-            for (IceLikeComponent component : components) {
-                if (component.blockDamage(source)) {
+        ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, _) -> {
+            for (ItemStack stack : TrinketsIntegration.getAllEquipped(entity)) {
+                HolderSet<DamageType> blockedDamageTypes = stack.get(BLOCKS_DAMAGE);
+
+                if (blockedDamageTypes != null && blockedDamageTypes.contains(source.typeHolder())) {
                     return false;
                 }
             }

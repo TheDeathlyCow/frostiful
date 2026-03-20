@@ -8,6 +8,7 @@ import net.minecraft.world.item.Item;
 
 public final class FItemTags {
     public static final TagKey<Item> C_ICICLES = convention("icicles");
+    public static final TagKey<Item> CHILLAGER_LORD_CLOAK = register("chillager_lord_cloak");
     public static final TagKey<Item> ENCHANTABLE_ICE_SKATES = register("enchantable/ice_skates");
     public static final TagKey<Item> ENCHANTABLE_FROST_WAND = register("enchantable/frost_wand");
     public static final TagKey<Item> FUR_ARMOR = register("fur_armor");
