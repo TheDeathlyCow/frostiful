@@ -2,7 +2,6 @@
   "type": "minecraft:stonecutting",
   "ingredient": "frostiful:cut_packed_ice",
   "result": {
-    "count": 1,
     "id": "frostiful:cut_packed_ice_stairs"
   }
 }

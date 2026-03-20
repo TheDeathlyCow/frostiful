@@ -19,7 +19,7 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
     public FItemTagGenerator(
             FabricPackOutput output,
             CompletableFuture<HolderLookup.Provider> registriesFuture,
-            BlockTagProvider blockTagProvider
+            BlockTagsProvider blockTagProvider
     ) {
         super(output, registriesFuture, blockTagProvider);
     }
@@ -97,9 +97,6 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .add(FItems.FROST_WAND);
 
         valueLookupBuilder(ConventionalItemTags.RANGED_WEAPON_TOOLS)
-                .add(FItems.FROST_WAND);
-
-        valueLookupBuilder(ConventionalItemTags.SPEAR_TOOLS)
                 .add(FItems.FROST_WAND);
 
         valueLookupBuilder(ConventionalItemTags.GLASS_PANES)

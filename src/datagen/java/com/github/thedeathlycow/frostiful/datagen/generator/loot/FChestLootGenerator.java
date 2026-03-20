@@ -7,6 +7,7 @@ import com.github.thedeathlycow.frostiful.registry.tag.FStructureTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.FontDescription;
@@ -14,6 +15,7 @@ import net.minecraft.network.chat.Style;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.InstrumentTags;
+import net.minecraft.world.item.Instrument;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
@@ -50,7 +52,10 @@ public class FChestLootGenerator extends SimpleFabricLootTableSubProvider {
     }
 
     private void generateChillagerOutpostChests(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output, HolderLookup.Provider lookup) {
-        HolderLookup.RegistryLookup<Enchantment> enchantmentRegistry = lookup.lookupOrThrow(Registries.ENCHANTMENT);
+        HolderLookup<Enchantment> enchantmentRegistry = lookup.lookupOrThrow(Registries.ENCHANTMENT);
+        HolderLookup<Instrument> instruments = lookup.lookupOrThrow(Registries.INSTRUMENT);
+
+        HolderSet<Instrument> instrumentOptions = instruments.getOrThrow(InstrumentTags.REGULAR_GOAT_HORNS);
 
         output.accept(
                 FLootTables.CHILLAGER_OUTPOST_FLETCHER,
@@ -74,7 +79,7 @@ public class FChestLootGenerator extends SimpleFabricLootTableSubProvider {
                                 LootPool.lootPool()
                                         .setRolls(ConstantValue.exactly(1f))
                                         .add(LootItem.lootTableItem(Items.CROSSBOW).setWeight(2))
-                                        .add(LootItem.lootTableItem(Items.GOAT_HORN).setWeight(2).apply(SetInstrumentFunction.setInstrumentOptions(InstrumentTags.REGULAR_GOAT_HORNS)))
+                                        .add(LootItem.lootTableItem(Items.GOAT_HORN).setWeight(2).apply(SetInstrumentFunction.setInstrumentOptions(instrumentOptions)))
                                         .add(LootItem.lootTableItem(FItems.FUR_UPGRADE_TEMPLATE))
                         )
         );
