@@ -5,12 +5,17 @@ import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponen
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
+import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
+import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
 import com.mojang.serialization.MapCodec;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
+import net.minecraft.core.HolderSet;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryCodecs;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 
 import java.util.List;
@@ -46,6 +51,22 @@ public final class FDataComponentTypes {
             builder -> builder
                     .persistent(IceLikeComponent.CODEC)
                     .networkSynchronized(IceLikeComponent.PACKET_CODEC)
+                    .cacheEncoding()
+    );
+
+    public static final DataComponentType<HolderSet<TemperatureStatus>> ENABLE_TEMPERATURE_STATUSES = register(
+            "enable_temperature_statuses",
+            builder -> builder
+                    .persistent(RegistryCodecs.homogeneousList(ThermooRegistryKeys.TEMPERATURE_STATUS))
+                    .networkSynchronized(ByteBufCodecs.holderSet(ThermooRegistryKeys.TEMPERATURE_STATUS))
+                    .cacheEncoding()
+    );
+
+    public static final DataComponentType<HolderSet<TemperatureStatus>> DISABLE_TEMPERATURE_STATUSES = register(
+            "disable_temperature_statuses",
+            builder -> builder
+                    .persistent(RegistryCodecs.homogeneousList(ThermooRegistryKeys.TEMPERATURE_STATUS))
+                    .networkSynchronized(ByteBufCodecs.holderSet(ThermooRegistryKeys.TEMPERATURE_STATUS))
                     .cacheEncoding()
     );
 

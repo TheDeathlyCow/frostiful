@@ -8,8 +8,11 @@ import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItemComponen
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.IceLikeComponent;
 import com.github.thedeathlycow.frostiful.item.component.InertTooltipComponent;
+import com.github.thedeathlycow.frostiful.item.component.TemperatureStatusEquipment;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
+import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -142,6 +145,8 @@ public final class FItems {
                             .component(FDataComponentTypes.ICE_LIKE, IceLikeComponent.DEFAULT)
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
                             .component(DataComponents.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
+                            .delayedComponent(FDataComponentTypes.DISABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES))
+                            .delayedComponent(FDataComponentTypes.ENABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.FROSTOLOGY_CLOAK_PLAYER_STATUSES))
                             .rarity(Rarity.EPIC)
                             .stacksTo(1)
             )
@@ -318,6 +323,7 @@ public final class FItems {
         Frostiful.LOGGER.debug("Initialized Frostiful items");
         FSmithingTemplateItem.addTemplatesToLoot();
         ResistanceComponentBuilder.initialize();
+        ServerEntityEvents.EQUIPMENT_CHANGE.register(new TemperatureStatusEquipment());
     }
 
     private static Item register(String id, Block block) {

@@ -103,7 +103,7 @@ public final class FrostifulTemperatureStatusBootstrap {
 
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_MELTING,
-                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtLeast(0))
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtLeast(-0.01))
                         .disabledByDefault()
                         .withInterval(20)
                         .addEffect(DamageEffect.create(4.0f, FDamageTypes.MELT))
@@ -118,7 +118,7 @@ public final class FrostifulTemperatureStatusBootstrap {
 
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_WARM,
-                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.25, 0))
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.25, -0.01))
                         .disabledByDefault()
                         .withInterval(60)
                         .addEffect(
