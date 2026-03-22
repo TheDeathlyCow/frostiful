@@ -23,7 +23,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LightLayer;
-import net.minecraft.world.level.block.FireBlock;
 import net.minecraft.world.level.block.GlowLichenBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.PathType;
@@ -32,7 +31,6 @@ import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class SunLichenBlock extends GlowLichenBlock implements Heatable {
-
     public static final int COLD_LEVEL = 0;
     public static final int COOL_LEVEL = 1;
     public static final int WARM_LEVEL = 2;
@@ -48,7 +46,7 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
         super(settings);
         this.heatLevel = heatLevel;
         if (heatLevel > COLD_LEVEL) {
-            LandPathTypeRegistry.register(this, PathType.FIRE, PathType.FIRE);
+            LandPathTypeRegistry.register(this, PathType.FIRE, PathType.FIRE_IN_NEIGHBOR);
         }
     }
 
