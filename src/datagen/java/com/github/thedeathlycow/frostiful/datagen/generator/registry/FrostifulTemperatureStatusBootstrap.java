@@ -25,7 +25,7 @@ public final class FrostifulTemperatureStatusBootstrap {
 
         context.register(
                 FTemperatureStatuses.FREEZE_DAMAGE,
-                TemperatureStatus.builder(TemperatureStatus.selectAllEntities().temperatureIsAtMost(-1.0))
+                TemperatureStatus.builder(TemperatureStatus.selectAllEntities().temperatureIsAtMost(-0.99))
                         .withInterval(20)
                         .addEffect(DamageEffect.create(1.0f, DamageTypes.FREEZE))
                         .build()
@@ -51,7 +51,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.PLAYER_CHILLY,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.99, -0.5))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).ambient())
@@ -63,7 +63,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.PLAYER_COLD,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.99, -0.75))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.MINING_FATIGUE).ambient())
@@ -75,7 +75,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.PLAYER_FREEZING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.99))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).withAmplifier(1).ambient())
@@ -117,7 +117,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_WARM,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.25, -0.01))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.WEAKNESS).ambient())
@@ -130,7 +130,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_COLD,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.75))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.RESISTANCE).ambient())
@@ -141,8 +141,8 @@ public final class FrostifulTemperatureStatusBootstrap {
 
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_FREEZING,
-                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-1.0))
-                        .withInterval(60)
+                TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.99))
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.HASTE).ambient())
@@ -170,7 +170,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGER_CHILLY,
                 TemperatureStatus.builder(TemperatureStatus.selector(frostologer).temperatureIsBetween(-0.95, -0.5))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.RESISTANCE))
@@ -183,7 +183,7 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGER_FREEZING,
                 TemperatureStatus.builder(TemperatureStatus.selector(frostologer).temperatureIsAtMost(-0.95))
-                        .withInterval(60)
+                        .withInterval(40)
                         .addEffect(
                                 MobEffectEffect.builder()
                                         .addEffect(MobEffectEffect.effect(MobEffects.SPEED).withAmplifier(1).ambient())

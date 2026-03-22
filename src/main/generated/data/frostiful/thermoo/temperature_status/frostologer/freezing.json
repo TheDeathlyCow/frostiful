@@ -27,7 +27,7 @@
     }
   ],
   "entity_type": "frostiful:frostologer",
-  "interval": 60,
+  "interval": 40,
   "temperature_scale_range": {
     "max": -0.95
   }

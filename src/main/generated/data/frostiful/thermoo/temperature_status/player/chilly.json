@@ -11,7 +11,7 @@
     }
   ],
   "entity_type": "#frostiful:has_player_temperature_statuses",
-  "interval": 60,
+  "interval": 40,
   "temperature_scale_range": {
     "max": -0.5,
     "min": -0.99
