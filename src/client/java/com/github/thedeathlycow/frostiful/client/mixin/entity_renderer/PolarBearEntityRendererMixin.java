@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
 import com.github.thedeathlycow.frostiful.client.BrushableTextures;
 import com.github.thedeathlycow.frostiful.client.render.state.FPolarBearEntityRenderState;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.renderer.entity.PolarBearRenderer;
@@ -22,7 +22,7 @@ public class PolarBearEntityRendererMixin {
             at = @At("TAIL")
     )
     private void updateRenderState(PolarBear entity, PolarBearRenderState state, float tickDelta, CallbackInfo ci) {
-        ((FPolarBearEntityRenderState) state).frostiful$wasSheared(FComponents.BRUSHABLE_COMPONENT.get(entity).wasBrushed());
+        ((FPolarBearEntityRenderState) state).frostiful$wasSheared(FCardinalComponents.BRUSHABLE_COMPONENT.get(entity).wasBrushed());
     }
 
     @WrapMethod(

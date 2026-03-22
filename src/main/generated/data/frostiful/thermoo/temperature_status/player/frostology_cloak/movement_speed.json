@@ -9,7 +9,6 @@
       "value": -0.04
     }
   ],
-  "enabled_by_default": false,
   "entity_type": "#frostiful:has_player_temperature_statuses",
   "interval": 1,
   "temperature_scale_range": {

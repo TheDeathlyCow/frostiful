@@ -6,7 +6,6 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
-import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureRecord;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureUnit;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
@@ -67,7 +66,7 @@ public final class ServerPlayerEnvironmentTickListeners {
         boolean doPassiveFreezing = config.doPassiveFreezing()
                 && context.level().getGameRules().get(FGameRules.ENABLE_ENVIRONMENT_FREEZING);
 
-        if (TrinketsIntegration.hasAnyEquipped(player, stack -> stack.is(FItemTags.CHILLAGER_LORD_CLOAK))) {
+        if (TrinketsIntegration.wearingFrostologyCloak(player)) {
             return TriState.TRUE;
         } else if (!doPassiveFreezing) {
             return TriState.FALSE;

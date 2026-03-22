@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.gui;
 
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
@@ -18,7 +18,7 @@ public class RootedOverlayRenderer {
             DeltaTracker tickCounter,
             OverlayRenderCallback callback
     ) {
-        FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
+        FrostWandRootComponent component = FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
         if (component.isRooted()) {
             callback.renderOverlay(extractor, FROSTIFUL_ROOTED_OVERLAY, component.getRootProgress());
         }

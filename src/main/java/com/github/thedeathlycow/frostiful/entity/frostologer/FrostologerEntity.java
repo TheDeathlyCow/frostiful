@@ -421,7 +421,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
     public boolean isTargetRooted() {
         LivingEntity target = this.getTarget();
         return target != null
-                && FComponents.FROST_WAND_ROOT_COMPONENT.get(target).isRooted();
+                && FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(target).isRooted();
     }
 
     public boolean isUsingFrostWand() {

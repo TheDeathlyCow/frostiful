@@ -148,6 +148,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(FBlockTags.C_ICICLES, "Icicles");
         builder.add(FItemTags.C_ICICLES, "Icicles");
+        builder.add(FItemTags.CHILLAGER_LORD_CLOAK, "Cloak of the Chillager Lord");
         builder.add(FItemTags.ICICLES, "Icicles");
         builder.add(FItemTags.FUR_TUFTS, "Fur Tufts");
         builder.add(FItemTags.WARM_FOODS, "Warm Foods");

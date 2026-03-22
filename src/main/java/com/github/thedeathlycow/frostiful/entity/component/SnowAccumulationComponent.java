@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,8 +14,9 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
-public class SnowAccumulationComponent implements Component, ServerTickingComponent {
+public class SnowAccumulationComponent implements CardinalComponent, ServerTickingComponent {
     private static final AttributeModifier SOAKED_MODIFIER = new AttributeModifier(
             Frostiful.id("soaked_cold_vulnerability"),
             -1,
@@ -35,7 +36,7 @@ public class SnowAccumulationComponent implements Component, ServerTickingCompon
     }
 
     public static SnowAccumulationComponent get(LivingEntity provider) {
-        return FComponents.SNOW_ACCUMULATION.get(provider);
+        return FCardinalComponents.SNOW_ACCUMULATION.get(provider);
     }
 
     @Override

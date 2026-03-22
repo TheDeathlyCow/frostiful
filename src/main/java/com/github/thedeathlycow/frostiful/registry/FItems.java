@@ -7,11 +7,9 @@ import com.github.thedeathlycow.frostiful.item.attribute.ResistanceComponentBuil
 import com.github.thedeathlycow.frostiful.item.cloak.FrostologyCloakItemComponents;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
-import com.github.thedeathlycow.frostiful.item.component.TemperatureStatusEquipment;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
-import net.fabricmc.fabric.api.event.lifecycle.v1.ServerEntityEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;
@@ -146,8 +144,6 @@ public final class FItems {
                             .component(FDataComponentTypes.CAPE, CapeComponent.FROSTOLOGY_CLOAK)
                             .component(DataComponents.EQUIPPABLE, FrostologyCloakItemComponents.createEquippableComponent())
                             .delayedComponent(FDataComponentTypes.BLOCKS_DAMAGE, context -> context.getOrThrow(DamageTypeTags.IS_FREEZING))
-                            .delayedComponent(FDataComponentTypes.DISABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES))
-                            .delayedComponent(FDataComponentTypes.ENABLE_TEMPERATURE_STATUSES, context -> context.getOrThrow(FTemperatureStatusTags.FROSTOLOGY_CLOAK_PLAYER_STATUSES))
                             .rarity(Rarity.EPIC)
                             .stacksTo(1)
             )
@@ -324,7 +320,6 @@ public final class FItems {
         Frostiful.LOGGER.debug("Initialized Frostiful items");
         FSmithingTemplateItem.addTemplatesToLoot();
         ResistanceComponentBuilder.initialize();
-        ServerEntityEvents.EQUIPMENT_CHANGE.register(new TemperatureStatusEquipment());
     }
 
     private static Item register(String id, Block block) {

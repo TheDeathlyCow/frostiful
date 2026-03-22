@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import com.github.thedeathlycow.frostiful.registry.tag.FEntityTypeTags;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
@@ -27,8 +27,9 @@ import net.minecraft.world.level.storage.loot.LootTable;
 import org.jetbrains.annotations.Nullable;
 import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
+import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
-public class BrushableComponent implements Component, AutoSyncedComponent {
+public class BrushableComponent implements CardinalComponent, AutoSyncedComponent {
 
     private static final String LAST_BRUSHED_TIME_KEY = "last_brushed_time";
     private static final int BRUSH_COOLDOWN = 20 * 300;
@@ -52,7 +53,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
         }
 
         ItemStack heldItem = player.getItemInHand(hand);
-        BrushableComponent component = FComponents.BRUSHABLE_COMPONENT.getNullable(animal);
+        BrushableComponent component = FCardinalComponents.BRUSHABLE_COMPONENT.getNullable(animal);
         if (component != null && component.isBrushable() && heldItem.is(ConventionalItemTags.BRUSH_TOOLS)) {
             component.brush(player, heldItem);
             if (!animal.level().isClientSide()) {
@@ -93,7 +94,7 @@ public class BrushableComponent implements Component, AutoSyncedComponent {
     public void setLastBrushTime(long lastBrushTime) {
         if (this.lastBrushTime != lastBrushTime) {
             this.lastBrushTime = lastBrushTime;
-            FComponents.BRUSHABLE_COMPONENT.sync(this.provider);
+            FCardinalComponents.BRUSHABLE_COMPONENT.sync(this.provider);
         }
     }
 

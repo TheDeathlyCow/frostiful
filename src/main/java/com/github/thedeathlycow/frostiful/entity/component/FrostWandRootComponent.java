@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
@@ -28,11 +28,11 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.sync.AutoSyncedComponent;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
+import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
-public class FrostWandRootComponent implements Component, AutoSyncedComponent, ServerTickingComponent {
+public class FrostWandRootComponent implements CardinalComponent, AutoSyncedComponent, ServerTickingComponent {
 
     private static final String ROOTED_TICKS_KEY = "rooted_ticks";
 
@@ -50,7 +50,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
             float baseDamageTaken, float damageTaken,
             boolean blocked
     ) {
-        FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(provider);
+        FrostWandRootComponent component = FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(provider);
         boolean breakRoot = !blocked
                 && damageTaken > 0f
                 && !source.is(FDamageTypeTags.DOES_NOT_BREAK_ROOT)
@@ -64,7 +64,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     @Nullable
     public static Vec3 adjustMovementForRoot(MoverType type, Vec3 movement, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity);
+            FrostWandRootComponent component = FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity);
             return component.adjustMovementForRoot(type, movement);
         }
 
@@ -148,7 +148,7 @@ public class FrostWandRootComponent implements Component, AutoSyncedComponent, S
     public void setRootedTicks(int rootedTicks) {
         if (this.rootedTicks != rootedTicks) {
             this.rootedTicks = rootedTicks;
-            FComponents.FROST_WAND_ROOT_COMPONENT.sync(this.provider);
+            FCardinalComponents.FROST_WAND_ROOT_COMPONENT.sync(this.provider);
         }
     }
 

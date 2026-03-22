@@ -1,11 +1,13 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.datafix.StructureUpdateHelper;
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.registry.*;
+import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
 import com.github.thedeathlycow.frostiful.server.command.WindCommand;
 import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
@@ -13,6 +15,8 @@ import com.github.thedeathlycow.frostiful.survival.ActiveTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.PassiveTemperatureEffects;
 import com.github.thedeathlycow.frostiful.survival.ServerPlayerEnvironmentTickListeners;
 import com.github.thedeathlycow.frostiful.survival.SoakingEffects;
+import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatusEvents;
+import dev.yumi.commons.TriState;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
@@ -86,6 +90,15 @@ public class Frostiful implements ModInitializer {
         PassiveTemperatureEffects.initialize();
         ActiveTemperatureEffects.initialize();
         SoakingEffects.initialize();
+        TemperatureStatusEvents.ALLOW_TEMPERATURE_STATUS.register((livingEntity, reference) -> {
+            if (reference.is(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES)) {
+                return TriState.from(!TrinketsIntegration.wearingFrostologyCloak(livingEntity));
+            } else if (reference.is(FTemperatureStatusTags.FROSTOLOGY_CLOAK_PLAYER_STATUSES)) {
+                return TriState.from(TrinketsIntegration.wearingFrostologyCloak(livingEntity));
+            } else {
+                return TriState.DEFAULT;
+            }
+        });
     }
 
     public static Path getConfigDir() {

@@ -5,8 +5,6 @@ import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
-import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
-import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.HolderSet;
@@ -43,22 +41,6 @@ public final class FDataComponentTypes {
             builder -> builder
                     .persistent(RegistryCodecs.homogeneousList(Registries.DAMAGE_TYPE))
                     .networkSynchronized(ByteBufCodecs.holderSet(Registries.DAMAGE_TYPE))
-                    .cacheEncoding()
-    );
-
-    public static final DataComponentType<HolderSet<TemperatureStatus>> ENABLE_TEMPERATURE_STATUSES = register(
-            "enable_temperature_statuses",
-            builder -> builder
-                    .persistent(RegistryCodecs.homogeneousList(ThermooRegistryKeys.TEMPERATURE_STATUS))
-                    .networkSynchronized(ByteBufCodecs.holderSet(ThermooRegistryKeys.TEMPERATURE_STATUS))
-                    .cacheEncoding()
-    );
-
-    public static final DataComponentType<HolderSet<TemperatureStatus>> DISABLE_TEMPERATURE_STATUSES = register(
-            "disable_temperature_statuses",
-            builder -> builder
-                    .persistent(RegistryCodecs.homogeneousList(ThermooRegistryKeys.TEMPERATURE_STATUS))
-                    .networkSynchronized(ByteBufCodecs.holderSet(ThermooRegistryKeys.TEMPERATURE_STATUS))
                     .cacheEncoding()
     );
 

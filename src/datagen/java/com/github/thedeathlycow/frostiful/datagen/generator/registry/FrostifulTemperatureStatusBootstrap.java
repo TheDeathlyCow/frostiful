@@ -90,7 +90,6 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_MOVEMENT_SPEED,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(0))
-                        .disabledByDefault()
                         .withInterval(1)
                         .addEffect(AttributeModifierEffect.createScaled(
                                 Attributes.MOVEMENT_SPEED,
@@ -104,7 +103,6 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_MELTING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtLeast(-0.01))
-                        .disabledByDefault()
                         .withInterval(20)
                         .addEffect(DamageEffect.create(4.0f, FDamageTypes.MELT))
                         .addEffect(
@@ -119,7 +117,6 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_WARM,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsBetween(-0.25, -0.01))
-                        .disabledByDefault()
                         .withInterval(60)
                         .addEffect(
                                 MobEffectEffect.builder()
@@ -133,7 +130,6 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_COLD,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-0.75))
-                        .disabledByDefault()
                         .withInterval(60)
                         .addEffect(
                                 MobEffectEffect.builder()
@@ -146,7 +142,6 @@ public final class FrostifulTemperatureStatusBootstrap {
         context.register(
                 FTemperatureStatuses.FROSTOLOGY_CLOAK_FREEZING,
                 TemperatureStatus.builder(TemperatureStatus.selector(playerEffects).temperatureIsAtMost(-1.0))
-                        .disabledByDefault()
                         .withInterval(60)
                         .addEffect(
                                 MobEffectEffect.builder()

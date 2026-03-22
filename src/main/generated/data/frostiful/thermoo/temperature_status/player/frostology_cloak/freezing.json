@@ -10,7 +10,6 @@
       ]
     }
   ],
-  "enabled_by_default": false,
   "entity_type": "#frostiful:has_player_temperature_statuses",
   "interval": 60,
   "temperature_scale_range": {

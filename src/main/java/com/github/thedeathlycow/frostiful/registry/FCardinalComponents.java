@@ -1,10 +1,8 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.component.BrushableComponent;
-import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
-import com.github.thedeathlycow.frostiful.entity.component.LivingEntityComponents;
-import com.github.thedeathlycow.frostiful.entity.component.SnowAccumulationComponent;
+import com.github.thedeathlycow.frostiful.entity.component.*;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import org.ladysnake.cca.api.v3.component.ComponentKey;
@@ -12,7 +10,7 @@ import org.ladysnake.cca.api.v3.component.ComponentRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import org.ladysnake.cca.api.v3.entity.EntityComponentInitializer;
 
-public class FComponents implements EntityComponentInitializer {
+public class FCardinalComponents implements EntityComponentInitializer {
 
     public static final ComponentKey<LivingEntityComponents> ENTITY_COMPONENTS = ComponentRegistry.getOrCreate(
             Frostiful.id("living_entity"),

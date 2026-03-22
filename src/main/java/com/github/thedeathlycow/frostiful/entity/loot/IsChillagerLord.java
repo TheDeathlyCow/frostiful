@@ -21,7 +21,7 @@ public record IsChillagerLord() implements LootItemCondition {
     public boolean test(LootContext lootContext) {
         Entity entity = lootContext.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity instanceof LivingEntity livingEntity) {
-            return TrinketsIntegration.hasAnyEquipped(livingEntity, stack -> stack.is(FItemTags.CHILLAGER_LORD_CLOAK));
+            return TrinketsIntegration.wearingFrostologyCloak(livingEntity);
         }
 
         return false;

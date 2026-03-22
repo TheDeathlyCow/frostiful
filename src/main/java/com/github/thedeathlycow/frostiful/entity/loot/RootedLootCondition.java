@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.loot;
 
 import com.github.thedeathlycow.frostiful.entity.component.FrostWandRootComponent;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.advancements.criterion.MinMaxBounds;
@@ -32,7 +32,7 @@ public record RootedLootCondition(
     public boolean test(LootContext lootContext) {
         Entity entity = lootContext.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity != null) {
-            FrostWandRootComponent component = FComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
+            FrostWandRootComponent component = FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(entity);
             return this.rootTicksRemaining.matches(component.getRootedTicks());
         }
 

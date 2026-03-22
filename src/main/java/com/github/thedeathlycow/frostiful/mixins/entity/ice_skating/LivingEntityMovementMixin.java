@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import com.github.thedeathlycow.frostiful.entity.component.LivingEntityComponents;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
-import com.github.thedeathlycow.frostiful.registry.FComponents;
+import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
@@ -57,13 +57,13 @@ public abstract class LivingEntityMovementMixin extends Entity implements IceSka
 
     @Unique
     private boolean frostiful$getSkateFlag(int index) {
-        byte flags = FComponents.ENTITY_COMPONENTS.get(this).getSkateFlags();
+        byte flags = FCardinalComponents.ENTITY_COMPONENTS.get(this).getSkateFlags();
         return (flags & 1 << index) != 0;
     }
 
     @Unique
     private void frostiful$setSkateFlag(int index, boolean value) {
-        LivingEntityComponents component = FComponents.ENTITY_COMPONENTS.get(this);
+        LivingEntityComponents component = FCardinalComponents.ENTITY_COMPONENTS.get(this);
         byte data = component.getSkateFlags();
         if (value) {
             component.setSkateFlags((byte) (data | 1 << index));

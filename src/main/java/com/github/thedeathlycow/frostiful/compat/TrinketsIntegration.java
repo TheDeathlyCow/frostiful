@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.compat;
 
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +12,8 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public final class TrinketsIntegration {
+    private static final Predicate<ItemStack> WEARING_CHILLAGER_LORD_CLOAK = stack -> stack.is(FItemTags.CHILLAGER_LORD_CLOAK);
+
     public static List<ItemStack> getAllEquipped(LivingEntity entity) {
         List<ItemStack> items = new ArrayList<>();
 
@@ -45,6 +48,10 @@ public final class TrinketsIntegration {
 //        }
 
         return false;
+    }
+
+    public static boolean wearingFrostologyCloak(LivingEntity entity) {
+        return hasAnyEquipped(entity, WEARING_CHILLAGER_LORD_CLOAK);
     }
 
     @Nullable

@@ -21,7 +21,6 @@
       ]
     }
   ],
-  "enabled_by_default": false,
   "entity_type": "#frostiful:has_player_temperature_statuses",
   "temperature_scale_range": {
     "min": -0.01
