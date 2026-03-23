@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.survival;
 
-import com.github.thedeathlycow.thermoo.api.util.TemperatureRecord;
+import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureRecord;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;

@@ -30,6 +30,7 @@ bin/
 
 # fabric
 
+.fabric/
 run/
 src/main/generated/.cache/
 
