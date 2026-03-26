@@ -27,6 +27,7 @@ repositories {
     maven { url "https://maven.terraformersmc.com/" }
     maven { url "https://maven.shedaniel.me/" }
     maven { url "https://jitpack.io/" }
+    maven { url "https://maven.nucleoid.xyz" }
     maven {
         name = "Ladysnake Mods"
         url = 'https://maven.ladysnake.org/releases'
