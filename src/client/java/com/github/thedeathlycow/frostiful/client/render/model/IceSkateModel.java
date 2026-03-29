@@ -17,6 +17,7 @@ public class IceSkateModel<T extends HumanoidRenderState> extends HumanoidModel<
             part.visible = false;
         }
 
+        this.root.visible = true;
         this.leftLeg.visible = true;
         this.rightLeg.visible = true;
     }
