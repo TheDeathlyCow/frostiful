@@ -9,6 +9,11 @@
             {
                 "texture": "frostiful:fur_lined_chainmail"
             }
+        ],
+        "humanoid_baby": [
+            {
+                "texture": "frostiful:fur_lined_chainmail"
+            }
         ]
     }
 }
