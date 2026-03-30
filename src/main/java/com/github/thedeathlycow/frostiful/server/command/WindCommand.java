@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
-import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
+import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnMethod;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.BoolArgumentType;
 import net.minecraft.commands.CommandSourceStack;
@@ -50,7 +50,7 @@ public class WindCommand {
     }
 
     private static int run(ServerLevel world, BlockPos pos, boolean isInAir) {
-        WindSpawnStrategies.POINT.getStrategy().spawn(
+        WindSpawnMethod.POINT.getStrategy().spawn(
                 world, pos, isInAir
         );
         return 0;

@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.config.section;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnStrategies;
+import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnMethod;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
@@ -43,7 +43,7 @@ public class FreezingConfig {
     @Translate.Name("Wind spawn method")
     @SerialEntry(comment = "If wind spawning is enabled, then this controls how they spawn. Points create small one-off explosions of wind, entity creates an entity that rolls across the landscape, and none disables the feature entirely.")
     @EnumCycler
-    WindSpawnStrategies windSpawnStrategy = WindSpawnStrategies.POINT;
+    WindSpawnMethod windSpawnStrategy = WindSpawnMethod.POINT;
 
     @AutoGen(category = CATEGORY)
     @Translate.Name("Spawn wind in air")
@@ -145,13 +145,13 @@ public class FreezingConfig {
     @Translate.Name("Shiver below")
     @SerialEntry(comment = "The temperature scale below which entities will begin to shiver. Must be between -1 and 0 (inclusive).")
     @FloatSlider(min = -1f, max = 0f, step = 0.05f, format = "%.2f")
+    // TODO: this option needs synchronization for rendering
     float shiverBelow = -0.51f;
 
     @AutoGen(category = CATEGORY)
     @Translate.Name("Shivering warmth")
     @SerialEntry(comment = "How many temperature points to add each tick to entities that are shivering. Must be at least 0.")
     @IntField(min = 0)
-    // TODO: this option needs synchronization for rendering
     int shiverWarmth = 1;
 
     @AutoGen(category = CATEGORY)
@@ -170,40 +170,12 @@ public class FreezingConfig {
         return doPassiveFreezing;
     }
 
-    public WindSpawnStrategies getWindSpawnStrategy() {
-        if (!doWindSpawning) {
-            return WindSpawnStrategies.NONE;
-        }
-
-        return windSpawnStrategy;
-    }
-
-    public boolean spawnWindInAir() {
-        return spawnWindInAir;
-    }
-
-    public boolean isWindDestroysTorches() {
-        return windDestroysTorches;
-    }
-
     public boolean doSnowPacking() {
         return doSnowPacking;
     }
 
     public int getPassiveFreezingTickInterval() {
         return passiveFreezingTickInterval;
-    }
-
-    public int getWindSpawnCapPerSecond() {
-        return windSpawnCapPerSecond;
-    }
-
-    public int getWindSpawnRarity() {
-        return windSpawnRarity;
-    }
-
-    public int getWindSpawnRarityThunder() {
-        return windSpawnRarityThunder;
     }
 
     public float getMaxPassiveFreezingPercent() {

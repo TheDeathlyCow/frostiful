@@ -10,6 +10,7 @@ import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
+import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnMethod;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -337,6 +338,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.WEATHER_CATEGORY, "Weather Settings");
         builder.add(FrostifulModMenu.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
         builder.add(Translate.categoryKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_CATEGORY), "Icicles");
+        builder.add(Translate.categoryKey(WeatherSettings.HANDLER, WeatherSettings.WIND_CATEGORY), "Freezing Wind");
+        generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");
 
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
         generateConfigOptionTranslations(CombatConfig.HANDLER, builder);
