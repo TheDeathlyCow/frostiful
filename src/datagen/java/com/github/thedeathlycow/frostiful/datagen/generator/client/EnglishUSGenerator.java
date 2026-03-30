@@ -3,10 +3,7 @@ package com.github.thedeathlycow.frostiful.datagen.generator.client;
 import com.github.thedeathlycow.frostiful.FrostifulModMenu;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
-import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.section.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
@@ -337,11 +334,16 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.ICICLE_CATEGORY, "Icicles Settings");
         builder.add(FrostifulModMenu.ICICLE_DESC, "Server-side settings for icicle related mechanics.");
 
+        builder.add(FrostifulModMenu.WEATHER_CATEGORY, "Weather Settings");
+        builder.add(FrostifulModMenu.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
+        builder.add(Translate.categoryKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_CATEGORY), "Icicles");
+
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
         generateConfigOptionTranslations(CombatConfig.HANDLER, builder);
         generateConfigOptionTranslations(EnvironmentConfig.HANDLER, builder);
         generateConfigOptionTranslations(FreezingConfig.HANDLER, builder);
         generateConfigOptionTranslations(IcicleConfig.HANDLER, builder);
+        generateConfigOptionTranslations(WeatherSettings.HANDLER, builder);
     }
 
     private String itemSuffix(Item item, String suffix) {

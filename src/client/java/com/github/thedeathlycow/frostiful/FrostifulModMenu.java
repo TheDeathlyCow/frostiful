@@ -23,12 +23,14 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String ENVIRONMENT_CATEGORY = Translate.mainCategoryKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_CATEGORY = Translate.mainCategoryKey(FreezingConfig.HANDLER);
     public static final String ICICLE_CATEGORY = Translate.mainCategoryKey(IcicleConfig.HANDLER);
+    public static final String WEATHER_CATEGORY = Translate.mainCategoryKey(WeatherSettings.HANDLER);
 
     public static final String DISPLAY_DESC = Translate.descKey(DisplaySettings.HANDLER);
     public static final String COMBAT_DESC = Translate.descKey(CombatConfig.HANDLER);
     public static final String ENVIRONMENT_DESC = Translate.descKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_DESC = Translate.descKey(FreezingConfig.HANDLER);
     public static final String ICICLE_DESC = Translate.descKey(IcicleConfig.HANDLER);
+    public static final String WEATHER_DESC = Translate.descKey(WeatherSettings.HANDLER);
 
     @Override
     public ConfigScreenFactory<?> getModConfigScreenFactory() {
@@ -50,6 +52,7 @@ public class FrostifulModMenu implements ModMenuApi {
                                                 .option(createSubsectionButton(CombatConfig.HANDLER, COMBAT_CATEGORY, COMBAT_DESC))
                                                 .option(createSubsectionButton(FreezingConfig.HANDLER, FREEZING_CATEGORY, FREEZING_DESC))
                                                 .option(createSubsectionButton(IcicleConfig.HANDLER, ICICLE_CATEGORY, ICICLE_DESC))
+                                                .option(createSubsectionButton(WeatherSettings.HANDLER, WEATHER_CATEGORY, WEATHER_DESC))
                                                 .build()
                                 )
                                 .build()
