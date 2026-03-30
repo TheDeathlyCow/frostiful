@@ -1,8 +1,12 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
 import com.github.thedeathlycow.frostiful.FrostifulModMenu;
+import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import com.github.thedeathlycow.frostiful.config.section.*;
+import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
@@ -318,8 +322,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.CLIENT_TITLE, "Client Settings");
         builder.add(FrostifulModMenu.COMMON_TITLE, "Common Settings");
 
-        builder.add(FrostifulModMenu.CLIENT_CATEGORY, "Client Settings");
-        builder.add(FrostifulModMenu.CLIENT_DESC, "Client-side settings for display and rendering.");
+        builder.add(FrostifulModMenu.DISPLAY_CATEGORY, "Display Settings");
+        builder.add(FrostifulModMenu.DISPLAY_DESC, "Settings that affect display.");
 
         builder.add(FrostifulModMenu.COMBAT_CATEGORY, "Combat Settings");
         builder.add(FrostifulModMenu.COMBAT_DESC, "Server-side settings for combat.");
@@ -333,7 +337,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.ICICLE_CATEGORY, "Icicles Settings");
         builder.add(FrostifulModMenu.ICICLE_DESC, "Server-side settings for icicle related mechanics.");
 
-        generateConfigOptionTranslations(ClientConfig.HANDLER, builder);
+        generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
         generateConfigOptionTranslations(CombatConfig.HANDLER, builder);
         generateConfigOptionTranslations(EnvironmentConfig.HANDLER, builder);
         generateConfigOptionTranslations(FreezingConfig.HANDLER, builder);

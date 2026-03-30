@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.config.section.*;
 import com.terraformersmc.modmenu.api.ConfigScreenFactory;
@@ -17,13 +18,13 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String CLIENT_TITLE = "frostiful.config.client.title";
     public static final String COMMON_TITLE = "frostiful.config.common.title";
 
-    public static final String CLIENT_CATEGORY = Translate.mainCategoryKey(ClientConfig.HANDLER);
+    public static final String DISPLAY_CATEGORY = Translate.mainCategoryKey(DisplaySettings.HANDLER);
     public static final String COMBAT_CATEGORY = Translate.mainCategoryKey(CombatConfig.HANDLER);
     public static final String ENVIRONMENT_CATEGORY = Translate.mainCategoryKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_CATEGORY = Translate.mainCategoryKey(FreezingConfig.HANDLER);
     public static final String ICICLE_CATEGORY = Translate.mainCategoryKey(IcicleConfig.HANDLER);
 
-    public static final String CLIENT_DESC = Translate.descKey(ClientConfig.HANDLER);
+    public static final String DISPLAY_DESC = Translate.descKey(DisplaySettings.HANDLER);
     public static final String COMBAT_DESC = Translate.descKey(CombatConfig.HANDLER);
     public static final String ENVIRONMENT_DESC = Translate.descKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_DESC = Translate.descKey(FreezingConfig.HANDLER);
@@ -39,17 +40,16 @@ public class FrostifulModMenu implements ModMenuApi {
                                 .group(
                                         OptionGroup.createBuilder()
                                                 .name(Component.translatable(CLIENT_TITLE))
-                                                .option(createSubsectionButton(ClientConfig.HANDLER, CLIENT_CATEGORY, CLIENT_DESC))
+                                                .option(createSubsectionButton(DisplaySettings.HANDLER, DISPLAY_CATEGORY, DISPLAY_DESC))
                                                 .build()
                                 )
                                 .group(
                                         OptionGroup.createBuilder()
                                                 .name(Component.translatable(COMMON_TITLE))
+                                                .option(createSubsectionButton(EnvironmentConfig.HANDLER, ENVIRONMENT_CATEGORY, ENVIRONMENT_DESC))
                                                 .option(createSubsectionButton(CombatConfig.HANDLER, COMBAT_CATEGORY, COMBAT_DESC))
-                                                .option(createSubsectionButton(CombatConfig.HANDLER, ENVIRONMENT_CATEGORY, ENVIRONMENT_DESC))
-                                                .option(createSubsectionButton(CombatConfig.HANDLER, COMBAT_CATEGORY, COMBAT_DESC))
-                                                .option(createSubsectionButton(CombatConfig.HANDLER, FREEZING_CATEGORY, FREEZING_DESC))
-                                                .option(createSubsectionButton(CombatConfig.HANDLER, ICICLE_CATEGORY, ICICLE_DESC))
+                                                .option(createSubsectionButton(FreezingConfig.HANDLER, FREEZING_CATEGORY, FREEZING_DESC))
+                                                .option(createSubsectionButton(IcicleConfig.HANDLER, ICICLE_CATEGORY, ICICLE_DESC))
                                                 .build()
                                 )
                                 .build()

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin.gui;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
+import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
+import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -54,10 +54,10 @@ public abstract class ShiveringRenderer {
             @Local(name = "poseStack") PoseStack poseStack
     ) {
         if (this.minecraft.getCameraEntity() instanceof LivingEntity livingEntity && SurvivalUtils.isShiveringRender(livingEntity)) {
-            ClientConfig config = FrostifulConfigYACL.clientConfig();
-            if (config.isShakeCameraWhenShiveringEnabled()) {
+            DisplaySettings config = FrostifulClientConfig.displaySettings();
 
-                final float intensity = config.getHandShakeIntensity();
+            if (config.shakeHandWhenShivering()) {
+                final float intensity = config.handShakeIntensity();
 
                 float shakeX = (this.random.nextFloat() - frostiful_baseShakeSift) * frostiful_baseIntensity;
                 float shakeY = (this.random.nextFloat() - frostiful_baseShakeSift) * frostiful_baseIntensity;

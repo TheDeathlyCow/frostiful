@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.config.section;
+package com.github.thedeathlycow.frostiful.client.config.section;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
@@ -13,11 +13,11 @@ import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 
 import java.nio.file.Path;
 
-public class ClientConfig {
-    public static final Path PATH = Frostiful.getConfigDir().resolve("client.json5");
+public class DisplaySettings {
+    public static final Path PATH = Frostiful.getConfigDir().resolve("client/display.json5");
 
-    public static final ConfigClassHandler<ClientConfig> HANDLER = ConfigClassHandler.createBuilder(ClientConfig.class)
-            .id(Frostiful.id("client"))
+    public static final ConfigClassHandler<DisplaySettings> HANDLER = ConfigClassHandler.createBuilder(DisplaySettings.class)
+            .id(Frostiful.id("client/display"))
             .serializer(
                     config -> GsonConfigSerializerBuilder.create(config)
                             .setPath(PATH)
@@ -29,29 +29,22 @@ public class ClientConfig {
     private static final String CATEGORY = FrostifulConfigYACL.MAIN_CATEGORY_NAME;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Frost overlay start")
-    @SerialEntry(comment = "The temperature scale below which the frosty overlay will begin to appear. Must be between -1 and 0 (inclusive).")
-    @FloatSlider(min = -1f, max = 0f, step = 0.1f)
-    float frostOverlayStart = -0.5f;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Render cold heart overlay")
-    @SerialEntry(comment = "Toggles the temperature display over the player health.")
+    @Translate.Name("Enable frosty heart overlay")
+    @SerialEntry(comment = "Toggle the frosty heart temperature display on the health bar.")
     @TickBox
-    boolean doColdHeartOverlay = true;
+    boolean enableFrostyHeartOverlay = true;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Render water drip particles when wet")
+    @Translate.Name("Frosty camera overlay temperature scale start")
+    @SerialEntry(comment = "The temperature scale below which the frosty camera overlay will begin to appear. Must be between -1 and 0 (inclusive).")
+    @FloatSlider(min = -1f, max = 0f, step = 0.1f)
+    float renderFrostyCameraOverlayBelow = -0.5f;
+
+    @AutoGen(category = CATEGORY)
+    @Translate.Name("Enable drip particles")
     @SerialEntry(comment = "Toggles the water drip particles when wet. Has no effect if Scorchful is installed.")
     @TickBox
-    boolean renderDripParticles = true;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Disable frost overlay when wearing Cloak of Frostology")
-    @SerialEntry
-    @Translate.NoComment
-    @TickBox
-    boolean disableFrostOverlayWhenWearingFrostologyCloak = true;
+    boolean enableDripParticles = true;
 
     @AutoGen(category = CATEGORY)
     @Translate.Name("Shake hand when shivering")
@@ -71,31 +64,27 @@ public class ClientConfig {
     @TickBox
     boolean disableHurtPolarBearSkin = false;
 
-    public float getFrostOverlayStart() {
-        return frostOverlayStart;
+    public boolean enableFrostyHeartOverlay() {
+        return enableFrostyHeartOverlay;
     }
 
-    public boolean doColdHeartOverlay() {
-        return doColdHeartOverlay;
+    public float frostOverlayStart() {
+        return renderFrostyCameraOverlayBelow;
     }
 
-    public boolean renderDripParticles() {
-        return renderDripParticles;
+    public boolean enableDripParticles() {
+        return enableDripParticles;
     }
 
-    public boolean isDisableFrostOverlayWhenWearingFrostologyCloak() {
-        return disableFrostOverlayWhenWearingFrostologyCloak;
-    }
-
-    public boolean isShakeCameraWhenShiveringEnabled() {
+    public boolean shakeHandWhenShivering() {
         return shakeHandWhenShivering;
     }
 
-    public float getHandShakeIntensity() {
+    public float handShakeIntensity() {
         return handShakeIntensity;
     }
 
-    public boolean isDisableHurtPolarBearSkin() {
+    public boolean disableHurtPolarBearSkin() {
         return disableHurtPolarBearSkin;
     }
 }

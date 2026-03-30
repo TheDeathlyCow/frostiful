@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin;
 
+import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.core.Direction;
@@ -25,9 +25,11 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
 
     private static final float SLOW_DRIP_MULTIPLIER = 2.0f;
 
-    @Shadow protected boolean wasUnderwater;
+    @Shadow
+    protected boolean wasUnderwater;
 
-    @Shadow public abstract boolean isSpectator();
+    @Shadow
+    public abstract boolean isSpectator();
 
     protected DrippingWetPlayerMixin(EntityType<? extends LivingEntity> entityType, Level world) {
         super(entityType, world);
@@ -59,7 +61,7 @@ public abstract class DrippingWetPlayerMixin extends LivingEntity {
             }
 
             // allow config to disable particles
-            if (!FrostifulConfigYACL.clientConfig().renderDripParticles()) {
+            if (!FrostifulClientConfig.displaySettings().enableDripParticles()) {
                 return;
             }
 

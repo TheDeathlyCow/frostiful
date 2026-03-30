@@ -102,7 +102,7 @@ public class Frostiful implements ModInitializer {
     }
 
     public static Path getConfigDir() {
-        return FabricLoader.getInstance().getConfigDir();
+        return FabricLoader.getInstance().getConfigDir().resolve("frostiful");
     }
 
     /**
