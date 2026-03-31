@@ -335,6 +335,13 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.ICICLE_CATEGORY, "Icicles Settings");
         builder.add(FrostifulModMenu.ICICLE_DESC, "Server-side settings for icicle related mechanics.");
 
+        builder.add(FrostifulModMenu.ITEM_CATEGORY, "Item Settings");
+        builder.add(FrostifulModMenu.ITEM_DESC, "Server-side settings that relate to items.");
+        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.FROST_WAND_GROUP), "Frost Wand");
+        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.PACKED_SNOWBALL_GROUP), "Packed Snowball");
+        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.ICICLE_GROUP), "Icicle");
+        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.MISC_GROUP), "Miscellaneous");
+
         builder.add(FrostifulModMenu.WEATHER_CATEGORY, "Weather Settings");
         builder.add(FrostifulModMenu.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
         builder.add(Translate.categoryKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_CATEGORY), "Icicles");
@@ -346,6 +353,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         generateConfigOptionTranslations(EnvironmentConfig.HANDLER, builder);
         generateConfigOptionTranslations(FreezingConfig.HANDLER, builder);
         generateConfigOptionTranslations(IcicleConfig.HANDLER, builder);
+        generateConfigOptionTranslations(ItemSettings.HANDLER, builder);
         generateConfigOptionTranslations(WeatherSettings.HANDLER, builder);
     }
 

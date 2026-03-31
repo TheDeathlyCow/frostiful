@@ -7,7 +7,6 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-import net.minecraft.util.Mth;
 
 import java.nio.file.Path;
 
@@ -39,24 +38,6 @@ public class CombatConfig {
     boolean straysCarryFrostArrows = true;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Maximum Frost Spell distance")
-    @SerialEntry(comment = "The maximum distance (in blocks) that a spell fired from a Frost Wand can travel before exploding. Must be at least 1.")
-    @DoubleField(min = 1)
-    double maxFrostSpellDistance = 25;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Frost Wand cooldown")
-    @SerialEntry(comment = "The cooldown time (in ticks) of the Frost Wand after casting a spell. Must be at least 0.")
-    @IntField(min = 0)
-    int frostWandCooldown = 120;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Frost Wand root time")
-    @SerialEntry(comment = "The time (in ticks) that an entity struct by a Frost Wand is rooted. Must be at least 1.")
-    @IntField(min = 1)
-    int frostWandRootTime = 100;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Frostologer Heat Drain per tick")
     @SerialEntry(comment = "How many temperature points the Frostologer removes from nearby entities each tick when casting their Blizzard spell.")
     @IntField
@@ -73,18 +54,6 @@ public class CombatConfig {
     @SerialEntry(comment = "How many temperature points a Packed Snowball removes from a target when hit.")
     @IntField
     int packedSnowballFreezeAmount = 500;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Packed Snowball Damage")
-    @SerialEntry(comment = "How much damage a Packed Snowball applies to a target when hit. Must be at least 0.")
-    @FloatField(min = 0)
-    float packedSnowballDamage = 2.0f;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Packed Snowball vulnerable type damage")
-    @SerialEntry(comment = "How much damage a Packed Snowball applies to a target that is a vulnerable type (Strider, Blaze, Magma Cube) when hit. Must be at least 0.")
-    @FloatField(min = 0)
-    float packedSnowballVulnerableTypesDamage = 5.0f;
 
     @AutoGen(category = CATEGORY)
     @Translate.Name("Biter Frost Bite Max amplifier")
@@ -104,37 +73,12 @@ public class CombatConfig {
     @FloatField
     float frostologerFireDamageMultiplier = 2.0f;
 
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Ice Skate Upgrade Template generation chance in Igloos")
-    @SerialEntry(comment = "The chance of an Ice Skate Upgrade Template generating in an Igloo chest. Requires a restart after changing!")
-    @FloatField(format = "%.2f")
-    float skateUpgradeTemplateIglooGenerateChance = 0.75f;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Ice Break fallback damage")
-    @SerialEntry(comment = "The fallback damage amount to use when breaking a Frost Wand spell if the attacker does not have the Ice Break damage attribute.")
-    @DoubleField
-    double iceBreakFallbackDamage = 3.0;
-
-
     public boolean doChillagerPatrols() {
         return doChillagerPatrols;
     }
 
     public boolean straysCarryFrostArrows() {
         return straysCarryFrostArrows;
-    }
-
-    public double getMaxFrostSpellDistance() {
-        return maxFrostSpellDistance;
-    }
-
-    public int getFrostWandCooldown() {
-        return frostWandCooldown;
-    }
-
-    public int getFrostWandRootTime() {
-        return frostWandRootTime;
     }
 
     public int getFrostologerHeatDrainPerTick() {
@@ -150,14 +94,6 @@ public class CombatConfig {
         return packedSnowballFreezeAmount;
     }
 
-    public float getPackedSnowballDamage() {
-        return packedSnowballDamage;
-    }
-
-    public float getPackedSnowballVulnerableTypesDamage() {
-        return packedSnowballVulnerableTypesDamage;
-    }
-
     public int getBiterFrostBiteMaxAmplifier() {
         return Math.max(0, this.biterFrostBiteMaxAmplifier);
     }
@@ -168,13 +104,5 @@ public class CombatConfig {
 
     public float getFrostologerFireDamageMultiplier() {
         return frostologerFireDamageMultiplier;
-    }
-
-    public float getSkateUpgradeTemplateIglooGenerateChance() {
-        return Mth.clamp(skateUpgradeTemplateIglooGenerateChance, 0f, 1f);
-    }
-
-    public double getIceBreakFallbackDamage() {
-        return iceBreakFallbackDamage;
     }
 }

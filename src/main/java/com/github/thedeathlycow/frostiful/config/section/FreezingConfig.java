@@ -34,30 +34,6 @@ public class FreezingConfig {
     boolean doPassiveFreezing = true;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Enable wind spawning")
-    @SerialEntry(comment = "When enabled, freezing winds will appear in the world.")
-    @TickBox
-    boolean doWindSpawning = true;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Wind spawn method")
-    @SerialEntry(comment = "If wind spawning is enabled, then this controls how they spawn. Points create small one-off explosions of wind, entity creates an entity that rolls across the landscape, and none disables the feature entirely.")
-    @EnumCycler
-    WindSpawnMethod windSpawnStrategy = WindSpawnMethod.POINT;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Spawn wind in air")
-    @SerialEntry(comment = "Allows freezing winds to appear high up in the air.")
-    @TickBox
-    boolean spawnWindInAir = true;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Wind destroys torches")
-    @SerialEntry(comment = "When enabled, freezing winds will destroy exposed fire blocks.")
-    @TickBox
-    boolean windDestroysTorches = true;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Enable snow packing")
     @SerialEntry(comment = "When enabled, heavy mobs like Iron Golems and Ravagers will compact the snow they walk on, turning it to Packed Snow.")
     @TickBox
@@ -68,24 +44,6 @@ public class FreezingConfig {
     @SerialEntry(comment = "The interval, in ticks, between applications of passive freezing to players. Must be at least 0.")
     @IntField(min = 0)
     int passiveFreezingTickInterval = 1;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Wind spawn cap (per second)")
-    @SerialEntry(comment = "The maximum number of freezing winds that can spawn on a server, per second.")
-    @IntField(min = 0)
-    int windSpawnCapPerSecond = 15;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Wind spawn rarity")
-    @SerialEntry(comment = "Controls how often freezing winds spawn during rain. Bigger numbers = less frequent wind. Must be at least 0.")
-    @IntField(min = 0)
-    int windSpawnRarity = 750;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Wind spawn rarity in thunder")
-    @SerialEntry(comment = "Controls how often freezing winds spawn during thunder. Bigger numbers = less frequent wind. Must be at least 0.")
-    @IntField(min = 0)
-    int windSpawnRarityThunder = 500;
 
     @AutoGen(category = CATEGORY)
     @Translate.Name("Max passive freezing temperature scale")

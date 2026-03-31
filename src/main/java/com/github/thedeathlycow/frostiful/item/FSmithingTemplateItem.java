@@ -26,7 +26,7 @@ public class FSmithingTemplateItem {
         addTemplateToLoot(
                 FItems.ICE_SKATE_UPGRADE_TEMPLATE,
                 Identifier.withDefaultNamespace("chests/igloo_chest"),
-                FrostifulConfigYACL.combatConfig().getSkateUpgradeTemplateIglooGenerateChance()
+                FrostifulConfigYACL.itemSettings().skateUpgradeTemplateIglooGenerateChance()
         );
     }
 

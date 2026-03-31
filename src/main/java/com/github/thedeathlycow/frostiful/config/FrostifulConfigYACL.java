@@ -21,6 +21,10 @@ public final class FrostifulConfigYACL {
         return IcicleConfig.HANDLER.instance();
     }
 
+    public static ItemSettings itemSettings() {
+        return ItemSettings.HANDLER.instance();
+    }
+
     public static WeatherSettings weatherSettings() {
         return WeatherSettings.HANDLER.instance();
     }
@@ -37,6 +41,9 @@ public final class FrostifulConfigYACL {
 
         IcicleConfig.HANDLER.load();
         IcicleConfig.HANDLER.save();
+
+        ItemSettings.HANDLER.load();
+        ItemSettings.HANDLER.save();
 
         WeatherSettings.HANDLER.load();
         WeatherSettings.HANDLER.save();

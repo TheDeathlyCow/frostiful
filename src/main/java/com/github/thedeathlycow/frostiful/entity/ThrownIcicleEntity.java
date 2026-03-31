@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.section.ItemSettings;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -46,11 +46,11 @@ public class ThrownIcicleEntity extends AbstractArrow {
             return;
         }
 
-        IcicleConfig config = FrostifulConfigYACL.icicleConfig();
+        ItemSettings config = FrostifulConfigYACL.itemSettings();
 
         float damage = entityHitResult.getEntity().is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
-                ? config.getThrownIcicleExtraDamage()
-                : config.getThrownIcicleDamage();
+                ? config.thrownIcicleVulnerableTypesDamage()
+                : config.thrownIcicleDamage();
         this.setBaseDamage(damage);
 
         super.onHitEntity(entityHitResult);

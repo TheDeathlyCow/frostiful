@@ -5,7 +5,8 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
-import dev.isxander.yacl3.config.v2.api.autogen.*;
+import dev.isxander.yacl3.config.v2.api.autogen.AutoGen;
+import dev.isxander.yacl3.config.v2.api.autogen.IntField;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 
 import java.nio.file.Path;
@@ -43,18 +44,6 @@ public class IcicleConfig {
     @IntField(min = 0)
     int icicleCollisionFreezeAmount = 3000;
 
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Thrown Icicle damage")
-    @SerialEntry(comment = "The damage a Thrown Icicle applies to targets. Must be at least 0.")
-    @FloatField(min = 0f)
-    float thrownIcicleDamage = 1.0f;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Thrown Icicle extra damage")
-    @SerialEntry(comment = "The damage a Thrown Icicle applies to entity types that are vulnerable to freezing damage (Magma Cube, Blaze, Striders). Must be at least 0.")
-    @FloatField(min = 0f)
-    float thrownIcicleExtraDamage = 3.0f;
-
 
     public int getFrostArrowFreezeAmount() {
         return frostArrowFreezeAmount;
@@ -66,13 +55,5 @@ public class IcicleConfig {
 
     public int getIcicleCollisionFreezeAmount() {
         return icicleCollisionFreezeAmount;
-    }
-
-    public float getThrownIcicleDamage() {
-        return thrownIcicleDamage;
-    }
-
-    public float getThrownIcicleExtraDamage() {
-        return thrownIcicleExtraDamage;
     }
 }
