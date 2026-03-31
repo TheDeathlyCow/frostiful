@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.item;
 
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import net.minecraft.core.Direction;
@@ -27,6 +28,10 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
 
     @Override
     public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (!FrostifulConfigYACL.itemSettings().enableIcicleThrowing()) {
+            return InteractionResult.PASS;
+        }
+
         ItemStack itemStack = user.getItemInHand(hand);
 
         world.playSound(
