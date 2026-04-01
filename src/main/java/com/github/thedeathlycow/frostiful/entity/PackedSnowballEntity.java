@@ -68,7 +68,7 @@ public class PackedSnowballEntity extends ThrowableItemProjectile {
 
         if (target instanceof LivingEntity livingTarget) {
             livingTarget.thermoo$addTemperature(
-                    -FrostifulConfigYACL.combatConfig().getPackedSnowballFreezeAmount(),
+                    FrostifulConfigYACL.temperatureSourceSettings().packedSnowballFreezeAmount(),
                     target.level().thermoo$temperatureSources().create(
                             TemperatureSources.ACTIVE,
                             this

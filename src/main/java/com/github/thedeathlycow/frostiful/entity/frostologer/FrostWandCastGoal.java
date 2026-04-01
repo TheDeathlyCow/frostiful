@@ -38,7 +38,7 @@ class FrostWandCastGoal extends RangedAttackGoal {
         frostologerEntity.stopUsingItem();
         this.stopUsingFrostWand();
         if (frostologerEntity.isTargetRooted()) {
-            int cooling = -FrostifulConfigYACL.combatConfig().getFrostologerCoolingFromFrostWandHit();
+            int cooling = FrostifulConfigYACL.temperatureSourceSettings().frostologerCoolingFromFrostWandHit();
             frostologerEntity.thermoo$addTemperature(cooling);
         }
     }
