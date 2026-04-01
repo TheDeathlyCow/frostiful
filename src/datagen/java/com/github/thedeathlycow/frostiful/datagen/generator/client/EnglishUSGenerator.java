@@ -351,8 +351,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(FrostifulModMenu.WEATHER_CATEGORY, "Weather Settings");
         builder.add(FrostifulModMenu.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
-        builder.add(Translate.categoryKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_CATEGORY), "Icicles");
-        builder.add(Translate.categoryKey(WeatherSettings.HANDLER, WeatherSettings.WIND_CATEGORY), "Freezing Wind");
+        builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_GROUP), "Icicles");
+        builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.WIND_GROUP), "Freezing Wind");
         generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");
 
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
