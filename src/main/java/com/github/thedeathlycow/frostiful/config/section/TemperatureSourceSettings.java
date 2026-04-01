@@ -41,22 +41,12 @@ public class TemperatureSourceSettings {
     @FloatField(min = 0.0f, format = "%.2f")
     float coolingMultiplier = 1.0f;
 
-    @AutoGen(category = GENERAL_CATEGORY)
-    @Translate.Name("Environment temperature multiplier")
-    @SerialEntry(comment = "Multiplies the temperature point reduction from environmental freezing.")
-    @FloatField(min = 0.0f, format = "%.2f")
-    float environmentTemperatureMultiplier = 1.0f;
-
     public float heatingMultiplier() {
         return heatingMultiplier;
     }
 
     public float coolingMultiplier() {
         return coolingMultiplier;
-    }
-
-    public float environmentTemperatureMultiplier() {
-        return environmentTemperatureMultiplier;
     }
 
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)

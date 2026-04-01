@@ -49,6 +49,12 @@ public class EnvironmentSettings {
     float minEnvironmentalFreezingTemperatureScale = -1.0f;
 
     @AutoGen(category = CATEGORY)
+    @Translate.Name("Environment temperature multiplier")
+    @SerialEntry(comment = "Multiplies the temperature point reduction from environmental freezing.")
+    @FloatField(min = 0.0f, format = "%.2f")
+    float environmentTemperatureMultiplier = 1.0f;
+
+    @AutoGen(category = CATEGORY)
     @Translate.Name("Minimum light level for warmth")
     @SerialEntry(comment = "The minimum block light level that is considered to be well-lit and warm. Must be at least 0.")
     @IntField(min = 0)
@@ -64,6 +70,10 @@ public class EnvironmentSettings {
 
     public float minEnvironmentalFreezingTemperatureScale() {
         return minEnvironmentalFreezingTemperatureScale;
+    }
+
+    public float environmentTemperatureMultiplier() {
+        return environmentTemperatureMultiplier;
     }
 
     public int minLightForWarmth() {
