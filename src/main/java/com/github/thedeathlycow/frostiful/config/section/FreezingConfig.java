@@ -57,24 +57,6 @@ public class FreezingConfig {
     int sunLichenHeatPerLevel = 500;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Sun Lichen burn time")
-    @SerialEntry(comment = "How long (in ticks) to burn entities that touch Sun Lichen. Must be at least 0.")
-    @IntField(min = 0)
-    int sunLichenBurnTime = 3 * 20;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Campfire warmth search radius")
-    @SerialEntry(comment = "The radius around a campfire to apply the Warmth effect to when adding a log. Must be at least 0.")
-    @DoubleField(min = 0)
-    double campfireWarmthSearchRadius = 10;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Campfire warmth time")
-    @SerialEntry(comment = "Duration of the Warmth effect, in ticks, to apply to close to a campfire after adding a log. Must be at least 0.")
-    @IntField(min = 0)
-    int campfireWarmthTime = 1200;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Freezing wind temperature reduction")
     @SerialEntry(comment = "How many temperature points to remove from entities that collide with a Freezing Wind. Must be at least 0.")
     @IntField(min = 0)
@@ -129,18 +111,6 @@ public class FreezingConfig {
 
     public int getSunLichenHeatPerLevel() {
         return sunLichenHeatPerLevel;
-    }
-
-    public int getSunLichenBurnTime() {
-        return sunLichenBurnTime;
-    }
-
-    public double getCampfireWarmthSearchRadius() {
-        return campfireWarmthSearchRadius;
-    }
-
-    public int getCampfireWarmthTime() {
-        return campfireWarmthTime;
     }
 
     public int getFreezingWindFrost() {

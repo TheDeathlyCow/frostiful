@@ -7,6 +7,7 @@ import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
 import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
+import net.minecraft.util.Mth;
 
 import java.nio.file.Path;
 
@@ -30,33 +31,33 @@ public class ItemSettings {
     public static final String MISC_GROUP = "misc";
 
     @AutoGen(category = CATEGORY, group = FROST_WAND_GROUP)
-    @Translate.Name("Frost Wand cooldown")
-    @SerialEntry(comment = "The cooldown time (in ticks) of the Frost Wand after casting a spell. Must be at least 0.")
-    @IntField(min = 0)
-    int frostWandCooldown = 120;
+    @Translate.Name("Frost Wand cooldown multiplier")
+    @SerialEntry(comment = "Multiplies the cooldown time of the Frost Wand after casting a spell. Must be at least 0.")
+    @FloatField(min = 0, format = "%.2f")
+    float frostWandCooldownMultiplier = 1.0f;
 
     @AutoGen(category = CATEGORY, group = FROST_WAND_GROUP)
-    @Translate.Name("Frost Wand root time")
-    @SerialEntry(comment = "The time (in ticks) that an entity struct by a Frost Wand is rooted. Must be at least 1.")
-    @IntField(min = 1)
-    int frostWandRootTime = 100;
+    @Translate.Name("Frost Wand root time multiplier")
+    @SerialEntry(comment = "Multiplies the time that an entity struck by a Frost Wand is rooted in place. Must be at least 0.")
+    @FloatField(min = 0, format = "%.2f")
+    float frostWandRootTimeMultiplier = 1.0f;
 
     @AutoGen(category = CATEGORY, group = FROST_WAND_GROUP)
-    @Translate.Name("Maximum Frost Spell distance")
-    @SerialEntry(comment = "The maximum distance (in blocks) that a spell fired from a Frost Wand can travel before exploding. Must be at least 1.")
-    @DoubleField(min = 1)
-    double maxFrostSpellDistance = 25;
+    @Translate.Name("Maximum Frost Spell distance multiplier")
+    @SerialEntry(comment = "Multiplies the maximum distance (in blocks) that a spell fired from a Frost Wand can travel before exploding. Must be at least 0.")
+    @DoubleField(min = 0)
+    double maxFrostSpellDistanceMultiplier = 1.0;
 
     public int frostWandCooldown() {
-        return frostWandCooldown;
+        return Mth.floor(120 * this.frostWandCooldownMultiplier);
     }
 
     public int frostWandRootTime() {
-        return frostWandRootTime;
+        return Mth.floor(100 * this.frostWandRootTimeMultiplier);
     }
 
     public double maxFrostSpellDistance() {
-        return maxFrostSpellDistance;
+        return Mth.floor(25 * this.maxFrostSpellDistanceMultiplier);
     }
 
     @AutoGen(category = CATEGORY, group = PACKED_SNOWBALL_GROUP)
@@ -126,6 +127,6 @@ public class ItemSettings {
     }
 
     public int warmingFoodDuration() {
-        return (int) (60 * 20 * warmingFoodDurationMultiplier);
+        return Mth.floor(60 * 20 * warmingFoodDurationMultiplier);
     }
 }

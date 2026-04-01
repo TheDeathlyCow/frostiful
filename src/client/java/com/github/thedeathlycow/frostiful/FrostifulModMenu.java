@@ -23,6 +23,7 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String ENVIRONMENT_CATEGORY = Translate.mainCategoryKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_CATEGORY = Translate.mainCategoryKey(FreezingConfig.HANDLER);
     public static final String ICICLE_CATEGORY = Translate.mainCategoryKey(IcicleConfig.HANDLER);
+    public static final String BLOCK_CATEGORY = Translate.mainCategoryKey(BlockSettings.HANDLER);
     public static final String ENTITY_CATEGORY = Translate.mainCategoryKey(EntitySettings.HANDLER);
     public static final String ITEM_CATEGORY = Translate.mainCategoryKey(ItemSettings.HANDLER);
     public static final String WEATHER_CATEGORY = Translate.mainCategoryKey(WeatherSettings.HANDLER);
@@ -32,6 +33,7 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String ENVIRONMENT_DESC = Translate.descKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_DESC = Translate.descKey(FreezingConfig.HANDLER);
     public static final String ICICLE_DESC = Translate.descKey(IcicleConfig.HANDLER);
+    public static final String BLOCK_DESC = Translate.descKey(BlockSettings.HANDLER);
     public static final String ENTITY_DESC = Translate.descKey(EntitySettings.HANDLER);
     public static final String ITEM_DESC = Translate.descKey(ItemSettings.HANDLER);
     public static final String WEATHER_DESC = Translate.descKey(WeatherSettings.HANDLER);
@@ -56,6 +58,7 @@ public class FrostifulModMenu implements ModMenuApi {
                                                 .option(createSubsectionButton(CombatConfig.HANDLER, COMBAT_CATEGORY, COMBAT_DESC))
                                                 .option(createSubsectionButton(FreezingConfig.HANDLER, FREEZING_CATEGORY, FREEZING_DESC))
                                                 .option(createSubsectionButton(IcicleConfig.HANDLER, ICICLE_CATEGORY, ICICLE_DESC))
+                                                .option(createSubsectionButton(BlockSettings.HANDLER, BLOCK_CATEGORY, BLOCK_DESC))
                                                 .option(createSubsectionButton(EntitySettings.HANDLER, ENTITY_CATEGORY, ENTITY_DESC))
                                                 .option(createSubsectionButton(ItemSettings.HANDLER, ITEM_CATEGORY, ITEM_DESC))
                                                 .option(createSubsectionButton(WeatherSettings.HANDLER, WEATHER_CATEGORY, WEATHER_DESC))

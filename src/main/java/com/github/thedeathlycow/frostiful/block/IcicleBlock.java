@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
@@ -244,15 +245,17 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
     @Override
     protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if (isPointingDown(state)) {
-            boolean tryFall = FrostifulConfigYACL.weatherSettings().iciclesBecomeUnable()
-                    && random.nextFloat() < BECOME_UNSTABLE_CHANCE
+            BlockSettings settings = FrostifulConfigYACL.blockSettings();
+
+            boolean tryFall = settings.enableIcicleInstability()
+                    && random.nextFloat() < BECOME_UNSTABLE_CHANCE * settings.icicleInstabilityChanceMultiplier()
                     && isHeldByIcicleFallable(state, world, pos);
 
             if (tryFall) {
                 this.tryFall(state, world, pos, random);
             }
 
-            final double growChance = getGrowChance(world);
+            final double growChance = settings.icicleGrowthChanceMultiplier() * getGrowChance(world);
             if (random.nextFloat() < growChance) { // grow
                 this.tryGrowIcicle(state, world, pos, random);
             }

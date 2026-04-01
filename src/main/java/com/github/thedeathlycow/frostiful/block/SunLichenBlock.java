@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
 import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FCriteria;
@@ -67,11 +68,12 @@ public class SunLichenBlock extends GlowLichenBlock implements Heatable {
             InsideBlockEffectApplier handler,
             FreezingConfig config
     ) {
+        BlockSettings settings = FrostifulConfigYACL.blockSettings();
         int heatToDischarge = config.getSunLichenHeatPerLevel() * this.heatLevel;
 
         // burn if hot sun lichen and target is warm
         if (entity.thermoo$getTemperature() > 0 && this.heatLevel == HOT_LEVEL) {
-            final int fireTicks = config.getSunLichenBurnTime();
+            final int fireTicks = settings.sunLichenBurnTime();
             handler.apply(InsideBlockEffectType.FIRE_IGNITE);
             handler.runAfter(InsideBlockEffectType.FIRE_IGNITE, e -> e.setRemainingFireTicks(fireTicks));
         } else if (entity.thermoo$isCold()) { // only add heatToDischarge if cold, but always damage

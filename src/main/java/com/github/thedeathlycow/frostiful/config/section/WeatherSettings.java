@@ -66,17 +66,7 @@ public class WeatherSettings {
     @TickBox
     boolean iciclesFormInWeather = true;
 
-    @AutoGen(category = CATEGORY, group = ICICLE_GROUP)
-    @Translate.Name("Enable icicle instability")
-    @SerialEntry(comment = "When enabled, icicles hanging from a ceiling will have a chance to become unstable and fall.")
-    @TickBox
-    boolean iciclesBecomeUnable = true;
-
     public boolean iciclesFormInWeather() {
         return iciclesFormInWeather;
-    }
-
-    public boolean iciclesBecomeUnable() {
-        return iciclesBecomeUnable;
     }
 }
