@@ -43,7 +43,7 @@ public class TemperatureSourceSettings {
 
     @AutoGen(category = GENERAL_CATEGORY)
     @Translate.Name("Environment temperature multiplier")
-    @SerialEntry(comment = "Multiplies the final temperature point change of an environment temperature change.")
+    @SerialEntry(comment = "Multiplies the temperature point reduction from environmental freezing.")
     @FloatField(min = 0.0f, format = "%.2f")
     float environmentTemperatureMultiplier = 1.0f;
 

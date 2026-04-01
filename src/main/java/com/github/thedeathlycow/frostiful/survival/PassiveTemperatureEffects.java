@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
 import com.github.thedeathlycow.frostiful.entity.component.SnowAccumulationComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
@@ -82,10 +81,8 @@ public final class PassiveTemperatureEffects {
      * loot condition.
      */
     public static int getBlockLightTemperatureChange(Level world, BlockPos pos) {
-        EnvironmentConfig config = FrostifulConfigYACL.environmentConfig();
-
         int lightLevel = world.getBrightness(LightLayer.BLOCK, pos);
-        int minLightLevel = config.getMinLightForWarmth();
+        int minLightLevel = FrostifulConfigYACL.environmentSettings().minLightForWarmth();
 
         int warmth = 0;
         if (lightLevel >= minLightLevel) {

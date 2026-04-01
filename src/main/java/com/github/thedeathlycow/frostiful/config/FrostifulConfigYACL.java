@@ -5,12 +5,8 @@ import com.github.thedeathlycow.frostiful.config.section.*;
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";
 
-    public static EnvironmentConfig environmentConfig() {
-        return EnvironmentConfig.HANDLER.instance();
-    }
-
-    public static FreezingConfig freezingConfig() {
-        return FreezingConfig.HANDLER.instance();
+    public static EnvironmentSettings environmentSettings() {
+        return EnvironmentSettings.HANDLER.instance();
     }
 
     public static TemperatureSourceSettings temperatureSourceSettings() {
@@ -34,14 +30,11 @@ public final class FrostifulConfigYACL {
     }
 
     public static void initialize() {
-        EnvironmentConfig.HANDLER.load();
-        EnvironmentConfig.HANDLER.save();
-
-        FreezingConfig.HANDLER.load();
-        FreezingConfig.HANDLER.save();
-
         TemperatureSourceSettings.HANDLER.load();
         TemperatureSourceSettings.HANDLER.save();
+
+        EnvironmentSettings.HANDLER.load();
+        EnvironmentSettings.HANDLER.save();
 
         BlockSettings.HANDLER.load();
         BlockSettings.HANDLER.save();

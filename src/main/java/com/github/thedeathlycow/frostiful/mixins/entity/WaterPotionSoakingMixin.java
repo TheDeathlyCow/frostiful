@@ -28,7 +28,7 @@ public abstract class WaterPotionSoakingMixin extends ThrowableItemProjectile {
     )
     private void soakEntitiesWithWaterbottle(ServerLevel world, CallbackInfo ci, @Local AABB box) {
         List<Player> players = level().getEntitiesOfClass(Player.class, box);
-        float soakPercent = FrostifulConfigYACL.freezingConfig().getSoakPercentFromWaterPotion();
+        float soakPercent = FrostifulConfigYACL.environmentSettings().soakPercentFromWaterPotion();
 
         for (var player : players) {
             int soakAmount = (int) (player.thermoo$getMaxWetTicks() * soakPercent);

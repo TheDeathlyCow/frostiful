@@ -326,9 +326,9 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(FrostifulModMenu.ENVIRONMENT_CATEGORY, "Environment Settings");
         builder.add(FrostifulModMenu.ENVIRONMENT_DESC, "Server-side settings for environment simulation.");
-
-        builder.add(FrostifulModMenu.FREEZING_CATEGORY, "Freezing Settings");
-        builder.add(FrostifulModMenu.FREEZING_DESC, "Server-side settings for freezing effects.");
+        builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.TEMPERATURE_GROUP), "Temperature values");
+        builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.SHIVERING_GROUP), "Shivering");
+        builder.add(Translate.categoryKey(EnvironmentSettings.HANDLER, EnvironmentSettings.SOAKING_CATEGORY), "Soaking");
 
         builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_CATEGORY, "Temperature Sources");
         builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_DESC, "Configure temperature sources.");
@@ -363,8 +363,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");
 
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
-        generateConfigOptionTranslations(EnvironmentConfig.HANDLER, builder);
-        generateConfigOptionTranslations(FreezingConfig.HANDLER, builder);
+        generateConfigOptionTranslations(EnvironmentSettings.HANDLER, builder);
         generateConfigOptionTranslations(TemperatureSourceSettings.HANDLER, builder);
         generateConfigOptionTranslations(BlockSettings.HANDLER, builder);
         generateConfigOptionTranslations(EntitySettings.HANDLER, builder);

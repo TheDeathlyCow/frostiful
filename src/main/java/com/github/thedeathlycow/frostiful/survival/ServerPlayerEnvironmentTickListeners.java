@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentSettings;
+import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureRecord;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureUnit;
@@ -32,11 +32,12 @@ public final class ServerPlayerEnvironmentTickListeners {
         TemperatureRecord temperature = context.components()
                 .getOrDefault(EnvironmentComponentTypes.TEMPERATURE, TemperatureRecordComponent.DEFAULT);
 
-        EnvironmentConfig config = FrostifulConfigYACL.environmentConfig();
-        int total = envTemperatureToTemperaturePoint(temperature, config);
+        EnvironmentSettings settings = FrostifulConfigYACL.environmentSettings();
+        TemperatureSourceSettings sourceSettings = FrostifulConfigYACL.temperatureSourceSettings();
+        int total = envTemperatureToTemperaturePoint(temperature, settings, sourceSettings);
 
         if (total < 0 && context.affected().thermoo$isWet()) {
-            total = (int) (total * config.getEnvironmentFreezingSoakedMultiplier());
+            total = (int) (total * settings.environmentFreezingSoakedMultiplier());
         }
 
         if (context.affected().tickCount % 20 == 0 && Frostiful.LOGGER.isDebugEnabled()) {
@@ -51,19 +52,19 @@ public final class ServerPlayerEnvironmentTickListeners {
             return TriState.DEFAULT;
         }
 
-        FreezingConfig config = FrostifulConfigYACL.freezingConfig();
+        EnvironmentSettings settings = FrostifulConfigYACL.environmentSettings();
         ServerPlayer player = context.affected();
 
-        int tickInterval = config.getPassiveFreezingTickInterval();
+        int tickInterval = settings.environmentFreezingTickInterval();
         if (tickInterval > 1 && player.tickCount % tickInterval != 0) {
             return TriState.FALSE;
         }
 
-        if (player.thermoo$getTemperatureScale() < -config.getMaxPassiveFreezingPercent()) {
+        if (player.thermoo$getTemperatureScale() < settings.minEnvironmentalFreezingTemperatureScale()) {
             return TriState.FALSE;
         }
 
-        boolean doPassiveFreezing = config.doPassiveFreezing()
+        boolean doPassiveFreezing = settings.enableEnvironmentFreezing()
                 && context.level().getGameRules().get(FGameRules.ENABLE_ENVIRONMENT_FREEZING);
 
         if (TrinketsIntegration.wearingFrostologyCloak(player)) {
@@ -77,22 +78,26 @@ public final class ServerPlayerEnvironmentTickListeners {
 
     @VisibleForTesting
     public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature) {
-        return envTemperatureToTemperaturePoint(temperature, new EnvironmentConfig());
+        return envTemperatureToTemperaturePoint(temperature, new EnvironmentSettings(), new TemperatureSourceSettings());
     }
 
-    public static int envTemperatureToTemperaturePoint(TemperatureRecord temperature, EnvironmentConfig config) {
+    public static int envTemperatureToTemperaturePoint(
+            TemperatureRecord temperature,
+            EnvironmentSettings settings,
+            TemperatureSourceSettings sourceSettings
+    ) {
         double temperatureC = temperature
                 .valueInUnit(TemperatureUnit.CELSIUS);
 
-        double thresholdC = config.getMaxTemperatureForColdC();
-        double degreesPerTemperatureDecrease = config.getDegreesCPerTemperatureDecrease();
+        double thresholdC = settings.maxTemperatureForColdC();
+        double degreesPerTemperatureDecrease = settings.degreesCPerTemperatureDecrease();
 
         if (temperatureC > thresholdC) {
             return 0;
         }
         // Graphical proof: https://www.desmos.com/calculator/01nd0aidxh
         double base = (temperatureC - thresholdC - degreesPerTemperatureDecrease) / degreesPerTemperatureDecrease;
-        return Mth.ceil(config.getEnvironmentTemperatureMultiplier() * base);
+        return Mth.ceil(sourceSettings.environmentTemperatureMultiplier() * base);
     }
 
     private ServerPlayerEnvironmentTickListeners() {

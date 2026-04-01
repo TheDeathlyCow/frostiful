@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentSettings;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.LivingEntitySoakingTickEvents;
@@ -27,31 +27,31 @@ public final class SoakingEffects {
         }
 
         EntityInvoker invoker = (EntityInvoker) context.affected();
-        EnvironmentConfig config = FrostifulConfigYACL.environmentConfig();
+        EnvironmentSettings settings = FrostifulConfigYACL.environmentSettings();
         int total = 0;
 
         // increase wetness
-        total += getRainChange(invoker, config);
-        total += getTouchingWaterChange(context, config);
+        total += getRainChange(invoker, settings);
+        total += getTouchingWaterChange(context, settings);
         total += getSubmerged(context, invoker);
 
         // drying effects
         total -= getLightDrying(context);
-        total -= getOnFireDrying(context, config);
+        total -= getOnFireDrying(context, settings);
 
         return total;
     }
 
-    private static int getRainChange(EntityInvoker invoker, EnvironmentConfig config) {
+    private static int getRainChange(EntityInvoker invoker, EnvironmentSettings settings) {
         return invoker.frostiful$invokeIsBeingRainedOn()
-                ? config.getRainWetnessIncrease()
+                ? settings.rainWetnessIncrease()
                 : 0;
     }
 
-    private static int getTouchingWaterChange(EnvironmentTickContext<? extends LivingEntity> context, EnvironmentConfig config) {
+    private static int getTouchingWaterChange(EnvironmentTickContext<? extends LivingEntity> context, EnvironmentSettings settings) {
         LivingEntity entity = context.affected();
         return entity.isInWater() || entity.getInBlockState().is(Blocks.WATER_CAULDRON)
-                ? config.getTouchingWaterWetnessIncrease()
+                ? settings.touchingWaterWetnessIncrease()
                 : 0;
     }
 
@@ -67,9 +67,9 @@ public final class SoakingEffects {
         return blockLightLevel / 4;
     }
 
-    private static int getOnFireDrying(EnvironmentTickContext<? extends LivingEntity> context, EnvironmentConfig config) {
+    private static int getOnFireDrying(EnvironmentTickContext<? extends LivingEntity> context, EnvironmentSettings settings) {
         return context.affected().isOnFire()
-                ? config.getOnFireDryDate()
+                ? settings.onFireDryDate()
                 : 0;
     }
 

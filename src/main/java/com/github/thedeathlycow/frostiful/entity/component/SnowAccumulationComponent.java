@@ -47,7 +47,7 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
             this.meltSnowAccumulation();
         }
 
-        if (FrostifulConfigYACL.environmentConfig().applyEnvironmentPenaltyWhenWet()) {
+        if (FrostifulConfigYACL.environmentSettings().applyEnvironmentPenaltyWhenWet()) {
             this.applySoakedEnvironmentFrostResistancePenalty();
         }
     }
@@ -92,7 +92,7 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
     }
 
     private void addSnowAccumulation() {
-        if (this.snowAccumulation < FrostifulConfigYACL.environmentConfig().getMaxSnowAccumulationTicks()) {
+        if (this.snowAccumulation < FrostifulConfigYACL.environmentSettings().maxSnowAccumulationTicks()) {
             this.snowAccumulation++;
         }
     }
