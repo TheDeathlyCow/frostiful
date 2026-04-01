@@ -28,7 +28,7 @@ public abstract class StrayCarriesFrostArrowMixin extends PathfinderMob {
             cancellable = true
     )
     private void straysHaveFrostArrows(ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
-        if (!FrostifulConfigYACL.combatConfig().straysCarryFrostArrows()) {
+        if (!FrostifulConfigYACL.entitySettings().straysCarryGlacialArrows()) {
             return;
         }
 

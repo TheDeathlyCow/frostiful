@@ -75,23 +75,19 @@ public class BiterEntity extends Monster {
     }
 
     @Override
-    public boolean doHurtTarget(ServerLevel world, Entity target) {
+    public boolean doHurtTarget(ServerLevel level, Entity target) {
         this.attackTicks = ATTACK_TIME;
-        world.broadcastEntityEvent(this, EntityEvent.START_ATTACKING);
+        level.broadcastEntityEvent(this, EntityEvent.START_ATTACKING);
         this.playAttackSound();
         if (target instanceof LivingEntity livingTarget && FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(livingTarget).isRooted()) {
-            int maxAmplifier = FrostifulConfigYACL.combatConfig().getBiterFrostBiteMaxAmplifier() + 1;
+            int amplifier = FrostifulConfigYACL.entitySettings().getFrostBiteAmplifier(level);
 
             livingTarget.addEffect(
-                    new MobEffectInstance(
-                            FStatusEffects.FROST_BITE,
-                            20 * 15,
-                            this.random.nextInt(maxAmplifier)
-                    ),
+                    new MobEffectInstance(FStatusEffects.FROST_BITE, 20 * 15, amplifier),
                     this
             );
         }
-        return super.doHurtTarget(world, target);
+        return super.doHurtTarget(level, target);
     }
 
     @Override

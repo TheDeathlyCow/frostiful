@@ -34,12 +34,6 @@ public class FreezingConfig {
     boolean doPassiveFreezing = true;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Enable snow packing")
-    @SerialEntry(comment = "When enabled, heavy mobs like Iron Golems and Ravagers will compact the snow they walk on, turning it to Packed Snow.")
-    @TickBox
-    boolean doSnowPacking = true;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Passive freezing tick interval")
     @SerialEntry(comment = "The interval, in ticks, between applications of passive freezing to players. Must be at least 0.")
     @IntField(min = 0)
@@ -126,10 +120,6 @@ public class FreezingConfig {
 
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
-    }
-
-    public boolean doSnowPacking() {
-        return doSnowPacking;
     }
 
     public int getPassiveFreezingTickInterval() {

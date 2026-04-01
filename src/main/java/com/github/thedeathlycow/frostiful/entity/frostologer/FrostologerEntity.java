@@ -306,7 +306,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
     @Override
     public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
-            amount *= FrostifulConfigYACL.combatConfig().getFrostologerFireDamageMultiplier();
+            amount *= FrostifulConfigYACL.entitySettings().frostologerFireDamageMultiplier();
         }
 
         return super.hurtServer(world, source, amount);

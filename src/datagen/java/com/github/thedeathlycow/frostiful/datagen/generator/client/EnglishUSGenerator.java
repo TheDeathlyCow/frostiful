@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
 import com.github.thedeathlycow.frostiful.FrostifulModMenu;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
+import com.github.thedeathlycow.frostiful.config.DifficultySetting;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.config.section.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
@@ -335,6 +336,12 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.ICICLE_CATEGORY, "Icicles Settings");
         builder.add(FrostifulModMenu.ICICLE_DESC, "Server-side settings for icicle related mechanics.");
 
+        builder.add(FrostifulModMenu.ENTITY_CATEGORY, "Entity Settings");
+        builder.add(FrostifulModMenu.ENTITY_DESC, "Server-side settings that relate to entities and mobs.");
+        builder.add(Translate.mainGroupKey(EntitySettings.HANDLER, EntitySettings.CHILLAGER_GROUP), "Chillagers & Frostologers");
+        builder.add(Translate.mainGroupKey(EntitySettings.HANDLER, EntitySettings.MISC_GROUP), "Miscellaneous");
+        generateConfigEnumTranslations(builder, DifficultySetting.class, "Automatic", "Peaceful", "Easy", "Normal", "Hard");
+
         builder.add(FrostifulModMenu.ITEM_CATEGORY, "Item Settings");
         builder.add(FrostifulModMenu.ITEM_DESC, "Server-side settings that relate to items.");
         builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.FROST_WAND_GROUP), "Frost Wand");
@@ -353,6 +360,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         generateConfigOptionTranslations(EnvironmentConfig.HANDLER, builder);
         generateConfigOptionTranslations(FreezingConfig.HANDLER, builder);
         generateConfigOptionTranslations(IcicleConfig.HANDLER, builder);
+        generateConfigOptionTranslations(EntitySettings.HANDLER, builder);
         generateConfigOptionTranslations(ItemSettings.HANDLER, builder);
         generateConfigOptionTranslations(WeatherSettings.HANDLER, builder);
     }

@@ -21,6 +21,10 @@ public final class FrostifulConfigYACL {
         return IcicleConfig.HANDLER.instance();
     }
 
+    public static EntitySettings entitySettings() {
+        return EntitySettings.HANDLER.instance();
+    }
+
     public static ItemSettings itemSettings() {
         return ItemSettings.HANDLER.instance();
     }
@@ -41,6 +45,9 @@ public final class FrostifulConfigYACL {
 
         IcicleConfig.HANDLER.load();
         IcicleConfig.HANDLER.save();
+
+        EntitySettings.HANDLER.load();
+        EntitySettings.HANDLER.save();
 
         ItemSettings.HANDLER.load();
         ItemSettings.HANDLER.save();
