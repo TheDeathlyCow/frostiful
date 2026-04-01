@@ -13,10 +13,6 @@ public final class FrostifulConfigYACL {
         return FreezingConfig.HANDLER.instance();
     }
 
-    public static IcicleConfig icicleConfig() {
-        return IcicleConfig.HANDLER.instance();
-    }
-
     public static TemperatureSourceSettings temperatureSourceSettings() {
         return TemperatureSourceSettings.HANDLER.instance();
     }
@@ -43,9 +39,6 @@ public final class FrostifulConfigYACL {
 
         FreezingConfig.HANDLER.load();
         FreezingConfig.HANDLER.save();
-
-        IcicleConfig.HANDLER.load();
-        IcicleConfig.HANDLER.save();
 
         TemperatureSourceSettings.HANDLER.load();
         TemperatureSourceSettings.HANDLER.save();

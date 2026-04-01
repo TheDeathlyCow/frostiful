@@ -324,17 +324,11 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.DISPLAY_CATEGORY, "Display Settings");
         builder.add(FrostifulModMenu.DISPLAY_DESC, "Settings that affect display.");
 
-        builder.add(FrostifulModMenu.COMBAT_CATEGORY, "Combat Settings");
-        builder.add(FrostifulModMenu.COMBAT_DESC, "Server-side settings for combat.");
-
         builder.add(FrostifulModMenu.ENVIRONMENT_CATEGORY, "Environment Settings");
         builder.add(FrostifulModMenu.ENVIRONMENT_DESC, "Server-side settings for environment simulation.");
 
         builder.add(FrostifulModMenu.FREEZING_CATEGORY, "Freezing Settings");
         builder.add(FrostifulModMenu.FREEZING_DESC, "Server-side settings for freezing effects.");
-
-        builder.add(FrostifulModMenu.ICICLE_CATEGORY, "Icicles Settings");
-        builder.add(FrostifulModMenu.ICICLE_DESC, "Server-side settings for icicle related mechanics.");
 
         builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_CATEGORY, "Temperature Sources");
         builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_DESC, "Configure temperature sources.");
@@ -369,7 +363,6 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
         generateConfigOptionTranslations(EnvironmentConfig.HANDLER, builder);
         generateConfigOptionTranslations(FreezingConfig.HANDLER, builder);
-        generateConfigOptionTranslations(IcicleConfig.HANDLER, builder);
         generateConfigOptionTranslations(TemperatureSourceSettings.HANDLER, builder);
         generateConfigOptionTranslations(BlockSettings.HANDLER, builder);
         generateConfigOptionTranslations(EntitySettings.HANDLER, builder);

@@ -74,7 +74,26 @@ public class TemperatureSourceSettings {
     @Translate.Name("Packed Snowball freeze amount multiplier")
     @SerialEntry(comment = "Multiplies the number of temperature points a Packed Snowball removes from a target when hit.")
     @FloatField(format = "%.2f")
-    float packedSnowballFreezeAmount = 1.0f;
+    float packedSnowballFreezeAmountMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
+    @Translate.Name("Glacial Arrow freezing multiplier")
+    @SerialEntry(comment = "Multiplies the temperature point reduction applied to a target struck by a Glacial Arrow.")
+    @FloatField(format = "%.2f")
+    float glacialArrowTemperatureChangeMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
+    @Translate.Name("Thrown Icicle freezing multiplier")
+    @SerialEntry(comment = "Multiplies the temperature point reduction applied to a target struck by a Thrown Icicle.")
+    @FloatField(format = "%.2f")
+    float thrownIcicleFreezeAmountMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
+    @Translate.Name("Icicle Collision freezing multiplier")
+    @SerialEntry(comment = "Multiplies the temperature point reduction applied to a target that falls on an icicle or is struck by a falling icicle.")
+    @FloatField(format = "%.2f")
+    float icicleCollisionFreezeAmountMultiplier = 1.0f;
+
 
     public int frostologerHeatDrain() {
         // multiply by 2 as goals run at only half the rate of normal
@@ -86,6 +105,18 @@ public class TemperatureSourceSettings {
     }
 
     public int packedSnowballFreezeAmount() {
-        return Mth.floor(-500 * this.packedSnowballFreezeAmount * this.coolingMultiplier());
+        return Mth.floor(-500 * this.packedSnowballFreezeAmountMultiplier * this.coolingMultiplier());
+    }
+
+    public int glacialArrowTemperatureChange() {
+        return Mth.floor(-1000 * this.glacialArrowTemperatureChangeMultiplier * this.coolingMultiplier());
+    }
+
+    public int thrownIcicleFreezeAmount() {
+        return Mth.floor(-1500 * this.thrownIcicleFreezeAmountMultiplier * this.coolingMultiplier());
+    }
+
+    public int icicleCollisionFreezeAmount() {
+        return Mth.floor(-3000 * this.icicleCollisionFreezeAmountMultiplier * this.coolingMultiplier());
     }
 }

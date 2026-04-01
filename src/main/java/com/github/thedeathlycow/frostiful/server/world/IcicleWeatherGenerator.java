@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.server.world;
 
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
 import com.github.thedeathlycow.frostiful.config.section.WeatherSettings;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import net.minecraft.core.BlockPos;

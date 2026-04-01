@@ -59,10 +59,10 @@ public class ThrownIcicleEntity extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity target) {
         super.doPostHurtEffects(target);
-        int freezeAmount = FrostifulConfigYACL.icicleConfig().getThrownIcicleFreezeAmount();
+        int freezeAmount = FrostifulConfigYACL.temperatureSourceSettings().thrownIcicleFreezeAmount();
 
         target.thermoo$addTemperature(
-                -freezeAmount,
+                freezeAmount,
                 target.level().thermoo$temperatureSources().create(
                         TemperatureSources.ACTIVE,
                         this
