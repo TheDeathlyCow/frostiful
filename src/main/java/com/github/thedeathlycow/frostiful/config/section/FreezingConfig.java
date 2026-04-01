@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.config.section;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnMethod;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
@@ -112,12 +111,6 @@ public class FreezingConfig {
     @IntSlider(min = 0, max = 20, step = 1)
     int stopShiverWarmingBelowFoodLevel = 10;
 
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Warm food warmth time")
-    @SerialEntry(comment = "Duration, in ticks, of the warmth effect to apply to entities after consuming food items that belong to the tag #frostiful:warm_foods")
-    @IntSlider(min = 0, max = 20, step = 1)
-    int warmFoodWarmthTime = 60 * 20;
-
     public boolean doPassiveFreezing() {
         return doPassiveFreezing;
     }
@@ -172,9 +165,5 @@ public class FreezingConfig {
 
     public int getStopShiverWarmingBelowFoodLevel() {
         return stopShiverWarmingBelowFoodLevel;
-    }
-
-    public int getWarmFoodWarmthTime() {
-        return warmFoodWarmthTime;
     }
 }

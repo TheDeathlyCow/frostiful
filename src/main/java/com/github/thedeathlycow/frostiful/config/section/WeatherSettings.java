@@ -46,7 +46,7 @@ public class WeatherSettings {
     @Translate.Name("Wind destroys torches")
     @SerialEntry(comment = "When enabled, freezing winds will destroy exposed fire blocks (includes torches!).")
     @TickBox
-    boolean freezingWindDestroysExposuedFire = true;
+    boolean freezingWindDestroysExposedFire = true;
 
     public WindSpawnMethod freezingWindSpawningMethod() {
         return freezingWindSpawningMethod;
@@ -56,8 +56,8 @@ public class WeatherSettings {
         return enableWindInTheAir;
     }
 
-    public boolean freezingWindDestroysExposuedFire() {
-        return freezingWindDestroysExposuedFire;
+    public boolean freezingWindDestroysExposedFire() {
+        return freezingWindDestroysExposedFire;
     }
 
     @AutoGen(category = CATEGORY, group = ICICLE_GROUP)

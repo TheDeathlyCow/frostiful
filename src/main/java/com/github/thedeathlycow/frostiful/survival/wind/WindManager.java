@@ -3,7 +3,6 @@ package com.github.thedeathlycow.frostiful.survival.wind;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
 import com.github.thedeathlycow.frostiful.config.section.WeatherSettings;
 import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
 import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
@@ -82,7 +81,7 @@ public final class WindManager {
     }
 
     public void extinguishBlock(BlockState state, Level level, BlockPos pos, Runnable playSoundCallback) {
-        if (!FrostifulConfigYACL.weatherSettings().freezingWindDestroysExposuedFire()) {
+        if (!FrostifulConfigYACL.weatherSettings().freezingWindDestroysExposedFire()) {
             return;
         }
 
