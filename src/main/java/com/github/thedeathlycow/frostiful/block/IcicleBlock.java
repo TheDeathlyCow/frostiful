@@ -136,7 +136,7 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
             boolean tookDamage = entity.causeFallDamage(fallDistance + 2.0, 2.0f, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 livingEntity.thermoo$addTemperature(
-                        FrostifulConfigYACL.temperatureSourceSettings().icicleCollisionFreezeAmount(),
+                        FrostifulConfigYACL.temperatureSourceSettings().icicleCollisionTemperatureChange(),
                         level.thermoo$temperatureSources().create(TemperatureSources.ACTIVE, pos.getCenter())
                 );
             }

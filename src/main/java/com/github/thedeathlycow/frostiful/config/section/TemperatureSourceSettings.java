@@ -26,7 +26,8 @@ public class TemperatureSourceSettings {
 
     public static final String GENERAL_CATEGORY = "general";
     public static final String TEMPERATURE_SOURCES_CATEGORY = "temperature_sources";
-
+    public static final String COOLING_GROUP = "cooling";
+    public static final String HEATING_GROUP = "heating";
 
     @AutoGen(category = GENERAL_CATEGORY)
     @Translate.Name("Heating multiplier")
@@ -58,65 +59,95 @@ public class TemperatureSourceSettings {
         return environmentTemperatureMultiplier;
     }
 
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
-    @Translate.Name("Frostologer Heat Drain multiplier multiplier")
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Frostologer Heat Drain temperature change multiplier")
     @SerialEntry(comment = "Multiplies the number of temperature points the Frostologer removes from nearby entities each tick when casting their Blizzard spell.")
     @FloatField(format = "%.2f")
-    float frostologerHeatDrainMultiplier = 1.0f;
+    float frostologerHeatDrainTemperatureChangeMultiplier = 1.0f;
 
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
-    @Translate.Name("Frostologer cooling from Frost Wand hit multiplier")
-    @SerialEntry(comment = "Multiplies the number of temperature points the Frostologer removes from a themselves after hitting a target with a Frost Spell.")
-    @FloatField(format = "%.2f")
-    float frostologerCoolingFromFrostWandHitMultiplier = 1.0f;
-
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
-    @Translate.Name("Packed Snowball freeze amount multiplier")
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Packed Snowball temperature change multiplier")
     @SerialEntry(comment = "Multiplies the number of temperature points a Packed Snowball removes from a target when hit.")
     @FloatField(format = "%.2f")
-    float packedSnowballFreezeAmountMultiplier = 1.0f;
+    float packedSnowballTemperatureChangeMultiplier = 1.0f;
 
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
-    @Translate.Name("Glacial Arrow freezing multiplier")
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Glacial Arrow temperature change multiplier")
     @SerialEntry(comment = "Multiplies the temperature point reduction applied to a target struck by a Glacial Arrow.")
     @FloatField(format = "%.2f")
     float glacialArrowTemperatureChangeMultiplier = 1.0f;
 
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
-    @Translate.Name("Thrown Icicle freezing multiplier")
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Thrown Icicle temperature change multiplier")
     @SerialEntry(comment = "Multiplies the temperature point reduction applied to a target struck by a Thrown Icicle.")
     @FloatField(format = "%.2f")
-    float thrownIcicleFreezeAmountMultiplier = 1.0f;
+    float thrownIcicleTemperatureChangeMultiplier = 1.0f;
 
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY)
-    @Translate.Name("Icicle Collision freezing multiplier")
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Icicle collision temperature change multiplier")
     @SerialEntry(comment = "Multiplies the temperature point reduction applied to a target that falls on an icicle or is struck by a falling icicle.")
     @FloatField(format = "%.2f")
-    float icicleCollisionFreezeAmountMultiplier = 1.0f;
+    float icicleCollisionTemperatureChangeMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Freezing wind temperature change multiplier")
+    @SerialEntry(comment = "Multiplies the number of temperature points removed from entities that collide with a Freezing Wind.")
+    @FloatField(format = "%.2f")
+    float freezingWindTemperatureChangeMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
+    @Translate.Name("Sun Lichen temperature change multiplier")
+    @SerialEntry(comment = "Multiplies the number of temperature points added to entities that touch Sun Lichen.")
+    @FloatField(format = "%.2f")
+    float sunLichenTemperatureChangeMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
+    @Translate.Name("Conduit temperature change multiplier")
+    @SerialEntry(comment = "Multiplies the number of temperature points to add each tick to underwater entities with the Conduit Power effect.")
+    @FloatField(format = "%.2f")
+    float conduitPowerTemperatureChangeMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
+    @Translate.Name("Hot floor temperature change multiplier")
+    @SerialEntry(comment = "Multiplies the number of temperature points to add each tick to entities that are standing on hot floor blocks like Magma.")
+    @FloatField(format = "%.2f")
+    float hotFloorTemperatureChangeMultiplier = 1.0f;
 
 
-    public int frostologerHeatDrain() {
+    public int frostologerHeatDrainTemperatureChange() {
         // multiply by 2 as goals run at only half the rate of normal
-        return 2 * Mth.floor(30 * this.frostologerHeatDrainMultiplier * this.coolingMultiplier());
+        return 2 * Mth.floor(30 * this.frostologerHeatDrainTemperatureChangeMultiplier * this.coolingMultiplier());
     }
 
-    public int frostologerCoolingFromFrostWandHit() {
-        return Mth.floor(-6300f / 6f * this.frostologerCoolingFromFrostWandHitMultiplier * this.coolingMultiplier());
-    }
-
-    public int packedSnowballFreezeAmount() {
-        return Mth.floor(-500 * this.packedSnowballFreezeAmountMultiplier * this.coolingMultiplier());
+    public int packedSnowballTemperatureChange() {
+        return Mth.floor(-500 * this.packedSnowballTemperatureChangeMultiplier * this.coolingMultiplier());
     }
 
     public int glacialArrowTemperatureChange() {
         return Mth.floor(-1000 * this.glacialArrowTemperatureChangeMultiplier * this.coolingMultiplier());
     }
 
-    public int thrownIcicleFreezeAmount() {
-        return Mth.floor(-1500 * this.thrownIcicleFreezeAmountMultiplier * this.coolingMultiplier());
+    public int thrownIcicleTemperatureChange() {
+        return Mth.floor(-1500 * this.thrownIcicleTemperatureChangeMultiplier * this.coolingMultiplier());
     }
 
-    public int icicleCollisionFreezeAmount() {
-        return Mth.floor(-3000 * this.icicleCollisionFreezeAmountMultiplier * this.coolingMultiplier());
+    public int icicleCollisionTemperatureChange() {
+        return Mth.floor(-3000 * this.icicleCollisionTemperatureChangeMultiplier * this.coolingMultiplier());
+    }
+
+    public int sunLichenTemperatureChangeForLevel(int level) {
+        return level * Mth.floor(500 * this.sunLichenTemperatureChangeMultiplier * this.heatingMultiplier());
+    }
+
+    public int freezingWindTemperatureChange() {
+        return Mth.floor(-160 * this.freezingWindTemperatureChangeMultiplier * this.coolingMultiplier());
+    }
+
+    public int conduitPowerTemperatureChange() {
+        return Mth.floor(12 * this.conduitPowerTemperatureChangeMultiplier * this.heatingMultiplier());
+    }
+
+    public int hotFloorTemperatureChange() {
+        return Mth.floor(12 * this.hotFloorTemperatureChangeMultiplier * this.heatingMultiplier());
     }
 }

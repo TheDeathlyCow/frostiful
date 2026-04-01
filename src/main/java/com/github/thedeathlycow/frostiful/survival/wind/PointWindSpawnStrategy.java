@@ -49,12 +49,13 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
             );
         }
 
+        final int temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().freezingWindTemperatureChange();
         world.getEntitiesOfClass(LivingEntity.class, box, WindEntity.CAN_BE_BLOWN)
                 .forEach(entity -> {
                     WindEntity.pushEntity(entity, world, center, POWER_SCALE);
                     FreezingWindEntity.freezeEntity(
                             entity,
-                            FrostifulConfigYACL.freezingConfig().getFreezingWindFrost() * POWER_SCALE,
+                            temperatureChange * POWER_SCALE,
                             null
                     );
                 });

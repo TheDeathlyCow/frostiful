@@ -51,30 +51,6 @@ public class FreezingConfig {
     float soakPercentFromWaterPotion = 0.5f;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Sun Lichen heat per level")
-    @SerialEntry(comment = "How many temperature points to add to entities that touch Sun Lichen, per level of heat. Must be at least 0.")
-    @IntField(min = 0)
-    int sunLichenHeatPerLevel = 500;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Freezing wind temperature reduction")
-    @SerialEntry(comment = "How many temperature points to remove from entities that collide with a Freezing Wind. Must be at least 0.")
-    @IntField(min = 0)
-    int freezingWindFrost = 160;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Conduit warmth per tick")
-    @SerialEntry(comment = "How many temperature points to add each tick to underwater entities with the Conduit Power effect. Must be at least 0.")
-    @IntField(min = 0)
-    int conduitPowerWarmthPerTick = 12;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Heat from hot floor")
-    @SerialEntry(comment = "How many temperature points to add each tick to entities that are standing on hot floor blocks like Magma. Must be at least 0.")
-    @IntField(min = 0)
-    int heatFromHotFloor = 12;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Shiver below")
     @SerialEntry(comment = "The temperature scale below which entities will begin to shiver. Must be between -1 and 0 (inclusive).")
     @FloatSlider(min = -1f, max = 0f, step = 0.05f, format = "%.2f")
@@ -107,22 +83,6 @@ public class FreezingConfig {
 
     public float getSoakPercentFromWaterPotion() {
         return Mth.clamp(soakPercentFromWaterPotion, 0.0f, 1.0f);
-    }
-
-    public int getSunLichenHeatPerLevel() {
-        return sunLichenHeatPerLevel;
-    }
-
-    public int getFreezingWindFrost() {
-        return freezingWindFrost;
-    }
-
-    public int getConduitWarmthPerTick() {
-        return conduitPowerWarmthPerTick;
-    }
-
-    public int getHeatFromHotFloor() {
-        return heatFromHotFloor;
     }
 
     public float getShiverBelow() {

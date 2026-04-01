@@ -560,7 +560,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
 
             Level level = frostologer.level();
 
-            int heatDrain = FrostifulConfigYACL.temperatureSourceSettings().frostologerHeatDrain();
+            int heatDrain = FrostifulConfigYACL.temperatureSourceSettings().frostologerHeatDrainTemperatureChange();
             frostologer.thermoo$addTemperature(heatDrain);
 
             for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, box, entity -> entity != frostologer)) {

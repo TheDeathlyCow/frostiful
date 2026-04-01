@@ -3,6 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
 import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
@@ -30,10 +31,11 @@ public final class ActiveTemperatureEffects {
         int total = 0;
         FreezingConfig freezingConfig = FrostifulConfigYACL.freezingConfig();
         EnvironmentConfig environmentConfig = FrostifulConfigYACL.environmentConfig();
+        TemperatureSourceSettings temperatureSourceSettings = FrostifulConfigYACL.temperatureSourceSettings();
 
         total += getOnFireTemperatureChange(entity, environmentConfig);
         total += getPowderSnowTemperatureChange(entity, environmentConfig);
-        total += getConduitPowerTemperatureChange(entity, freezingConfig);
+        total += getConduitPowerTemperatureChange(entity, temperatureSourceSettings);
         total += getShiveringTemperatureChange(entity, freezingConfig);
 
         return total;
@@ -59,12 +61,12 @@ public final class ActiveTemperatureEffects {
         return 0;
     }
 
-    private static int getConduitPowerTemperatureChange(LivingEntity entity, FreezingConfig config) {
+    private static int getConduitPowerTemperatureChange(LivingEntity entity, TemperatureSourceSettings config) {
         boolean applyConduitPowerWarmth = entity.isUnderWater()
                 && entity.hasEffect(MobEffects.CONDUIT_POWER);
 
         if (applyConduitPowerWarmth) {
-            return config.getConduitWarmthPerTick();
+            return config.conduitPowerTemperatureChange();
         }
         return 0;
     }
