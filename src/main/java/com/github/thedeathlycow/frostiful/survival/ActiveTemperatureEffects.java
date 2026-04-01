@@ -33,17 +33,17 @@ public final class ActiveTemperatureEffects {
         EnvironmentConfig environmentConfig = FrostifulConfigYACL.environmentConfig();
         TemperatureSourceSettings temperatureSourceSettings = FrostifulConfigYACL.temperatureSourceSettings();
 
-        total += getOnFireTemperatureChange(entity, environmentConfig);
-        total += getPowderSnowTemperatureChange(entity, environmentConfig);
+        total += getOnFireTemperatureChange(entity, temperatureSourceSettings);
+        total += getPowderSnowTemperatureChange(entity, temperatureSourceSettings);
         total += getConduitPowerTemperatureChange(entity, temperatureSourceSettings);
         total += getShiveringTemperatureChange(entity, freezingConfig);
 
         return total;
     }
 
-    private static int getOnFireTemperatureChange(LivingEntity entity, EnvironmentConfig config) {
+    private static int getOnFireTemperatureChange(LivingEntity entity, TemperatureSourceSettings config) {
         if (entity.isOnFire()) {
-            int onFireRate = config.getOnFireWarmRate();
+            int onFireRate = config.onFireTemperatureChange();
 
             if (entity.getType() == FEntityTypes.FROSTOLOGER) {
                 onFireRate /= 2;
@@ -54,9 +54,9 @@ public final class ActiveTemperatureEffects {
         return 0;
     }
 
-    private static int getPowderSnowTemperatureChange(LivingEntity entity, EnvironmentConfig config) {
+    private static int getPowderSnowTemperatureChange(LivingEntity entity, TemperatureSourceSettings config) {
         if (entity.wasInPowderSnow) {
-            return -config.getPowderSnowFreezeRate();
+            return config.powderSnowTemperatureChange();
         }
         return 0;
     }

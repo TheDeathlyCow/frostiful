@@ -83,6 +83,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
     public static final float MAX_POWER_SCALE_START = -0.75f;
     private static final int NUM_POWER_PARTICLES = 2;
     private static final float START_PLACING_SNOW_TEMP = -0.75f;
+    private static final int BLIZZARD_SELF_TEMPERATURE_CHANGE = 30;
 
 
     public float prevStrideDistance;
@@ -555,17 +556,16 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         @Override
         public void tick() {
             FrostologerEntity frostologer = FrostologerEntity.this;
-
             AABB box = frostologer.getBoundingBox().inflate(this.range);
-
             Level level = frostologer.level();
 
-            int heatDrain = FrostifulConfigYACL.temperatureSourceSettings().frostologerHeatDrainTemperatureChange();
-            frostologer.thermoo$addTemperature(heatDrain);
+            frostologer.thermoo$addTemperature(BLIZZARD_SELF_TEMPERATURE_CHANGE);
+
+            int playerTemperatureChange = FrostifulConfigYACL.temperatureSourceSettings().frostologerBlizzardPlayerTemperatureChange();
 
             for (LivingEntity victim : level.getEntitiesOfClass(LivingEntity.class, box, entity -> entity != frostologer)) {
                 victim.thermoo$addTemperature(
-                        -heatDrain,
+                        -playerTemperatureChange,
                         level.thermoo$temperatureSources().create(TemperatureSources.ACTIVE, frostologer)
                 );
 

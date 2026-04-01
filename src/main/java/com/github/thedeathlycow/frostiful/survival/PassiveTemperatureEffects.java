@@ -89,7 +89,7 @@ public final class PassiveTemperatureEffects {
 
         int warmth = 0;
         if (lightLevel >= minLightLevel) {
-            warmth = config.getWarmthPerLightLevel() * (lightLevel - minLightLevel);
+            warmth = FrostifulConfigYACL.temperatureSourceSettings().lightTemperatureChangeForLevel(lightLevel - minLightLevel);
         }
 
         return warmth;

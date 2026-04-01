@@ -68,24 +68,6 @@ public class EnvironmentConfig {
     int onFireDryDate = 50;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("On fire warm rate")
-    @SerialEntry(comment = "Rate at which to increase temperature points per tick to entities that are cold and on fire. Must be at least 0.")
-    @IntField(min = 0)
-    int onFireWarmRate = 50;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("On fire warm rate")
-    @SerialEntry(comment = "Rate at which to decrease temperature points per tick to entities that are cold and standing in Powder Snow. Must be at least 0.")
-    @IntField(min = 0)
-    int powderSnowFreezeRate = 30;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Warmth per light level")
-    @SerialEntry(comment = "Rate at which to increase temperature points per tick to entities that are cold and standing in a well-lit area, per level of light. Must be at least 0.")
-    @IntField(min = 0)
-    int warmthPerLightLevel = 2;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Minimum light level for warmth")
     @SerialEntry(comment = "The minimum block light level that is considered to be well-lit and warm. Must be at least 0.")
     @IntField(min = 0)
@@ -129,18 +111,6 @@ public class EnvironmentConfig {
 
     public int getOnFireDryDate() {
         return onFireDryDate;
-    }
-
-    public int getOnFireWarmRate() {
-        return onFireWarmRate;
-    }
-
-    public int getPowderSnowFreezeRate() {
-        return powderSnowFreezeRate;
-    }
-
-    public int getWarmthPerLightLevel() {
-        return warmthPerLightLevel;
     }
 
     public int getMinLightForWarmth() {
