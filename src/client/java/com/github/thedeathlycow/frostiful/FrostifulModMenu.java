@@ -19,7 +19,6 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String COMMON_TITLE = "frostiful.config.common.title";
 
     public static final String DISPLAY_CATEGORY = Translate.mainCategoryKey(DisplaySettings.HANDLER);
-    public static final String COMBAT_CATEGORY = Translate.mainCategoryKey(CombatConfig.HANDLER);
     public static final String ENVIRONMENT_CATEGORY = Translate.mainCategoryKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_CATEGORY = Translate.mainCategoryKey(FreezingConfig.HANDLER);
     public static final String ICICLE_CATEGORY = Translate.mainCategoryKey(IcicleConfig.HANDLER);
@@ -30,7 +29,6 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String WEATHER_CATEGORY = Translate.mainCategoryKey(WeatherSettings.HANDLER);
 
     public static final String DISPLAY_DESC = Translate.descKey(DisplaySettings.HANDLER);
-    public static final String COMBAT_DESC = Translate.descKey(CombatConfig.HANDLER);
     public static final String ENVIRONMENT_DESC = Translate.descKey(EnvironmentConfig.HANDLER);
     public static final String FREEZING_DESC = Translate.descKey(FreezingConfig.HANDLER);
     public static final String ICICLE_DESC = Translate.descKey(IcicleConfig.HANDLER);
@@ -57,7 +55,6 @@ public class FrostifulModMenu implements ModMenuApi {
                                         OptionGroup.createBuilder()
                                                 .name(Component.translatable(COMMON_TITLE))
                                                 .option(createSubsectionButton(EnvironmentConfig.HANDLER, ENVIRONMENT_CATEGORY, ENVIRONMENT_DESC))
-                                                .option(createSubsectionButton(CombatConfig.HANDLER, COMBAT_CATEGORY, COMBAT_DESC))
                                                 .option(createSubsectionButton(FreezingConfig.HANDLER, FREEZING_CATEGORY, FREEZING_DESC))
                                                 .option(createSubsectionButton(IcicleConfig.HANDLER, ICICLE_CATEGORY, ICICLE_DESC))
                                                 .option(createSubsectionButton(TemperatureSourceSettings.HANDLER, TEMPERATURE_SOURCE_CATEGORY, TEMPERATURE_SOURCE_DESC))

@@ -5,10 +5,6 @@ import com.github.thedeathlycow.frostiful.config.section.*;
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";
 
-    public static CombatConfig combatConfig() {
-        return CombatConfig.HANDLER.instance();
-    }
-
     public static EnvironmentConfig environmentConfig() {
         return EnvironmentConfig.HANDLER.instance();
     }
@@ -42,9 +38,6 @@ public final class FrostifulConfigYACL {
     }
 
     public static void initialize() {
-        CombatConfig.HANDLER.load();
-        CombatConfig.HANDLER.save();
-
         EnvironmentConfig.HANDLER.load();
         EnvironmentConfig.HANDLER.save();
 
