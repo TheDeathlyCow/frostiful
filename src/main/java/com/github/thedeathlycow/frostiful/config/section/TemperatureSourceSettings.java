@@ -93,7 +93,7 @@ public class TemperatureSourceSettings {
 
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
     @Translate.Name("Sun Lichen temperature change multiplier")
-    @SerialEntry(comment = "Multiplies the heating applied to entities that touch Sun Lichen.")
+    @SerialEntry(comment = "Multiplies the heating applied to a cold entity when they touch a cool/warm/hot Sun Lichen. The base value scales with the lichen's heat level, from 500 to 1500 points.")
     @FloatField(format = "%.2f")
     float sunLichenTemperatureChangeMultiplier = 1.0f;
 
