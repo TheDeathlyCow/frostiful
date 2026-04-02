@@ -61,10 +61,10 @@ public class SoakingSettings {
     float touchingWaterSoakingChangeMultiplier = 1.0f;
 
     @AutoGen(category = CATEGORY, group = SOAKING_GROUP)
-    @Translate.Name("Water potion soaking change multiplier")
-    @SerialEntry(comment = "Multiplies the soaking change applied to entities struck by a water potion. The base soaking change will be 50% of the affected player's maximum wet ticks. Must be at least 0.")
+    @Translate.Name("Splash potion soaking change multiplier")
+    @SerialEntry(comment = "Multiplies the soaking change applied to entities struck by a splash potion. The base soaking change will be 50% of the affected player's maximum wet ticks. Must be at least 0. Has no effect if Scorchful is loaded.")
     @FloatField(min = 0, format = "%.2f")
-    float waterPotionSoakingChangeMultiplier = 1.0f;
+    float splashPotionSoakingChangeMultiplier = 1.0f;
 
     public int rainWetnessIncrease() {
         return Mth.floor(rainSoakingChangeMultiplier);
@@ -74,13 +74,13 @@ public class SoakingSettings {
         return Mth.floor(5 * this.touchingWaterSoakingChangeMultiplier);
     }
 
-    public int soakingFromWaterPotion(int maxSoakingTicks) {
-        return Mth.floor(0.5f * maxSoakingTicks * this.waterPotionSoakingChangeMultiplier);
+    public int soakingFromSplashPotion(int maxSoakingTicks) {
+        return Mth.floor(0.5f * maxSoakingTicks * this.splashPotionSoakingChangeMultiplier);
     }
 
     @AutoGen(category = CATEGORY, group = DRYING_GROUP)
     @Translate.Name("Enable light drying")
-    @SerialEntry(comment = "When enabled, entities will be able to be dried from being the prescence of block light. The strength of the drying increases linearly with the block light level.")
+    @SerialEntry(comment = "When enabled, entities will be able to be dried from being the presence of block light. The strength of the drying increases linearly with the block light level. Has no effect if Scorchful is loaded.")
     @TickBox
     private boolean enableLightDrying = true;
 

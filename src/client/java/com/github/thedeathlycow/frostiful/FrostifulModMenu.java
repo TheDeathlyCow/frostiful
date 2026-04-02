@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful;
 
+import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.config.section.*;
@@ -18,6 +19,7 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String CLIENT_TITLE = "frostiful.config.client.title";
     public static final String COMMON_TITLE = "frostiful.config.common.title";
 
+    public static final String ACCESSIBILITY_CATEGORY = Translate.mainCategoryKey(AccessibilitySettings.HANDLER);
     public static final String DISPLAY_CATEGORY = Translate.mainCategoryKey(DisplaySettings.HANDLER);
     public static final String TEMPERATURE_SOURCE_CATEGORY = Translate.mainCategoryKey(TemperatureSourceSettings.HANDLER);
     public static final String ENVIRONMENT_CATEGORY = Translate.mainCategoryKey(EnvironmentSettings.HANDLER);
@@ -27,6 +29,7 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String ITEM_CATEGORY = Translate.mainCategoryKey(ItemSettings.HANDLER);
     public static final String WEATHER_CATEGORY = Translate.mainCategoryKey(WeatherSettings.HANDLER);
 
+    public static final String ACCESSIBILITY_DESC = Translate.descKey(AccessibilitySettings.HANDLER);
     public static final String DISPLAY_DESC = Translate.descKey(DisplaySettings.HANDLER);
     public static final String TEMPERATURE_SOURCE_DESC = Translate.descKey(TemperatureSourceSettings.HANDLER);
     public static final String ENVIRONMENT_DESC = Translate.descKey(EnvironmentSettings.HANDLER);
@@ -46,6 +49,7 @@ public class FrostifulModMenu implements ModMenuApi {
                                 .group(
                                         OptionGroup.createBuilder()
                                                 .name(Component.translatable(CLIENT_TITLE))
+                                                .option(createSubsectionButton(AccessibilitySettings.HANDLER, ACCESSIBILITY_CATEGORY, ACCESSIBILITY_DESC))
                                                 .option(createSubsectionButton(DisplaySettings.HANDLER, DISPLAY_CATEGORY, DISPLAY_DESC))
                                                 .build()
                                 )

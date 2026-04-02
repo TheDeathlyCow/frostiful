@@ -47,18 +47,6 @@ public class DisplaySettings {
     boolean enableDripParticles = true;
 
     @AutoGen(category = CATEGORY)
-    @Translate.Name("Shake hand when shivering")
-    @SerialEntry(comment = "Whether to shake the player's hand in first person when cold.")
-    @TickBox
-    boolean shakeHandWhenShivering = true;
-
-    @AutoGen(category = CATEGORY)
-    @Translate.Name("Hand shake intensity")
-    @SerialEntry(comment = "How intense the hand shaking should be when shivering.")
-    @FloatField
-    float handShakeIntensity = 1.0f;
-
-    @AutoGen(category = CATEGORY)
     @Translate.Name("Disable hurt Polar Bear skin")
     @SerialEntry(comment = "When Polar Bears have been recently brushed, they show a hurt skin. Disable this feature if the texture is not compatible with your resource pack.")
     @TickBox
@@ -74,14 +62,6 @@ public class DisplaySettings {
 
     public boolean enableDripParticles() {
         return enableDripParticles;
-    }
-
-    public boolean shakeHandWhenShivering() {
-        return shakeHandWhenShivering;
-    }
-
-    public float handShakeIntensity() {
-        return handShakeIntensity;
     }
 
     public boolean disableHurtPolarBearSkin() {

@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.mixin.gui;
 
 import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
+import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import com.llamalad7.mixinextras.sugar.Local;
@@ -54,7 +55,7 @@ public abstract class ShiveringRenderer {
             @Local(name = "poseStack") PoseStack poseStack
     ) {
         if (this.minecraft.getCameraEntity() instanceof LivingEntity livingEntity && SurvivalUtils.isShiveringRender(livingEntity)) {
-            DisplaySettings config = FrostifulClientConfig.displaySettings();
+            AccessibilitySettings config = FrostifulClientConfig.accessibilitySettings();
 
             if (config.shakeHandWhenShivering()) {
                 final float intensity = config.handShakeIntensity();

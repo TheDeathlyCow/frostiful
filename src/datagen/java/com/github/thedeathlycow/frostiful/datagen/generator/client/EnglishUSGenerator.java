@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
 import com.github.thedeathlycow.frostiful.FrostifulModMenu;
+import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.DifficultySetting;
 import com.github.thedeathlycow.frostiful.config.Translate;
@@ -321,6 +322,9 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.CLIENT_TITLE, "Client Settings");
         builder.add(FrostifulModMenu.COMMON_TITLE, "Common Settings");
 
+        builder.add(FrostifulModMenu.ACCESSIBILITY_CATEGORY, "Accessibility Settings");
+        builder.add(FrostifulModMenu.ACCESSIBILITY_DESC, "Settings for accessibility.");
+
         builder.add(FrostifulModMenu.DISPLAY_CATEGORY, "Display Settings");
         builder.add(FrostifulModMenu.DISPLAY_DESC, "Settings that affect display.");
 
@@ -366,6 +370,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.WIND_GROUP), "Freezing Wind");
         generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");
 
+        generateConfigOptionTranslations(AccessibilitySettings.HANDLER, builder);
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
         generateConfigOptionTranslations(TemperatureSourceSettings.HANDLER, builder);
         generateConfigOptionTranslations(EnvironmentSettings.HANDLER, builder);
