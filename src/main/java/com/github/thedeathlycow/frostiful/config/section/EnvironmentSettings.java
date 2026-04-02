@@ -28,8 +28,6 @@ public class EnvironmentSettings {
     public static final String TEMPERATURE_GROUP = "temperature";
     public static final String SHIVERING_GROUP = "shivering";
 
-    public static final String SOAKING_CATEGORY = "soaking";
-
     @AutoGen(category = CATEGORY)
     @Translate.Name("Enable environment freezing (global)")
     @SerialEntry(comment = "When enabled, players will receive environmental temperature reductions from exposure in cold biomes. This can also be toggled on a per-world basis with the game rule frostiful:enable_environment_freezing.")
@@ -60,6 +58,12 @@ public class EnvironmentSettings {
     @IntField(min = 0)
     int minLightForWarmth = 5;
 
+    @AutoGen(category = CATEGORY)
+    @Translate.Name("Environment freezing soaked multiplier")
+    @SerialEntry(comment = "Multiples the temperature reduction per tick of entities that are wet. Must be at least 0.")
+    @FloatField(min = 0)
+    float environmentFreezingSoakedMultiplier = 2.0f;
+
     public boolean enableEnvironmentFreezing() {
         return enableEnvironmentFreezing;
     }
@@ -78,6 +82,10 @@ public class EnvironmentSettings {
 
     public int minLightForWarmth() {
         return minLightForWarmth;
+    }
+
+    public float environmentFreezingSoakedMultiplier() {
+        return environmentFreezingSoakedMultiplier;
     }
 
     @AutoGen(category = CATEGORY, group = TEMPERATURE_GROUP)
@@ -109,95 +117,25 @@ public class EnvironmentSettings {
 
     @AutoGen(category = CATEGORY, group = SHIVERING_GROUP)
     @Translate.Name("Shivering warmth multiplier")
-    @SerialEntry(comment = "Multiplies the heating applied each tick to entities that are shivering. Must be at least 0.")
+    @SerialEntry(comment = "Multiplies the heating applied each tick to entities that are shivering. Note that the hunger cost of shivering also scales with this multiplier. Must be at least 0.")
     @FloatField(format = "%.2f")
-    float shiveringTemperatureChangeMultiplier = 1.0f;
+    float shiveringWarmthMultiplier = 1.0f;
 
     @AutoGen(category = CATEGORY, group = SHIVERING_GROUP)
-    @Translate.Name("Stop shivering below food level")
-    @SerialEntry(comment = "When a player is below this food level, the player will stop receiving warmth from shivering to prevent starvation. Must be between 0 and 20 (inclusive).")
+    @Translate.Name("Shivering warming minimum food level")
+    @SerialEntry(comment = "When a player is below this food level, the player will stop consuming hunger and stop being warmed by shivering to prevent starvation. Must be between 0 and 20 (inclusive).")
     @IntSlider(min = 0, max = 20, step = 1)
-    int stopShiverWarmingBelowFoodLevel = 10;
+    int shiverWarmingMinFoodLevel = 10;
 
     public float shiverBelowTemperatureScale() {
         return shiverBelowTemperatureScale;
     }
 
     public int shiveringTemperatureChange(TemperatureSourceSettings temperatureSourceSettings) {
-        return Mth.floor(shiveringTemperatureChangeMultiplier * temperatureSourceSettings.heatingMultiplier());
+        return Mth.floor(shiveringWarmthMultiplier * temperatureSourceSettings.heatingMultiplier());
     }
 
     public int stopShiverWarmingBelowFoodLevel() {
-        return stopShiverWarmingBelowFoodLevel;
-    }
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("Apply environment penalty when wet")
-    @SerialEntry(comment = "When enabled, increases the rate of environmental freezing on wet players.")
-    @TickBox
-    boolean applyEnvironmentPenaltyWhenWet = true;
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("Rain wetness increase")
-    @SerialEntry(comment = "Rate at which to increase soaking points per tick to entities standing in rain. Must be at least 0. Has no effect if Scorchful is loaded.")
-    @IntField(min = 0)
-    int rainWetnessIncrease = 1;
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("Standing in water wetness increase")
-    @SerialEntry(comment = "Rate at which to increase soaking points per tick to entities standing in water. Must be at least 0. Has no effect if Scorchful is loaded.")
-    @IntField(min = 0)
-    int touchingWaterWetnessIncrease = 5;
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("On fire dry rate")
-    @SerialEntry(comment = "Rate at which to decrease soaking points per tick to entities on fire. Must be at least 0. Has no effect if Scorchful is loaded.")
-    @IntField(min = 0)
-    int onFireDryDate = 50;
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("Maximum snow accumulation ticks")
-    @SerialEntry(comment = "The maximum number of ticks to record players standing in snow for the purposes of soaking them after it melts. Must be at least 0.")
-    @IntField(min = 0)
-    int maxSnowAccumulationTicks = 100;
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("Environment freezing soaked multiplier")
-    @SerialEntry(comment = "Multiples the temperature reduction per tick of entities that are wet. Must be at least 0.")
-    @FloatField(min = 0)
-    float environmentFreezingSoakedMultiplier = 2.0f;
-
-    @AutoGen(category = SOAKING_CATEGORY)
-    @Translate.Name("Max soaking from water potion (percent)")
-    @SerialEntry(comment = "Soaking percent from Splash Water Potion. Must be between 0 and 1 (inclusive)")
-    @FloatSlider(min = 0f, max = 1f, step = 0.05f, format = "%.2f")
-    float soakPercentFromWaterPotion = 0.5f;
-
-    public boolean applyEnvironmentPenaltyWhenWet() {
-        return applyEnvironmentPenaltyWhenWet;
-    }
-
-    public int rainWetnessIncrease() {
-        return rainWetnessIncrease;
-    }
-
-    public int touchingWaterWetnessIncrease() {
-        return touchingWaterWetnessIncrease;
-    }
-
-    public int onFireDryDate() {
-        return onFireDryDate;
-    }
-
-    public int maxSnowAccumulationTicks() {
-        return maxSnowAccumulationTicks;
-    }
-
-    public float environmentFreezingSoakedMultiplier() {
-        return environmentFreezingSoakedMultiplier;
-    }
-
-    public float soakPercentFromWaterPotion() {
-        return soakPercentFromWaterPotion;
+        return shiverWarmingMinFoodLevel;
     }
 }

@@ -35,13 +35,11 @@ public class Frostiful implements ModInitializer {
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
 
-    public static final int CONFIG_VERSION = 3;
-
     @Override
     public void onInitialize() {
         FrostifulConfigYACL.initialize();
 
-        if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+        if (isDevelopmentEnvironment()) {
             CommandRegistrationCallback.EVENT.register(
                     (dispatcher, registryAccess, environment) -> {
                         RootCommand.register(dispatcher);
@@ -99,6 +97,10 @@ public class Frostiful implements ModInitializer {
                 return TriState.DEFAULT;
             }
         });
+    }
+
+    public static boolean isDevelopmentEnvironment() {
+        return FabricLoader.getInstance().isDevelopmentEnvironment();
     }
 
     public static Path getConfigDir() {

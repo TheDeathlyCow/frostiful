@@ -328,7 +328,6 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FrostifulModMenu.ENVIRONMENT_DESC, "Server-side settings for environment simulation.");
         builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.TEMPERATURE_GROUP), "Temperature values");
         builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.SHIVERING_GROUP), "Shivering");
-        builder.add(Translate.categoryKey(EnvironmentSettings.HANDLER, EnvironmentSettings.SOAKING_CATEGORY), "Soaking");
 
         builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_CATEGORY, "Temperature Sources");
         builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_DESC, "Configure temperature sources.");
@@ -336,6 +335,11 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(Translate.categoryKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY), "Temperature Sources");
         builder.add(Translate.groupKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.COOLING_GROUP), "Cooling Sources");
         builder.add(Translate.groupKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.HEATING_GROUP), "Heating Sources");
+
+        builder.add(FrostifulModMenu.SOAKING_CATEGORY, "Soaking Settings");
+        builder.add(FrostifulModMenu.SOAKING_DESC, "Server-side settings for soaking/wetness.");
+        builder.add(Translate.mainGroupKey(SoakingSettings.HANDLER, SoakingSettings.SOAKING_GROUP), "Soaking");
+        builder.add(Translate.mainGroupKey(SoakingSettings.HANDLER, SoakingSettings.DRYING_GROUP), "Drying");
 
         builder.add(FrostifulModMenu.BLOCK_CATEGORY, "Block Settings");
         builder.add(FrostifulModMenu.BLOCK_DESC, "Server-side settings that relate to blocks.");
@@ -363,8 +367,9 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");
 
         generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
-        generateConfigOptionTranslations(EnvironmentSettings.HANDLER, builder);
         generateConfigOptionTranslations(TemperatureSourceSettings.HANDLER, builder);
+        generateConfigOptionTranslations(EnvironmentSettings.HANDLER, builder);
+        generateConfigOptionTranslations(SoakingSettings.HANDLER, builder);
         generateConfigOptionTranslations(BlockSettings.HANDLER, builder);
         generateConfigOptionTranslations(EntitySettings.HANDLER, builder);
         generateConfigOptionTranslations(ItemSettings.HANDLER, builder);

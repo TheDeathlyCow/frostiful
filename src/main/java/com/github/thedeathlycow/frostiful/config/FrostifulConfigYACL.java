@@ -5,12 +5,16 @@ import com.github.thedeathlycow.frostiful.config.section.*;
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";
 
+    public static TemperatureSourceSettings temperatureSourceSettings() {
+        return TemperatureSourceSettings.HANDLER.instance();
+    }
+
     public static EnvironmentSettings environmentSettings() {
         return EnvironmentSettings.HANDLER.instance();
     }
 
-    public static TemperatureSourceSettings temperatureSourceSettings() {
-        return TemperatureSourceSettings.HANDLER.instance();
+    public static SoakingSettings soakingSettings() {
+        return SoakingSettings.HANDLER.instance();
     }
 
     public static BlockSettings blockSettings() {
@@ -35,6 +39,9 @@ public final class FrostifulConfigYACL {
 
         EnvironmentSettings.HANDLER.load();
         EnvironmentSettings.HANDLER.save();
+
+        SoakingSettings.HANDLER.load();
+        SoakingSettings.HANDLER.save();
 
         BlockSettings.HANDLER.load();
         BlockSettings.HANDLER.save();

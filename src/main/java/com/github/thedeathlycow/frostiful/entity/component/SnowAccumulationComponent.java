@@ -2,6 +2,7 @@ package com.github.thedeathlycow.frostiful.entity.component;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.SoakingSettings;
 import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.core.BlockPos;
@@ -12,7 +13,6 @@ import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
-import org.ladysnake.cca.api.v3.component.Component;
 import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
@@ -41,13 +41,15 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
 
     @Override
     public void serverTick() {
+        SoakingSettings settings = FrostifulConfigYACL.soakingSettings();
+
         if (this.isBeingSnowedOn()) {
-            this.addSnowAccumulation();
+            this.addSnowAccumulation(settings);
         } else {
             this.meltSnowAccumulation();
         }
 
-        if (FrostifulConfigYACL.environmentSettings().applyEnvironmentPenaltyWhenWet()) {
+        if (settings.removeEnvironmentFrostResistanceWhenWet()) {
             this.applySoakedEnvironmentFrostResistancePenalty();
         }
     }
@@ -91,14 +93,14 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
         }
     }
 
-    private void addSnowAccumulation() {
-        if (this.snowAccumulation < FrostifulConfigYACL.environmentSettings().maxSnowAccumulationTicks()) {
+    private void addSnowAccumulation(SoakingSettings settings) {
+        if (this.snowAccumulation < settings.maxSnowAccumulationTicks()) {
             this.snowAccumulation++;
         }
     }
 
     private void applySoakedEnvironmentFrostResistancePenalty() {
-        // this probably doesnt belong in this component but oh well i dont feel like making another one
+        // FIXME this probably doesnt belong in this component but oh well i dont feel like making another one
         boolean wet = provider.thermoo$isWet();
         if (wet && !this.appliedSoakedModifiers && !provider.thermoo$ignoresFrigidWater()) {
             var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
@@ -106,7 +108,10 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
             if (envFrostResistance != null) {
                 envFrostResistance.addTransientModifier(SOAKED_MODIFIER);
                 this.appliedSoakedModifiers = true;
-                Frostiful.LOGGER.debug("Applied soaked env frost resistance penalty");
+
+                if (Frostiful.isDevelopmentEnvironment()) {
+                    Frostiful.LOGGER.info("Applied soaked env frost resistance penalty");
+                }
             }
         } else if (!wet && this.appliedSoakedModifiers) {
             var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
@@ -114,7 +119,10 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
             if (envFrostResistance != null) {
                 envFrostResistance.removeModifier(SOAKED_MODIFIER);
                 this.appliedSoakedModifiers = false;
-                Frostiful.LOGGER.debug("Removed soaked env frost resistance penalty");
+
+                if (Frostiful.isDevelopmentEnvironment()) {
+                    Frostiful.LOGGER.debug("Removed soaked env frost resistance penalty");
+                }
             }
         }
     }
