@@ -34,6 +34,8 @@ public final class FrostifulConfigYACL {
     }
 
     public static void initialize() {
+        Updater.run();
+
         TemperatureSourceSettings.HANDLER.load();
         TemperatureSourceSettings.HANDLER.save();
 
