@@ -197,7 +197,7 @@ loom {
 
 publishMods {
     changelog = file("changelogs/${mod_version}.md").text
-    type = ALPHA
+    type = BETA
 
     file = jar.archiveFile
     additionalFiles.from(sourcesJar.archiveFile)
