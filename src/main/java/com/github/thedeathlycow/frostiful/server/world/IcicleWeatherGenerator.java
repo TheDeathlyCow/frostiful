@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.server.world;
 
 import com.github.thedeathlycow.frostiful.block.IcicleBlock;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.section.WeatherSettings;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,13 +19,14 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import java.util.function.Predicate;
 
 public final class IcicleWeatherGenerator {
+    private static final int MAX_BLOCK_LIGHT_LEVEL = 8;
+    private static final int MAX_SKY_LIGHT_LEVEL = 11;
 
     public static void tickIciclesForChunk(ServerLevel world, LevelChunk chunk, int randomTickSpeed) {
-
         final RandomSource random = world.getRandom();
 
-        IcicleConfig icicleConfig = FrostifulConfigYACL.icicleConfig();
-        if (!icicleConfig.iciclesFormInWeather()) {
+        WeatherSettings settings = FrostifulConfigYACL.weatherSettings();
+        if (!settings.iciclesFormInWeather()) {
             return;
         }
 
@@ -56,7 +57,7 @@ public final class IcicleWeatherGenerator {
 
             // testing for sky light helps increase the chance that icicles will only ever form outside
             return at.isAir()
-                    && world.getBrightness(LightLayer.SKY, testPos) >= icicleConfig.getMinSkylightLevelToForm()
+                    && world.getBrightness(LightLayer.SKY, testPos) >= MAX_SKY_LIGHT_LEVEL
                     && downwardIcicle.canSurvive(world, testPos);
         };
 
@@ -65,7 +66,7 @@ public final class IcicleWeatherGenerator {
 
             if (validCondition.test(placePos)) {
                 // only place if can place and light is not blocking it
-                if (world.getBrightness(LightLayer.BLOCK, placePos) < icicleConfig.getMaxLightLevelToForm()) {
+                if (world.getBrightness(LightLayer.BLOCK, placePos) < MAX_BLOCK_LIGHT_LEVEL) {
                     world.setBlock(placePos, downwardIcicle, Block.UPDATE_ALL);
                 }
 

@@ -34,7 +34,7 @@ public class ChillagerEntity extends Pillager {
     @Override
     public boolean hurtServer(ServerLevel world, DamageSource source, float amount) {
         if (source.is(DamageTypeTags.IS_FIRE)) {
-            amount *= FrostifulConfigYACL.combatConfig().getChillagerFireDamageMultiplier();
+            amount *= FrostifulConfigYACL.entitySettings().chillagerFireDamageMultiplier();
         }
 
         return super.hurtServer(world, source, amount);

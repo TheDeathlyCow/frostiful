@@ -31,7 +31,7 @@ public abstract class SnowPackingMixin {
         boolean maySmushSnow = state.getBlock() == Blocks.SNOW
                 && entity.is(FEntityTypeTags.HEAVY_ENTITY_TYPES)
                 && !world.isClientSide()
-                && FrostifulConfigYACL.freezingConfig().doSnowPacking()
+                && FrostifulConfigYACL.entitySettings().enableHeavyMobSnowPacking()
                 && ((ServerLevel) world).getGameRules().get(GameRules.MOB_GRIEFING)
                 && isEntityWalkingOn(pos, entity);
 

@@ -13,7 +13,7 @@ public class SurvivalUtils {
             return false;
         }
 
-        return entity.thermoo$getTemperatureScale() < FrostifulConfigYACL.freezingConfig().getShiverBelow();
+        return entity.thermoo$getTemperatureScale() < FrostifulConfigYACL.environmentSettings().shiverBelowTemperatureScale();
     }
 
     @Environment(EnvType.CLIENT)
@@ -23,7 +23,7 @@ public class SurvivalUtils {
         }
 
         // start showing shivering slightly before actually applying it
-        return entity.thermoo$getTemperatureScale() <= FrostifulConfigYACL.freezingConfig().getShiverBelow();
+        return entity.thermoo$getTemperatureScale() <= FrostifulConfigYACL.environmentSettings().shiverBelowTemperatureScale();
     }
 
     private SurvivalUtils() {

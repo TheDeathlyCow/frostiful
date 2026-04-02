@@ -15,8 +15,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class GlacialArrowEntity extends AbstractArrow {
-
-    private int freezeAmount = FrostifulConfigYACL.icicleConfig().getFrostArrowFreezeAmount();
+    private int temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().glacialArrowTemperatureChange();
 
     private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
 
@@ -59,7 +58,7 @@ public class GlacialArrowEntity extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity target) {
         super.doPostHurtEffects(target);
-        target.thermoo$addTemperature(-freezeAmount, target.level().thermoo$temperatureSources().create(
+        target.thermoo$addTemperature(temperatureChange, target.level().thermoo$temperatureSources().create(
                 TemperatureSources.ACTIVE,
                 this
         ));
@@ -68,13 +67,12 @@ public class GlacialArrowEntity extends AbstractArrow {
     @Override
     public void readAdditionalSaveData(ValueInput readView) {
         super.readAdditionalSaveData(readView);
-        this.freezeAmount = readView.getIntOr(FREEZE_AMOUNT_NBT_KEY, 0);
+        this.temperatureChange = readView.getIntOr(FREEZE_AMOUNT_NBT_KEY, 0);
     }
 
     @Override
     public void addAdditionalSaveData(ValueOutput writeView) {
         super.addAdditionalSaveData(writeView);
-        writeView.putInt(FREEZE_AMOUNT_NBT_KEY, this.freezeAmount);
+        writeView.putInt(FREEZE_AMOUNT_NBT_KEY, this.temperatureChange);
     }
-
 }

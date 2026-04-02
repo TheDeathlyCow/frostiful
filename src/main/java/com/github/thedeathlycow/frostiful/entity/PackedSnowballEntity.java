@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.CombatConfig;
+import com.github.thedeathlycow.frostiful.config.section.ItemSettings;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
@@ -58,17 +58,17 @@ public class PackedSnowballEntity extends ThrowableItemProjectile {
         super.onHitEntity(entityHitResult);
         Entity target = entityHitResult.getEntity();
 
-        CombatConfig config = FrostifulConfigYACL.combatConfig();
+        ItemSettings config = FrostifulConfigYACL.itemSettings();
 
         float damage = target.is(EntityTypeTags.FREEZE_HURTS_EXTRA_TYPES)
-                ? config.getPackedSnowballVulnerableTypesDamage()
-                : config.getPackedSnowballDamage();
+                ? config.packedSnowballVulnerableTypesDamage()
+                : config.packedSnowballDamage();
 
         target.hurt(this.damageSources().thrown(this, this.getOwner()), damage);
 
         if (target instanceof LivingEntity livingTarget) {
             livingTarget.thermoo$addTemperature(
-                    -config.getPackedSnowballFreezeAmount(),
+                    FrostifulConfigYACL.temperatureSourceSettings().packedSnowballTemperatureChange(),
                     target.level().thermoo$temperatureSources().create(
                             TemperatureSources.ACTIVE,
                             this

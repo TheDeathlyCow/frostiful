@@ -40,7 +40,7 @@ public abstract class FallingBlockEntityMixin extends Entity {
         return par1.andThen((entity) -> {
             if (entity instanceof LivingEntity livingEntity) {
                 livingEntity.thermoo$addTemperature(
-                        FrostifulConfigYACL.icicleConfig().getIcicleCollisionFreezeAmount(),
+                        FrostifulConfigYACL.temperatureSourceSettings().icicleCollisionTemperatureChange(),
                         livingEntity.level().thermoo$temperatureSources().create(
                                 TemperatureSources.ACTIVE,
                                 this

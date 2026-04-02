@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.gui;
 
-import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.ClientConfig;
+import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -35,17 +34,12 @@ public final class FrostOverlayRenderer {
             return;
         }
 
-        ClientConfig config = FrostifulConfigYACL.clientConfig();
-
         // disable frost overlay when wearing frostology cloak
-        boolean isOverlayDisabled = config.isDisableFrostOverlayWhenWearingFrostologyCloak()
-                && player.getItemBySlot(EquipmentSlot.CHEST).is(FItemTags.CHILLAGER_LORD_CLOAK);
-
-        if (isOverlayDisabled) {
+        if (player.getItemBySlot(EquipmentSlot.CHEST).is(FItemTags.CHILLAGER_LORD_CLOAK)) {
             return;
         }
 
-        float renderThreshold = config.getFrostOverlayStart();
+        float renderThreshold = FrostifulClientConfig.displaySettings().frostOverlayStart();
 
         if (temperatureScale <= renderThreshold) {
             // scale opacity to temp scale

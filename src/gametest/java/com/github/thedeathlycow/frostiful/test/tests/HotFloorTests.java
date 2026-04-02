@@ -13,7 +13,7 @@ import net.minecraft.world.entity.npc.villager.Villager;
 public class HotFloorTests {
     @GameTest(structure = "frostiful-test:magma_block_test", maxTicks = 40)
     public void villagerOnMagmaHeatedMoreThanVillagerOnStone(GameTestHelper context) {
-        int temperatureChange = FrostifulConfigYACL.freezingConfig().getHeatFromHotFloor();
+        int temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().hotFloorTemperatureChange();
 
         final BlockPos stonePos = new BlockPos(2, 2, 3);
         final BlockPos magmaPos = new BlockPos(4, 2, 3);

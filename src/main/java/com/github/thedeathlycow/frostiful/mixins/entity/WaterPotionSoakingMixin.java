@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
+import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.config.section.SoakingSettings;
 import com.llamalad7.mixinextras.sugar.Local;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.EntityType;
@@ -26,14 +28,16 @@ public abstract class WaterPotionSoakingMixin extends ThrowableItemProjectile {
             method = "onHitAsWater",
             at = @At("TAIL")
     )
-    private void soakEntitiesWithWaterbottle(ServerLevel world, CallbackInfo ci, @Local AABB box) {
-        List<Player> players = level().getEntitiesOfClass(Player.class, box);
-        float soakPercent = FrostifulConfigYACL.freezingConfig().getSoakPercentFromWaterPotion();
+    private void soakEntitiesWithWaterbottle(ServerLevel world, CallbackInfo ci, @Local(name = "aabb") AABB box) {
+        if (!FrostifulIntegrations.isModLoaded(FrostifulIntegrations.SCORCHFUL_ID)) {
+            List<Player> players = level().getEntitiesOfClass(Player.class, box);
+            SoakingSettings settings = FrostifulConfigYACL.soakingSettings();
 
-        for (var player : players) {
-            int soakAmount = (int) (player.thermoo$getMaxWetTicks() * soakPercent);
-            soakAmount += player.thermoo$getWetTicks();
-            player.thermoo$setWetTicks(soakAmount);
+            for (var player : players) {
+                int soakAmount = settings.soakingFromSplashPotion(player.thermoo$getMaxWetTicks());
+                soakAmount += player.thermoo$getWetTicks();
+                player.thermoo$setWetTicks(soakAmount);
+            }
         }
     }
 }

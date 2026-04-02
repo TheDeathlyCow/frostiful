@@ -49,7 +49,7 @@ public class FoodIntegration {
     }
 
     private static void applyWarmthFromFood(LivingEntity user) {
-        int duration = FrostifulConfigYACL.freezingConfig().getWarmFoodWarmthTime();
+        int duration = FrostifulConfigYACL.itemSettings().warmingFoodDuration();
         user.addEffect(new MobEffectInstance(FStatusEffects.WARMTH, duration));
     }
 

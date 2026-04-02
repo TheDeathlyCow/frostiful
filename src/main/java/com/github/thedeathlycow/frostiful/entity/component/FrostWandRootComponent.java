@@ -33,6 +33,7 @@ import org.ladysnake.cca.api.v3.component.tick.ServerTickingComponent;
 import org.ladysnake.cca.api.v8.component.CardinalComponent;
 
 public class FrostWandRootComponent implements CardinalComponent, AutoSyncedComponent, ServerTickingComponent {
+    private static final double ICE_BREAKER_FALLBACK_DAMAGE = 3.0;
 
     private static final String ROOTED_TICKS_KEY = "rooted_ticks";
 
@@ -87,7 +88,7 @@ public class FrostWandRootComponent implements CardinalComponent, AutoSyncedComp
     }
 
     public float getRootProgress() {
-        return (float) this.rootedTicks / FrostifulConfigYACL.combatConfig().getFrostWandRootTime();
+        return (float) this.rootedTicks / FrostifulConfigYACL.itemSettings().frostWandRootTime();
     }
 
     public void breakRoot(@Nullable Entity attacker) {
@@ -97,7 +98,7 @@ public class FrostWandRootComponent implements CardinalComponent, AutoSyncedComp
 
             double damage = attacker instanceof LivingEntity livingAttacker
                     ? livingAttacker.getAttributeValue(FEntityAttributes.ICE_BREAKER_DAMAGE)
-                    : FrostifulConfigYACL.combatConfig().getIceBreakFallbackDamage();
+                    : ICE_BREAKER_FALLBACK_DAMAGE;
 
             DamageSource source = FDamageSources.getDamageSources(provider.level())
                     .frostiful$brokenIce(attacker);
@@ -109,7 +110,7 @@ public class FrostWandRootComponent implements CardinalComponent, AutoSyncedComp
 
     public boolean tryRootFromFrostWand(@Nullable Entity originalCaster) {
         if (this.canBeRootedBy(originalCaster)) {
-            this.setRootedTicks(FrostifulConfigYACL.combatConfig().getFrostWandRootTime());
+            this.setRootedTicks(FrostifulConfigYACL.itemSettings().frostWandRootTime());
             return true;
         }
         return false;

@@ -12,24 +12,23 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class FreezingWindEntity extends WindEntity {
-
-    private int frost;
+    private int temperatureChange;
 
     public FreezingWindEntity(EntityType<? extends FreezingWindEntity> type, Level world) {
         super(type, world);
-        this.frost = FrostifulConfigYACL.freezingConfig().getFreezingWindFrost();
+        this.temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().freezingWindTemperatureChange();
     }
 
     @Override
     public void onEntityCollision(LivingEntity entity) {
         super.onEntityCollision(entity);
-        freezeEntity(entity, this.frost, this);
+        freezeEntity(entity, this.temperatureChange, this);
     }
 
     public static void freezeEntity(LivingEntity entity, int frost, @Nullable FreezingWindEntity source) {
         if (entity.getType() == EntityType.PLAYER) {
             entity.thermoo$addTemperature(
-                    -frost,
+                    frost,
                     entity.level().thermoo$temperatureSources().create(TemperatureSources.ACTIVE, source)
             );
         }
@@ -42,13 +41,13 @@ public class FreezingWindEntity extends WindEntity {
     @Override
     protected void readAdditionalSaveData(ValueInput readView) {
         super.readAdditionalSaveData(readView);
-        this.frost = readView.getIntOr("Frost", FrostifulConfigYACL.freezingConfig().getFreezingWindFrost());
+        this.temperatureChange = readView.getIntOr("temperature_change", FrostifulConfigYACL.temperatureSourceSettings().freezingWindTemperatureChange());
     }
 
     @Override
     protected void addAdditionalSaveData(ValueOutput writeView) {
         super.addAdditionalSaveData(writeView);
 
-        writeView.putInt("Frost", this.frost);
+        writeView.putInt("temperature_change", this.temperatureChange);
     }
 }

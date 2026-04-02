@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.survival;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
+import com.github.thedeathlycow.frostiful.config.section.SoakingSettings;
 import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.LivingEntitySoakingTickEvents;
@@ -27,31 +27,31 @@ public final class SoakingEffects {
         }
 
         EntityInvoker invoker = (EntityInvoker) context.affected();
-        EnvironmentConfig config = FrostifulConfigYACL.environmentConfig();
+        SoakingSettings soakingSettings = FrostifulConfigYACL.soakingSettings();
         int total = 0;
 
         // increase wetness
-        total += getRainChange(invoker, config);
-        total += getTouchingWaterChange(context, config);
+        total += getRainChange(invoker, soakingSettings);
+        total += getTouchingWaterChange(context, soakingSettings);
         total += getSubmerged(context, invoker);
 
         // drying effects
-        total -= getLightDrying(context);
-        total -= getOnFireDrying(context, config);
+        total -= getLightDrying(context, soakingSettings);
+        total -= getOnFireDrying(context, soakingSettings);
 
         return total;
     }
 
-    private static int getRainChange(EntityInvoker invoker, EnvironmentConfig config) {
+    private static int getRainChange(EntityInvoker invoker, SoakingSettings settings) {
         return invoker.frostiful$invokeIsBeingRainedOn()
-                ? config.getRainWetnessIncrease()
+                ? settings.rainWetnessIncrease()
                 : 0;
     }
 
-    private static int getTouchingWaterChange(EnvironmentTickContext<? extends LivingEntity> context, EnvironmentConfig config) {
+    private static int getTouchingWaterChange(EnvironmentTickContext<? extends LivingEntity> context, SoakingSettings settings) {
         LivingEntity entity = context.affected();
         return entity.isInWater() || entity.getInBlockState().is(Blocks.WATER_CAULDRON)
-                ? config.getTouchingWaterWetnessIncrease()
+                ? settings.touchingWaterWetnessIncrease()
                 : 0;
     }
 
@@ -62,14 +62,18 @@ public final class SoakingEffects {
                 : 0;
     }
 
-    private static int getLightDrying(EnvironmentTickContext<? extends LivingEntity> context) {
-        int blockLightLevel = context.level().getBrightness(LightLayer.BLOCK, context.pos());
-        return blockLightLevel / 4;
+    private static int getLightDrying(EnvironmentTickContext<? extends LivingEntity> context, SoakingSettings settings) {
+        if (settings.enableLightDrying()) {
+            int blockLightLevel = context.level().getBrightness(LightLayer.BLOCK, context.pos());
+            return blockLightLevel / 4;
+        } else {
+            return 0;
+        }
     }
 
-    private static int getOnFireDrying(EnvironmentTickContext<? extends LivingEntity> context, EnvironmentConfig config) {
+    private static int getOnFireDrying(EnvironmentTickContext<? extends LivingEntity> context, SoakingSettings settings) {
         return context.affected().isOnFire()
-                ? config.getOnFireDryDate()
+                ? settings.onFireDryDate()
                 : 0;
     }
 

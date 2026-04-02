@@ -21,7 +21,7 @@ public class PatrolSpawnerMixin {
             cancellable = true
     )
     private void spawnChillagerInColdBiomes(ServerLevel world, BlockPos pos, RandomSource random, boolean captain, CallbackInfoReturnable<Boolean> cir) {
-        if (!FrostifulConfigYACL.combatConfig().doChillagerPatrols()) {
+        if (!FrostifulConfigYACL.entitySettings().enableChillagerPatrols()) {
             return;
         }
 

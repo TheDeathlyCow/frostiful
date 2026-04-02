@@ -13,7 +13,7 @@ import com.github.thedeathlycow.frostiful.datagen.generator.tag.*;
 import com.github.thedeathlycow.frostiful.registry.FArmorTrimPatterns;
 import com.github.thedeathlycow.frostiful.registry.FBannerPatterns;
 import com.github.thedeathlycow.frostiful.registry.FDamageTypes;
-import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
+import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistries;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.core.RegistrySetBuilder;
@@ -74,7 +74,7 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
                 FDamageTypes::bootstrap
         );
         registryBuilder.add(
-                ThermooRegistryKeys.TEMPERATURE_STATUS,
+                ThermooRegistries.TEMPERATURE_STATUS,
                 FrostifulTemperatureStatusBootstrap::bootstrap
         );
     }

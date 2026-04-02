@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.survival.wind;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.WeatherSettings;
 import com.github.thedeathlycow.frostiful.registry.FBlockTransformers;
 import com.github.thedeathlycow.frostiful.registry.FEnvironmentAttributes;
 import com.github.thedeathlycow.frostiful.registry.FrostifulRegistries;
@@ -38,15 +38,13 @@ public final class WindManager {
     }
 
     public void trySpawnFreezingWind(Level level, LevelChunk chunk) {
-        FreezingConfig config = FrostifulConfigYACL.freezingConfig();
+        WeatherSettings config = FrostifulConfigYACL.weatherSettings();
 
-        if (this.windSpawnCount >= config.getWindSpawnCapPerSecond()) {
+        if (this.windSpawnCount >= 15) { // spawn cap
             return;
         }
 
-        int chanceBound = level.isThundering()
-                ? config.getWindSpawnRarityThunder()
-                : config.getWindSpawnRarity();
+        int chanceBound = level.isThundering() ? 750 : 500;
 
         if (level.getRandom().nextInt(chanceBound) != 0) {
             return;
@@ -56,13 +54,14 @@ public final class WindManager {
         boolean spawnInAir = this.setSpawnPosition(level, chunk, spawnPos);
         WindBehavior windBehavior = level.environmentAttributes().getValue(FEnvironmentAttributes.WIND_BEHAVIOR, spawnPos);
 
-        if (windBehavior == WindBehavior.NEVER || (spawnInAir && !config.spawnWindInAir())) {
+        if (windBehavior == WindBehavior.NEVER || (spawnInAir && !config.enableWindInTheAir())) {
             return;
         }
 
         double temperatureC = EnvironmentLookup.getInstance().findEnvironmentComponents(level, spawnPos)
                 .getOrDefault(EnvironmentComponentTypes.TEMPERATURE, TemperatureRecordComponent.DEFAULT)
                 .valueInUnit(TemperatureUnit.CELSIUS);
+
         if (temperatureC > 0) {
             return;
         }
@@ -70,7 +69,8 @@ public final class WindManager {
         boolean canSpawnOnGround = (level.isRaining() && windBehavior == WindBehavior.DURING_RAIN)
                 || windBehavior == WindBehavior.ALWAYS;
 
-        WindSpawnStrategy strategy = config.getWindSpawnStrategy().getStrategy();
+        WindSpawnStrategy strategy = config.freezingWindSpawningMethod().getStrategy();
+
         if (strategy == null) {
             return;
         }
@@ -81,7 +81,7 @@ public final class WindManager {
     }
 
     public void extinguishBlock(BlockState state, Level level, BlockPos pos, Runnable playSoundCallback) {
-        if (!FrostifulConfigYACL.freezingConfig().isWindDestroysTorches()) {
+        if (!FrostifulConfigYACL.weatherSettings().freezingWindDestroysExposedFire()) {
             return;
         }
 

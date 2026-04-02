@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.EnvironmentConfig;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.EnvironmentSettings;
+import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
@@ -28,20 +28,20 @@ public final class ActiveTemperatureEffects {
         }
 
         int total = 0;
-        FreezingConfig freezingConfig = FrostifulConfigYACL.freezingConfig();
-        EnvironmentConfig environmentConfig = FrostifulConfigYACL.environmentConfig();
+        EnvironmentSettings environmentSettings = FrostifulConfigYACL.environmentSettings();
+        TemperatureSourceSettings temperatureSourceSettings = FrostifulConfigYACL.temperatureSourceSettings();
 
-        total += getOnFireTemperatureChange(entity, environmentConfig);
-        total += getPowderSnowTemperatureChange(entity, environmentConfig);
-        total += getConduitPowerTemperatureChange(entity, freezingConfig);
-        total += getShiveringTemperatureChange(entity, freezingConfig);
+        total += getOnFireTemperatureChange(entity, temperatureSourceSettings);
+        total += getPowderSnowTemperatureChange(entity, temperatureSourceSettings);
+        total += getConduitPowerTemperatureChange(entity, temperatureSourceSettings);
+        total += getShiveringTemperatureChange(entity, environmentSettings, temperatureSourceSettings);
 
         return total;
     }
 
-    private static int getOnFireTemperatureChange(LivingEntity entity, EnvironmentConfig config) {
+    private static int getOnFireTemperatureChange(LivingEntity entity, TemperatureSourceSettings config) {
         if (entity.isOnFire()) {
-            int onFireRate = config.getOnFireWarmRate();
+            int onFireRate = config.onFireTemperatureChange();
 
             if (entity.getType() == FEntityTypes.FROSTOLOGER) {
                 onFireRate /= 2;
@@ -52,24 +52,24 @@ public final class ActiveTemperatureEffects {
         return 0;
     }
 
-    private static int getPowderSnowTemperatureChange(LivingEntity entity, EnvironmentConfig config) {
+    private static int getPowderSnowTemperatureChange(LivingEntity entity, TemperatureSourceSettings config) {
         if (entity.wasInPowderSnow) {
-            return -config.getPowderSnowFreezeRate();
+            return config.powderSnowTemperatureChange();
         }
         return 0;
     }
 
-    private static int getConduitPowerTemperatureChange(LivingEntity entity, FreezingConfig config) {
+    private static int getConduitPowerTemperatureChange(LivingEntity entity, TemperatureSourceSettings config) {
         boolean applyConduitPowerWarmth = entity.isUnderWater()
                 && entity.hasEffect(MobEffects.CONDUIT_POWER);
 
         if (applyConduitPowerWarmth) {
-            return config.getConduitWarmthPerTick();
+            return config.conduitPowerTemperatureChange();
         }
         return 0;
     }
 
-    private static int getShiveringTemperatureChange(LivingEntity entity, FreezingConfig config) {
+    private static int getShiveringTemperatureChange(LivingEntity entity, EnvironmentSettings environmentSettings, TemperatureSourceSettings sourceSettings) {
         if (!SurvivalUtils.isShivering(entity)) {
             return 0;
         }
@@ -81,9 +81,9 @@ public final class ActiveTemperatureEffects {
             return 0;
         }
 
-        int shiverWarmth = config.getShiverWarmth();
+        int shiverWarmth = environmentSettings.shiveringTemperatureChange(sourceSettings);
         if (entity instanceof Player player) {
-            if (player.getFoodData().getFoodLevel() <= config.getStopShiverWarmingBelowFoodLevel()) {
+            if (player.getFoodData().getFoodLevel() <= environmentSettings.stopShiverWarmingBelowFoodLevel()) {
                 return 0;
             }
 

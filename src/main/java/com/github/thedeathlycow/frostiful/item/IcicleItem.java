@@ -20,12 +20,18 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 
 public class IcicleItem extends BlockItem implements ProjectileItem {
+    private static final int COOLDOWN_TICKS = 10;
+
     public IcicleItem(Block block, Item.Properties settings) {
         super(block, settings.useBlockDescriptionPrefix());
     }
 
     @Override
     public InteractionResult use(Level world, Player user, InteractionHand hand) {
+        if (!FrostifulConfigYACL.itemSettings().enableIcicleThrowing()) {
+            return InteractionResult.PASS;
+        }
+
         ItemStack itemStack = user.getItemInHand(hand);
 
         world.playSound(
@@ -52,7 +58,7 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
 
         user.awardStat(Stats.ITEM_USED.get(this));
         itemStack.consume(1, user);
-        user.getCooldowns().addCooldown(itemStack, FrostifulConfigYACL.icicleConfig().getThrownIcicleCooldown());
+        user.getCooldowns().addCooldown(itemStack, COOLDOWN_TICKS);
 
         return InteractionResult.SUCCESS;
     }

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.FreezingConfig;
+import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
@@ -83,9 +83,9 @@ public class CampfireUseEventListener implements UseBlockCallback {
     }
 
     private static void warmNearbyEntities(Level world, BlockPos pos) {
-        FreezingConfig config = FrostifulConfigYACL.freezingConfig();
-        final double boxLength = config.getCampfireWarmthSearchRadius();
-        final int duration = config.getCampfireWarmthTime();
+        BlockSettings settings = FrostifulConfigYACL.blockSettings();
+        final double boxLength = settings.campfireWarmthSearchRadius();
+        final int duration = settings.campfireWarmthTime();
 
         // get all nearby living entities that do not have warmth or
         // who have a weak warmth effect

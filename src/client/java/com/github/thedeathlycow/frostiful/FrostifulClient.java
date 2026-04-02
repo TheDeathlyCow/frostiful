@@ -1,6 +1,7 @@
 package com.github.thedeathlycow.frostiful;
 
 import com.github.thedeathlycow.frostiful.client.FrozenHeartsOverlay;
+import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.client.network.PointWindSpawnPacketListener;
 import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.registry.FEntityRenderers;
@@ -20,6 +21,7 @@ import net.minecraft.client.renderer.special.SpecialModelRenderers;
 public class FrostifulClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
+        FrostifulClientConfig.initialize();
         FParticleFactoryRegistry.initialize();
         FEntityModelLayers.initialize();
         FEntityRenderers.initialize();

@@ -1,12 +1,11 @@
 package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.config.section.IcicleConfig;
+import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.mixins.entity.FallingBlockEntityAccessor;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
-import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureChange;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -74,6 +73,7 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
     private static final VoxelShape FRUSTUM_SHAPE = Block.box(3.0D, 0.0D, 3.0D, 13.0D, 16.0D, 13.0D);
     private static final VoxelShape MIDDLE_SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 16.0D, 14.0D);
 
+    private static final float BECOME_UNSTABLE_CHANCE = 0.05f;
     private static final IntProvider UNSTABLE_TICKS_BEFORE_FALL = UniformInt.of(40, 80);
 
     public IcicleBlock(Properties settings) {
@@ -136,7 +136,7 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
             boolean tookDamage = entity.causeFallDamage(fallDistance + 2.0, 2.0f, damageSource);
             if (tookDamage && entity instanceof LivingEntity livingEntity) {
                 livingEntity.thermoo$addTemperature(
-                        -FrostifulConfigYACL.icicleConfig().getIcicleCollisionFreezeAmount(),
+                        FrostifulConfigYACL.temperatureSourceSettings().icicleCollisionTemperatureChange(),
                         level.thermoo$temperatureSources().create(TemperatureSources.ACTIVE, pos.getCenter())
                 );
             }
@@ -245,10 +245,17 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
     @Override
     protected void randomTick(BlockState state, ServerLevel world, BlockPos pos, RandomSource random) {
         if (isPointingDown(state)) {
-            if (random.nextFloat() < FrostifulConfigYACL.icicleConfig().getBecomeUnstableChance() && isHeldByIcicleFallable(state, world, pos)) { // fall
+            BlockSettings settings = FrostifulConfigYACL.blockSettings();
+
+            boolean tryFall = settings.enableIcicleInstability()
+                    && random.nextFloat() < BECOME_UNSTABLE_CHANCE * settings.icicleInstabilityChanceMultiplier()
+                    && isHeldByIcicleFallable(state, world, pos);
+
+            if (tryFall) {
                 this.tryFall(state, world, pos, random);
             }
-            final double growChance = this.getGrowChance(world);
+
+            final double growChance = settings.icicleGrowthChanceMultiplier() * getGrowChance(world);
             if (random.nextFloat() < growChance) { // grow
                 this.tryGrowIcicle(state, world, pos, random);
             }
@@ -313,14 +320,13 @@ public class IcicleBlock extends Block implements Fallable, SimpleWaterloggedBlo
         return 0.125F;
     }
 
-    private Double getGrowChance(ServerLevel world) {
-        IcicleConfig config = FrostifulConfigYACL.icicleConfig();
+    private static double getGrowChance(ServerLevel world) {
         if (world.isThundering()) {
-            return config.getGrowChanceDuringThunder();
+            return 0.15;
         } else if (world.isRaining()) {
-            return config.getGrowChanceDuringRain();
+            return 0.09;
         } else {
-            return config.getGrowChance();
+            return 0.02;
         }
     }
 

@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.datagen.generator.tag;
 
 import com.github.thedeathlycow.frostiful.registry.FTemperatureStatuses;
 import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
-import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistryKeys;
+import com.github.thedeathlycow.thermoo.api.core.v2.registry.ThermooRegistries;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatus;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.tag.TemperatureStatusTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
@@ -13,7 +13,7 @@ import java.util.concurrent.CompletableFuture;
 
 public class FTemperatureStatusTagGenerator extends FabricTagsProvider<TemperatureStatus> {
     public FTemperatureStatusTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
-        super(output, ThermooRegistryKeys.TEMPERATURE_STATUS, registryLookupFuture);
+        super(output, ThermooRegistries.TEMPERATURE_STATUS, registryLookupFuture);
     }
 
     @Override
