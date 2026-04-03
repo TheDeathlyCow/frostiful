@@ -44,7 +44,7 @@ Thanks to everyone who has contributed to Frostiful, no matter how big or small!
 
 # LTS Policy
 
-Minecraft 1.21.11 is now unsupported. See the full LTS policy at https://github.com/TheDeathlyCow/scorchful/?tab=readme-ov-file#lts-policy
+Minecraft 1.21.11 is now unsupported. See the full LTS policy at https://github.com/TheDeathlyCow/frostiful/?tab=readme-ov-file#lts-policy
 
 # Build and Run
 
