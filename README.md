@@ -43,7 +43,7 @@ Many other patches that are also relevant for Frostiful are provided by the stan
 Thanks to everyone who has contributed to Frostiful, no matter how big or small! See the [Credits](./CREDITS.md) for the full list of contributors.
 
 # LTS Policy
-Minecraft 1.21.1 is currently supported. See the full LTS policy at https://github.com/TheDeathlyCow/frostiful/?tab=readme-ov-file#lts-policy
+Minecraft 1.21.1 is now receiving long-term fixes only support. See the full LTS policy at https://github.com/TheDeathlyCow/frostiful/?tab=readme-ov-file#lts-policy
 
 # Build and Run
 
