@@ -106,6 +106,9 @@ public class FBlockTagGenerator extends FabricTagsProvider.BlockTagsProvider {
                 .addOptionalTag(BlockTags.LOGS)
                 .addOptionalTag(BlockTags.LEAVES);
 
+        valueLookupBuilder(FBlockTags.SUN_LICHEN_CAN_PLACE_ON)
+                .addOptionalTag(BlockTags.FOREST_ROCK_CAN_PLACE_ON)
+                .add(Blocks.COBBLESTONE);
 
         valueLookupBuilder(FBlockTags.FROSTOLOGER_CANNOT_FREEZE)
                 .addOptionalTag(BlockTags.PORTALS)

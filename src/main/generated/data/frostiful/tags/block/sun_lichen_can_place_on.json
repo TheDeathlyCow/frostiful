@@ -1,0 +1,9 @@
+{
+  "values": [
+    {
+      "id": "#minecraft:forest_rock_can_place_on",
+      "required": false
+    },
+    "minecraft:cobblestone"
+  ]
+}

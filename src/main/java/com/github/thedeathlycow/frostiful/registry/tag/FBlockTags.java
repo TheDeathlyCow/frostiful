@@ -10,6 +10,7 @@ public class FBlockTags {
     public static final TagKey<Block> C_ICICLES = convention("icicles");
     public static final TagKey<Block> COVERED_ROCK_COVERING_REPLACEABLE = register("covered_rock_covering_replaceable");
     public static final TagKey<Block> COVERED_ROCKS_CANNOT_REPLACE = register("covered_rocks_cannot_replace");
+    public static final TagKey<Block> SUN_LICHEN_CAN_PLACE_ON = register("sun_lichen_can_place_on");
     public static final TagKey<Block> FROSTOLOGER_CANNOT_FREEZE = register("frostologer_cannot_freeze");
     public static final TagKey<Block> FROZEN_TORCHES = register("frozen_torches");
     public static final TagKey<Block> HAS_OPEN_FLAME = register("has_open_flame");
