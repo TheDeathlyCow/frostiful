@@ -36,7 +36,7 @@ public class FurSmithingUpgradeTemplate {
             )
     );
 
-    private static final Identifier EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("item/empty/fur_padding");
+    private static final Identifier EMPTY_SLOT_FUR_PADDING_TEXTURE = Frostiful.id("container/slot/fur_padding");
 
 
     public static SmithingTemplateItem createItem(Item.Properties settings) {
@@ -53,10 +53,10 @@ public class FurSmithingUpgradeTemplate {
 
     private static List<Identifier> getFurUpgradeEmptyBaseSlotTextures() {
         return List.of(
-                FSmithingTemplateItem.EMPTY_ARMOR_SLOT_HELMET_TEXTURE,
-                FSmithingTemplateItem.EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE,
-                FSmithingTemplateItem.EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE,
-                FSmithingTemplateItem.EMPTY_ARMOR_SLOT_BOOTS_TEXTURE
+                FSmithingTemplateItem.HELMET_SLOT_TEXTURE,
+                FSmithingTemplateItem.CHESTPLATE_SLOT_TEXTURE,
+                FSmithingTemplateItem.LEGGINGS_SLOT_TEXTURE,
+                FSmithingTemplateItem.BOOTS_SLOT_TEXTURE
         );
     }
 

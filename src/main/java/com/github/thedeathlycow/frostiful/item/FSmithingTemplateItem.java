@@ -17,10 +17,10 @@ public class FSmithingTemplateItem {
     public static final ChatFormatting DESCRIPTION_FORMATTING = ChatFormatting.BLUE;
 
     /// Texture IDs ///
-    public static final Identifier EMPTY_ARMOR_SLOT_HELMET_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_helmet");
-    public static final Identifier EMPTY_ARMOR_SLOT_CHESTPLATE_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_chestplate");
-    public static final Identifier EMPTY_ARMOR_SLOT_LEGGINGS_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_leggings");
-    public static final Identifier EMPTY_ARMOR_SLOT_BOOTS_TEXTURE = Identifier.withDefaultNamespace("item/empty_armor_slot_boots");
+    public static final Identifier HELMET_SLOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/helmet");
+    public static final Identifier CHESTPLATE_SLOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/chestplate");
+    public static final Identifier LEGGINGS_SLOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/leggings");
+    public static final Identifier BOOTS_SLOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/boots");
 
     public static void addTemplatesToLoot() {
         addTemplateToLoot(

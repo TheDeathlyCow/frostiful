@@ -35,7 +35,7 @@ public class IceSkateUpgradeTemplate {
             )
     );
 
-    private static final Identifier EMPTY_SLOT_SWORD_TEXTURE = Identifier.withDefaultNamespace("item/empty_slot_sword");
+    private static final Identifier SWORD_SLOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/sword");
 
     public static SmithingTemplateItem createItem(Item.Properties settings) {
         return new SmithingTemplateItem(
@@ -50,11 +50,11 @@ public class IceSkateUpgradeTemplate {
     }
 
     private static List<Identifier> getIceSkateUpgradeEmptyBaseSlotTextures() {
-        return List.of(FSmithingTemplateItem.EMPTY_ARMOR_SLOT_BOOTS_TEXTURE);
+        return List.of(FSmithingTemplateItem.BOOTS_SLOT_TEXTURE);
     }
 
     private static List<Identifier> getIceSkateUpgradeEmptyAdditionsSlotTextures() {
-        return List.of(EMPTY_SLOT_SWORD_TEXTURE);
+        return List.of(SWORD_SLOT_TEXTURE);
     }
 
     private IceSkateUpgradeTemplate() {
