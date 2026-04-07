@@ -1,6 +1,8 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureChange;
+import com.github.thedeathlycow.thermoo.api.core.v2.source.BuiltinTemperatureSources;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -25,12 +27,15 @@ public class FreezingWindEntity extends WindEntity {
         freezeEntity(entity, this.temperatureChange, this);
     }
 
-    public static void freezeEntity(LivingEntity entity, int frost, @Nullable FreezingWindEntity source) {
+    public static void freezeEntity(LivingEntity entity, int temperatureChange, @Nullable FreezingWindEntity source) {
         if (entity.getType() == EntityType.PLAYER) {
-            entity.thermoo$addTemperature(
-                    frost,
-                    entity.level().thermoo$temperatureSources().create(TemperatureSources.ACTIVE, source)
-            );
+            BuiltinTemperatureSources sources = entity.level().thermoo$temperatureSources();
+
+            TemperatureChange changeContext = source != null
+                    ? sources.create(TemperatureSources.ACTIVE, source)
+                    : sources.active();
+
+            entity.thermoo$addTemperature(temperatureChange, changeContext);
         }
     }
 

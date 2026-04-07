@@ -53,11 +53,7 @@ public class PointWindSpawnStrategy implements WindSpawnStrategy {
         world.getEntitiesOfClass(LivingEntity.class, box, WindEntity.CAN_BE_BLOWN)
                 .forEach(entity -> {
                     WindEntity.pushEntity(entity, world, center, POWER_SCALE);
-                    FreezingWindEntity.freezeEntity(
-                            entity,
-                            temperatureChange * POWER_SCALE,
-                            null
-                    );
+                    FreezingWindEntity.freezeEntity(entity, temperatureChange * POWER_SCALE, null);
                 });
 
         return true;
