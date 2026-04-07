@@ -174,5 +174,10 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS)
                 .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS)
                 .add(FItems.ARMORED_ICE_SKATES);
+
+        valueLookupBuilder(ItemTags.LOOM_PATTERNS)
+                .add(FItems.FROSTOLOGY_BANNER_PATTERN)
+                .add(FItems.SNOWFLAKE_BANNER_PATTERN)
+                .add(FItems.ICICLE_BANNER_PATTERN);
     }
 }
