@@ -58,6 +58,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         map.put(DyeColor.BLUE, "Blue");
         map.put(DyeColor.PURPLE, "Purple");
         map.put(DyeColor.MAGENTA, "Magenta");
+        map.put(DyeColor.PINK, "Pink");
     });
 
     public EnglishUSGenerator(FabricPackOutput dataOutput, CompletableFuture<HolderLookup.Provider> registryLookup) {
@@ -409,6 +410,11 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         for (DyeColor color : DyeColor.values()) {
             String key = pattern.value().translationKey() + "." + color.getName();
             String colorName = COLOR_NAMES.get(color);
+
+            if (colorName == null) {
+                throw new IllegalStateException("Untranslated color: " + color);
+            }
+
             builder.add(key, "%s %s".formatted(colorName, value));
         }
     }
