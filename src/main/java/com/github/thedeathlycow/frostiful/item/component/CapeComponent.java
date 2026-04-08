@@ -44,7 +44,7 @@ public record CapeComponent(
 
     @Nullable
     public static CapeComponent getCapeOrChest(LivingEntity entity) {
-        if (FrostifulIntegrations.isModLoaded(FrostifulIntegrations.TRINKETS_ID)) {
+        if (FrostifulIntegrations.isTrinketsLoaded()) {
             CapeComponent cape = TrinketsIntegration.getComponentInCapeSlot(entity, FDataComponentTypes.CAPE);
             if (cape != null) {
                 return cape;

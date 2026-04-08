@@ -97,12 +97,7 @@ dependencies {
     //// Optional Dependencies ////
     compileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}") { transitive = false }
 
-    // Trinkets https://github.com/emilyploszaj/trinkets
-    // temporarily replaced with canary until updated
-//    implementation("dev.emi:trinkets:${project.trinkets_version}") {
-//        exclude(group: "net.fabricmc.fabric-api")
-//    }
-//    implementation "maven.modrinth:trinkets-canary:${project.trinkets_version}"
+    implementation("eu.pb4:trinkets:${trinkets_version}")
 
     testImplementation "net.fabricmc:fabric-loader-junit:${project.loader_version}"
     testImplementation "org.junit.jupiter:junit-jupiter"
@@ -218,7 +213,7 @@ publishMods {
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "yacl")
 
-        optional("thermoo-patches", "scorchful", "modmenu", "trinkets")
+        optional("thermoo-patches", "scorchful", "modmenu")
     }
 
     modrinth {
@@ -228,6 +223,6 @@ publishMods {
 
         requires("fabric-api", "cardinal-components-api", "thermoo", "yacl")
 
-        optional("thermoo-patches", "scorchful", "modmenu", "trinkets-canary")
+        optional("thermoo-patches", "scorchful", "modmenu", "trinkets-updated")
     }
 }

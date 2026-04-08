@@ -1,6 +1,9 @@
 package com.github.thedeathlycow.frostiful.compat;
 
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
+import eu.pb4.trinkets.api.SlotGroup;
+import eu.pb4.trinkets.api.TrinketInventory;
+import eu.pb4.trinkets.api.TrinketsApi;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -9,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
 
 public final class TrinketsIntegration {
@@ -24,11 +28,11 @@ public final class TrinketsIntegration {
             }
         }
 
-//        if (FrostifulIntegrations.isTrinketsLoaded()) {
-//            TrinketsApi.getTrinketComponent(entity).ifPresent(component -> {
-//                component.forEach((ref, stack) -> items.add(stack));
-//            });
-//        }
+        if (FrostifulIntegrations.isTrinketsLoaded()) {
+            TrinketsApi.getAttachment(entity).forEach((_, stack) -> {
+                items.add(stack);
+            });
+        }
 
         return items;
     }
@@ -41,11 +45,9 @@ public final class TrinketsIntegration {
             }
         }
 
-//        if (FrostifulIntegrations.isTrinketsLoaded()) {
-//            TrinketsApi.getTrinketComponent(entity).ifPresent(component -> {
-//                component.forEach((ref, stack) -> items.add(stack));
-//            });
-//        }
+        if (FrostifulIntegrations.isTrinketsLoaded()) {
+            return TrinketsApi.getAttachment(entity).isEquipped(predicate);
+        }
 
         return false;
     }
@@ -56,33 +58,34 @@ public final class TrinketsIntegration {
 
     @Nullable
     public static <T> T getComponentInCapeSlot(LivingEntity entity, DataComponentType<T> type) {
-//        return TrinketsApi.getTrinketComponent(entity)
-//                .map(trinket -> getFirstInCapeOrNull(trinket, type))
-//                .orElse(null);
-        return null;
+        return getFirstInCapeOrNull(entity, type);
     }
 
-//    @Nullable
-//    private static <T> T getFirstInCapeOrNull(TrinketComponent trinket, DataComponentType<T> type) {
-//        Map<String, TrinketInventory> chest = trinket.getInventory().get("chest");
-//        if (chest == null) {
-//            return null;
-//        }
-//
-//        TrinketInventory cape = chest.get("cape");
-//        if (cape == null) {
-//            return null;
-//        }
-//
-//        for (int i = 0; i < cape.getContainerSize(); i++) {
-//            T component = cape.getItem(i).get(type);
-//            if (component != null) {
-//                return component;
-//            }
-//        }
-//
-//        return null;
-//    }
+    @Nullable
+    private static <T> T getFirstInCapeOrNull(LivingEntity entity, DataComponentType<T> type) {
+        Map<String, Map<String, TrinketInventory>> inventory = TrinketsApi.getAttachment(entity).getInventory();
+
+        Map<String, TrinketInventory> chestSlots = inventory.get("chest");
+
+        if (chestSlots == null) {
+            return null;
+        }
+
+        TrinketInventory cape = chestSlots.get("cape");
+
+        if (cape == null) {
+            return null;
+        }
+
+        for (int i = 0; i < cape.getContainerSize(); i++) {
+            T component = cape.getItem(i).get(type);
+            if (component != null) {
+                return component;
+            }
+        }
+
+        return null;
+    }
 
     private TrinketsIntegration() {
 
