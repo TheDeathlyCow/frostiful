@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.tests;
 
-import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
+import com.github.thedeathlycow.frostiful.entity.Chillager;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
@@ -20,7 +20,7 @@ public class ChillagerDropTests {
         ServerLevel world = context.getLevel();
         DamageSources damageSources = world.damageSources();
 
-        ChillagerEntity chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
+        Chillager chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
 
         chillager.hurtServer(world, damageSources.genericKill(), Float.MAX_VALUE);
 
@@ -34,7 +34,7 @@ public class ChillagerDropTests {
         ServerLevel world = context.getLevel();
         DamageSources damageSources = world.damageSources();
 
-        ChillagerEntity chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
+        Chillager chillager = context.spawn(FEntityTypes.CHILLAGER, BlockPos.ZERO);
         chillager.setPatrolLeader(true);
         chillager.setItemSlot(
                 EquipmentSlot.HEAD,

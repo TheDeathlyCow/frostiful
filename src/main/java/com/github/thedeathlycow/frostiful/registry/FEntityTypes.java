@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.entity.*;
-import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
+import com.github.thedeathlycow.frostiful.entity.frostologer.Frostologer;
 import net.fabricmc.fabric.api.entity.event.v1.ServerEntityCombatEvents;
 import net.fabricmc.fabric.api.object.builder.v1.entity.FabricDefaultAttributeRegistry;
 import net.minecraft.core.Registry;
@@ -16,25 +16,25 @@ import net.minecraft.world.entity.MobCategory;
 
 public class FEntityTypes {
 
-    public static final EntityType<FrostologerEntity> FROSTOLOGER = register(
+    public static final EntityType<Frostologer> FROSTOLOGER = register(
             "frostologer",
-            EntityType.Builder.of(FrostologerEntity::new, MobCategory.MONSTER)
+            EntityType.Builder.of(Frostologer::new, MobCategory.MONSTER)
                     .sized(0.6f, 1.95f)
                     .passengerAttachments(2.0F)
                     .ridingOffset(-0.6F)
                     .clientTrackingRange(10)
     );
 
-    public static final EntityType<BiterEntity> BITER = register(
+    public static final EntityType<Biter> BITER = register(
             "biter",
-            EntityType.Builder.of(BiterEntity::new, MobCategory.MONSTER)
+            EntityType.Builder.of(Biter::new, MobCategory.MONSTER)
                     .sized(1.0f, 1.5f)
                     .clientTrackingRange(10)
     );
 
-    public static final EntityType<ChillagerEntity> CHILLAGER = register(
+    public static final EntityType<Chillager> CHILLAGER = register(
             "chillager",
-            EntityType.Builder.of(ChillagerEntity::new, MobCategory.MONSTER)
+            EntityType.Builder.of(Chillager::new, MobCategory.MONSTER)
                     .canSpawnFarFromPlayer()
                     .sized(0.6F, 1.95F)
                     .passengerAttachments(2.0F)
@@ -42,9 +42,9 @@ public class FEntityTypes {
                     .clientTrackingRange(10)
     );
 
-    public static final EntityType<GlacialArrowEntity> GLACIAL_ARROW = register(
+    public static final EntityType<GlacialArrow> GLACIAL_ARROW = register(
             "glacial_arrow",
-            EntityType.Builder.<GlacialArrowEntity>of(GlacialArrowEntity::new, MobCategory.CREATURE)
+            EntityType.Builder.<GlacialArrow>of(GlacialArrow::new, MobCategory.CREATURE)
                     .noLootTable()
                     .sized(0.5F, 0.5F)
                     .eyeHeight(0.13F)
@@ -52,9 +52,9 @@ public class FEntityTypes {
                     .updateInterval(20)
     );
 
-    public static final EntityType<FrostSpellEntity> FROST_SPELL = register(
+    public static final EntityType<FrostSpell> FROST_SPELL = register(
             "frost_spell",
-            EntityType.Builder.<FrostSpellEntity>of(FrostSpellEntity::new, MobCategory.MISC)
+            EntityType.Builder.<FrostSpell>of(FrostSpell::new, MobCategory.MISC)
                     .noLootTable()
                     .sized(1.0F, 1.0F)
                     .clientTrackingRange(4)
@@ -70,9 +70,9 @@ public class FEntityTypes {
                     .updateInterval(10)
     );
 
-    public static final EntityType<ThrownIcicleEntity> THROWN_ICICLE = register(
+    public static final EntityType<ThrownIcicle> THROWN_ICICLE = register(
             "thrown_icicle",
-            EntityType.Builder.<ThrownIcicleEntity>of(ThrownIcicleEntity::new, MobCategory.MISC)
+            EntityType.Builder.<ThrownIcicle>of(ThrownIcicle::new, MobCategory.MISC)
                     .noLootTable()
                     .sized(0.5F, 0.5F)
                     .eyeHeight(0.13F)
@@ -93,9 +93,9 @@ public class FEntityTypes {
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful entity types");
 
-        FabricDefaultAttributeRegistry.register(FROSTOLOGER, FrostologerEntity.createFrostologerAttributes());
-        FabricDefaultAttributeRegistry.register(CHILLAGER, ChillagerEntity.createChillagerAttributes());
-        FabricDefaultAttributeRegistry.register(BITER, BiterEntity.createBiterAttributes());
+        FabricDefaultAttributeRegistry.register(FROSTOLOGER, Frostologer.createFrostologerAttributes());
+        FabricDefaultAttributeRegistry.register(CHILLAGER, Chillager.createChillagerAttributes());
+        FabricDefaultAttributeRegistry.register(BITER, Biter.createBiterAttributes());
 
         ServerEntityCombatEvents.AFTER_KILLED_OTHER_ENTITY.register(
                 ((world, entity, killedEntity, damageSource) -> {

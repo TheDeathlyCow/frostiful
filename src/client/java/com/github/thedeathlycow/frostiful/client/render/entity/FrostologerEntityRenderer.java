@@ -8,7 +8,7 @@ import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerEyesF
 import com.github.thedeathlycow.frostiful.client.render.feature.FrostologerFrostFeatureRenderer;
 import com.github.thedeathlycow.frostiful.client.render.model.FrostologerEntityModel;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
-import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
+import com.github.thedeathlycow.frostiful.entity.frostologer.Frostologer;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
 import net.fabricmc.api.EnvType;
@@ -26,7 +26,7 @@ import net.minecraft.world.entity.monster.illager.AbstractIllager;
 import net.minecraft.world.item.CrossbowItem;
 
 @Environment(EnvType.CLIENT)
-public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
+public class FrostologerEntityRenderer extends MobRenderer<Frostologer, FrostologerEntityRenderState, FrostologerEntityModel<FrostologerEntityRenderState>> {
 
 
     private static final Identifier TEXTURE = Frostiful.id("textures/entity/illager/frostologer.png");
@@ -53,7 +53,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
     }
 
     @Override
-    public void extractRenderState(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
+    public void extractRenderState(Frostologer frostologer, FrostologerEntityRenderState state, float tickDelta) {
         super.extractRenderState(frostologer, state, tickDelta);
         ArmedEntityRenderState.extractArmedEntityRenderState(frostologer, state, this.itemModelResolver, tickDelta);
         state.isRiding = frostologer.isPassenger();
@@ -100,7 +100,7 @@ public class FrostologerEntityRenderer extends MobRenderer<FrostologerEntity, Fr
         return TEXTURE;
     }
 
-    private static void updateCape(FrostologerEntity frostologer, FrostologerEntityRenderState state, float tickDelta) {
+    private static void updateCape(Frostologer frostologer, FrostologerEntityRenderState state, float tickDelta) {
         double deltaX = Mth.lerp(tickDelta, frostologer.prevCapeX, frostologer.capeX) - Mth.lerp(tickDelta, frostologer.xo, frostologer.getX());
         double deltaY = Mth.lerp(tickDelta, frostologer.prevCapeY, frostologer.capeY) - Mth.lerp(tickDelta, frostologer.yo, frostologer.getY());
         double deltaZ = Mth.lerp(tickDelta, frostologer.prevCapeZ, frostologer.capeZ) - Mth.lerp(tickDelta, frostologer.zo, frostologer.getZ());

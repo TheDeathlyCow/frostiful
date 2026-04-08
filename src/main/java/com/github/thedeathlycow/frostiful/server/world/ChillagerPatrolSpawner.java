@@ -1,5 +1,6 @@
 package com.github.thedeathlycow.frostiful.server.world;
 
+import com.github.thedeathlycow.frostiful.entity.Chillager;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -15,7 +16,7 @@ public class ChillagerPatrolSpawner {
 
     /**
      * Essentially a rewrite of {@link PatrolSpawner#spawnPatrolMember(ServerLevel, BlockPos, RandomSource, boolean)}, except
-     * that it spawns a {@link com.github.thedeathlycow.frostiful.entity.ChillagerEntity} instead of a
+     * that it spawns a {@link Chillager} instead of a
      * {@link net.minecraft.world.entity.monster.Pillager}. Called via mixin as method is private.
      *
      * @param world world to spawn chillager in

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.test.tests;
 
-import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
+import com.github.thedeathlycow.frostiful.entity.frostologer.Frostologer;
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
@@ -343,7 +343,7 @@ public class FrostologerDestroyHeatSourcesTests {
 
         serverWorld.setBlockAndUpdate(context.absolutePos(pos), toPlace);
 
-        FrostologerEntity frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
+        Frostologer frostologer = context.spawn(FEntityTypes.FROSTOLOGER, pos.offset(1, 0, 1));
         frostologer.setInvulnerable(true);
         frostologer.setNoAi(true);
         frostologer.tryDestroyHeatSource(serverWorld, toPlace, context.absolutePos(pos));

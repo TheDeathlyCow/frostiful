@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.item;
 
-import com.github.thedeathlycow.frostiful.entity.GlacialArrowEntity;
+import com.github.thedeathlycow.frostiful.entity.GlacialArrow;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
 import net.minecraft.world.entity.LivingEntity;
@@ -19,12 +19,12 @@ public class GlacialArrowItem extends ArrowItem {
     }
 
     public AbstractArrow createArrow(Level world, ItemStack stack, LivingEntity shooter, @Nullable ItemStack shotFrom) {
-        return new GlacialArrowEntity(world, shooter, stack.copyWithCount(1), shotFrom);
+        return new GlacialArrow(world, shooter, stack.copyWithCount(1), shotFrom);
     }
 
     @Override
     public Projectile asProjectile(Level world, Position pos, ItemStack stack, Direction direction) {
-        GlacialArrowEntity frostArrow = new GlacialArrowEntity(
+        GlacialArrow frostArrow = new GlacialArrow(
                 world,
                 pos.x(), pos.y(), pos.z(),
                 stack.copyWithCount(1),

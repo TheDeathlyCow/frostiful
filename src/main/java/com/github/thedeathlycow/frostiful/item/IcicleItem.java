@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
+import com.github.thedeathlycow.frostiful.entity.ThrownIcicle;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Position;
@@ -42,7 +42,7 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
         );
 
         if (!world.isClientSide()) {
-            ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, user, itemStack.copyWithCount(1));
+            ThrownIcicle icicleEntity = new ThrownIcicle(world, user, itemStack.copyWithCount(1));
 
             icicleEntity.shootFromRotation(
                     user,
@@ -65,7 +65,7 @@ public class IcicleItem extends BlockItem implements ProjectileItem {
 
     @Override
     public Projectile asProjectile(Level world, Position pos, ItemStack stack, Direction direction) {
-        ThrownIcicleEntity icicleEntity = new ThrownIcicleEntity(world, pos.x(), pos.y(), pos.z(), stack.copyWithCount(1));
+        ThrownIcicle icicleEntity = new ThrownIcicle(world, pos.x(), pos.y(), pos.z(), stack.copyWithCount(1));
         icicleEntity.pickup = AbstractArrow.Pickup.ALLOWED;
         return icicleEntity;
     }

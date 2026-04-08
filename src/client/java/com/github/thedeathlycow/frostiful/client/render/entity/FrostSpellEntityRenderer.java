@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.github.thedeathlycow.frostiful.entity.FrostSpell;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.fabricmc.api.EnvType;
@@ -18,7 +18,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.util.CommonColors;
 
 @Environment(EnvType.CLIENT)
-public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpellEntity, EntityRenderState> {
+public class FrostSpellEntityRenderer extends EntityRenderer<FrostSpell, EntityRenderState> {
 
     private static final Identifier TEXTURE = Frostiful.id("textures/entity/frost_spell.png");
     private static final RenderType LAYER = RenderTypes.entityCutout(TEXTURE);

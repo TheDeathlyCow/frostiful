@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.render.feature;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
+import com.github.thedeathlycow.frostiful.entity.frostologer.Frostologer;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.resources.Identifier;
@@ -15,7 +15,7 @@ public enum FrostLayer {
     NONE(0.0f, null),
     LOW(-0.25f, Frostiful.id("textures/entity/illager/frostologer/low_frost.png")),
     MEDIUM(-0.5f, Frostiful.id("textures/entity/illager/frostologer/medium_frost.png")),
-    HIGH(FrostologerEntity.MAX_POWER_SCALE_START, Frostiful.id("textures/entity/illager/frostologer/high_frost.png"));
+    HIGH(Frostologer.MAX_POWER_SCALE_START, Frostiful.id("textures/entity/illager/frostologer/high_frost.png"));
 
     public static final FrostLayer[] LAYERS_WITHOUT_NONE = Stream.of(FrostLayer.values())
             .filter(layer -> layer != NONE)
@@ -30,7 +30,7 @@ public enum FrostLayer {
         this.texture = texture;
     }
 
-    public static FrostLayer fromFrostologer(FrostologerEntity frostologer) {
+    public static FrostLayer fromFrostologer(Frostologer frostologer) {
         float scale = frostologer.thermoo$getTemperatureScale();
         for (var layer : LAYERS_WITHOUT_NONE) {
             if (scale < layer.maximumTemperatureScale) {

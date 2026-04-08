@@ -9,50 +9,50 @@ import net.minecraft.world.entity.ai.goal.RangedAttackGoal;
 class FrostWandCastGoal extends RangedAttackGoal {
     private static final float HIT_TEMPERATURE_REDUCTION_PERCENT = 1.0f / 6.0f;
 
-    private final FrostologerEntity frostologerEntity;
+    private final Frostologer frostologer;
 
-    public FrostWandCastGoal(FrostologerEntity frostologer, double mobSpeed, int intervalTicks, float maxShootRange) {
+    public FrostWandCastGoal(Frostologer frostologer, double mobSpeed, int intervalTicks, float maxShootRange) {
         super(frostologer, mobSpeed, intervalTicks, maxShootRange);
-        this.frostologerEntity = frostologer;
+        this.frostologer = frostologer;
     }
 
     @Override
     public boolean canUse() {
         return super.canUse()
-                && frostologerEntity.hasTarget()
-                && !frostologerEntity.isTargetRooted()
-                && frostologerEntity.getMainHandItem().is(FItems.FROST_WAND);
+                && frostologer.hasTarget()
+                && !frostologer.isTargetRooted()
+                && frostologer.getMainHandItem().is(FItems.FROST_WAND);
     }
 
     @Override
     public void start() {
         super.start();
-        frostologerEntity.setAggressive(true);
-        frostologerEntity.startUsingItem(InteractionHand.MAIN_HAND);
+        frostologer.setAggressive(true);
+        frostologer.startUsingItem(InteractionHand.MAIN_HAND);
         this.startUsingFrostWand();
     }
 
     @Override
     public void stop() {
         super.stop();
-        frostologerEntity.setAggressive(false);
-        frostologerEntity.stopUsingItem();
+        frostologer.setAggressive(false);
+        frostologer.stopUsingItem();
         this.stopUsingFrostWand();
-        if (frostologerEntity.isTargetRooted()) {
-            int cooling = Mth.floor(-frostologerEntity.thermoo$getMinTemperature() * HIT_TEMPERATURE_REDUCTION_PERCENT);
-            frostologerEntity.thermoo$addTemperature(cooling);
+        if (frostologer.isTargetRooted()) {
+            int cooling = Mth.floor(-frostologer.thermoo$getMinTemperature() * HIT_TEMPERATURE_REDUCTION_PERCENT);
+            frostologer.thermoo$addTemperature(cooling);
         }
     }
 
     private void startUsingFrostWand() {
-        frostologerEntity.playSound(
+        frostologer.playSound(
                 FSoundEvents.ITEM_FROST_WAND_PREPARE_CAST,
                 1.0f, 1.0f
         );
-        frostologerEntity.getEntityData().set(FrostologerEntity.IS_USING_FROST_WAND, true);
+        frostologer.getEntityData().set(Frostologer.IS_USING_FROST_WAND, true);
     }
 
     private void stopUsingFrostWand() {
-        frostologerEntity.getEntityData().set(FrostologerEntity.IS_USING_FROST_WAND, false);
+        frostologer.getEntityData().set(Frostologer.IS_USING_FROST_WAND, false);
     }
 }

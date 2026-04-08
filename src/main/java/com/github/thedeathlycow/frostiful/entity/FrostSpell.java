@@ -19,19 +19,19 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FrostSpellEntity extends SpellEntity {
+public class FrostSpell extends SpellEntity {
 
     private static final double EFFECT_CLOUD_SIZE = 3.0;
 
-    public FrostSpellEntity(Level world, LivingEntity owner, Vec3 velocity) {
+    public FrostSpell(Level world, LivingEntity owner, Vec3 velocity) {
         super(FEntityTypes.FROST_SPELL, world, owner, velocity);
     }
 
-    public FrostSpellEntity(Level world, LivingEntity owner, Vec3 velocity, double maxDistance) {
+    public FrostSpell(Level world, LivingEntity owner, Vec3 velocity, double maxDistance) {
         super(FEntityTypes.FROST_SPELL, world, owner, velocity, maxDistance);
     }
 
-    public FrostSpellEntity(EntityType<? extends SpellEntity> entityType, Level world) {
+    public FrostSpell(EntityType<? extends SpellEntity> entityType, Level world) {
         super(entityType, world);
     }
 

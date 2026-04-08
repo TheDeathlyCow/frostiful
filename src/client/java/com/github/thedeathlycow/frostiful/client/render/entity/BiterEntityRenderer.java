@@ -4,7 +4,7 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.model.BiterEntityModel;
 import com.github.thedeathlycow.frostiful.client.render.state.BiterEntityRenderState;
-import com.github.thedeathlycow.frostiful.entity.BiterEntity;
+import com.github.thedeathlycow.frostiful.entity.Biter;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -12,7 +12,7 @@ import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.Identifier;
 
 @Environment(EnvType.CLIENT)
-public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityRenderState, BiterEntityModel> {
+public class BiterEntityRenderer extends MobRenderer<Biter, BiterEntityRenderState, BiterEntityModel> {
 
     public static final Identifier TEXTURE = Frostiful.id("textures/entity/biter.png");
 
@@ -21,7 +21,7 @@ public class BiterEntityRenderer extends MobRenderer<BiterEntity, BiterEntityRen
     }
 
     @Override
-    public void extractRenderState(BiterEntity entity, BiterEntityRenderState state, float tickDelta) {
+    public void extractRenderState(Biter entity, BiterEntityRenderState state, float tickDelta) {
         super.extractRenderState(entity, state, tickDelta);
         state.biteAnimationState.copyFrom(entity.bitingAnimation);
     }

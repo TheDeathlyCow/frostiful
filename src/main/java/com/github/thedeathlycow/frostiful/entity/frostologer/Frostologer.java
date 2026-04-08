@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.entity.frostologer;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.block.transformer.BlockTransformer;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.entity.BiterEntity;
-import com.github.thedeathlycow.frostiful.entity.ThrownIcicleEntity;
+import com.github.thedeathlycow.frostiful.entity.Biter;
+import com.github.thedeathlycow.frostiful.entity.ThrownIcicle;
 import com.github.thedeathlycow.frostiful.item.FrostWandItem;
 import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentEffect;
 import com.github.thedeathlycow.frostiful.registry.*;
@@ -74,10 +74,10 @@ import java.util.concurrent.ThreadLocalRandom;
  * SUMMON_VEX = SUMMON_MINIONS
  * DISAPPEAR = DESTROY_HEAT_SOURCES
  */
-public class FrostologerEntity extends SpellcasterIllager implements RangedAttackMob {
+public class Frostologer extends SpellcasterIllager implements RangedAttackMob {
 
     static final EntityDataAccessor<Boolean> IS_USING_FROST_WAND = SynchedEntityData.defineId(
-            FrostologerEntity.class, EntityDataSerializers.BOOLEAN
+            Frostologer.class, EntityDataSerializers.BOOLEAN
     );
 
     public static final float MAX_POWER_SCALE_START = -0.75f;
@@ -98,7 +98,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
 
     private final BlockPos[] stepPositionsPool = new BlockPos[2];
 
-    public FrostologerEntity(EntityType<? extends FrostologerEntity> entityType, Level world) {
+    public Frostologer(EntityType<? extends Frostologer> entityType, Level world) {
         super(entityType, world);
         this.xpReward = 20;
     }
@@ -484,7 +484,7 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         } else if (super.considersEntityAsAlly(other)) {
             return true;
         } else {
-            if (other instanceof BiterEntity biter && biter.getOwner() != null) {
+            if (other instanceof Biter biter && biter.getOwner() != null) {
                 return this.considersEntityAsAlly(biter.getOwner());
             }
             return false;
@@ -544,18 +544,18 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         @Override
         public void start() {
             super.start();
-            FrostologerEntity.this.isChanneling = true;
+            Frostologer.this.isChanneling = true;
         }
 
         @Override
         public boolean canUse() {
-            FrostologerEntity frostologer = FrostologerEntity.this;
+            Frostologer frostologer = Frostologer.this;
             return super.canUse() && frostologer.thermoo$getTemperatureScale() <= -0.9f;
         }
 
         @Override
         public void tick() {
-            FrostologerEntity frostologer = FrostologerEntity.this;
+            Frostologer frostologer = Frostologer.this;
             AABB box = frostologer.getBoundingBox().inflate(this.range);
             Level level = frostologer.level();
 
@@ -584,16 +584,16 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
                 return;
             }
 
-            BlockPos origin = FrostologerEntity.this.blockPosition();
+            BlockPos origin = Frostologer.this.blockPosition();
             Vec3i distance = new Vec3i(this.range, this.range, this.range);
 
             for (BlockPos pos : BlockPos.betweenClosed(origin.subtract(distance), origin.offset(distance))) {
                 if (world instanceof ServerLevel serverWorld) {
-                    FrostologerEntity.this.tryDestroyHeatSource(serverWorld, world.getBlockState(pos), pos);
+                    Frostologer.this.tryDestroyHeatSource(serverWorld, world.getBlockState(pos), pos);
                 }
             }
 
-            FrostologerEntity.this.isChanneling = false;
+            Frostologer.this.isChanneling = false;
         }
 
         @Override
@@ -640,20 +640,20 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
         @Override
         public void start() {
             super.start();
-            if (FrostologerEntity.this.isOnFire()) {
-                FrostologerEntity.this.clearFire();
-                FrostologerEntity.this.playEntityOnFireExtinguishedSound();
+            if (Frostologer.this.isOnFire()) {
+                Frostologer.this.clearFire();
+                Frostologer.this.playEntityOnFireExtinguishedSound();
             }
         }
 
         @Override
         public boolean canUse() {
-            if (FrostologerEntity.this.tickCount <= nextStartTime) {
+            if (Frostologer.this.tickCount <= nextStartTime) {
                 return false;
             } else if (!super.canUse()) {
                 return false;
             } else {
-                return FrostologerEntity.this.isTargetRooted();
+                return Frostologer.this.isTargetRooted();
             }
         }
 
@@ -662,28 +662,28 @@ public class FrostologerEntity extends SpellcasterIllager implements RangedAttac
             ServerLevel serverWorld = (ServerLevel) level();
 
             int numIcicles = this.numIciclesProvider.sample(random);
-            nextStartTime = FrostologerEntity.this.tickCount + cooldownProvider.sample(random) * 20;
+            nextStartTime = Frostologer.this.tickCount + cooldownProvider.sample(random) * 20;
             for (int i = 0; i < numIcicles; ++i) {
-                BlockPos blockPos = FrostologerEntity.this.blockPosition()
+                BlockPos blockPos = Frostologer.this.blockPosition()
                         .offset(
-                                -2 + FrostologerEntity.this.random.nextInt(5),
+                                -2 + Frostologer.this.random.nextInt(5),
                                 2,
-                                -2 + FrostologerEntity.this.random.nextInt(5)
+                                -2 + Frostologer.this.random.nextInt(5)
                         );
 
-                ThrownIcicleEntity icicle = FEntityTypes.THROWN_ICICLE.create(serverWorld, EntitySpawnReason.SPAWN_ITEM_USE);
+                ThrownIcicle icicle = FEntityTypes.THROWN_ICICLE.create(serverWorld, EntitySpawnReason.SPAWN_ITEM_USE);
 
                 if (icicle == null) {
                     return;
                 }
 
                 icicle.snapTo(blockPos, 0.0F, 0.0F);
-                icicle.setOwner(FrostologerEntity.this);
+                icicle.setOwner(Frostologer.this);
 
                 icicle.shootFromRotation(
-                        FrostologerEntity.this,
-                        FrostologerEntity.this.getXRot() + FrostologerEntity.this.random.nextFloat(),
-                        FrostologerEntity.this.getYHeadRot() + FrostologerEntity.this.random.nextFloat(),
+                        Frostologer.this,
+                        Frostologer.this.getXRot() + Frostologer.this.random.nextFloat(),
+                        Frostologer.this.getYHeadRot() + Frostologer.this.random.nextFloat(),
                         0.0f, 3.0f, 1.0f
                 );
 

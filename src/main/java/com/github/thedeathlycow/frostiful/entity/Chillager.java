@@ -20,8 +20,8 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.ProjectileWeaponItem;
 import net.minecraft.world.level.Level;
 
-public class ChillagerEntity extends Pillager {
-    public ChillagerEntity(EntityType<? extends ChillagerEntity> entityType, Level world) {
+public class Chillager extends Pillager {
+    public Chillager(EntityType<? extends Chillager> entityType, Level world) {
         super(entityType, world);
     }
 

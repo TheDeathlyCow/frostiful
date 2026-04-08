@@ -36,9 +36,9 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 
-public class BiterEntity extends Monster {
+public class Biter extends Monster {
 
-    private static final EntityDataAccessor<Byte> ICE_GOLEM_FLAGS = SynchedEntityData.defineId(BiterEntity.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Byte> ICE_GOLEM_FLAGS = SynchedEntityData.defineId(Biter.class, EntityDataSerializers.BYTE);
 
     private static final int IS_CHARGING_FLAG_MASK = 0x1;
 
@@ -51,7 +51,7 @@ public class BiterEntity extends Monster {
 
     public final AnimationState bitingAnimation = new AnimationState();
 
-    public BiterEntity(EntityType<? extends BiterEntity> entityType, Level world) {
+    public Biter(EntityType<? extends Biter> entityType, Level world) {
         super(entityType, world);
     }
 
@@ -194,15 +194,15 @@ public class BiterEntity extends Monster {
 
         @Override
         public boolean canUse() {
-            LivingEntity target = BiterEntity.this.getTarget();
+            LivingEntity target = Biter.this.getTarget();
 
             boolean hasTarget = target != null
                     && target.isAlive()
-                    && !BiterEntity.this.getMoveControl().hasWanted()
-                    && BiterEntity.this.random.nextInt(Goal.reducedTickDelay(7)) == 0;
+                    && !Biter.this.getMoveControl().hasWanted()
+                    && Biter.this.random.nextInt(Goal.reducedTickDelay(7)) == 0;
 
             if (hasTarget) {
-                return BiterEntity.this.distanceToSqr(target) > 4.0;
+                return Biter.this.distanceToSqr(target) > 4.0;
             } else {
                 return false;
             }
@@ -210,27 +210,27 @@ public class BiterEntity extends Monster {
 
         @Override
         public boolean canContinueToUse() {
-            return BiterEntity.this.getMoveControl().hasWanted()
-                    && BiterEntity.this.isCharging()
-                    && BiterEntity.this.getTarget() != null
-                    && BiterEntity.this.getTarget().isAlive();
+            return Biter.this.getMoveControl().hasWanted()
+                    && Biter.this.isCharging()
+                    && Biter.this.getTarget() != null
+                    && Biter.this.getTarget().isAlive();
         }
 
         @Override
         public void start() {
-            LivingEntity target = BiterEntity.this.getTarget();
+            LivingEntity target = Biter.this.getTarget();
             if (target != null) {
                 Vec3 targetPos = target.getEyePosition();
-                BiterEntity.this.moveControl.setWantedPosition(targetPos.x, targetPos.y, targetPos.z, 1.0);
+                Biter.this.moveControl.setWantedPosition(targetPos.x, targetPos.y, targetPos.z, 1.0);
             }
 
-            BiterEntity.this.setCharging(true);
-            BiterEntity.this.playSound(SoundEvents.VEX_CHARGE, 1.0f, 1.0f);
+            Biter.this.setCharging(true);
+            Biter.this.playSound(SoundEvents.VEX_CHARGE, 1.0f, 1.0f);
         }
 
         @Override
         public void stop() {
-            BiterEntity.this.setCharging(false);
+            Biter.this.setCharging(false);
         }
 
         @Override
@@ -240,16 +240,16 @@ public class BiterEntity extends Monster {
 
         @Override
         public void tick() {
-            LivingEntity target = BiterEntity.this.getTarget();
+            LivingEntity target = Biter.this.getTarget();
             if (target != null) {
 
-                double distanceToTarget = BiterEntity.this.distanceToSqr(target);
+                double distanceToTarget = Biter.this.distanceToSqr(target);
                 if (distanceToTarget < 1.5) {
-                    BiterEntity.this.doHurtTarget(getServerLevel(target), target);
-                    BiterEntity.this.setCharging(false);
+                    Biter.this.doHurtTarget(getServerLevel(target), target);
+                    Biter.this.setCharging(false);
                 } else if (distanceToTarget < 9.0) {
                     Vec3 targetPos = target.getEyePosition();
-                    BiterEntity.this.moveControl.setWantedPosition(targetPos.x, targetPos.y, targetPos.z, 1.0);
+                    Biter.this.moveControl.setWantedPosition(targetPos.x, targetPos.y, targetPos.z, 1.0);
                 }
             }
         }
@@ -259,18 +259,18 @@ public class BiterEntity extends Monster {
         private final TargetingConditions targetPredicate = TargetingConditions.forNonCombat().ignoreLineOfSight().ignoreInvisibilityTesting();
 
         public TrackOwnerTargetGoal() {
-            super(BiterEntity.this, false);
+            super(Biter.this, false);
         }
 
         public boolean canUse() {
-            return BiterEntity.this.owner != null
-                    && BiterEntity.this.owner.getTarget() != null
-                    && this.canAttack(BiterEntity.this.owner.getTarget(), this.targetPredicate);
+            return Biter.this.owner != null
+                    && Biter.this.owner.getTarget() != null
+                    && this.canAttack(Biter.this.owner.getTarget(), this.targetPredicate);
         }
 
         public void start() {
-            if (BiterEntity.this.owner != null) {
-                BiterEntity.this.setTarget(BiterEntity.this.owner.getTarget());
+            if (Biter.this.owner != null) {
+                Biter.this.setTarget(Biter.this.owner.getTarget());
             }
             super.start();
         }

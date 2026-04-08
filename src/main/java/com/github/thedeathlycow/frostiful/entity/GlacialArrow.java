@@ -14,20 +14,20 @@ import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
-public class GlacialArrowEntity extends AbstractArrow {
+public class GlacialArrow extends AbstractArrow {
     private int temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().glacialArrowTemperatureChange();
 
     private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
 
-    public GlacialArrowEntity(EntityType<? extends GlacialArrowEntity> entityType, Level world) {
+    public GlacialArrow(EntityType<? extends GlacialArrow> entityType, Level world) {
         super(entityType, world);
     }
 
-    public GlacialArrowEntity(Level world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
+    public GlacialArrow(Level world, double x, double y, double z, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(FEntityTypes.GLACIAL_ARROW, x, y, z, world, stack, shotFrom);
     }
 
-    public GlacialArrowEntity(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
+    public GlacialArrow(Level world, LivingEntity owner, ItemStack stack, @Nullable ItemStack shotFrom) {
         super(FEntityTypes.GLACIAL_ARROW, owner, world, stack, shotFrom);
     }
 

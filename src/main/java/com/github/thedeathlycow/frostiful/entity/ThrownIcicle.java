@@ -16,17 +16,17 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 
-public class ThrownIcicleEntity extends AbstractArrow {
+public class ThrownIcicle extends AbstractArrow {
 
-    public ThrownIcicleEntity(EntityType<? extends ThrownIcicleEntity> entityType, Level world) {
+    public ThrownIcicle(EntityType<? extends ThrownIcicle> entityType, Level world) {
         super(entityType, world);
     }
 
-    public ThrownIcicleEntity(Level world, double x, double y, double z, ItemStack stack) {
+    public ThrownIcicle(Level world, double x, double y, double z, ItemStack stack) {
         super(FEntityTypes.THROWN_ICICLE, x, y, z, world, stack, stack);
     }
 
-    public ThrownIcicleEntity(Level world, LivingEntity owner, ItemStack stack) {
+    public ThrownIcicle(Level world, LivingEntity owner, ItemStack stack) {
         super(FEntityTypes.THROWN_ICICLE, owner, world, stack, null);
     }
 

@@ -2,7 +2,7 @@ package com.github.thedeathlycow.frostiful.item;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.ItemSettings;
-import com.github.thedeathlycow.frostiful.entity.FrostSpellEntity;
+import com.github.thedeathlycow.frostiful.entity.FrostSpell;
 import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import net.minecraft.core.BlockPos;
@@ -102,7 +102,7 @@ public class FrostWandItem extends Item {
     public static void fireFrostSpell(ItemStack frostWandStack, Level level, LivingEntity user) {
         ItemSettings config = FrostifulConfigYACL.itemSettings();
 
-        FrostSpellEntity spell = new FrostSpellEntity(level, user, Vec3.ZERO, config.maxFrostSpellDistance());
+        FrostSpell spell = new FrostSpell(level, user, Vec3.ZERO, config.maxFrostSpellDistance());
 
         spell.shootFromRotation(user, user.getXRot(), user.getYHeadRot(), 0.0f, 2.5f, 1.0f);
 
