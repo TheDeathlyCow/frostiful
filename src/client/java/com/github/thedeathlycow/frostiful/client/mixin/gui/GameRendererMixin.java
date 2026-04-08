@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.mixin.gui;
 
 import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
-import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,7 +23,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Environment(EnvType.CLIENT)
 @Mixin(GameRenderer.class)
-public abstract class ShiveringRenderer {
+public abstract class GameRendererMixin {
     @Shadow
     @Final
     private RandomSource random;

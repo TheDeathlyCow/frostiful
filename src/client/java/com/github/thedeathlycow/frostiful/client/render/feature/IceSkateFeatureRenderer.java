@@ -3,7 +3,7 @@ package com.github.thedeathlycow.frostiful.client.render.feature;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
 import com.github.thedeathlycow.frostiful.client.render.model.IceSkateModel;
-import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
+import com.github.thedeathlycow.frostiful.client.render.state.FHumanoidRenderState;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.client.model.geom.EntityModelSet;
@@ -41,7 +41,7 @@ public class IceSkateFeatureRenderer<
             float limbAngle,
             float limbDistance
     ) {
-        if (((FBipedRenderState) state).frostiful$wearingIceSkates()) {
+        if (((FHumanoidRenderState) state).frostiful$wearingIceSkates()) {
             IceSkateModel<S> model = state.isBaby ? this.babyModel : this.model;
 
             M contextModel = this.getParentModel();

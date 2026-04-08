@@ -1,6 +1,6 @@
-package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
+package com.github.thedeathlycow.frostiful.client.mixin.entity.render;
 
-import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
+import com.github.thedeathlycow.frostiful.client.render.state.FHumanoidRenderState;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import net.minecraft.client.model.HumanoidModel;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(HumanoidMobRenderer.class)
-public abstract class BipedEntityRendererMixin<T extends Mob, S extends HumanoidRenderState, M extends HumanoidModel<S>> {
+public abstract class HumanoidMobRendererMixin<T extends Mob, S extends HumanoidRenderState, M extends HumanoidModel<S>> {
     @Inject(
             method = "extractHumanoidRenderState",
             at = @At("TAIL")
@@ -30,7 +30,7 @@ public abstract class BipedEntityRendererMixin<T extends Mob, S extends Humanoid
     ) {
         boolean wearingSkates = entity.getItemBySlot(EquipmentSlot.FEET).is(FItemTags.ICE_SKATES);
 
-        FBipedRenderState fState = ((FBipedRenderState) state);
+        FHumanoidRenderState fState = ((FHumanoidRenderState) state);
 
         fState.frostiful$wearingIceSkates(wearingSkates);
 

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.Calendar;
 
 @Mixin(SplashManager.class)
-public class SplashTextResourceSupplierMixin {
+public class SplashManagerMixin {
     @Unique
     private static final SplashRenderer frostiful_DOWNLOAD_MUSESWIPR = new SplashRenderer(Component.translatable("frostiful.splash.download_museswipr"));
 

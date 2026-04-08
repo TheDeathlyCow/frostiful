@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer.state;
+package com.github.thedeathlycow.frostiful.client.mixin.entity.render.state;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FPolarBearEntityRenderState;
 import net.minecraft.client.renderer.entity.state.PolarBearRenderState;
@@ -6,7 +6,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(PolarBearRenderState.class)
-public class PolarBearEntityRenderStateMixin implements FPolarBearEntityRenderState {
+public class PolarBearRenderStateMixin implements FPolarBearEntityRenderState {
     private boolean frostiful$wasSheared = false;
 
     @Override

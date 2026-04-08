@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.mixin;
 
-import com.github.thedeathlycow.frostiful.client.render.state.FBipedRenderState;
+import com.github.thedeathlycow.frostiful.client.render.state.FHumanoidRenderState;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -27,7 +27,7 @@ public class ElytraFeatureRendererMixin {
             @Local(argsOnly = true) HumanoidRenderState state
     ) {
         ClientAsset.Texture accountCape = original.call(instance);
-        CapeComponent cape = ((FBipedRenderState) state).frostiful$cape();
+        CapeComponent cape = ((FHumanoidRenderState) state).frostiful$cape();
 
         if (cape != null && (accountCape == null || cape.overrideAccountCape())) {
             return cape.capeAsset();

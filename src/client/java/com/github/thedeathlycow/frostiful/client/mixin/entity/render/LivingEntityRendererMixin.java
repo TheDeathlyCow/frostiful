@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
+package com.github.thedeathlycow.frostiful.client.mixin.entity.render;
 
 import com.github.thedeathlycow.frostiful.client.render.entity.IceBlockRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;

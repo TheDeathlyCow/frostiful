@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer.state;
+package com.github.thedeathlycow.frostiful.client.mixin.entity.render.state;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FLivingEntityRenderState;
 import net.minecraft.client.renderer.block.BlockModelRenderState;

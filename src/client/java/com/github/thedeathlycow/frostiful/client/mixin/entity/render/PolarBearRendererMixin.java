@@ -1,4 +1,4 @@
-package com.github.thedeathlycow.frostiful.client.mixin.entity_renderer;
+package com.github.thedeathlycow.frostiful.client.mixin.entity.render;
 
 import com.github.thedeathlycow.frostiful.client.BrushableTextures;
 import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(PolarBearRenderer.class)
-public class PolarBearEntityRendererMixin {
+public class PolarBearRendererMixin {
     @Inject(
             method = "extractRenderState(Lnet/minecraft/world/entity/animal/polarbear/PolarBear;Lnet/minecraft/client/renderer/entity/state/PolarBearRenderState;F)V",
             at = @At("TAIL")
