@@ -4,6 +4,7 @@ A Vanilla+ Freezing Temperature Mod. Also try [Scorchful](https://github.com/The
 
 # Download Pages
 
+* Webiste: https://www.thedeathlycow.com/frostiful
 * Modrinth: https://modrinth.com/mod/frostiful
 * CurseForge: https://www.curseforge.com/minecraft/mc-mods/frostiful
 
@@ -44,31 +45,7 @@ Thanks to everyone who has contributed to Frostiful, no matter how big or small!
 
 # LTS Policy
 
-This is my current intended support status for each version of Minecraft that Frostiful is available for. The current Long-Term Support (LTS) policy for Frostiful versions is to fully support only the latest game drop.
-
-Supported versions will receive all new features, fixes, and updates.
-
-Version 1.21.1 will receive limited fixes only support (for things such as minor changes and bug fixes), but no new major features.
-
-Unsupported versions version will receive no future updates, except for critical security fixes.
-
-| Minecraft Version | Support Status                        |
-|-------------------|---------------------------------------|
-| 1.21.11           | ✅ Supported                           | 
-| 1.21.10           | ❌ Unsupported                         |
-| 1.21.9            | ❌ Unsupported                         |
-| 1.21.6-8          | ❌ Unsupported                         |
-| 1.21.5            | ❌ Unsupported                         |
-| 1.21.4            | ❌ Unsupported                         |
-| 1.21.2-3          | ❌ Unsupported                         |
-| 1.21.1            | ⚠️ Fixes only (includes Neoforge[^1]) | 
-| 1.20.4            | ❌ Unsupported                         | 
-| 1.20.2            | ❌ Unsupported                         | 
-| 1.20.1            | ❌ Unsupported                         |
-| 1.19.4            | ❌ Unsupported                         |
-| 1.19.2            | ❌ Unsupported                         | 
-
-[^1]: Frostiful's Neoforge port is very experimental. It is still in alpha, and therefore may contain bugs and cause crashes. The port has also been created in a 'Fabric-like' manner using Forgified Fabric API and custom entry points to minimize the changes needed from the original version, which means that it may not work very well with the Neoforge ecosystem. Proceed with mild caution and please feel free to report issues to the [issue tracker](https://github.com/TheDeathlyCow/frostiful/issues). **Frostiful remains a Fabric-first mod and the Neoforge port is not likely to be updated to new Minecraft versions regularly.**
+The LTS policy for Frostiful is available at: https://www.thedeathlycow.com/frostiful/#lts-policy
 
 # Build and Run
 
