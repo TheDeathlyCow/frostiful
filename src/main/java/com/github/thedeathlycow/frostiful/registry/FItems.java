@@ -359,7 +359,7 @@ public final class FItems {
 
     private static Item register(String id, Function<Item.Properties, Item> itemFactory, Item.Properties settings) {
         Item item = itemFactory.apply(settings);
-        return Registry.register(BuiltInRegistries.ITEM, Frostiful.id(id), item);
+        return Items.registerItem(Frostiful.id(id), item);
     }
 
     private FItems() {
