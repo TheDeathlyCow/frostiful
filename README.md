@@ -4,6 +4,7 @@ A Vanilla+ Freezing Temperature Mod. Also try [Scorchful](https://github.com/The
 
 # Download Pages
 
+* Website: https://www.thedeathlycow.com/frostiful
 * Modrinth: https://modrinth.com/mod/frostiful
 * CurseForge: https://www.curseforge.com/minecraft/mc-mods/frostiful
 
@@ -43,7 +44,8 @@ Many other patches that are also relevant for Frostiful are provided by the stan
 Thanks to everyone who has contributed to Frostiful, no matter how big or small! See the [Credits](./CREDITS.md) for the full list of contributors.
 
 # LTS Policy
-Minecraft 1.21.1 is now receiving long-term fixes only support. See the full LTS policy at https://github.com/TheDeathlyCow/frostiful/?tab=readme-ov-file#lts-policy
+
+The LTS policy for Frostiful is available at https://www.thedeathlycow.com/frostiful/#lts-policy 
 
 # Build and Run
 
