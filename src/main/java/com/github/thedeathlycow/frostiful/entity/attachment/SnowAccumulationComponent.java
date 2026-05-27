@@ -112,7 +112,7 @@ public class SnowAccumulationComponent implements INBTSerializable<CompoundTag> 
             var envFrostResistance = providerEntity.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
 
             if (envFrostResistance != null) {
-                envFrostResistance.addTransientModifier(SOAKED_MODIFIER);
+                envFrostResistance.addOrUpdateTransientModifier(SOAKED_MODIFIER);
                 this.appliedSoakedModifiers = true;
                 Frostiful.LOGGER.debug("Applied soaked env frost resistance penalty");
             }
