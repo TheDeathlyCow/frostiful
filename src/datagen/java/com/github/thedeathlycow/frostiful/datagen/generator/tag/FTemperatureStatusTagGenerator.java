@@ -19,6 +19,21 @@ public class FTemperatureStatusTagGenerator extends FabricTagsProvider<Temperatu
     @Override
     protected void addTags(HolderLookup.Provider registries) {
         // thermoo tags
+        builder(TemperatureStatusTags.COLD)
+                .add(FTemperatureStatuses.FREEZE_DAMAGE)
+                .add(FTemperatureStatuses.FROSTOLOGY_CLOAK_MELTING)
+                .add(FTemperatureStatuses.FROSTOLOGY_CLOAK_WARM)
+                .add(FTemperatureStatuses.PLAYER_MOVEMENT_SPEED)
+                .add(FTemperatureStatuses.PLAYER_CHILLY)
+                .add(FTemperatureStatuses.PLAYER_COLD)
+                .add(FTemperatureStatuses.PLAYER_FREEZING)
+                .add(FTemperatureStatuses.FROSTOLOGER_ATTACK_DAMAGE)
+                .add(FTemperatureStatuses.FROSTOLOGER_CHILLY)
+                .add(FTemperatureStatuses.FROSTOLOGER_FREEZING)
+                .add(FTemperatureStatuses.FROSTOLOGY_CLOAK_MOVEMENT_SPEED)
+                .add(FTemperatureStatuses.FROSTOLOGY_CLOAK_COLD)
+                .add(FTemperatureStatuses.FROSTOLOGY_CLOAK_FREEZING);
+
         builder(TemperatureStatusTags.HARMFUL)
                 .add(FTemperatureStatuses.FREEZE_DAMAGE)
                 .add(FTemperatureStatuses.FROSTOLOGY_CLOAK_MELTING)

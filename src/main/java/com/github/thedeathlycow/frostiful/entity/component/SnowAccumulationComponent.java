@@ -106,7 +106,7 @@ public class SnowAccumulationComponent implements CardinalComponent, ServerTicki
             var envFrostResistance = provider.getAttribute(ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE);
 
             if (envFrostResistance != null) {
-                envFrostResistance.addTransientModifier(SOAKED_MODIFIER);
+                envFrostResistance.addOrUpdateTransientModifier(SOAKED_MODIFIER);
                 this.appliedSoakedModifiers = true;
 
                 if (Frostiful.isDevelopmentEnvironment()) {
