@@ -6,6 +6,7 @@ import com.github.thedeathlycow.frostiful.entity.BiterEntity;
 import com.github.thedeathlycow.frostiful.entity.ChillagerEntity;
 import com.github.thedeathlycow.frostiful.entity.frostologer.FrostologerEntity;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
+import com.github.thedeathlycow.frostiful.registry.FItemGroups;
 import com.github.thedeathlycow.frostiful.registry.FrostifulEntityAttachments;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -17,6 +18,7 @@ public class FrostifulMod {
         modBus.addListener(FrostifulMod::createDefaultAttributes);
         FrostifulEntityAttachments.REGISTRY.register(modBus);
         AccessoriesIntegration.removeAccessoriesRenderer();
+        FItemGroups.REGISTRY.register(modBus);
     }
 
     private static void createDefaultAttributes(EntityAttributeCreationEvent event) {

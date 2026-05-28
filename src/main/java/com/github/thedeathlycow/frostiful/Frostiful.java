@@ -63,7 +63,6 @@ public class Frostiful implements ModInitializer {
         FStatusEffects.initialize();
         FParticleTypes.initialize();
         FPotions.initialize();
-        FItemGroups.initialize();
         FLootConditionTypes.initialize();
         FFeatures.initialize();
         FPlacedFeatures.initialize();

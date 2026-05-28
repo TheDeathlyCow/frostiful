@@ -1,20 +1,22 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
-import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantments;
+import net.neoforged.neoforge.registries.DeferredRegister;
+
+import java.util.function.Supplier;
 
 public class FItemGroups {
-    public static final CreativeModeTab FROSTIFUL = Registry.register(
-            BuiltInRegistries.CREATIVE_MODE_TAB,
-            Frostiful.id("main"),
-            FabricItemGroup.builder()
+    public static final DeferredRegister<CreativeModeTab> REGISTRY = DeferredRegister.create(BuiltInRegistries.CREATIVE_MODE_TAB, Frostiful.MODID);
+
+    public static final Supplier<CreativeModeTab> FROSTIFUL_TAB = REGISTRY.register(
+            "main",
+            () -> CreativeModeTab.builder()
                     .icon(() -> new ItemStack(FItems.FROST_WAND))
                     .title(Component.translatable("itemGroup.frostiful.frostiful"))
                     .displayItems((context, entries) -> {
