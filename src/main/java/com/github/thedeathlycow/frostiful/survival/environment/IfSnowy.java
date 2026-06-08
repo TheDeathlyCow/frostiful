@@ -38,6 +38,7 @@ public record IfSnowy(
         Biome biome = biomeHolder.value();
 
         return biome.getBaseTemperature() < 0.15f
-                || biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW;
+                || biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW
+                || biome.shouldSnow(level, pos);
     }
 }
