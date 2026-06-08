@@ -90,12 +90,16 @@ public class Frostiful implements ModInitializer {
         SoakingEffects.initialize();
         TemperatureStatusEvents.ALLOW_TEMPERATURE_STATUS.register((livingEntity, reference) -> {
             if (reference.is(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES)) {
-                return TriState.from(!TrinketsIntegration.wearingFrostologyCloak(livingEntity));
+                if (TrinketsIntegration.wearingFrostologyCloak(livingEntity)) {
+                    return TriState.FALSE;
+                }
             } else if (reference.is(FTemperatureStatusTags.FROSTOLOGY_CLOAK_PLAYER_STATUSES)) {
-                return TriState.from(TrinketsIntegration.wearingFrostologyCloak(livingEntity));
-            } else {
-                return TriState.DEFAULT;
+                if (!TrinketsIntegration.wearingFrostologyCloak(livingEntity)) {
+                    return TriState.FALSE;
+                }
             }
+
+            return TriState.DEFAULT;
         });
     }
 
