@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.EnvironmentSettings;
-import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
 import com.github.thedeathlycow.frostiful.registry.FGameRules;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureRecord;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureUnit;
@@ -12,7 +11,9 @@ import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext
 import com.github.thedeathlycow.thermoo.api.environment.v2.component.EnvironmentComponentTypes;
 import com.github.thedeathlycow.thermoo.api.environment.v2.component.TemperatureRecordComponent;
 import com.github.thedeathlycow.thermoo.api.environment.v2.event.ServerPlayerEnvironmentTickEvents;
+import com.github.thedeathlycow.thermoo.impl.Thermoo;
 import dev.yumi.commons.TriState;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.VisibleForTesting;
@@ -25,7 +26,9 @@ public final class ServerPlayerEnvironmentTickListeners {
     }
 
     private static int getTemperatureChange(EnvironmentTickContext<ServerPlayer> context) {
-        if (context.affected().isSpectator()) {
+        ServerPlayer player = context.affected();
+
+        if (player.isSpectator()) {
             return 0;
         }
 
@@ -35,12 +38,16 @@ public final class ServerPlayerEnvironmentTickListeners {
         EnvironmentSettings settings = FrostifulConfigYACL.environmentSettings();
         int total = envTemperatureToTemperaturePoint(temperature, settings);
 
-        if (total < 0 && context.affected().thermoo$isWet()) {
+        if (total < 0 && player.thermoo$isWet()) {
             total = (int) (total * settings.environmentFreezingSoakedMultiplier());
         }
 
-        if (context.affected().tickCount % 20 == 0 && Frostiful.LOGGER.isDebugEnabled()) {
-            Frostiful.LOGGER.debug("Adding {} temperature to {}", total, context.affected().getScoreboardName());
+        if (player.tickCount % 20 == 0 && Frostiful.LOGGER.isDebugEnabled()) {
+            Frostiful.LOGGER.debug("Adding {} temperature to {}", total, player.getScoreboardName());
+        }
+
+        if (total == 0 && player.thermoo$isCold() && temperature.valueInUnit(TemperatureUnit.CELSIUS) >= 15) {
+            total = 1;
         }
 
         return total;
