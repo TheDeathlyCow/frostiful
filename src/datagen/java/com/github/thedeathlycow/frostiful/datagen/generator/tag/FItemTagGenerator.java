@@ -132,21 +132,21 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
         valueLookupBuilder(ItemTags.ARROWS)
                 .add(FItems.GLACIAL_ARROW);
 
-        valueLookupBuilder(ItemTags.CHEST_ARMOR)
-                .add(FItems.FUR_CHESTPLATE)
-                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE);
-
-        valueLookupBuilder(ItemTags.FOOT_ARMOR)
-                .addOptionalTag(FItemTags.FUR_BOOTS)
-                .addOptionalTag(FItemTags.ICE_SKATES);
-
         valueLookupBuilder(ItemTags.HEAD_ARMOR)
                 .add(FItems.FUR_HELMET)
                 .add(FItems.FUR_PADDED_CHAINMAIL_HELMET);
 
+        valueLookupBuilder(ItemTags.CHEST_ARMOR)
+                .add(FItems.FUR_CHESTPLATE)
+                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE);
+
         valueLookupBuilder(ItemTags.LEG_ARMOR)
-                .add(FItems.FUR_BOOTS)
-                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS);
+                .add(FItems.FUR_LEGGINGS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS);
+
+        valueLookupBuilder(ItemTags.FOOT_ARMOR)
+                .addOptionalTag(FItemTags.FUR_BOOTS)
+                .addOptionalTag(FItemTags.ICE_SKATES);
 
         valueLookupBuilder(ItemTags.SLABS)
                 .add(FItems.PACKED_SNOW_BRICK_SLAB)
