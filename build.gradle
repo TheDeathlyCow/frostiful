@@ -89,7 +89,7 @@ dependencies {
 
     implementation "dev.isxander:yet-another-config-lib:${project.yacl_version}"
 
-    implementation "com.github.TheDeathlyCow:thermoo:v${project.thermoo_version}"
+    implementation "com.github.TheDeathlyCow.thermoo:thermoo-fabric:v${project.thermoo_version}"
 
     implementation "org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cardinal_components_version}"
     implementation "org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cardinal_components_version}"

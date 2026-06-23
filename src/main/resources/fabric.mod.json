@@ -65,14 +65,14 @@
         }
     ],
     "depends": {
-        "fabricloader": ">=0.18.5",
+        "fabricloader": ">=0.19.3",
         "fabric-api": ">=0.144.3+26.1",
         "minecraft": "~26.1-",
-        "thermoo": "~10.0-",
+        "thermoo": "*",
         "java": ">=25",
-        "yet_another_config_lib_v3": "~3.9-",
-        "cardinal-components-base": "~8.0-",
-        "cardinal-components-entity": "~8.0-"
+        "yet_another_config_lib_v3": ">=3.9.4",
+        "cardinal-components-base": ">=8.0.0",
+        "cardinal-components-entity": ">=8.0.0"
     },
     "suggests": {
         "scorchful": "*",
