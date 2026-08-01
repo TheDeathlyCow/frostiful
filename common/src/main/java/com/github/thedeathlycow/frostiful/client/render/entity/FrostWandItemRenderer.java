@@ -1,0 +1,79 @@
+package com.github.thedeathlycow.frostiful.client.render.entity;
+
+import com.github.thedeathlycow.frostiful.client.registry.FEntityModelLayers;
+import com.github.thedeathlycow.frostiful.client.render.model.FrostWandItemModel;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.serialization.MapCodec;
+
+import net.minecraft.client.renderer.SubmitNodeCollector;
+import net.minecraft.client.renderer.special.NoDataSpecialModelRenderer;
+import net.minecraft.client.renderer.special.SpecialModelRenderer;
+import org.joml.Vector3fc;
+import org.jspecify.annotations.Nullable;
+
+import java.util.function.Consumer;
+
+
+public class FrostWandItemRenderer implements NoDataSpecialModelRenderer {
+    // packed lightmap coordinates are (block << 4) | (sky << 20)
+    private static final int FULL_BRIGHTNESS = (15 << 4) | (15 << 20);
+
+    private final FrostWandItemModel model;
+
+    public FrostWandItemRenderer(FrostWandItemModel model) {
+        this.model = model;
+    }
+
+    @Override
+    public void getExtents(Consumer<Vector3fc> vertices) {
+        var matrixStack = new PoseStack();
+        matrixStack.scale(1.0F, -1.0F, -1.0F);
+        this.model.root().getExtentsForGui(matrixStack, vertices);
+    }
+
+    @Override
+    public void submit(
+            PoseStack poseStack,
+            SubmitNodeCollector submitNodeCollector,
+            int lightCoords,
+            int overlayCoords,
+            boolean hasFoil,
+            int outlineColor
+    ) {
+        poseStack.pushPose();
+        poseStack.scale(1.0F, -1.0F, -1.0F);
+
+        submitNodeCollector.submitModelPart(
+                this.model.root(),
+                poseStack,
+                this.model.renderType(FrostWandItemModel.TEXTURE),
+                FULL_BRIGHTNESS,
+                overlayCoords,
+                null,
+                false,
+                hasFoil,
+                -1,
+                null,
+                outlineColor
+        );
+
+        poseStack.popPose();
+    }
+
+    
+    public record Unbaked() implements NoDataSpecialModelRenderer.Unbaked {
+        public static final MapCodec<FrostWandItemRenderer.Unbaked> CODEC = MapCodec.unit(new FrostWandItemRenderer.Unbaked());
+
+        @Override
+        public SpecialModelRenderer<Void> bake(BakingContext context) {
+            return new FrostWandItemRenderer(
+                    new FrostWandItemModel(context.entityModelSet().bakeLayer(FEntityModelLayers.FROST_WAND))
+            );
+        }
+
+        @Override
+        public MapCodec<FrostWandItemRenderer.Unbaked> type() {
+            return CODEC;
+        }
+    }
+}

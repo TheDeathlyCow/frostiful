@@ -2,7 +2,7 @@ name: Crowdin Upload Translations
 
 on:
   push:
-    paths: [ 'src/main/resources/assets/frostiful/lang/**', 'src/main/generated/assets/frostiful/lang/**' ]
+    paths: [ '../../common/src/main/resources/assets/frostiful/lang/**', '../../common/src/main/generated/assets/frostiful/lang/**' ]
     branches:
       - 26.1
   workflow_dispatch:
