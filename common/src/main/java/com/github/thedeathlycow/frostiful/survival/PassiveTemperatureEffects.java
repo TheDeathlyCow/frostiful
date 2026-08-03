@@ -2,9 +2,9 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
-import com.github.thedeathlycow.frostiful.entity.attachment.SnowAccumulationComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FEnchantmentTags;
+import com.github.thedeathlycow.frostiful.survival.system.SnowAccumulationSystem;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.EnvironmentTickContext;
 import com.github.thedeathlycow.thermoo.api.core.v2.event.LivingEntityTemperatureTickEvents;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
@@ -70,7 +70,7 @@ public final class PassiveTemperatureEffects {
     private static int getAndUpdateBlockLightTemperatureChange(EnvironmentTickContext<? extends LivingEntity> context) {
         int warmthFromLight = getBlockLightTemperatureChange(context.level(), context.pos());
         if (warmthFromLight > 0) {
-            SnowAccumulationComponent.get(context.affected()).meltSnowAccumulation();
+            SnowAccumulationSystem.tryMeltSnowAccumulation(context.affected());
         }
 
         return warmthFromLight;

@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
-import com.github.thedeathlycow.frostiful.FrostifulModMenu;
+import com.github.thedeathlycow.frostiful.client.FrostifulConfigScreen;
 import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.DifficultySetting;
@@ -319,54 +319,54 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add("frostiful.splash.download_museswipr", "Download Museswipr on Steam!");
 
-        builder.add(FrostifulModMenu.TITLE, "Frostiful Config");
-        builder.add(FrostifulModMenu.CLIENT_TITLE, "Client Settings");
-        builder.add(FrostifulModMenu.COMMON_TITLE, "Common Settings");
+        builder.add(FrostifulConfigScreen.TITLE, "Frostiful Config");
+        builder.add(FrostifulConfigScreen.CLIENT_TITLE, "Client Settings");
+        builder.add(FrostifulConfigScreen.COMMON_TITLE, "Common Settings");
 
-        builder.add(FrostifulModMenu.ACCESSIBILITY_CATEGORY, "Accessibility Settings");
-        builder.add(FrostifulModMenu.ACCESSIBILITY_DESC, "Settings for accessibility.");
+        builder.add(FrostifulConfigScreen.ACCESSIBILITY_CATEGORY, "Accessibility Settings");
+        builder.add(FrostifulConfigScreen.ACCESSIBILITY_DESC, "Settings for accessibility.");
 
-        builder.add(FrostifulModMenu.DISPLAY_CATEGORY, "Display Settings");
-        builder.add(FrostifulModMenu.DISPLAY_DESC, "Settings that affect display.");
+        builder.add(FrostifulConfigScreen.DISPLAY_CATEGORY, "Display Settings");
+        builder.add(FrostifulConfigScreen.DISPLAY_DESC, "Settings that affect display.");
 
-        builder.add(FrostifulModMenu.ENVIRONMENT_CATEGORY, "Environment Settings");
-        builder.add(FrostifulModMenu.ENVIRONMENT_DESC, "Server-side settings for environment simulation.");
+        builder.add(FrostifulConfigScreen.ENVIRONMENT_CATEGORY, "Environment Settings");
+        builder.add(FrostifulConfigScreen.ENVIRONMENT_DESC, "Server-side settings for environment simulation.");
         builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.TEMPERATURE_GROUP), "Temperature values");
         builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.SHIVERING_GROUP), "Shivering");
 
-        builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_CATEGORY, "Temperature Sources");
-        builder.add(FrostifulModMenu.TEMPERATURE_SOURCE_DESC, "Configure temperature sources.");
+        builder.add(FrostifulConfigScreen.TEMPERATURE_SOURCE_CATEGORY, "Temperature Sources");
+        builder.add(FrostifulConfigScreen.TEMPERATURE_SOURCE_DESC, "Configure temperature sources.");
         builder.add(Translate.categoryKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.GENERAL_CATEGORY), "General");
         builder.add(Translate.categoryKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY), "Temperature Sources");
         builder.add(Translate.groupKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.COOLING_GROUP), "Cooling Sources");
         builder.add(Translate.groupKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.HEATING_GROUP), "Heating Sources");
 
-        builder.add(FrostifulModMenu.SOAKING_CATEGORY, "Soaking Settings");
-        builder.add(FrostifulModMenu.SOAKING_DESC, "Server-side settings for soaking/wetness.");
+        builder.add(FrostifulConfigScreen.SOAKING_CATEGORY, "Soaking Settings");
+        builder.add(FrostifulConfigScreen.SOAKING_DESC, "Server-side settings for soaking/wetness.");
         builder.add(Translate.mainGroupKey(SoakingSettings.HANDLER, SoakingSettings.SOAKING_GROUP), "Soaking");
         builder.add(Translate.mainGroupKey(SoakingSettings.HANDLER, SoakingSettings.DRYING_GROUP), "Drying");
 
-        builder.add(FrostifulModMenu.BLOCK_CATEGORY, "Block Settings");
-        builder.add(FrostifulModMenu.BLOCK_DESC, "Server-side settings that relate to blocks.");
+        builder.add(FrostifulConfigScreen.BLOCK_CATEGORY, "Block Settings");
+        builder.add(FrostifulConfigScreen.BLOCK_DESC, "Server-side settings that relate to blocks.");
         builder.add(Translate.mainGroupKey(BlockSettings.HANDLER, BlockSettings.ICICLE_GROUP), "Icicles");
         builder.add(Translate.mainGroupKey(BlockSettings.HANDLER, BlockSettings.SUN_LICHEN_GROUP), "Sun Lichens");
         builder.add(Translate.mainGroupKey(BlockSettings.HANDLER, BlockSettings.CAMPFIRE_GROUP), "Campfires");
 
-        builder.add(FrostifulModMenu.ENTITY_CATEGORY, "Entity Settings");
-        builder.add(FrostifulModMenu.ENTITY_DESC, "Server-side settings that relate to entities and mobs.");
+        builder.add(FrostifulConfigScreen.ENTITY_CATEGORY, "Entity Settings");
+        builder.add(FrostifulConfigScreen.ENTITY_DESC, "Server-side settings that relate to entities and mobs.");
         builder.add(Translate.mainGroupKey(EntitySettings.HANDLER, EntitySettings.CHILLAGER_GROUP), "Chillagers & Frostologers");
         builder.add(Translate.mainGroupKey(EntitySettings.HANDLER, EntitySettings.MISC_GROUP), "Miscellaneous");
         generateConfigEnumTranslations(builder, DifficultySetting.class, "Automatic", "Peaceful", "Easy", "Normal", "Hard");
 
-        builder.add(FrostifulModMenu.ITEM_CATEGORY, "Item Settings");
-        builder.add(FrostifulModMenu.ITEM_DESC, "Server-side settings that relate to items.");
+        builder.add(FrostifulConfigScreen.ITEM_CATEGORY, "Item Settings");
+        builder.add(FrostifulConfigScreen.ITEM_DESC, "Server-side settings that relate to items.");
         builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.FROST_WAND_GROUP), "Frost Wands");
         builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.PACKED_SNOWBALL_GROUP), "Packed Snowballs");
         builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.ICICLE_GROUP), "Icicles");
         builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.MISC_GROUP), "Miscellaneous");
 
-        builder.add(FrostifulModMenu.WEATHER_CATEGORY, "Weather Settings");
-        builder.add(FrostifulModMenu.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
+        builder.add(FrostifulConfigScreen.WEATHER_CATEGORY, "Weather Settings");
+        builder.add(FrostifulConfigScreen.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
         builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_GROUP), "Icicles");
         builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.WIND_GROUP), "Freezing Wind");
         generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");

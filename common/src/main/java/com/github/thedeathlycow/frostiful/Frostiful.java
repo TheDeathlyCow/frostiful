@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.datafix.StructureUpdateHelper;
-import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
@@ -42,7 +42,7 @@ public class Frostiful implements ModInitializer {
 
         if (isDevelopmentEnvironment()) {
             CommandRegistrationCallback.EVENT.register(
-                    (dispatcher, registryAccess, environment) -> {
+                    (dispatcher, _, _) -> {
                         RootCommand.register(dispatcher);
                         WindCommand.register(dispatcher);
                         FrostedBanner.registerCommand(dispatcher);
@@ -52,6 +52,7 @@ public class Frostiful implements ModInitializer {
         LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
 
         FrostifulRegistries.initialize();
+        FDataAttachments.initialize();
         FBlocks.initialize();
         FDataComponentTypes.initialize();
         FItems.initialize();
@@ -73,7 +74,7 @@ public class Frostiful implements ModInitializer {
         FBlockTransformerTypes.initialize();
         FEnvironmentProviderTypes.initialize();
 
-        ServerLivingEntityEvents.AFTER_DAMAGE.register(FrostWandRootComponent::afterDamage);
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(FrostRootSystem::afterDamage);
 
         this.registerThermooEventListeners();
         PayloadTypeRegistry.clientboundPlay().register(

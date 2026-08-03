@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
-import com.github.thedeathlycow.frostiful.entity.attachment.BrushedData;
+import com.github.thedeathlycow.frostiful.survival.system.BrushSystem;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -27,6 +27,6 @@ public abstract class AnimalEntityMixin extends Mob {
     )
     private InteractionResult postInteract(InteractionResult original, Player player, InteractionHand hand) {
         Animal animal = (Animal) (Object) this;
-        return BrushedData.interactWithMob(animal, player, hand, original);
+        return BrushSystem.interactWithMob(animal, player, hand, original);
     }
 }

@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import com.github.thedeathlycow.frostiful.entity.attachment.BrushedData;
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
+import com.github.thedeathlycow.frostiful.survival.system.BrushSystem;
+import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
@@ -107,8 +107,8 @@ public class PlayFightGoal<T extends PathfinderMob> extends Goal {
             return;
         }
 
-        BrushedData brushedData = FCardinalComponents.BRUSHABLE_COMPONENT.getNullable(this.mob);
-        if (brushedData == null || !brushedData.wasBrushed()) {
+        long lastBrushTime = this.mob.getAttachedOrCreate(FDataAttachments.LAST_BRUSH_TIME);
+        if (!BrushSystem.wasBrushed(this.mob, lastBrushTime)) {
             FLootHelper.dropPlayfightLoot(this.mob, this.furLootTable);
         }
 

@@ -1,19 +1,19 @@
-package com.github.thedeathlycow.frostiful;
+package com.github.thedeathlycow.frostiful.client;
 
 import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.config.section.*;
-import com.terraformersmc.modmenu.api.ConfigScreenFactory;
-import com.terraformersmc.modmenu.api.ModMenuApi;
 import dev.isxander.yacl3.api.*;
 import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
-
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.util.function.Function;
 
-public class FrostifulModMenu implements ModMenuApi {
+
+public class FrostifulConfigScreen {
     public static final String TITLE = "frostiful.title";
     public static final String CLIENT_TITLE = "frostiful.config.client.title";
     public static final String COMMON_TITLE = "frostiful.config.common.title";
@@ -38,8 +38,7 @@ public class FrostifulModMenu implements ModMenuApi {
     public static final String ITEM_DESC = Translate.descKey(ItemSettings.HANDLER);
     public static final String WEATHER_DESC = Translate.descKey(WeatherSettings.HANDLER);
 
-    @Override
-    public ConfigScreenFactory<?> getModConfigScreenFactory() {
+    public static Function<Screen, ? extends Screen> getConfigScreenFactory() {
         return parent -> YetAnotherConfigLib.createBuilder()
                 .title(Component.translatable(TITLE))
                 .category(

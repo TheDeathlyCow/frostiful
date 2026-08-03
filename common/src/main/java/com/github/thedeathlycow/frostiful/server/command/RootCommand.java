@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.server.command;
 
-import com.github.thedeathlycow.frostiful.entity.attachment.FrostWandRootComponent;
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
+import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
@@ -51,8 +50,7 @@ public class RootCommand {
         int sum = 0;
         for (Entity entity : targets) {
             if (entity instanceof LivingEntity livingEntity) {
-                FrostWandRootComponent component = FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity);
-                component.setRootedTicks(duration);
+                livingEntity.setAttached(FDataAttachments.FROST_WAND_ROOT_TICKS, duration);
                 sum += duration;
             }
         }

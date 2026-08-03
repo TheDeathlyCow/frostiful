@@ -3,7 +3,8 @@ package com.github.thedeathlycow.frostiful.client.mixin.entity.render;
 import com.github.thedeathlycow.frostiful.client.BrushableTextures;
 import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.client.render.state.FPolarBearEntityRenderState;
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
+import com.github.thedeathlycow.frostiful.survival.system.BrushSystem;
+import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import net.minecraft.client.renderer.entity.PolarBearRenderer;
@@ -21,8 +22,9 @@ public class PolarBearRendererMixin {
             method = "extractRenderState(Lnet/minecraft/world/entity/animal/polarbear/PolarBear;Lnet/minecraft/client/renderer/entity/state/PolarBearRenderState;F)V",
             at = @At("TAIL")
     )
-    private void updateRenderState(PolarBear entity, PolarBearRenderState state, float tickDelta, CallbackInfo ci) {
-        ((FPolarBearEntityRenderState) state).frostiful$wasSheared(FCardinalComponents.BRUSHABLE_COMPONENT.get(entity).wasBrushed());
+    private void updateRenderState(PolarBear polarBear, PolarBearRenderState state, float tickDelta, CallbackInfo ci) {
+        long lastBrushTime = polarBear.getAttachedOrCreate(FDataAttachments.LAST_BRUSH_TIME);
+        ((FPolarBearEntityRenderState) state).frostiful$wasSheared(BrushSystem.wasBrushed(polarBear, lastBrushTime));
     }
 
     @WrapMethod(

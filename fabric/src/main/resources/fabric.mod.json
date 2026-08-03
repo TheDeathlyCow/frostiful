@@ -48,7 +48,7 @@
             "com.github.thedeathlycow.frostiful.FrostifulClient"
         ],
         "modmenu": [
-            "com.github.thedeathlycow.frostiful.FrostifulModMenu"
+            "com.github.thedeathlycow.frostiful.fabric.client.FrostifulModMenu"
         ],
         "cardinal-components-entity": [
             "com.github.thedeathlycow.frostiful.registry.FCardinalComponents"
@@ -81,10 +81,7 @@
     "accessWidener": "frostiful.classtweaker",
     "custom": {
         "cardinal-components": [
-            "frostiful:living_entity",
-            "frostiful:brushable",
-            "frostiful:frost_wand_root",
-            "frostiful:snow_accumulation"
+            "frostiful:living_entity"
         ],
         "modmenu": {
             "links": {
