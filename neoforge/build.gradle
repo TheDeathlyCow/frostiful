@@ -1,0 +1,109 @@
+plugins {
+    id 'multiloader-loader'
+    id 'org.relativitymc.neo-loom'
+    id 'me.modmuss50.mod-publish-plugin'
+}
+
+def commonProject = project(':common')
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    forgeUserdev "net.neoforged:neoforge:${project.neoforge_version}:userdev"
+    include("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
+
+    implementation("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.fabric_version}+${project.ffapi_subversion}")
+    implementation("dev.isxander:yet-another-config-lib:${project.yacl_neoforge_version}")
+
+    implementation("com.github.TheDeathlyCow.thermoo:thermoo-neoforge:v${project.thermoo_version}")
+
+    gametestImplementation commonProject.sourceSets.gametest.output
+}
+
+loom {
+    def ct = commonProject.file("src/main/resources/${mod_id}.classtweaker")
+    if (ct.exists()) {
+        accessWidenerPath.set(ct)
+        convertAw2At(tasks.named("jar", Jar), ["${mod_id}.classtweaker"])
+    }
+
+    interfaceInjection {
+        enableDependencyInterfaceInjection = true
+    }
+
+    runs {
+        client {
+            client()
+            setConfigName('Neoforge Client')
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+
+        server {
+            server()
+            setConfigName('Neoforge Server')
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+
+        clientManualTest {
+            client()
+            setConfigName('Neoforge Manual Test Client')
+            ideConfigGenerated(true)
+            runDir('runs/clientManualTest')
+            source(sourceSets.gametest)
+            property('neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test")
+        }
+
+        serverManualTest {
+            server()
+            setConfigName('Neoforge Manual Test Server')
+            ideConfigGenerated(true)
+            runDir('runs/serverManualTest')
+            source(sourceSets.gametest)
+            property('neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test")
+        }
+
+        gameTest {
+            environment("gameTestServer")
+            setConfigName('Neoforge Game test')
+            ideConfigGenerated(true)
+            runDir('build/gametest')
+            source(sourceSets.gametest)
+            property('neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test")
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+
+        "${mod_id}_test" {
+            sourceSet(sourceSets.gametest)
+        }
+    }
+}
+
+tasks.named('build') {
+    dependsOn('runGameTest')
+}
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements', 'includeInternal', 'modCompileClasspath'].each { variant ->
+    configurations.named(variant) {
+        attributes {
+            attribute(loaderAttribute, 'neoforge')
+        }
+    }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant ->
+        configurations.named(variant) {
+            attributes {
+                attribute(loaderAttribute, 'neoforge')
+            }
+        }
+    }
+}
+

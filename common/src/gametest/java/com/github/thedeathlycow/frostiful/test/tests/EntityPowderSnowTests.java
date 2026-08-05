@@ -14,9 +14,9 @@ import net.minecraft.world.item.Items;
 
 @SuppressWarnings("unused")
 public class EntityPowderSnowTests {
-    private static final String NIGHT_ENVIRONMENT = "frostiful-test:night";
+    private static final String NIGHT_ENVIRONMENT = "frostiful_test:night";
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
+    @GameTest(structure = "frostiful_test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombieWearingFurBootsDoesNotFall(GameTestHelper context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
@@ -32,7 +32,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
+    @GameTest(structure = "frostiful_test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombieWearingChainmailFurBootsDoesNotFall(GameTestHelper context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
@@ -47,7 +47,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
+    @GameTest(structure = "frostiful_test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombieWearingLeatherBootsDoesNotFall(GameTestHelper context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
@@ -63,7 +63,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
+    @GameTest(structure = "frostiful_test:powder_snow_walkable_test", environment = NIGHT_ENVIRONMENT)
     public void zombieWearingNoBootsFalls(GameTestHelper context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 
@@ -77,7 +77,7 @@ public class EntityPowderSnowTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:powder_snow_walkable_test")
+    @GameTest(structure = "frostiful_test:powder_snow_walkable_test")
     public void rabbitDoesNotFall(GameTestHelper context) {
         BlockPos spawnPos = new BlockPos(1, 2, 1);
 

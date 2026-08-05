@@ -11,7 +11,7 @@ import net.minecraft.world.entity.npc.villager.Villager;
 
 @SuppressWarnings("unused")
 public class HotFloorTests {
-    @GameTest(structure = "frostiful-test:magma_block_test", maxTicks = 40)
+    @GameTest(structure = "frostiful_test:magma_block_test", maxTicks = 40)
     public void villagerOnMagmaHeatedMoreThanVillagerOnStone(GameTestHelper context) {
         int temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().hotFloorTemperatureChange();
 

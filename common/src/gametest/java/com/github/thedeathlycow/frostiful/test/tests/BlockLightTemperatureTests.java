@@ -11,7 +11,7 @@ import net.minecraft.world.level.block.Blocks;
 
 @SuppressWarnings("unused")
 public class BlockLightTemperatureTests {
-    @GameTest(structure = "frostiful-test:effects.local_temperature")
+    @GameTest(structure = "frostiful_test:effects.local_temperature")
     public void villagerIsWarmedByTorch(GameTestHelper context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
@@ -46,7 +46,7 @@ public class BlockLightTemperatureTests {
         );
     }
 
-    @GameTest(structure = "frostiful-test:effects.local_temperature")
+    @GameTest(structure = "frostiful_test:effects.local_temperature")
     public void villagerInBoatIsWarmedByTorch(GameTestHelper context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;
@@ -96,7 +96,7 @@ public class BlockLightTemperatureTests {
     }
 
 
-    @GameTest(structure = "frostiful-test:effects.local_temperature")
+    @GameTest(structure = "frostiful_test:effects.local_temperature")
     public void villagerIsNotWarmedWithoutTorch(GameTestHelper context) {
         BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = -2000;

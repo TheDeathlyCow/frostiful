@@ -49,6 +49,9 @@ repositories {
         name = 'Neoforge'
         url = 'https://maven.neoforged.net/'
     }
+    maven {
+        url "https://maven.sinytra.org"
+    }
     exclusiveContent {
         forRepository {
             maven {

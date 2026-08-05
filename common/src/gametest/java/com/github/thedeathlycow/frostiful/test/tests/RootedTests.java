@@ -12,7 +12,7 @@ import net.minecraft.world.entity.Mob;
 @SuppressWarnings("unused")
 public class RootedTests {
 
-    @GameTest(structure = "frostiful-test:effects.platform")
+    @GameTest(structure = "frostiful_test:effects.platform")
     public void villagerStopsWalkingWhenRooted(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 1, 1);
         BlockPos end = start.offset(2, 0, 2);
@@ -24,7 +24,7 @@ public class RootedTests {
         context.succeedWhenEntityPresent(EntityType.VILLAGER, start);
     }
 
-    @GameTest(structure = "frostiful-test:effects.platform")
+    @GameTest(structure = "frostiful_test:effects.platform")
     public void villagerCanWalkWhenNotRooted(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 1, 1);
         BlockPos end = start.offset(2, 0, 2);
@@ -35,7 +35,7 @@ public class RootedTests {
         context.succeedWhenEntityPresent(EntityType.VILLAGER, end);
     }
 
-    @GameTest(structure = "frostiful-test:effects.platform")
+    @GameTest(structure = "frostiful_test:effects.platform")
     public void villagerRootIsNotReset(GameTestHelper context) {
         BlockPos start = new BlockPos(1, 1, 1);
 

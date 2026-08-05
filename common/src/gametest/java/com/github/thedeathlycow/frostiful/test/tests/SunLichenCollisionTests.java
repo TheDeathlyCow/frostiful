@@ -21,7 +21,7 @@ import java.util.function.Function;
 
 @SuppressWarnings("unused")
 public final class SunLichenCollisionTests {
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void coolLichenDoesNotDamage(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
@@ -32,7 +32,7 @@ public final class SunLichenCollisionTests {
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth());
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void hotLichenDamages(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
@@ -44,7 +44,7 @@ public final class SunLichenCollisionTests {
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, LivingEntity::getHealth, entity.getMaxHealth() - 1.0f);
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void coldLichenDoesNotWarm(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
@@ -59,7 +59,7 @@ public final class SunLichenCollisionTests {
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void sunLichenDoesNotOverheat(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
 
@@ -75,7 +75,7 @@ public final class SunLichenCollisionTests {
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void warmVillagerIsBurnedByHotSunLichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = 500;
@@ -91,7 +91,7 @@ public final class SunLichenCollisionTests {
         });
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void warmVillagerIsNotBurnedByCoolSunLichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = 500;
@@ -107,17 +107,17 @@ public final class SunLichenCollisionTests {
         });
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void hotLichenWarmsVillager(GameTestHelper context) {
         expectWarmLichenWarmsVillager(context, FBlocks.HOT_SUN_LICHEN);
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void warmLichenWarmsVillager(GameTestHelper context) {
         expectWarmLichenWarmsVillager(context, FBlocks.WARM_SUN_LICHEN);
     }
 
-    @GameTest(structure = "frostiful-test:sun_lichen_tests.platform")
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void coolLichenWarmsVillager(GameTestHelper context) {
         expectWarmLichenWarmsVillager(context, FBlocks.COOL_SUN_LICHEN);
     }

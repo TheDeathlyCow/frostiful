@@ -66,7 +66,7 @@ plugins {
 //
 //    configureTests {
 //        createSourceSet = true
-//        modId = "frostiful-test"
+//        modId = "frostiful_test"
 //        enableGameTests = true
 //        enableClientGameTests = false
 //        eula = true
