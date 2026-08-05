@@ -3,8 +3,8 @@ package com.github.thedeathlycow.frostiful.item;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.ItemSettings;
 import com.github.thedeathlycow.frostiful.entity.FrostSpell;
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -70,8 +70,7 @@ public class FrostWandItem extends Item {
     @Override
     public float getAttackDamageBonus(Entity target, float baseAttackDamage, DamageSource damageSource) {
         Entity attacker = damageSource.getEntity();
-        boolean resetCooldown = target instanceof LivingEntity livingEntity
-                && FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(livingEntity).isRooted();
+        boolean resetCooldown = target instanceof LivingEntity livingEntity && FrostRootSystem.isRooted(livingEntity);
         if (attacker instanceof Player player && resetCooldown) {
             player.getCooldowns().addCooldown(this.getDefaultInstance(), 0);
         }

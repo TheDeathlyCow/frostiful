@@ -1,10 +1,10 @@
 package com.github.thedeathlycow.frostiful.entity;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -79,7 +79,7 @@ public class Biter extends Monster {
         this.attackTicks = ATTACK_TIME;
         level.broadcastEntityEvent(this, EntityEvent.START_ATTACKING);
         this.playAttackSound();
-        if (target instanceof LivingEntity livingTarget && FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(livingTarget).isRooted()) {
+        if (target instanceof LivingEntity livingTarget && FrostRootSystem.isRooted(livingTarget)) {
             int amplifier = FrostifulConfigYACL.entitySettings().getFrostBiteAmplifier(level);
 
             livingTarget.addEffect(

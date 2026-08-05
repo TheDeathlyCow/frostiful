@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.client.render.entity;
 
 import com.github.thedeathlycow.frostiful.client.render.state.FLivingEntityRenderState;
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
@@ -28,7 +28,7 @@ public final class IceBlockRenderer<T extends LivingEntity, S extends LivingEnti
     }
 
     public void extractRenderState(final T entity, final S state, final float partialTicks) {
-        boolean isRooted = FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(entity).isRooted();
+        boolean isRooted = FrostRootSystem.isRooted(entity);
         FLivingEntityRenderState frostifulState = (FLivingEntityRenderState) state;
         frostifulState.frostiful$isRooted(isRooted);
 

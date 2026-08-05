@@ -19,6 +19,7 @@ fabricApi {
 dependencies {
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
     implementation("net.fabricmc:fabric-loader:${project.fabric_loader_version}")
+    include("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
 
     implementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
     implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}")
@@ -28,6 +29,7 @@ dependencies {
     implementation("com.terraformersmc:modmenu:${project.mod_menu_version}")
 
     compileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}")
+
 
     testImplementation "net.fabricmc:fabric-loader-junit:${project.fabric_loader_version}"
 

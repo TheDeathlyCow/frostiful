@@ -10,6 +10,7 @@ import com.github.thedeathlycow.frostiful.item.enchantment.HeatDrainEnchantmentE
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.core.BlockPos;
@@ -419,8 +420,7 @@ public class Frostologer extends SpellcasterIllager implements RangedAttackMob {
 
     public boolean isTargetRooted() {
         LivingEntity target = this.getTarget();
-        return target != null
-                && FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(target).isRooted();
+        return target != null && FrostRootSystem.isRooted(target);
     }
 
     public boolean isUsingFrostWand() {

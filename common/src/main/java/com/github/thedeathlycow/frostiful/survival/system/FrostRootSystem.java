@@ -69,6 +69,10 @@ public final class FrostRootSystem {
         return null;
     }
 
+    public static boolean isRooted(LivingEntity entity) {
+        return entity.getAttachedOrElse(FDataAttachments.FROST_WAND_ROOT_TICKS, 0) < 0;
+    }
+
     public static void serverTick(LivingEntity provider) {
         if (!provider.hasAttached(FDataAttachments.FROST_WAND_ROOT_TICKS)) {
             return;
@@ -115,7 +119,7 @@ public final class FrostRootSystem {
         }
     }
 
-    public static boolean tryRootFromFrostWand(LivingEntity provider, @Nullable Entity originalCaster) {
+    public static boolean tryRootFromFrostWand(Entity provider, @Nullable Entity originalCaster) {
         if (canBeRootedBy(provider, originalCaster)) {
             provider.setAttached(FDataAttachments.FROST_WAND_ROOT_TICKS, FrostifulConfigYACL.itemSettings().frostWandRootTime());
             return true;
@@ -123,7 +127,7 @@ public final class FrostRootSystem {
         return false;
     }
 
-    private static boolean canBeRootedBy(LivingEntity provider, @Nullable Entity originalCaster) {
+    private static boolean canBeRootedBy(Entity provider, @Nullable Entity originalCaster) {
         if (provider.hasAttached(FDataAttachments.FROST_WAND_ROOT_TICKS)) {
             return false;
         }
@@ -136,7 +140,7 @@ public final class FrostRootSystem {
             return false;
         }
 
-        return provider.thermoo$canFreeze();
+        return !(provider instanceof LivingEntity livingEntity) || livingEntity.thermoo$canFreeze();
     }
 
     private static void dropAllBindingItems(LivingEntity victim) {

@@ -43,8 +43,7 @@ dependencies {
 
     // these mods are universal jars and have no loader-specific modules
     api("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
-    include("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
-    implementation("eu.pb4:trinkets:${trinkets_version}")
+    api("eu.pb4:trinkets:${trinkets_version}")
 
     testImplementation "org.junit.jupiter:junit-jupiter:5.+"
     testImplementation "org.mockito:mockito-core:3.+"

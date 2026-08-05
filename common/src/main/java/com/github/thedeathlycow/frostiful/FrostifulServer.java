@@ -6,7 +6,7 @@ import dev.yumi.mc.core.api.entrypoint.server.DedicatedServerModInitializer;
 
 public class FrostifulServer implements DedicatedServerModInitializer {
     @Override
-    public void onInitializeServer(ModContainer mod) {
+    public void onInitializeDedicatedServer(ModContainer mod) {
         Frostiful.LOGGER.info("Download MuseSwipr on Steam!");
     }
 }

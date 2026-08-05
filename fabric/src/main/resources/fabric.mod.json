@@ -50,9 +50,6 @@
         "modmenu": [
             "com.github.thedeathlycow.frostiful.fabric.client.FrostifulModMenu"
         ],
-        "cardinal-components-entity": [
-            "com.github.thedeathlycow.frostiful.registry.FCardinalComponents"
-        ],
         "colorfulhearts": [
             "com.github.thedeathlycow.frostiful.fabric.client.compat.ColorfulHeartsIntegration"
         ]

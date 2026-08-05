@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.entity;
 
-import com.github.thedeathlycow.frostiful.registry.FCardinalComponents;
 import com.github.thedeathlycow.frostiful.registry.FCriteria;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -81,7 +81,7 @@ public class FrostSpell extends SpellEntity {
     protected boolean applySingleTargetEffect(Entity target) {
         Level world = target.level();
         if (!world.isClientSide()) {
-            if (FCardinalComponents.FROST_WAND_ROOT_COMPONENT.get(target).tryRootFromFrostWand(this.getOwner())) {
+            if (FrostRootSystem.tryRootFromFrostWand(target, this.getOwner())) {
                 world.playSound(
                         null,
                         target.getX(), target.getY(), target.getZ(),
