@@ -1,6 +1,5 @@
 package com.github.thedeathlycow.frostiful.survival.environment;
 
-import com.github.thedeathlycow.frostiful.registry.FEnvironmentProviderTypes;
 import com.github.thedeathlycow.thermoo.api.environment.v2.provider.EnvironmentProvider;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;

@@ -12,7 +12,6 @@ import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FDamageTypeTags;
 import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
-
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;

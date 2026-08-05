@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.entity.*;
 import com.github.thedeathlycow.frostiful.client.render.feature.IceSkateFeatureRenderer;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
-
 import net.fabricmc.fabric.api.client.rendering.v1.LivingEntityRenderLayerRegistrationCallback;
 import net.minecraft.client.renderer.entity.*;
 import net.minecraft.client.renderer.entity.player.AvatarRenderer;

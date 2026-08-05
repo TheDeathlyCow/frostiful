@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.test.tests;
 
-import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import net.fabricmc.fabric.api.gametest.v1.GameTest;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.GameTestHelper;

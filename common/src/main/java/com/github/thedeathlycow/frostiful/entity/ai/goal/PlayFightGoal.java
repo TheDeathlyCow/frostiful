@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.entity.ai.goal;
 
-import com.github.thedeathlycow.frostiful.survival.system.BrushSystem;
 import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
+import com.github.thedeathlycow.frostiful.survival.system.BrushSystem;
 import com.github.thedeathlycow.frostiful.util.FLootHelper;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;

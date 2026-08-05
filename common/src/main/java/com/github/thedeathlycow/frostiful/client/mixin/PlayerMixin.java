@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.mixin;
 
 import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.compat.FrostifulIntegrations;
-
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.EntityType;

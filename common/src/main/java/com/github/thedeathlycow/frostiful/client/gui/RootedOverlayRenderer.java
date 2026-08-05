@@ -1,7 +1,7 @@
 package com.github.thedeathlycow.frostiful.client.gui;
 
-import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;

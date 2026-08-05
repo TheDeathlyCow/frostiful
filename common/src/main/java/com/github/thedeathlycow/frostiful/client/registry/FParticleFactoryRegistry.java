@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.particle.HeatDrainParticle;
 import com.github.thedeathlycow.frostiful.client.particle.WindParticle;
 import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
-
 import net.fabricmc.fabric.api.client.particle.v1.ParticleProviderRegistry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;

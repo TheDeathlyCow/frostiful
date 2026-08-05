@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.particle;
 
 import com.github.thedeathlycow.frostiful.particle.HeatDrainParticleEffect;
-
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.util.RandomSource;

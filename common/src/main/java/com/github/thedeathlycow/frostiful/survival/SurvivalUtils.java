@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.survival;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooEntityTypeTags;
-
 import net.minecraft.world.entity.LivingEntity;
 
 public class SurvivalUtils {

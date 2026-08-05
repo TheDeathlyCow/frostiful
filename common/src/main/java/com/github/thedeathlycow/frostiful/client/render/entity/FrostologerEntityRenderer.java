@@ -11,7 +11,6 @@ import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityR
 import com.github.thedeathlycow.frostiful.entity.frostologer.Frostologer;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.registry.FDataComponentTypes;
-
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.CustomHeadLayer;

@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.client.particle;
 
 import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
-
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;

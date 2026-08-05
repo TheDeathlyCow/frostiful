@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
+import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.frostiful.survival.system.SnowAccumulationSystem;
-import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.survival.system.SoakedFreezingSystem;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.entity.Entity;

@@ -34,6 +34,17 @@ public final class FDataAttachments {
             builder -> builder.initializer(() -> false)
     );
 
+    public static final AttachmentType<Boolean> WAS_ICE_SKATING = AttachmentRegistry.create(
+            Frostiful.id("was_ice_skating"),
+            builder -> builder.initializer(() -> false)
+                    .syncWith(ByteBufCodecs.BOOL, AttachmentSyncPredicate.all())
+    );
+
+    public static final AttachmentType<Boolean> WAS_SLOWED_BY_SKATES = AttachmentRegistry.create(
+            Frostiful.id("was_slowed_by_skates"),
+            builder -> builder.initializer(() -> false)
+    );
+
     public static void initialize() {
         Frostiful.LOGGER.info("Initialized data attachments");
     }

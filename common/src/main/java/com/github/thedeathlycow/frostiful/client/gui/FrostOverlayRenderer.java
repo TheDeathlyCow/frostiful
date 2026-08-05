@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.gui;
 
 import com.github.thedeathlycow.frostiful.client.config.FrostifulClientConfig;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.resources.Identifier;

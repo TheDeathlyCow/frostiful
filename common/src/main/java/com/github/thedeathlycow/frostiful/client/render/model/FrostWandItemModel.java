@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.render.model;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.state.FrostologerEntityRenderState;
-
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;

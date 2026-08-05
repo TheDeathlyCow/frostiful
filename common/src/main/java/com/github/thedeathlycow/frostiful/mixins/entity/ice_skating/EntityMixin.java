@@ -1,10 +1,11 @@
 package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 
-import com.github.thedeathlycow.frostiful.entity.IceSkater;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
+import com.github.thedeathlycow.frostiful.survival.system.IceSkateSystem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -14,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Entity.class)
-public abstract class EntitySoundMixin {
+public abstract class EntityMixin {
 
     @Shadow @Final protected RandomSource random;
 
@@ -30,10 +31,8 @@ public abstract class EntitySoundMixin {
             return;
         }
 
-        if (instance instanceof IceSkater iceSkater) {
-
-            boolean playGlideSound = iceSkater.frostiful$isIceSkating()
-                    && IceSkater.frostiful$isMoving(instance);
+        if (instance instanceof LivingEntity livingEntity) {
+            boolean playGlideSound = IceSkateSystem.isIceSkatingAndMoving(livingEntity);
 
             if (playGlideSound) {
                 // don't also play the normal step sounds

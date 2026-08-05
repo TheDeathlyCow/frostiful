@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.compat;
 
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import eu.pb4.trinkets.api.SlotGroup;
 import eu.pb4.trinkets.api.TrinketInventory;
 import eu.pb4.trinkets.api.TrinketsApi;
 import net.minecraft.core.component.DataComponentType;

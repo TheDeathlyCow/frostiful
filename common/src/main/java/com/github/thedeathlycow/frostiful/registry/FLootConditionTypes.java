@@ -1,9 +1,9 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.loot.IsChillagerLord;
 import com.github.thedeathlycow.frostiful.entity.loot.LocationWarmthLootCondition;
 import com.github.thedeathlycow.frostiful.entity.loot.RootedLootCondition;
-import com.github.thedeathlycow.frostiful.entity.loot.IsChillagerLord;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;

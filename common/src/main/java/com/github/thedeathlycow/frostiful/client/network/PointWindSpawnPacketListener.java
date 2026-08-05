@@ -4,7 +4,6 @@ import com.github.thedeathlycow.frostiful.particle.WindParticleEffect;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
 import com.github.thedeathlycow.frostiful.survival.wind.PointWindSpawnStrategy;
-
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleOptions;

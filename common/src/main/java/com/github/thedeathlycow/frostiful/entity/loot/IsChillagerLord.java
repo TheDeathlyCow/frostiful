@@ -1,7 +1,6 @@
 package com.github.thedeathlycow.frostiful.entity.loot;
 
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
-import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.mojang.serialization.MapCodec;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

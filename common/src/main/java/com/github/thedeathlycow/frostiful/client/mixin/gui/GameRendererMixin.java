@@ -5,7 +5,6 @@ import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySet
 import com.github.thedeathlycow.frostiful.survival.SurvivalUtils;
 import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.state.level.CameraRenderState;

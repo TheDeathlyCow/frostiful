@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.client.render.model.*;
-
 import net.fabricmc.fabric.api.client.rendering.v1.ModelLayerRegistry;
 import net.minecraft.client.model.geom.ModelLayerLocation;
 import net.minecraft.client.model.monster.illager.IllagerModel;

@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.mixin.entity.render;
 
 import com.github.thedeathlycow.frostiful.client.render.entity.IceBlockRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
-
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

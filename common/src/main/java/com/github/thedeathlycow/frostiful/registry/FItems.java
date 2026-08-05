@@ -9,7 +9,6 @@ import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
 import com.github.thedeathlycow.frostiful.registry.tag.FBannerPatternTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
-import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Registry;
 import net.minecraft.core.component.DataComponents;

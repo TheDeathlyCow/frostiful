@@ -2,7 +2,6 @@ package com.github.thedeathlycow.frostiful.client.render.model;
 
 import com.github.thedeathlycow.frostiful.client.anim.BiterAnimations;
 import com.github.thedeathlycow.frostiful.client.render.state.BiterEntityRenderState;
-
 import net.minecraft.client.animation.KeyframeAnimation;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.geom.ModelPart;

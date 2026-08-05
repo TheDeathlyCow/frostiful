@@ -5,8 +5,9 @@
     "compatibilityLevel": "JAVA_25",
     "client": [
         "CapeFeatureRendererMixin",
-        "PlayerMixin",
         "ElytraFeatureRendererMixin",
+        "GameRendererMixin",
+        "PlayerMixin",
         "SplashManagerMixin",
         "entity.render.ArmorStandRendererMixin",
         "entity.render.HumanoidMobRendererMixin",
@@ -15,10 +16,9 @@
         "entity.render.state.HumanoidRenderStateMixin",
         "entity.render.state.LivingEntityRenderStateMixin",
         "entity.render.state.PolarBearRenderStateMixin",
-        "gui.HeartTypeMixin",
-        "gui.GuiMixin",
         "gui.GameRendererMixin",
-        "GameRendererMixin"
+        "gui.GuiMixin",
+        "gui.HeartTypeMixin"
     ],
     "injectors": {
         "defaultRequire": 1

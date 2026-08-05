@@ -11,4 +11,7 @@ public interface EntityInvoker {
 
     @Invoker("playEntityOnFireExtinguishedSound")
     void frostiful$invokePlayExtinguishSound();
+
+    @Invoker("spawnSprintParticle")
+    void frostiful$spawnSprintParticle();
 }
