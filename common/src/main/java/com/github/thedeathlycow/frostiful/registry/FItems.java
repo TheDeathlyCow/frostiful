@@ -336,6 +336,11 @@ public final class FItems {
     private static Item register(String id, Function<Item.Properties, Item> itemFactory, Item.Properties settings) {
         ResourceKey<Item> key = ResourceKey.create(Registries.ITEM, Frostiful.id(id));
         Item item = itemFactory.apply(settings.setId(key));
+
+        if (item instanceof BlockItem blockItem) {
+            blockItem.registerBlocks(Item.BY_BLOCK, item);
+        }
+
         return Registry.register(BuiltInRegistries.ITEM, key, item);
     }
 

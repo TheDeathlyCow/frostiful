@@ -17,6 +17,7 @@ import com.github.thedeathlycow.frostiful.survival.SoakingEffects;
 import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatusEvents;
 import dev.yumi.commons.TriState;
+import dev.yumi.commons.event.EventManager;
 import dev.yumi.mc.core.api.ModContainer;
 import dev.yumi.mc.core.api.YumiMods;
 import dev.yumi.mc.core.api.entrypoint.ModInitializer;
@@ -32,9 +33,9 @@ import org.slf4j.LoggerFactory;
 import java.nio.file.Path;
 
 public class Frostiful implements ModInitializer {
-
     public static final String MODID = "frostiful";
     public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    public static final EventManager<Identifier> EVENT_MANAGER = new EventManager<>(id("default"), Identifier::parse);
 
     @Override
     public void onInitialize(ModContainer mod) {

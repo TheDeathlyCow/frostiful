@@ -29,10 +29,8 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 
 public class CampfireUseEventListener implements UseBlockCallback {
-
     @Override
     public InteractionResult interact(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
-
         if (player.isSpectator()) {
             return InteractionResult.PASS;
         }

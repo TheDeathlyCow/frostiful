@@ -1,8 +1,8 @@
 package com.github.thedeathlycow.frostiful.datafix;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import dev.yumi.mc.core.api.YumiMods;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.data.structures.StructureUpdater;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtAccounter;
@@ -22,7 +22,7 @@ public final class StructureUpdateHelper {
     private static final Path OUT_PATH = Paths.get("./generated");
 
     public static void initialize() {
-        if (FabricLoader.getInstance().isDevelopmentEnvironment() && System.getProperty("frostiful.update-structures") != null) {
+        if (YumiMods.get().isDevelopmentEnvironment() && System.getProperty("frostiful.update-structures") != null) {
             ServerLifecycleEvents.SERVER_STARTED.register(server -> {
                 updateAllStructures();
                 Frostiful.LOGGER.info("All structures updated! :)");
@@ -32,7 +32,7 @@ public final class StructureUpdateHelper {
     }
 
     private static void updateAllStructures() {
-        if (!FabricLoader.getInstance().isDevelopmentEnvironment()) {
+        if (!YumiMods.get().isDevelopmentEnvironment()) {
             throw new IllegalStateException("Structures may only be updated in a dev environment!");
         }
 

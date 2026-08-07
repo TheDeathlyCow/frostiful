@@ -1,6 +1,6 @@
 package com.github.thedeathlycow.frostiful.compat;
 
-import net.fabricmc.loader.api.FabricLoader;
+import dev.yumi.mc.core.api.YumiMods;
 
 public class FrostifulIntegrations {
 
@@ -25,6 +25,6 @@ public class FrostifulIntegrations {
     }
 
     public static boolean isModLoaded(String id) {
-        return FabricLoader.getInstance().isModLoaded(id);
+        return YumiMods.get().isModLoaded(id);
     }
 }

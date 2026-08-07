@@ -1,24 +1,19 @@
 package com.github.thedeathlycow.frostiful.neoforge;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.Biter;
-import com.github.thedeathlycow.frostiful.entity.Chillager;
-import com.github.thedeathlycow.frostiful.entity.frostologer.Frostologer;
-import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import com.github.thedeathlycow.frostiful.block.BlockAddedEvent;
+import dev.yumi.mc.core.api.ModContainer;
+import dev.yumi.mc.core.api.entrypoint.ModInitializer;
+import net.minecraft.world.level.block.state.BlockState;
 
-@Mod(Frostiful.MODID)
-public class FrostifulNeoforge {
-    public FrostifulNeoforge(IEventBus modEventBus, ModContainer modContainer) {
-        modEventBus.addListener(FrostifulNeoforge::registerEntityTypeAttributes);
-    }
-
-    private static void registerEntityTypeAttributes(EntityAttributeCreationEvent event) {
-        event.put(FEntityTypes.FROSTOLOGER, Frostologer.createFrostologerAttributes().build());
-        event.put(FEntityTypes.CHILLAGER, Chillager.createChillagerAttributes().build());
-        event.put(FEntityTypes.BITER, Biter.createBiterAttributes().build());
+public class FrostifulNeoforge implements ModInitializer {
+    @Override
+    public void onInitialize(ModContainer mod) {
+        BlockAddedEvent.EVENT.register((key, block) -> {
+            for (BlockState state : block.getStateDefinition().getPossibleStates()) {
+                if (state.getOcclusionShape() == null) {
+                    state.initCache();
+                }
+            }
+        });
     }
 }

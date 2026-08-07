@@ -25,7 +25,7 @@ public record EnsureTemperatureBelow(
 
     @Override
     public void buildCurrentComponents(Level level, BlockPos pos, Holder<Biome> biome, DataComponentMap.Builder builder) {
-        TemperatureRecord temperature = builder.getOrDefault(
+        TemperatureRecord temperature = builder.thermoo$getOrElse(
                 EnvironmentComponentTypes.TEMPERATURE,
                 TemperatureRecordComponent.DEFAULT
         );
