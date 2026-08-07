@@ -1,0 +1,28 @@
+modLoader = "javafml"
+loaderVersion = "[1.0.0,)"
+issueTrackerURL = "https://github.com/TheDeathlyCow/frostiful/issues"
+license = "LGPL-3.0"
+
+[[mods]]
+modId = "frostiful_test"
+version = "1.0.0"
+displayName = "Frostiful Test Mod"
+authors = "TheDeathlyCow"
+credits = ""
+description = '''Test mod for Frostiful'''
+logoFile = "assets/frostiful/icon.png"
+displayURL = "https://www.thedeathlycow.com/frostiful/"
+
+[modproperties.frostiful_test."fabric:entrypoints"]
+fabric-gametest = [
+    "com.github.thedeathlycow.frostiful.test.tests.IcicleBreakTests",
+    "com.github.thedeathlycow.frostiful.test.tests.SunLichenCollisionTests",
+    "com.github.thedeathlycow.frostiful.test.tests.RootedTests",
+    "com.github.thedeathlycow.frostiful.test.tests.BlockLightTemperatureTests",
+    "com.github.thedeathlycow.frostiful.test.tests.FrostologerDestroyHeatSourcesTests",
+    "com.github.thedeathlycow.frostiful.test.tests.ChillagerDropTests",
+    "com.github.thedeathlycow.frostiful.test.tests.EntityPowderSnowTests",
+    "com.github.thedeathlycow.frostiful.test.tests.HotFloorTests",
+    "com.github.thedeathlycow.frostiful.test.tests.FrozenByFrostWandCriterionTest"
+]
+

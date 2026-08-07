@@ -106,7 +106,9 @@ processResources {
             'neoforge_version'             : neoforge_version,
             'neoforge_loader_version_range': neoforge_loader_version_range,
             'credits'                      : credits,
-            'java_version'                 : java_version
+            'java_version'                 : java_version,
+            'yacl_version'                 : yacl_version,
+            'thermoo_version'              : thermoo_version
     ]
 
     var jsonExpandProps = expandProps.collectEntries {

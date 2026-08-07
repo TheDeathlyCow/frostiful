@@ -39,7 +39,8 @@
     "environment": "*",
     "entrypoints": {
         "yumi:init": [
-            "com.github.thedeathlycow.frostiful.Frostiful"
+            "com.github.thedeathlycow.frostiful.Frostiful",
+            "com.github.thedeathlycow.frostiful.fabric.FrostifulFabric"
         ],
         "yumi:dedicated_server_init": [
             "com.github.thedeathlycow.frostiful.FrostifulServer"
@@ -56,6 +57,7 @@
     },
     "mixins": [
         "frostiful.mixins.json",
+        "frostiful.fabric.mixins.json",
         {
             "config": "frostiful.client.mixins.json",
             "environment": "client"

@@ -9,6 +9,7 @@
         "GameRendererMixin",
         "PlayerMixin",
         "SplashManagerMixin",
+        "accessor.SpecialModelRenderersAccessor",
         "entity.render.ArmorStandRendererMixin",
         "entity.render.HumanoidMobRendererMixin",
         "entity.render.LivingEntityRendererMixin",

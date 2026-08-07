@@ -12,11 +12,15 @@ dependencies {
     include("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
 
     implementation("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.fabric_version}+${project.ffapi_subversion}")
-    implementation("dev.isxander:yet-another-config-lib:${project.yacl_neoforge_version}")
+    implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-neoforge")
 
+    implementation("maven.modrinth:unruled-api:${project.unruled_version}")
     implementation("com.github.TheDeathlyCow.thermoo:thermoo-neoforge:v${project.thermoo_version}")
 
     gametestImplementation commonProject.sourceSets.gametest.output
+
+    neoForgeAccessTransformers("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.fabric_version}+${project.ffapi_subversion}")
+    neoForgeInterfaceInjections("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.fabric_version}+${project.ffapi_subversion}")
 }
 
 loom {
@@ -73,15 +77,15 @@ loom {
         }
     }
 
-    mods {
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
-        }
-
-        "${mod_id}_test" {
-            sourceSet(sourceSets.gametest)
-        }
-    }
+//    mods {
+//        "${mod_id}" {
+//            sourceSet(sourceSets.main)
+//        }
+//
+//        "${mod_id}_test" {
+//            sourceSet(sourceSets.gametest)
+//        }
+//    }
 }
 
 tasks.named('build') {

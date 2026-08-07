@@ -16,8 +16,7 @@ public class ChillagerPatrolSpawner {
 
     /**
      * Essentially a rewrite of {@link PatrolSpawner#spawnPatrolMember(ServerLevel, BlockPos, RandomSource, boolean)}, except
-     * that it spawns a {@link Chillager} instead of a
-     * {@link net.minecraft.world.entity.monster.Pillager}. Called via mixin as method is private.
+     * that it spawns a {@link Chillager} instead of a Pillager. Called via mixin as method is private.
      *
      * @param world world to spawn chillager in
      * @param pos position to spawn chillager at

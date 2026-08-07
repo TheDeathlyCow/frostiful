@@ -1,0 +1,60 @@
+modLoader = "javafml"
+loaderVersion = "${neoforge_loader_version_range}"
+issueTrackerURL = "https://github.com/TheDeathlyCow/frostiful/issues"
+license = "${license}"
+
+[[mods]]
+modId = "${mod_id}"
+version = "${version}"
+displayName = "${mod_name}"
+authors = "${mod_author}"
+credits = "${credits}"
+description = '''${description}'''
+logoFile = "assets/frostiful/icon.png"
+displayURL = "https://www.thedeathlycow.com/frostiful/"
+
+[modproperties.${mod_id}."yumi:entrypoints"]
+"yumi:init" = "com.github.thedeathlycow.frostiful.Frostiful"
+"yumi:client_init" = "com.github.thedeathlycow.frostiful.FrostifulClient"
+"yumi:dedicated_server_init" = "com.github.thedeathlycow.frostiful.FrostifulServer"
+
+[[dependencies.${mod_id}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${neoforge_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft_version_range}"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "thermoo"
+type = "required"
+versionRange = "[${thermoo_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "fabric_api"
+type = "required"
+versionRange = "[${fabric_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${mod_id}]]
+modId = "yet_another_config_lib_v3"
+type = "required"
+versionRange = "[${yacl_version},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[mixins]]
+config = "${mod_id}.mixins.json"
+
+[[mixins]]
+config = "${mod_id}.client.mixins.json"

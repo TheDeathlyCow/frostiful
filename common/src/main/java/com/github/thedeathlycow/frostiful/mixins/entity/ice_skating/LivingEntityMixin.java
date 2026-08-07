@@ -3,8 +3,6 @@ package com.github.thedeathlycow.frostiful.mixins.entity.ice_skating;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.survival.system.IceSkateSystem;
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.profiling.Profiler;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -14,7 +12,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -42,21 +39,6 @@ public abstract class LivingEntityMixin extends Entity {
         IceSkateSystem.aiStep(self);
 
         profiler.pop();
-    }
-
-    @WrapOperation(
-            method = "travelInAir",
-            at = @At(
-                    value = "INVOKE",
-                    target = "Lnet/minecraft/world/level/block/Block;getFriction()F"
-            )
-    )
-    private float setSlipperinessForIceSkates(Block instance, Operation<Float> original) {
-        if (IceSkateSystem.isIceSkating((LivingEntity) (Object) this)) {
-            return IceSkateSystem.getSlipperinessForEntity(this);
-        }
-
-        return original.call(instance);
     }
 
     @Inject(
