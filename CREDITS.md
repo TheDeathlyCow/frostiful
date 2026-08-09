@@ -22,6 +22,8 @@
 * [Usia](https://crowdin.com/profile/usia) - Ukrainian
 * [aiocringe](https://github.com/aiocringe) - Russian
 * [Artemis Ribeiro](https://crowdin.com/profile/artemisdumb) - Portuguese (Brazil)
+* [Tenwoc](https://crowdin.com/profile/tenwoc) - Ukrainian
+* [Mks Skm](https://crowdin.com/profile/sapex) - Russian
 
 # Sound Effects
 
