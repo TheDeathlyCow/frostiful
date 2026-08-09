@@ -20,10 +20,10 @@
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
 import com.github.thedeathlycow.frostiful.client.FrostifulConfigScreen;
-import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
-import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
+import com.github.thedeathlycow.frostiful.client.config.handler.ClientConfigHandlers;
 import com.github.thedeathlycow.frostiful.config.DifficultySetting;
 import com.github.thedeathlycow.frostiful.config.Translate;
+import com.github.thedeathlycow.frostiful.config.handler.ConfigHandlers;
 import com.github.thedeathlycow.frostiful.config.section.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
@@ -350,55 +350,55 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         builder.add(FrostifulConfigScreen.ENVIRONMENT_CATEGORY, "Environment Settings");
         builder.add(FrostifulConfigScreen.ENVIRONMENT_DESC, "Server-side settings for environment simulation.");
-        builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.TEMPERATURE_GROUP), "Temperature values");
-        builder.add(Translate.mainGroupKey(EnvironmentSettings.HANDLER, EnvironmentSettings.SHIVERING_GROUP), "Shivering");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ENVIRONMENT, EnvironmentSettings.TEMPERATURE_GROUP), "Temperature values");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ENVIRONMENT, EnvironmentSettings.SHIVERING_GROUP), "Shivering");
 
         builder.add(FrostifulConfigScreen.TEMPERATURE_SOURCE_CATEGORY, "Temperature Sources");
         builder.add(FrostifulConfigScreen.TEMPERATURE_SOURCE_DESC, "Configure temperature sources.");
-        builder.add(Translate.categoryKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.GENERAL_CATEGORY), "General");
-        builder.add(Translate.categoryKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY), "Temperature Sources");
-        builder.add(Translate.groupKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.COOLING_GROUP), "Cooling Sources");
-        builder.add(Translate.groupKey(TemperatureSourceSettings.HANDLER, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.HEATING_GROUP), "Heating Sources");
+        builder.add(Translate.categoryKey(ConfigHandlers.TEMPERATURE_SOURCE, TemperatureSourceSettings.GENERAL_CATEGORY), "General");
+        builder.add(Translate.categoryKey(ConfigHandlers.TEMPERATURE_SOURCE, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY), "Temperature Sources");
+        builder.add(Translate.groupKey(ConfigHandlers.TEMPERATURE_SOURCE, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.COOLING_GROUP), "Cooling Sources");
+        builder.add(Translate.groupKey(ConfigHandlers.TEMPERATURE_SOURCE, TemperatureSourceSettings.TEMPERATURE_SOURCES_CATEGORY, TemperatureSourceSettings.HEATING_GROUP), "Heating Sources");
 
         builder.add(FrostifulConfigScreen.SOAKING_CATEGORY, "Soaking Settings");
         builder.add(FrostifulConfigScreen.SOAKING_DESC, "Server-side settings for soaking/wetness.");
-        builder.add(Translate.mainGroupKey(SoakingSettings.HANDLER, SoakingSettings.SOAKING_GROUP), "Soaking");
-        builder.add(Translate.mainGroupKey(SoakingSettings.HANDLER, SoakingSettings.DRYING_GROUP), "Drying");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.SOAKING, SoakingSettings.SOAKING_GROUP), "Soaking");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.SOAKING, SoakingSettings.DRYING_GROUP), "Drying");
 
         builder.add(FrostifulConfigScreen.BLOCK_CATEGORY, "Block Settings");
         builder.add(FrostifulConfigScreen.BLOCK_DESC, "Server-side settings that relate to blocks.");
-        builder.add(Translate.mainGroupKey(BlockSettings.HANDLER, BlockSettings.ICICLE_GROUP), "Icicles");
-        builder.add(Translate.mainGroupKey(BlockSettings.HANDLER, BlockSettings.SUN_LICHEN_GROUP), "Sun Lichens");
-        builder.add(Translate.mainGroupKey(BlockSettings.HANDLER, BlockSettings.CAMPFIRE_GROUP), "Campfires");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.BLOCK, BlockSettings.ICICLE_GROUP), "Icicles");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.BLOCK, BlockSettings.SUN_LICHEN_GROUP), "Sun Lichens");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.BLOCK, BlockSettings.CAMPFIRE_GROUP), "Campfires");
 
         builder.add(FrostifulConfigScreen.ENTITY_CATEGORY, "Entity Settings");
         builder.add(FrostifulConfigScreen.ENTITY_DESC, "Server-side settings that relate to entities and mobs.");
-        builder.add(Translate.mainGroupKey(EntitySettings.HANDLER, EntitySettings.CHILLAGER_GROUP), "Chillagers & Frostologers");
-        builder.add(Translate.mainGroupKey(EntitySettings.HANDLER, EntitySettings.MISC_GROUP), "Miscellaneous");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ENTITY, EntitySettings.CHILLAGER_GROUP), "Chillagers & Frostologers");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ENTITY, EntitySettings.MISC_GROUP), "Miscellaneous");
         generateConfigEnumTranslations(builder, DifficultySetting.class, "Automatic", "Peaceful", "Easy", "Normal", "Hard");
 
         builder.add(FrostifulConfigScreen.ITEM_CATEGORY, "Item Settings");
         builder.add(FrostifulConfigScreen.ITEM_DESC, "Server-side settings that relate to items.");
-        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.FROST_WAND_GROUP), "Frost Wands");
-        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.PACKED_SNOWBALL_GROUP), "Packed Snowballs");
-        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.ICICLE_GROUP), "Icicles");
-        builder.add(Translate.mainGroupKey(ItemSettings.HANDLER, ItemSettings.MISC_GROUP), "Miscellaneous");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ITEM, ItemSettings.FROST_WAND_GROUP), "Frost Wands");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ITEM, ItemSettings.PACKED_SNOWBALL_GROUP), "Packed Snowballs");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ITEM, ItemSettings.ICICLE_GROUP), "Icicles");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.ITEM, ItemSettings.MISC_GROUP), "Miscellaneous");
 
         builder.add(FrostifulConfigScreen.WEATHER_CATEGORY, "Weather Settings");
         builder.add(FrostifulConfigScreen.WEATHER_DESC, "Server-side settings for weather-related mechanics.");
-        builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.ICICLE_GROUP), "Icicles");
-        builder.add(Translate.mainGroupKey(WeatherSettings.HANDLER, WeatherSettings.WIND_GROUP), "Freezing Wind");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.WEATHER, WeatherSettings.ICICLE_GROUP), "Icicles");
+        builder.add(Translate.mainGroupKey(ConfigHandlers.WEATHER, WeatherSettings.WIND_GROUP), "Freezing Wind");
         generateConfigEnumTranslations(builder, WindSpawnMethod.class, "None", "Entity", "Point");
 
-        generateConfigOptionTranslations(AccessibilitySettings.HANDLER, builder);
-        generateConfigOptionTranslations(DisplaySettings.HANDLER, builder);
-        generateConfigOptionTranslations(TemperatureSourceSettings.HANDLER, builder);
-        generateConfigOptionTranslations(EnvironmentSettings.HANDLER, builder);
-        generateConfigOptionTranslations(SoakingSettings.HANDLER, builder);
-        generateConfigOptionTranslations(BlockSettings.HANDLER, builder);
-        generateConfigOptionTranslations(EntitySettings.HANDLER, builder);
-        generateConfigOptionTranslations(ItemSettings.HANDLER, builder);
-        generateConfigOptionTranslations(WeatherSettings.HANDLER, builder);
+        generateConfigOptionTranslations(ClientConfigHandlers.ACCESSIBILITY, builder);
+        generateConfigOptionTranslations(ClientConfigHandlers.DISPLAY, builder);
+        generateConfigOptionTranslations(ConfigHandlers.TEMPERATURE_SOURCE, builder);
+        generateConfigOptionTranslations(ConfigHandlers.ENVIRONMENT, builder);
+        generateConfigOptionTranslations(ConfigHandlers.SOAKING, builder);
+        generateConfigOptionTranslations(ConfigHandlers.BLOCK, builder);
+        generateConfigOptionTranslations(ConfigHandlers.ENTITY, builder);
+        generateConfigOptionTranslations(ConfigHandlers.ITEM, builder);
+        generateConfigOptionTranslations(ConfigHandlers.WEATHER, builder);
     }
 
     private String itemSuffix(Item item, String suffix) {

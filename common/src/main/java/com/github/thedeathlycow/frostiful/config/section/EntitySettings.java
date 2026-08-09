@@ -19,34 +19,17 @@
 
 package com.github.thedeathlycow.frostiful.config.section;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.DifficultySetting;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.AutoGen;
 import dev.isxander.yacl3.config.v2.api.autogen.EnumCycler;
 import dev.isxander.yacl3.config.v2.api.autogen.FloatField;
 import dev.isxander.yacl3.config.v2.api.autogen.TickBox;
-import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import net.minecraft.world.level.Level;
 
-import java.nio.file.Path;
-
 public class EntitySettings {
-    public static final Path PATH = Frostiful.getConfigDir().resolve("common").resolve("entity.json5");
-
-    public static final ConfigClassHandler<EntitySettings> HANDLER = ConfigClassHandler.createBuilder(EntitySettings.class)
-            .id(Frostiful.id("common/entity"))
-            .serializer(
-                    config -> GsonConfigSerializerBuilder.create(config)
-                            .setPath(PATH)
-                            .setJson5(true)
-                            .build()
-            )
-            .build();
-
     public static final String CATEGORY = FrostifulConfigYACL.MAIN_CATEGORY_NAME;
     public static final String CHILLAGER_GROUP = "chillager";
     public static final String MISC_GROUP = "misc";

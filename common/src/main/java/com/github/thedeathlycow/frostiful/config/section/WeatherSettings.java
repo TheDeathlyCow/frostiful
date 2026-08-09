@@ -19,32 +19,15 @@
 
 package com.github.thedeathlycow.frostiful.config.section;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
 import com.github.thedeathlycow.frostiful.survival.wind.WindSpawnMethod;
-import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.AutoGen;
 import dev.isxander.yacl3.config.v2.api.autogen.EnumCycler;
 import dev.isxander.yacl3.config.v2.api.autogen.TickBox;
-import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
-
-import java.nio.file.Path;
 
 public class WeatherSettings {
-    public static final Path PATH = Frostiful.getConfigDir().resolve("common").resolve("weather.json5");
-
-    public static final ConfigClassHandler<WeatherSettings> HANDLER = ConfigClassHandler.createBuilder(WeatherSettings.class)
-            .id(Frostiful.id("common/weather"))
-            .serializer(
-                    config -> GsonConfigSerializerBuilder.create(config)
-                            .setPath(PATH)
-                            .setJson5(true)
-                            .build()
-            )
-            .build();
-
     public static final String CATEGORY = FrostifulConfigYACL.MAIN_CATEGORY_NAME;
     public static final String ICICLE_GROUP = "icicle";
     public static final String WIND_GROUP = "wind";

@@ -19,30 +19,13 @@
 
 package com.github.thedeathlycow.frostiful.config.section;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
-import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import net.minecraft.util.Mth;
 
-import java.nio.file.Path;
-
 public class EnvironmentSettings {
-    public static final Path PATH = Frostiful.getConfigDir().resolve("common").resolve("environment.json5");
-
-    public static final ConfigClassHandler<EnvironmentSettings> HANDLER = ConfigClassHandler.createBuilder(EnvironmentSettings.class)
-            .id(Frostiful.id("common/environment"))
-            .serializer(
-                    config -> GsonConfigSerializerBuilder.create(config)
-                            .setPath(PATH)
-                            .setJson5(true)
-                            .build()
-            )
-            .build();
-
     public static final String CATEGORY = FrostifulConfigYACL.MAIN_CATEGORY_NAME;
     public static final String TEMPERATURE_GROUP = "temperature";
     public static final String SHIVERING_GROUP = "shivering";

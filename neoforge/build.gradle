@@ -37,55 +37,59 @@ loom {
     runs {
         client {
             client()
-            setConfigName('Neoforge Client')
-            ideConfigGenerated(true)
-            runDir('runs/client')
+            setDisplayName("Neoforge Client")
+            setGenerateRunConfig(true)
+            setRunDirectory(project.file("runs/client"))
         }
 
         server {
             server()
-            setConfigName('Neoforge Server')
-            ideConfigGenerated(true)
-            runDir('runs/server')
+            setDisplayName("Neoforge Server")
+            setGenerateRunConfig(true)
+            setRunDirectory(project.file("runs/server"))
         }
 
         clientManualTest {
             client()
-            setConfigName('Neoforge Manual Test Client')
-            ideConfigGenerated(true)
-            runDir('runs/clientManualTest')
-            source(sourceSets.gametest)
-            property('neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test")
+            setDisplayName("Neoforge Manual Test Client")
+            setGenerateRunConfig(true)
+            setRunDirectory(project.file("runs/clientManualTest"))
+            setSourceSet("gametest")
+            setSystemProperties(["neoforge.enabledGameTestNamespaces": "${project.mod_id},${project.mod_id}_test"])
         }
 
         serverManualTest {
             server()
-            setConfigName('Neoforge Manual Test Server')
-            ideConfigGenerated(true)
-            runDir('runs/serverManualTest')
-            source(sourceSets.gametest)
-            property('neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test")
+            setDisplayName("Neoforge Manual Test Server")
+            setGenerateRunConfig(true)
+            setRunDirectory(project.file("runs/serverManualTest"))
+            setSourceSet("gametest")
+            setSystemProperties(["neoforge.enabledGameTestNamespaces": "${project.mod_id},${project.mod_id}_test"])
         }
 
         gameTest {
             environment("gameTestServer")
-            setConfigName('Neoforge Game test')
-            ideConfigGenerated(true)
-            runDir('build/gametest')
-            source(sourceSets.gametest)
-            property('neoforge.enabledGameTestNamespaces', "${project.mod_id},${project.mod_id}_test")
+            setDisplayName("Neoforge Game test")
+            setGenerateRunConfig(true)
+            setRunDirectory(project.file("build/gametest"))
+            setSourceSet("gametest")
+            setSystemProperties(["neoforge.enabledGameTestNamespaces": "${project.mod_id},${project.mod_id}_test"])
+            setJvmArguments([
+                    "-Dfabric-api.gametest",
+                    "-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.file("junit.xml").get().getAsFile()}"
+            ])
         }
     }
 
-//    mods {
-//        "${mod_id}" {
-//            sourceSet(sourceSets.main)
-//        }
-//
-//        "${mod_id}_test" {
-//            sourceSet(sourceSets.gametest)
-//        }
-//    }
+    mods {
+        mod_id {
+            sourceSet("main")
+        }
+
+        "${mod_id}_test" {
+            sourceSet("gametest")
+        }
+    }
 }
 
 tasks.named('build') {

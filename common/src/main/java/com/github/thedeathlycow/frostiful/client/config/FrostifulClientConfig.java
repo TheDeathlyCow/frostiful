@@ -19,24 +19,25 @@
 
 package com.github.thedeathlycow.frostiful.client.config;
 
+import com.github.thedeathlycow.frostiful.client.config.handler.ClientConfigHandlers;
 import com.github.thedeathlycow.frostiful.client.config.section.AccessibilitySettings;
 import com.github.thedeathlycow.frostiful.client.config.section.DisplaySettings;
 
 public final class FrostifulClientConfig {
     public static AccessibilitySettings accessibilitySettings() {
-        return AccessibilitySettings.HANDLER.instance();
+        return ClientConfigHandlers.ACCESSIBILITY.instance();
     }
 
     public static DisplaySettings displaySettings() {
-        return DisplaySettings.HANDLER.instance();
+        return ClientConfigHandlers.DISPLAY.instance();
     }
 
     public static void initialize() {
-        AccessibilitySettings.HANDLER.load();
-        AccessibilitySettings.HANDLER.save();
+        ClientConfigHandlers.ACCESSIBILITY.load();
+        ClientConfigHandlers.ACCESSIBILITY.save();
 
-        DisplaySettings.HANDLER.load();
-        DisplaySettings.HANDLER.save();
+        ClientConfigHandlers.DISPLAY.load();
+        ClientConfigHandlers.DISPLAY.save();
     }
 
     private FrostifulClientConfig() {

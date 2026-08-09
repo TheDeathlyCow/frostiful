@@ -19,62 +19,63 @@
 
 package com.github.thedeathlycow.frostiful.config;
 
+import com.github.thedeathlycow.frostiful.config.handler.ConfigHandlers;
 import com.github.thedeathlycow.frostiful.config.section.*;
 
 public final class FrostifulConfigYACL {
     public static final String MAIN_CATEGORY_NAME = "main";
 
     public static TemperatureSourceSettings temperatureSourceSettings() {
-        return TemperatureSourceSettings.HANDLER.instance();
+        return ConfigHandlers.TEMPERATURE_SOURCE.instance();
     }
 
     public static EnvironmentSettings environmentSettings() {
-        return EnvironmentSettings.HANDLER.instance();
+        return ConfigHandlers.ENVIRONMENT.instance();
     }
 
     public static SoakingSettings soakingSettings() {
-        return SoakingSettings.HANDLER.instance();
+        return ConfigHandlers.SOAKING.instance();
     }
 
     public static BlockSettings blockSettings() {
-        return BlockSettings.HANDLER.instance();
+        return ConfigHandlers.BLOCK.instance();
     }
 
     public static EntitySettings entitySettings() {
-        return EntitySettings.HANDLER.instance();
+        return ConfigHandlers.ENTITY.instance();
     }
 
     public static ItemSettings itemSettings() {
-        return ItemSettings.HANDLER.instance();
+        return ConfigHandlers.ITEM.instance();
     }
 
     public static WeatherSettings weatherSettings() {
-        return WeatherSettings.HANDLER.instance();
+        return ConfigHandlers.WEATHER.instance();
     }
 
     public static void initialize() {
         Updater.run();
 
-        TemperatureSourceSettings.HANDLER.load();
-        TemperatureSourceSettings.HANDLER.save();
+        ConfigHandlers.TEMPERATURE_SOURCE.load();
+        ConfigHandlers.TEMPERATURE_SOURCE.save();
 
-        EnvironmentSettings.HANDLER.load();
-        EnvironmentSettings.HANDLER.save();
+        ConfigHandlers.ENVIRONMENT.load();
+        ConfigHandlers.ENVIRONMENT.save();
 
-        SoakingSettings.HANDLER.load();
-        SoakingSettings.HANDLER.save();
+        ConfigHandlers.SOAKING.load();
+        ConfigHandlers.SOAKING.save();
 
-        BlockSettings.HANDLER.load();
-        BlockSettings.HANDLER.save();
+        ConfigHandlers.BLOCK.load();
+        ConfigHandlers.BLOCK.save();
 
-        EntitySettings.HANDLER.load();
-        EntitySettings.HANDLER.save();
+        ConfigHandlers.ENTITY.load();
+        ConfigHandlers.ENTITY.save();
 
-        ItemSettings.HANDLER.load();
-        ItemSettings.HANDLER.save();
+        ConfigHandlers.ITEM.load();
+        ConfigHandlers.ITEM.save();
 
-        WeatherSettings.HANDLER.load();
-        WeatherSettings.HANDLER.save();
+        ConfigHandlers.WEATHER.load();
+        ConfigHandlers.WEATHER.save();
     }
 
     private FrostifulConfigYACL() {

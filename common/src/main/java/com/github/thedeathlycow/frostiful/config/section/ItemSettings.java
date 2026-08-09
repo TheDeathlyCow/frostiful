@@ -19,30 +19,13 @@
 
 package com.github.thedeathlycow.frostiful.config.section;
 
-import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.Translate;
-import dev.isxander.yacl3.config.v2.api.ConfigClassHandler;
 import dev.isxander.yacl3.config.v2.api.SerialEntry;
 import dev.isxander.yacl3.config.v2.api.autogen.*;
-import dev.isxander.yacl3.config.v2.api.serializer.GsonConfigSerializerBuilder;
 import net.minecraft.util.Mth;
 
-import java.nio.file.Path;
-
 public class ItemSettings {
-    public static final Path PATH = Frostiful.getConfigDir().resolve("common").resolve("item.json5");
-
-    public static final ConfigClassHandler<ItemSettings> HANDLER = ConfigClassHandler.createBuilder(ItemSettings.class)
-            .id(Frostiful.id("common/item"))
-            .serializer(
-                    config -> GsonConfigSerializerBuilder.create(config)
-                            .setPath(PATH)
-                            .setJson5(true)
-                            .build()
-            )
-            .build();
-
     public static final String CATEGORY = FrostifulConfigYACL.MAIN_CATEGORY_NAME;
     public static final String FROST_WAND_GROUP = "frost_wand";
     public static final String PACKED_SNOWBALL_GROUP = "packed_snowball";
