@@ -65,7 +65,7 @@ public record CapeComponent(
     public static CapeComponent getEquippedCape(LivingEntity entity) {
         if (FrostifulIntegrations.isTrinketsLoaded()) {
             CapeComponent cape = TrinketsIntegration.getFirstChestEquipped(entity, FDataComponentTypes.CAPE);
-            
+
             if (cape != null) {
                 return cape;
             }
