@@ -53,7 +53,7 @@ public abstract class HumanoidMobRendererMixin<T extends Mob, S extends Humanoid
 
         fState.frostiful$wearingIceSkates(wearingSkates);
 
-        CapeComponent component = CapeComponent.getCapeOrChest(entity);
+        CapeComponent component = CapeComponent.getEquippedCape(entity);
         if (component != null) {
             fState.frostiful$cape(component);
         } else {
