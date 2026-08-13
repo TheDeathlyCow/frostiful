@@ -22,6 +22,7 @@ package com.github.thedeathlycow.frostiful.datagen.generator.loot;
 import com.github.thedeathlycow.frostiful.registry.FEnchantments;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FLootTables;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FStructureTags;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.SimpleFabricLootTableSubProvider;
@@ -46,6 +47,7 @@ import net.minecraft.world.level.storage.loot.functions.ExplorationMapFunction;
 import net.minecraft.world.level.storage.loot.functions.SetInstrumentFunction;
 import net.minecraft.world.level.storage.loot.functions.SetNameFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
+import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
@@ -75,6 +77,39 @@ public class FChestLootGenerator extends SimpleFabricLootTableSubProvider {
         HolderLookup<Instrument> instruments = lookup.lookupOrThrow(Registries.INSTRUMENT);
 
         HolderSet<Instrument> instrumentOptions = instruments.getOrThrow(InstrumentTags.REGULAR_GOAT_HORNS);
+
+        output.accept(
+                FLootTables.CHILLAGER_OUTPOST_SMITH,
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(UniformGenerator.between(1f, 4f))
+                                        .add(uniformItem(Items.IRON_INGOT, 1f, 2f))
+                                        .add(uniformItem(Items.EMERALD, 1f, 3f))
+                                        .add(uniformItem(Items.WHEAT, 1f, 3f))
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(UniformGenerator.between(1f, 2f))
+                                        .add(LootItem.lootTableItem(FItems.FUR_UPGRADE_TEMPLATE).setWeight(2))
+                                        .add(uniformItem(FItems.FUR_PADDING, 1f, 2f))
+                                        .add(expandUniformItemTag(FItemTags.FUR_TUFTS, 1f, 4f).setWeight(2))
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(UniformGenerator.between(1f, 2f))
+                                        .add(LootItem.lootTableItem(Items.CHAINMAIL_HELMET))
+                                        .add(LootItem.lootTableItem(Items.CHAINMAIL_CHESTPLATE))
+                                        .add(LootItem.lootTableItem(Items.CHAINMAIL_LEGGINGS))
+                                        .add(LootItem.lootTableItem(Items.CHAINMAIL_BOOTS))
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1f))
+                                        .when(LootItemRandomChanceCondition.randomChance(0.25f))
+                                        .add(LootItem.lootTableItem(FItems.SNOW_MAN_ARMOR_TRIM_SMITHING_TEMPLATE))
+                        )
+        );
 
         output.accept(
                 FLootTables.CHILLAGER_OUTPOST_FLETCHER,

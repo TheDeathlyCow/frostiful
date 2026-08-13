@@ -44,6 +44,10 @@ public final class FrostifulLootUtils {
         return TagEntry.tagContents(tag).apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
     }
 
+    public static LootPoolSingletonContainer.Builder<?> expandUniformItemTag(TagKey<Item> tag, float min, float max) {
+        return TagEntry.expandTag(tag).apply(SetItemCountFunction.setCount(UniformGenerator.between(min, max)));
+    }
+
     public static TagKey<Block> commonBlockKey(String path) {
         return blockKey("c", path);
     }
