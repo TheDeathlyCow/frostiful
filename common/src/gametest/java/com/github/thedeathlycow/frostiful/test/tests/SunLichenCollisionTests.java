@@ -94,8 +94,7 @@ public final class SunLichenCollisionTests {
         context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
     }
 
-    // TODO: this doesnt work anymore. i dont know why. the fire only applies for like 1 tick and then instantly goes away.
-    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform", required = false)
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void warmVillagerIsBurnedByHotSunLichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
         int temperature = 500;

@@ -22,7 +22,6 @@ package com.github.thedeathlycow.frostiful.survival.system;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.entity.damage.FDamageSources;
-import com.github.thedeathlycow.frostiful.mixins.entity.EntityInvoker;
 import com.github.thedeathlycow.frostiful.registry.FDataAttachments;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
@@ -58,7 +57,7 @@ public final class FrostRootSystem {
             float damageTaken,
             boolean blocked
     ) {
-        int ticksRemaining = provider.getAttachedOrCreate(FDataAttachments.FROST_WAND_ROOT_TICKS);
+        int ticksRemaining = provider.getAttachedOrElse(FDataAttachments.FROST_WAND_ROOT_TICKS, 0);
         boolean breakRoot = !blocked
                 && damageTaken > 0f
                 && ticksRemaining > 0
@@ -72,7 +71,7 @@ public final class FrostRootSystem {
     @Nullable
     public static Vec3 adjustMovementForRoot(MoverType type, Vec3 movement, Entity entity) {
         if (entity instanceof LivingEntity livingEntity) {
-            int ticksRemaining = livingEntity.getAttachedOrCreate(FDataAttachments.FROST_WAND_ROOT_TICKS);
+            int ticksRemaining = livingEntity.getAttachedOrElse(FDataAttachments.FROST_WAND_ROOT_TICKS, 0);
 
             if (ticksRemaining <= 0) {
                 return null;
@@ -89,7 +88,7 @@ public final class FrostRootSystem {
     }
 
     public static boolean isRooted(LivingEntity entity) {
-        return entity.getAttachedOrElse(FDataAttachments.FROST_WAND_ROOT_TICKS, 0) < 0;
+        return entity.getAttachedOrElse(FDataAttachments.FROST_WAND_ROOT_TICKS, 0) > 0;
     }
 
     public static void serverTick(LivingEntity provider) {
@@ -99,23 +98,17 @@ public final class FrostRootSystem {
 
         int ticksRemaining = provider.getAttachedOrThrow(FDataAttachments.FROST_WAND_ROOT_TICKS);
 
-        if (provider.isSpectator()) {
+        if (ticksRemaining <= 0 || provider.isSpectator()) {
             provider.removeAttached(FDataAttachments.FROST_WAND_ROOT_TICKS);
-        } else if (provider.isOnFire()) {
-            breakRoot(provider, null, ticksRemaining);
-            provider.clearFire();
-            ((EntityInvoker) provider).frostiful$invokePlayExtinguishSound();
-        } else if (ticksRemaining > 0) { // dont bother decrementing if on fire since the ticks remaining will be set to 1
-            decrementTicksRemaining(provider, ticksRemaining);
+            return;
         }
-    }
 
-    private static void decrementTicksRemaining(LivingEntity provider, int ticksRemaining) {
-        ticksRemaining = ticksRemaining - 1;
-        if (ticksRemaining <= 0) {
-            provider.removeAttached(FDataAttachments.FROST_WAND_ROOT_TICKS);
+        if (provider.isOnFire()) {
+            breakRoot(provider, null, ticksRemaining);
+            provider.extinguishFire();
         } else {
-            provider.setAttached(FDataAttachments.FROST_WAND_ROOT_TICKS, ticksRemaining);
+            // dont bother decrementing if on fire since the ticks remaining will be set to 1
+            provider.setAttached(FDataAttachments.FROST_WAND_ROOT_TICKS, ticksRemaining - 1);
         }
     }
 

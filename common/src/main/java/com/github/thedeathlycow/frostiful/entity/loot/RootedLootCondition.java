@@ -50,7 +50,7 @@ public record RootedLootCondition(
     public boolean test(LootContext lootContext) {
         Entity entity = lootContext.getOptionalParameter(LootContextParams.THIS_ENTITY);
         if (entity != null) {
-            int rootTicksRemaining = entity.getAttached(FDataAttachments.FROST_WAND_ROOT_TICKS);
+            int rootTicksRemaining = entity.getAttachedOrThrow(FDataAttachments.FROST_WAND_ROOT_TICKS);
             return this.rootTicksRemaining.matches(rootTicksRemaining);
         }
 
