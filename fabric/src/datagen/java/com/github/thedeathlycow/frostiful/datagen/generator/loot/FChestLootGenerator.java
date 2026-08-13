@@ -36,6 +36,7 @@ import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.InstrumentTags;
 import net.minecraft.world.item.Instrument;
+import net.minecraft.world.item.Instruments;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.saveddata.maps.MapDecorationTypes;
@@ -77,6 +78,30 @@ public class FChestLootGenerator extends SimpleFabricLootTableSubProvider {
         HolderLookup<Instrument> instruments = lookup.lookupOrThrow(Registries.INSTRUMENT);
 
         HolderSet<Instrument> instrumentOptions = instruments.getOrThrow(InstrumentTags.REGULAR_GOAT_HORNS);
+
+        output.accept(
+                FLootTables.CHILLAGER_OUTPOST_TOWER,
+                LootTable.lootTable()
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(UniformGenerator.between(1f, 3f))
+                                        .add(uniformItem(Items.ARROW, 1f, 5f))
+                                        .add(uniformItem(FItems.GLACIAL_ARROW, 1f, 5f))
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(UniformGenerator.between(1f, 3f))
+                                        .add(uniformItem(FItems.PACKED_SNOWBALL, 1f, 2f))
+                        )
+                        .withPool(
+                                LootPool.lootPool()
+                                        .setRolls(ConstantValue.exactly(1f))
+                                        .add(LootItem.lootTableItem(Items.GOAT_HORN).apply(
+                                                SetInstrumentFunction.setInstrumentOptions(
+                                                        instruments.getOrThrow(InstrumentTags.REGULAR_GOAT_HORNS)
+                                                )))
+                        )
+        );
 
         output.accept(
                 FLootTables.CHILLAGER_OUTPOST_SMITH,
