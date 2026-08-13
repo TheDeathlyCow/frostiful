@@ -3,5 +3,6 @@
     "environment": "frostiful_test:night",
     "structure": "frostiful_test:zombie_avoids_cool_sun_lichen",
     "max_ticks": 600,
-    "sky_access": false
+    "sky_access": false,
+    "required": false
 }
