@@ -163,13 +163,13 @@ configurations {
 
 dependencies {
     // fabric-like development
-    api("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}")
+    implementation("org.sinytra.forgified-fabric-api:forgified-fabric-api:${project.ffapi_version}")
 
     // config lib
-    api "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
+    implementation "me.shedaniel.cloth:cloth-config-neoforge:${project.cloth_config_version}"
 
     // thermoo temperature lib
-    api("com.github.thedeathlycow:thermoo:v${project.thermoo_version}")
+    implementation("com.github.thedeathlycow:thermoo:v${project.thermoo_version}")
     // i hate neoforge
 //    interfaceInjectionData "com.github.thedeathlycow:thermoo:v${project.thermoo_version}"
 
