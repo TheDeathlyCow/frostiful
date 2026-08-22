@@ -38,7 +38,7 @@ public abstract class FallingIcicleMixin {
             if (entity instanceof LivingEntity livingEntity) {
                 FrostifulConfig config = Frostiful.getConfig();
                 livingEntity.thermoo$addTemperature(
-                        config.icicleConfig.getIcicleCollisionFreezeAmount(), HeatingModes.ACTIVE
+                        -config.icicleConfig.getIcicleCollisionFreezeAmount(), HeatingModes.ACTIVE
                 );
             }
         });
