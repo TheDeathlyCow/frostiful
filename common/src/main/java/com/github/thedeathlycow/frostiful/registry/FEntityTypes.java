@@ -63,7 +63,7 @@ public class FEntityTypes {
 
     public static final EntityType<GlacialArrow> GLACIAL_ARROW = register(
             "glacial_arrow",
-            EntityType.Builder.<GlacialArrow>of(GlacialArrow::new, MobCategory.CREATURE)
+            EntityType.Builder.<GlacialArrow>of(GlacialArrow::new, MobCategory.MISC)
                     .noLootTable()
                     .sized(0.5F, 0.5F)
                     .eyeHeight(0.13F)
@@ -101,7 +101,7 @@ public class FEntityTypes {
 
     public static final EntityType<FreezingWindEntity> FREEZING_WIND = register(
             "freezing_wind",
-            EntityType.Builder.of(FreezingWindEntity::new, MobCategory.AMBIENT)
+            EntityType.Builder.of(FreezingWindEntity::new, MobCategory.MISC)
                     .noLootTable()
                     .noSave()
                     .sized(2.0f, 2.0f)
