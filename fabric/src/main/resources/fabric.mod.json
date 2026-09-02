@@ -1,0 +1,97 @@
+{
+    "schemaVersion": 1,
+    "id": "${mod_id}",
+    "version": "${version}",
+    "name": "${mod_name}",
+    "description": "${description}",
+    "authors": [
+        {
+            "name": "${mod_author}",
+            "contact": {
+                "homepage": "https://github.com/TheDeathlyCow/"
+            }
+        }
+    ],
+    "contributors": [
+        "NerjalNosk (Various compatibility patches)",
+        "YeoXuHang (Assistance with the Frost Wand 3D model redesign)",
+        "Terrails (Crash fix for Colorful Hearts)",
+        "bravely-beep (Advancement fix)",
+        "godkyo98 (Vietnamese Translation)",
+        "noawx (Finnish Translation)",
+        "Tefnya (Russian Translation)",
+        "unroman (Ukrainian Translation)",
+        "Nezila (Ukrainian Translation)",
+        "Texaliuz (Argentine Spanish Translation)",
+        "TheLegendofSaram (Mexican Spanish Translation)",
+        "MaroonLuv (Russian Translation)",
+        "Usia (Ukrainian Translation)",
+        "aiocringe (Russian Translation)",
+        "Artemis Ribeiro (Brazilian Portuguese Translation)",
+        "Tenwoc (Ukrainian Translation)",
+        "Mks Skm (Russian Translation)"
+    ],
+    "contact": {
+        "homepage": "https://www.thedeathlycow.com/frostiful",
+        "sources": "https://github.com/TheDeathlyCow/frostiful",
+        "issues": "https://github.com/TheDeathlyCow/frostiful/issues"
+    },
+    "license": "${license}",
+    "icon": "assets/frostiful/icon.png",
+    "environment": "*",
+    "entrypoints": {
+        "yumi:init": [
+            "com.github.thedeathlycow.frostiful.Frostiful",
+            "com.github.thedeathlycow.frostiful.fabric.FrostifulFabric"
+        ],
+        "yumi:dedicated_server_init": [
+            "com.github.thedeathlycow.frostiful.FrostifulServer"
+        ],
+        "yumi:client_init": [
+            "com.github.thedeathlycow.frostiful.FrostifulClient"
+        ],
+        "modmenu": [
+            "com.github.thedeathlycow.frostiful.fabric.client.FrostifulModMenu"
+        ],
+        "colorfulhearts": [
+            "com.github.thedeathlycow.frostiful.fabric.client.compat.ColorfulHeartsIntegration"
+        ]
+    },
+    "mixins": [
+        "frostiful.mixins.json",
+        "frostiful.fabric.mixins.json",
+        {
+            "config": "frostiful.client.mixins.json",
+            "environment": "client"
+        }
+    ],
+    "depends": {
+        "fabricloader": ">=${fabric_loader_version}",
+        "fabric-api": ">=${fabric_version}",
+        "minecraft": "${minecraft_version_predicate}",
+        "java": ">=${java_version}",
+        "thermoo": "*",
+        "yet_another_config_lib_v3": ">=3.9.4",
+        "cardinal-components-base": ">=8.0.0",
+        "cardinal-components-entity": ">=8.0.0"
+    },
+    "suggests": {
+        "scorchful": "*",
+        "thermoo-patches": "*"
+    },
+    "accessWidener": "frostiful.classtweaker",
+    "custom": {
+        "cardinal-components": [
+            "frostiful:living_entity"
+        ],
+        "modmenu": {
+            "links": {
+                "modmenu.discord": "https://discord.thedeathlycow.com",
+                "modmenu.wiki": "https://modded.wiki/w/Frostiful",
+                "modmenu.kofi": "https://ko-fi.com/thedeathlycow",
+                "modmenu.modrinth": "https://modrinth.com/mod/frostiful",
+                "modmenu.crowdin": "https://crowdin.com/project/frostiful"
+            }
+        }
+    }
+}

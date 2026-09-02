@@ -1,0 +1,146 @@
+/*
+ * Frostiful: A Vanilla+ Freezing Temperature Mod. Also try Scorchful!
+ * Copyright (C) 2026	TheDeathlyCow
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+
+package com.github.thedeathlycow.frostiful;
+
+import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
+import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
+import com.github.thedeathlycow.frostiful.datafix.StructureUpdateHelper;
+import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
+import com.github.thedeathlycow.frostiful.item.FrostedBanner;
+import com.github.thedeathlycow.frostiful.registry.*;
+import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
+import com.github.thedeathlycow.frostiful.server.command.RootCommand;
+import com.github.thedeathlycow.frostiful.server.command.WindCommand;
+import com.github.thedeathlycow.frostiful.server.network.PointWindSpawnPacket;
+import com.github.thedeathlycow.frostiful.survival.ActiveTemperatureEffects;
+import com.github.thedeathlycow.frostiful.survival.PassiveTemperatureEffects;
+import com.github.thedeathlycow.frostiful.survival.ServerPlayerEnvironmentTickListeners;
+import com.github.thedeathlycow.frostiful.survival.SoakingEffects;
+import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
+import com.github.thedeathlycow.thermoo.api.temperature.status.v2.TemperatureStatusEvents;
+import dev.yumi.commons.TriState;
+import dev.yumi.commons.event.EventManager;
+import dev.yumi.mc.core.api.ModContainer;
+import dev.yumi.mc.core.api.YumiMods;
+import dev.yumi.mc.core.api.entrypoint.ModInitializer;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
+import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
+import net.fabricmc.fabric.api.loot.v3.LootTableEvents;
+import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
+import net.minecraft.resources.Identifier;
+import org.jetbrains.annotations.Contract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.nio.file.Path;
+
+public class Frostiful implements ModInitializer {
+    public static final String MODID = "frostiful";
+    public static final Logger LOGGER = LoggerFactory.getLogger(MODID);
+    public static final EventManager<Identifier> EVENT_MANAGER = new EventManager<>(id("default"), Identifier::parse);
+
+    @Override
+    public void onInitialize(ModContainer mod) {
+        FrostifulConfigYACL.initialize();
+
+        if (isDevelopmentEnvironment()) {
+            CommandRegistrationCallback.EVENT.register(
+                    (dispatcher, _, _) -> {
+                        RootCommand.register(dispatcher);
+                        WindCommand.register(dispatcher);
+                        FrostedBanner.registerCommand(dispatcher);
+                    });
+        }
+
+        LootTableEvents.MODIFY.register(StrayLootTableModifier::addFrostTippedArrows);
+
+        FrostifulRegistries.initialize();
+        FDataAttachments.initialize();
+        FBlocks.initialize();
+        FDataComponentTypes.initialize();
+        FItems.initialize();
+        FEntityTypes.initialize();
+        FGameRules.initialize();
+        FSoundEvents.initialize();
+        FStatusEffects.initialize();
+        FParticleTypes.initialize();
+        FPotions.initialize();
+        FItemGroups.initialize();
+        FLootConditionTypes.initialize();
+        FFeatures.initialize();
+        FPlacedFeatures.initialize();
+        FEntityAttributes.initialize();
+        FCriteria.initialize();
+        StructureUpdateHelper.initialize();
+        FAttributeTypes.initialize();
+        FEnvironmentAttributes.initialize();
+        FBlockTransformerTypes.initialize();
+        FEnvironmentProviderTypes.initialize();
+
+        ServerLivingEntityEvents.AFTER_DAMAGE.register(FrostRootSystem::afterDamage);
+
+        this.registerThermooEventListeners();
+        PayloadTypeRegistry.clientboundPlay().register(
+                PointWindSpawnPacket.PACKET_ID,
+                PointWindSpawnPacket.PACKET_CODEC
+        );
+
+        LOGGER.info("Initialized Frostiful!");
+    }
+
+    private void registerThermooEventListeners() {
+        ServerPlayerEnvironmentTickListeners.initialize();
+        PassiveTemperatureEffects.initialize();
+        ActiveTemperatureEffects.initialize();
+        SoakingEffects.initialize();
+        TemperatureStatusEvents.ALLOW_TEMPERATURE_STATUS.register((livingEntity, reference) -> {
+            if (reference.is(FTemperatureStatusTags.NORMAL_PLAYER_STATUSES)) {
+                if (TrinketsIntegration.wearingFrostologyCloak(livingEntity)) {
+                    return TriState.FALSE;
+                }
+            } else if (reference.is(FTemperatureStatusTags.FROSTOLOGY_CLOAK_PLAYER_STATUSES)) {
+                if (!TrinketsIntegration.wearingFrostologyCloak(livingEntity)) {
+                    return TriState.FALSE;
+                }
+            }
+
+            return TriState.DEFAULT;
+        });
+    }
+
+    public static boolean isDevelopmentEnvironment() {
+        return YumiMods.get().isDevelopmentEnvironment();
+    }
+
+    public static Path getConfigDir() {
+        return YumiMods.get().getConfigDirectory().resolve(MODID);
+    }
+
+    /**
+     * Creates a new {@link Identifier} in the namespace {@value MODID}.
+     *
+     * @param path The path of the uuid
+     * @return Returns a new {@link Identifier}
+     */
+    @Contract("_->new")
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MODID, path);
+    }
+}

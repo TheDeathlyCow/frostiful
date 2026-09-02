@@ -1,0 +1,110 @@
+plugins {
+    id 'multiloader-common'
+    id 'org.relativitymc.neo-loom'
+}
+
+sourceSets {
+    gametest {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.output
+        runtimeClasspath += main.output
+    }
+}
+
+loom {
+    def aw = project(":common").file("src/main/resources/${mod_id}.classtweaker")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+
+    interfaceInjection {
+        enableDependencyInterfaceInjection = true
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+
+    // Fabric and NeoForge both bundle Fabric Mixin, so it is safe to use it in common
+    // If you need to update, check what version they are using to see what is compatible
+    // https://github.com/neoforged/NeoForge/blob/26.1.x/gradle.properties#L37
+    // https://github.com/FabricMC/fabric-loader/blob/master/gradle.properties#L12
+    compileOnly('net.fabricmc:sponge-mixin:0.17.3+mixin.0.8.7')
+    // Fabric and NeoForge both bundle MixinExtras, so it is safe to use it in common
+    compileOnly(annotationProcessor('io.github.llamalad7:mixinextras-common:0.5.3'))
+    compileOnly("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+
+    // implementation is used because compileOnly doesnt seem to apply classtweakers at compile time
+    // NOTE: I still use Fabric API Neoforge but with Forgified Fabric API
+    implementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
+    implementation("com.github.TheDeathlyCow.thermoo:thermoo-common:v${project.thermoo_version}")
+
+    // these mods are universal jars and have no loader-specific modules
+    api("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
+    api("eu.pb4:trinkets:${trinkets_version}")
+
+    testImplementation "org.junit.jupiter:junit-jupiter:5.+"
+    testImplementation "org.mockito:mockito-core:3.+"
+
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+
+    gametestImplementation "org.mockito:mockito-core:3.+"
+}
+
+test {
+    useJUnitPlatform()
+}
+
+sourceSets.main.resources { srcDir project(":common").file("src/main/generated") }
+
+configurations {
+    commonJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonGeneratedResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonGametestJava {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+    commonGametestResources {
+        canBeResolved = false
+        canBeConsumed = true
+    }
+}
+
+artifacts {
+    commonJava file("src/main/java")
+    commonResources file("src/main/resources")
+    commonGeneratedResources file("src/main/generated")
+    commonGametestJava file("src/gametest/java")
+    commonGametestResources file("src/gametest/resources")
+}
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements', 'includeInternal', 'modCompileClasspath'].each { variant ->
+    configurations.named(variant) {
+        attributes {
+            attribute(loaderAttribute, 'common')
+        }
+    }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant ->
+        configurations.named(variant) {
+            attributes {
+                attribute(loaderAttribute, 'common')
+            }
+        }
+    }
+}

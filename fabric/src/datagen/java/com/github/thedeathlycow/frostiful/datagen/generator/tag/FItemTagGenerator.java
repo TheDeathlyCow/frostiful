@@ -1,0 +1,202 @@
+/*
+ * Frostiful: A Vanilla+ Freezing Temperature Mod. Also try Scorchful!
+ * Copyright (C) 2026	TheDeathlyCow
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Lesser General Public License as
+ * published by the Free Software Foundation, either version 3 of the
+ * License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this program.  If not, see
+ * <https://www.gnu.org/licenses/>.
+ */
+
+package com.github.thedeathlycow.frostiful.datagen.generator.tag;
+
+import com.github.thedeathlycow.frostiful.registry.FItems;
+import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
+import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
+import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
+import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
+import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.resources.Identifier;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Items;
+
+import java.util.concurrent.CompletableFuture;
+
+import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonItemKey;
+
+public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
+    public FItemTagGenerator(
+            FabricPackOutput output,
+            CompletableFuture<HolderLookup.Provider> registriesFuture,
+            BlockTagsProvider blockTagProvider
+    ) {
+        super(output, registriesFuture, blockTagProvider);
+    }
+
+    @Override
+    protected void addTags(HolderLookup.Provider wrapperLookup) {
+        generateFrostifulTags(wrapperLookup);
+        generateConventionalTags(wrapperLookup);
+        generateMinecraftTags(wrapperLookup);
+    }
+
+    private void generateFrostifulTags(HolderLookup.Provider wrapperLookup) {
+        valueLookupBuilder(FItemTags.CHILLAGER_LORD_CLOAK)
+                .add(FItems.FROSTOLOGY_CLOAK);
+
+        valueLookupBuilder(FItemTags.ENCHANTABLE_ICE_SKATES)
+                .addOptionalTag(FItemTags.ICE_SKATES);
+
+        valueLookupBuilder(FItemTags.ENCHANTABLE_FROST_WAND)
+                .add(FItems.FROST_WAND);
+
+        valueLookupBuilder(FItemTags.FUR_ARMOR)
+                .add(FItems.FUR_HELMET)
+                .add(FItems.FUR_CHESTPLATE)
+                .add(FItems.FUR_LEGGINGS)
+                .add(FItems.FUR_BOOTS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_HELMET)
+                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE)
+                .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS);
+
+        valueLookupBuilder(FItemTags.FUR_BOOTS)
+                .add(FItems.FUR_BOOTS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS);
+
+        valueLookupBuilder(FItemTags.ICE_SKATES)
+                .add(FItems.ICE_SKATES)
+                .add(FItems.ARMORED_ICE_SKATES);
+
+        valueLookupBuilder(FItemTags.FUR_TUFTS)
+                .add(FItems.POLAR_BEAR_FUR_TUFT)
+                .add(FItems.WOLF_FUR_TUFT)
+                .add(FItems.OCELOT_FUR_TUFT)
+                .add(Items.RABBIT_HIDE);
+
+        valueLookupBuilder(FItemTags.ICICLES)
+                .add(FItems.ICICLE)
+                .addOptionalTag(commonItemKey("icicles"));
+
+        getOrCreateRawBuilder(FItemTags.ICICLES)
+                .addOptionalElement(Identifier.fromNamespaceAndPath("immersive_weathering", "icicle"));
+
+        valueLookupBuilder(FItemTags.POWDER_SNOW_WALKABLE)
+                .add(Items.LEATHER_BOOTS)
+                .add(FItems.FUR_BOOTS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS)
+                .add(Items.LEATHER_HORSE_ARMOR);
+
+        valueLookupBuilder(FItemTags.REPAIRS_FROST_WAND)
+                .add(FItems.FROZEN_ROD);
+
+        valueLookupBuilder(FItemTags.REPAIRS_FUR_ARMOR)
+                .addOptionalTag(FItemTags.FUR_TUFTS);
+
+        valueLookupBuilder(FItemTags.REPAIRS_FUR_LINED_CHAINMAIL_ARMOR)
+                .add(Items.IRON_INGOT)
+                .addOptionalTag(ConventionalItemTags.IRON_INGOTS);
+
+        copy(FBlockTags.SUN_LICHENS, FItemTags.SUN_LICHENS);
+
+        valueLookupBuilder(FItemTags.SUPPORTS_HEAT_DRAIN)
+                .addOptionalTag(FItemTags.ENCHANTABLE_FROST_WAND)
+                .addOptionalTag(ItemTags.WEAPON_ENCHANTABLE);
+    }
+
+    private void generateConventionalTags(HolderLookup.Provider wrapperLookup) {
+        valueLookupBuilder(ConventionalItemTags.MELEE_WEAPON_TOOLS)
+                .add(FItems.FROST_WAND);
+
+        valueLookupBuilder(ConventionalItemTags.RANGED_WEAPON_TOOLS)
+                .add(FItems.FROST_WAND);
+
+        valueLookupBuilder(ConventionalItemTags.GLASS_PANES)
+                .add(FItems.ICE_PANE);
+
+        valueLookupBuilder(ConventionalItemTags.GLASS_BLOCKS_COLORLESS)
+                .add(FItems.ICE_PANE);
+
+        valueLookupBuilder(FItemTags.C_ICICLES)
+                .add(FItems.ICICLE);
+
+        valueLookupBuilder(ConventionalItemTags.HUMANOID_ARMORS)
+                .addOptionalTag(FItemTags.FUR_ARMOR);
+
+        valueLookupBuilder(ConventionalItemTags.ENCHANTABLES)
+                .addOptionalTag(FItemTags.ENCHANTABLE_FROST_WAND)
+                .addOptionalTag(FItemTags.ENCHANTABLE_ICE_SKATES);
+
+        valueLookupBuilder(ConventionalItemTags.RODS)
+                .add(FItems.FROZEN_ROD);
+    }
+
+    private void generateMinecraftTags(HolderLookup.Provider wrapperLookup) {
+        valueLookupBuilder(ItemTags.EQUIPPABLE_ENCHANTABLE)
+                .add(FItems.FROSTOLOGY_CLOAK);
+
+        valueLookupBuilder(ItemTags.WEAPON_ENCHANTABLE)
+                .add(FItems.FROST_WAND);
+
+        valueLookupBuilder(ItemTags.ARROWS)
+                .add(FItems.GLACIAL_ARROW);
+
+        valueLookupBuilder(ItemTags.HEAD_ARMOR)
+                .add(FItems.FUR_HELMET)
+                .add(FItems.FUR_PADDED_CHAINMAIL_HELMET);
+
+        valueLookupBuilder(ItemTags.CHEST_ARMOR)
+                .add(FItems.FUR_CHESTPLATE)
+                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE);
+
+        valueLookupBuilder(ItemTags.LEG_ARMOR)
+                .add(FItems.FUR_LEGGINGS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS);
+
+        valueLookupBuilder(ItemTags.FOOT_ARMOR)
+                .addOptionalTag(FItemTags.FUR_BOOTS)
+                .addOptionalTag(FItemTags.ICE_SKATES);
+
+        valueLookupBuilder(ItemTags.SLABS)
+                .add(FItems.PACKED_SNOW_BRICK_SLAB)
+                .add(FItems.CUT_BLUE_ICE_SLAB)
+                .add(FItems.CUT_PACKED_ICE_SLAB);
+
+        valueLookupBuilder(ItemTags.SLABS)
+                .add(FItems.PACKED_SNOW_BRICK_STAIRS)
+                .add(FItems.CUT_BLUE_ICE_STAIRS)
+                .add(FItems.CUT_PACKED_ICE_STAIRS);
+
+        valueLookupBuilder(ItemTags.WALLS)
+                .add(FItems.PACKED_SNOW_BRICK_WALL)
+                .add(FItems.CUT_BLUE_ICE_WALL)
+                .add(FItems.CUT_PACKED_ICE_WALL);
+
+        valueLookupBuilder(ItemTags.TRIMMABLE_ARMOR)
+                .add(FItems.FUR_HELMET)
+                .add(FItems.FUR_CHESTPLATE)
+                .add(FItems.FUR_LEGGINGS)
+                .add(FItems.FUR_BOOTS)
+                .add(FItems.ICE_SKATES)
+                .add(FItems.FUR_PADDED_CHAINMAIL_HELMET)
+                .add(FItems.FUR_PADDED_CHAINMAIL_CHESTPLATE)
+                .add(FItems.FUR_PADDED_CHAINMAIL_LEGGINGS)
+                .add(FItems.FUR_PADDED_CHAINMAIL_BOOTS)
+                .add(FItems.ARMORED_ICE_SKATES);
+
+        valueLookupBuilder(ItemTags.LOOM_PATTERNS)
+                .add(FItems.FROSTOLOGY_BANNER_PATTERN)
+                .add(FItems.SNOWFLAKE_BANNER_PATTERN)
+                .add(FItems.ICICLE_BANNER_PATTERN);
+    }
+}

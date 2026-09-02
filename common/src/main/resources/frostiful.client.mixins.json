@@ -1,0 +1,27 @@
+{
+    "required": true,
+    "minVersion": "0.8",
+    "package": "com.github.thedeathlycow.frostiful.client.mixin",
+    "compatibilityLevel": "JAVA_25",
+    "client": [
+        "CapeFeatureRendererMixin",
+        "ElytraFeatureRendererMixin",
+        "GameRendererMixin",
+        "PlayerMixin",
+        "SplashManagerMixin",
+        "accessor.SpecialModelRenderersAccessor",
+        "entity.render.ArmorStandRendererMixin",
+        "entity.render.HumanoidMobRendererMixin",
+        "entity.render.LivingEntityRendererMixin",
+        "entity.render.PolarBearRendererMixin",
+        "entity.render.state.HumanoidRenderStateMixin",
+        "entity.render.state.LivingEntityRenderStateMixin",
+        "entity.render.state.PolarBearRenderStateMixin",
+        "gui.GameRendererMixin",
+        "gui.GuiMixin",
+        "gui.HeartTypeMixin"
+    ],
+    "injectors": {
+        "defaultRequire": 1
+    }
+}
