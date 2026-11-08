@@ -29,9 +29,7 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
-public class FStatusEffects {
-
-
+public final class FMobEffects {
     public static final Holder<MobEffect> WARMTH = registerReference(
             "warmth",
             new SimpleStatusEffect(
@@ -64,6 +62,6 @@ public class FStatusEffects {
         return Registry.registerForHolder(BuiltInRegistries.MOB_EFFECT, Frostiful.id(name), statusEffect);
     }
 
-    private FStatusEffects() {
+    private FMobEffects() {
     }
 }

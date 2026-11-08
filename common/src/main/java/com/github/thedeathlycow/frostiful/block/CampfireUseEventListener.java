@@ -22,7 +22,7 @@ package com.github.thedeathlycow.frostiful.block;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -110,14 +110,14 @@ public class CampfireUseEventListener implements UseBlockCallback {
                 LivingEntity.class,
                 AABB.ofSize(Vec3.atCenterOf(pos), boxLength, boxLength, boxLength),
                 (entity) -> {
-                    MobEffectInstance instance = entity.getEffect(FStatusEffects.WARMTH);
+                    MobEffectInstance instance = entity.getEffect(FMobEffects.WARMTH);
                     return !entity.isSpectator() && (instance == null || (instance.getAmplifier() == 0 && instance.getDuration() < duration));
                 }
         );
 
         // apply warmth effect to all nearby entities
         for (LivingEntity entity : nearbyEntities) {
-            MobEffectInstance instance = new MobEffectInstance(FStatusEffects.WARMTH, duration, 0, true, true);
+            MobEffectInstance instance = new MobEffectInstance(FMobEffects.WARMTH, duration, 0, true, true);
             entity.addEffect(instance);
         }
 
