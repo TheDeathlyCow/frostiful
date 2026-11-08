@@ -2,8 +2,10 @@
 
 .gradle/
 build/
+runs/
 out/
 classes/
+.kotlin/
 
 # eclipse
 
@@ -29,11 +31,15 @@ bin/
 *.DS_Store
 
 # fabric
-
 .fabric/
 run/
-src/main/generated/.cache/
-
-src/main/resources/pack.mcmeta
-.mixin.out/
 logs/
+.cache/
+.mixin.out/
+
+# java
+
+hs_err_*.log
+replay_*.log
+*.hprof
+*.jfr

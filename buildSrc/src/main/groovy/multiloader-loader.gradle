@@ -1,0 +1,72 @@
+plugins {
+    id 'multiloader-common'
+}
+
+sourceSets {
+    gametest {
+        compileClasspath += main.compileClasspath
+        runtimeClasspath += main.runtimeClasspath
+        compileClasspath += main.output
+        runtimeClasspath += main.output
+    }
+}
+
+configurations {
+    commonJava {
+        canBeResolved = true
+    }
+    commonResources {
+        canBeResolved = true
+    }
+    commonGeneratedResources {
+        canBeResolved = true
+    }
+    commonGametestJava {
+        canBeResolved = true
+    }
+    commonGametestResources {
+        canBeResolved = true
+    }
+}
+
+dependencies {
+    compileOnly(project(':common')) {
+        def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+        attributes {
+            attribute(loaderAttribute, 'common')
+        }
+    }
+    commonJava project(path: ':common', configuration: 'commonJava')
+    commonResources project(path: ':common', configuration: 'commonResources')
+    commonGeneratedResources project(path: ':common', configuration: 'commonGeneratedResources')
+
+    commonGametestJava project(path: ':common', configuration: 'commonGametestJava')
+    commonGametestResources project(path: ':common', configuration: 'commonGametestResources')
+}
+
+tasks.named('compileJava', JavaCompile) {
+    dependsOn(configurations.commonJava)
+    source(configurations.commonJava)
+}
+
+processResources {
+    dependsOn(configurations.commonResources, configurations.commonGeneratedResources)
+    from(configurations.commonResources, configurations.commonGeneratedResources)
+}
+
+tasks.named('compileGametestJava', JavaCompile) {
+    dependsOn(configurations.commonGametestJava)
+    source(configurations.commonGametestJava)
+}
+
+tasks.named('processGametestResources', ProcessResources) {
+    dependsOn(configurations.commonGametestResources)
+    from(configurations.commonGametestResources)
+}
+
+tasks.named("sourcesJar", Jar) {
+    dependsOn(configurations.commonJava)
+    from(configurations.commonJava)
+    dependsOn(configurations.commonResources, configurations.commonGeneratedResources)
+    from(configurations.commonResources, configurations.commonGeneratedResources)
+}

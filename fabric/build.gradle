@@ -1,0 +1,162 @@
+plugins {
+    id 'multiloader-loader'
+    id 'org.relativitymc.neo-loom'
+    id 'me.modmuss50.mod-publish-plugin'
+}
+
+def commonProject = project(':common')
+
+fabricApi {
+    configureDataGeneration() {
+        client = true
+        createSourceSet = true
+        addToResources = false
+        modId = "frostiful-datagen"
+        outputDirectory = commonProject.file("src/main/generated")
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    implementation("net.fabricmc:fabric-loader:${project.fabric_loader_version}")
+    include("dev.yumi.mc.core:yumi-mc-foundation:${project.yumi_mc_foundation_version}")
+
+    implementation("net.fabricmc.fabric-api:fabric-api:${project.fabric_version}")
+    implementation("dev.isxander:yet-another-config-lib:${project.yacl_version}-fabric")
+    implementation("com.github.TheDeathlyCow.thermoo:thermoo-fabric:v${project.thermoo_version}")
+    implementation("org.ladysnake.cardinal-components-api:cardinal-components-base:${project.cca_version}")
+    implementation("org.ladysnake.cardinal-components-api:cardinal-components-entity:${project.cca_version}")
+    implementation("com.terraformersmc:modmenu:${project.mod_menu_version}")
+
+    compileOnly("maven.modrinth:colorful-hearts:${project.colorful_hearts_version}")
+
+
+    testImplementation "net.fabricmc:fabric-loader-junit:${project.fabric_loader_version}"
+
+    gametestImplementation commonProject.sourceSets.gametest.output
+}
+
+loom {
+    def aw = commonProject.file("src/main/resources/${mod_id}.classtweaker")
+    if (aw.exists()) {
+        accessWidenerPath.set(aw)
+    }
+    runs {
+        client {
+            client()
+            setConfigName('Fabric Client')
+            ideConfigGenerated(true)
+            runDir('runs/client')
+        }
+        server {
+            server()
+            setConfigName('Fabric Server')
+            ideConfigGenerated(true)
+            runDir('runs/server')
+        }
+
+        clientManualTest {
+            client()
+            setConfigName('Fabric Manual Test Client')
+            ideConfigGenerated(true)
+            runDir('runs/clientManualTest')
+            source(sourceSets.gametest)
+        }
+
+        serverManualTest {
+            server()
+            setConfigName('Fabric Manual Test Server')
+            ideConfigGenerated(true)
+            runDir('runs/serverManualTest')
+            source(sourceSets.gametest)
+        }
+
+        gameTest {
+            server()
+            setConfigName('Fabric Game test')
+            ideConfigGenerated(true)
+            runDir('build/gametest')
+            source(sourceSets.gametest)
+
+            vmArg('-Dfabric-api.gametest')
+            vmArg("-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.file("junit.xml").get().getAsFile()}")
+        }
+
+        clientGameTest {
+            client()
+            setConfigName('Fabric Client Game Test')
+            ideConfigGenerated(true)
+            runDir('build/clientGametest')
+            source(sourceSets.gametest)
+
+            vmArg('-Dfabric-api.client.gametest')
+            vmArg("-Dfabric-api.gametest.report-file=${project.layout.buildDirectory.file("junit.xml").get().getAsFile()}")
+        }
+    }
+}
+
+tasks.named('build') {
+    dependsOn('runGameTest')
+    // runClientGameTest is OS-specific and difficult to run on github actions, so not including it here
+    // feel free to run these manually :)
+}
+
+// Implement mcgradleconventions loader attribute
+def loaderAttribute = Attribute.of('io.github.mcgradleconventions.loader', String)
+['apiElements', 'runtimeElements', 'sourcesElements', 'javadocElements', 'includeInternal', 'modCompileClasspath'].each { variant ->
+    configurations.named(variant) {
+        attributes {
+            attribute(loaderAttribute, 'fabric')
+        }
+    }
+}
+sourceSets.configureEach {
+    [it.compileClasspathConfigurationName, it.runtimeClasspathConfigurationName].each { variant->
+        configurations.named(variant) {
+            attributes {
+                attribute(loaderAttribute, 'fabric')
+            }
+        }
+    }
+}
+
+publishMods {
+    type = BETA
+    def changelogFile = rootProject.file("./changelogs/${project.version}.md")
+
+    if (changelogFile.exists()) {
+        changelog = changelogFile.text
+    }
+
+    file = jar.archiveFile
+    additionalFiles.from(sourcesJar.archiveFile)
+    displayName = "Frostiful ${version}"
+
+    modLoaders.add("fabric")
+    modLoaders.add("quilt")
+
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_API_KEY")
+        projectId = "715248"
+        minecraftVersions.addAll("26.1", "26.1.1", "26.1.2")
+
+        javaVersions.add(JavaVersion.VERSION_25)
+
+        clientRequired = true
+        serverRequired = true
+
+        requires("fabric-api", "thermoo", "yacl")
+
+        optional("thermoo-patches", "scorchful", "modmenu")
+    }
+
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "Ae6qoBj3"
+        minecraftVersions.addAll("26.1", "26.1.1", "26.1.2")
+
+        requires("fabric-api", "thermoo", "yacl")
+
+        optional("thermoo-patches", "scorchful", "modmenu", "trinkets-updated")
+    }
+}
