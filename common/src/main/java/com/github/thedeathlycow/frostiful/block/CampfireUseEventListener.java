@@ -102,23 +102,20 @@ public class CampfireUseEventListener implements UseBlockCallback {
     private static void warmNearbyEntities(Level world, BlockPos pos) {
         BlockSettings settings = FrostifulConfigYACL.blockSettings();
         final double boxLength = settings.campfireWarmthSearchRadius();
-        final int duration = settings.campfireWarmthTime();
+        final int warmingTime = settings.campfireWarmingTime();
+        final int warmheartedTime = settings.campfireWarmheartedTime();
 
-        // get all nearby living entities that do not have warmth or
-        // who have a weak warmth effect
         List<LivingEntity> nearbyEntities = world.getEntitiesOfClass(
                 LivingEntity.class,
                 AABB.ofSize(Vec3.atCenterOf(pos), boxLength, boxLength, boxLength),
-                (entity) -> {
-                    MobEffectInstance instance = entity.getEffect(FMobEffects.WARMTH);
-                    return !entity.isSpectator() && (instance == null || (instance.getAmplifier() == 0 && instance.getDuration() < duration));
-                }
+                entity -> !entity.isSpectator()
         );
 
-        // apply warmth effect to all nearby entities
         for (LivingEntity entity : nearbyEntities) {
-            MobEffectInstance instance = new MobEffectInstance(FMobEffects.WARMTH, duration, 0, true, true);
-            entity.addEffect(instance);
+            MobEffectInstance warmth = new MobEffectInstance(FMobEffects.WARMING, warmingTime, 0, true, true);
+            MobEffectInstance warmhearted = new MobEffectInstance(FMobEffects.WARMHEARTED, warmheartedTime, 0, true, true);
+            entity.addEffect(warmth);
+            entity.addEffect(warmhearted);
         }
 
         world.playSound(null, pos, FSoundEvents.CAMPFIRE_HISS, SoundSource.BLOCKS, 0.5F, 1.5f);

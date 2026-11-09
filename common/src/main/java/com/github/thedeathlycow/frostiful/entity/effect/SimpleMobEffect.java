@@ -26,8 +26,8 @@ import net.minecraft.world.effect.MobEffectCategory;
  * A simple status effect that is not instant
  * and does not have updates.
  */
-public class SimpleStatusEffect extends MobEffect {
-    public SimpleStatusEffect(MobEffectCategory category, int color) {
+public class SimpleMobEffect extends MobEffect {
+    public SimpleMobEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 

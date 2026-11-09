@@ -21,6 +21,7 @@ package com.github.thedeathlycow.frostiful.config;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.config.schema.ConfigUpdater;
+import com.github.thedeathlycow.frostiful.config.schema.SchemaV2;
 import com.github.thedeathlycow.frostiful.config.section.SchemaSettings;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
@@ -31,7 +32,7 @@ import java.util.function.Supplier;
 class Updater {
     private static final Supplier<Int2ObjectMap<ConfigUpdater>> SCHEMAS = () -> {
         Int2ObjectMap<ConfigUpdater> map = new Int2ObjectArrayMap<>();
-
+        map.put(2, new SchemaV2());
         return map;
     };
 

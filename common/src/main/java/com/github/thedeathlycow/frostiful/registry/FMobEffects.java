@@ -20,7 +20,8 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
-import com.github.thedeathlycow.frostiful.entity.effect.SimpleStatusEffect;
+import com.github.thedeathlycow.frostiful.entity.effect.SimpleMobEffect;
+import com.github.thedeathlycow.frostiful.entity.effect.WarmingMobEffect;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -30,13 +31,26 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class FMobEffects {
-    public static final Holder<MobEffect> WARMTH = registerReference(
-            "warmth",
-            new SimpleStatusEffect(
+
+    public static final Holder<MobEffect> WARMING = registerReference(
+            "warming",
+            new WarmingMobEffect(
                     MobEffectCategory.BENEFICIAL, 0xE3963E
+            )
+    );
+
+    public static final Holder<MobEffect> WARMHEARTED = registerReference(
+            "warmhearted",
+            new SimpleMobEffect(
+                    MobEffectCategory.BENEFICIAL, 0xE3673E
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.id("effect.warmth"),
+                    Frostiful.id("effect.warmhearted"),
+                    1.0,
+                    AttributeModifier.Operation.ADD_VALUE
+            ).addAttributeModifier(
+                    ThermooAttributes.FROST_RESISTANCE,
+                    Frostiful.id("effect.warmhearted"),
                     1.0,
                     AttributeModifier.Operation.ADD_VALUE
             )
@@ -44,7 +58,7 @@ public final class FMobEffects {
 
     public static final Holder<MobEffect> FROST_BITE = registerReference(
             "frost_bite",
-            new SimpleStatusEffect(
+            new SimpleMobEffect(
                     MobEffectCategory.HARMFUL, 0x4287F5
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
@@ -56,6 +70,8 @@ public final class FMobEffects {
 
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful status effects");
+
+        BuiltInRegistries.MOB_EFFECT.addAlias(Frostiful.id("warmth"), Frostiful.id("warmhearted"));
     }
 
     private static Holder<MobEffect> registerReference(String name, MobEffect statusEffect) {

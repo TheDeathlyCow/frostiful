@@ -69,7 +69,7 @@ public class FoodIntegration {
 
     private static void applyWarmthFromFood(LivingEntity user) {
         int duration = FrostifulConfigYACL.itemSettings().warmingFoodDuration();
-        user.addEffect(new MobEffectInstance(FMobEffects.WARMTH, duration));
+        user.addEffect(new MobEffectInstance(FMobEffects.WARMHEARTED, duration));
     }
 
     private static void addTooltipBeforeAdvanced(ItemStack stack, List<Component> tooltip) {

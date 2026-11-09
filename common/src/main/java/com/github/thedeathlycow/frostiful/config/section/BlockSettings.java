@@ -81,16 +81,26 @@ public class BlockSettings {
     double campfireWarmthSearchRadiusMultiplier = 1.0;
 
     @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
-    @Translate.Name("Campfire warmth time multiplier")
-    @SerialEntry(comment = "Multiplies the duration of the Warmth effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
+    @Translate.Name("Campfire warming time multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Warming effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
     @FloatField(min = 0)
-    float campfireWarmthTimeMultiplier = 1.0f;
+    float campfireWarmingTimeMultiplier = 1.0f;
+
+    @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
+    @Translate.Name("Campfire warmhearted time multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Warmhearted effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
+    @FloatField(min = 0)
+    float campfireWarmheartedTimeMultiplier = 1.0f;
 
     public double campfireWarmthSearchRadius() {
         return 10.0 * this.campfireWarmthSearchRadiusMultiplier;
     }
 
-    public int campfireWarmthTime() {
-        return Mth.floor(1200 * campfireWarmthTimeMultiplier);
+    public int campfireWarmingTime() {
+        return Mth.floor(5 * 20 * campfireWarmingTimeMultiplier);
+    }
+
+    public int campfireWarmheartedTime() {
+        return Mth.floor(60 * 20 * campfireWarmheartedTimeMultiplier);
     }
 }

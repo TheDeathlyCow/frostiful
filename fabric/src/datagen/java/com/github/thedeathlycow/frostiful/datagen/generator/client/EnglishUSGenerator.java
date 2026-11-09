@@ -324,7 +324,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FSoundEvents.ITEM_ARMOR_EQUIP_FUR.value(), "Fur armor rustles");
 
         effect(builder, FMobEffects.FROST_BITE, "Frost Bite");
-        effect(builder, FMobEffects.WARMTH, "Warmth");
+        effect(builder, FMobEffects.WARMING, "Warming");
+        effect(builder, FMobEffects.WARMHEARTED, "Warmhearted");
 
         enchantment(builder, FEnchantments.ENERVATION, "Enervation", "Steals heat from cold enemies when attacking");
         enchantment(builder, FEnchantments.ICE_BREAKER, "Ice Breaker", "Increases the damage from attacking enemies frozen in ice");
