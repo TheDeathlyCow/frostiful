@@ -45,12 +45,12 @@ public final class FMobEffects {
                     MobEffectCategory.BENEFICIAL, 0xE3673E
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.id("effect.warmhearted"),
+                    Frostiful.id("effect.warmhearted/frost_resistance"),
                     1.0,
                     AttributeModifier.Operation.ADD_VALUE
             ).addAttributeModifier(
-                    ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.id("effect.warmhearted"),
+                    ThermooAttributes.ENVIRONMENT_FROST_RESISTANCE,
+                    Frostiful.id("effect.warmhearted/environment_frost_resistance"),
                     1.0,
                     AttributeModifier.Operation.ADD_VALUE
             )
