@@ -15,7 +15,7 @@ public final class WarmingMobEffect extends SimpleMobEffect {
     public boolean applyEffectTick(final ServerLevel level, final LivingEntity mob, final int amplification) {
         if (mob.thermoo$getTemperatureScale() < 0.01f) {
             int minTemp = -mob.thermoo$getMinTemperature();
-            int tempChange = Mth.ceil(minTemp * PERCENT_PER_TICK * amplification);
+            int tempChange = Mth.ceil(minTemp * PERCENT_PER_TICK * (amplification + 1));
 
             mob.thermoo$addTemperature(tempChange, level.thermoo$temperatureSources().active());
         }
