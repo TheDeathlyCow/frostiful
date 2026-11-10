@@ -28,6 +28,7 @@ import net.minecraft.world.level.gamerules.GameRuleCategory;
 public class FGameRules {
     public static final GameRuleCategory SURVIVAL_CATEGORY = GameRuleCategory.register(Frostiful.id("survival"));
 
+
     public static final GameRule<Boolean> ENABLE_ENVIRONMENT_FREEZING =
             GameRuleBuilder.forBoolean(true)
                     .category(SURVIVAL_CATEGORY)

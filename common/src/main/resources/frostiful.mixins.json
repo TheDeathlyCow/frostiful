@@ -24,7 +24,7 @@
         "entity.mob.WolfPlayFightMixin",
         "entity.root.EntityMovementBlockMixin",
         "entity.root.PlayerMovementBlockMixin",
-        "item.ConsumeItemCriterionMixin",
+        "item.ConsumableMixin",
         "item.EnchantmentEntityEffectMixin",
         "powder_snow_effects.EntityPowderSnowRedirect",
         "powder_snow_effects.LivingEntityPowderSnowDisabler",

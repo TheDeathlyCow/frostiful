@@ -19,24 +19,26 @@
 
 package com.github.thedeathlycow.frostiful.mixins.item;
 
-import com.github.thedeathlycow.frostiful.compat.FoodIntegration;
-import net.minecraft.advancements.criterion.ConsumeItemTrigger;
-import net.minecraft.server.level.ServerPlayer;
+import com.github.thedeathlycow.frostiful.item.component.ConsumeCallback;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.Consumable;
+import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(ConsumeItemTrigger.class)
-public class ConsumeItemCriterionMixin {
-
+@Mixin(Consumable.class)
+public class ConsumableMixin {
     @Inject(
-            method = "trigger",
-            at = @At("HEAD")
+            method = "onConsume",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/item/ItemStack;getAllOfType(Ljava/lang/Class;)Ljava/util/stream/Stream;"
+            )
     )
-    private void onConsumeItem(ServerPlayer player, ItemStack stack, CallbackInfo ci) {
-        FoodIntegration.onConsumeFood(stack, player);
+    private void onConsumeItem(Level level, LivingEntity user, ItemStack stack, CallbackInfoReturnable<ItemStack> cir) {
+        ConsumeCallback.EVENT.invoker().onConsume(level, user, stack, (Consumable) (Object) this);
     }
-
 }
