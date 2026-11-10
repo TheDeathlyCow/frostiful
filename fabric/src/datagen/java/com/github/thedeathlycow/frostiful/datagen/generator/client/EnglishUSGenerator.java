@@ -178,6 +178,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FItemTags.ICICLES, "Icicles");
         builder.add(FItemTags.FUR_TUFTS, "Fur Tufts");
         builder.add(FItemTags.WARM_FOODS, "Warm Foods");
+        builder.add(FItemTags.COLD_FOODS, "Cold Foods");
+        builder.add(FItemTags.HOT_FOODS, "Hot Foods");
         builder.add(FItemTags.ICE_SKATES, "Ice Skates");
         builder.add(FItemTags.SUN_LICHENS, "Sun Lichens");
         builder.add(FItemTags.FUR_BOOTS, "Fur Boots");

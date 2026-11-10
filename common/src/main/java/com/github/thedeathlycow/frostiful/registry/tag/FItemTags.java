@@ -43,6 +43,7 @@ public final class FItemTags {
     public static final TagKey<Item> SUPPORTS_HEAT_DRAIN = register("supports_heat_drain");
     public static final TagKey<Item> WARM_FOODS = register("warm_foods");
     public static final TagKey<Item> HOT_FOODS = register("hot_foods");
+    public static final TagKey<Item> COLD_FOODS = register("cold_foods");
 
     private static TagKey<Item> register(String id) {
         return TagKey.create(Registries.ITEM, Frostiful.id(id));

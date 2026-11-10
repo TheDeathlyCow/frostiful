@@ -25,11 +25,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 public record WarmFoodEffects(
         List<MobEffectInstance> effects,
-        Component tooltip
+        Optional<Component> tooltip
 ) {
     public static final Codec<WarmFoodEffects> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
@@ -37,7 +38,7 @@ public record WarmFoodEffects(
                                     .optionalFieldOf("effects", List.of())
                                     .forGetter(WarmFoodEffects::effects),
                             ComponentSerialization.CODEC
-                                    .fieldOf("tooltip")
+                                    .optionalFieldOf("tooltip")
                                     .forGetter(WarmFoodEffects::tooltip)
                     )
                     .apply(instance, WarmFoodEffects::new)
@@ -46,13 +47,15 @@ public record WarmFoodEffects(
     public static final StreamCodec<RegistryFriendlyByteBuf, WarmFoodEffects> STREAM_CODEC = StreamCodec.composite(
             MobEffectInstance.STREAM_CODEC.apply(ByteBufCodecs.list()),
             WarmFoodEffects::effects,
-            ComponentSerialization.STREAM_CODEC,
+            ByteBufCodecs.optional(ComponentSerialization.STREAM_CODEC),
             WarmFoodEffects::tooltip,
             WarmFoodEffects::new
     );
 
     public static final String WARMING_TOOLTIP_KEY = "item.frostiful.warming.tooltip";
     public static final String HOT_TOOLTIP_KEY = "item.frostiful.hot.tooltip";
+
+    public static final WarmFoodEffects DEFAULT = new WarmFoodEffects(List.of());
 
     public static final WarmFoodEffects WARMING_FOOD = new WarmFoodEffects(
             List.of(
@@ -70,16 +73,26 @@ public record WarmFoodEffects(
             Component.translatable(HOT_TOOLTIP_KEY).setStyle(TextStyles.RED_NONITALIC)
     );
 
+    public WarmFoodEffects(List<MobEffectInstance> effects, Component tooltip) {
+        this(effects, Optional.of(tooltip));
+    }
+
+    public WarmFoodEffects(List<MobEffectInstance> effects) {
+        this(effects, Optional.empty());
+    }
+
     @Nullable
     public static WarmFoodEffects getByTag(ItemStack stack) {
         if (stack.has(FDataComponentTypes.WARM_FOOD_EFFECTS)) {
             return stack.get(FDataComponentTypes.WARM_FOOD_EFFECTS);
-        } else if (stack.is(FItemTags.WARM_FOODS)) {
-            return WARMING_FOOD;
+        } else if (stack.is(FItemTags.COLD_FOODS)) {
+            return DEFAULT;
         } else if (stack.is(FItemTags.HOT_FOODS)) {
             return HOT_FOOD;
+        } else if (stack.is(FItemTags.WARM_FOODS)) {
+            return WARMING_FOOD;
         } else {
-            return null;
+            return DEFAULT;
         }
     }
 
@@ -111,10 +124,16 @@ public record WarmFoodEffects(
     }
 
     public void getTooltip(ItemStack stack, Item.TooltipContext tooltipContext, TooltipFlag tooltipFlag, List<Component> lines) {
+        if (tooltip.isEmpty()) {
+            return;
+        }
+
+        Component line = tooltip.orElseThrow();
+
         if (tooltipFlag.isAdvanced()) {
-            SimpleTooltipComponent.addTooltipBeforeAdvanced(stack, lines, tooltip);
+            SimpleTooltipComponent.addTooltipBeforeAdvanced(stack, lines, line);
         } else {
-            lines.add(tooltip);
+            lines.add(line);
         }
     }
 }
