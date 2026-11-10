@@ -22,14 +22,18 @@ package com.github.thedeathlycow.frostiful.item.component;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.mojang.serialization.Codec;
 import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.component.TooltipProvider;
 
+import java.util.List;
 import java.util.function.Consumer;
 
 public record SimpleTooltipComponent(
@@ -49,15 +53,27 @@ public record SimpleTooltipComponent(
     public static final String INERT_KEY = "item.frostiful.inert_frostology_cloak.tooltip";
 
     public static final Component INERT_TEXT = Component.translatable(INERT_KEY)
-            .setStyle(TextStyles.INERT_FROSTOLOGY_CLOAK_TOOLTIP);
+            .setStyle(TextStyles.GRAY_NONITALIC);
 
     public static final String ICE_LIKE_KEY = "item.frostiful.frostology_cloak.tooltip";
 
     public static final Component ICE_LIKE_TEXT = Component.translatable(ICE_LIKE_KEY)
-            .setStyle(TextStyles.FROSTOLOGY_CLOAK_TOOLTIP);
+            .setStyle(TextStyles.BLUE_NONITALIC);
 
     @Override
     public void addToTooltip(Item.TooltipContext context, Consumer<Component> consumer, TooltipFlag flag, DataComponentGetter components) {
         consumer.accept(text);
+    }
+
+    static void addTooltipBeforeAdvanced(ItemStack stack, List<Component> tooltip, Component text) {
+        Identifier identifier = BuiltInRegistries.ITEM.getKey(stack.getItem());
+        Component idAsText = Component.literal(identifier.toString());
+
+        for (int i = tooltip.size() - 1; i >= 0; i--) {
+            if (tooltip.get(i).contains(idAsText)) {
+                tooltip.add(i, text);
+                return;
+            }
+        }
     }
 }

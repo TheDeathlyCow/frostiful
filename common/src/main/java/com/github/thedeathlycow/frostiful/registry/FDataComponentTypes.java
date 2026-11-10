@@ -23,7 +23,9 @@ import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.compat.TrinketsIntegration;
 import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponent;
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
+import com.github.thedeathlycow.frostiful.item.component.ConsumeCallback;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
+import com.github.thedeathlycow.frostiful.item.component.PostConsumeEffects;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.HolderSet;
@@ -71,10 +73,23 @@ public final class FDataComponentTypes {
                     .cacheEncoding()
     );
 
+    public static final DataComponentType<PostConsumeEffects> POST_CONSUME_EFFECTS = register(
+            "post_consume_effects",
+            builder -> builder
+                    .persistent(PostConsumeEffects.CODEC)
+                    .networkSynchronized(PostConsumeEffects.STREAM_CODEC)
+                    .cacheEncoding()
+    );
+
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful item components");
 
         ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.SIMPLE_TOOLTIP);
+
+        ConsumeCallback.EVENT.register((level, user, stack, consumable) -> {
+            PostConsumeEffects effects = PostConsumeEffects.getByTag(stack);
+            effects.onConsume(level, user, stack);
+        });
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, _) -> {
             for (ItemStack stack : TrinketsIntegration.getAllEquipped(entity)) {

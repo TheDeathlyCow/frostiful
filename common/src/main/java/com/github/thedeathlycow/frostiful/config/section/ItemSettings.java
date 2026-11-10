@@ -119,16 +119,16 @@ public class ItemSettings {
     float skateUpgradeTemplateIglooGenerateChance = 0.75f;
 
     @AutoGen(category = CATEGORY, group = MISC_GROUP)
-    @Translate.Name("Warming Food duration multiplier")
-    @SerialEntry(comment = "Multiplies the duration of the Warmth mob effect applied to entities after consuming food items that belong to the item tag #frostiful:warm_foods")
+    @Translate.Name("Warm food duration multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Warming and Warmhearted mob effects applied to entities after consuming warm food items")
     @FloatField(min = 0)
-    float warmingFoodDurationMultiplier = 1.0f;
+    float warmFoodDurationMultiplier = 1.0f;
 
     public float skateUpgradeTemplateIglooGenerateChance() {
         return skateUpgradeTemplateIglooGenerateChance;
     }
 
-    public int warmingFoodDuration() {
-        return Mth.floor(60 * 20 * warmingFoodDurationMultiplier);
+    public float warmingFoodDurationMultiplier() {
+        return warmFoodDurationMultiplier;
     }
 }

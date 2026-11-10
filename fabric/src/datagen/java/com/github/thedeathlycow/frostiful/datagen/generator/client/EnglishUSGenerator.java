@@ -28,6 +28,7 @@ import com.github.thedeathlycow.frostiful.config.section.*;
 import com.github.thedeathlycow.frostiful.datagen.generator.loot.FChestLootGenerator;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
+import com.github.thedeathlycow.frostiful.item.component.PostConsumeEffects;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
@@ -127,7 +128,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FItems.CASTLE_KEY, "Castle Key");
         builder.add(FItems.OMINOUS_CASTLE_KEY, "Ominous Castle Key");
 
-        builder.add("item.frostiful.warming.tooltip", "Warming \uD83D\uDD25");
+        builder.add(PostConsumeEffects.WARMING_TOOLTIP_KEY, "Warm \uD83D\uDD25");
+        builder.add(PostConsumeEffects.HOT_TOOLTIP_KEY, "Hot \uD83D\uDD25 \uD83D\uDD25");
 
         builder.add(potionItem(Items.POTION, FPotions.FREEZING), "Potion of Freezing");
         builder.add(potionItem(Items.SPLASH_POTION, FPotions.FREEZING), "Splash Potion of Freezing");
@@ -176,6 +178,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FItemTags.ICICLES, "Icicles");
         builder.add(FItemTags.FUR_TUFTS, "Fur Tufts");
         builder.add(FItemTags.WARM_FOODS, "Warm Foods");
+        builder.add(FItemTags.COLD_FOODS, "Cold Foods");
+        builder.add(FItemTags.HOT_FOODS, "Hot Foods");
         builder.add(FItemTags.ICE_SKATES, "Ice Skates");
         builder.add(FItemTags.SUN_LICHENS, "Sun Lichens");
         builder.add(FItemTags.FUR_BOOTS, "Fur Boots");

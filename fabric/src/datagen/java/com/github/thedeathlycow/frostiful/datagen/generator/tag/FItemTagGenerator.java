@@ -19,6 +19,7 @@
 
 package com.github.thedeathlycow.frostiful.datagen.generator.tag;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
@@ -26,8 +27,12 @@ import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricTagsProvider;
 import net.fabricmc.fabric.api.tag.convention.v2.ConventionalItemTags;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
 import java.util.concurrent.CompletableFuture;
@@ -48,6 +53,7 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
         generateFrostifulTags(wrapperLookup);
         generateConventionalTags(wrapperLookup);
         generateMinecraftTags(wrapperLookup);
+        generateCompatTags(wrapperLookup);
     }
 
     private void generateFrostifulTags(HolderLookup.Provider wrapperLookup) {
@@ -198,5 +204,100 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .add(FItems.FROSTOLOGY_BANNER_PATTERN)
                 .add(FItems.SNOWFLAKE_BANNER_PATTERN)
                 .add(FItems.ICICLE_BANNER_PATTERN);
+    }
+
+    private void generateCompatTags(HolderLookup.Provider wrapperLookup) {
+        builder(FItemTags.WARM_FOODS)
+                .addOptional(farmersDelight("hot_cocoa"))
+                .addOptional(farmersDelight("apple_cider"))
+                .addOptional(croptopia("tea"))
+                .addOptional(croptopia("coffee"))
+                .addOptional(croptopia("pumpkin_spice_latte"))
+                .addOptional(spectrum("hot_chocolate"))
+                .addOptional(spectrum("restoration_tea"))
+                .addOptional(spectrum("glistering_jelly_tea"))
+                .addOptional(spectrum("azalea_tea"))
+                .addOptional(spectrum("demon_tea"))
+                .addOptional(herbalBrews("black_tea"))
+                .addOptional(herbalBrews("coffee"))
+                .addOptional(herbalBrews("green_tea"))
+                .addOptional(herbalBrews("hibiscus_tea"))
+                .addOptional(herbalBrews("lavender_tea"))
+                .addOptional(herbalBrews("rooibos_tea"))
+                .addOptional(herbalBrews("yerba_mate_tea"))
+                .addOptional(herbalBrews("oolong_tea"))
+                .addOptional(herbalBrews("milk_coffee"))
+                .addOptional(frozenUp("mug_of_truffle_hot_chocolate"))
+                .addOptional(farmersRespite("green_tea"))
+                .addOptional(farmersRespite("yellow_tea"))
+                .addOptional(farmersRespite("black_tea"))
+                .addOptional(farmersRespite("dandelion_tea"))
+                .addOptional(farmersRespite("coffee"))
+                .addOptional(farmersRespite("long_green_tea"))
+                .addOptional(farmersRespite("long_yellow_tea"))
+                .addOptional(farmersRespite("long_black_tea"))
+                .addOptional(farmersRespite("long_dandelion_tea"))
+                .addOptional(farmersRespite("long_coffee"))
+                .addOptional(farmersRespite("strong_green_tea"))
+                .addOptional(farmersRespite("strong_yellow_tea"))
+                .addOptional(farmersRespite("strong_black_tea"))
+                .addOptional(farmersRespite("strong_coffee"))
+                .addOptional(farmersRespite("tea_curry"))
+                .addOptionalTag(ConventionalItemTags.SOUP_FOODS)
+                // old tag key is used here for backwards compatibility
+                .addOptionalTag(TagKey.create(Registries.ITEM, Frostiful.id("warm_foods")));
+
+        builder(FItemTags.HOT_FOODS)
+                .addOptional(brewinAndChewin("fiery_fondue"))
+                .addOptional(myNethersDelight("bullet_pepper"))
+                .addOptional(myNethersDelight("spicy_skewer"))
+                .addOptional(myNethersDelight("chilidog"))
+                .addOptional(myNethersDelight("spicy_hoglin_stew"))
+                .addOptional(myNethersDelight("hot_wings"))
+                .addOptional(myNethersDelight("hot_wings_bucket"))
+                .addOptional(myNethersDelight("spicy_curry"))
+                .addOptional(myNethersDelight("spicy_noodle_soup"))
+                .addOptional(myNethersDelight("rock_soup"))
+                .addOptional(myNethersDelight("spicy_cotton"))
+                .addOptional(myNethersDelight("burnt_roll"))
+                .addOptional(myNethersDelight("magma_cake_slice"))
+                .addOptional(myNethersDelight("hot_cream"))
+                .addOptional(myNethersDelight("hot_cream_cone"))
+                .addOptional(croptopia("chili_relleno"))
+                .addOptional(farmersRespite("blazing_chili"));
+
+        builder(FItemTags.COLD_FOODS);
+    }
+
+    static ResourceKey<Item> farmersDelight(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.farmersDelight(path));
+    }
+
+    static ResourceKey<Item> brewinAndChewin(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.brewinAndChewin(path));
+    }
+
+    static ResourceKey<Item> myNethersDelight(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.myNethersDelight(path));
+    }
+
+    static ResourceKey<Item> croptopia(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.croptopia(path));
+    }
+
+    static ResourceKey<Item> spectrum(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.spectrum(path));
+    }
+
+    static ResourceKey<Item> herbalBrews(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.herbalBrews(path));
+    }
+
+    static ResourceKey<Item> frozenUp(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.frozenUp(path));
+    }
+
+    static ResourceKey<Item> farmersRespite(String path) {
+        return ResourceKey.create(Registries.ITEM, Ids.farmersRespite(path));
     }
 }
