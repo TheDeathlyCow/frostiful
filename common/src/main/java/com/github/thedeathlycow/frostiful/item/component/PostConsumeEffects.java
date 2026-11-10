@@ -45,7 +45,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.Optional;
@@ -104,7 +103,6 @@ public record PostConsumeEffects(
         this(effects, Optional.empty());
     }
 
-    @Nullable
     public static PostConsumeEffects getByTag(ItemStack stack) {
         if (stack.has(FDataComponentTypes.POST_CONSUME_EFFECTS)) {
             return stack.get(FDataComponentTypes.POST_CONSUME_EFFECTS);

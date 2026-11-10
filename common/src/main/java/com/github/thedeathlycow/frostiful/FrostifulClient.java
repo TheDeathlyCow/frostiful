@@ -53,9 +53,7 @@ public class FrostifulClient implements ClientModInitializer {
         StatusBarOverlayRenderEvents.AFTER_MOUNT_HEALTH_BAR.register(FrozenHeartsOverlay::afterMountHealthBar);
         ItemTooltipCallback.EVENT.register((stack, tooltipContext, tooltipFlag, lines) -> {
             PostConsumeEffects effects = PostConsumeEffects.getByTag(stack);
-            if (effects != null) {
-                effects.getTooltip(stack, tooltipContext, tooltipFlag, lines);
-            }
+            effects.getTooltip(stack, tooltipContext, tooltipFlag, lines);
         });
 
         Frostiful.LOGGER.info("Initialized Frostiful client!");

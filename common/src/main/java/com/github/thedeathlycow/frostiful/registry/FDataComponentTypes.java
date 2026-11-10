@@ -88,10 +88,7 @@ public final class FDataComponentTypes {
 
         ConsumeCallback.EVENT.register((level, user, stack, consumable) -> {
             PostConsumeEffects effects = PostConsumeEffects.getByTag(stack);
-
-            if (effects != null) {
-                effects.onConsume(level, user, stack);
-            }
+            effects.onConsume(level, user, stack);
         });
 
         ServerLivingEntityEvents.ALLOW_DAMAGE.register((entity, source, _) -> {
