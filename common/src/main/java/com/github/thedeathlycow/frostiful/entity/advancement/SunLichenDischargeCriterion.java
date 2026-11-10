@@ -21,18 +21,17 @@ package com.github.thedeathlycow.frostiful.entity.advancement;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.criterion.ContextAwarePredicate;
-import net.minecraft.advancements.criterion.EntityPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
-import net.minecraft.advancements.criterion.SimpleCriterionTrigger;
+import net.minecraft.advancements.criterion.*;
+import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 
 import java.util.Optional;
 
 public class SunLichenDischargeCriterion extends SimpleCriterionTrigger<SunLichenDischargeCriterion.Conditions> {
 
-    public void trigger(ServerPlayer player, int temperatureImparted) {
-        this.trigger(player, conditions -> conditions.temperatureImparted.matches(temperatureImparted));
+    public void trigger(ServerPlayer player, ServerLevel level, BlockPos pos) {
+        this.trigger(player, conditions -> conditions.block.matches(level, pos));
     }
 
     @Override
@@ -42,17 +41,16 @@ public class SunLichenDischargeCriterion extends SimpleCriterionTrigger<SunLiche
 
     public record Conditions(
             Optional<ContextAwarePredicate> player,
-            MinMaxBounds.Ints temperatureImparted
+            BlockPredicate block
     ) implements SimpleCriterionTrigger.SimpleInstance {
         public static final Codec<Conditions> CODEC = RecordCodecBuilder.create(
                 instance -> instance.group(
                         EntityPredicate.ADVANCEMENT_CODEC
                                 .optionalFieldOf("player")
                                 .forGetter(Conditions::player),
-                        MinMaxBounds.Ints.CODEC
-                                .fieldOf("temperature_imparted")
-                                .orElse(MinMaxBounds.Ints.ANY)
-                                .forGetter(Conditions::temperatureImparted)
+                        BlockPredicate.CODEC
+                                .optionalFieldOf("block", BlockPredicate.Builder.block().build())
+                                .forGetter(Conditions::block)
                 ).apply(instance, Conditions::new)
         );
     }

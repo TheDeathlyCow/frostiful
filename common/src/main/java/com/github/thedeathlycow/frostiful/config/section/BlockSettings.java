@@ -70,8 +70,18 @@ public class BlockSettings {
     @FloatField(min = 0, format = "%.2f")
     float sunLichenBurnTimeMultiplier = 1.0f;
 
+    @AutoGen(category = CATEGORY, group = SUN_LICHEN_GROUP)
+    @Translate.Name("Sun Lichen effect time multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Warming effect that Sun Lichen will apply to any entity that touches it. Must be at least 0.")
+    @FloatField(min = 0, format = "%.2f")
+    float sunLichenEffectTimeMultiplier = 1.0f;
+
     public int sunLichenBurnTime() {
         return Mth.floor(3 * 20 * this.sunLichenBurnTimeMultiplier);
+    }
+
+    public int sunLichenEffectTime() {
+        return Mth.floor(2 * 20 * sunLichenEffectTimeMultiplier);
     }
 
     @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)

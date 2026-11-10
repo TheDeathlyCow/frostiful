@@ -103,12 +103,6 @@ public class TemperatureSourceSettings {
     float warmingMobEffectTemperatureChangeMultiplier = 1.0f;
 
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
-    @Translate.Name("Sun Lichen temperature change multiplier")
-    @SerialEntry(comment = "Multiplies the heating applied to a cold entity when they touch a cool/warm/hot Sun Lichen. The base value scales with the lichen's heat level, from 500 to 1500 points.")
-    @FloatField(format = "%.2f")
-    float sunLichenTemperatureChangeMultiplier = 1.0f;
-
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
     @Translate.Name("Conduit temperature change multiplier")
     @SerialEntry(comment = "Multiplies the heating applied each tick to underwater entities with the Conduit Power effect.")
     @FloatField(format = "%.2f")
@@ -163,10 +157,6 @@ public class TemperatureSourceSettings {
 
     public float warmingMobEffectTemperatureChangeMultiplier() {
         return warmingMobEffectTemperatureChangeMultiplier;
-    }
-
-    public int sunLichenTemperatureChangeForLevel(int level) {
-        return level * Mth.floor(500 * this.sunLichenTemperatureChangeMultiplier * this.heatingMultiplier());
     }
 
     public int conduitPowerTemperatureChange() {

@@ -415,6 +415,8 @@
   "yacl3.config.frostiful:common/temperature_source.sunLichenTemperatureChangeMultiplier.desc": "Multiplies the heating applied to a cold entity when they touch a cool/warm/hot Sun Lichen. The base value scales with the lichen's heat level, from 500 to 1500 points.",
   "yacl3.config.frostiful:common/temperature_source.thrownIcicleTemperatureChangeMultiplier": "Thrown Icicle temperature change multiplier",
   "yacl3.config.frostiful:common/temperature_source.thrownIcicleTemperatureChangeMultiplier.desc": "Multiplies the cooling applied to a target struck by a Thrown Icicle.",
+  "yacl3.config.frostiful:common/temperature_source.warmingMobEffectTemperatureChangeMultiplier": "Warming mob effect temperature change multiplier",
+  "yacl3.config.frostiful:common/temperature_source.warmingMobEffectTemperatureChangeMultiplier.desc": "Multiplies the heating applied to entities with the Warming effect each tick. The Warming effect increases the temperature of cold entities by 5% per second. It does not apply to warm entities and is thus strictly beneficial.",
   "yacl3.config.frostiful:common/weather.category.main": "Weather Settings",
   "yacl3.config.frostiful:common/weather.category.main.group.icicle": "Icicles",
   "yacl3.config.frostiful:common/weather.category.main.group.wind": "Freezing Wind",

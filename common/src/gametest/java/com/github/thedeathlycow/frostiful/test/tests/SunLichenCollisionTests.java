@@ -20,6 +20,7 @@
 package com.github.thedeathlycow.frostiful.test.tests;
 
 import com.github.thedeathlycow.frostiful.registry.FBlocks;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import com.github.thedeathlycow.frostiful.test.FrostifulGameTest;
 import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureAware;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
@@ -64,48 +65,15 @@ public final class SunLichenCollisionTests {
     }
 
     @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
-    public void coldLichenDoesNotWarm(GameTestHelper context) {
+    public void warmVillagerIsNotBurnedByColdSunLichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
-
-        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
-        final Function<Villager, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
-
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
         entity.thermoo$setTemperature(0);
-        context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
 
         context.setBlock(pos, FBlocks.COLD_SUN_LICHEN.defaultBlockState());
 
-        context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
-    }
-
-    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
-    public void sunLichenDoesNotOverheat(GameTestHelper context) {
-        final BlockPos pos = new BlockPos(1, 1, 1);
-
-        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
-        final Function<Villager, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
-
-        int freezeAmount = -500;
-        entity.thermoo$setTemperature(freezeAmount);
-        context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, freezeAmount);
-
-        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
-
-        context.succeedWhenEntityData(pos, EntityType.VILLAGER, frostGetter, 0);
-    }
-
-    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
-    public void warmVillagerIsBurnedByHotSunLichen(GameTestHelper context) {
-        final BlockPos pos = new BlockPos(1, 1, 1);
-        int temperature = 500;
-        Mob entity = setupWarmVillagerTest(context, pos, temperature);
-
-        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
-
         context.runAfterDelay(1L, () -> {
-            context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
-            context.assertEntityData(pos, EntityType.VILLAGER, Entity::isOnFire, true);
-
+            context.assertEntityProperty(entity, e -> !e.isOnFire(), Component.literal("Is Not On Fire"));
             context.succeed();
         });
     }
@@ -113,78 +81,99 @@ public final class SunLichenCollisionTests {
     @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
     public void warmVillagerIsNotBurnedByCoolSunLichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
-        int temperature = 500;
-        Mob entity = setupWarmVillagerTest(context, pos, temperature);
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        entity.thermoo$setTemperature(0);
 
         context.setBlock(pos, FBlocks.COOL_SUN_LICHEN.defaultBlockState());
 
         context.runAfterDelay(1L, () -> {
-            context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
-            context.assertEntityData(pos, EntityType.VILLAGER, Entity::isOnFire, false);
-
+            context.assertEntityProperty(entity, e -> !e.isOnFire(), Component.literal("Is Not On Fire"));
             context.succeed();
         });
     }
 
     @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
-    public void hotLichenWarmsVillager(GameTestHelper context) {
-        expectWarmLichenWarmsVillager(context, FBlocks.HOT_SUN_LICHEN);
-    }
-
-    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
-    public void warmLichenWarmsVillager(GameTestHelper context) {
-        expectWarmLichenWarmsVillager(context, FBlocks.WARM_SUN_LICHEN);
-    }
-
-    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
-    public void coolLichenWarmsVillager(GameTestHelper context) {
-        expectWarmLichenWarmsVillager(context, FBlocks.COOL_SUN_LICHEN);
-    }
-
-    private static void expectWarmLichenWarmsVillager(GameTestHelper context, Block warmLichen) {
+    public void warmVillagerIsNotBurnedByWarmSunLichen(GameTestHelper context) {
         final BlockPos pos = new BlockPos(1, 1, 1);
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        entity.thermoo$setTemperature(0);
 
-        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
-        final Function<Villager, Integer> frostGetter = TemperatureAware::thermoo$getTemperature;
+        context.setBlock(pos, FBlocks.WARM_SUN_LICHEN.defaultBlockState());
 
-        int initialTemperature = -2000;
-        entity.thermoo$setTemperature(initialTemperature);
-        context.assertEntityData(pos, EntityType.VILLAGER, frostGetter, initialTemperature);
-
-        context.setBlock(pos, warmLichen.defaultBlockState());
-
-        context.runAfterDelay(10, () -> {
-            context.succeedWhen(() -> {
-                context.assertTrue(
-                        entity.thermoo$getTemperature() > -2000,
-                        Component.literal(
-                                String.format(
-                                        "Villager temperature of %d is not greater than %d",
-                                        entity.thermoo$getTemperature(),
-                                        initialTemperature
-                                )
-                        )
-                );
-            });
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityProperty(entity, e -> !e.isOnFire(), Component.literal("Is Not On Fire"));
+            context.succeed();
         });
     }
 
-    private static Mob setupWarmVillagerTest(GameTestHelper context, BlockPos pos, int temperature) {
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
+    public void warmVillagerIsBurnedByHotSunLichen(GameTestHelper context) {
+        final BlockPos pos = new BlockPos(1, 1, 1);
+        Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+        entity.thermoo$setTemperature(0);
+
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
+
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityProperty(entity, e -> e.isOnFire(), Component.literal("Is On Fire"));
+            context.succeed();
+        });
+    }
+
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
+    public void coldLichenDoesNotApplyWarming(GameTestHelper context) {
+        final BlockPos pos = new BlockPos(1, 1, 1);
         final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
 
-        AttributeInstance maxTemperature = entity.getAttribute(ThermooAttributes.MAX_TEMPERATURE);
-        context.assertFalse(maxTemperature == null, Component.literal("Villager does not have a max temperature attribute"));
-        maxTemperature.addTransientModifier(
-                new AttributeModifier(
-                        FrostifulGameTest.id("max_temperature"),
-                        40,
-                        AttributeModifier.Operation.ADD_VALUE
-                )
-        );
+        context.assertEntityProperty(entity, e -> !e.hasEffect(FMobEffects.WARMING), Component.literal("No Warming mob effect"));
+        context.setBlock(pos, FBlocks.COLD_SUN_LICHEN.defaultBlockState());
 
-        entity.thermoo$setTemperature(temperature);
-        context.assertEntityData(pos, EntityType.VILLAGER, TemperatureAware::thermoo$getTemperature, temperature);
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityProperty(entity, e -> !e.hasEffect(FMobEffects.WARMING), Component.literal("No Warming mob effect"));
+            context.succeed();
+        });
+    }
 
-        return entity;
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
+    public void coolLichenAppliesWarming(GameTestHelper context) {
+        final BlockPos pos = new BlockPos(1, 1, 1);
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+
+        context.assertEntityProperty(entity, e -> !e.hasEffect(FMobEffects.WARMING), Component.literal("No Warming mob effect"));
+        context.setBlock(pos, FBlocks.COOL_SUN_LICHEN.defaultBlockState());
+
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityProperty(entity, e -> e.hasEffect(FMobEffects.WARMING), Component.literal("Warming mob effect"));
+            context.assertEntityProperty(entity, e -> e.getEffect(FMobEffects.WARMING).getAmplifier(), 0, Component.literal("Warming mob effect amplifier"));
+            context.succeed();
+        });
+    }
+
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
+    public void warmLichenAppliesWarming(GameTestHelper context) {
+        final BlockPos pos = new BlockPos(1, 1, 1);
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+
+        context.assertEntityProperty(entity, e -> !e.hasEffect(FMobEffects.WARMING), Component.literal("No Warming mob effect"));
+        context.setBlock(pos, FBlocks.WARM_SUN_LICHEN.defaultBlockState());
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityProperty(entity, e -> e.hasEffect(FMobEffects.WARMING), Component.literal("Warming mob effect"));
+            context.assertEntityProperty(entity, e -> e.getEffect(FMobEffects.WARMING).getAmplifier(), 1, Component.literal("Warming mob effect amplifier"));
+            context.succeed();
+        });
+    }
+
+    @GameTest(structure = "frostiful_test:sun_lichen_tests.platform")
+    public void hotLichenAppliesWarming(GameTestHelper context) {
+        final BlockPos pos = new BlockPos(1, 1, 1);
+        final Mob entity = context.spawnWithNoFreeWill(EntityType.VILLAGER, pos);
+
+        context.assertEntityProperty(entity, e -> !e.hasEffect(FMobEffects.WARMING), Component.literal("No Warming mob effect"));
+        context.setBlock(pos, FBlocks.HOT_SUN_LICHEN.defaultBlockState());
+        context.runAfterDelay(1L, () -> {
+            context.assertEntityProperty(entity, e -> e.hasEffect(FMobEffects.WARMING), Component.literal("Warming mob effect"));
+            context.assertEntityProperty(entity, e -> e.getEffect(FMobEffects.WARMING).getAmplifier(), 2, Component.literal("Warming mob effect amplifier"));
+            context.succeed();
+        });
     }
 }
