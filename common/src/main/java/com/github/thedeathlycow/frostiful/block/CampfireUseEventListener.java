@@ -21,8 +21,8 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -50,7 +50,9 @@ import java.util.List;
 public class CampfireUseEventListener implements UseBlockCallback {
     @Override
     public InteractionResult interact(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
-        if (player.isSpectator()) {
+        BlockSettings settings = FrostifulConfigYACL.blockSettings();
+
+        if (player.isSpectator() || !settings.enableCampfireLogs()) {
             return InteractionResult.PASS;
         }
 
@@ -63,7 +65,7 @@ public class CampfireUseEventListener implements UseBlockCallback {
 
             if (!stack.isEmpty() && stack.is(ItemTags.LOGS_THAT_BURN)) {
                 if (!world.isClientSide()) {
-                    warmNearbyEntities(world, pos);
+                    warmNearbyEntities(world, pos, settings);
                     addSmokeParticles(world, pos);
                     player.awardStat(Stats.INTERACT_WITH_CAMPFIRE);
                     CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer) player, pos, stack);
@@ -99,26 +101,22 @@ public class CampfireUseEventListener implements UseBlockCallback {
         }
     }
 
-    private static void warmNearbyEntities(Level world, BlockPos pos) {
-        BlockSettings settings = FrostifulConfigYACL.blockSettings();
+    private static void warmNearbyEntities(Level world, BlockPos pos, BlockSettings settings) {
         final double boxLength = settings.campfireWarmthSearchRadius();
-        final int duration = settings.campfireWarmthTime();
+        final int warmingTime = settings.campfireWarmingTime();
+        final int warmheartedTime = settings.campfireWarmheartedTime();
 
-        // get all nearby living entities that do not have warmth or
-        // who have a weak warmth effect
         List<LivingEntity> nearbyEntities = world.getEntitiesOfClass(
                 LivingEntity.class,
                 AABB.ofSize(Vec3.atCenterOf(pos), boxLength, boxLength, boxLength),
-                (entity) -> {
-                    MobEffectInstance instance = entity.getEffect(FStatusEffects.WARMTH);
-                    return !entity.isSpectator() && (instance == null || (instance.getAmplifier() == 0 && instance.getDuration() < duration));
-                }
+                entity -> !entity.isSpectator()
         );
 
-        // apply warmth effect to all nearby entities
         for (LivingEntity entity : nearbyEntities) {
-            MobEffectInstance instance = new MobEffectInstance(FStatusEffects.WARMTH, duration, 0, true, true);
-            entity.addEffect(instance);
+            MobEffectInstance warmth = new MobEffectInstance(FMobEffects.WARMING, warmingTime, 0, true, true);
+            MobEffectInstance warmhearted = new MobEffectInstance(FMobEffects.WARMHEARTED, warmheartedTime, 0, true, true);
+            entity.addEffect(warmth);
+            entity.addEffect(warmhearted);
         }
 
         world.playSound(null, pos, FSoundEvents.CAMPFIRE_HISS, SoundSource.BLOCKS, 0.5F, 1.5f);

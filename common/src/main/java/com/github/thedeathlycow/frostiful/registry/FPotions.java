@@ -33,15 +33,15 @@ public class FPotions {
 
     public static final Holder<Potion> FREEZING = registerReference(
             "freezing",
-            create("freezing", new MobEffectInstance(FStatusEffects.FROST_BITE, 180 * 20, 0))
+            create("freezing", new MobEffectInstance(FMobEffects.FROST_BITE, 180 * 20, 0))
     );
     public static final Holder<Potion> FREEZING_LONG = registerReference(
             "long_freezing",
-            create("freezing", new MobEffectInstance(FStatusEffects.FROST_BITE, 2 * 180 * 20, 0))
+            create("freezing", new MobEffectInstance(FMobEffects.FROST_BITE, 2 * 180 * 20, 0))
     );
     public static final Holder<Potion> FREEZING_STRONG = registerReference(
             "strong_freezing",
-            create("freezing", new MobEffectInstance(FStatusEffects.FROST_BITE, 90 * 20, 1))
+            create("freezing", new MobEffectInstance(FMobEffects.FROST_BITE, 90 * 20, 1))
     );
 
     public static void initialize() {

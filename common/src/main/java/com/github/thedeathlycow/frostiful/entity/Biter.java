@@ -22,7 +22,7 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
 import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
-import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -102,7 +102,7 @@ public class Biter extends Monster {
             int amplifier = FrostifulConfigYACL.entitySettings().getFrostBiteAmplifier(level);
 
             livingTarget.addEffect(
-                    new MobEffectInstance(FStatusEffects.FROST_BITE, 20 * 15, amplifier),
+                    new MobEffectInstance(FMobEffects.FROST_BITE, 20 * 15, amplifier),
                     this
             );
         }

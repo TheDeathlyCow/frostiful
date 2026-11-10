@@ -75,22 +75,42 @@ public class BlockSettings {
     }
 
     @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
+    @Translate.Name("Enable campfire logs")
+    @SerialEntry(comment = "When enabled, players can right-click any lit campfire with a burnable log to receive the Warmth and Warmhearted mob effects.")
+    @TickBox
+    boolean enableCampfireLogs = true;
+
+    @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
     @Translate.Name("Campfire warmth range multiplier")
     @SerialEntry(comment = "Multiplies the range of the Warmth effect applied to entities around a Campfire, after adding a log. The base range is 10 blocks. Must be at least 0.")
     @DoubleField(min = 0)
     double campfireWarmthSearchRadiusMultiplier = 1.0;
 
     @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
-    @Translate.Name("Campfire warmth time multiplier")
-    @SerialEntry(comment = "Multiplies the duration of the Warmth effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
+    @Translate.Name("Campfire warming time multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Warming effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
     @FloatField(min = 0)
-    float campfireWarmthTimeMultiplier = 1.0f;
+    float campfireWarmingTimeMultiplier = 1.0f;
+
+    @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
+    @Translate.Name("Campfire warmhearted time multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Warmhearted effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
+    @FloatField(min = 0)
+    float campfireWarmheartedTimeMultiplier = 1.0f;
+
+    public boolean enableCampfireLogs() {
+        return enableCampfireLogs;
+    }
 
     public double campfireWarmthSearchRadius() {
         return 10.0 * this.campfireWarmthSearchRadiusMultiplier;
     }
 
-    public int campfireWarmthTime() {
-        return Mth.floor(1200 * campfireWarmthTimeMultiplier);
+    public int campfireWarmingTime() {
+        return Mth.floor(5 * 20 * campfireWarmingTimeMultiplier);
+    }
+
+    public int campfireWarmheartedTime() {
+        return Mth.floor(60 * 20 * campfireWarmheartedTimeMultiplier);
     }
 }

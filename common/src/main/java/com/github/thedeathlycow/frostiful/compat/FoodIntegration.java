@@ -20,7 +20,7 @@
 package com.github.thedeathlycow.frostiful.compat;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
-import com.github.thedeathlycow.frostiful.registry.FStatusEffects;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
 import com.github.thedeathlycow.frostiful.util.TextStyles;
 import com.google.common.base.Suppliers;
@@ -69,7 +69,7 @@ public class FoodIntegration {
 
     private static void applyWarmthFromFood(LivingEntity user) {
         int duration = FrostifulConfigYACL.itemSettings().warmingFoodDuration();
-        user.addEffect(new MobEffectInstance(FStatusEffects.WARMTH, duration));
+        user.addEffect(new MobEffectInstance(FMobEffects.WARMHEARTED, duration));
     }
 
     private static void addTooltipBeforeAdvanced(ItemStack stack, List<Component> tooltip) {

@@ -17,22 +17,19 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-package com.github.thedeathlycow.frostiful.entity.effect;
+package com.github.thedeathlycow.frostiful.config.schema;
 
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.effect.MobEffectCategory;
+import com.github.thedeathlycow.frostiful.config.handler.ConfigPaths;
+import com.google.gson.JsonObject;
 
-/**
- * A simple status effect that is not instant
- * and does not have updates.
- */
-public class SimpleStatusEffect extends MobEffect {
-    public SimpleStatusEffect(MobEffectCategory category, int color) {
-        super(category, color);
-    }
+import java.io.IOException;
+import java.nio.file.Files;
 
+public final class SchemaV2 implements ConfigUpdater {
     @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-        return false;
+    public void run(int originalSchemaVersion) throws IOException {
+        JsonObject blockSettings = JsonCopyHelper.read(ConfigPaths.BLOCK);
+        JsonCopyHelper.rename(blockSettings, "campfireWarmthTimeMultiplier", "campfireWarmheartedTimeMultiplier");
+        Files.writeString(ConfigPaths.BLOCK, blockSettings.toString());
     }
 }
