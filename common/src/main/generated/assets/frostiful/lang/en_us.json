@@ -282,6 +282,8 @@
   "yacl3.config.frostiful:common/block.category.main.group.icicle": "Icicles",
   "yacl3.config.frostiful:common/block.category.main.group.sun_lichen": "Sun Lichens",
   "yacl3.config.frostiful:common/block.desc": "Server-side settings that relate to blocks.",
+  "yacl3.config.frostiful:common/block.enableCampfireLogs": "Enable campfire logs",
+  "yacl3.config.frostiful:common/block.enableCampfireLogs.desc": "When enabled, players can right-click any lit campfire with a burnable log to receive the Warmth and Warmhearted mob effects.",
   "yacl3.config.frostiful:common/block.enableIcicleInstability": "Enable icicle instability",
   "yacl3.config.frostiful:common/block.enableIcicleInstability.desc": "When enabled, icicles hanging from a ceiling will have a chance to become unstable and fall.",
   "yacl3.config.frostiful:common/block.icicleGrowthChanceMultiplier": "Icicle growth chance multiplier",

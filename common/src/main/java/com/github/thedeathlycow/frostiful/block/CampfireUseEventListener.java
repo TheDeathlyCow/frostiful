@@ -21,8 +21,8 @@ package com.github.thedeathlycow.frostiful.block;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.BlockSettings;
-import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import com.github.thedeathlycow.frostiful.registry.FMobEffects;
+import com.github.thedeathlycow.frostiful.registry.FSoundEvents;
 import net.fabricmc.fabric.api.event.player.UseBlockCallback;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -50,7 +50,9 @@ import java.util.List;
 public class CampfireUseEventListener implements UseBlockCallback {
     @Override
     public InteractionResult interact(Player player, Level world, InteractionHand hand, BlockHitResult hitResult) {
-        if (player.isSpectator()) {
+        BlockSettings settings = FrostifulConfigYACL.blockSettings();
+
+        if (player.isSpectator() || !settings.enableCampfireLogs()) {
             return InteractionResult.PASS;
         }
 
@@ -63,7 +65,7 @@ public class CampfireUseEventListener implements UseBlockCallback {
 
             if (!stack.isEmpty() && stack.is(ItemTags.LOGS_THAT_BURN)) {
                 if (!world.isClientSide()) {
-                    warmNearbyEntities(world, pos);
+                    warmNearbyEntities(world, pos, settings);
                     addSmokeParticles(world, pos);
                     player.awardStat(Stats.INTERACT_WITH_CAMPFIRE);
                     CriteriaTriggers.ITEM_USED_ON_BLOCK.trigger((ServerPlayer) player, pos, stack);
@@ -99,8 +101,7 @@ public class CampfireUseEventListener implements UseBlockCallback {
         }
     }
 
-    private static void warmNearbyEntities(Level world, BlockPos pos) {
-        BlockSettings settings = FrostifulConfigYACL.blockSettings();
+    private static void warmNearbyEntities(Level world, BlockPos pos, BlockSettings settings) {
         final double boxLength = settings.campfireWarmthSearchRadius();
         final int warmingTime = settings.campfireWarmingTime();
         final int warmheartedTime = settings.campfireWarmheartedTime();

@@ -75,6 +75,12 @@ public class BlockSettings {
     }
 
     @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
+    @Translate.Name("Enable campfire logs")
+    @SerialEntry(comment = "When enabled, players can right-click any lit campfire with a burnable log to receive the Warmth and Warmhearted mob effects.")
+    @TickBox
+    boolean enableCampfireLogs = true;
+
+    @AutoGen(category = CATEGORY, group = CAMPFIRE_GROUP)
     @Translate.Name("Campfire warmth range multiplier")
     @SerialEntry(comment = "Multiplies the range of the Warmth effect applied to entities around a Campfire, after adding a log. The base range is 10 blocks. Must be at least 0.")
     @DoubleField(min = 0)
@@ -91,6 +97,10 @@ public class BlockSettings {
     @SerialEntry(comment = "Multiplies the duration of the Warmhearted effect that will be applied to entities near a campfire when a log is added to it. Must be at least 0.")
     @FloatField(min = 0)
     float campfireWarmheartedTimeMultiplier = 1.0f;
+
+    public boolean enableCampfireLogs() {
+        return enableCampfireLogs;
+    }
 
     public double campfireWarmthSearchRadius() {
         return 10.0 * this.campfireWarmthSearchRadiusMultiplier;
