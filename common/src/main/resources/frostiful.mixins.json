@@ -4,6 +4,7 @@
     "package": "com.github.thedeathlycow.frostiful.mixins",
     "compatibilityLevel": "JAVA_25",
     "mixins": [
+        "IdentifierInvoker",
         "block.PowderSnowWalkableMixin",
         "block.SnowPackingMixin",
         "block.WindBlowoutMixin",

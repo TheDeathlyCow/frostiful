@@ -24,6 +24,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.datafix.StructureUpdateHelper;
 import com.github.thedeathlycow.frostiful.entity.loot.StrayLootTableModifier;
 import com.github.thedeathlycow.frostiful.item.FrostedBanner;
+import com.github.thedeathlycow.frostiful.mixins.IdentifierInvoker;
 import com.github.thedeathlycow.frostiful.registry.*;
 import com.github.thedeathlycow.frostiful.registry.tag.FTemperatureStatusTags;
 import com.github.thedeathlycow.frostiful.server.command.RootCommand;
@@ -133,14 +134,16 @@ public class Frostiful implements ModInitializer {
         return YumiMods.get().getConfigDirectory().resolve(MODID);
     }
 
-    /**
-     * Creates a new {@link Identifier} in the namespace {@value MODID}.
-     *
-     * @param path The path of the uuid
-     * @return Returns a new {@link Identifier}
-     */
+
+    /// Creates a new [Identifier] in the namespace {@value #MODID}.
+    ///
+    /// This is slightly faster than using [Identifier#fromNamespaceAndPath] because it bypasses the valid namespace
+    /// check.
+    ///
+    /// @param path The path of the identifier
+    /// @return Returns a new [Identifier] with the namespace {@value #MODID}
     @Contract("_->new")
     public static Identifier id(String path) {
-        return Identifier.fromNamespaceAndPath(MODID, path);
+        return IdentifierInvoker.invokeConstructor(MODID, IdentifierInvoker.invokeAssertValidPath(MODID, path));
     }
 }
