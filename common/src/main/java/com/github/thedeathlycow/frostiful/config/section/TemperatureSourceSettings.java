@@ -94,6 +94,15 @@ public class TemperatureSourceSettings {
     float freezingWindTemperatureChangeMultiplier = 1.0f;
 
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
+    @Translate.Name("Warming mob effect temperature change multiplier")
+    @SerialEntry(comment =
+            "Multiplies the heating applied to entities with the Warming effect each tick. The Warming effect " +
+                    "increases the temperature of cold entities by 5% per second. It does not apply to warm entities " +
+                    "and is thus strictly beneficial.")
+    @FloatField(format = "%.2f")
+    float warmingMobEffectTemperatureChangeMultiplier = 1.0f;
+
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
     @Translate.Name("Sun Lichen temperature change multiplier")
     @SerialEntry(comment = "Multiplies the heating applied to a cold entity when they touch a cool/warm/hot Sun Lichen. The base value scales with the lichen's heat level, from 500 to 1500 points.")
     @FloatField(format = "%.2f")
@@ -150,6 +159,10 @@ public class TemperatureSourceSettings {
 
     public int freezingWindTemperatureChange() {
         return Mth.floor(-160 * this.freezingWindTemperatureChangeMultiplier * this.coolingMultiplier());
+    }
+
+    public float warmingMobEffectTemperatureChangeMultiplier() {
+        return warmingMobEffectTemperatureChangeMultiplier;
     }
 
     public int sunLichenTemperatureChangeForLevel(int level) {
