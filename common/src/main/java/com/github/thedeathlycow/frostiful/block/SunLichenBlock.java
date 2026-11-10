@@ -55,7 +55,7 @@ public final class SunLichenBlock extends GlowLichenBlock implements Heatable {
     public static final int COOL_LEVEL = 1;
     public static final int WARM_LEVEL = 2;
     public static final int HOT_LEVEL = 3;
-    
+
     private static final float BASE_GROW_CHANCE = 0.017f;
     private static final float RANDOM_DISCHARGE_CHANCE = 0.13f;
 
