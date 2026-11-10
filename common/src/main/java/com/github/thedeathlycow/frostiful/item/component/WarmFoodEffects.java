@@ -11,16 +11,20 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentSerialization;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffectUtil;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -105,10 +109,14 @@ public record WarmFoodEffects(
         }
     }
 
+    public static float getDurationScale(ItemStack stack) {
+        float durationScale = stack.getOrDefault(DataComponents.POTION_DURATION_SCALE, 1.0f);
+        durationScale *= FrostifulConfigYACL.itemSettings().warmingFoodDurationMultiplier();
+        return durationScale;
+    }
+
     public void onConsume(Level level, LivingEntity user, ItemStack stack) {
         if (level instanceof ServerLevel serverLevel) {
-            float durationScale = stack.getOrDefault(DataComponents.POTION_DURATION_SCALE, 1.0f);
-            durationScale *= FrostifulConfigYACL.itemSettings().warmingFoodDurationMultiplier();
 
             this.forEachEffect(effect -> {
                 MobEffect effectType = effect.getEffect().value();
@@ -119,7 +127,7 @@ public record WarmFoodEffects(
                 } else {
                     user.addEffect(effect);
                 }
-            }, durationScale);
+            }, getDurationScale(stack));
         }
     }
 
@@ -132,8 +140,30 @@ public record WarmFoodEffects(
 
         if (tooltipFlag.isAdvanced()) {
             SimpleTooltipComponent.addTooltipBeforeAdvanced(stack, lines, line);
+            this.addEffectTooltip(stack, tooltipContext.tickRate(), l -> SimpleTooltipComponent.addTooltipBeforeAdvanced(stack, lines, l));
         } else {
             lines.add(line);
         }
+    }
+
+    private void addEffectTooltip(ItemStack stack, float tickRate, Consumer<Component> appender) {
+        float durationScale = getDurationScale(stack);
+
+        Style style = tooltip.map(Component::getStyle).orElse(Style.EMPTY);
+
+        this.forEachEffect(
+                effect -> {
+                    MutableComponent line = PotionContents.getPotionDescription(effect.getEffect(), effect.getAmplifier());
+
+                    if (!effect.endsWithin(20)) {
+                        line = Component.translatable("potion.withDuration", line, MobEffectUtil.formatDuration(effect, durationScale, tickRate));
+                    }
+
+                    line.setStyle(style);
+
+                    appender.accept(line);
+                },
+                durationScale
+        );
     }
 }
