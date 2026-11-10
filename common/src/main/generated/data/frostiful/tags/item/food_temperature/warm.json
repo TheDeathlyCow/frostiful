@@ -143,6 +143,10 @@
     {
       "id": "#c:foods/soup",
       "required": false
+    },
+    {
+      "id": "#frostiful:warm_foods",
+      "required": false
     }
   ]
 }

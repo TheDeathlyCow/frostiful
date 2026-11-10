@@ -19,6 +19,7 @@
 
 package com.github.thedeathlycow.frostiful.datagen.generator.tag;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.tag.FBlockTags;
 import com.github.thedeathlycow.frostiful.registry.tag.FItemTags;
@@ -30,6 +31,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
@@ -241,7 +243,9 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .addOptional(farmersRespite("strong_black_tea"))
                 .addOptional(farmersRespite("strong_coffee"))
                 .addOptional(farmersRespite("tea_curry"))
-                .addOptionalTag(ConventionalItemTags.SOUP_FOODS);
+                .addOptionalTag(ConventionalItemTags.SOUP_FOODS)
+                // old tag key is used here for backwards compatibility
+                .addOptionalTag(TagKey.create(Registries.ITEM, Frostiful.id("warm_foods")));
 
         builder(FItemTags.HOT_FOODS)
                 .addOptional(brewinAndChewin("fiery_fondue"))
@@ -261,6 +265,8 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .addOptional(myNethersDelight("hot_cream_cone"))
                 .addOptional(croptopia("chili_relleno"))
                 .addOptional(farmersRespite("blazing_chili"));
+
+        builder(FItemTags.COLD_FOODS);
     }
 
     static ResourceKey<Item> farmersDelight(String path) {

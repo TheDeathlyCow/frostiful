@@ -128,7 +128,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FItems.CASTLE_KEY, "Castle Key");
         builder.add(FItems.OMINOUS_CASTLE_KEY, "Ominous Castle Key");
 
-        builder.add(PostConsumeEffects.WARMING_TOOLTIP_KEY, "Warming \uD83D\uDD25");
+        builder.add(PostConsumeEffects.WARMING_TOOLTIP_KEY, "Warm \uD83D\uDD25");
         builder.add(PostConsumeEffects.HOT_TOOLTIP_KEY, "Hot \uD83D\uDD25 \uD83D\uDD25");
 
         builder.add(potionItem(Items.POTION, FPotions.FREEZING), "Potion of Freezing");
