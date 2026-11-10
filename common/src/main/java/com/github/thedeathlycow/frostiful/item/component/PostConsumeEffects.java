@@ -51,36 +51,36 @@ import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
-public record WarmFoodEffects(
+public record PostConsumeEffects(
         List<MobEffectInstance> effects,
         Optional<Component> tooltip
 ) {
-    public static final Codec<WarmFoodEffects> CODEC = RecordCodecBuilder.create(
+    public static final Codec<PostConsumeEffects> CODEC = RecordCodecBuilder.create(
             instance -> instance.group(
                             MobEffectInstance.CODEC.listOf()
                                     .optionalFieldOf("effects", List.of())
-                                    .forGetter(WarmFoodEffects::effects),
+                                    .forGetter(PostConsumeEffects::effects),
                             ComponentSerialization.CODEC
                                     .optionalFieldOf("tooltip")
-                                    .forGetter(WarmFoodEffects::tooltip)
+                                    .forGetter(PostConsumeEffects::tooltip)
                     )
-                    .apply(instance, WarmFoodEffects::new)
+                    .apply(instance, PostConsumeEffects::new)
     );
 
-    public static final StreamCodec<RegistryFriendlyByteBuf, WarmFoodEffects> STREAM_CODEC = StreamCodec.composite(
+    public static final StreamCodec<RegistryFriendlyByteBuf, PostConsumeEffects> STREAM_CODEC = StreamCodec.composite(
             MobEffectInstance.STREAM_CODEC.apply(ByteBufCodecs.list()),
-            WarmFoodEffects::effects,
+            PostConsumeEffects::effects,
             ByteBufCodecs.optional(ComponentSerialization.STREAM_CODEC),
-            WarmFoodEffects::tooltip,
-            WarmFoodEffects::new
+            PostConsumeEffects::tooltip,
+            PostConsumeEffects::new
     );
 
     public static final String WARMING_TOOLTIP_KEY = "item.frostiful.warming.tooltip";
     public static final String HOT_TOOLTIP_KEY = "item.frostiful.hot.tooltip";
 
-    public static final WarmFoodEffects DEFAULT = new WarmFoodEffects(List.of());
+    public static final PostConsumeEffects DEFAULT = new PostConsumeEffects(List.of());
 
-    public static final WarmFoodEffects WARMING_FOOD = new WarmFoodEffects(
+    public static final PostConsumeEffects WARMING_FOOD = new PostConsumeEffects(
             List.of(
                     new MobEffectInstance(FMobEffects.WARMING, 5 * 20, 0),
                     new MobEffectInstance(FMobEffects.WARMHEARTED, 30 * 20, 0)
@@ -88,7 +88,7 @@ public record WarmFoodEffects(
             Component.translatable(WARMING_TOOLTIP_KEY).setStyle(TextStyles.GOLD_NONITALIC)
     );
 
-    public static final WarmFoodEffects HOT_FOOD = new WarmFoodEffects(
+    public static final PostConsumeEffects HOT_FOOD = new PostConsumeEffects(
             List.of(
                     new MobEffectInstance(FMobEffects.WARMING, 5 * 20, 1),
                     new MobEffectInstance(FMobEffects.WARMHEARTED, 60 * 20, 0)
@@ -96,18 +96,18 @@ public record WarmFoodEffects(
             Component.translatable(HOT_TOOLTIP_KEY).setStyle(TextStyles.RED_NONITALIC)
     );
 
-    public WarmFoodEffects(List<MobEffectInstance> effects, Component tooltip) {
+    public PostConsumeEffects(List<MobEffectInstance> effects, Component tooltip) {
         this(effects, Optional.of(tooltip));
     }
 
-    public WarmFoodEffects(List<MobEffectInstance> effects) {
+    public PostConsumeEffects(List<MobEffectInstance> effects) {
         this(effects, Optional.empty());
     }
 
     @Nullable
-    public static WarmFoodEffects getByTag(ItemStack stack) {
-        if (stack.has(FDataComponentTypes.WARM_FOOD_EFFECTS)) {
-            return stack.get(FDataComponentTypes.WARM_FOOD_EFFECTS);
+    public static PostConsumeEffects getByTag(ItemStack stack) {
+        if (stack.has(FDataComponentTypes.POST_CONSUME_EFFECTS)) {
+            return stack.get(FDataComponentTypes.POST_CONSUME_EFFECTS);
         } else if (stack.is(FItemTags.COLD_FOODS)) {
             return DEFAULT;
         } else if (stack.is(FItemTags.HOT_FOODS)) {

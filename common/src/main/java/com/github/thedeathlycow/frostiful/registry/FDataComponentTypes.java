@@ -25,7 +25,7 @@ import com.github.thedeathlycow.frostiful.item.attribute.FrostResistanceComponen
 import com.github.thedeathlycow.frostiful.item.component.CapeComponent;
 import com.github.thedeathlycow.frostiful.item.component.ConsumeCallback;
 import com.github.thedeathlycow.frostiful.item.component.SimpleTooltipComponent;
-import com.github.thedeathlycow.frostiful.item.component.WarmFoodEffects;
+import com.github.thedeathlycow.frostiful.item.component.PostConsumeEffects;
 import net.fabricmc.fabric.api.entity.event.v1.ServerLivingEntityEvents;
 import net.fabricmc.fabric.api.item.v1.ItemComponentTooltipProviderRegistry;
 import net.minecraft.core.HolderSet;
@@ -73,11 +73,11 @@ public final class FDataComponentTypes {
                     .cacheEncoding()
     );
 
-    public static final DataComponentType<WarmFoodEffects> WARM_FOOD_EFFECTS = register(
-            "warm_food_effects",
+    public static final DataComponentType<PostConsumeEffects> POST_CONSUME_EFFECTS = register(
+            "post_consume_effects",
             builder -> builder
-                    .persistent(WarmFoodEffects.CODEC)
-                    .networkSynchronized(WarmFoodEffects.STREAM_CODEC)
+                    .persistent(PostConsumeEffects.CODEC)
+                    .networkSynchronized(PostConsumeEffects.STREAM_CODEC)
                     .cacheEncoding()
     );
 
@@ -87,7 +87,7 @@ public final class FDataComponentTypes {
         ItemComponentTooltipProviderRegistry.addLast(FDataComponentTypes.SIMPLE_TOOLTIP);
 
         ConsumeCallback.EVENT.register((level, user, stack, consumable) -> {
-            WarmFoodEffects effects = WarmFoodEffects.getByTag(stack);
+            PostConsumeEffects effects = PostConsumeEffects.getByTag(stack);
 
             if (effects != null) {
                 effects.onConsume(level, user, stack);
