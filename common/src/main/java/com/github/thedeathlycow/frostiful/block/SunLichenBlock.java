@@ -70,12 +70,12 @@ public final class SunLichenBlock extends GlowLichenBlock implements Heatable {
     }
 
     @Override
-    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean bl) {
+    protected void entityInside(BlockState state, Level world, BlockPos pos, Entity entity, InsideBlockEffectApplier handler, boolean isPrecise) {
         if (this.heatLevel > COLD_LEVEL && entity instanceof LivingEntity livingEntity && this.canBurnEntity(entity)) {
             this.dischargeHeatToEntity(state, world, pos, livingEntity, handler, FrostifulConfigYACL.blockSettings());
         }
 
-        super.entityInside(state, world, pos, entity, handler, bl);
+        super.entityInside(state, world, pos, entity, handler, isPrecise);
     }
 
     private void dischargeHeatToEntity(
