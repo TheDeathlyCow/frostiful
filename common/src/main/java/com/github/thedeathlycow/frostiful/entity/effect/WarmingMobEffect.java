@@ -21,41 +21,16 @@ package com.github.thedeathlycow.frostiful.entity.effect;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectCategory;
-import net.minecraft.world.entity.LivingEntity;
 
-public final class WarmingMobEffect extends SimpleMobEffect {
-    private static final double PERCENT_PER_TICK = 0.05 / 20.0;
-
+public final class WarmingMobEffect extends TemperatureChangingMobEffect {
     public WarmingMobEffect(MobEffectCategory category, int color) {
         super(category, color);
     }
 
-    public boolean applyEffectTick(final ServerLevel level, final LivingEntity mob, final int amplification) {
-        if (mob.thermoo$getTemperatureScale() < 0.01f) {
-            TemperatureSourceSettings settings = FrostifulConfigYACL.temperatureSourceSettings();
-            float scale = settings.warmingMobEffectTemperatureChangeMultiplier();
-            this.applyTemperatureChangeTick(level, mob, amplification, scale);
-        }
-
-        return true;
-    }
-
-    public boolean shouldApplyEffectTickThisTick(final int tickCount, final int amplification) {
-        return true;
-    }
-
-    private void applyTemperatureChangeTick(
-            final ServerLevel level,
-            final LivingEntity mob,
-            final int amplification,
-            final float scale
-    ) {
-        int minTemp = -mob.thermoo$getMinTemperature();
-        int tempChange = Mth.ceil(minTemp * PERCENT_PER_TICK * (amplification + 1) * scale);
-
-        mob.thermoo$addTemperature(tempChange, level.thermoo$temperatureSources().active());
+    @Override
+    protected float getScale() {
+        TemperatureSourceSettings settings = FrostifulConfigYACL.temperatureSourceSettings();
+        return settings.warmingMobEffectTemperatureChangeMultiplier();
     }
 }

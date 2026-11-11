@@ -93,13 +93,22 @@ public class TemperatureSourceSettings {
     @FloatField(format = "%.2f")
     float freezingWindTemperatureChangeMultiplier = 1.0f;
 
+    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
+    @Translate.Name("Freezing mob effect temperature change multiplier")
+    @SerialEntry(comment =
+            "Multiplies the freezing applied to entities with the Freezing effect each tick. The Freezing effect " +
+                    "decreases the temperature of cold entities by 5% per second. It does not apply to warm entities " +
+                    "and is thus strictly harmful. Must be at least 0.")
+    @FloatField(min = 0.0f, format = "%.2f")
+    float freezingMobEffectTemperatureChangeMultiplier = 1.0f;
+
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
     @Translate.Name("Warming mob effect temperature change multiplier")
     @SerialEntry(comment =
             "Multiplies the heating applied to entities with the Warming effect each tick. The Warming effect " +
                     "increases the temperature of cold entities by 5% per second. It does not apply to warm entities " +
-                    "and is thus strictly beneficial.")
-    @FloatField(format = "%.2f")
+                    "and is thus strictly beneficial. Must be at least 0.")
+    @FloatField(min = 0.0f, format = "%.2f")
     float warmingMobEffectTemperatureChangeMultiplier = 1.0f;
 
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = HEATING_GROUP)
@@ -153,6 +162,10 @@ public class TemperatureSourceSettings {
 
     public int freezingWindTemperatureChange() {
         return Mth.floor(-160 * this.freezingWindTemperatureChangeMultiplier * this.coolingMultiplier());
+    }
+
+    public float freezingMobEffectTemperatureChangeMultiplier() {
+        return freezingMobEffectTemperatureChangeMultiplier;
     }
 
     public float warmingMobEffectTemperatureChangeMultiplier() {
