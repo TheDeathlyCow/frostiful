@@ -131,10 +131,10 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(PostConsumeEffects.WARMING_TOOLTIP_KEY, "Warm \uD83D\uDD25");
         builder.add(PostConsumeEffects.HOT_TOOLTIP_KEY, "Hot \uD83D\uDD25 \uD83D\uDD25");
 
-        builder.add(potionItem(Items.POTION, FPotions.FREEZING), "Potion of Freezing");
-        builder.add(potionItem(Items.SPLASH_POTION, FPotions.FREEZING), "Splash Potion of Freezing");
-        builder.add(potionItem(Items.LINGERING_POTION, FPotions.FREEZING), "Lingering Potion of Freezing");
-        builder.add(potionItem(Items.TIPPED_ARROW, FPotions.FREEZING), "Arrow of Freezing");
+        builder.add(potionItem(Items.POTION, FPotions.NUMBING), "Potion of Numbing");
+        builder.add(potionItem(Items.SPLASH_POTION, FPotions.NUMBING), "Splash Potion of Numbing");
+        builder.add(potionItem(Items.LINGERING_POTION, FPotions.NUMBING), "Lingering Potion of Numbing");
+        builder.add(potionItem(Items.TIPPED_ARROW, FPotions.NUMBING), "Arrow of Numbing");
 
         builder.add(FItems.FUR_UPGRADE_TEMPLATE, "Fur Padded Chainmail Upgrade");
         builder.add(FItems.ICE_SKATE_UPGRADE_TEMPLATE, "Ice Skate Upgrade");
@@ -329,6 +329,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
 
         effect(builder, FMobEffects.FROST_BITE, "Frost Bite");
         effect(builder, FMobEffects.WARMING, "Warming");
+        effect(builder, FMobEffects.FREEZING, "Freezing");
         effect(builder, FMobEffects.WARMHEARTED, "Warmhearted");
 
         enchantment(builder, FEnchantments.ENERVATION, "Enervation", "Steals heat from cold enemies when attacking");

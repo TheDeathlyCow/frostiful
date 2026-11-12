@@ -20,6 +20,7 @@
 package com.github.thedeathlycow.frostiful.registry;
 
 import com.github.thedeathlycow.frostiful.Frostiful;
+import com.github.thedeathlycow.frostiful.entity.effect.FreezingMobEffect;
 import com.github.thedeathlycow.frostiful.entity.effect.SimpleMobEffect;
 import com.github.thedeathlycow.frostiful.entity.effect.WarmingMobEffect;
 import com.github.thedeathlycow.thermoo.api.entity.v1.ThermooAttributes;
@@ -31,6 +32,13 @@ import net.minecraft.world.effect.MobEffectCategory;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public final class FMobEffects {
+    /// NOTE: In 26.4+, this should just be aliased to the vanilla Freezing effect
+    public static final Holder<MobEffect> FREEZING = registerReference(
+            "freezing",
+            new FreezingMobEffect(
+                    MobEffectCategory.HARMFUL, 0x4FC3F7
+            )
+    );
 
     public static final Holder<MobEffect> WARMING = registerReference(
             "warming",
