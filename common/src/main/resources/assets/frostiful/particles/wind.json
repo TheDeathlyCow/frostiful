@@ -1,7 +1,16 @@
 {
-  "textures": [
-    "frostiful:wind/var1_01",
-    "frostiful:wind/var1_02",
-    "frostiful:wind/var1_03"
-  ]
+    "textures": [
+        "frostiful:wind/frame_0",
+        "frostiful:wind/frame_1",
+        "frostiful:wind/frame_2",
+        "frostiful:wind/frame_3",
+        "frostiful:wind/frame_4",
+        "frostiful:wind/frame_5",
+        "frostiful:wind/frame_6",
+        "frostiful:wind/frame_7",
+        "frostiful:wind/frame_8",
+        "frostiful:wind/frame_9",
+        "frostiful:wind/frame_10",
+        "frostiful:wind/frame_11"
+    ]
 }

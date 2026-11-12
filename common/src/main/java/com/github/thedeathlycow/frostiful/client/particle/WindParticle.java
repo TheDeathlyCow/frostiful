@@ -27,22 +27,18 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SingleQuadParticle;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.state.level.QuadParticleRenderState;
+import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
 import net.minecraft.util.Util;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
 import org.joml.Vector3f;
 
 
 public class WindParticle extends SingleQuadParticle {
-    private static final Vector3f FROM = Util.make(new Vector3f(0.5F, 0.5F, 0.5F), Vector3f::normalize);
-    private static final Vector3f TO = new Vector3f(-1.0F, -1.0F, 0.0F);
-
     private final SpriteSet spriteProvider;
-
-    private static final Quaternionf FRONT_ROTATION = new Quaternionf().rotationX(-Mth.PI);
-    private static final Quaternionf BACK_ROTATION = new Quaternionf().rotationYXZ(-Mth.PI, Mth.PI, 0.0f);
 
     protected WindParticle(ClientLevel clientWorld, double x, double y, double z, SpriteSet spriteProvider) {
         super(clientWorld, x, y, z, spriteProvider.first());
@@ -58,13 +54,15 @@ public class WindParticle extends SingleQuadParticle {
     }
 
     @Override
-    public void extract(QuadParticleRenderState submittable, Camera camera, float tickProgress) {
-        this.extractRotatedQuad(submittable, camera, FRONT_ROTATION, tickProgress);
+    public void extract(QuadParticleRenderState particleTypeRenderState, Camera camera, float partialTickTime) {
+        var rotation = new Quaternionf();
 
-        // flip so that both faces are rendered in the same direction in the absolute position of the world
-        this.quadSize *= -1;
-        this.extractRotatedQuad(submittable, camera, BACK_ROTATION, tickProgress);
-        this.quadSize *= -1;
+        rotation.identity();
+        this.extractRotatedQuad(particleTypeRenderState, camera, rotation, partialTickTime);
+
+        rotation.rotationY(Mth.PI);
+        // flip the u coordinates to mirror the sprite properly
+        this.extractRotatedQuad(particleTypeRenderState, camera, rotation, partialTickTime, this.getU1(), this.getU0(), this.getV0(), this.getV1());
     }
 
     @Override
@@ -72,7 +70,31 @@ public class WindParticle extends SingleQuadParticle {
         return SingleQuadParticle.Layer.OPAQUE;
     }
 
-    
+    protected void extractRotatedQuad(
+            final QuadParticleRenderState particleTypeRenderState,
+            final Camera camera,
+            final Quaternionf rotation,
+            final float partialTickTime,
+            final float u0, final float u1,
+            final float v0, final float v1
+    ) {
+        Vec3 pos = camera.position();
+        float x = (float)(Mth.lerp(partialTickTime, this.xo, this.x) - pos.x());
+        float y = (float)(Mth.lerp(partialTickTime, this.yo, this.y) - pos.y());
+        float z = (float)(Mth.lerp(partialTickTime, this.zo, this.z) - pos.z());
+
+        particleTypeRenderState.add(
+                this.getLayer(),
+                x, y, z,
+                rotation.x, rotation.y, rotation.z, rotation.w,
+                this.getQuadSize(partialTickTime),
+                u0, u1,
+                v0, v1,
+                ARGB.colorFromFloat(this.alpha, this.rCol, this.gCol, this.bCol),
+                this.getLightCoords(partialTickTime)
+        );
+    }
+
     public static class Factory implements ParticleProvider<WindParticleEffect> {
         private final SpriteSet spriteProvider;
 
