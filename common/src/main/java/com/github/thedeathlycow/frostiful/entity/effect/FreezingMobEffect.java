@@ -21,11 +21,12 @@ package com.github.thedeathlycow.frostiful.entity.effect;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
+import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import net.minecraft.world.effect.MobEffectCategory;
 
 public final class FreezingMobEffect extends TemperatureChangingMobEffect {
     public FreezingMobEffect(MobEffectCategory category, int color) {
-        super(category, color);
+        super(category, color, FParticleTypes.SNOWFLAKE);
     }
 
     @Override

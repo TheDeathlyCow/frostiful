@@ -19,6 +19,7 @@
 
 package com.github.thedeathlycow.frostiful.entity.effect;
 
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.effect.MobEffectCategory;
@@ -27,8 +28,12 @@ import net.minecraft.world.entity.LivingEntity;
 public abstract class TemperatureChangingMobEffect extends SimpleMobEffect {
     private static final double PERCENT_PER_TICK = 0.05 / 20.0;
 
-    public TemperatureChangingMobEffect(MobEffectCategory category, int color) {
+    protected TemperatureChangingMobEffect(MobEffectCategory category, int color) {
         super(category, color);
+    }
+
+    protected TemperatureChangingMobEffect(MobEffectCategory category, int color, ParticleOptions particleOptions) {
+        super(category, color, particleOptions);
     }
 
     public final boolean applyEffectTick(final ServerLevel level, final LivingEntity mob, final int amplification) {
