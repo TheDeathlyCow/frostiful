@@ -25,6 +25,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.item.alchemy.Potions;
@@ -38,6 +39,7 @@ public class FPotions {
             create(
                     "numbing",
                     new MobEffectInstance(FMobEffects.FROST_BITE, BASE_LONG_DURATION, 0),
+                    new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION, 0),
                     new MobEffectInstance(FMobEffects.FREEZING, BASE_SHORT_DURATION, 0)
             )
     );
@@ -46,6 +48,7 @@ public class FPotions {
             create(
                     "numbing",
                     new MobEffectInstance(FMobEffects.FROST_BITE, 2 * BASE_LONG_DURATION, 0),
+                    new MobEffectInstance(MobEffects.SLOWNESS, 2 * BASE_LONG_DURATION, 0),
                     new MobEffectInstance(FMobEffects.FREEZING, 2 * BASE_SHORT_DURATION, 0)
             )
     );
@@ -54,6 +57,7 @@ public class FPotions {
             create(
                     "numbing",
                     new MobEffectInstance(FMobEffects.FROST_BITE, BASE_LONG_DURATION / 2, 1),
+                    new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION / 2, 2),
                     new MobEffectInstance(FMobEffects.FREEZING, BASE_SHORT_DURATION, 2)
             )
     );
