@@ -28,28 +28,34 @@ import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import org.jspecify.annotations.NonNull;
 
 public record WindParticleEffect(
-        boolean flipped
+        float yAngle
 ) implements ParticleOptions {
 
     public static final MapCodec<WindParticleEffect> CODEC = RecordCodecBuilder.mapCodec(
             instance -> instance.group(
-                            Codec.BOOL
-                                    .fieldOf("flipped")
-                                    .forGetter(WindParticleEffect::flipped)
+                            Codec.FLOAT
+                                    .optionalFieldOf("y_angle", 0f)
+                                    .forGetter(WindParticleEffect::yAngle)
                     )
                     .apply(instance, WindParticleEffect::new)
     );
 
     public static final StreamCodec<RegistryFriendlyByteBuf, WindParticleEffect> PACKET_CODEC = StreamCodec.composite(
-            ByteBufCodecs.BOOL,
-            WindParticleEffect::flipped,
+            ByteBufCodecs.FLOAT,
+            WindParticleEffect::yAngle,
             WindParticleEffect::new
     );
 
+    public WindParticleEffect() {
+        this(0f);
+    }
+
     @Override
+    @NonNull
     public ParticleType<?> getType() {
-        return this.flipped ? FParticleTypes.WIND_FLIPPED : FParticleTypes.WIND;
+        return FParticleTypes.WIND;
     }
 }

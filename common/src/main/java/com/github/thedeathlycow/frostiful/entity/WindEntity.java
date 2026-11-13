@@ -130,16 +130,12 @@ public class WindEntity extends Entity {
                 profiler.pop();
             }
         } else {
-
-            WindParticleEffect particle = this.random.nextBoolean()
-                    ? new WindParticleEffect(true)
-                    : new WindParticleEffect(false);
-
+            WindParticleEffect wind = new WindParticleEffect();
             ParticleOptions dust = this.getDustParticle();
 
             for (int i = 0; i < 2; ++i) {
                 world.addParticle(
-                        particle,
+                        wind,
                         this.getRandomX(0.5),
                         this.getRandomY(),
                         this.getRandomZ(0.5),
