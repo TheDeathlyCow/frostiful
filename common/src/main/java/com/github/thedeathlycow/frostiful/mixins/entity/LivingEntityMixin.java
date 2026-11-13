@@ -20,10 +20,15 @@
 package com.github.thedeathlycow.frostiful.mixins.entity;
 
 import com.github.thedeathlycow.frostiful.registry.FEntityAttributes;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import com.github.thedeathlycow.frostiful.survival.system.FrostRootSystem;
 import com.github.thedeathlycow.frostiful.survival.system.SnowAccumulationSystem;
 import com.github.thedeathlycow.frostiful.survival.system.SoakedFreezingSystem;
+import com.github.thedeathlycow.thermoo.api.core.v2.TemperatureAware;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -35,7 +40,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingEntity.class)
-public abstract class LivingEntityMixin extends Entity {
+public abstract class LivingEntityMixin extends Entity implements TemperatureAware {
     public LivingEntityMixin(EntityType<?> type, Level level) {
         super(type, level);
     }
@@ -57,5 +62,16 @@ public abstract class LivingEntityMixin extends Entity {
             SnowAccumulationSystem.serverTick(self);
             SoakedFreezingSystem.serverTick(self);
         }
+    }
+
+    @WrapMethod(method = "canBeAffected")
+    private boolean canBeAffectedFrostiful(MobEffectInstance newEffect, Operation<Boolean> original) {
+        if (!this.thermoo$canFreeze()) {
+            return !newEffect.is(FMobEffects.FREEZING);
+        } else if (!this.thermoo$canOverheat()) {
+            return !newEffect.is(FMobEffects.WARMING);
+        }
+
+        return original.call(newEffect);
     }
 }

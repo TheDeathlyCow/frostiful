@@ -26,7 +26,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
 
 public class FEntityTypeTags {
-
     public static final TagKey<EntityType<?>> ROOT_IMMUNE = register("root_immune");
 
     public static final TagKey<EntityType<?>> HEAVY_ENTITY_TYPES = register("heavy_entity_types");
