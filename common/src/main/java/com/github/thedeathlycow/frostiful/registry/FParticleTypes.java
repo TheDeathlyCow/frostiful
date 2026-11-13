@@ -40,18 +40,7 @@ public final class FParticleTypes {
 
     public static final ParticleType<WindParticleEffect> WIND = register(
             "wind",
-            FabricParticleTypes.complex(
-                    WindParticleEffect.CODEC,
-                    WindParticleEffect.PACKET_CODEC
-            )
-    );
-
-    public static final ParticleType<WindParticleEffect> WIND_FLIPPED = register(
-            "wind_flipped",
-            FabricParticleTypes.complex(
-                    WindParticleEffect.CODEC,
-                    WindParticleEffect.PACKET_CODEC
-            )
+            FabricParticleTypes.complex(WindParticleEffect.CODEC, WindParticleEffect.PACKET_CODEC)
     );
 
     public static final SimpleParticleType SNOWFLAKE = registerSimple("snowflake", false);

@@ -30,21 +30,21 @@ import net.minecraft.client.renderer.state.level.QuadParticleRenderState;
 import net.minecraft.util.ARGB;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
-import net.minecraft.util.Util;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Quaternionf;
-import org.joml.Vector3f;
 
 
 public class WindParticle extends SingleQuadParticle {
     private final SpriteSet spriteProvider;
+    private final float xAngle;
 
-    protected WindParticle(ClientLevel clientWorld, double x, double y, double z, SpriteSet spriteProvider) {
+    protected WindParticle(ClientLevel clientWorld, double x, double y, double z, SpriteSet spriteProvider, float xAngle) {
         super(clientWorld, x, y, z, spriteProvider.first());
         this.spriteProvider = spriteProvider;
         this.xd *= 2;
         this.quadSize *= 3;
+        this.xAngle = xAngle;
     }
 
     @Override
@@ -57,10 +57,11 @@ public class WindParticle extends SingleQuadParticle {
     public void extract(QuadParticleRenderState particleTypeRenderState, Camera camera, float partialTickTime) {
         var rotation = new Quaternionf();
 
-        rotation.identity();
+        float angle = xAngle * Mth.PI / 180f;
+        rotation.rotationY(angle);
         this.extractRotatedQuad(particleTypeRenderState, camera, rotation, partialTickTime);
 
-        rotation.rotationY(Mth.PI);
+        rotation.rotationY(Mth.PI + angle);
         // flip the u coordinates to mirror the sprite properly
         this.extractRotatedQuad(particleTypeRenderState, camera, rotation, partialTickTime, this.getU1(), this.getU0(), this.getV0(), this.getV1());
     }
@@ -95,10 +96,10 @@ public class WindParticle extends SingleQuadParticle {
         );
     }
 
-    public static class Factory implements ParticleProvider<WindParticleEffect> {
+    public static class Provider implements ParticleProvider<WindParticleEffect> {
         private final SpriteSet spriteProvider;
 
-        public Factory(SpriteSet spriteProvider) {
+        public Provider(SpriteSet spriteProvider) {
             this.spriteProvider = spriteProvider;
         }
 
@@ -111,7 +112,7 @@ public class WindParticle extends SingleQuadParticle {
                 double velocityX, double velocityY, double velocityZ,
                 RandomSource random
         ) {
-            return new WindParticle(world, x, y, z, this.spriteProvider);
+            return new WindParticle(world, x, y, z, this.spriteProvider, parameters.yAngle());
         }
     }
 }

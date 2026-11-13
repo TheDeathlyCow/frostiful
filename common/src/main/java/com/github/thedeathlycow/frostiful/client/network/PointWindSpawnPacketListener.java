@@ -36,8 +36,8 @@ public class PointWindSpawnPacketListener implements ClientPlayNetworking.PlayPa
     private static final int PARTICLE_COUNT = 50;
 
     private static final ParticleOptions[] WIND_PARTICLES = new ParticleOptions[]{
-            new WindParticleEffect(true),
-            new WindParticleEffect(false),
+            new WindParticleEffect(),
+            new WindParticleEffect(),
             ParticleTypes.SNOWFLAKE,
             ParticleTypes.SNOWFLAKE,
             ParticleTypes.SNOWFLAKE

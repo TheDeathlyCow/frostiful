@@ -32,8 +32,7 @@ public final class FParticleFactoryRegistry {
     public static void initialize() {
         Frostiful.LOGGER.debug("Initialized Frostiful particle factories");
         registerFactory(FParticleTypes.HEAT_DRAIN, HeatDrainParticle.Factory::new);
-        registerFactory(FParticleTypes.WIND, WindParticle.Factory::new);
-        registerFactory(FParticleTypes.WIND_FLIPPED, WindParticle.Factory::new);
+        registerFactory(FParticleTypes.WIND, WindParticle.Provider::new);
         registerFactory(FParticleTypes.SNOWFLAKE, SnowflakeParticleProvider::new);
     }
 
