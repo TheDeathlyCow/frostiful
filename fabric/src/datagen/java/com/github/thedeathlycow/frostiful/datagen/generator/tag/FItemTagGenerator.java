@@ -266,7 +266,8 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .addOptional(croptopia("chili_relleno"))
                 .addOptional(farmersRespite("blazing_chili"));
 
-        builder(FItemTags.COLD_FOODS);
+        valueLookupBuilder(FItemTags.COLD_FOODS)
+                .add(Items.SUSPICIOUS_STEW);
     }
 
     static ResourceKey<Item> farmersDelight(String path) {
