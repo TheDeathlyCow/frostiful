@@ -37,14 +37,14 @@ import org.joml.Quaternionf;
 
 public class WindParticle extends SingleQuadParticle {
     private final SpriteSet spriteProvider;
-    private final float xAngle;
+    private final float yAngle;
 
-    protected WindParticle(ClientLevel clientWorld, double x, double y, double z, SpriteSet spriteProvider, float xAngle) {
+    protected WindParticle(ClientLevel clientWorld, double x, double y, double z, SpriteSet spriteProvider, float yAngle) {
         super(clientWorld, x, y, z, spriteProvider.first());
         this.spriteProvider = spriteProvider;
         this.xd *= 2;
         this.quadSize *= 3;
-        this.xAngle = xAngle;
+        this.yAngle = yAngle;
     }
 
     @Override
@@ -57,7 +57,7 @@ public class WindParticle extends SingleQuadParticle {
     public void extract(QuadParticleRenderState particleTypeRenderState, Camera camera, float partialTickTime) {
         var rotation = new Quaternionf();
 
-        float angle = xAngle * Mth.PI / 180f;
+        float angle = yAngle * Mth.PI / 180f;
         rotation.rotationY(angle);
         this.extractRotatedQuad(particleTypeRenderState, camera, rotation, partialTickTime);
 
