@@ -121,7 +121,7 @@ sourceSets.configureEach {
 }
 
 publishMods {
-    type = BETA
+    type = STABLE
     def changelogFile = rootProject.file("./changelogs/${project.version}.md")
 
     if (changelogFile.exists()) {
