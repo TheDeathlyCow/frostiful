@@ -97,8 +97,7 @@ public class TemperatureSourceSettings {
     @Translate.Name("Freezing mob effect temperature change multiplier")
     @SerialEntry(comment =
             "Multiplies the freezing applied to entities with the Freezing effect each tick. The Freezing effect " +
-                    "decreases the temperature of cold entities by 5% per second. It does not apply to warm entities " +
-                    "and is thus strictly harmful. Must be at least 0.")
+                    "decreases the temperature of cold entities by 5% per second. Must be at least 0.")
     @FloatField(min = 0.0f, format = "%.2f")
     float freezingMobEffectTemperatureChangeMultiplier = 1.0f;
 

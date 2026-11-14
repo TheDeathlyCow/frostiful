@@ -395,7 +395,7 @@
   "yacl3.config.frostiful:common/temperature_source.coolingMultiplier.desc": "Multiplies the final temperature point change of all non-environment cooling sources like powder snow and glacial arrows.",
   "yacl3.config.frostiful:common/temperature_source.desc": "Configure temperature sources.",
   "yacl3.config.frostiful:common/temperature_source.freezingMobEffectTemperatureChangeMultiplier": "Freezing mob effect temperature change multiplier",
-  "yacl3.config.frostiful:common/temperature_source.freezingMobEffectTemperatureChangeMultiplier.desc": "Multiplies the freezing applied to entities with the Freezing effect each tick. The Freezing effect decreases the temperature of cold entities by 5% per second. It does not apply to warm entities and is thus strictly harmful. Must be at least 0.",
+  "yacl3.config.frostiful:common/temperature_source.freezingMobEffectTemperatureChangeMultiplier.desc": "Multiplies the freezing applied to entities with the Freezing effect each tick. The Freezing effect decreases the temperature of cold entities by 5% per second. Must be at least 0.",
   "yacl3.config.frostiful:common/temperature_source.freezingWindTemperatureChangeMultiplier": "Freezing wind temperature change multiplier",
   "yacl3.config.frostiful:common/temperature_source.freezingWindTemperatureChangeMultiplier.desc": "Multiplies the cooling applied to entities that collide with Freezing Wind.",
   "yacl3.config.frostiful:common/temperature_source.frostologerBlizzardPlayerTemperatureChangeMultiplier": "Frostologer Heat Drain temperature change multiplier",

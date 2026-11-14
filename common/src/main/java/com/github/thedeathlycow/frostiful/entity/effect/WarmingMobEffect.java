@@ -21,11 +21,22 @@ package com.github.thedeathlycow.frostiful.entity.effect;
 
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.config.section.TemperatureSourceSettings;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
 
 public final class WarmingMobEffect extends TemperatureChangingMobEffect {
     public WarmingMobEffect(MobEffectCategory category, int color) {
         super(category, color);
+    }
+
+    @Override
+    public boolean applyEffectTick(ServerLevel level, LivingEntity mob, int amplification) {
+        if (mob.thermoo$getTemperature() <= 0) {
+            return super.applyEffectTick(level, mob, amplification);
+        }
+
+        return false;
     }
 
     @Override

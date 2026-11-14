@@ -36,14 +36,13 @@ public abstract class TemperatureChangingMobEffect extends SimpleMobEffect {
         super(category, color, particleOptions);
     }
 
-    public final boolean applyEffectTick(final ServerLevel level, final LivingEntity mob, final int amplification) {
-        if (mob.thermoo$getTemperature() <= 0) {
-            this.applyTemperatureChangeTick(level, mob, amplification, this.getScale());
-        }
-
+    @Override
+    public boolean applyEffectTick(final ServerLevel level, final LivingEntity mob, final int amplification) {
+        this.applyTemperatureChangeTick(level, mob, amplification, this.getScale());
         return true;
     }
 
+    @Override
     public final boolean shouldApplyEffectTickThisTick(final int tickCount, final int amplification) {
         return true;
     }
