@@ -130,7 +130,7 @@ publishMods {
 
     file = jar.archiveFile
     additionalFiles.from(sourcesJar.archiveFile)
-    displayName = "Frostiful ${version}"
+    displayName = "Frostiful ${project.version}"
 
     modLoaders.add("fabric")
     modLoaders.add("quilt")

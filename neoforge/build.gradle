@@ -125,7 +125,7 @@ publishMods {
 
     file = jar.archiveFile
     additionalFiles.from(sourcesJar.archiveFile)
-    displayName = "Frostiful Neoforge ${version}"
+    displayName = "Frostiful Neoforge ${project.version}"
 
     modLoaders.add("neoforge")
 
