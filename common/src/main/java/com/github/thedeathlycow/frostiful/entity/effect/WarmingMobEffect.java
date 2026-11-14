@@ -32,7 +32,7 @@ public final class WarmingMobEffect extends TemperatureChangingMobEffect {
 
     @Override
     public boolean applyEffectTick(ServerLevel level, LivingEntity mob, int amplification) {
-        if (mob.thermoo$getTemperature() < 0) {
+        if (mob.thermoo$getTemperature() < -10) {
             return super.applyEffectTick(level, mob, amplification);
         }
 
