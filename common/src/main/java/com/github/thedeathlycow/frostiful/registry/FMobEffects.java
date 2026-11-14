@@ -70,8 +70,13 @@ public final class FMobEffects {
                     MobEffectCategory.HARMFUL, 0x4287F5
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.id("effect.frost_base"),
+                    Frostiful.id("effect.frost_bite/frost_resistance"),
                     -1.0,
+                    AttributeModifier.Operation.ADD_VALUE
+            ).addAttributeModifier(
+                    ThermooAttributes.FROST_RESISTANCE,
+                    Frostiful.id("effect.frost_bite/environment_frost_resistance"),
+                    -0.25,
                     AttributeModifier.Operation.ADD_VALUE
             )
     );
