@@ -327,7 +327,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FSoundEvents.ENTITY_BREAK_BINDING_CURSE, "Curse of Binding breaks");
         builder.add(FSoundEvents.ITEM_ARMOR_EQUIP_FUR.value(), "Fur armor rustles");
 
-        effect(builder, FMobEffects.FROST_BITE, "Frost Bite");
+        effect(builder, FMobEffects.FROSTBITE, "Frostbite");
         effect(builder, FMobEffects.WARMING, "Warming");
         effect(builder, FMobEffects.FREEZING, "Freezing");
         effect(builder, FMobEffects.WARMHEARTED, "Warmhearted");

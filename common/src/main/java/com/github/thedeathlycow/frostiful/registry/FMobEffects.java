@@ -64,18 +64,18 @@ public final class FMobEffects {
             )
     );
 
-    public static final Holder<MobEffect> FROST_BITE = registerReference(
-            "frost_bite",
+    public static final Holder<MobEffect> FROSTBITE = registerReference(
+            "frostbite",
             new SimpleMobEffect(
                     MobEffectCategory.HARMFUL, 0x4287F5
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.id("effect.frost_bite/frost_resistance"),
+                    Frostiful.id("effect.frostbite/frost_resistance"),
                     -1.0,
                     AttributeModifier.Operation.ADD_VALUE
             ).addAttributeModifier(
                     ThermooAttributes.FROST_RESISTANCE,
-                    Frostiful.id("effect.frost_bite/environment_frost_resistance"),
+                    Frostiful.id("effect.frostbite/environment_frost_resistance"),
                     -0.25,
                     AttributeModifier.Operation.ADD_VALUE
             )
@@ -85,6 +85,7 @@ public final class FMobEffects {
         Frostiful.LOGGER.debug("Initialized Frostiful status effects");
 
         BuiltInRegistries.MOB_EFFECT.addAlias(Frostiful.id("warmth"), Frostiful.id("warmhearted"));
+        BuiltInRegistries.MOB_EFFECT.addAlias(Frostiful.id("frost_bite"), Frostiful.id("frostbite"));
     }
 
     private static Holder<MobEffect> registerReference(String name, MobEffect statusEffect) {

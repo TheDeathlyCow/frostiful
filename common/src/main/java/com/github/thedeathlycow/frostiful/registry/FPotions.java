@@ -38,7 +38,7 @@ public class FPotions {
             "numbing",
             create(
                     "numbing",
-                    new MobEffectInstance(FMobEffects.FROST_BITE, BASE_LONG_DURATION, 0),
+                    new MobEffectInstance(FMobEffects.FROSTBITE, BASE_LONG_DURATION, 0),
                     new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION, 0),
                     new MobEffectInstance(FMobEffects.FREEZING, BASE_SHORT_DURATION, 0)
             )
@@ -47,7 +47,7 @@ public class FPotions {
             "long_numbing",
             create(
                     "numbing",
-                    new MobEffectInstance(FMobEffects.FROST_BITE, 2 * BASE_LONG_DURATION, 0),
+                    new MobEffectInstance(FMobEffects.FROSTBITE, 2 * BASE_LONG_DURATION, 0),
                     new MobEffectInstance(MobEffects.SLOWNESS, 2 * BASE_LONG_DURATION, 0),
                     new MobEffectInstance(FMobEffects.FREEZING, 2 * BASE_SHORT_DURATION, 0)
             )
@@ -56,7 +56,7 @@ public class FPotions {
             "strong_numbing",
             create(
                     "numbing",
-                    new MobEffectInstance(FMobEffects.FROST_BITE, BASE_LONG_DURATION / 2, 1),
+                    new MobEffectInstance(FMobEffects.FROSTBITE, BASE_LONG_DURATION / 2, 1),
                     new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION / 2, 2),
                     new MobEffectInstance(FMobEffects.FREEZING, BASE_SHORT_DURATION, 2)
             )

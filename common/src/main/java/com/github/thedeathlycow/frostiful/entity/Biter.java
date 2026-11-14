@@ -102,7 +102,7 @@ public class Biter extends Monster {
             int amplifier = FrostifulConfigYACL.entitySettings().getFrostBiteAmplifier(level);
 
             livingTarget.addEffect(
-                    new MobEffectInstance(FMobEffects.FROST_BITE, 20 * 15, amplifier),
+                    new MobEffectInstance(FMobEffects.FROSTBITE, 20 * 15, amplifier),
                     this
             );
         }
