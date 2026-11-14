@@ -19,19 +19,23 @@
 
 package com.github.thedeathlycow.frostiful.datagen.generator.client;
 
+import com.github.thedeathlycow.frostiful.block.PackedSnowBlock;
 import com.github.thedeathlycow.frostiful.client.render.entity.FrostWandItemRenderer;
 import com.github.thedeathlycow.frostiful.registry.FArmorMaterials;
+import com.github.thedeathlycow.frostiful.registry.FBlocks;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import net.fabricmc.fabric.api.client.datagen.v1.provider.FabricModelProvider;
 import net.fabricmc.fabric.api.datagen.v1.FabricPackOutput;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
-import net.minecraft.client.data.models.model.ItemModelUtils;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
-import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.MultiVariant;
+import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
+import net.minecraft.client.data.models.blockstates.PropertyDispatch;
+import net.minecraft.client.data.models.model.*;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.block.Blocks;
 
 public class FrostifulModelGenerator extends FabricModelProvider {
     private static final Identifier HELMET_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("helmet");
@@ -44,8 +48,8 @@ public class FrostifulModelGenerator extends FabricModelProvider {
     }
 
     @Override
-    public void generateBlockStateModels(BlockModelGenerators blockStateModelGenerator) {
-        // not generating block states atm
+    public void generateBlockStateModels(BlockModelGenerators blockModelGenerators) {
+        this.generatePackedSnowLayerModels(blockModelGenerators);
     }
 
     @Override
@@ -88,7 +92,6 @@ public class FrostifulModelGenerator extends FabricModelProvider {
 
         itemModelGenerator.declareCustomModelItem(FItems.GLACIAL_ARROW);
         itemModelGenerator.declareCustomModelItem(FItems.FROZEN_TORCH);
-        itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW);
         itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOWBALL);
 
         itemModelGenerator.declareCustomModelItem(FItems.PACKED_SNOW_BLOCK);
@@ -130,5 +133,30 @@ public class FrostifulModelGenerator extends FabricModelProvider {
         );
 
         itemModelGenerator.itemModelOutput.accept(item, ItemModelGenerators.createFlatModelDispatch(sprite, inHand));
+    }
+
+    private void generatePackedSnowLayerModels(BlockModelGenerators blockModelGenerators) {
+        TextureMapping textures = TextureMapping.column(FBlocks.PACKED_SNOW);
+        MultiVariant fullModel = BlockModelGenerators.plainVariant(
+                ModelTemplates.CUBE_COLUMN.create(FBlocks.PACKED_SNOW_BLOCK, textures, blockModelGenerators.modelOutput)
+        );
+
+        blockModelGenerators.blockStateOutput.accept(
+                MultiVariantGenerator.dispatch(FBlocks.PACKED_SNOW)
+                        .with(PropertyDispatch.initial(PackedSnowBlock.LAYERS).generate(level -> {
+                                    if (level < PackedSnowBlock.MAX_LAYERS) {
+                                        return BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(FBlocks.PACKED_SNOW, "/height" + level));
+                                    } else {
+                                        return fullModel;
+                                    }
+                                })
+                        ));
+
+        for (int layer = 1; layer < PackedSnowBlock.MAX_LAYERS; layer++) {
+            
+        }
+
+        blockModelGenerators.registerSimpleItemModel(FBlocks.PACKED_SNOW, ModelLocationUtils.getModelLocation(FBlocks.PACKED_SNOW, "/height2"));
+        blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(FBlocks.PACKED_SNOW_BLOCK, fullModel));
     }
 }
