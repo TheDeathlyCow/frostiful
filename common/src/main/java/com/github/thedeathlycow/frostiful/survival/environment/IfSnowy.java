@@ -20,8 +20,10 @@
 package com.github.thedeathlycow.frostiful.survival.environment;
 
 import com.github.thedeathlycow.thermoo.api.environment.v2.provider.EnvironmentProvider;
+import com.github.thedeathlycow.thermoo.api.season.v2.ThermooSeasonEvents;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import dev.yumi.commons.TriState;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentMap;
@@ -55,6 +57,7 @@ public record IfSnowy(
         Biome biome = biomeHolder.value();
 
         return biome.getBaseTemperature() < 0.15f
-                || biome.getPrecipitationAt(pos, level.getSeaLevel()) == Biome.Precipitation.SNOW;
+                || biome.getPrecipitationAt(pos, level.getSeaLevel()) == Biome.Precipitation.SNOW
+                || ThermooSeasonEvents.IS_COLD_ENOUGH_TO_SNOW.invoker().isColdEnoughToSnow(level, pos, biomeHolder) == TriState.TRUE;
     }
 }
