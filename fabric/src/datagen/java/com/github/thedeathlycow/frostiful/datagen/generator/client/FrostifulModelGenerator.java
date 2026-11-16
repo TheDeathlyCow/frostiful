@@ -31,11 +31,13 @@ import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.client.data.models.blockstates.PropertyDispatch;
-import net.minecraft.client.data.models.model.*;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
+import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.client.renderer.item.ItemModel;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Blocks;
 
 public class FrostifulModelGenerator extends FabricModelProvider {
     private static final Identifier HELMET_TRIM_ASSET_ID_PREFIX = ItemModelGenerators.prefixForSlotTrim("helmet");
@@ -151,10 +153,6 @@ public class FrostifulModelGenerator extends FabricModelProvider {
                                     }
                                 })
                         ));
-
-        for (int layer = 1; layer < PackedSnowBlock.MAX_LAYERS; layer++) {
-            
-        }
 
         blockModelGenerators.registerSimpleItemModel(FBlocks.PACKED_SNOW, ModelLocationUtils.getModelLocation(FBlocks.PACKED_SNOW, "/height2"));
         blockModelGenerators.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(FBlocks.PACKED_SNOW_BLOCK, fullModel));
