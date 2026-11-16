@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "frostiful:block/packed_snow_top",
+    "side": "frostiful:block/packed_snow_side"
+  }
+}
