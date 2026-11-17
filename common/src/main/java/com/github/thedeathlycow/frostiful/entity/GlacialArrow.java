@@ -23,6 +23,7 @@ import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
 import com.github.thedeathlycow.frostiful.registry.FMobEffects;
+import com.github.thedeathlycow.frostiful.registry.FParticleTypes;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
@@ -64,11 +65,11 @@ public class GlacialArrow extends AbstractArrow {
     @Override
     public void tick() {
         super.tick();
+        Level level = this.level();
 
-        Level world = level();
-        if (world.isClientSide() && !this.isInGround()) {
-            world.addParticle(
-                    ParticleTypes.SNOWFLAKE,
+        if (level.isClientSide() && !this.isInGround()) {
+            level.addParticle(
+                    FParticleTypes.SNOWFLAKE,
                     this.getX(), this.getY(), this.getZ(),
                     0.0D, 0.0D, 0.0D
             );
