@@ -131,7 +131,7 @@ public class ItemSettings {
     float warmFoodDurationMultiplier = 1.0f;
 
     public int glacialArrowFreezingEffectDuration() {
-        return Mth.floor(3 * 20 * this.glacialArrowFreezingEffectDurationMultiplier);
+        return Mth.floor(4 * 20 * this.glacialArrowFreezingEffectDurationMultiplier);
     }
 
     public float skateUpgradeTemplateIglooGenerateChance() {
