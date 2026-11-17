@@ -113,6 +113,12 @@ public class ItemSettings {
     }
 
     @AutoGen(category = CATEGORY, group = MISC_GROUP)
+    @Translate.Name("Glacial Arrow freezing effect duration multiplier")
+    @SerialEntry(comment = "Multiplies the duration of the Freezing effect applied to a target struck by a Glacial Arrow.")
+    @FloatField(format = "%.2f")
+    float glacialArrowFreezingEffectDurationMultiplier = 1.0f;
+
+    @AutoGen(category = CATEGORY, group = MISC_GROUP)
     @Translate.Name("Ice Skate Upgrade Template generation chance in Igloos")
     @SerialEntry(comment = "The chance of an Ice Skate Upgrade Template generating in an Igloo chest. Must be between 0 and 1 (inclusive). Requires a restart after changing!")
     @FloatSlider(format = "%.2f", min = 0f, max = 1f, step = 0.05f)
@@ -123,6 +129,10 @@ public class ItemSettings {
     @SerialEntry(comment = "Multiplies the duration of the Warming and Warmhearted mob effects applied to entities after consuming warm food items")
     @FloatField(min = 0)
     float warmFoodDurationMultiplier = 1.0f;
+
+    public int glacialArrowFreezingEffectDuration() {
+        return Mth.floor(3 * 20 * this.glacialArrowFreezingEffectDurationMultiplier);
+    }
 
     public float skateUpgradeTemplateIglooGenerateChance() {
         return skateUpgradeTemplateIglooGenerateChance;

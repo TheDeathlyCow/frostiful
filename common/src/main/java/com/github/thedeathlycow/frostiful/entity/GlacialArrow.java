@@ -35,7 +35,7 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class GlacialArrow extends AbstractArrow {
-    private int freezingDuration = FrostifulConfigYACL.temperatureSourceSettings().glacialArrowFreezingEffectDuration();
+    private int freezingDuration = FrostifulConfigYACL.itemSettings().glacialArrowFreezingEffectDuration();
 
     private static final String FREEZING_DURATION_NBT_KEY = "freezing_duration";
 

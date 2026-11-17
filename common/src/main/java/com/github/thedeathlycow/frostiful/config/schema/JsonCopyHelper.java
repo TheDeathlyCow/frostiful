@@ -19,6 +19,7 @@
 
 package com.github.thedeathlycow.frostiful.config.schema;
 
+import com.github.thedeathlycow.frostiful.Frostiful;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -35,22 +36,47 @@ public final class JsonCopyHelper {
     }
 
     public static void copyStringProperty(JsonObject src, JsonObject dest, String propertyName) {
+        if (!src.has(propertyName)) {
+            Frostiful.LOGGER.warn("Missing string property for upgrade: {}", propertyName);
+            return;
+        }
+
         dest.addProperty(propertyName, src.remove(propertyName).getAsString());
     }
 
     public static void copyBooleanProperty(JsonObject src, JsonObject dest, String propertyName) {
+        if (!src.has(propertyName)) {
+            Frostiful.LOGGER.warn("Missing bool property for upgrade: {}", propertyName);
+            return;
+        }
+
         dest.addProperty(propertyName, src.remove(propertyName).getAsBoolean());
     }
 
     public static void copyFloatProperty(JsonObject src, JsonObject dest, String propertyName) {
+        if (!src.has(propertyName)) {
+            Frostiful.LOGGER.warn("Missing float property for upgrade: {}", propertyName);
+            return;
+        }
+
         dest.addProperty(propertyName, src.remove(propertyName).getAsFloat());
     }
 
     public static void copyDoubleProperty(JsonObject src, JsonObject dest, String propertyName) {
+        if (!src.has(propertyName)) {
+            Frostiful.LOGGER.warn("Missing double property for upgrade: {}", propertyName);
+            return;
+        }
+
         dest.addProperty(propertyName, src.remove(propertyName).getAsDouble());
     }
 
     public static void copyIntProperty(JsonObject src, JsonObject dest, String propertyName) {
+        if (!src.has(propertyName)) {
+            Frostiful.LOGGER.warn("Missing int property for upgrade: {}", propertyName);
+            return;
+        }
+
         dest.addProperty(propertyName, src.remove(propertyName).getAsInt());
     }
 
@@ -72,6 +98,11 @@ public final class JsonCopyHelper {
     }
 
     public static void rename(JsonObject json, String oldName, String newName) {
+        if (!json.has(oldName)) {
+            Frostiful.LOGGER.warn("Missing property for rename: {}", oldName);
+            return;
+        }
+
         JsonElement prop = json.remove(oldName);
         json.add(newName, prop);
     }

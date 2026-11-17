@@ -70,12 +70,6 @@ public class TemperatureSourceSettings {
     float packedSnowballTemperatureChangeMultiplier = 1.0f;
 
     @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
-    @Translate.Name("Glacial Arrow freezing effect duration multiplier")
-    @SerialEntry(comment = "Multiplies the duration of the Freezing effect applied to a target struck by a Glacial Arrow.")
-    @FloatField(format = "%.2f")
-    float glacialArrowFreezingEffectDurationMultiplier = 1.0f;
-
-    @AutoGen(category = TEMPERATURE_SOURCES_CATEGORY, group = COOLING_GROUP)
     @Translate.Name("Thrown Icicle temperature change multiplier")
     @SerialEntry(comment = "Multiplies the cooling applied to a target struck by a Thrown Icicle.")
     @FloatField(format = "%.2f")
@@ -145,10 +139,6 @@ public class TemperatureSourceSettings {
 
     public int packedSnowballTemperatureChange() {
         return Mth.floor(-500 * this.packedSnowballTemperatureChangeMultiplier * this.coolingMultiplier());
-    }
-
-    public int glacialArrowFreezingEffectDuration() {
-        return Mth.floor(3 * 20 * this.glacialArrowFreezingEffectDurationMultiplier * this.coolingMultiplier());
     }
 
     public int thrownIcicleTemperatureChange() {

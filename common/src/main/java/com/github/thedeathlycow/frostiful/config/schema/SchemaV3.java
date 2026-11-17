@@ -10,11 +10,12 @@ public final class SchemaV3 implements ConfigUpdater {
     @Override
     public void run(int originalSchemaVersion) throws IOException {
         JsonObject sourceSettings = JsonCopyHelper.read(ConfigPaths.TEMPERATURE_SOURCE);
+        JsonObject itemSettings = JsonCopyHelper.read(ConfigPaths.ITEM);
 
-        JsonCopyHelper.rename(sourceSettings, "glacialArrowTemperatureChangeMultiplier", "glacialArrowFreezingEffectDurationMultiplier");
-        // TODO: move sun lichen multiplier back to temp sources
+        JsonCopyHelper.copyFloatProperty(sourceSettings, itemSettings, "glacialArrowTemperatureChangeMultiplier");
+        JsonCopyHelper.rename(itemSettings, "glacialArrowTemperatureChangeMultiplier", "glacialArrowFreezingEffectDurationMultiplier");
 
-
-        Files.writeString(ConfigPaths.BLOCK, sourceSettings.toString());
+        Files.writeString(ConfigPaths.TEMPERATURE_SOURCE, sourceSettings.toString());
+        Files.writeString(ConfigPaths.ITEM, itemSettings.toString());
     }
 }

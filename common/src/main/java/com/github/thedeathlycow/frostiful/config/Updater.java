@@ -76,11 +76,12 @@ class Updater {
             if (updater != null) {
                 try {
                     updater.run(currentSchemaVersion);
-                } catch (IOException e) {
+                } catch (Exception e) {
                     Frostiful.LOGGER.warn(
-                            "Unable to upgrade config file from schema version {} to {}, due to IO error. Aborting upgrade.",
+                            "Unable to upgrade config file from schema version {} to {}, due to error. Aborting upgrade. Working directory is {}.",
                             step - 1,
                             step,
+                            Frostiful.getConfigDir(),
                             e
                     );
                     break;
