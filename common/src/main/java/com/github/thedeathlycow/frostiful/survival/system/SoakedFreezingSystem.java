@@ -62,7 +62,7 @@ public final class SoakedFreezingSystem {
                 provider.setAttached(FDataAttachments.APPLIED_SOAKED_MODIFIERS, false);
 
                 if (Frostiful.isDevelopmentEnvironment()) {
-                    Frostiful.LOGGER.debug("Removed soaked env frost resistance penalty");
+                    Frostiful.LOGGER.info("Removed soaked env frost resistance penalty");
                 }
             }
         }
