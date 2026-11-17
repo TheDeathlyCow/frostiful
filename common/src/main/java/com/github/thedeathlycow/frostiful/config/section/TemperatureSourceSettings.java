@@ -154,11 +154,11 @@ public class TemperatureSourceSettings {
     }
 
     public float freezingMobEffectTemperatureChangeMultiplier() {
-        return freezingMobEffectTemperatureChangeMultiplier;
+        return freezingMobEffectTemperatureChangeMultiplier * this.coolingMultiplier();
     }
 
     public float warmingMobEffectTemperatureChangeMultiplier() {
-        return warmingMobEffectTemperatureChangeMultiplier;
+        return warmingMobEffectTemperatureChangeMultiplier * this.heatingMultiplier();
     }
 
     public int conduitPowerTemperatureChange() {
