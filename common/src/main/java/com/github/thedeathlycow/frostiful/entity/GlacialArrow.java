@@ -22,8 +22,9 @@ package com.github.thedeathlycow.frostiful.entity;
 import com.github.thedeathlycow.frostiful.config.FrostifulConfigYACL;
 import com.github.thedeathlycow.frostiful.registry.FEntityTypes;
 import com.github.thedeathlycow.frostiful.registry.FItems;
-import com.github.thedeathlycow.thermoo.api.core.v2.source.TemperatureSources;
+import com.github.thedeathlycow.frostiful.registry.FMobEffects;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
@@ -34,9 +35,9 @@ import net.minecraft.world.level.storage.ValueOutput;
 import org.jetbrains.annotations.Nullable;
 
 public class GlacialArrow extends AbstractArrow {
-    private int temperatureChange = FrostifulConfigYACL.temperatureSourceSettings().glacialArrowTemperatureChange();
+    private int freezingDuration = FrostifulConfigYACL.temperatureSourceSettings().glacialArrowFreezingEffectDuration();
 
-    private static final String FREEZE_AMOUNT_NBT_KEY = "freeze_amount";
+    private static final String FREEZING_DURATION_NBT_KEY = "freezing_duration";
 
     public GlacialArrow(EntityType<? extends GlacialArrow> entityType, Level world) {
         super(entityType, world);
@@ -77,21 +78,18 @@ public class GlacialArrow extends AbstractArrow {
     @Override
     protected void doPostHurtEffects(LivingEntity target) {
         super.doPostHurtEffects(target);
-        target.thermoo$addTemperature(temperatureChange, target.level().thermoo$temperatureSources().create(
-                TemperatureSources.ACTIVE,
-                this
-        ));
+        target.addEffect(new MobEffectInstance(FMobEffects.FREEZING, this.freezingDuration), this);
     }
 
     @Override
     public void readAdditionalSaveData(ValueInput readView) {
         super.readAdditionalSaveData(readView);
-        this.temperatureChange = readView.getIntOr(FREEZE_AMOUNT_NBT_KEY, 0);
+        this.freezingDuration = readView.getIntOr(FREEZING_DURATION_NBT_KEY, 20);
     }
 
     @Override
     public void addAdditionalSaveData(ValueOutput writeView) {
         super.addAdditionalSaveData(writeView);
-        writeView.putInt(FREEZE_AMOUNT_NBT_KEY, this.temperatureChange);
+        writeView.putInt(FREEZING_DURATION_NBT_KEY, this.freezingDuration);
     }
 }
