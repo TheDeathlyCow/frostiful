@@ -39,8 +39,7 @@ public class FPotions {
             create(
                     "numbing",
                     new MobEffectInstance(FMobEffects.FROSTBITE, BASE_LONG_DURATION, 0),
-                    new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION, 0),
-                    new MobEffectInstance(FMobEffects.FREEZING, BASE_SHORT_DURATION, 0)
+                    new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION, 0)
             )
     );
     public static final Holder<Potion> NUMBING_LONG = registerReference(
@@ -48,8 +47,7 @@ public class FPotions {
             create(
                     "numbing",
                     new MobEffectInstance(FMobEffects.FROSTBITE, 2 * BASE_LONG_DURATION, 0),
-                    new MobEffectInstance(MobEffects.SLOWNESS, 2 * BASE_LONG_DURATION, 0),
-                    new MobEffectInstance(FMobEffects.FREEZING, 2 * BASE_SHORT_DURATION, 0)
+                    new MobEffectInstance(MobEffects.SLOWNESS, 2 * BASE_LONG_DURATION, 0)
             )
     );
     public static final Holder<Potion> NUMBING_STRONG = registerReference(
@@ -57,8 +55,7 @@ public class FPotions {
             create(
                     "numbing",
                     new MobEffectInstance(FMobEffects.FROSTBITE, BASE_LONG_DURATION / 2, 1),
-                    new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION / 2, 2),
-                    new MobEffectInstance(FMobEffects.FREEZING, BASE_SHORT_DURATION, 2)
+                    new MobEffectInstance(MobEffects.SLOWNESS, BASE_LONG_DURATION / 2, 2)
             )
     );
 
