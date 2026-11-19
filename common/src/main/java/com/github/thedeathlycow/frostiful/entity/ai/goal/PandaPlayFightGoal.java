@@ -23,9 +23,36 @@ import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import net.minecraft.world.entity.animal.panda.Panda;
 
 public class PandaPlayFightGoal extends PlayFightGoal<Panda> {
-
     public PandaPlayFightGoal(Panda panda, float adultChance, float babyChance) {
         super(panda, Panda.class, adultChance, babyChance, FLootTables.PANDA_PLAYFIGHT_GAMEPLAY);
     }
 
+    @Override
+    public boolean canUse() {
+        if (!this.mob.canPerformAction()) {
+            return false;
+        }
+
+        boolean foundTarget = super.canUse();
+
+        if (foundTarget) {
+            assert this.target != null;
+            return canVariantPlay(this.mob) && canVariantPlay(this.target);
+        }
+
+        return false;
+    }
+
+    private static boolean canVariantPlay(Panda panda) {
+        Panda.Gene gene = panda.getVariant();
+        return panda.isBaby() ? canBabyVariantPlay(gene) : canAdultVariantPlay(gene);
+    }
+
+    private static boolean canBabyVariantPlay(Panda.Gene gene) {
+        return gene != Panda.Gene.WEAK && gene != Panda.Gene.WORRIED;
+    }
+
+    private static boolean canAdultVariantPlay(Panda.Gene gene) {
+        return gene == Panda.Gene.AGGRESSIVE || gene == Panda.Gene.PLAYFUL;
+    }
 }
