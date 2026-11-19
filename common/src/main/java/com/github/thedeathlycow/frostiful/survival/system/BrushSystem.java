@@ -139,6 +139,8 @@ public final class BrushSystem {
         if (animal instanceof NeutralMob angerable) {
             angerable.startPersistentAngerTimer();
             angerable.setPersistentAngerTarget(EntityReference.of(brusher));
+        } else if (animal.isAggressive()) {
+            animal.setTarget(brusher);
         }
     }
 
