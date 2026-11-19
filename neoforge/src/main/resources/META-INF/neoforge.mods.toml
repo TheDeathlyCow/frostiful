@@ -35,7 +35,7 @@ side = "BOTH"
 [[dependencies.${mod_id}]]
 modId = "thermoo"
 type = "required"
-versionRange = "[${thermoo_version},)"
+versionRange = "[10.0.0,)"
 ordering = "NONE"
 side = "BOTH"
 
