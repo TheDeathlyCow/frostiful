@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:polar_bear",
+    {
+      "id": "#c:polar_bears",
+      "required": false
+    }
+  ]
+}

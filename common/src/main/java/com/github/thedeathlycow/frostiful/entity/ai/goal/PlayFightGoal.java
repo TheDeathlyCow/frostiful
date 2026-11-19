@@ -34,7 +34,6 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 public class PlayFightGoal<T extends PathfinderMob> extends Goal {
-
     private static final TargetingConditions VALID_PLAYFIGHT_PREDICATE = TargetingConditions.forCombat()
             .range(8.0D)
             .ignoreLineOfSight();
@@ -64,7 +63,6 @@ public class PlayFightGoal<T extends PathfinderMob> extends Goal {
 
     @Override
     public boolean canUse() {
-
         float chance = this.mob.isBaby() ? this.babyChance : this.adultChance;
 
         if (this.mob.getRandom().nextFloat() < chance) {
@@ -145,8 +143,8 @@ public class PlayFightGoal<T extends PathfinderMob> extends Goal {
         ServerLevel world = getServerLevel(this.mob);
         List<? extends T> candidates = world.getNearbyEntities(this.type, VALID_PLAYFIGHT_PREDICATE, this.mob, this.mob.getBoundingBox().inflate(8.0));
         double closestEntityDistance = Double.POSITIVE_INFINITY;
-
         T closestTargetSoFar = null;
+
         for (T candidate : candidates) {
             double distance = this.mob.distanceToSqr(candidate);
             if (this.canPlayFightWith(candidate) && distance < closestEntityDistance) {

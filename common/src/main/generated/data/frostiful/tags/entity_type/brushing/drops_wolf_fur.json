@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:wolf",
+    {
+      "id": "#c:wolves",
+      "required": false
+    }
+  ]
+}

@@ -84,6 +84,8 @@ public class FrostifulModelGenerator extends FabricModelProvider {
         itemModelGenerator.declareCustomModelItem(FItems.POLAR_BEAR_FUR_TUFT);
         itemModelGenerator.declareCustomModelItem(FItems.WOLF_FUR_TUFT);
         itemModelGenerator.declareCustomModelItem(FItems.OCELOT_FUR_TUFT);
+        itemModelGenerator.generateFlatItem(FItems.FOX_FUR_TUFT, ModelTemplates.FLAT_ITEM);
+        itemModelGenerator.generateFlatItem(FItems.PANDA_FUR_TUFT, ModelTemplates.FLAT_ITEM);
 
         itemModelGenerator.declareCustomModelItem(FItems.ICICLE);
 

@@ -48,8 +48,10 @@ public class FPlayfightLootGenerator extends SimpleFabricLootTableSubProvider {
         output = FrostifulLootUtils.withSequenceId(output);
 
         output.accept(FLootTables.POLAR_BEAR_PLAYFIGHT_GAMEPLAY, bigAnimal(FItems.POLAR_BEAR_FUR_TUFT));
+        output.accept(FLootTables.PANDA_PLAYFIGHT_GAMEPLAY, bigAnimal(FItems.PANDA_FUR_TUFT));
         output.accept(FLootTables.WOLF_PLAYFIGHT_GAMEPLAY, mediumAnimal(FItems.WOLF_FUR_TUFT));
         output.accept(FLootTables.OCELOT_PLAYFIGHT_GAMEPLAY, mediumAnimal(FItems.OCELOT_FUR_TUFT));
+        output.accept(FLootTables.FOX_PLAYFIGHT_GAMEPLAY, mediumAnimal(FItems.FOX_FUR_TUFT));
     }
 
     private static LootTable.Builder bigAnimal(ItemLike item) {

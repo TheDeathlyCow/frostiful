@@ -88,6 +88,8 @@ public class FItemTagGenerator extends FabricTagsProvider.ItemTagsProvider {
                 .add(FItems.POLAR_BEAR_FUR_TUFT)
                 .add(FItems.WOLF_FUR_TUFT)
                 .add(FItems.OCELOT_FUR_TUFT)
+                .add(FItems.FOX_FUR_TUFT)
+                .add(FItems.PANDA_FUR_TUFT)
                 .add(Items.RABBIT_HIDE);
 
         valueLookupBuilder(FItemTags.ICICLES)

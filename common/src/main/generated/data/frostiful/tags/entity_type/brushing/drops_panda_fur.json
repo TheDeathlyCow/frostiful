@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:panda",
+    {
+      "id": "#c:pandas",
+      "required": false
+    }
+  ]
+}

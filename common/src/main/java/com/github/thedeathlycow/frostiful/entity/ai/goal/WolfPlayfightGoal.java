@@ -23,7 +23,6 @@ import com.github.thedeathlycow.frostiful.registry.FLootTables;
 import net.minecraft.world.entity.animal.wolf.Wolf;
 
 public class WolfPlayfightGoal extends PlayFightGoal<Wolf> {
-
     public WolfPlayfightGoal(Wolf wolf, float adultChance, float babyChance) {
         super(wolf, Wolf.class, adultChance, babyChance, FLootTables.WOLF_PLAYFIGHT_GAMEPLAY);
     }

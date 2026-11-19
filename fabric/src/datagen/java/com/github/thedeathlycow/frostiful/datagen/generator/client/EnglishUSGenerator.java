@@ -108,6 +108,8 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         builder.add(FItems.POLAR_BEAR_FUR_TUFT, "Tuft of Polar Bear Fur");
         builder.add(FItems.WOLF_FUR_TUFT, "Tuft of Wolf Fur");
         builder.add(FItems.OCELOT_FUR_TUFT, "Tuft of Ocelot Fur");
+        builder.add(FItems.FOX_FUR_TUFT, "Tuft of Fox Fur");
+        builder.add(FItems.PANDA_FUR_TUFT, "Tuft of Panda Fur");
 
         builder.add(FItems.FROSTOLOGER_SPAWN_EGG, "Frostologer Spawn Egg");
         builder.add(FItems.CHILLAGER_SPAWN_EGG, "Chillager Spawn Egg");

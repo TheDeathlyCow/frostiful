@@ -31,8 +31,7 @@ class FrostWandAttackGoal extends OcelotAttackGoal {
 
     @Override
     public boolean canUse() {
-        return frostologer.isTargetRooted()
-                && super.canUse();
+        return frostologer.isTargetRooted() && super.canUse();
     }
 
 }

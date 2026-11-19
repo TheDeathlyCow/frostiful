@@ -57,6 +57,8 @@ public class FItemGroups {
                         entries.accept(new ItemStack(FItems.POLAR_BEAR_FUR_TUFT));
                         entries.accept(new ItemStack(FItems.WOLF_FUR_TUFT));
                         entries.accept(new ItemStack(FItems.OCELOT_FUR_TUFT));
+                        entries.accept(new ItemStack(FItems.FOX_FUR_TUFT));
+                        entries.accept(new ItemStack(FItems.PANDA_FUR_TUFT));
                         entries.accept(new ItemStack(FItems.FUR_PADDING));
 
                         entries.accept(new ItemStack(FItems.COLD_SUN_LICHEN));

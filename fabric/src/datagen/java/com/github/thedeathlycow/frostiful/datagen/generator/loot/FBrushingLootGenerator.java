@@ -49,6 +49,8 @@ public class FBrushingLootGenerator extends SimpleFabricLootTableSubProvider {
         output.accept(FLootTables.POLAR_BEAR_BRUSHING_GAMEPLAY, brushingLoot(FItems.POLAR_BEAR_FUR_TUFT));
         output.accept(FLootTables.OCELOT_BRUSHING_GAMEPLAY, brushingLoot(FItems.OCELOT_FUR_TUFT));
         output.accept(FLootTables.WOLF_BRUSHING_GAMEPLAY, brushingLoot(FItems.WOLF_FUR_TUFT));
+        output.accept(FLootTables.FOX_BRUSHING_GAMEPLAY, brushingLoot(FItems.FOX_FUR_TUFT));
+        output.accept(FLootTables.PANDA_BRUSHING_GAMEPLAY, brushingLoot(FItems.PANDA_FUR_TUFT));
     }
 
     private static LootTable.Builder brushingLoot(ItemLike item) {

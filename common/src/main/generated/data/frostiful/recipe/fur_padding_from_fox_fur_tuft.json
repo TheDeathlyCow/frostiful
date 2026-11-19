@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "group": "frostiful:fur_padding",
+  "ingredients": [
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft",
+    "frostiful:fox_fur_tuft"
+  ],
+  "result": {
+    "id": "frostiful:fur_padding"
+  }
+}

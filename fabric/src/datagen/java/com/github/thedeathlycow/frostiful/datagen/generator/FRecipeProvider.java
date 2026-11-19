@@ -102,8 +102,10 @@ public class FRecipeProvider extends FabricRecipeProvider {
                 offerFurArmorRecipes();
 
                 offerFurPaddingRecipe(FItems.POLAR_BEAR_FUR_TUFT, 4);
+                offerFurPaddingRecipe(FItems.PANDA_FUR_TUFT, 4);
                 offerFurPaddingRecipe(FItems.WOLF_FUR_TUFT, 9);
                 offerFurPaddingRecipe(FItems.OCELOT_FUR_TUFT, 9);
+                offerFurPaddingRecipe(FItems.FOX_FUR_TUFT, 9);
                 offerFurPaddingRecipe(Items.RABBIT_HIDE, 9);
 
                 shaped(RecipeCategory.DECORATIONS, FItems.ICE_PANE, 16)
