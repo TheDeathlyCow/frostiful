@@ -21,6 +21,7 @@
         "entity.ice_skating.LivingEntityMixin",
         "entity.mob.FoxPlayFightMixin",
         "entity.mob.OcelotPlayFightMixin",
+        "entity.PandaMixin",
         "entity.mob.PandaPlayFightMixin",
         "entity.mob.PolarBearPlayFightMixin",
         "entity.mob.StrayCarriesFrostArrowMixin",
