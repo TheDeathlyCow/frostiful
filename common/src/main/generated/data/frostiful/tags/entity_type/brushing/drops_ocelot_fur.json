@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:ocelot",
+    {
+      "id": "#c:ocelots",
+      "required": false
+    }
+  ]
+}

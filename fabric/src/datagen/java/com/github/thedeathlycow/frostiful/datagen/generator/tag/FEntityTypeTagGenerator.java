@@ -27,6 +27,8 @@ import net.minecraft.world.entity.EntityType;
 
 import java.util.concurrent.CompletableFuture;
 
+import static com.github.thedeathlycow.frostiful.datagen.generator.loot.FrostifulLootUtils.commonEntityTypeKey;
+
 public class FEntityTypeTagGenerator extends FabricTagsProvider.EntityTypeTagsProvider {
     public FEntityTypeTagGenerator(FabricPackOutput output, CompletableFuture<HolderLookup.Provider> registryLookupFuture) {
         super(output, registryLookupFuture);
@@ -37,5 +39,32 @@ public class FEntityTypeTagGenerator extends FabricTagsProvider.EntityTypeTagsPr
         valueLookupBuilder(FEntityTypeTags.HAS_PLAYER_TEMPERATURE_STATUSES)
                 .add(EntityType.PLAYER)
                 .add(EntityType.MANNEQUIN);
+
+        valueLookupBuilder(FEntityTypeTags.IS_BRUSHABLE)
+                .addTag(FEntityTypeTags.BRUSHING_DROPS_POLAR_BEAR_FUR)
+                .addTag(FEntityTypeTags.BRUSHING_DROPS_WOLF_FUR)
+                .addTag(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)
+                .addTag(FEntityTypeTags.BRUSHING_DROPS_FOX_FUR)
+                .addTag(FEntityTypeTags.BRUSHING_DROPS_PANDA_FUR);
+
+        valueLookupBuilder(FEntityTypeTags.BRUSHING_DROPS_POLAR_BEAR_FUR)
+                .add(EntityType.POLAR_BEAR)
+                .addOptionalTag(commonEntityTypeKey("polar_bears"));
+
+        valueLookupBuilder(FEntityTypeTags.BRUSHING_DROPS_WOLF_FUR)
+                .add(EntityType.WOLF)
+                .addOptionalTag(commonEntityTypeKey("wolves"));
+
+        valueLookupBuilder(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)
+                .add(EntityType.OCELOT)
+                .addOptionalTag(commonEntityTypeKey("ocelots"));
+
+        valueLookupBuilder(FEntityTypeTags.BRUSHING_DROPS_FOX_FUR)
+                .add(EntityType.FOX)
+                .addOptionalTag(commonEntityTypeKey("foxes"));
+
+        valueLookupBuilder(FEntityTypeTags.BRUSHING_DROPS_PANDA_FUR)
+                .add(EntityType.PANDA)
+                .addOptionalTag(commonEntityTypeKey("pandas"));
     }
 }

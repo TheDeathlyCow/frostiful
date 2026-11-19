@@ -1,0 +1,9 @@
+{
+  "values": [
+    "minecraft:fox",
+    {
+      "id": "#c:foxes",
+      "required": false
+    }
+  ]
+}

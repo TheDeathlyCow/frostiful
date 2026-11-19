@@ -23,6 +23,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
@@ -56,12 +57,20 @@ public final class FrostifulLootUtils {
         return itemKey("c", path);
     }
 
+    public static TagKey<EntityType<?>> commonEntityTypeKey(String path) {
+        return entityTypeKey("c", path);
+    }
+
     public static TagKey<Block> blockKey(String id, String path) {
         return TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath(id, path));
     }
 
     public static TagKey<Item> itemKey(String id, String path) {
         return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(id, path));
+    }
+
+    public static TagKey<EntityType<?>> entityTypeKey(String id, String path) {
+        return TagKey.create(Registries.ENTITY_TYPE, Identifier.fromNamespaceAndPath(id, path));
     }
 
     public static BiConsumer<ResourceKey<LootTable>, LootTable.Builder> withSequenceId(BiConsumer<ResourceKey<LootTable>, LootTable.Builder> output) {
