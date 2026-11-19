@@ -30,10 +30,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Wolf.class)
-public abstract class WolfPlayFightMixin extends TamableAnimal {
+public abstract class WolfMixin extends TamableAnimal {
 
 
-    protected WolfPlayFightMixin(EntityType<? extends TamableAnimal> entityType, Level world) {
+    protected WolfMixin(EntityType<? extends TamableAnimal> entityType, Level world) {
         super(entityType, world);
     }
 

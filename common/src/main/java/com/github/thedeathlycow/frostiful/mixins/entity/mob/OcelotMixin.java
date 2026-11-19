@@ -30,8 +30,8 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Ocelot.class)
-public abstract class OcelotPlayFightMixin extends Animal {
-    protected OcelotPlayFightMixin(EntityType<? extends Animal> entityType, Level world) {
+public abstract class OcelotMixin extends Animal {
+    protected OcelotMixin(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
 

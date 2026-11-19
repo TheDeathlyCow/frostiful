@@ -17,8 +17,9 @@
  * <https://www.gnu.org/licenses/>.
  */
 
-package com.github.thedeathlycow.frostiful.mixins.entity;
+package com.github.thedeathlycow.frostiful.mixins.entity.mob;
 
+import com.github.thedeathlycow.frostiful.entity.ai.goal.PandaPlayFightGoal;
 import com.github.thedeathlycow.frostiful.survival.system.BrushSystem;
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import net.minecraft.world.InteractionHand;
@@ -30,12 +31,27 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Panda.class)
 public abstract class PandaMixin extends Animal {
     protected PandaMixin(EntityType<? extends Animal> entityType, Level world) {
         super(entityType, world);
     }
+
+    @Inject(
+            method = "registerGoals",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;addGoal(ILnet/minecraft/world/entity/ai/goal/Goal;)V",
+                    ordinal = 0
+            )
+    )
+    private void addPlayFightGoal(CallbackInfo ci) {
+        this.goalSelector.addGoal(8, new PandaPlayFightGoal((Panda) (Object) this, 8e-4f, 4e-3f));
+    }
+
 
     @ModifyReturnValue(
             method = "mobInteract",

@@ -35,9 +35,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.function.Predicate;
 
 @Mixin(Monster.class)
-public abstract class StrayCarriesFrostArrowMixin extends PathfinderMob {
+public abstract class MonsterMixin extends PathfinderMob {
 
-    protected StrayCarriesFrostArrowMixin(EntityType<? extends PathfinderMob> entityType, Level world) {
+    protected MonsterMixin(EntityType<? extends PathfinderMob> entityType, Level world) {
         super(entityType, world);
     }
 
