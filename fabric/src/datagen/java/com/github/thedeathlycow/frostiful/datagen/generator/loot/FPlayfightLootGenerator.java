@@ -33,6 +33,7 @@ import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemRandomChanceCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.NumberProvider;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 
 import java.util.concurrent.CompletableFuture;
@@ -55,26 +56,20 @@ public class FPlayfightLootGenerator extends SimpleFabricLootTableSubProvider {
     }
 
     private static LootTable.Builder bigAnimal(ItemLike item) {
-        return LootTable.lootTable()
-                .withPool(
-                        LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1f))
-                                .add(LootItem.lootTableItem(item)
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(1f, 2f)))
-                                        .when(LootItemRandomChanceCondition.randomChance(0.75f))
-                                )
-                );
+        return chanceLoot(item, 0.15f, UniformGenerator.between(1f, 2f));
     }
 
     private static LootTable.Builder mediumAnimal(ItemLike item) {
+        return chanceLoot(item, 0.1f, ConstantValue.exactly(1f));
+    }
+
+    private static LootTable.Builder chanceLoot(ItemLike item, float chance, NumberProvider count) {
         return LootTable.lootTable()
-                .withPool(
-                        LootPool.lootPool()
-                                .setRolls(ConstantValue.exactly(1f))
-                                .add(LootItem.lootTableItem(item)
-                                        .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1f)))
-                                        .when(LootItemRandomChanceCondition.randomChance(0.67f))
-                                )
-                );
+                .withPool(LootPool.lootPool()
+                        .setRolls(ConstantValue.exactly(1f))
+                        .add(LootItem.lootTableItem(item)
+                                .apply(SetItemCountFunction.setCount(count))
+                                .when(LootItemRandomChanceCondition.randomChance(chance))
+                        ));
     }
 }
