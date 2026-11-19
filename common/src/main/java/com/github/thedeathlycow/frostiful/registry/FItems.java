@@ -190,6 +190,8 @@ public final class FItems {
     public static final Item POLAR_BEAR_FUR_TUFT = register("polar_bear_fur_tuft");
     public static final Item WOLF_FUR_TUFT = register("wolf_fur_tuft");
     public static final Item OCELOT_FUR_TUFT = register("ocelot_fur_tuft");
+    public static final Item FOX_FUR_TUFT = register("fox_fur_tuft");
+    public static final Item PANDA_FUR_TUFT = register("panda_fur_tuft");
 
     public static final Item ICICLE = register(
             "icicle",

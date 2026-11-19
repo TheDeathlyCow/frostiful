@@ -40,6 +40,10 @@ public class FEntityTypeTags {
 
     public static final TagKey<EntityType<?>> BRUSHING_DROPS_OCELOT_FUR = register("brushing/drops_ocelot_fur");
 
+    public static final TagKey<EntityType<?>> BRUSHING_DROPS_FOX_FUR = register("brushing/drops_fox_fur");
+
+    public static final TagKey<EntityType<?>> BRUSHING_DROPS_PANDA_FUR = register("brushing/drops_panda_fur");
+
     public static final TagKey<EntityType<?>> HAS_PLAYER_TEMPERATURE_STATUSES = register("has_player_temperature_statuses");
 
     private static TagKey<EntityType<?>> register(String id) {

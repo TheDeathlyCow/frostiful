@@ -118,6 +118,10 @@ public final class BrushSystem {
             return FLootTables.WOLF_BRUSHING_GAMEPLAY;
         } else if (animal.is(FEntityTypeTags.BRUSHING_DROPS_OCELOT_FUR)) {
             return FLootTables.OCELOT_BRUSHING_GAMEPLAY;
+        } else if (animal.is(FEntityTypeTags.BRUSHING_DROPS_FOX_FUR)) {
+            return FLootTables.FOX_BRUSHING_GAMEPLAY;
+        } else if (animal.is(FEntityTypeTags.BRUSHING_DROPS_PANDA_FUR)) {
+            return FLootTables.PANDA_BRUSHING_GAMEPLAY;
         } else {
             return null;
         }
