@@ -57,8 +57,8 @@ public final class BrushSystem {
         }
 
         ItemStack heldItem = player.getItemInHand(hand);
+        long lastBrushTime = animal.getAttachedOrCreate(FDataAttachments.LAST_BRUSH_TIME);
 
-        long lastBrushTime = player.getAttachedOrCreate(FDataAttachments.LAST_BRUSH_TIME);
         if (isBrushable(animal, lastBrushTime) && heldItem.is(ConventionalItemTags.BRUSH_TOOLS)) {
             brush(animal, player, heldItem);
             if (!animal.level().isClientSide()) {
