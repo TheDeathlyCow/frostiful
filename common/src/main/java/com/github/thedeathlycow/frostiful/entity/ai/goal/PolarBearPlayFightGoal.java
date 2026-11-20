@@ -38,9 +38,13 @@ public class PolarBearPlayFightGoal extends PlayFightGoal<PolarBear> {
 
     @Override
     protected void playFight() {
-        this.mob.setStanding(true);
-        if (this.target != null) {
-            this.target.setStanding(true);
+        // TODO: make the babies stand again if MC-145654 is fixed (or if i fix it myself)
+        // https://bugs.mojang.com/browse/MC/issues/MC-145654
+        if (!this.mob.isBaby()) {
+            this.mob.setStanding(true);
+            if (this.target != null) {
+                this.target.setStanding(true);
+            }
         }
         super.playFight();
     }
