@@ -1,0 +1,122 @@
+{
+  "parent": "frostiful:adventure/brush_polar_bear",
+  "criteria": {
+    "brush_fox": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:fox"
+            }
+          }
+        ],
+        "item": {
+          "items": "minecraft:brush"
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    },
+    "brush_ocelot": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:ocelot"
+            }
+          }
+        ],
+        "item": {
+          "items": "minecraft:brush"
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    },
+    "brush_panda": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:panda"
+            }
+          }
+        ],
+        "item": {
+          "items": "minecraft:brush"
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    },
+    "brush_polar_bear": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:polar_bear"
+            }
+          }
+        ],
+        "item": {
+          "items": "minecraft:brush"
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    },
+    "brush_wolf": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:wolf"
+            }
+          }
+        ],
+        "item": {
+          "items": "minecraft:brush"
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.frostiful.adventure.brush_every_animal.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "frostiful:fox_fur_tuft"
+    },
+    "title": {
+      "translate": "advancements.frostiful.adventure.brush_every_animal.title"
+    }
+  },
+  "requirements": [
+    [
+      "brush_polar_bear"
+    ],
+    [
+      "brush_panda"
+    ],
+    [
+      "brush_fox"
+    ],
+    [
+      "brush_wolf"
+    ],
+    [
+      "brush_ocelot"
+    ]
+  ],
+  "rewards": {
+    "experience": 200
+  }
+}

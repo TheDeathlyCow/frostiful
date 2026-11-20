@@ -259,6 +259,7 @@ public class EnglishUSGenerator extends FabricLanguageProvider {
         addAdvancement(builder, FAdvancements.TRIM_WITH_PACKED_SNOW_PATTERNS, "Frosty the Snow Man", "Apply both the Frosty and Snow Man trim patterns at least once");
         addAdvancement(builder, FAdvancements.TRIM_WITH_GLACIAL_PATTERN, "King in the North", "Apply the Glacial trim pattern at least once");
         addAdvancement(builder, FAdvancements.BRUSH_POLAR_BEAR, "If not friend, why friend shaped?", "Brush a Polar Bear for its fur");
+        addAdvancement(builder, FAdvancements.BRUSH_EVERY_ANIMAL, "Can I pet that dawwwwg??", "Brush every brushable animal (Polar Bear, Wolf, Fox, Panda, Ocelot)");
         addAdvancement(builder, FAdvancements.CRAFT_ANY_FUR_ARMOR, "Winter Wardrobe", "Keep yourself warm with Fur Armor");
         addAdvancement(builder, FAdvancements.CHAIN_FUR_ARMOR, "Armored Furry", "Obtain a full suit of Fur Padded Chainmail Armor");
         addAdvancement(builder, FAdvancements.OBTAIN_ICE_SKATES, "Sword Shoes", "Craft a pair of Ice Skates in the Smithing Table");

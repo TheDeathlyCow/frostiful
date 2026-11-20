@@ -1,0 +1,41 @@
+{
+  "parent": "frostiful:adventure/root",
+  "criteria": {
+    "brush_polar_bear": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "minecraft:polar_bear"
+            }
+          }
+        ],
+        "item": {
+          "items": "minecraft:brush"
+        }
+      },
+      "trigger": "minecraft:player_interacted_with_entity"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.frostiful.adventure.brush_polar_bear.description"
+    },
+    "icon": {
+      "id": "frostiful:polar_bear_fur_tuft"
+    },
+    "title": {
+      "translate": "advancements.frostiful.adventure.brush_polar_bear.title"
+    }
+  },
+  "requirements": [
+    [
+      "brush_polar_bear"
+    ]
+  ],
+  "rewards": {
+    "experience": 15
+  }
+}

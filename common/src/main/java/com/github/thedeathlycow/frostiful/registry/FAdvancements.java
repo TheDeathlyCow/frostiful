@@ -28,6 +28,7 @@ public final class FAdvancements {
     public static final ResourceKey<Advancement> ROOT = create("adventure/root");
     public static final ResourceKey<Advancement> ADD_LOG_TO_CAMPFIRE = create("adventure/add_log_to_campfire");
     public static final ResourceKey<Advancement> BRUSH_POLAR_BEAR = create("adventure/brush_polar_bear");
+    public static final ResourceKey<Advancement> BRUSH_EVERY_ANIMAL = create("adventure/brush_every_animal");
     public static final ResourceKey<Advancement> CHAIN_FUR_ARMOR = create("adventure/chain_fur_armor");
     public static final ResourceKey<Advancement> CRAFT_ANY_FUR_ARMOR = create("adventure/craft_any_fur_armor");
     public static final ResourceKey<Advancement> FIND_CHILLAGER_OUTPOST = create("adventure/find_chillager_outpost");

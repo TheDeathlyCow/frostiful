@@ -22,6 +22,7 @@ package com.github.thedeathlycow.frostiful.datagen;
 import com.github.thedeathlycow.frostiful.Frostiful;
 import com.github.thedeathlycow.frostiful.datagen.generator.BlockTransformerProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.BootstrappedRegistryGenerator;
+import com.github.thedeathlycow.frostiful.datagen.generator.FAdvancementProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.FRecipeProvider;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.EnglishUSGenerator;
 import com.github.thedeathlycow.frostiful.datagen.generator.client.FrostifulModelGenerator;
@@ -62,6 +63,7 @@ public class FrostifulDataGenerator implements DataGeneratorEntrypoint {
         pack.addProvider(FChestLootGenerator::new);
 
         pack.addProvider(FRecipeProvider::new);
+        pack.addProvider(FAdvancementProvider::new);
         pack.addProvider(BlockTransformerProvider::new);
 
         pack.addProvider(FrostifulModelGenerator::new);

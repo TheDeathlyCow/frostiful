@@ -1,0 +1,36 @@
+{
+  "criteria": {
+    "player_is_cold": {
+      "conditions": {
+        "player": [
+          {
+            "condition": "thermoo:temperature",
+            "scale": {
+              "max": -0.1
+            },
+            "value": {}
+          }
+        ]
+      },
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "frostiful:block/brittle_ice/cracked_0",
+    "description": {
+      "translate": "advancements.frostiful.adventure.root.description"
+    },
+    "icon": {
+      "id": "frostiful:frost_wand"
+    },
+    "title": {
+      "translate": "advancements.frostiful.adventure.root.title"
+    }
+  },
+  "requirements": [
+    [
+      "player_is_cold"
+    ]
+  ]
+}
